@@ -21,6 +21,10 @@ import WebKit
 
 extension WKWebViewConfiguration {
 
+    public static var ddgNameForUserAgent: String {
+        return "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
+    }
+    
     public static func persistent() -> WKWebViewConfiguration {
         return configuration(persistsData: true)
     }
@@ -28,7 +32,7 @@ extension WKWebViewConfiguration {
     public static func nonPersistent() -> WKWebViewConfiguration {
         return configuration(persistsData: false)
     }
-
+    
     private static func configuration(persistsData: Bool) -> WKWebViewConfiguration {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
@@ -38,7 +42,7 @@ extension WKWebViewConfiguration {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
 
-        configuration.applicationNameForUserAgent = "DuckDuckGo/\(AppVersion().majorVersionNumber)"
+        configuration.applicationNameForUserAgent = WKWebViewConfiguration.ddgNameForUserAgent
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsPictureInPictureMediaPlayback = true

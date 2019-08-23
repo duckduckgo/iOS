@@ -28,6 +28,8 @@ public struct AppVersion {
         static let versionNumber = "CFBundleShortVersionString"
     }
 
+    public static let shared = AppVersion()
+    
     private let bundle: InfoBundle
 
     public init(bundle: InfoBundle = Bundle.main) {

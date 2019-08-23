@@ -40,11 +40,11 @@ class WKWebViewConfigurationExtensionTests: XCTestCase {
     
     func testWhenPersistantConfigurationCreatedThenApplicationForUserAgentIsSet() {
         let configuration = WKWebViewConfiguration.persistent()
-        XCTAssertEqual("DuckDuckGo/7", configuration.applicationNameForUserAgent)
+        XCTAssertTrue(configuration.applicationNameForUserAgent?.hasSuffix("DuckDuckGo/7") ?? false)
     }
     
     func testWhenNonPersistantConfigurationCreatedThenApplicationForUserAgentIsSet() {
         let configuration = WKWebViewConfiguration.nonPersistent()
-        XCTAssertEqual("DuckDuckGo/7", configuration.applicationNameForUserAgent)
+        XCTAssertTrue(configuration.applicationNameForUserAgent?.hasSuffix("DuckDuckGo/7") ?? false)
     }
 }

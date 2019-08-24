@@ -105,7 +105,11 @@ public class HTTPSUpgrade {
     }
     
     private func isLocalListReloading() -> Bool {
-        return dataReloadLock.try()
+        if !dataReloadLock.try() {
+            return true
+        }
+        dataReloadLock.unlock()
+        return false
     }
     
     public func loadDataAsync() {

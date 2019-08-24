@@ -73,10 +73,10 @@ public class HTTPSUpgrade {
         isInServiceUpgradeList(host: host) { result in
             Logger.log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
             if result.isInList {
-                Pixel.fire(pixel: result.isCached ? .httpsServiceCachedUpdgrade : .httpsServiceRequestUpgrade)
+                Pixel.fire(pixel: result.isCached ? .httpsServiceCacheUpdgrade : .httpsServiceRequestUpgrade)
                 completion(true)
             } else {
-                Pixel.fire(pixel: .httpsNoUpdgrade)
+                Pixel.fire(pixel: result.isCached ? .httpsServiceCacheNoUpdgrade : .httpsServiceRequestNoUpdgrade)
                 completion(false)
             }
         }

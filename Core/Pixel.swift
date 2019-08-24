@@ -35,9 +35,10 @@ public enum PixelName: String {
     case privacyDashboardToggleProtectionOff = "mp_tb"
     
     case httpsNoLookup = "m_https_nl"
-    case httpsLocalLookup = "m_https_l"
-    case httpsServiceRequestLookup = "m_https_sr"
-    case httpsServiceCacheLookup = "m_https_sc"
+    case httpsLocalUpgrade = "m_https_lu"
+    case httpsServiceCachedUpdgrade = "m_https_scu"
+    case httpsServiceRequestUpgrade = "m_https_sru"
+    case httpsNoUpdgrade = "m_https_nu"
     
     case longPressMenuOpened = "mlp"
     case longPressMenuNewBackgroundTabItem = "mlp_b"

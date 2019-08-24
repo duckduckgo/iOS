@@ -56,28 +56,29 @@ public class HTTPSUpgrade {
             return
         }
         
-        if store.hasWhitelistedDomain(host) {
+        guard !store.hasWhitelistedDomain(host) else {
             Pixel.fire(pixel: .httpsNoLookup)
             completion(false)
             return
         }
-
+        
         let isLocallyUpgradable = !isLocalListReloading() && isInLocalUpgradeList(host: host)
         Logger.log(text: "\(host) \(isLocallyUpgradable ? "is" : "is not") locally upgradable")
         if  isLocallyUpgradable {
-            Pixel.fire(pixel: .httpsLocalLookup)
+            Pixel.fire(pixel: .httpsLocalUpgrade)
             completion(true)
             return
         }
-
-       isInServiceUpgradeList(host: host) { result in
-            Pixel.fire(pixel: result.isCached ? .httpsServiceCacheLookup : .httpsServiceRequestLookup)
+        
+        isInServiceUpgradeList(host: host) { result in
             Logger.log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
             if result.isInList {
+                Pixel.fire(pixel: result.isCached ? .httpsServiceCachedUpdgrade : .httpsServiceRequestUpgrade)
                 completion(true)
-                return
+            } else {
+                Pixel.fire(pixel: .httpsNoUpdgrade)
+                completion(false)
             }
-            completion(false)
         }
     }
     
@@ -92,15 +93,16 @@ public class HTTPSUpgrade {
         var serviceRequest = URLRequest(url: appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host))
         serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
 
-        let isCached = URLCache.shared.cachedResponse(for: serviceRequest) != nil
+        let cachedResponse = URLCache.shared.cachedResponse(for: serviceRequest)?.response as? HTTPURLResponse
         Alamofire.request(serviceRequest).validate(statusCode: 200..<300).response { response in
-            var isInList = false
-
             if let data = response.data {
                 let result = try? JSONDecoder().decode([String].self, from: data)
-                isInList = result?.contains(sha1Host) ?? false
+                let isCached = isResponseFromCache(response.response, cachedResponse: cachedResponse)
+                let isInList = result?.contains(sha1Host) ?? false
+                completion((isInList: isInList, isCached: isCached))
+            } else {
+                completion((isInList: false, isCached: false))
             }
-            completion((isInList: isInList, isCached: isCached))
         }
     }
     
@@ -126,4 +128,10 @@ public class HTTPSUpgrade {
         bloomFilter = store.bloomFilter()
         dataReloadLock.unlock()
     }
+}
+
+private func isResponseFromCache(_ response: HTTPURLResponse?, cachedResponse: HTTPURLResponse?) -> Bool {
+    guard let responseHeaders = response?.allHeaderFields as? [String: String] else { return false }
+    guard let cachedHeaders = cachedResponse?.allHeaderFields as? [String: String] else { return false }
+    return responseHeaders == cachedHeaders
 }

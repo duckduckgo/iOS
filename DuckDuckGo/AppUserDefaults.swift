@@ -40,6 +40,8 @@ public class AppUserDefaults: AppSettings {
         static let backgroundFetchStartCount = "com.duckduckgo.app.bgFetchStartCount"
         static let backgroundFetchNoDataCount = "com.duckduckgo.app.bgFetchNoDataCount"
         static let backgroundFetchNewDataCount = "com.duckduckgo.app.bgFetchNewDataCount"
+        
+        static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
     }
 
     private var userDefaults: UserDefaults? {
@@ -187,4 +189,37 @@ extension AppUserDefaults: PrivacyStatsExperimentStore {
         }
     }
     
+}
+
+extension AppUserDefaults: NotificationsStore {
+    
+    var notificationsEnabled: Bool {
+        get {
+            return userDefaults?.bool(forKey: Keys.notificationsEnabled) ?? false
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.notificationsEnabled)
+        }
+    }
+    
+    func scheduleStatus(for notification: LocalNotificationsLogic.Notification) -> LocalNotificationsLogic.ScheduleStatus? {
+        
+        guard let data = userDefaults?.value(forKey: notification.settingsKey) as? Data else { return nil }
+        
+        return try? PropertyListDecoder().decode(LocalNotificationsLogic.ScheduleStatus.self, from: data)
+    }
+    
+    func didSchedule(notification: LocalNotificationsLogic.Notification, date: Date) {
+        let status = LocalNotificationsLogic.ScheduleStatus.scheduled(date)
+        userDefaults?.set(try? PropertyListEncoder().encode(status), forKey: notification.settingsKey)
+    }
+    
+    func didFire(notification: LocalNotificationsLogic.Notification) {
+        let status = LocalNotificationsLogic.ScheduleStatus.fired
+        userDefaults?.set(try? PropertyListEncoder().encode(status), forKey: notification.settingsKey)
+    }
+    
+    func didCancel(notification: LocalNotificationsLogic.Notification) {
+        userDefaults?.removeObject(forKey: notification.settingsKey)
+    }
 }

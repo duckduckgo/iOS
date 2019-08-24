@@ -46,18 +46,11 @@ class PrivacyProtectionErrorController: UITableViewController {
         errorLabel.text = errorText
         resetTryAgain()
         buttonCell.isHidden = !canRetry()
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateFooterHeight()
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: nil) { _ in
-            self.updateFooterHeight()
-        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -81,20 +74,12 @@ class PrivacyProtectionErrorController: UITableViewController {
         return (delegate?.canTryAgain(controller: self) ?? false)
     }
 
-    private func updateFooterHeight() {
-        guard let footerView = tableView.tableFooterView else { return }
+}
 
-        tableView.tableFooterView = nil
+extension PrivacyProtectionErrorController: Themable {
 
-        let frameHeight = tableView.frame.size.height
-        let contentHeight = tableView.contentSize.height
-
-        let minSize = footer.preferredContentSize.height
-        let height = max(minSize, frameHeight - contentHeight)
-
-        let frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: height)
-        footerView.frame = frame
-        tableView.tableFooterView = footerView
+    func decorate(with theme: Theme) {
+        decorateNavigationBar(with: theme)
     }
 
 }

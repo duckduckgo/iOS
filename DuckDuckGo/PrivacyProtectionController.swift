@@ -28,22 +28,10 @@ protocol PrivacyProtectionDelegate: class {
 
 }
 
-class PrivacyProtectionController: UIViewController {
+class PrivacyProtectionController: ThemableNavigationController {
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ThemeManager.shared.currentTheme.statusBarStyle
-    }
+    weak var privacyProtectionDelegate: PrivacyProtectionDelegate?
 
-    @IBOutlet weak var contentContainer: UIView!
-    @IBOutlet weak var omniBarContainer: UIView!
-    @IBOutlet weak var statusBarBackground: UIView!
-    @IBOutlet weak var headerConstraint: NSLayoutConstraint!
-
-    weak var delegate: PrivacyProtectionDelegate?
-
-    weak var embeddedController: UINavigationController!
-
-    weak var omniBar: OmniBar!
     weak var omniDelegate: OmniBarDelegate!
     weak var siteRating: SiteRating?
     var omniBarText: String?
@@ -54,10 +42,8 @@ class PrivacyProtectionController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        transitioningDelegate = self
-        popoverPresentationController?.backgroundColor = view.backgroundColor
-
-        initOmniBar()
+        navigationBar.isHidden = isPad
+        popoverPresentationController?.backgroundColor = UIColor.nearlyWhite
 
         if !storageCache.hasData {
             showBlockerListError()
@@ -69,67 +55,51 @@ class PrivacyProtectionController: UIViewController {
             showInitialScreen()
         }
 
-        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     private func showError(withText errorText: String) {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
         controller.errorText = errorText
-        embeddedController.pushViewController(controller, animated: true)
+        pushViewController(controller, animated: true)
     }
 
     private func showBlockerListError() {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
         controller.errorText = UserText.privacyProtectionReloadBlockerLists
         controller.delegate = self
-        embeddedController.pushViewController(controller, animated: true)
+        pushViewController(controller, animated: true)
     }
 
     private func showInitialScreen() {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen")
             as? PrivacyProtectionOverviewController else { return }
-        embeddedController.pushViewController(controller, animated: true)
+        pushViewController(controller, animated: true)
         updateViewControllers()
     }
 
-    private func initOmniBar() {
-        omniBar = OmniBar.loadFromXib()
-        omniBar.frame = omniBarContainer.bounds
-        omniBarContainer.addSubview(omniBar)
-        omniBar.textField.text = omniBarText
-        omniBar.updateSiteRating(siteRating, with: storageCache)
-        omniBar.startBrowsing()
-        omniBar.omniDelegate = self
-        omniBar.textField.addTarget(self, action: #selector(onTextFieldTapped), for: .touchDown)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? UINavigationController {
-            embeddedController = controller
-            updateViewControllers()
-        }
-    }
-
-    @objc func onTextFieldTapped() {
-        dismiss(animated: true) {
-            self.delegate?.omniBarTextTapped()
-        }
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        viewController.title = siteRating?.domain
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        viewController.navigationItem.rightBarButtonItem = doneButton
+        super.pushViewController(viewController, animated: animated)
     }
 
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
-        guard let siteRating = siteRating else { return }
-        omniBar.updateSiteRating(siteRating, with: storageCache)
-        omniBar.refreshText(forUrl: siteRating.url)
         updateViewControllers()
     }
 
     func updateViewControllers() {
         guard let siteRating = siteRating else { return }
-        for controller in embeddedController.viewControllers {
-            guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
+
+        viewControllers.forEach {
+            guard let infoDisplaying = $0 as? PrivacyProtectionInfoDisplaying else { return }
             infoDisplaying.using(siteRating: siteRating, configuration: storageCache.configuration)
         }
+    }
+
+    @objc func done() {
+        dismiss(animated: true)
     }
 
 }
@@ -152,7 +122,7 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
             if let newCache = newCache {
                 self.storageCache = newCache
                 controller.dismiss(animated: true)
-                self.delegate?.reload(scripts: true)
+                self.privacyProtectionDelegate?.reload(scripts: true)
             } else {
                 controller.resetTryAgain()
             }
@@ -161,126 +131,4 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
 
 }
 
-extension PrivacyProtectionController: OmniBarDelegate {
-
-    func onOmniQuerySubmitted(_ query: String) {
-        dismiss(animated: true) {
-            self.omniDelegate.onOmniQuerySubmitted(query)
-        }
-    }
-
-    func onSiteRatingPressed() {
-        dismiss(animated: true)
-    }
-
-    func onMenuPressed() {
-        dismiss(animated: true) {
-            self.omniDelegate.onMenuPressed()
-        }
-    }
-    
-    func onRefreshPressed() {
-        dismiss(animated: true) {
-            self.omniDelegate.onRefreshPressed()
-        }
-    }
-
-}
-
-extension PrivacyProtectionController: UIViewControllerTransitioningDelegate {
-
-    func animationController(forPresented presented: UIViewController,
-                             presenting: UIViewController,
-                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        return SlideInFromBelowOmniBarTransitioning()
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideUpBehindOmniBarTransitioning()
-    }
-
-}
-
-private struct AnimationConstants {
-    static let inDuration = 0.3
-    static let outDuration = 0.2
-    static let tyOffset = CGFloat(20.0)
-}
-
-private class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView
-        guard let toController = transitionContext.viewController(forKey: .to) else { return }
-        guard let fromController = transitionContext.viewController(forKey: .from) as? PrivacyProtectionController else { return }
-
-        fromController.view.backgroundColor = UIColor.clear
-
-        toController.view.frame = transitionContext.finalFrame(for: toController)
-        containerView.insertSubview(toController.view, at: 0)
-
-        UIView.animate(withDuration: AnimationConstants.outDuration, animations: {
-            fromController.contentContainer.transform.ty = -fromController.contentContainer.frame.size.height -
-                fromController.omniBarContainer.frame.height -
-                AnimationConstants.tyOffset
-        }, completion: { (_: Bool) in
-            transitionContext.completeTransition(true)
-        })
-    }
-
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return AnimationConstants.outDuration
-    }
-
-}
-
-extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate {
-
-    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-        view.bringSubviewToFront(contentContainer)
-        headerConstraint.constant = -omniBarContainer.frame.size.height
-    }
-
-}
-
-private class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView
-
-        guard let toController = transitionContext.viewController(forKey: .to) as? PrivacyProtectionController else { return }
-
-        toController.view.frame = transitionContext.finalFrame(for: toController)
-        containerView.addSubview(toController.view)
-
-        let toColor = toController.view.backgroundColor
-        toController.view.backgroundColor = UIColor.clear
-
-        toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height
-            - toController.omniBarContainer.frame.height
-            - AnimationConstants.tyOffset
-
-        UIView.animate(withDuration: AnimationConstants.inDuration, animations: {
-            toController.contentContainer.transform.ty = 0
-        }, completion: { (_: Bool) in
-            toController.view.backgroundColor = toColor
-            transitionContext.completeTransition(true)
-        })
-    }
-
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return AnimationConstants.inDuration
-    }
-
-}
-
-extension PrivacyProtectionController: Themable {
-    
-    func decorate(with theme: Theme) {
-        setNeedsStatusBarAppearanceUpdate()
-        
-        statusBarBackground.backgroundColor = theme.barBackgroundColor
-        omniBar?.decorate(with: theme)
-    }
-}
+extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate { }

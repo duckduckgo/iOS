@@ -109,6 +109,7 @@ class MainViewController: UIViewController {
 
         applyTheme(ThemeManager.shared.currentTheme)
         
+        LocalNotifications.shared.logic.delegate = self
     }
     
     private func registerForKeyboardNotifications() {
@@ -220,7 +221,11 @@ class MainViewController: UIViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
-        
+
+        if var onboarding = segue.destination as? Onboarding {
+            onboarding.delegate = self
+        }
+
     }
 
     private func configureTabManager() {
@@ -705,7 +710,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
-        currentTab?.showPrivacyProtection()
+        currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
@@ -1029,6 +1034,14 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
+}
+
+extension MainViewController: LocalNotificationsLogicDelegate {
+    
+    func displayHomeHowInstructions(for: LocalNotificationsLogic) {
+        clearNavigationStack()
+        launchInstructions()
+    }
 }
 
 // swiftlint:enable file_length

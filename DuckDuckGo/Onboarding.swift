@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import UserNotifications
 
 protocol Onboarding {
     
@@ -32,8 +33,8 @@ protocol OnboardingContent {
     var canContinue: Bool { get }
     var delegate: OnboardingContentDelegate? { get set }
 
-    func onContinuePressed()
-    
+    func onContinuePressed(navigationHandler: @escaping () -> Void)
+    func onSkipPressed(navigationHandler: @escaping () -> Void)
 }
 
 protocol OnboardingDelegate: NSObjectProtocol {
@@ -57,7 +58,19 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
         return title
     }
     
-    func onContinuePressed() {
+    var continueButtonTitle: String {
+        return UserText.onboardingContinue
+    }
+    var skipButtonTitle: String {
+        return UserText.onboardingSkip
+    }
+    
+    func onContinuePressed(navigationHandler: @escaping () -> Void) {
+        navigationHandler()
+    }
+    
+    func onSkipPressed(navigationHandler: @escaping () -> Void) {
+        navigationHandler()
     }
     
 }
@@ -77,22 +90,10 @@ extension MainViewController {
         // Only show tips if the user is a new one, ie they've not seen onboarding yet
         DefaultContextualTipsStorage().isEnabled = true
         
-        let onboardingFlow: String
-        let modalTransitionStyle: UIModalTransitionStyle
-        
-        modalTransitionStyle = .coverVertical
-        onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
-        
-        guard let controller = UIStoryboard(name: onboardingFlow, bundle: nil).instantiateInitialViewController() else {
-            fatalError("instantiateInitialViewController for \(onboardingFlow)")
-        }
+        let onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
 
-        if var onboarding = controller as? Onboarding {
-            onboarding.delegate = self
-        }
-        
-        controller.modalTransitionStyle = modalTransitionStyle
-        present(controller, animated: true)
+        performSegue(withIdentifier: onboardingFlow, sender: self)
+
         homeController?.resetHomeRowCTAAnimations()
     }
     

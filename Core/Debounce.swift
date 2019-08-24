@@ -1,5 +1,5 @@
 //
-//  CustomizedNavigationController.swift
+//  Debounce.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -16,12 +16,24 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-import UIKit
 
-class ThemableNavigationController: UINavigationController {
+import Foundation
+
+public class Debounce {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ThemeManager.shared.currentTheme.statusBarStyle
+    private let queue: DispatchQueue
+    private let interval: TimeInterval
+    
+    private var currentWorkItem = DispatchWorkItem(block: {})
+    
+    public init(queue: DispatchQueue, seconds: TimeInterval) {
+        self.queue = queue
+        self.interval = seconds
     }
-
+    
+    public func schedule(_ block: @escaping (() -> Void)) {
+        currentWorkItem.cancel()
+        currentWorkItem = DispatchWorkItem(block: { block() })
+        queue.asyncAfter(deadline: .now() + interval, execute: currentWorkItem)
+    }
 }

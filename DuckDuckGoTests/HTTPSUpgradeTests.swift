@@ -108,6 +108,23 @@ class HTTPSUpgradeTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
+    func testWhenURLIsHttpAndCannotBeUpgradedLocallyAndServiceRequestFailsThenShouldUpgradeIsFalse() {
+        let expect = expectation(description: "When service request fails http url should not be upgraded")
+        let url = URL(string: "http://service.url")!
+        stub(condition: isHost(host)) { _ in
+            return OHHTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
+        }
+        
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
+        testee.isUgradeable(url: url) { result in
+            XCTAssertFalse(result)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+        
     func testWhenBloomFilterIsNotLoadedAndUrlIsInServiceListThenShouldUpgradeIsTrue() {
         let expect = expectation(description: "Http url in service list should upgrade")
         let url = URL(string: "http://service.url")!

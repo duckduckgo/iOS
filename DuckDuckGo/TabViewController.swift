@@ -984,14 +984,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload(scripts: false)
         }
     }
-    
-}
-
-extension URL {
-    func toHttps() -> URL? {
-        let urlString = absoluteString
-        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
-    }
 }
 
 // swiftlint:enable file_length

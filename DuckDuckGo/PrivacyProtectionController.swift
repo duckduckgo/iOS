@@ -78,10 +78,24 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        viewController.title = siteRating?.domain
+        
+        if viewControllers.isEmpty {
+            viewController.title = siteRating?.domain
+        } else {
+            topViewController?.title = " "
+        }
+        
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         viewController.navigationItem.rightBarButtonItem = doneButton
         super.pushViewController(viewController, animated: animated)
+    }
+    
+    override func popViewController(animated: Bool) -> UIViewController? {
+        let controller = super.popViewController(animated: animated)
+        if viewControllers.count == 1 {
+            viewControllers[0].title = siteRating?.domain
+        }
+        return controller
     }
 
     func updateSiteRating(_ siteRating: SiteRating?) {

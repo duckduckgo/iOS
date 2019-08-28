@@ -36,9 +36,7 @@ extension Data {
         var hash = [UInt8](repeating: 0, count: Int(length))
         let dataBytes = [UInt8](self)
         _ = algorithm(dataBytes, CC_LONG(self.count), &hash)
-        let output = NSMutableString(capacity: Int(length))
-        hash.forEach { byte in output.appendFormat("%02x", byte) }
-        return output as String
+        return hash.map { String(format: "%02x", $0) }.joined()
     }
 }
 

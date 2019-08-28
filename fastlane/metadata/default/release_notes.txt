@@ -1,1 +1,2 @@
+• We added support for Basic Authentication so you can login to more websites.
 • Bug fixes and other improvements.

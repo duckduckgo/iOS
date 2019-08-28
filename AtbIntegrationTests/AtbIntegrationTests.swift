@@ -233,7 +233,7 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        waitForButtonThenTap("SKIP")
+        waitForButtonThenTap("Skip")
         waitForButtonThenTap("Continue")
     }
     

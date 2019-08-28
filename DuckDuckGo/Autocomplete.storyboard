@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HV3-WA-HxT">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HV3-WA-HxT">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -27,7 +25,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3mS-sG-8Ub">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -36,18 +34,14 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TNN-hI-k2q" id="QaM-hM-0gl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="45.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="Dnd-CT-WA4">
-                                                    <rect key="frame" x="15" y="14" width="18" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="T5P-xd-wAf"/>
-                                                        <constraint firstAttribute="width" constant="18" id="xdy-eo-Oax"/>
-                                                    </constraints>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="Dnd-CT-WA4">
+                                                    <rect key="frame" x="16" y="11" width="24" height="24"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ag-a1-mlA">
-                                                    <rect key="frame" x="49" y="15" width="272" height="16"/>
+                                                    <rect key="frame" x="48" y="15" width="273" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -58,7 +52,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="fBV-vf-OLd"/>
                                                         <constraint firstAttribute="width" constant="30" id="wRc-fh-LDz"/>
                                                     </constraints>
-                                                    <state key="normal" image="Add"/>
+                                                    <state key="normal" image="AutoComplete"/>
                                                     <connections>
                                                         <action selector="onPlusButtonPressed:" destination="HV3-WA-HxT" eventType="touchUpInside" id="MC2-dB-gjU"/>
                                                     </connections>
@@ -66,11 +60,11 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="leading" secondItem="Dnd-CT-WA4" secondAttribute="trailing" constant="16" id="3Jc-Oq-nOu"/>
+                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="leading" secondItem="Dnd-CT-WA4" secondAttribute="trailing" constant="8" id="3Jc-Oq-nOu"/>
                                                 <constraint firstItem="5ag-a1-mlA" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="6Nb-BF-Gki"/>
                                                 <constraint firstItem="N97-eI-Lps" firstAttribute="leading" secondItem="5ag-a1-mlA" secondAttribute="trailing" constant="12" id="QLj-tb-zce"/>
                                                 <constraint firstItem="Dnd-CT-WA4" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="V9w-6x-WUQ"/>
-                                                <constraint firstItem="Dnd-CT-WA4" firstAttribute="leading" secondItem="QaM-hM-0gl" secondAttribute="leading" constant="15" id="emv-yc-ymv"/>
+                                                <constraint firstItem="Dnd-CT-WA4" firstAttribute="leading" secondItem="QaM-hM-0gl" secondAttribute="leading" constant="16" id="emv-yc-ymv"/>
                                                 <constraint firstAttribute="trailing" secondItem="N97-eI-Lps" secondAttribute="trailing" constant="12" id="hm0-kg-rcx"/>
                                                 <constraint firstItem="N97-eI-Lps" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="zf3-hI-TKf"/>
                                             </constraints>
@@ -87,7 +81,7 @@
                                         <rect key="frame" x="0.0" y="74" width="375" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O6P-GP-haK" id="snf-ah-e6i">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="45.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Suggestions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPe-Cv-14j">
@@ -143,7 +137,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add" width="24" height="24"/>
-        <image name="SearchLoupe" width="24" height="24"/>
+        <image name="AutoComplete" width="24" height="24"/>
+        <image name="SuggestLoupe" width="24" height="24"/>
     </resources>
 </document>

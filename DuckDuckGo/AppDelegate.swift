@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import EasyTipView
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -76,6 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if appIsLaunching {
             appIsLaunching = false
             onApplicationLaunch(application)
+            LocalNotificationsLogic().didEnterApplication()
         }
     }
     
@@ -96,13 +98,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             removeOverlay()
         }
-        autoClear?.applicationWillMoveToForeground()
         
+        LocalNotificationsLogic().didEnterApplication()
+        autoClear?.applicationWillMoveToForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayOverlay()
+        LocalNotificationsLogic().willLeaveApplication()
         autoClear?.applicationDidEnterBackground()
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        LocalNotificationsLogic().willLeaveApplication()
     }
 
     func application(_ application: UIApplication,

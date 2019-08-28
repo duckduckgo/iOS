@@ -31,7 +31,9 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    
+    case privacyDashboardToggleProtectionOn = "mp_ta"
+    case privacyDashboardToggleProtectionOff = "mp_tb"
+
     case longPressMenuOpened = "mlp"
     case longPressMenuNewBackgroundTabItem = "mlp_b"
     case longPressMenuNewTabItem = "mlp_t"
@@ -131,6 +133,13 @@ public enum PixelName: String {
     case feedbackNegativePerformanceCrash = "mfbs_negative_performance_crash"
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
+    
+    case notificationOptIn = "m_ne"
+    case notificationOptOut = "m_nd"
+    case privacyNotificationFired = "m_nfi"
+    case homeRowNotificationFired = "m_nfii"
+    case privacyNotificationOpened = "m_noi"
+    case homeRowNotificationOpened = "m_noii"
     
     case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"

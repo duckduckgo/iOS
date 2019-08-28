@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3n-LI-9p5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3n-LI-9p5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,14 +23,14 @@
             <objects>
                 <viewController id="F3n-LI-9p5" customClass="PrivacyProtectionFooterController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7wS-3y-DDY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="248"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hd5-yh-lIG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Djl-H1-Nxl">
-                                        <rect key="frame" x="20" y="13" width="288" height="31"/>
+                                        <rect key="frame" x="20" y="12.5" width="288" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5v-ss-qJ7">
                                                 <rect key="frame" x="0.0" y="0.0" width="239" height="31"/>
@@ -59,16 +58,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jR-2G-yON">
-                                <rect key="frame" x="0.0" y="56" width="320" height="144"/>
+                                <rect key="frame" x="0.0" y="56" width="320" height="192"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHX-zw-YEZ" customClass="TrackerNetworkLeaderboardView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="-0.5" y="0.0" width="320" height="144"/>
+                                        <rect key="frame" x="0.0" y="48" width="320" height="144"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLL-zs-goU">
-                                                <rect key="frame" x="0.0" y="22" width="320" height="100"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rO0-0v-ngG">
-                                                        <rect key="frame" x="38" y="50" width="244" height="28"/>
+                                                        <rect key="frame" x="38" y="52" width="244" height="28"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-FS-KoR" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="76" height="28"/>
@@ -82,7 +81,7 @@
                                                                         <rect key="frame" x="9" y="8" width="13" height="13"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZN-i4-VWw">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="AZN-i4-VWw">
                                                                         <rect key="frame" x="33" y="4" width="36" height="21"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <attributedString key="attributedText">
@@ -90,7 +89,7 @@
                                                                                 <attributes>
                                                                                     <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <font key="NSFont" size="16" name="ProximaNova-Bold"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                                 </attributes>
                                                                             </fragment>
                                                                         </attributedString>
@@ -119,7 +118,7 @@
                                                                         <rect key="frame" x="9" y="8" width="13" height="13"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNX-cn-hfq">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="UNX-cn-hfq">
                                                                         <rect key="frame" x="33" y="4" width="36" height="21"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <attributedString key="attributedText">
@@ -127,7 +126,7 @@
                                                                                 <attributes>
                                                                                     <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <font key="NSFont" size="16" name="ProximaNova-Bold"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                                 </attributes>
                                                                             </fragment>
                                                                         </attributedString>
@@ -156,7 +155,7 @@
                                                                         <rect key="frame" x="9" y="8" width="13" height="13"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCL-fQ-ISt">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="QCL-fQ-ISt">
                                                                         <rect key="frame" x="33" y="4" width="36" height="21"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <attributedString key="attributedText">
@@ -164,7 +163,7 @@
                                                                                 <attributes>
                                                                                     <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <font key="NSFont" size="16" name="ProximaNova-Bold"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                                 </attributes>
                                                                             </fragment>
                                                                         </attributedString>
@@ -184,13 +183,13 @@
                                                         </subviews>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AA-Ma-AG6">
-                                                        <rect key="frame" x="0.0" y="20" width="320" height="12"/>
+                                                        <rect key="frame" x="0.0" y="20" width="320" height="14"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                         <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="5NM-vg-MQe">
-                                                        <rect key="frame" x="290" y="42" width="10" height="16"/>
+                                                        <rect key="frame" x="284" y="42" width="16" height="16"/>
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
@@ -209,19 +208,19 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Leaderboard No Stats" translatesAutoresizingMaskIntoConstraints="NO" id="gPE-Br-bJP">
-                                                        <rect key="frame" x="111" y="8" width="98" height="48"/>
+                                                        <rect key="frame" x="152" y="8" width="16" height="48"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="LPU-2C-SJH"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHx-Qp-lvj">
-                                                        <rect key="frame" x="0.0" y="72" width="320" height="12"/>
+                                                        <rect key="frame" x="0.0" y="72" width="320" height="14"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                         <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqv-VR-7we">
-                                                        <rect key="frame" x="0.0" y="92" width="320" height="36"/>
+                                                        <rect key="frame" x="0.0" y="94" width="320" height="42"/>
                                                         <attributedString key="attributedText">
                                                             <fragment>
                                                                 <string key="content">We're still collecting data to show how
@@ -259,7 +258,7 @@ many trackers we've blocked.</string>
                                             <constraint firstItem="frY-3a-m4a" firstAttribute="centerY" secondItem="fnJ-7J-vsv" secondAttribute="centerY" id="9T2-sc-lAH"/>
                                             <constraint firstItem="frY-3a-m4a" firstAttribute="width" secondItem="VHX-zw-YEZ" secondAttribute="width" id="A65-Lt-jq1"/>
                                             <constraint firstAttribute="height" constant="144" id="CNL-RI-itC"/>
-                                            <constraint firstItem="SLL-zs-goU" firstAttribute="centerY" secondItem="fnJ-7J-vsv" secondAttribute="centerY" id="gAN-rS-InP"/>
+                                            <constraint firstItem="SLL-zs-goU" firstAttribute="top" secondItem="fnJ-7J-vsv" secondAttribute="top" id="IOq-Wf-VfP"/>
                                             <constraint firstItem="frY-3a-m4a" firstAttribute="centerX" secondItem="fnJ-7J-vsv" secondAttribute="centerX" id="k89-MR-pyW"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="fnJ-7J-vsv"/>
@@ -273,7 +272,9 @@ many trackers we've blocked.</string>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="centerY" secondItem="4jR-2G-yON" secondAttribute="centerY" id="jSP-lB-dJb"/>
+                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="top" secondItem="4jR-2G-yON" secondAttribute="top" priority="750" constant="48" id="cuJ-uw-O3f">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="VHX-zw-YEZ" firstAttribute="width" secondItem="4jR-2G-yON" secondAttribute="width" id="uWy-k1-zGw"/>
                                     <constraint firstItem="VHX-zw-YEZ" firstAttribute="centerX" secondItem="4jR-2G-yON" secondAttribute="centerX" id="wgw-Qg-abz"/>
                                 </constraints>
@@ -290,7 +291,7 @@ many trackers we've blocked.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ile-lz-9ig"/>
                     </view>
-                    <size key="freeformSize" width="320" height="200"/>
+                    <size key="freeformSize" width="320" height="248"/>
                     <connections>
                         <outlet property="leaderboard" destination="VHX-zw-YEZ" id="8dT-TJ-jRf"/>
                         <outlet property="privacyProtectionSwitch" destination="K5G-OG-RJ7" id="7vq-r7-p9M"/>

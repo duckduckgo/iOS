@@ -382,7 +382,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
 
-            controller.delegate = self
+            controller.privacyProtectionDelegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.omniBarText = chromeDelegate.omniBar.textField.text
@@ -428,13 +428,9 @@ class TabViewController: UIViewController {
         chromeDelegate?.setBarsHidden(false, animated: animated)
     }
 
-    func showPrivacyProtection() {
+    func showPrivacyDashboard() {
         Pixel.fire(pixel: .privacyDashboardOpened)
-        if UIUserInterfaceIdiom.pad == UIDevice.current.userInterfaceIdiom {
-            performSegue(withIdentifier: "PrivacyProtectionTablet", sender: self)
-        } else {
-            performSegue(withIdentifier: "PrivacyProtection", sender: self)
-        }
+        performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
 
     private func resetSiteRating() {
@@ -662,7 +658,7 @@ extension TabViewController: WKScriptMessageHandler {
             return
         }
 
-        let url = URL(string: urlString)
+        let url = URL(string: urlString.trimWhitespace())
         var networkName: String?
         var category: String?
         if let domain = url?.host {
@@ -696,10 +692,27 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
+            performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
+        } else {
+            completionHandler(.performDefaultHandling, nil)
+            guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
+            ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
+        }
+    }
+    
+    func performBascHTTPAuthentication(protectionSpace: URLProtectionSpace,
+                                       completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let isHttps = protectionSpace.protocol == "https"
+        let alert = BasicAuthenticationAlert(host: protectionSpace.host,
+                                             isEncrypted: isHttps,
+                                             logInCompletion: { (login, password) in
+            completionHandler(.useCredential, URLCredential(user: login, password: password, persistence: .forSession))
+        }, cancelCompletion: {
+            completionHandler(.rejectProtectionSpace, nil)
+        })
         
-        completionHandler(.performDefaultHandling, nil)
-        guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
-        ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
+        present(alert, animated: true)
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {

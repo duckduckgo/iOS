@@ -149,8 +149,8 @@ public enum PixelName: String {
 }
 
 public struct PixelParameters {
-    static let url = "url"
-    static let duration = "dur"
+    public static let url = "url"
+    public static let duration = "dur"
     static let test = "test"
 }
 

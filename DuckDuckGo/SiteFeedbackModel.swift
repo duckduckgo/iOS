@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 struct SiteFeedbackModel {
 
@@ -44,7 +45,7 @@ struct SiteFeedbackModel {
 
     public func submit() {
         guard canSubmit() else { return }
-
+        Pixel.fire(pixel: .brokenSiteReported, withAdditionalParameters: [PixelParameters.url: url!])
         feedbackSender.submitBrokenSite(url: url!, message: message!)
     }
 }

@@ -145,6 +145,17 @@ public enum PixelName: String {
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
     
     case configurationFetchInfo = "m_d_cfgfetch"
+    case brokenSiteReported = "m_bsr"
+}
+
+public struct PixelParameters {
+    public static let url = "url"
+    public static let duration = "dur"
+    static let test = "test"
+}
+
+public struct PixelValues {
+    static let test = "1"
 }
 
 public class Pixel {
@@ -167,7 +178,7 @@ public class Pixel {
         
         var newParams = params
         if isDebugBuild {
-            newParams["test"] = "1"
+            newParams[PixelParameters.test] = PixelValues.test
         }
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
@@ -195,7 +206,7 @@ public class TimedPixel {
     
     public func fire(_ fireDate: Date = Date()) {
         let duration = String(fireDate.timeIntervalSince(date))
-        Pixel.fire(pixel: pixel, withAdditionalParameters: ["dur": duration])
+        Pixel.fire(pixel: pixel, withAdditionalParameters: [PixelParameters.duration: duration])
     }
     
 }

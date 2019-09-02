@@ -92,6 +92,7 @@ public class HTTPSUpgrade {
         let partialSha1Host = String(sha1Host.prefix(4))
         var serviceRequest = URLRequest(url: appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host))
         serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        serviceRequest.timeoutInterval = 10
 
         let cachedResponse = URLCache.shared.cachedResponse(for: serviceRequest)?.response as? HTTPURLResponse
         Alamofire.request(serviceRequest).validate(statusCode: 200..<300).response { response in

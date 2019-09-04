@@ -1,5 +1,5 @@
 //
-//  WKWebViewExtensionTests.swift
+//  WKWebViewConfigurationExtensionTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,18 +20,31 @@
 import XCTest
 import WebKit
 
-class WKWebViewExtensionTests: XCTestCase {
-
+class WKWebViewConfigurationExtensionTests: XCTestCase {
+    
     func testWhenWebViewCreatedWithNonPersistenceThenDataStoreIsNonPersistent() {
         let configuration = WKWebViewConfiguration.nonPersistent()
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
         XCTAssertFalse(webView.configuration.websiteDataStore.isPersistent)
     }
-
+    
     func testWhenWebViewCreatedWithPersistenceThenDataStoreIsPersistent() {
         let configuration = WKWebViewConfiguration.persistent()
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
         XCTAssertTrue(webView.configuration.websiteDataStore.isPersistent)
     }
-
+    
+    func testWhenDddgNameForUserAgentRequestedThenNameAndVersionAreCorrect() {
+        XCTAssertEqual("DuckDuckGo/7", WKWebViewConfiguration.ddgNameForUserAgent)
+    }
+    
+    func testWhenPersistantConfigurationCreatedThenApplicationForUserAgentIsSet() {
+        let configuration = WKWebViewConfiguration.persistent()
+        XCTAssertTrue(configuration.applicationNameForUserAgent?.hasSuffix("DuckDuckGo/7") ?? false)
+    }
+    
+    func testWhenNonPersistantConfigurationCreatedThenApplicationForUserAgentIsSet() {
+        let configuration = WKWebViewConfiguration.nonPersistent()
+        XCTAssertTrue(configuration.applicationNameForUserAgent?.hasSuffix("DuckDuckGo/7") ?? false)
+    }
 }

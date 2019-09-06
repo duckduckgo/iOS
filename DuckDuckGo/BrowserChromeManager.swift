@@ -100,7 +100,6 @@ private class BarsAnimator {
                 delegate?.setBarsVisibility(1.0 - ratio, animated: false)
                 transitionProgress = ratio
             }
-            // if offset is 0 - reveal
         }
     }
     
@@ -149,8 +148,6 @@ private class BarsAnimator {
 protocol BrowserChromeDelegate: class {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool)
-    
-    // Nav search home renderer
     func setNavigationBarHidden(_ hidden: Bool)
     
     func setBarsVisibility(_ percent: CGFloat, animated: Bool)

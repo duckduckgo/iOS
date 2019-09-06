@@ -33,11 +33,10 @@ class BarsAnimator {
     
     var transitionStartPosY: CGFloat = 0
     
-    
     enum State: String {
         case revealed
         case transitioning
-//        case transitioned
+        //        case transitioned
         case hidden
     }
     
@@ -53,23 +52,27 @@ class BarsAnimator {
         
         let normalizedDistance = max(cumulativeDistance, 0)
         
-//        print("-> ratio: \(min(normalizedDistance / barsHeight, 1.0))")
+        //                print("-> ratio: \(min(normalizedDistance / barsHeight, 1.0))")
         return min(normalizedDistance / barsHeight, 1.0)
     }
     
     func didScroll(in scrollView: UIScrollView) {
         
-//        print("-----")
-//        print("-> state: \(barsState.rawValue)")
-//        print("-> progress: \(transitionProgress)")
-//        print("-> startPos Drag: \(draggingStartPosY)")
-//        print("-> startPos Trans: \(transitionStartPosY)")
-//        print("-> offset: \(scrollView.contentOffset.y)")
+        //                print("-----")
+        //                print("-> state: \(barsState.rawValue)")
+        //                print("-> progress: \(transitionProgress)")
+        //                print("-> startPos Drag: \(draggingStartPosY)")
+        //                print("-> startPos Trans: \(transitionStartPosY)")
+        //                print("-> offset: \(scrollView.contentOffset.y)")
         
         switch barsState {
         case .revealed:
             if scrollView.contentOffset.y > draggingStartPosY {
-                transitionStartPosY = draggingStartPosY
+                if draggingStartPosY < 0, scrollView.contentOffset.y <= 0 {
+                    break
+                }
+                
+                transitionStartPosY = draggingStartPosY < 0 ? 0 : draggingStartPosY
                 barsState = .transitioning
                 
                 let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
@@ -77,7 +80,7 @@ class BarsAnimator {
                 transitionProgress = ratio
                 
                 var offset = scrollView.contentOffset
-                offset.y = draggingStartPosY
+                offset.y = transitionStartPosY
                 scrollView.contentOffset = offset
             }
             
@@ -88,6 +91,8 @@ class BarsAnimator {
                 barsState = .hidden
             } else if ratio == 0 {
                 barsState = .revealed
+            } else if transitionProgress == ratio {
+                return
             }
             
             delegate?.setBarsVisibility(1.0 - ratio, animated: false)
@@ -96,16 +101,6 @@ class BarsAnimator {
             var offset = scrollView.contentOffset
             offset.y = transitionStartPosY
             scrollView.contentOffset = offset
-            
-//        case .transitioned:
-//            abort()
-//            if scrollView.contentOffset.y < transitionStartPosY {
-//                barsState = .transitioning
-//
-//                let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
-//                delegate?.setBarsVisibility(1.0 - ratio, animated: false)
-//                transitionProgress = ratio
-//            }
             
         case .hidden:
             if scrollView.contentOffset.y < 0 {
@@ -118,8 +113,6 @@ class BarsAnimator {
             }
             // if offset is 0 - reveal
         }
-        
-//        print("-----")
     }
     
     func didFinishScrolling(velocity: CGFloat) {
@@ -140,8 +133,6 @@ class BarsAnimator {
         switch barsState {
         case .revealed, .hidden:
             break
-//        case .transitioned:
-//            barsState = .hidden
         case .transitioning:
             
             //todo: animate to revealed/hidden
@@ -159,7 +150,6 @@ class BarsAnimator {
         }
     }
 }
-
 protocol BrowserChromeDelegate: class {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool)

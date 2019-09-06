@@ -37,7 +37,7 @@ class SettingsViewController: UITableViewController {
     
     weak var homePageSettingsDelegate: HomePageSettingsDelegate?
 
-    private lazy var versionProvider: AppVersion = AppVersion()
+    private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager

@@ -69,6 +69,13 @@ public struct UserText {
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
+    
+    public static let authAlertTitle = NSLocalizedString("auth.alert.title", comment: "Authentication Alert Title")
+    public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", comment: "Authentication Alert Encrypted Connection Message")
+    public static let authAlertPlainConnectionMessage = NSLocalizedString("auth.alert.message.plain", comment: "Authentication Alert Plain Connection Message")
+    public static let authAlertUsernamePlaceholder = NSLocalizedString("auth.alert.username.placeholder", comment: "Authentication User name Placeholder")
+    public static let authAlertPasswordPlaceholder = NSLocalizedString("auth.alert.password.placeholder", comment: "Authentication Password Placeholder")
+    public static let authAlertLogInButtonTitle = NSLocalizedString("auth.alert.login.button", comment: "Authentication Alert Log In Button")
 
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
 
@@ -161,7 +168,7 @@ public struct UserText {
     public static let emptyFavorites = NSLocalizedString("empty.favorites", comment: "No favorites")
 
     public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", comment: "Bookmark Title Placeholder")
-    public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", comment: "Bookmark Title Placeholder")
+    public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", comment: "Bookmark Address Placeholder")
 
     public static let findInPage = NSLocalizedString("findinpage.title", comment: "Find in Page")
     public static let findInPageCount = NSLocalizedString("findinpage.count", comment: "%d of %d")
@@ -221,7 +228,9 @@ public struct UserText {
     public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
     public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
 
-    public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue button")
+    public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue")
+    public static let onboardingSkip = NSLocalizedString("onboardingSkip", comment: "Skip")
     public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")
-
+    public static let onboardingNotificationsAccept = NSLocalizedString("onboardingNotificationsAccept", comment: "Turn on Notifications")
+    public static let onboardingNotificationsDeny = NSLocalizedString("onboardingNotificationsDeny", comment: "Not now")
 }

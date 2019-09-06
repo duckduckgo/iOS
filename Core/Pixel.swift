@@ -31,7 +31,9 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    
+    case privacyDashboardToggleProtectionOn = "mp_ta"
+    case privacyDashboardToggleProtectionOff = "mp_tb"
+
     case longPressMenuOpened = "mlp"
     case longPressMenuNewBackgroundTabItem = "mlp_b"
     case longPressMenuNewTabItem = "mlp_t"
@@ -132,10 +134,28 @@ public enum PixelName: String {
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
+    case notificationOptIn = "m_ne"
+    case notificationOptOut = "m_nd"
+    case privacyNotificationFired = "m_nfi"
+    case homeRowNotificationFired = "m_nfii"
+    case privacyNotificationOpened = "m_noi"
+    case homeRowNotificationOpened = "m_noii"
+    
     case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
     
     case configurationFetchInfo = "m_d_cfgfetch"
+    case brokenSiteReported = "m_bsr"
+}
+
+public struct PixelParameters {
+    public static let url = "url"
+    public static let duration = "dur"
+    static let test = "test"
+}
+
+public struct PixelValues {
+    static let test = "1"
 }
 
 public class Pixel {
@@ -158,7 +178,7 @@ public class Pixel {
         
         var newParams = params
         if isDebugBuild {
-            newParams["test"] = "1"
+            newParams[PixelParameters.test] = PixelValues.test
         }
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
@@ -186,7 +206,7 @@ public class TimedPixel {
     
     public func fire(_ fireDate: Date = Date()) {
         let duration = String(fireDate.timeIntervalSince(date))
-        Pixel.fire(pixel: pixel, withAdditionalParameters: ["dur": duration])
+        Pixel.fire(pixel: pixel, withAdditionalParameters: [PixelParameters.duration: duration])
     }
     
 }

@@ -21,8 +21,14 @@ import UIKit
 import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
-
-    var controllerNames = ["onboardingThemes", "onboardingSummary"]
+    
+    var controllerNames: [String] = {
+        if DefaultVariantManager().isSupported(feature: .notificationsOnboarding) {
+            return ["onboardingThemes", "onboardingNotifications", "onboardingSummary"]
+        } else {
+            return ["onboardingThemes", "onboardingSummary"]
+        }
+    }()
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
@@ -39,7 +45,6 @@ class OnboardingViewController: UIViewController, Onboarding {
         super.viewDidLoad()
         Pixel.fire(pixel: .onboardingShown)
         loadInitialContent()
-        prepareForNextScreen()
         updateForSmallerScreens()
     }
     
@@ -53,6 +58,8 @@ class OnboardingViewController: UIViewController, Onboarding {
         contentContainer.addSubview(controller.view)
         addChild(controller)
         controller.didMove(toParent: self)
+        
+        prepareFor(nextScreen: controller)
     }
     
     private func updateForSmallerScreens() {
@@ -76,22 +83,22 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     @IBAction func next(sender: UIButton) {
         
-        if let name = controllerNames.first,
-            let oldController = contentController,
-            let newController = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
-
-            transition(from: oldController, to: newController)
-            
-        } else {
-            
-            done()
-            
+        let navigationHandler = {
+            if let name = self.controllerNames.first,
+                let oldController = self.contentController,
+                let newController = self.storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
+                
+                self.transition(from: oldController, to: newController)
+            } else {
+                self.done()
+            }
         }
 
         if sender == continueButton {
-            contentController?.onContinuePressed()
+            contentController?.onContinuePressed(navigationHandler: navigationHandler)
+        } else {
+            contentController?.onSkipPressed(navigationHandler: navigationHandler)
         }
-        
     }
     
     private func transition(from oldController: OnboardingContentViewController, to newController: OnboardingContentViewController) {
@@ -118,7 +125,7 @@ class OnboardingViewController: UIViewController, Onboarding {
             
         })
         
-        prepareForNextScreen()
+        prepareFor(nextScreen: newController)
     }
     
     private func animateInSubtitle() {
@@ -127,14 +134,18 @@ class OnboardingViewController: UIViewController, Onboarding {
         }
     }
     
-    private func prepareForNextScreen() {
+    private func prepareFor(nextScreen: OnboardingContentViewController) {
         controllerNames = [String](controllerNames.dropFirst())
-        skipButton.isHidden = controllerNames.isEmpty
         
-        let title = controllerNames.isEmpty ? UserText.onboardingStartBrowsing : UserText.onboardingContinue
-        continueButton.setTitle(title, for: .normal)
-        continueButton.setTitle(title, for: .disabled)
-        continueButton.isEnabled = contentController?.canContinue ?? true
+        let continueButtonTitle = nextScreen.continueButtonTitle
+        continueButton.setTitle(continueButtonTitle, for: .normal)
+        continueButton.setTitle(continueButtonTitle, for: .disabled)
+        continueButton.isEnabled = nextScreen.canContinue
+        
+        let skipButtonTitle = nextScreen.skipButtonTitle
+        skipButton.setTitle(skipButtonTitle, for: .normal)
+        skipButton.setTitle(skipButtonTitle, for: .disabled)
+        skipButton.isHidden = controllerNames.isEmpty
     }
     
     func done() {

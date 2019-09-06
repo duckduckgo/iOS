@@ -884,6 +884,11 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if shouldLoad(url: url, forDocument: documentUrl) {
+            if navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
+                // Handle <a href target="_blank">
+                delegate?.tab(self, didRequestNewTabForUrl: url)
+                return .cancel
+            }
             return .allow
         }
         

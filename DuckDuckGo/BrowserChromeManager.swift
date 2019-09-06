@@ -19,14 +19,11 @@
 
 import UIKit
 
-class BarsAnimator {
+private class BarsAnimator {
     
     weak var delegate: BrowserChromeDelegate?
     
-    private var barsState: State = .revealed
-    
-    //private var cumulativeDistance: CGFloat = 0.0
-    
+    private(set) var barsState: State = .revealed
     private var transitionProgress: CGFloat = 0.0
     
     var draggingStartPosY: CGFloat = 0
@@ -36,7 +33,6 @@ class BarsAnimator {
     enum State: String {
         case revealed
         case transitioning
-        //        case transitioned
         case hidden
     }
     
@@ -49,25 +45,17 @@ class BarsAnimator {
         let barsHeight = delegate?.barsMaxHeight ?? CGFloat.infinity
         
         let cumulativeDistance = (barsHeight * transitionProgress) + distance
-        
         let normalizedDistance = max(cumulativeDistance, 0)
         
-        //                print("-> ratio: \(min(normalizedDistance / barsHeight, 1.0))")
         return min(normalizedDistance / barsHeight, 1.0)
     }
     
     func didScroll(in scrollView: UIScrollView) {
-        
-        //                print("-----")
-        //                print("-> state: \(barsState.rawValue)")
-        //                print("-> progress: \(transitionProgress)")
-        //                print("-> startPos Drag: \(draggingStartPosY)")
-        //                print("-> startPos Trans: \(transitionStartPosY)")
-        //                print("-> offset: \(scrollView.contentOffset.y)")
-        
+
         switch barsState {
         case .revealed:
             if scrollView.contentOffset.y > draggingStartPosY {
+                // In case view has been "caught" in the middle of the animation above the (0.0, 0.0) offset, wait till user scrolls to the top before animating any transition.
                 if draggingStartPosY < 0, scrollView.contentOffset.y <= 0 {
                     break
                 }
@@ -117,37 +105,44 @@ class BarsAnimator {
     
     func didFinishScrolling(velocity: CGFloat) {
         guard velocity >= 0 else {
-            barsState = .revealed
-            transitionProgress = 0
-            delegate?.setBarsVisibility(1, animated: true)
+            revealBars(animated: true)
             return
         }
         
         guard velocity == 0 else {
-            barsState = .hidden
-            transitionProgress = 1
-            delegate?.setBarsVisibility(0, animated: true)
+            hideBars(animated: true)
             return
         }
         
         switch barsState {
         case .revealed, .hidden:
             break
-        case .transitioning:
             
-            //todo: animate to revealed/hidden
+        case .transitioning:
             if transitionProgress > 0.5 && transitionProgress < 1.0 {
-                barsState = .hidden
-                transitionProgress = 1.0
-                
-                delegate?.setBarsVisibility(0, animated: true)
+                hideBars(animated: true)
             } else if transitionProgress > 0 && transitionProgress  <= 0.5 {
-                barsState = .revealed
-                transitionProgress = 0
-                
-                delegate?.setBarsVisibility(1, animated: true)
+                revealBars(animated: true)
             }
         }
+    }
+    
+    func revealBars(animated: Bool) {
+        guard barsState != .revealed else { return }
+        
+        barsState = .revealed
+        transitionProgress = 0
+        
+        delegate?.setBarsVisibility(1, animated: animated)
+    }
+    
+    func hideBars(animated: Bool) {
+        guard barsState != .hidden else { return }
+        
+        barsState = .hidden
+        transitionProgress = 1.0
+        
+        delegate?.setBarsVisibility(0, animated: animated)
     }
 }
 protocol BrowserChromeDelegate: class {
@@ -178,19 +173,13 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         }
     }
     
-    let animator = BarsAnimator()
+    private let animator = BarsAnimator()
 
-    var hidden = false
-    var dragging = false
-    
-    //var draggingStartPosY: CGFloat = 0
-    
-    var currentOffset: CGFloat = 0
-    
-    var startZoomScale: CGFloat = 0
+    private var dragging = false
+    private var startZoomScale: CGFloat = 0
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !scrollView.isZooming else { return } //
+        guard !scrollView.isZooming else { return }
         
         guard dragging else { return }
         guard canHideBars(for: scrollView) else { return }
@@ -206,11 +195,10 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         guard !scrollView.isZoomBouncing else { return }
         
         if scrollView.fullyZoomedOut {
-            updateBars(shouldHide: false)
+            animator.revealBars(animated: true)
         } else if abs(scrollView.zoomScale - startZoomScale) > Constants.zoomThreshold {
-            updateBars(shouldHide: true)
+            animator.hideBars(animated: true)
         }
-        
     }
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
@@ -229,25 +217,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         guard canHideBars(for: scrollView) else { return }
         
         animator.didFinishScrolling(velocity: velocity.y)
-        
-//        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
-//        let startedFromVeryBottom = abs(draggingStartPosY - scrollView.contentOffsetYAtBottom) < 1
-        
-//        if isInBottomBounceArea && startedFromVeryBottom {
-//            updateBars(shouldHide: false)
-//            // Fix for iPhone X issue: reaching bottom of the web page and then revealing
-//            // bars by executing "bottom bounce" gesture, caused web view to re layout and
-//            // cover bottom of the web page.
-//            DispatchQueue.main.async { [weak scrollView] in
-//                guard let scrollView = scrollView else { return }
-//                scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffsetYAtBottom),
-//                                            animated: true)
-//            }
-//        } else if velocity.y < 0 {
-//            updateBars(shouldHide: false)
-//        } else if velocity.y > 0 {
-//            updateBars(shouldHide: true)
-//        }
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -255,27 +224,22 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
 
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if hidden {
-            updateBars(shouldHide: false)
+        switch animator.barsState {
+        case .hidden:
+            animator.revealBars(animated: true)
             return false
+        default:
+            return true
         }
-
-        return true
     }
     
     /// Bars should not be hidden in case ScrollView content is smaller than viewport.
     private func canHideBars(for scrollView: UIScrollView) -> Bool {
-        return hidden || scrollView.bounds.height < scrollView.contentSize.height
-    }
-
-    private func updateBars(shouldHide: Bool) {
-        guard shouldHide != hidden else { return }
-        hidden = shouldHide
-        delegate?.setBarsHidden(shouldHide, animated: true)
+        return scrollView.bounds.height < scrollView.contentSize.height
     }
 
     func reset() {
-        updateBars(shouldHide: false)
+        animator.revealBars(animated: true)
     }
 }
 

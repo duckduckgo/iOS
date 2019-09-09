@@ -77,7 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if appIsLaunching {
             appIsLaunching = false
             onApplicationLaunch(application)
-            LocalNotificationsLogic().didEnterApplication()
         }
     }
     
@@ -99,18 +98,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             removeOverlay()
         }
         
-        LocalNotificationsLogic().didEnterApplication()
         autoClear?.applicationWillMoveToForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayOverlay()
-        LocalNotificationsLogic().willLeaveApplication()
         autoClear?.applicationDidEnterBackground()
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        LocalNotificationsLogic().willLeaveApplication()
     }
 
     func application(_ application: UIApplication,

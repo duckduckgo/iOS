@@ -108,8 +108,6 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
-        
-        LocalNotifications.shared.logic.delegate = self
     }
     
     private func registerForKeyboardNotifications() {
@@ -1034,14 +1032,6 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
-}
-
-extension MainViewController: LocalNotificationsLogicDelegate {
-    
-    func displayHomeHowInstructions(for: LocalNotificationsLogic) {
-        clearNavigationStack()
-        launchInstructions()
-    }
 }
 
 // swiftlint:enable file_length

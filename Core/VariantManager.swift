@@ -27,8 +27,6 @@ public enum FeatureName: String {
     case privacyOnHomeScreen
     
     case notificationsOnboarding
-    case dayZeroNotification
-    case dayOneNotification
 }
 
 public struct Variant {
@@ -37,8 +35,6 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         Variant(name: "mg", weight: 1, features: []),
-        Variant(name: "mt", weight: 1, features: [ .notificationsOnboarding, .dayZeroNotification, .dayOneNotification]),
-        Variant(name: "my", weight: 1, features: [ .notificationsOnboarding, .dayOneNotification ]),
         
         Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
     ]

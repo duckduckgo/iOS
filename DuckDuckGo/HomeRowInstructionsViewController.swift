@@ -50,7 +50,7 @@ class HomeRowInstructionsViewController: UIViewController {
     @IBAction func playVideo() {
         guard let player = player else { return }
         
-        if userInteracted == false {
+        if !userInteracted {
             userInteracted = true
             Pixel.fire(pixel: .homeRowInstructionsReplayed)
         }

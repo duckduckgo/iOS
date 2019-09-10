@@ -24,3 +24,13 @@ public let isDebugBuild = true
 #else
 public let isDebugBuild = false
 #endif
+
+struct Global {
+    public static let groupIdPrefix: String = {
+        let groupIdPrefixKey = "DuckDuckGoGroupIdentifierPrefix"
+        guard let groupIdPrefix = Bundle.main.object(forInfoDictionaryKey: groupIdPrefixKey) as? String else {
+            fatalError("Info.plist must contain a \"\(groupIdPrefixKey)\" entry with a string value")
+        }
+        return groupIdPrefix
+    }()
+}

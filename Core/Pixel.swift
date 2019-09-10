@@ -50,6 +50,7 @@ public enum PixelName: String {
     case settingsOpened = "ms"
     case settingsThemeToggledLight = "ms_tl"
     case settingsThemeToggledDark = "ms_td"
+    case settingsHomeRowInstructionsRequested = "ms_hr"
 
     case settingsHomePageShown = "ms_hp"
     case settingsHomePageSimple = "ms_hp_s"
@@ -99,6 +100,14 @@ public enum PixelName: String {
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
     case homeScreenPrivacyStatsTapped = "mh_ps"
+    
+    case homeRowCTAShowMeTapped = "m_ha"
+    case homeRowCTANoThanksTapped = "m_hb"
+    
+    case homeRowCTAReminderTapped = "m_hc"
+    case homeRowCTAReminderDismissed = "m_hd"
+    
+    case homeRowInstructionsReplayed = "m_hv"
     
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"

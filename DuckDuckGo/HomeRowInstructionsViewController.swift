@@ -19,6 +19,7 @@
 
 import UIKit
 import AVKit
+import Core
 
 class HomeRowInstructionsViewController: UIViewController {
 
@@ -33,6 +34,8 @@ class HomeRowInstructionsViewController: UIViewController {
 
     var layer: AVPlayerLayer?
     var player: AVPlayer?
+    
+    private var userInteracted = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +49,12 @@ class HomeRowInstructionsViewController: UIViewController {
 
     @IBAction func playVideo() {
         guard let player = player else { return }
+        
+        if userInteracted == false {
+            userInteracted = true
+            Pixel.fire(pixel: .homeRowInstructionsReplayed)
+        }
+        
         player.seek(to: CMTime(seconds: 0.0, preferredTimescale: player.currentTime().timescale))
         startVideo()
     }

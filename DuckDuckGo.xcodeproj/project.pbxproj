@@ -294,7 +294,6 @@
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		983054442302E4F40017BED0 /* OnboardingNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */; };
 		9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */ = {isa = PBXBuildFile; fileRef = 9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */; };
-		9837F9412304970700221BBD /* LocalNotificationsLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9837F9402304970700221BBD /* LocalNotificationsLogicTests.swift */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
 		9849942922B8FAF70019E4FA /* SiteRatingViewPerfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */; };
 		9849942B22B8FFED0019E4FA /* PerformanceTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */; };
@@ -304,7 +303,6 @@
 		984E291922CD67B500EE7154 /* PrivacyProtectionHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */; };
 		984E291B22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */; };
 		984FD95823018E6700B3E4DE /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FD95723018E6700B3E4DE /* LocalNotifications.swift */; };
-		984FD95A2301926000B3E4DE /* LocalNotificationsLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FD9592301926000B3E4DE /* LocalNotificationsLogic.swift */; };
 		985892522260B1B200EEB31B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985892512260B1B200EEB31B /* ProgressView.swift */; };
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
 		9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */; };
@@ -882,7 +880,6 @@
 		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
 		983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingNotificationsViewController.swift; sourceTree = "<group>"; };
 		9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "debug-messaging-disabled.js"; sourceTree = "<group>"; };
-		9837F9402304970700221BBD /* LocalNotificationsLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsLogicTests.swift; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
 		9846AA6622BD3BBF007DE48E /* InitHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitHelpers.swift; sourceTree = "<group>"; };
 		9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingViewPerfTests.swift; sourceTree = "<group>"; };
@@ -893,7 +890,6 @@
 		984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHomeCell.swift; sourceTree = "<group>"; };
 		984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivacyProtectionHomeCell.xib; sourceTree = "<group>"; };
 		984FD95723018E6700B3E4DE /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
-		984FD9592301926000B3E4DE /* LocalNotificationsLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsLogic.swift; sourceTree = "<group>"; };
 		985892512260B1B200EEB31B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesOverlay.swift; sourceTree = "<group>"; };
 		9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteHomeCell.xib; sourceTree = "<group>"; };
@@ -1679,7 +1675,6 @@
 				85AE668D2097206E0014CF04 /* NotificationView.xib */,
 				85AE668F209724120014CF04 /* NotificationView.swift */,
 				984FD95723018E6700B3E4DE /* LocalNotifications.swift */,
-				984FD9592301926000B3E4DE /* LocalNotificationsLogic.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -1835,14 +1830,6 @@
 				982E562D222C39F8008D861B /* Feedback.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		9837F93F23047CBF00221BBD /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				9837F9402304970700221BBD /* LocalNotificationsLogicTests.swift */,
-			);
-			name = Notifications;
 			sourceTree = "<group>";
 		};
 		987E7FAF22D8F84200AD30A1 /* PrivacyReport */ = {
@@ -2051,7 +2038,6 @@
 				83134D7F20E2E013006CE65D /* Feedback */,
 				85C9E5F621B4230700460EBC /* Home */,
 				851DFD88212C5ED600D95F20 /* Main */,
-				9837F93F23047CBF00221BBD /* Notifications */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
 				85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */,
 				98EA2C3F218BB5140023E1DC /* Settings */,
@@ -3374,7 +3360,6 @@
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
-				984FD95A2301926000B3E4DE /* LocalNotificationsLogic.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				F1134EC11F40DD9300B73467 /* AppVersionExtension.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
@@ -3549,7 +3534,6 @@
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
-				9837F9412304970700221BBD /* LocalNotificationsLogicTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* DataChecksumExtensionTest.swift in Sources */,

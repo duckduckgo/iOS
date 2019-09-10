@@ -50,6 +50,7 @@ public enum PixelName: String {
     case settingsOpened = "ms"
     case settingsThemeToggledLight = "ms_tl"
     case settingsThemeToggledDark = "ms_td"
+    case settingsHomeRowInstructionsRequested = "ms_hr"
 
     case settingsHomePageShown = "ms_hp"
     case settingsHomePageSimple = "ms_hp_s"
@@ -100,6 +101,14 @@ public enum PixelName: String {
     case homeScreenDeleteFavorite = "mh_df"
     case homeScreenPrivacyStatsTapped = "mh_ps"
     
+    case homeRowCTAShowMeTapped = "m_ha"
+    case homeRowCTANoThanksTapped = "m_hb"
+    
+    case homeRowCTAReminderTapped = "m_hc"
+    case homeRowCTAReminderDismissed = "m_hd"
+    
+    case homeRowInstructionsReplayed = "m_hv"
+    
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     
@@ -136,10 +145,6 @@ public enum PixelName: String {
     
     case notificationOptIn = "m_ne"
     case notificationOptOut = "m_nd"
-    case privacyNotificationFired = "m_nfi"
-    case homeRowNotificationFired = "m_nfii"
-    case privacyNotificationOpened = "m_noi"
-    case homeRowNotificationOpened = "m_noii"
     
     case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"

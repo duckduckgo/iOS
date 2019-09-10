@@ -37,9 +37,7 @@ class OnboardingNotificationsViewController: OnboardingContentViewController {
             } else {
                 Pixel.fire(pixel: .notificationOptOut)
             }
-            
-            LocalNotifications.shared.logic.didUpdateNotificationsPermissions(enabled: enabled)
-            
+                        
             navigationHandler()
         }
     }

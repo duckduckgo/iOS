@@ -108,8 +108,6 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
-        
-        LocalNotifications.shared.logic.delegate = self
     }
     
     private func registerForKeyboardNotifications() {
@@ -579,7 +577,10 @@ class MainViewController: UIViewController {
 
         showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
             if tapped {
+                Pixel.fire(pixel: .homeRowCTAReminderTapped)
                 self.launchInstructions()
+            } else {
+                Pixel.fire(pixel: .homeRowCTAReminderDismissed)
             }
 
             self.hideNotification()
@@ -1042,14 +1043,6 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
-}
-
-extension MainViewController: LocalNotificationsLogicDelegate {
-    
-    func displayHomeHowInstructions(for: LocalNotificationsLogic) {
-        clearNavigationStack()
-        launchInstructions()
-    }
 }
 
 // swiftlint:enable file_length

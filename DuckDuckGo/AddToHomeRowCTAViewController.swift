@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class AddToHomeRowCTAViewController: UIViewController {
 
@@ -42,6 +43,8 @@ class AddToHomeRowCTAViewController: UIViewController {
         super.viewDidLoad()
         configureViews()
         configureForFirstAppearance()
+        configureLabels()
+        
         addObservers()
         
         applyTheme(ThemeManager.shared.currentTheme)
@@ -53,10 +56,12 @@ class AddToHomeRowCTAViewController: UIViewController {
     }
     
     @IBAction func showMe() {
+        Pixel.fire(pixel: .homeRowCTAShowMeTapped)
         dismiss()
     }
 
     @IBAction func noThanks() {
+        Pixel.fire(pixel: .homeRowCTANoThanksTapped)
         dismiss()
     }
 
@@ -69,6 +74,22 @@ class AddToHomeRowCTAViewController: UIViewController {
     @objc func onKeyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: notification.keyboardAnimationDuration()) {
             self.view.alpha = 1.0
+        }
+    }
+    
+    private func configureLabels(variantManager: VariantManager = DefaultVariantManager()) {
+        guard let variant = variantManager.currentVariant else {
+            return
+        }
+        switch variant.name {
+        case "mc":
+            primaryText.text = "Add me to your home screen!"
+            secondaryText.text = "Search and browse privately, every time."
+        case "md":
+            primaryText.text = "Add me to your home screen!"
+            secondaryText.text = "Enjoy tracker-free browsing, every day."
+        default:
+            break
         }
     }
 

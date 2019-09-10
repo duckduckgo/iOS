@@ -141,6 +141,11 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.section == 2,
+            indexPath.row == 1 {
+            onHomeRowInstructionRequested()
+        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -179,6 +184,10 @@ class SettingsViewController: UITableViewController {
         let pixelName = sender.isOn ? PixelName.settingsThemeToggledLight : PixelName.settingsThemeToggledDark
         Pixel.fire(pixel: pixelName)
         ThemeManager.shared.enableTheme(with: sender.isOn ? .light : .dark)
+    }
+    
+    func onHomeRowInstructionRequested() {
+        Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
     }
 
     @IBAction func onDonePressed(_ sender: Any) {

@@ -961,7 +961,19 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
-        return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
+        guard gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer else {
+            return false
+        }
+
+        if gestureRecognizer == showBarsTapGestureRecogniser,
+            otherRecognizer is UITapGestureRecognizer {
+            return true
+        } else if gestureRecognizer == longPressGestureRecognizer,
+            otherRecognizer is UILongPressGestureRecognizer || String(describing: otherRecognizer).contains("action=_highlightLongPressRecognized:") {
+            return true
+        }
+        
+        return false
     }
 
     func requestFindInPage() {

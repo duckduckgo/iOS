@@ -25,8 +25,6 @@ public enum FeatureName: String {
     case dummy
     
     case privacyOnHomeScreen
-    
-    case notificationsOnboarding
 }
 
 public struct Variant {

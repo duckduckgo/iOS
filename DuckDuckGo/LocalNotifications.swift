@@ -26,8 +26,6 @@ class LocalNotifications: NSObject {
     
     static let shared = LocalNotifications()
     
-    let logic = LocalNotificationsLogic()
-    
     override init() {
         super.init()
         
@@ -93,9 +91,7 @@ extension LocalNotifications: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        logic.didSelectNotification(withIdentifier: response.notification.request.identifier)
-        
+                
         completionHandler()
     }
 }

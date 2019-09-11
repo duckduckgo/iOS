@@ -108,8 +108,6 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
-        
-        LocalNotifications.shared.logic.delegate = self
     }
     
     private func registerForKeyboardNotifications() {
@@ -579,7 +577,10 @@ class MainViewController: UIViewController {
 
         showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
             if tapped {
+                Pixel.fire(pixel: .homeRowCTAReminderTapped)
                 self.launchInstructions()
+            } else {
+                Pixel.fire(pixel: .homeRowCTAReminderDismissed)
             }
 
             self.hideNotification()
@@ -645,31 +646,33 @@ extension MainViewController: BrowserChromeDelegate {
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
         if hidden { hideKeyboard() }
 
-        updateToolbarConstant(hidden)
-        updateNavBarConstant(hidden)
-
-        if animated {
-
-            self.view.layer.removeAllAnimations()
-
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, delay: 0.0, options: .allowUserInteraction, animations: {
-                self.omniBar.alpha = hidden ? 0 : 1
-                self.toolbar.alpha = hidden ? 0 : 1
-
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-
-        } else {
-            setNavigationBarHidden(hidden)
-            toolbar.alpha = hidden ? 0 : 1
+        setBarsVisibility(hidden ? 0 : 1.0, animated: animated)
+    }
+    
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
+        if percent < 1 { hideKeyboard() }
+        
+        let updateBlock = {
+            self.updateToolbarConstant(percent)
+            self.updateNavBarConstant(percent)
+            
+            self.view.layoutIfNeeded()
+            
+            self.omniBar.alpha = percent
+            self.toolbar.alpha = percent
         }
-
+        
+        if animated {
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
+        } else {
+            updateBlock()
+        }
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
         
-        updateNavBarConstant(hidden)
+        updateNavBarConstant(hidden ? 0 : 1.0)
         omniBar.alpha = hidden ? 0 : 1
         statusBarBackground.alpha = hidden ? 0 : 1
     }
@@ -681,17 +684,23 @@ extension MainViewController: BrowserChromeDelegate {
     var toolbarHeight: CGFloat {
         return toolbar.frame.size.height
     }
+    
+    var barsMaxHeight: CGFloat {
+        return max(toolbarHeight, omniBar.frame.size.height)
+    }
 
-    private func updateToolbarConstant(_ hidden: Bool) {
+    // 1.0 - full size, 0.0 - hidden
+    private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = self.toolbar.frame.size.height
         if #available(iOS 11.0, *) {
             bottomHeight += view.safeAreaInsets.bottom
         }
-        toolbarBottom.constant = hidden ? bottomHeight : 0
+        toolbarBottom.constant = bottomHeight * (1.0 - ratio)
     }
 
-    private func updateNavBarConstant(_ hidden: Bool) {
-        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
+    // 1.0 - full size, 0.0 - hidden
+    private func updateNavBarConstant(_ ratio: CGFloat) {
+        navBarTop.constant = -self.customNavigationBar.frame.size.height * (1.0 - ratio)
     }
 
 }
@@ -1034,14 +1043,6 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
-}
-
-extension MainViewController: LocalNotificationsLogicDelegate {
-    
-    func displayHomeHowInstructions(for: LocalNotificationsLogic) {
-        clearNavigationStack()
-        launchInstructions()
-    }
 }
 
 // swiftlint:enable file_length

@@ -29,7 +29,7 @@ public class APIHeaders {
 
     private let appVersion: AppVersion
 
-    public init(appVersion: AppVersion = AppVersion()) {
+    public init(appVersion: AppVersion = AppVersion.shared) {
         self.appVersion = appVersion
     }
 

@@ -28,6 +28,8 @@ public struct AppVersion {
         static let versionNumber = "CFBundleShortVersionString"
     }
 
+    public static let shared = AppVersion()
+    
     private let bundle: InfoBundle
 
     public init(bundle: InfoBundle = Bundle.main) {
@@ -40,6 +42,10 @@ public struct AppVersion {
 
     public var identifier: String {
         return bundle.object(forInfoDictionaryKey: Keys.identifier) as? String ?? ""
+    }
+    
+    public var majorVersionNumber: String {
+        return String(versionNumber.split(separator: ".").first ?? "")
     }
 
     public var versionNumber: String {

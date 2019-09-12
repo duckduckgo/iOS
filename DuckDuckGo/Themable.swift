@@ -28,6 +28,10 @@ extension Themable where Self: UIViewController {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
+        
+        if #available(iOS 13.0, *) {
+            overrideSystemTheme(with: theme)
+        }
     }
     
     func decorateNavigationBar(with theme: Theme) {
@@ -38,6 +42,15 @@ extension Themable where Self: UIViewController {
         var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
         titleAttrs[NSAttributedString.Key.foregroundColor] = theme.navigationBarTitleColor
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
+    }
+    
+    @available(iOS 13.0, *)
+    func overrideSystemTheme(with theme: Theme) {
+        if theme.currentImageSet == .dark {
+            overrideUserInterfaceStyle = .light
+        } else {
+            overrideUserInterfaceStyle = .dark
+        }
     }
 }
 

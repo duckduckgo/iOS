@@ -202,7 +202,7 @@ extension PrivacyProtectionOverviewController: Themable {
         decorateNavigationBar(with: theme)
         
         if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
+            overrideUserInterfaceStyle = .light
         }
     }
 }

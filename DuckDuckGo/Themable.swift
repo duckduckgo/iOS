@@ -47,9 +47,9 @@ extension Themable where Self: UIViewController {
     @available(iOS 13.0, *)
     func overrideSystemTheme(with theme: Theme) {
         if theme.currentImageSet == .dark {
-            overrideUserInterfaceStyle = .light
-        } else {
             overrideUserInterfaceStyle = .dark
+        } else {
+            overrideUserInterfaceStyle = .light
         }
     }
 }

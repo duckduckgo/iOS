@@ -514,6 +514,7 @@ class TabViewController: UIViewController {
             let dontOpen = UserText.customUrlSchemeDontOpen
             
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.overrideUserInterfaceStyle()
             alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
             alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
                 self.openExternally(url: url)

@@ -286,6 +286,7 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle()
         alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: toolbar)

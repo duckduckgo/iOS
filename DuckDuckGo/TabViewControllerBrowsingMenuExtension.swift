@@ -25,6 +25,7 @@ extension TabViewController {
     func buildBrowsingMenu() -> UIAlertController {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle()
         alert.addAction(title: UserText.actionNewTab) { [weak self] in
             self?.onNewTabAction()
         }

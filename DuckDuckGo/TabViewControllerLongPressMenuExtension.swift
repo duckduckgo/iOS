@@ -25,6 +25,7 @@ extension TabViewController {
     
     func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle()
         alert.addAction(title: UserText.actionNewTabForUrl) { [weak self] in
             self?.onNewTabAction(url: url)
         }

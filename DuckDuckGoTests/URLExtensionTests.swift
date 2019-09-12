@@ -24,6 +24,22 @@ class URLExtensionTests: XCTestCase {
     func testWhenHostnameHasMultiplePunycodedPartsThenItIsConsideredValid() {
         XCTAssertTrue(URL.isValidHostname("82.xn--b1aew.xn--p1ai"))
     }
+
+    func testWhenUrlHasHttpSchemeThenToHttpsUpdatesItToHttps() {
+        XCTAssertEqual(URL(string: "https://example.com"), URL(string: "http://example.com")?.toHttps())
+    }
+    
+    func testWhenUrlHasHttpsSchemeThenToHttpsDoesNothing() {
+        XCTAssertEqual(URL(string: "https://example.com"), URL(string: "https://example.com")?.toHttps())
+    }
+
+    func testWhenUrlHasOtherSchemeThenToHttpsDoesNothing() {
+        XCTAssertEqual(URL(string: "other://example.com"), URL(string: "other://example.com")?.toHttps())
+    }
+    
+    func testWhenUrlHasNoSchemeThenToHttpsDoesNothing() {
+        XCTAssertEqual(URL(string: "example.com"), URL(string: "example.com")?.toHttps())
+    }
     
     func testWhenMobileUrlAndToDesktopUrlIsCalledThenDesktopUrlIsReturned() {
         XCTAssertEqual("https://example.com", URL(string: "https://m.example.com")?.toDesktopUrl().absoluteString)

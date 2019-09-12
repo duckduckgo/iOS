@@ -33,6 +33,13 @@ extension URL {
     enum Host: String {
         case localhost
     }
+    
+    public func toHttps() -> URL? {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
+        guard components.scheme == URLProtocol.http.rawValue else { return self }
+        components.scheme = URLProtocol.https.rawValue
+        return try? components.asURL()
+    }
 
     public func toDesktopUrl() -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }

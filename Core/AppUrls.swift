@@ -44,6 +44,7 @@ public struct AppUrls {
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
         static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
+        static let httpsLookupService = "\(base)/smarter_encryption.js"
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
@@ -55,6 +56,7 @@ public struct AppUrls {
         static let atb = "atb"
         static let setAtb = "set_atb"
         static let activityType = "at"
+        static let partialHost = "pv1"
     }
 
     private struct ParamValue {
@@ -201,6 +203,10 @@ public struct AppUrls {
         return URL(string: Url.httpsWhitelist)!
     }
 
+    public func httpsLookupServiceUrl(forPartialHost partialHashedHost: String) -> URL {
+        return URL(string: Url.httpsLookupService)!.addParam(name: Param.partialHost, value: partialHashedHost)
+    }
+    
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String) -> URL {
         var url = URL(string: Url.pixel.format(arguments: pixelName, formFactor))!
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")

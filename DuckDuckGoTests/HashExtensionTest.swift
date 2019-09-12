@@ -1,8 +1,8 @@
 //
-//  DataHashExtensionTest.swift
+//  HashExtensionTest.swift
 //  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -22,12 +22,23 @@ import Foundation
 import XCTest
 @testable import Core
 
-class DataChecksumExtensionTest: XCTestCase {
-
-    func testWhenSha256IsCalledThenChecksumIsCorrect() {
+class HashExtensionTest: XCTestCase {
+    
+    func testWhenSha1DataIsCalledThenHashIsCorrect() {
+        let result = "Hello World!".data(using: .utf8)?.sha1
+        let expectedResult = "2ef7bde608ce5404e97d5f042f95f89f1c232871"
+        XCTAssertEqual(expectedResult, result)
+    }
+    
+    func testWhenSha1StringIsCalledThenHashIsCorrect() {
+        let result = "Hello World!".sha1
+        let expectedResult = "2ef7bde608ce5404e97d5f042f95f89f1c232871"
+        XCTAssertEqual(expectedResult, result)
+    }
+    
+    func testWhenSha256DataIsCalledThenHashIsCorrect() {
         let result = "Hello World!".data(using: .utf8)?.sha256
         let expectedResult = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
         XCTAssertEqual(expectedResult, result)
     }
-    
 }

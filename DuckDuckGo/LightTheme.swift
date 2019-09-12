@@ -22,7 +22,13 @@ struct LightTheme: Theme {
     var name = ThemeName.light
     
     var currentImageSet: ThemeManager.ImageSet = .light
-    var statusBarStyle: UIStatusBarStyle = .default
+    var statusBarStyle: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        }
+        return .default
+    }
+    
     var keyboardAppearance: UIKeyboardAppearance = .light
     
     var backgroundColor = UIColor.nearlyWhite

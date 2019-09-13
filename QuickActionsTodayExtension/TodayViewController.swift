@@ -22,6 +22,49 @@ import Core
 import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding {
+    
+    private let lightThemeTintColor = UIColor.black
+    private let darkThemeTintColor = UIColor.white
+    
+    @IBOutlet var loupeIcon: UIImageView!
+    @IBOutlet var searchLabel: UILabel!
+    @IBOutlet var bookmarksButton: UIButton!
+    @IBOutlet var clearDataButton: UIButton!
+        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateColors()
+    }
+    
+    private func updateColors() {
+        loupeIcon.tintColor = lightThemeTintColor
+        searchLabel.textColor = lightThemeTintColor
+        bookmarksButton.setTitleColor(lightThemeTintColor, for: .normal)
+        clearDataButton.setTitleColor(lightThemeTintColor, for: .normal)
+        
+        if #available(iOSApplicationExtension 13.0, *) {
+            if traitCollection.userInterfaceStyle == .light {
+                updateImageColor(color: lightThemeTintColor, for: bookmarksButton)
+                updateImageColor(color: lightThemeTintColor, for: clearDataButton)
+            } else {
+                loupeIcon.tintColor = darkThemeTintColor
+                searchLabel.textColor = darkThemeTintColor
+                bookmarksButton.setTitleColor(darkThemeTintColor, for: .normal)
+                clearDataButton.setTitleColor(darkThemeTintColor, for: .normal)
+                
+                updateImageColor(color: darkThemeTintColor, for: bookmarksButton)
+                updateImageColor(color: darkThemeTintColor, for: clearDataButton)
+            }
+        }
+    }
+    
+    @available(iOSApplicationExtension 13.0, *)
+    private func updateImageColor(color: UIColor, for button: UIButton) {
+        let updatedImage = button.currentImage?.withTintColor(color)
+        button.setImage(updatedImage, for: .normal)
+        button.setImage(updatedImage, for: .selected)
+    }
 
     @IBAction func onSearchTapped(_ sender: Any) {
         let url = URL(string: AppDeepLinks.newSearch)!

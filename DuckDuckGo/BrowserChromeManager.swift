@@ -105,9 +105,9 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         }
     }
     
-    /// Bars should not be hidden in case ScrollView content is smaller than viewport.
+    /// Bars should not be hidden in case ScrollView content is smaller than full (with bars hidden) viewport.
     private func canHideBars(for scrollView: UIScrollView) -> Bool {
-        return scrollView.bounds.height < scrollView.contentSize.height
+        return scrollView.bounds.height + (delegate?.barsMaxHeight ?? 0) < scrollView.contentSize.height
     }
 
     func reset() {

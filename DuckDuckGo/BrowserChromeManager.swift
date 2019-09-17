@@ -54,7 +54,12 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         guard !scrollView.isZooming else { return }
         
         guard dragging else { return }
-        guard canHideBars(for: scrollView) else { return }
+        guard canHideBars(for: scrollView) else {
+            if animator.barsState != .revealed {
+                animator.revealBars(animated: true)
+            }
+            return
+        }
         
         let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
         guard isInBottomBounceArea == false else { return }

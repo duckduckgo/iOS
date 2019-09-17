@@ -1,2 +1,2 @@
-• Links that should open in a new tab by default no longer open in the existing tab.
-• Scrolling is now smoother and we improved responsiveness when in-app bars are hidden and revealed.
+• We expanded our https upgrade coverage to secure your browsing across even more sites.
+• We fixed visual and scrolling glitches around our top bar.

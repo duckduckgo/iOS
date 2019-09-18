@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w88-u3-TgK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w88-u3-TgK">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -30,38 +30,33 @@
                         <sections>
                             <tableViewSection headerTitle="Customize" id="dj9-vh-Rig">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="1kb-O5-IBX">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="f1O-6u-LFY" detailTextLabel="Gbx-kl-uOO" style="IBUITableViewCellStyleValue1" id="6If-9E-vOG">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="1kb-O5-IBX" id="hhO-4g-akE">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6If-9E-vOG" id="vlZ-xh-CdC">
+                                            <rect key="frame" x="0.0" y="0.0" width="347.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bym-LR-2L9">
-                                                    <rect key="frame" x="16" y="6.5" width="343" height="31"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="jyc-pE-eK8">
-                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
-                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xE6-kW-NSs">
-                                                            <rect key="frame" x="294" y="0.0" width="51" height="31"/>
-                                                            <connections>
-                                                                <action selector="onLightThemeToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="IF8-aG-36i"/>
-                                                            </connections>
-                                                        </switch>
-                                                    </subviews>
-                                                </stackView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f1O-6u-LFY">
+                                                    <rect key="frame" x="16" y="14" width="49.5" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gbx-kl-uOO">
+                                                    <rect key="frame" x="289" y="14" width="50.5" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="bym-LR-2L9" firstAttribute="centerY" secondItem="hhO-4g-akE" secondAttribute="centerY" id="0EK-PA-rZV"/>
-                                                <constraint firstItem="bym-LR-2L9" firstAttribute="leading" secondItem="hhO-4g-akE" secondAttribute="leadingMargin" id="leX-6S-yqR"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="bym-LR-2L9" secondAttribute="trailing" id="y8a-BQ-8Bc"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="gMx-K0-9ev" kind="show" id="Pes-Ig-9hs"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nwi-z5-yyq">
                                         <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
@@ -363,13 +358,10 @@
                         <outlet property="autoClearAccessoryText" destination="Ccm-w6-p6U" id="1wX-zy-6k5"/>
                         <outlet property="autocompleteToggle" destination="PNd-rx-En1" id="KD7-z4-4OW"/>
                         <outlet property="homePageAccessoryText" destination="O9k-vm-boT" id="qTg-od-oXj"/>
-                        <outlet property="lightThemeToggle" destination="xE6-kW-NSs" id="8cT-yH-0u4"/>
+                        <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
-                        <outletCollection property="margins" destination="leX-6S-yqR" collectionClass="NSMutableArray" id="2hh-JC-egM"/>
-                        <outletCollection property="margins" destination="y8a-BQ-8Bc" collectionClass="NSMutableArray" id="3g6-Iu-GP1"/>
                         <outletCollection property="margins" destination="zJZ-MR-uhS" collectionClass="NSMutableArray" id="o3p-WG-avM"/>
                         <outletCollection property="margins" destination="QO8-S9-afk" collectionClass="NSMutableArray" id="U45-GQ-aTd"/>
-                        <outletCollection property="labels" destination="jyc-pE-eK8" collectionClass="NSMutableArray" id="8Ov-1v-21V"/>
                         <outletCollection property="labels" destination="FHC-1z-Z3v" collectionClass="NSMutableArray" id="IrB-hk-2iB"/>
                         <outletCollection property="labels" destination="dBZ-yq-FYj" collectionClass="NSMutableArray" id="2XL-Gk-iVC"/>
                         <outletCollection property="labels" destination="oM7-1o-9oY" collectionClass="NSMutableArray" id="51p-86-4KL"/>
@@ -382,6 +374,8 @@
                         <outletCollection property="labels" destination="m23-t6-9cb" collectionClass="NSMutableArray" id="7g6-RD-pp5"/>
                         <outletCollection property="labels" destination="yvj-LL-MiR" collectionClass="NSMutableArray" id="NvU-BV-yIi"/>
                         <outletCollection property="labels" destination="74x-N4-jKV" collectionClass="NSMutableArray" id="7ai-K6-ZBz"/>
+                        <outletCollection property="accessoryLabels" destination="Gbx-kl-uOO" collectionClass="NSMutableArray" id="Gnw-Cu-leX"/>
+                        <outletCollection property="labels" destination="f1O-6u-LFY" collectionClass="NSMutableArray" id="7iH-K1-eOt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1010,6 +1004,60 @@ upgraded by Privacy Protection.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bjs-Ft-LTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1932" y="930"/>
+        </scene>
+        <!--Theme-->
+        <scene sceneID="Fn1-Ld-WqV">
+            <objects>
+                <tableViewController id="gMx-K0-9ev" customClass="ThemeSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="mlK-PZ-aXX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThemeItemCell" id="Yae-R5-CPt" userLabel="ThemeItemCell" customClass="ThemeItemCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yae-R5-CPt" id="Jae-Iy-uPB">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
+                                            <rect key="frame" x="16" y="14" width="343" height="16"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="16"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="vtB-4n-8Qi" firstAttribute="leading" secondItem="Jae-Iy-uPB" secondAttribute="leadingMargin" id="ccg-BS-yOL"/>
+                                        <constraint firstItem="vtB-4n-8Qi" firstAttribute="centerY" secondItem="Jae-Iy-uPB" secondAttribute="centerY" id="hMu-Np-LSu"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="vtB-4n-8Qi" secondAttribute="trailing" id="yhm-Xc-d2g"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="themeNameLabel" destination="qeN-SV-zy7" id="F70-Rc-Ag2"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="gMx-K0-9ev" id="zto-CS-w8l"/>
+                            <outlet property="delegate" destination="gMx-K0-9ev" id="uQC-Pq-Cwv"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Theme" id="gS2-mg-l7R"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dty-fX-sNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4191" y="930"/>
         </scene>
     </scenes>
     <resources>

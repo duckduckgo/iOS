@@ -25,7 +25,7 @@ import Device
 class SettingsViewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
-    @IBOutlet weak var lightThemeToggle: UISwitch!
+    @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var homePageAccessoryText: UILabel!
@@ -49,7 +49,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMargins()
-        configureLightThemeToggle()
+        configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -98,8 +98,15 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    private func configureLightThemeToggle() {
-        lightThemeToggle.isOn = appSettings.currentThemeName == .light
+    private func configureThemeCellAccessory() {
+        switch appSettings.currentThemeName {
+        case .systemDefault:
+            themeAccessoryText.text = "Default"
+        case .light:
+            themeAccessoryText.text = "Light"
+        case .dark:
+            themeAccessoryText.text = "Dark"
+        }
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -180,12 +187,6 @@ class SettingsViewController: UITableViewController {
         privacyStore.authenticationEnabled = sender.isOn
     }
     
-    @IBAction func onLightThemeToggled(_ sender: UISwitch) {
-        let pixelName = sender.isOn ? PixelName.settingsThemeToggledLight : PixelName.settingsThemeToggledDark
-        Pixel.fire(pixel: pixelName)
-        ThemeManager.shared.enableTheme(with: sender.isOn ? .light : .dark)
-    }
-    
     func onHomeRowInstructionRequested() {
         Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
     }
@@ -202,6 +203,7 @@ class SettingsViewController: UITableViewController {
 extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
+        decorateNavigationBar(with: theme)
         
         for label in labels {
             label.textColor = theme.tableCellTextColor
@@ -213,20 +215,11 @@ extension SettingsViewController: Themable {
         
         versionText.textColor = theme.tableCellTextColor
         
-        lightThemeToggle.onTintColor = theme.buttonTintColor
         autocompleteToggle.onTintColor = theme.buttonTintColor
         authenticationToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
-        
-        if let navigationController = self.navigationController {
-            UIView.transition(with: navigationController.navigationBar,
-                              duration: 0.2,
-                              options: .transitionCrossDissolve, animations: {
-                                self.decorateNavigationBar(with: theme)
-            }, completion: nil)
-        }
         
         UIView.transition(with: view,
                           duration: 0.2,

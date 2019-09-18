@@ -88,6 +88,8 @@ extension HomeViewController: HomeScreenTipsDelegate {
             
             let text: String
             switch ThemeManager.shared.currentTheme.name {
+            case .systemDefault:
+                text = "Want a different look? Try changing current theme!"
             case .dark:
                 text = UserText.contextualOnboardingCustomizeLight
                 

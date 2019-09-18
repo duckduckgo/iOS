@@ -49,9 +49,28 @@ class ThemeManager {
     
     private static func makeTheme(name: ThemeName) -> Theme {
         switch name {
+        case .systemDefault:
+            if #available(iOS 13.0, *) {
+                return obtainSystemTheme()
+            } else {
+                return DarkTheme()
+            }
+        case .dark:
+            return DarkTheme()
         case .light:
             return LightTheme()
+
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    private static func obtainSystemTheme() -> Theme {
+        switch UIScreen.main.traitCollection.userInterfaceStyle {
         case .dark:
+            return DarkTheme()
+        case .light:
+            return LightTheme()
+        default:
             return DarkTheme()
         }
     }

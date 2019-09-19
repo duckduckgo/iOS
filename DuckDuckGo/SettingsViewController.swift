@@ -78,9 +78,19 @@ class SettingsViewController: UITableViewController {
             return
         }
         
+        if segue.destination is ThemeSettingsViewController {
+            Pixel.fire(pixel: .settingsThemeShown)
+            return
+        }
+        
         if let controller = segue.destination as? HomePageSettingsViewController {
             Pixel.fire(pixel: .settingsHomePageShown)
             controller.delegate = homePageSettingsDelegate
+            return
+        }
+        
+        if segue.destination is HomeRowInstructionsViewController {
+            Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
             return
         }
         
@@ -148,11 +158,6 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        if indexPath.section == 2,
-            indexPath.row == 1 {
-            onHomeRowInstructionRequested()
-        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -185,10 +190,6 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
-    }
-    
-    func onHomeRowInstructionRequested() {
-        Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
     }
 
     @IBAction func onDonePressed(_ sender: Any) {

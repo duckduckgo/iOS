@@ -23,11 +23,32 @@ import Core
 class ThemeSettingsViewController: UITableViewController {
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    
+    private let previousTheme = AppDependencyProvider.shared.appSettings.currentThemeName
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        sendPixel()
+    }
+    
+    private func sendPixel() {
+        guard appSettings.currentThemeName != previousTheme else { return }
+        
+        switch appSettings.currentThemeName {
+        case .systemDefault:
+            Pixel.fire(pixel: .settingsThemeChangedSystemDefault)
+        case .light:
+            Pixel.fire(pixel: .settingsThemeChangedLight)
+        case .dark:
+            Pixel.fire(pixel: .settingsThemeChangedDark)
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -74,9 +95,7 @@ class ThemeSettingsViewController: UITableViewController {
         appSettings.currentThemeName = theme
         
         tableView.reloadData()
-        
-//        let pixelName = sender.isOn ? PixelName.settingsThemeToggledLight : PixelName.settingsThemeToggledDark
-//        Pixel.fire(pixel: pixelName)
+
         ThemeManager.shared.enableTheme(with: theme)
     }
     

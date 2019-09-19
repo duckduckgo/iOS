@@ -55,9 +55,12 @@ public enum PixelName: String {
     case bookmarksExtensionBookmark = "mbe_b"
     
     case settingsOpened = "ms"
-    case settingsThemeToggledLight = "ms_tl"
-    case settingsThemeToggledDark = "ms_td"
     case settingsHomeRowInstructionsRequested = "ms_hr"
+    
+    case settingsThemeShown = "ms_tp"
+    case settingsThemeChangedSystemDefault = "ms_ts"
+    case settingsThemeChangedLight = "ms_tl"
+    case settingsThemeChangedDark = "ms_td"
 
     case settingsHomePageShown = "ms_hp"
     case settingsHomePageSimple = "ms_hp_s"

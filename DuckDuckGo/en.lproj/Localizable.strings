@@ -168,14 +168,21 @@
 "keyCommandSelect" = "Select";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
-"contextualOnboardingCustomizeLight" = "Want a different look? Try the light theme!";
-"contextualOnboardingCustomizeDark" = "Want a different look? Try the dark theme!";
+"contextualOnboardingCustomizeTheme" = "Want a different look? Try changing current theme!";
 "contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.";
 "contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.";
 
 "bookmarkAll.tabs.notfound" = "No tabs to bookmark";
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
+
+"theme.name.default" = "System Default";
+"theme.name.light" = "Light";
+"theme.name.dark" = "Dark";
+
+"theme.acc.default" = "Default";
+"theme.acc.light" = "Light";
+"theme.acc.dark" = "Dark";
 
 "autoclear.on" = "On";
 "autoclear.off" = "Off";

@@ -101,11 +101,11 @@ class SettingsViewController: UITableViewController {
     private func configureThemeCellAccessory() {
         switch appSettings.currentThemeName {
         case .systemDefault:
-            themeAccessoryText.text = "Default"
+            themeAccessoryText.text = UserText.themeAccessoryDefault
         case .light:
-            themeAccessoryText.text = "Light"
+            themeAccessoryText.text = UserText.themeAccessoryLight
         case .dark:
-            themeAccessoryText.text = "Dark"
+            themeAccessoryText.text = UserText.themeAccessoryDark
         }
     }
 

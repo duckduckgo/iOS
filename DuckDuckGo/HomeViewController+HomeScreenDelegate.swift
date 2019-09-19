@@ -85,20 +85,9 @@ extension HomeViewController: HomeScreenTipsDelegate {
 
             var preferences = EasyTipView.globalPreferences
             preferences.positioning.bubbleHInset = 8
-            
-            let text: String
-            switch ThemeManager.shared.currentTheme.name {
-            case .systemDefault:
-                text = "Want a different look? Try changing current theme!"
-            case .dark:
-                text = UserText.contextualOnboardingCustomizeLight
-                
-            case .light:
-                text = UserText.contextualOnboardingCustomizeDark                
-            }
-            
+                        
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize48")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: text,
+            let tip = EasyTipView(text: UserText.contextualOnboardingCustomizeTheme,
                                   icon: icon,
                                   preferences: preferences)
 

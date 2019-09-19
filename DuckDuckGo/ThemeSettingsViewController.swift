@@ -59,7 +59,7 @@ class ThemeSettingsViewController: UITableViewController {
         case .systemDefault:
             cell.themeName = "System Default"
         case .light:
-            cell.themeName = "Light"
+            cell.themeName = UserText.themeAccessoryLight
         case .dark:
             cell.themeName = "Dark"
         }

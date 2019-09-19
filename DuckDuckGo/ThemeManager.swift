@@ -98,5 +98,4 @@ class ThemeManager {
             currentTheme = systemTheme
         }
     }
-    
 }

@@ -33,14 +33,36 @@ public class WebCacheManager {
         return WKWebsiteDataStore.default()
     }
 
-    public static func consumeCookies() {
-        guard #available(iOS 11, *) else { return }
+    public static func consumeCookies(completion: @escaping () -> Void) {
+        guard #available(iOS 11, *) else {
+            completion()
+            return
+        }
 
         let cookieStorage = CookieStorage()
-        for cookie in cookieStorage.cookies {
-            WebCacheManager.dataStore.httpCookieStore.setCookie(cookie)
+        guard !cookieStorage.cookies.isEmpty else {
+            completion()
+            return
         }
-        cookieStorage.clear()
+        
+        let semaphore = DispatchSemaphore(value: 0)
+                        
+        for cookie in cookieStorage.cookies {
+            WebCacheManager.dataStore.httpCookieStore.setCookie(cookie) {
+                semaphore.signal()
+            }
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            for _ in 0 ..< cookieStorage.cookies.count {
+                semaphore.wait()
+            }
+            
+            DispatchQueue.main.async {
+                cookieStorage.clear()
+                completion()
+            }
+        }
     }
 
     /**

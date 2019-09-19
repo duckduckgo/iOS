@@ -216,15 +216,18 @@ class TabViewController: UIViewController {
     
     private func consumeCookiesThenLoadUrl(_ url: URL?) {
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-            WebCacheManager.consumeCookies()
-            if let url = url {
-                self.load(url: url)
+            WebCacheManager.consumeCookies { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                if let url = url {
+                    strongSelf.load(url: url)
+                }
+                
+                if url != nil {
+                    strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
+                    strongSelf.onWebpageDidStartLoading(httpsForced: false)
+                }
             }
-        }
-        
-        if url != nil {
-            delegate?.tabLoadingStateDidChange(tab: self)
-            onWebpageDidStartLoading(httpsForced: false)
         }
     }
     

@@ -87,4 +87,15 @@ class ThemeManager {
         appSettings.currentThemeName = name
         currentTheme = ThemeManager.makeTheme(name: name)
     }
+    
+    @available(iOS 13.0, *)
+    public func refreshSystemTheme() {
+        guard appSettings.currentThemeName == .systemDefault else { return }
+        
+        let systemTheme = type(of: self).obtainSystemTheme()
+        
+        if systemTheme.name != currentTheme.name {
+            currentTheme = systemTheme
+        }
+    }
 }

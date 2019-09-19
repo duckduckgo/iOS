@@ -168,7 +168,7 @@
 "keyCommandSelect" = "Select";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
-"contextualOnboardingCustomizeTheme" = "Want a different look? Try changing current theme!";
+"contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";
 "contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.";
 "contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.";
 

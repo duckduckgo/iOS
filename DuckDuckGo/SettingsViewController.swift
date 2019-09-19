@@ -204,6 +204,7 @@ extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
+        configureThemeCellAccessory()
         
         for label in labels {
             label.textColor = theme.tableCellTextColor

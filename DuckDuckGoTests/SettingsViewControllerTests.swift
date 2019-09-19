@@ -59,48 +59,26 @@ class SettingsViewControllerTests: XCTestCase {
         }
     }
 
-    func testWhenOpeningSettingsThenLightThemeToggleIsSetBasedOnAppSettings() {
+    func testWhenOpeningSettingsThenThemeAccessoryIsSetBasedOnAppSettings() {
+        
+        let testAccessoryLabel : (String) -> Void = { expected in
+            if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+                let settingsController = navController.topViewController as? SettingsViewController {
+                settingsController.loadViewIfNeeded()
+                XCTAssert(settingsController.themeAccessoryText.text == expected)
+            } else {
+                assertionFailure("Could not load Setting View Controller")
+            }
+        }
+        
         let appSettigns = AppUserDefaults()
         appSettigns.currentThemeName = .dark
-        
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-            let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            XCTAssertFalse(settingsController.themeAccessoryText.text == "Dark")
-        } else {
-            assertionFailure("Could not load Setting View Controller")
-        }
+        testAccessoryLabel("Dark")
         
         appSettigns.currentThemeName = .light
+        testAccessoryLabel("Light")
         
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-            let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            XCTAssertFalse(settingsController.themeAccessoryText.text == "Light")
-        } else {
-            assertionFailure("Could not load Setting View Controller")
-        }
+        appSettigns.currentThemeName = .systemDefault
+        testAccessoryLabel("Default")
     }
-    
-//    func testWhenLightThemeIsToggledThenAppSettingsAreUpdated() {
-//        let appSettings = AppUserDefaults()
-//        appSettings.currentThemeName = .dark
-//        
-//        guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-//            let settingsController = navController.topViewController as? SettingsViewController else {
-//                assertionFailure("Could not load Setting View Controller")
-//                return
-//        }
-//        
-//        settingsController.loadViewIfNeeded()
-//        settingsController.lightThemeToggle.isOn = true
-//        settingsController.lightThemeToggle.sendActions(for: .valueChanged)
-//        
-//        XCTAssert(appSettings.currentThemeName == .light)
-//        
-//        settingsController.lightThemeToggle.isOn = false
-//        settingsController.lightThemeToggle.sendActions(for: .valueChanged)
-//        
-//        XCTAssert(appSettings.currentThemeName == .dark)
-//    }
 }

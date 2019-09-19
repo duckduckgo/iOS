@@ -57,11 +57,11 @@ class ThemeSettingsViewController: UITableViewController {
         let themeName = themeForRow(at: indexPath)
         switch themeName {
         case .systemDefault:
-            cell.themeName = "System Default"
+            cell.themeName = UserText.themeNameDefault
         case .light:
-            cell.themeName = UserText.themeAccessoryLight
+            cell.themeName = UserText.themeNameLight
         case .dark:
-            cell.themeName = "Dark"
+            cell.themeName = UserText.themeNameDark
         }
         
         cell.accessoryType = themeName == appSettings.currentThemeName ? .checkmark : .none

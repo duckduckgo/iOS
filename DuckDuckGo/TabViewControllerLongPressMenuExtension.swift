@@ -24,7 +24,7 @@ import SafariServices
 extension TabViewController {
     
     func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: makeMessage(from: url), preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
         alert.addAction(title: UserText.actionNewTabForUrl) { [weak self] in
             self?.onNewTabAction(url: url)
@@ -46,6 +46,17 @@ extension TabViewController {
         }
         alert.addAction(title: UserText.actionCancel, style: .cancel)
         return alert
+    }
+    
+    private func makeMessage(from url: URL) -> String {
+        if var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
+            components.query = nil
+            if let newUrl = components.url {
+                return newUrl.absoluteString
+            }
+        }
+        
+        return url.absoluteString
     }
     
     private func onNewTabAction(url: URL) {

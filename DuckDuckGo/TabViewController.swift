@@ -173,6 +173,7 @@ class TabViewController: UIViewController {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webView.allowsLinkPreview = false
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
         

@@ -61,7 +61,7 @@ class SettingsViewControllerTests: XCTestCase {
 
     func testWhenOpeningSettingsThenThemeAccessoryIsSetBasedOnAppSettings() {
         
-        let testAccessoryLabel : (String) -> Void = { expected in
+        let testAccessoryLabel: (String) -> Void = { expected in
             if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
                 let settingsController = navController.topViewController as? SettingsViewController {
                 settingsController.loadViewIfNeeded()

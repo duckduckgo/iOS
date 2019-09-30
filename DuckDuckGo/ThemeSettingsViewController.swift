@@ -96,8 +96,6 @@ class ThemeSettingsViewController: UITableViewController {
         
         let theme = availableThemes[indexPath.row].themeName
         appSettings.currentThemeName = theme
-        
-        tableView.reloadData()
 
         ThemeManager.shared.enableTheme(with: theme)
     }
@@ -123,5 +121,7 @@ extension ThemeSettingsViewController: Themable {
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
+        
+        tableView.reloadData()
     }
 }

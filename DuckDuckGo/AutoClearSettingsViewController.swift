@@ -190,5 +190,7 @@ extension AutoClearSettingsViewController: Themable {
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
+        
+        tableView.reloadData()
     }
 }

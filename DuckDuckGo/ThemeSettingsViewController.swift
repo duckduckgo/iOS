@@ -22,9 +22,22 @@ import Core
 
 class ThemeSettingsViewController: UITableViewController {
     
+    private typealias ThemeEntry = (themeName: ThemeName, displayName: String)
+    
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
     private let previousTheme = AppDependencyProvider.shared.appSettings.currentThemeName
+    
+    private lazy var availableThemes: [ThemeEntry] = {
+        if #available(iOS 13.0, *) {
+            return [(ThemeName.systemDefault, UserText.themeNameDefault),
+                    (ThemeName.light, UserText.themeNameLight),
+                    (ThemeName.dark, UserText.themeNameDark)]
+        } else {
+            return [(ThemeName.light, UserText.themeNameLight),
+                    (ThemeName.dark, UserText.themeNameDark)]
+        }
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +65,7 @@ class ThemeSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if #available(iOS 13.0, *) {
-            return 3
-        }
-        return 2
+        return availableThemes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,46 +85,21 @@ class ThemeSettingsViewController: UITableViewController {
         cell.tintColor = theme.buttonTintColor
         cell.themeNameLabel.textColor = theme.tableCellTextColor
         
-        let themeName = themeForRow(at: indexPath)
-        switch themeName {
-        case .systemDefault:
-            cell.themeName = UserText.themeNameDefault
-        case .light:
-            cell.themeName = UserText.themeNameLight
-        case .dark:
-            cell.themeName = UserText.themeNameDark
-        }
-        
+        cell.themeName = availableThemes[indexPath.row].displayName
+
+        let themeName = availableThemes[indexPath.row].themeName
         cell.accessoryType = themeName == appSettings.currentThemeName ? .checkmark : .none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let theme = themeForRow(at: indexPath)
+        let theme = availableThemes[indexPath.row].themeName
         appSettings.currentThemeName = theme
         
         tableView.reloadData()
 
         ThemeManager.shared.enableTheme(with: theme)
-    }
-    
-    private func themeForRow(at indexPath: IndexPath) -> ThemeName {
-        let index: Int
-        if #available(iOS 13.0, *) {
-            index = indexPath.row
-        } else {
-            index = indexPath.row + 1
-        }
-        
-        switch index {
-        case 0:
-            return .systemDefault
-        case 1:
-            return .light
-        default:
-            return .dark
-        }
     }
 }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SIM_NAME=${DDG_SIMULATOR:-'iPhone 6s'}
+SIM_NAME=${DDG_SIMULATOR:-'iPhone 8'}
 SCHEME=${DDG_TEST_SCHEME:-'DuckDuckGo'}
 
 carthage bootstrap --platform iOS --cache-builds;

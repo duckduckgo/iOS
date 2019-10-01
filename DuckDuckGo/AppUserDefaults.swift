@@ -67,11 +67,18 @@ public class AppUserDefaults: AppSettings {
     var currentThemeName: ThemeName {
         
         get {
-            var currentThemeName = ThemeName.dark
+            var currentThemeName: ThemeName?
             if let stringName = userDefaults?.string(forKey: Keys.currentThemeNameKey) {
-                currentThemeName = ThemeName(rawValue: stringName) ?? ThemeName.dark
+                currentThemeName = ThemeName(rawValue: stringName)
             }
-            return currentThemeName
+            
+            if let themeName = currentThemeName {
+                return themeName
+            } else if #available(iOS 13.0, *) {
+                return .systemDefault
+            } else {
+                return .dark
+            }
         }
         
         set {

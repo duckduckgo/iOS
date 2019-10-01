@@ -40,21 +40,23 @@ public class WebCacheManager {
         }
 
         let cookieStorage = CookieStorage()
-        guard !cookieStorage.cookies.isEmpty else {
+        let cookies = cookieStorage.cookies
+        
+        guard !cookies.isEmpty else {
             completion()
             return
         }
         
         let semaphore = DispatchSemaphore(value: 0)
                         
-        for cookie in cookieStorage.cookies {
+        for cookie in cookies {
             WebCacheManager.dataStore.httpCookieStore.setCookie(cookie) {
                 semaphore.signal()
             }
         }
         
         DispatchQueue.global(qos: .userInitiated).async {
-            for _ in 0 ..< cookieStorage.cookies.count {
+            for _ in 0 ..< cookies.count {
                 semaphore.wait()
             }
             

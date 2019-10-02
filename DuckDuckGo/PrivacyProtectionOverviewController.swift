@@ -200,5 +200,9 @@ extension PrivacyProtectionOverviewController: Themable {
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
         decorateNavigationBar(with: theme)
+        
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
 }

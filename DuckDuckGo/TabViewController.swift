@@ -173,6 +173,7 @@ class TabViewController: UIViewController {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webView.allowsLinkPreview = false
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
         
@@ -216,15 +217,18 @@ class TabViewController: UIViewController {
     
     private func consumeCookiesThenLoadUrl(_ url: URL?) {
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-            WebCacheManager.consumeCookies()
-            if let url = url {
-                self.load(url: url)
+            WebCacheManager.consumeCookies { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                if let url = url {
+                    strongSelf.load(url: url)
+                }
+                
+                if url != nil {
+                    strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
+                    strongSelf.onWebpageDidStartLoading(httpsForced: false)
+                }
             }
-        }
-        
-        if url != nil {
-            delegate?.tabLoadingStateDidChange(tab: self)
-            onWebpageDidStartLoading(httpsForced: false)
         }
     }
     
@@ -514,6 +518,7 @@ class TabViewController: UIViewController {
             let dontOpen = UserText.customUrlSchemeDontOpen
             
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.overrideUserInterfaceStyle()
             alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
             alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
                 self.openExternally(url: url)

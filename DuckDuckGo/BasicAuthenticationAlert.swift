@@ -41,6 +41,7 @@ class BasicAuthenticationAlert: UIAlertController {
         }
         
         self.init(title: UserText.authAlertTitle, message: message, preferredStyle: .alert)
+        overrideUserInterfaceStyle()
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         addTextField { textField in

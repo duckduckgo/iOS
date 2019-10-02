@@ -129,6 +129,10 @@ extension PrivacyReportViewController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
         
+        if #available(iOS 13.0, *) {
+            overrideSystemTheme(with: theme)
+        }
+        
         view.backgroundColor = theme.backgroundColor
     }
     

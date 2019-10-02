@@ -46,6 +46,7 @@ private class ValidatingAlert: UIAlertController {
                      cancelCompletion: EditBookmarkAlert.CancelCompletion?) {
         
         self.init(title: title, message: nil, preferredStyle: .alert)
+        overrideUserInterfaceStyle()
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         addTextField { textField in

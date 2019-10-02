@@ -73,6 +73,7 @@ class WhitelistViewController: UITableViewController {
         let cancel = UserText.actionCancel
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        addSiteBox.overrideUserInterfaceStyle()
         addSiteBox.addTextField { (textField) in
             textField.placeholder = placeholder
             textField.keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance

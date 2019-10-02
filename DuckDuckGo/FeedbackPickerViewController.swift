@@ -136,6 +136,8 @@ extension FeedbackPickerViewController: Themable {
         headerView.backgroundColor = theme.backgroundColor
         headerText.textColor = theme.feedbackPrimaryTextColor
         supplementaryText.textColor = theme.feedbackSecondaryTextColor
+        
+        tableView.reloadData()
     }
     
 }

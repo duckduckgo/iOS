@@ -233,7 +233,6 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        waitForButtonThenTap("Skip")
         waitForButtonThenTap("Continue")
     }
     
@@ -276,6 +275,11 @@ class Springboard {
             let springboardFrame = springboard.frame
             icon.press(forDuration: 1.3)
             
+            let rearrangeButton = springboard.buttons["Rearrange Apps"]
+            _ = rearrangeButton.waitForExistence(timeout: AtbIntegrationTests.Constants.defaultTimeout)
+            rearrangeButton.tap()
+            
+            sleep(1)
             // Tap the little "X" button at approximately where it is. The X is not exposed directly
 
             springboard.coordinate(withNormalizedOffset: CGVector(dx: (iconFrame.minX + 3) / springboardFrame.maxX,

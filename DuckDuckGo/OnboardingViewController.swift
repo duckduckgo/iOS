@@ -22,7 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
     
-    var controllerNames = ["onboardingThemes", "onboardingSummary"]
+    var controllerNames = ["onboardingSummary"]
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!

@@ -51,10 +51,10 @@ class AppUserDefaultsTests: XCTestCase {
         
     }
     
-    func testWhenReadingCurrentThemeDefaultThenDarkIsReturned() {
+    func testWhenReadingCurrentThemeDefaultThenSystemDefaultIsReturned() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(appUserDefaults.currentThemeName, .dark)
+        XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
         
     }
     

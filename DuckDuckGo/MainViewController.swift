@@ -225,6 +225,15 @@ class MainViewController: UIViewController {
         }
 
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            ThemeManager.shared.refreshSystemTheme()
+        }
+    }
 
     private func configureTabManager() {
         let tabsModel: TabsModel
@@ -286,6 +295,7 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle()
         alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: toolbar)

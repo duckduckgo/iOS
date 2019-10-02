@@ -237,7 +237,6 @@
 		85CC9376203C42A500690089 /* speed_test_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 85CC9375203C42A500690089 /* speed_test_sites.json */; };
 		85CE790721E8A9F600607B91 /* EmptySectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CE790621E8A9F600607B91 /* EmptySectionRenderer.swift */; };
 		85E00179225E0D4E00877BF6 /* OnboardingSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E00178225E0D4E00877BF6 /* OnboardingSummaryViewController.swift */; };
-		85E0017B225E0ED700877BF6 /* OnboardingThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0017A225E0ED700877BF6 /* OnboardingThemesViewController.swift */; };
 		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
 		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
 		85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */; };
@@ -316,6 +315,7 @@
 		987E7FB722D8FDC600AD30A1 /* PrivacyReportViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 987E7FB622D8FDC600AD30A1 /* PrivacyReportViewController.storyboard */; };
 		987E7FB922D914B200AD30A1 /* PrivacyReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */; };
 		987E7FBB22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */; };
+		9881439C23326DC200573F7C /* ThemeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */; };
 		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
@@ -824,7 +824,6 @@
 		85CE790621E8A9F600607B91 /* EmptySectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySectionRenderer.swift; sourceTree = "<group>"; };
 		85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NetworkLeaderboard 2.xcdatamodel"; sourceTree = "<group>"; };
 		85E00178225E0D4E00877BF6 /* OnboardingSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryViewController.swift; sourceTree = "<group>"; };
-		85E0017A225E0ED700877BF6 /* OnboardingThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingThemesViewController.swift; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
 		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
 		85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerNavigationController.swift; sourceTree = "<group>"; };
@@ -903,6 +902,7 @@
 		987E7FB622D8FDC600AD30A1 /* PrivacyReportViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyReportViewController.storyboard; sourceTree = "<group>"; };
 		987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportCell.swift; sourceTree = "<group>"; };
 		987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportFooterCell.swift; sourceTree = "<group>"; };
+		9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
 		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
@@ -2426,6 +2426,7 @@
 				8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */,
 				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
 				851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */,
+				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2453,7 +2454,6 @@
 				850819D51FDB68F9006561FD /* Onboarding.xcassets */,
 				8577B0AD2225CA4F009CCC71 /* OnboardingPadViewController.swift */,
 				85E00178225E0D4E00877BF6 /* OnboardingSummaryViewController.swift */,
-				85E0017A225E0ED700877BF6 /* OnboardingThemesViewController.swift */,
 				983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */,
 				851B128B2220483A004781BC /* OnboardingViewController.swift */,
 			);
@@ -3327,6 +3327,7 @@
 				984E291922CD67B500EE7154 /* PrivacyProtectionHomeCell.swift in Sources */,
 				9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */,
 				982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */,
+				9881439C23326DC200573F7C /* ThemeSettingsViewController.swift in Sources */,
 				987E7FBB22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
@@ -3356,7 +3357,6 @@
 				851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
-				85E0017B225E0ED700877BF6 /* OnboardingThemesViewController.swift in Sources */,
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,

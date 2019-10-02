@@ -41,6 +41,10 @@ class PrivacyProtectionController: ThemableNavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
 
         navigationBar.isHidden = isPad
         popoverPresentationController?.backgroundColor = UIColor.nearlyWhite

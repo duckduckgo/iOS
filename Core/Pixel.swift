@@ -55,9 +55,12 @@ public enum PixelName: String {
     case bookmarksExtensionBookmark = "mbe_b"
     
     case settingsOpened = "ms"
-    case settingsThemeToggledLight = "ms_tl"
-    case settingsThemeToggledDark = "ms_td"
     case settingsHomeRowInstructionsRequested = "ms_hr"
+    
+    case settingsThemeShown = "ms_tp"
+    case settingsThemeChangedSystemDefault = "ms_ts"
+    case settingsThemeChangedLight = "ms_tl"
+    case settingsThemeChangedDark = "ms_td"
 
     case settingsHomePageShown = "ms_hp"
     case settingsHomePageSimple = "ms_hp_s"
@@ -92,10 +95,6 @@ public enum PixelName: String {
     case tabBarTabSwitcherPressed = "mt_tb"
 
     case onboardingShown = "m_o"
-    case onboardingThemesFinished = "m_o_t"
-    case onboardingThemesDarkThemeSelected = "m_o_t_d"
-    case onboardingThemesLightThemeSelected = "m_o_t_l"
-    case onboardingThemesSkipped = "m_o_t_s"
     case onboardingSummaryFinished = "m_o_s"
     
     case homeScreenShown = "mh"

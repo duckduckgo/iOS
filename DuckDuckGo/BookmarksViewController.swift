@@ -155,6 +155,10 @@ extension BookmarksViewController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
         
+        if #available(iOS 13.0, *) {
+            overrideSystemTheme(with: theme)
+        }
+        
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor
         

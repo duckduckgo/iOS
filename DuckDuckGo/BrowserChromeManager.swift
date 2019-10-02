@@ -54,7 +54,12 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         guard !scrollView.isZooming else { return }
         
         guard dragging else { return }
-        guard canHideBars(for: scrollView) else { return }
+        guard canHideBars(for: scrollView) else {
+            if animator.barsState != .revealed {
+                animator.revealBars(animated: true)
+            }
+            return
+        }
         
         let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
         guard isInBottomBounceArea == false else { return }
@@ -105,9 +110,9 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         }
     }
     
-    /// Bars should not be hidden in case ScrollView content is smaller than viewport.
+    /// Bars should not be hidden in case ScrollView content is smaller than full (with bars hidden) viewport.
     private func canHideBars(for scrollView: UIScrollView) -> Bool {
-        return scrollView.bounds.height < scrollView.contentSize.height
+        return scrollView.bounds.height + (delegate?.barsMaxHeight ?? 0) < scrollView.contentSize.height
     }
 
     func reset() {

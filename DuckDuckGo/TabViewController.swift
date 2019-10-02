@@ -422,7 +422,7 @@ class TabViewController: UIViewController {
     }
 
     private func resetNavigationBar() {
-        chromeDelegate?.setBarsHidden(false, animated: false)
+        chromeDelegate?.setNavigationBarHidden(false)
     }
 
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {

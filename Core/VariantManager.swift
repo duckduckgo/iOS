@@ -25,6 +25,8 @@ public enum FeatureName: String {
     case dummy
     
     case privacyOnHomeScreen
+    
+    case remindMeLaterCTA
 }
 
 public struct Variant {
@@ -32,9 +34,12 @@ public struct Variant {
     static let doNotAllocate = 0
     
     public static let defaultVariants: [Variant] = [
-        Variant(name: "mw", weight: 1, features: []),
-        Variant(name: "mc", weight: 1, features: []),
-        Variant(name: "md", weight: 1, features: []),
+        // SERP testing
+        Variant(name: "sc", weight: 1, features: []),
+        Variant(name: "se", weight: 1, features: []),
+        
+        Variant(name: "mx", weight: 1, features: []),
+        Variant(name: "ms", weight: 1, features: [.remindMeLaterCTA]),
         
         Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
     ]

@@ -2968,10 +2968,9 @@
 			};
 			buildConfigurationList = 84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				es,

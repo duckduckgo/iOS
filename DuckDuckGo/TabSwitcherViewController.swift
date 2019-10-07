@@ -131,6 +131,7 @@ class TabSwitcherViewController: UIViewController {
         let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
                                       message: UserText.alertBookmarkAllMessage,
                                       preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
             let savedState = self.bookmarkAll(self.tabsModel.tabs)
@@ -166,6 +167,7 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
             self?.forgetAll()
         })

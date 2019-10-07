@@ -20,6 +20,7 @@
 import UIKit
 
 enum ThemeName: String {
+    case systemDefault
     case light
     case dark
 }

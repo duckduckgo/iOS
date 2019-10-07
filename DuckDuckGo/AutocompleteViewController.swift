@@ -23,7 +23,12 @@ import Core
 class AutocompleteViewController: UIViewController {
     
     struct Constants {
-        static let debounceDelay = 0.3
+        static let debounceDelay: TimeInterval = {
+            if #available(iOS 13.0, *) {
+                return 0.1
+            }
+            return 0.3
+        }()
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?

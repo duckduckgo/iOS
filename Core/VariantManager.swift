@@ -32,9 +32,9 @@ public struct Variant {
     static let doNotAllocate = 0
     
     public static let defaultVariants: [Variant] = [
-        Variant(name: "mw", weight: 1, features: []),
-        Variant(name: "mc", weight: 1, features: []),
-        Variant(name: "md", weight: 1, features: []),
+        // SERP testing
+        Variant(name: "sc", weight: 1, features: []),
+        Variant(name: "se", weight: 1, features: []),
         
         Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
     ]

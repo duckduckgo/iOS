@@ -24,7 +24,7 @@ import SafariServices
 extension TabViewController {
 
     @available(iOS 13.0, *)
-    func buildLinkPreviewMenu(for url: URL) -> UIMenu {
+    func buildLinkPreviewMenu(for url: URL, atPoint point: Point) -> UIMenu {
         var items = [UIMenuElement]()
 
         items.append(UIAction(title: UserText.actionNewTabForUrl, image: UIImage(systemName: "rectangle.stack.badge.plus")) { [weak self] _ in
@@ -41,7 +41,7 @@ extension TabViewController {
             self?.onCopyAction(forUrl: url)
         })
         items.append(UIAction(title: UserText.actionShare, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
-             self?.onShareAction(forUrl: url, atPoint: nil)
+            self?.onShareAction(forUrl: url, atPoint: point)
         })
 
         return UIMenu(title: "", image: nil, identifier: nil, options: [], children: items)

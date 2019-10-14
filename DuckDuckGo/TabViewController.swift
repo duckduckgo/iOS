@@ -1037,7 +1037,9 @@ extension TabViewController {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
             return self.buildPreview(for: url)
         }, actionProvider: { _ in
-            return self.buildLinkPreviewMenu(for: url)
+            let midX = self.view.frame.midX
+            let midY = self.view.frame.midY
+            return self.buildLinkPreviewMenu(for: url, atPoint: Point(x: Int(midX), y: Int(midY)))
         })
         
         completionHandler(config)

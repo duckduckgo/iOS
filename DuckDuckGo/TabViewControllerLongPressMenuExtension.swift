@@ -22,6 +22,30 @@ import Core
 import SafariServices
 
 extension TabViewController {
+
+    @available(iOS 13.0, *)
+    func buildLinkPreviewMenu(for url: URL) -> UIMenu {
+        var items = [UIMenuElement]()
+
+        items.append(UIAction(title: UserText.actionNewTabForUrl, image: UIImage(systemName: "rectangle.stack.badge.plus")) { [weak self] _ in
+            self?.onNewTabAction(url: url)
+        })
+        items.append(UIAction(title: UserText.actionNewBackgroundTabForUrl,
+                              image: UIImage(systemName: "rectangle.on.rectangle.angled")) { [weak self] _ in
+            self?.onBackgroundTabAction(url: url)
+        })
+        items.append(UIAction(title: UserText.actionReadingList, image: UIImage(systemName: "eyeglasses")) { [weak self] _ in
+            self?.onReadingAction(forUrl: url)
+        })
+        items.append(UIAction(title: UserText.actionCopy, image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+            self?.onCopyAction(forUrl: url)
+        })
+        items.append(UIAction(title: UserText.actionShare, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+             self?.onShareAction(forUrl: url, atPoint: nil)
+        })
+
+        return UIMenu(title: "", image: nil, identifier: nil, options: [], children: items)
+    }
     
     func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: makeMessage(from: url), preferredStyle: .actionSheet)
@@ -87,7 +111,7 @@ extension TabViewController {
         UIPasteboard.general.string = copyText
     }
     
-    private func onShareAction(forUrl url: URL, atPoint point: Point) {
+    private func onShareAction(forUrl url: URL, atPoint point: Point?) {
         Pixel.fire(pixel: .longPressMenuShareItem)
         guard let webView = webView else { return }
         presentShareSheet(withItems: [url], fromView: webView, atPoint: point)

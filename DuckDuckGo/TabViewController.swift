@@ -142,6 +142,7 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
     }
@@ -173,8 +174,13 @@ class TabViewController: UIViewController {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.allowsLinkPreview = false
-        attachLongPressHandler(webView: webView)
+        
+        if #available(iOS 13, *) {
+            attachLongPressHandler(webView: webView)
+        } else {
+            webView.allowsLinkPreview = false
+        }
+        
         webView.allowsBackForwardNavigationGestures = true
         
         addObservers()
@@ -1008,6 +1014,68 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload(scripts: false)
         }
     }
+    
+    // Prevents rare accidental display of preview previous to iOS 12
+    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
+        return false
+    }
+    
+}
+
+@available(iOS 13.0, *)
+extension TabViewController {
+    
+    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
+    
+        guard let url = elementInfo.linkURL else {
+            completionHandler(nil)
+            return
+        }
+        
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
+            return self.buildPreview(for: url)
+        }, actionProvider: { _ in
+            return self.buildLinkPreviewMenu(for: url)
+        })
+        
+        completionHandler(config)
+    }
+    
+    func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo,
+                 willCommitWithAnimator animator: UIContextMenuInteractionCommitAnimating) {
+        guard let url = elementInfo.linkURL else { return }
+        load(url: url)
+    }
+        
+    func buildPreview(for url: URL) -> UIViewController? {
+        let tab = Tab(link: Link(title: nil, url: url))
+        let tabController = TabViewController.loadFromStoryboard(model: tab)
+        tabController.decorate(with: ThemeManager.shared.currentTheme)
+        let configuration = WKWebViewConfiguration.nonPersistent()
+        tabController.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: false)
+        tabController.loadViewIfNeeded()
+        return tabController
+    }
+    
+}
+
+extension TabViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+        error?.backgroundColor = theme.backgroundColor
+        errorHeader.textColor = theme.barTintColor
+        errorMessage.textColor = theme.barTintColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
+        case .dark:
+            errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
+        }
+    }
+    
 }
 
 // swiftlint:enable file_length

@@ -176,8 +176,9 @@ class TabViewController: UIViewController {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         if #available(iOS 13, *) {
-            attachLongPressHandler(webView: webView)
+            webView.allowsLinkPreview = true
         } else {
+            attachLongPressHandler(webView: webView)
             webView.allowsLinkPreview = false
         }
         

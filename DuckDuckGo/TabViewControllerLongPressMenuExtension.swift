@@ -115,7 +115,8 @@ extension TabViewController {
     static let excludedLongPressItems = [
         UIImage(systemName: "safari"),
         UIImage(systemName: "eyeglasses"),
-        nil // hide/show link previews
+        UIImage(systemName: "eye.fill"), //  hide/show link previews on some versions of ios
+        nil // hide/show link previews on some versions of ios
     ]
 
     func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,

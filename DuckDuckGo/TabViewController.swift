@@ -1023,46 +1023,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
     
 }
 
-@available(iOS 13.0, *)
-extension TabViewController {
-    
-    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
-                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
-    
-        guard let url = elementInfo.linkURL else {
-            completionHandler(nil)
-            return
-        }
-        
-        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-            return self.buildPreview(for: url)
-        }, actionProvider: { _ in
-            let midX = self.view.frame.midX
-            let midY = self.view.frame.midY
-            return self.buildLinkPreviewMenu(for: url, atPoint: Point(x: Int(midX), y: Int(midY)))
-        })
-        
-        completionHandler(config)
-    }
-    
-    func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo,
-                 willCommitWithAnimator animator: UIContextMenuInteractionCommitAnimating) {
-        guard let url = elementInfo.linkURL else { return }
-        load(url: url)
-    }
-        
-    func buildPreview(for url: URL) -> UIViewController? {
-        let tab = Tab(link: Link(title: nil, url: url))
-        let tabController = TabViewController.loadFromStoryboard(model: tab)
-        tabController.decorate(with: ThemeManager.shared.currentTheme)
-        let configuration = WKWebViewConfiguration.nonPersistent()
-        tabController.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: false)
-        tabController.loadViewIfNeeded()
-        return tabController
-    }
-    
-}
-
 extension TabViewController: Themable {
 
     func decorate(with theme: Theme) {

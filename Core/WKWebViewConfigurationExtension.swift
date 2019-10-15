@@ -42,6 +42,10 @@ extension WKWebViewConfiguration {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
 
+        if #available(iOS 11, *) {
+            configuration.installHideAtbModals()
+        }
+
         let defaultNameForUserAgent = configuration.applicationNameForUserAgent ?? ""
         configuration.applicationNameForUserAgent = "\(defaultNameForUserAgent) \(WKWebViewConfiguration.ddgNameForUserAgent)"
         configuration.allowsAirPlayForMediaPlayback = true
@@ -50,6 +54,29 @@ extension WKWebViewConfiguration {
         configuration.ignoresViewportScaleLimits = true
 
         return configuration
+    }
+
+    @available(iOS 11, *)
+    private func installHideAtbModals() {
+        guard let store = WKContentRuleListStore.default() else { return }
+        let rules = """
+        [
+          {
+            "trigger": {
+              "url-filter": ".*",
+              "if-domain": ["*duckduckgo.com"]
+            },
+            "action": {
+              "type": "css-display-none",
+              "selector": ".ddg-extension-hide"
+            }
+          }
+        ]
+        """
+        store.compileContentRuleList(forIdentifier: "hide-extension-css", encodedContentRuleList: rules) { rulesList, _ in
+            guard let rulesList = rulesList else { return }
+            self.userContentController.add(rulesList)
+        }
     }
 
     public func loadScripts(storageCache: StorageCache, contentBlockingEnabled: Bool) {

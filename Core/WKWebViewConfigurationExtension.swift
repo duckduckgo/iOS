@@ -91,7 +91,11 @@ private class Loader {
     }
 
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document, .findinpage ] )
+        if #available(iOS 13, *) {
+            load(scripts: [ .findinpage ] )
+        } else {
+            load(scripts: [ .document, .findinpage ] )
+        }
     }
 
     private func loadContentBlockingScripts() {

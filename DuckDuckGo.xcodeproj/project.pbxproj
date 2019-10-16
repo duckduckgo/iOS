@@ -467,6 +467,8 @@
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
+		FA23D6952357AD6100E25EBC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FA23D6932357AD6100E25EBC /* Settings.bundle */; };
+		FA23D6962357AD6100E25EBC /* SystemSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23D6942357AD6100E25EBC /* SystemSettingsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1068,6 +1070,8 @@
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
+		FA23D6932357AD6100E25EBC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FA23D6942357AD6100E25EBC /* SystemSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2475,6 +2479,7 @@
 		F1C5ECF31E37812900C599A4 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				FA23D6922357AD4A00E25EBC /* SystemSettings */,
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
 				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
@@ -2620,6 +2625,15 @@
 				F1EEAC4C1EAFC708006128D9 /* readme.txt */,
 			);
 			name = Licensed;
+			sourceTree = "<group>";
+		};
+		FA23D6922357AD4A00E25EBC /* SystemSettings */ = {
+			isa = PBXGroup;
+			children = (
+				FA23D6932357AD6100E25EBC /* Settings.bundle */,
+				FA23D6942357AD6100E25EBC /* SystemSettingsManager.swift */,
+			);
+			name = SystemSettings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3086,6 +3100,7 @@
 				85A313972028E78A00327D00 /* release_notes.txt in Resources */,
 				9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
+				FA23D6952357AD6100E25EBC /* Settings.bundle in Resources */,
 				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,
 				851B128A22204800004781BC /* Onboarding.storyboard in Resources */,
 				83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */,
@@ -3467,6 +3482,7 @@
 				987E7FB222D8F92700AD30A1 /* PrivacyReportViewController.swift in Sources */,
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
+				FA23D6962357AD6100E25EBC /* SystemSettingsManager.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,

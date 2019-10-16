@@ -27,20 +27,21 @@ class NetworkLeaderboardTests: XCTestCase {
         NetworkLeaderboard().reset()
     }
 
-    func testWhenDetectedNetworksLessThanMinimumDetectionLevelThenShouldNotShow() {
+    func testWhenNetworkOnLessThan1PercentOfSitesItIsExcludedFromTheView() {
         let leaderboard = NetworkLeaderboard()
-
-        for i in 0 ..< 3 {
-            leaderboard.incrementDetectionCount(forNetworkNamed: "google\(i).com")
-        }
-
         for _ in 0 ..< 200 {
             leaderboard.incrementPagesLoaded()
         }
 
-        XCTAssertEqual(200, leaderboard.pagesVisited())
-        XCTAssertEqual(3, leaderboard.networksDetected().count)
-        XCTAssertFalse(leaderboard.shouldShow(minimumDetectionLevel: 0.01))
+        leaderboard.incrementDetectionCount(forNetworkNamed: "Test")
+        XCTAssertTrue(leaderboard.networksDetected().isEmpty)
+
+        for _ in 0 ..< 100 {
+            leaderboard.incrementDetectionCount(forNetworkNamed: "Found")
+        }
+
+        XCTAssertEqual(1, leaderboard.networksDetected().count)
+        XCTAssertEqual("Found", leaderboard.networksDetected()[0].name)
     }
 
     func testWhenFirstAccessingLeaderboardThenItHasAStartDateOfToday() {
@@ -83,7 +84,7 @@ class NetworkLeaderboardTests: XCTestCase {
         
         XCTAssertEqual(30, leaderboard.pagesVisited())
         XCTAssertEqual(3, leaderboard.networksDetected().count)
-        XCTAssertTrue(leaderboard.shouldShow(minimumDetectionLevel: 0.0))
+        XCTAssertTrue(leaderboard.shouldShow())
     }
 
     func testWhenNotEnoughSitesVisitedButEnoughNetworksDetectedThenShouldNotShow() {
@@ -93,13 +94,13 @@ class NetworkLeaderboardTests: XCTestCase {
         }
 
         XCTAssertEqual(3, leaderboard.networksDetected().count)
-        XCTAssertFalse(leaderboard.shouldShow(minimumDetectionLevel: 0.0))
+        XCTAssertFalse(leaderboard.shouldShow())
     }
 
     func testWhenNotEnoughSitesVisitedOrNetworksDetectedThenShouldNotShow() {
 
         let leaderboard = NetworkLeaderboard()
-        XCTAssertFalse(leaderboard.shouldShow(minimumDetectionLevel: 0.0))
+        XCTAssertFalse(leaderboard.shouldShow())
 
     }
 

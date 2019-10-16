@@ -35,7 +35,7 @@ public protocol HTTPSUpgradeStore {
 
 public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
-    private let container = DDGPersistenceContainer(name: "HTTPSUpgrade")!
+    private let context = Database.shared.makeContext(concurrencyType: .privateQueueConcurrencyType, name: "HTTPSUpgrade")
     
     public init() {
     }
@@ -52,7 +52,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     public func bloomFilter() -> BloomFilterWrapper? {
         guard hasBloomFilterData else { return nil }
         var bloomFilter: BloomFilterWrapper?
-        container.managedObjectContext.performAndWait {
+        context.performAndWait {
             if let specification = bloomFilterSpecification() {
                 let entries = specification.totalEntries
                 bloomFilter = BloomFilterWrapper(fromPath: bloomFilterPath.path, withTotalItems: Int32(entries))
@@ -63,7 +63,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
 
     public func bloomFilterSpecification() -> HTTPSBloomFilterSpecification? {
         var specification: HTTPSBloomFilterSpecification?
-        container.managedObjectContext.performAndWait {
+        context.performAndWait {
             let request: NSFetchRequest<HTTPSStoredBloomFilterSpecification> = HTTPSStoredBloomFilterSpecification.fetchRequest()
             guard let result = try? request.execute() else { return }
             specification = HTTPSBloomFilterSpecification.copy(storedSpecification: result.first)
@@ -94,11 +94,10 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     func persistBloomFilterSpecification(_ specification: HTTPSBloomFilterSpecification) {
         
-        container.managedObjectContext.performAndWait {
+        context.performAndWait {
             deleteBloomFilterSpecification()
-            
+
             let entityName = String(describing: HTTPSStoredBloomFilterSpecification.self)
-            let context = container.managedObjectContext
             
             if let storedEntity = NSEntityDescription.insertNewObject(
                 forEntityName: entityName,
@@ -109,22 +108,22 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
                 storedEntity.sha256 = specification.sha256
                 
             }
-            _ = container.save()
+            try? context.save()
         }
     }
     
     private func deleteBloomFilterSpecification() {
-        container.managedObjectContext.performAndWait {
-            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSStoredBloomFilterSpecification.fetchRequest()))
+        context.performAndWait {
+            context.deleteAll(entities: try? context.fetch(HTTPSStoredBloomFilterSpecification.fetchRequest()))
         }
     }
     
     public func hasWhitelistedDomain(_ domain: String) -> Bool {
         var result = false
-        container.managedObjectContext.performAndWait {
+        context.performAndWait {
             let request: NSFetchRequest<HTTPSWhitelistedDomain> = HTTPSWhitelistedDomain.fetchRequest()
             request.predicate = NSPredicate(format: "domain = %@", domain.lowercased())
-            guard let count = try? container.managedObjectContext.count(for: request) else { return }
+            guard let count = try? context.count(for: request) else { return }
             result = count > 0
         }
         return result
@@ -132,25 +131,28 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     @discardableResult
     public func persistWhitelist(domains: [String]) -> Bool {
-        var result = false
-        container.managedObjectContext.performAndWait {
+        var result = true
+        context.performAndWait {
             deleteWhitelist()
 
             for domain in domains {
                 let entityName = String(describing: HTTPSWhitelistedDomain.self)
-                let context = container.managedObjectContext
                 if let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSWhitelistedDomain {
                     storedDomain.domain = domain.lowercased()
                 }
             }
-            result = container.save()
+            do {
+                try context.save()
+            } catch {
+                result = false
+            }
         }
         return result
     }
     
     private func deleteWhitelist() {
-        container.managedObjectContext.performAndWait {
-            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSWhitelistedDomain.fetchRequest()))
+        context.performAndWait {
+            context.deleteAll(entities: try? context.fetch(HTTPSWhitelistedDomain.fetchRequest()))
         }
     }
     

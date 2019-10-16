@@ -316,6 +316,7 @@
 		987E7FB922D914B200AD30A1 /* PrivacyReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */; };
 		987E7FBB22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */; };
 		9881439C23326DC200573F7C /* ThemeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */; };
+		9887DC252354D2AA005C85F5 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9887DC242354D2AA005C85F5 /* Database.swift */; };
 		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
@@ -903,6 +904,7 @@
 		987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportCell.swift; sourceTree = "<group>"; };
 		987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportFooterCell.swift; sourceTree = "<group>"; };
 		9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
+		9887DC242354D2AA005C85F5 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
@@ -2165,6 +2167,7 @@
 				8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */,
 				8328AAB7212A3DF200293140 /* BloomFilterWrapper.mm */,
 				8328AAAE212A3AE900293140 /* HashExtension.swift */,
+				9887DC242354D2AA005C85F5 /* Database.swift */,
 				85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */,
 				F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */,
 				F1134ED91F40FC3F00B73467 /* InfoBundle.swift */,
@@ -3702,6 +3705,7 @@
 				859C5FBD214972E400E2A43D /* Grade.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */,
+				9887DC252354D2AA005C85F5 /* Database.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

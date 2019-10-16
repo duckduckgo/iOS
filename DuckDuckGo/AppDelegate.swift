@@ -41,12 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        Database.shared.loadStore()
+        
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-
+        
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         

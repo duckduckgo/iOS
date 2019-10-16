@@ -69,8 +69,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        
-        if identifier == "Leaderboard" && !NetworkLeaderboard.shared.shouldShow() {
+
+        let level = TrackerNetworkLeaderboardView.Constants.minimumDetectionLevel
+        if identifier == "Leaderboard" && !NetworkLeaderboard.shared.shouldShow(minimumDetectionLevel: level) {
             return false
         }
         

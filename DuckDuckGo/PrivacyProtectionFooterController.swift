@@ -61,6 +61,10 @@ class PrivacyProtectionFooterController: UIViewController {
 
 class TrackerNetworkLeaderboardView: UIView {
 
+    struct Constants {
+        static let minimumDetectionLevel = 0.01
+    }
+
     @IBOutlet weak var gatheringView: UIView!
     @IBOutlet weak var scoresView: UIView!
 
@@ -78,7 +82,7 @@ class TrackerNetworkLeaderboardView: UIView {
 
     func update() {
         let networksDetected = leaderboard.networksDetected()
-        let shouldShow = leaderboard.shouldShow()
+        let shouldShow = leaderboard.shouldShow(minimumDetectionLevel: Constants.minimumDetectionLevel)
         gatheringView.isHidden = shouldShow
         scoresView.isHidden = !shouldShow
 

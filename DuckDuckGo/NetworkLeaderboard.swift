@@ -101,13 +101,14 @@ class NetworkLeaderboard {
         let request: NSFetchRequest<PPTrackerNetwork> = PPTrackerNetwork.fetchRequest()
         request.sortDescriptors = [ NSSortDescriptor(key: "detectedOnCount", ascending: false) ]
         guard let results = try? container.managedObjectContext.fetch(request) else { return [] }
-        let pagesVisitedCount = Float(pagesVisited())
-        return results.filter { Float($0.detectedOnCount) / pagesVisitedCount >= 0.01 }
+        return results
     }
 
-    func shouldShow() -> Bool {
+    func shouldShow(minimumDetectionLevel: Double) -> Bool {
+        let pagesVisitedCount = Double(pagesVisited())
+        let detected = networksDetected().filter { Double($0.detectedOnCount) / pagesVisitedCount >= minimumDetectionLevel }
         let pagesVisitedThreshold = isDebugBuild ? 3 : 30
-        return pagesVisited() > pagesVisitedThreshold && networksDetected().count >= 3
+        return pagesVisited() > pagesVisitedThreshold && detected.count >= 3
     }
     
     func incrementDetectionCount(forNetworkNamed networkName: String) {

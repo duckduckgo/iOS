@@ -75,7 +75,7 @@
 		</dict>
 	</array>
 	<key>UIApplicationShortcutWidget</key>
-	<string>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</string>
+	<string>$(APP_ID).QuickActionsTodayExtension</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

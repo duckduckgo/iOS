@@ -13,6 +13,8 @@
 			<string>Version</string>
 			<key>Key</key>
 			<string>app_version</string>
+			<key>DefaultValue</key>
+			<string></string>
 		</dict>
 	</array>
 </dict>

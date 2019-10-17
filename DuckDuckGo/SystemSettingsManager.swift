@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Core
 
 class SystemSettingsManager {
     struct Keys {
@@ -15,6 +16,6 @@ class SystemSettingsManager {
     
     static func updateSettingsValues() {
         // Update version value
-        UserDefaults.standart.set(AppVersion.shared.majorVersionNumber, forKey: Keys.version)
+        UserDefaults.standard.set(AppVersion.shared.versionAndBuildNumber, forKey: Keys.version)
     }
 }

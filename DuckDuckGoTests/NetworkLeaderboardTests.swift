@@ -26,7 +26,24 @@ class NetworkLeaderboardTests: XCTestCase {
     override func setUp() {
         NetworkLeaderboard().reset()
     }
-    
+
+    func testWhenNetworkOnLessThan1PercentOfSitesItIsExcludedFromTheView() {
+        let leaderboard = NetworkLeaderboard()
+        for _ in 0 ..< 200 {
+            leaderboard.incrementPagesLoaded()
+        }
+
+        leaderboard.incrementDetectionCount(forNetworkNamed: "Test")
+        XCTAssertTrue(leaderboard.networksDetected().isEmpty)
+
+        for _ in 0 ..< 100 {
+            leaderboard.incrementDetectionCount(forNetworkNamed: "Found")
+        }
+
+        XCTAssertEqual(1, leaderboard.networksDetected().count)
+        XCTAssertEqual("Found", leaderboard.networksDetected()[0].name)
+    }
+
     func testWhenFirstAccessingLeaderboardThenItHasAStartDateOfToday() {
         let leaderboard = NetworkLeaderboard()
         guard let startDate = leaderboard.startDate else {

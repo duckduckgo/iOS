@@ -188,6 +188,7 @@ extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
         delegate.tabSwitcher(self, didRemoveTab: tab)
+        currentSelection = tabsModel.currentIndex
         refreshTitle()
         collectionView.reloadData()
     }

@@ -61,7 +61,7 @@ class HomeRowCTA {
         }
         
         // only show if we're on a different day
-        return !Calendar.current.isDate(installDate, inSameDayAs: currentDate)
+        return !installDate.isSameDay(currentDate)
     }
 
     func dismissed() {

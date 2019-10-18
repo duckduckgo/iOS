@@ -55,6 +55,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     private var startZoomScale: CGFloat = 0
     
     func attach(to scrollView: UIScrollView) {
+        detach()
+        
         scrollView.delegate = self
         
         observation = scrollView.observe(\.contentSize, options: .new) { [weak self] scrollView, _ in

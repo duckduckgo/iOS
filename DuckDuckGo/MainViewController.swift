@@ -273,6 +273,8 @@ class MainViewController: UIViewController {
 
     fileprivate func attachHomeScreen() {
         findInPageView.isHidden = true
+        chromeManager.detach()
+        
         removeHomeScreen()
 
         let controller = HomeViewController.loadFromStoryboard()
@@ -377,7 +379,7 @@ class MainViewController: UIViewController {
         currentTab?.chromeDelegate = nil
         addToView(controller: tab)
         tab.progressWorker.progressBar = progressView
-        tab.webView.scrollView.delegate = chromeManager
+        chromeManager.attach(to: tab.webView.scrollView)
         tab.chromeDelegate = self
     }
 

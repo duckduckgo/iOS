@@ -468,7 +468,6 @@
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
 		FA23D6952357AD6100E25EBC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FA23D6932357AD6100E25EBC /* Settings.bundle */; };
-		FA23D6962357AD6100E25EBC /* SystemSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23D6942357AD6100E25EBC /* SystemSettingsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1071,7 +1070,6 @@
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
 		FA23D6932357AD6100E25EBC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		FA23D6942357AD6100E25EBC /* SystemSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2479,7 +2477,6 @@
 		F1C5ECF31E37812900C599A4 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				FA23D6922357AD4A00E25EBC /* SystemSettings */,
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
 				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
@@ -2488,6 +2485,7 @@
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				853C5F6021C277C7001F7A05 /* global.swift */,
 				850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */,
+				FA23D6932357AD6100E25EBC /* Settings.bundle */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2627,15 +2625,6 @@
 			name = Licensed;
 			sourceTree = "<group>";
 		};
-		FA23D6922357AD4A00E25EBC /* SystemSettings */ = {
-			isa = PBXGroup;
-			children = (
-				FA23D6932357AD6100E25EBC /* Settings.bundle */,
-				FA23D6942357AD6100E25EBC /* SystemSettingsManager.swift */,
-			);
-			name = SystemSettings;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2752,6 +2741,7 @@
 				F10307651E7D5B2C0059FEC7 /* Copy Frameworks */,
 				F17BA4411F1CD9D300460FFA /* Cathage Copy Frameworks */,
 				83E282AC20BC1840005FBE88 /* Embed App Extensions */,
+				FA23D69C2359ABCF00E25EBC /* System Settings */,
 			);
 			buildRules = (
 			);
@@ -3288,6 +3278,24 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
+		FA23D69C2359ABCF00E25EBC /* System Settings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "System Settings";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "version=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuild=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\n\n/usr/libexec/PlistBuddy \"$SRCROOT/DuckDuckGo/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:0:DefaultValue $version.$build\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3482,7 +3490,6 @@
 				987E7FB222D8F92700AD30A1 /* PrivacyReportViewController.swift in Sources */,
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
-				FA23D6962357AD6100E25EBC /* SystemSettingsManager.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,

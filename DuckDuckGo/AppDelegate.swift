@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        SystemSettingsManager.updateSettingsValues()
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         

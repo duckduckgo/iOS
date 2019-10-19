@@ -1,8 +1,4 @@
-//
-//  ContentBlockerStoreConstants.swift
-//  DuckDuckGo
-//
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,10 +13,11 @@
 //  limitations under the License.
 //
 
-import Foundation
+// The Apple Developer account's Team ID
+DEVELOPMENT_TEAM = HKE973VLUW
 
-public struct ContentBlockerStoreConstants {
+// The app bundle identifier
+APP_ID = com.duckduckgo.mobile.ios
 
-    public static let groupName = "\(Global.groupIdPrefix).contentblocker"
-
-}
+// A prefix for group ids. Must start with "group.".
+GROUP_ID_PREFIX = group.com.duckduckgo

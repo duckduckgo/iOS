@@ -64,3 +64,7 @@ Carthage/Build
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/test_output
+
+# DuckDuckGo
+
+Configuration/ExternalDeveloper.xcconfig

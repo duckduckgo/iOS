@@ -75,7 +75,7 @@
 		</dict>
 	</array>
 	<key>UIApplicationShortcutWidget</key>
-	<string>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</string>
+	<string>$(APP_ID).QuickActionsTodayExtension</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -99,5 +99,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>DuckDuckGoGroupIdentifierPrefix</key>
+	<string>$(GROUP_ID_PREFIX)</string>
 </dict>
 </plist>

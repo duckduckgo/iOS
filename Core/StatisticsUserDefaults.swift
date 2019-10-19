@@ -35,7 +35,11 @@ public class StatisticsUserDefaults: StatisticsStore {
         return UserDefaults(suiteName: groupName)
     }
 
-    public init(groupName: String = "group.com.duckduckgo.statistics") {
+    public init() {
+        self.groupName = "\(Global.groupIdPrefix).statistics"
+    }
+
+    public init(groupName: String) {
         self.groupName = groupName
     }
 

@@ -1,3 +1,3 @@
-• Saving images now works again for iOS 13 users.  We've also implemented the preview when you long press on a link.
+• We fixed an image saving issue on iOS 13 and added a page preview when you long press a link.
 • The tab switcher now highlights the correct tab when you close a tab.
 • A few other minor bug fixes and improvements.

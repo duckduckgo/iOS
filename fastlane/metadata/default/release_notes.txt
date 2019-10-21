@@ -1,3 +1,3 @@
-• From iOS 13, you can change the in-app theme to match the system default.
-• We made search queries faster.
-• We fixed a bug to ensure that duckduckgo website settings are maintained when using the fire button.
+• Saving images now works again for iOS 13 users.  We've also implemented the preview when you long press on a link.
+• The tab switcher now highlights the correct tab when you close a tab.
+• A few other minor bug fixes and improvements.

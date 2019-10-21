@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>0</string>
+	<key>DuckDuckGoGroupIdentifierPrefix</key>
+	<string>$(GROUP_ID_PREFIX)</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionMainStoryboard</key>
@@ -27,7 +29,5 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widget-extension</string>
 	</dict>
-	<key>DuckDuckGoGroupIdentifierPrefix</key>
-	<string>$(GROUP_ID_PREFIX)</string>
 </dict>
 </plist>

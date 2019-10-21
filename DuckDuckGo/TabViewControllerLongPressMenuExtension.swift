@@ -20,8 +20,23 @@
 import UIKit
 import Core
 import SafariServices
+import WebKit
 
 extension TabViewController {
+
+    @available(iOS 13.0, *)
+    func buildLinkPreviewMenu(for url: URL, withProvided providedElements: [UIMenuElement]) -> UIMenu {
+        var items = [UIMenuElement]()
+
+        items.append(UIAction(title: UserText.actionNewTabForUrl, image: UIImage(systemName: "plus.square.on.square")) { [weak self] _ in
+            self?.onNewTabAction(url: url)
+        })
+        items.append(UIAction(title: UserText.actionNewBackgroundTabForUrl,
+                              image: UIImage(systemName: "arrow.up.right.square")) { [weak self] _ in
+            self?.onBackgroundTabAction(url: url)
+        })
+        return UIMenu(title: url.host?.dropPrefix(prefix: "www.") ?? "", children: items + providedElements)
+    }
     
     func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: makeMessage(from: url), preferredStyle: .actionSheet)
@@ -87,9 +102,59 @@ extension TabViewController {
         UIPasteboard.general.string = copyText
     }
     
-    private func onShareAction(forUrl url: URL, atPoint point: Point) {
+    private func onShareAction(forUrl url: URL, atPoint point: Point?) {
         Pixel.fire(pixel: .longPressMenuShareItem)
         guard let webView = webView else { return }
         presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
     }
+}
+
+@available(iOS 13.0, *)
+extension TabViewController {
+
+    static let excludedLongPressItems = [
+        UIImage(systemName: "safari"),
+        UIImage(systemName: "eyeglasses"),
+        UIImage(systemName: "eye.fill"), //  hide/show link previews on some versions of ios
+        nil // hide/show link previews on some versions of ios
+    ]
+
+    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
+
+        guard let url = elementInfo.linkURL else {
+            completionHandler(nil)
+            return
+        }
+
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
+            return self.buildPreview(for: url)
+        }, actionProvider: { elements in
+
+            let provided = elements.filter({
+                !TabViewController.excludedLongPressItems.contains($0.image)
+            })
+
+            return self.buildLinkPreviewMenu(for: url, withProvided: provided)
+        })
+
+        completionHandler(config)
+    }
+
+    func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo,
+                 willCommitWithAnimator animator: UIContextMenuInteractionCommitAnimating) {
+        guard let url = elementInfo.linkURL else { return }
+        load(url: url)
+    }
+
+    func buildPreview(for url: URL) -> UIViewController? {
+        let tab = Tab(link: Link(title: nil, url: url))
+        let tabController = TabViewController.loadFromStoryboard(model: tab)
+        tabController.decorate(with: ThemeManager.shared.currentTheme)
+        let configuration = WKWebViewConfiguration.nonPersistent()
+        tabController.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: false)
+        tabController.loadViewIfNeeded()
+        return tabController
+    }
+
 }

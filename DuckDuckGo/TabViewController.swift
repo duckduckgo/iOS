@@ -856,6 +856,11 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let allow: WKNavigationActionPolicy = AppUserDefaults().allowUniversalLinks ?
+                .allow : WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) else {
+            fatalError("Could not create action poloicy")
+        }
+        
         let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
@@ -864,7 +869,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let url = navigationAction.request.url else {
-            completion(.allow)
+            completion(allow)
             return
         }
         
@@ -874,13 +879,13 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            completion(.allow)
+            completion(allow)
             return
         }
         
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
-            completion(.cancel)
+            completion(allow)
             return
         }
         
@@ -900,7 +905,7 @@ extension TabViewController: WKNavigationDelegate {
                     self?.delegate?.tab(strongSelf, didRequestNewTabForUrl: url)
                     completion(.cancel)
                 } else {
-                    completion(.allow)
+                    completion(allow)
                 }
                 return
             }

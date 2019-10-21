@@ -86,9 +86,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
             return
         }
         
-        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
-        guard isInBottomBounceArea == false else { return }
-
         animator.didScroll(in: scrollView)
     }
     
@@ -177,6 +174,11 @@ private class BarsAnimator {
     }
     
     func didScroll(in scrollView: UIScrollView) {
+        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
+        guard isInBottomBounceArea == false else {
+            scrollingInBottomBounceArea(in: scrollView)
+            return
+        }
         
         switch barsState {
         case .revealed:
@@ -188,6 +190,12 @@ private class BarsAnimator {
         case .hidden:
             hiddenAndScrolling(in: scrollView)
             
+        }
+    }
+    
+    private func scrollingInBottomBounceArea(in scrollView: UIScrollView) {
+        if barsState == .hidden {
+            delegate?.setBarsHidden(false, animated: true)
         }
     }
     

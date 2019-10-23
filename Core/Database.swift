@@ -28,6 +28,7 @@ public class Database {
     
     public static let shared = Database()
 
+    private let lock = NSLock()
     private let container: NSPersistentContainer
     
     init() {
@@ -38,19 +39,21 @@ public class Database {
         
         container = DDGPersistentContainer(name: "Database", managedObjectModel: managedObjectModel)
         
+        loadStore()
     }
     
-    public func loadStore() {
-        let semaphore = DispatchSemaphore(value: 0)
-        container.loadPersistentStores { _, _ in semaphore.signal() }
-        semaphore.wait()
+    private func loadStore() {
+        lock.lock()
+        container.loadPersistentStores { _, _ in self.lock.unlock() }
     }
     
     public func makeContext(concurrencyType: NSManagedObjectContextConcurrencyType, name: String? = nil) -> NSManagedObjectContext {
-        
+        lock.lock()
         let context = NSManagedObjectContext(concurrencyType: concurrencyType)
         context.persistentStoreCoordinator = container.persistentStoreCoordinator
         context.name = name
+        lock.unlock()
+        
         return context
     }
 }

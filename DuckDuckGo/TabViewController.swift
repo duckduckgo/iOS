@@ -142,6 +142,7 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
     }
@@ -173,8 +174,14 @@ class TabViewController: UIViewController {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.allowsLinkPreview = false
-        attachLongPressHandler(webView: webView)
+        
+        if #available(iOS 13, *) {
+            webView.allowsLinkPreview = true
+        } else {
+            attachLongPressHandler(webView: webView)
+            webView.allowsLinkPreview = false
+        }
+        
         webView.allowsBackForwardNavigationGestures = true
         
         addObservers()
@@ -1008,6 +1015,30 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload(scripts: false)
         }
     }
+    
+    // Prevents rare accidental display of preview previous to iOS 12
+    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
+        return false
+    }
+    
+}
+
+extension TabViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+        error?.backgroundColor = theme.backgroundColor
+        errorHeader.textColor = theme.barTintColor
+        errorMessage.textColor = theme.barTintColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
+        case .dark:
+            errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
+        }
+    }
+    
 }
 
 // swiftlint:enable file_length

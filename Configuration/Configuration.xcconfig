@@ -1,8 +1,4 @@
-//
-//  ContentBlockerStoreConstants.swift
-//  DuckDuckGo
-//
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,10 +13,5 @@
 //  limitations under the License.
 //
 
-import Foundation
-
-public struct ContentBlockerStoreConstants {
-
-    public static let groupName = "\(Global.groupIdPrefix).contentblocker"
-
-}
+#include "DuckDuckGoDeveloper.xcconfig"
+#include? "ExternalDeveloper.xcconfig"

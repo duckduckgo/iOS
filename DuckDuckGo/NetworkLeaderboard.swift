@@ -101,7 +101,8 @@ class NetworkLeaderboard {
         let request: NSFetchRequest<PPTrackerNetwork> = PPTrackerNetwork.fetchRequest()
         request.sortDescriptors = [ NSSortDescriptor(key: "detectedOnCount", ascending: false) ]
         guard let results = try? context.fetch(request) else { return [] }
-        return results
+        let pagesVisitedCount = Float(pagesVisited())
+        return results.filter { Float($0.detectedOnCount) / pagesVisitedCount >= 0.01 }
     }
 
     func shouldShow() -> Bool {

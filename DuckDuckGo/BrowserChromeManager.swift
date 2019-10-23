@@ -37,6 +37,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     struct Constants {
         static let dragThreshold: CGFloat = 30
         static let zoomThreshold: CGFloat = 0.1
+        
+        static let contentSizeKVOKey = "contentSize"
     }
 
     weak var delegate: BrowserChromeDelegate? {
@@ -46,10 +48,33 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
     
     private let animator = BarsAnimator()
+    
+    private var observation: NSKeyValueObservation?
 
     private var dragging = false
     private var startZoomScale: CGFloat = 0
     
+    func attach(to scrollView: UIScrollView) {
+        detach()
+        
+        scrollView.delegate = self
+        
+        observation = scrollView.observe(\.contentSize, options: .new) { [weak self] scrollView, _ in
+            self?.scrollViewDidResizeContent(scrollView)
+        }
+    }
+    
+    func detach() {
+        observation?.invalidate()
+        observation = nil
+    }
+    
+    private func scrollViewDidResizeContent(_ scrollView: UIScrollView) {
+        if !canHideBars(for: scrollView) && animator.barsState != .revealed {
+            animator.revealBars(animated: true)
+        }
+    }
+        
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !scrollView.isZooming else { return }
         

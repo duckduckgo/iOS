@@ -31,8 +31,8 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    case privacyDashboardToggleProtectionOn = "mp_ta"
-    case privacyDashboardToggleProtectionOff = "mp_tb"
+    case privacyDashboardWhitelistAdd = "mp_wla"
+    case privacyDashboardWhitelistRemove = "mp_wlr"
     
     case httpsNoLookup = "m_https_nl"
     case httpsLocalUpgrade = "m_https_lu"
@@ -84,11 +84,12 @@ public enum PixelName: String {
     case browsingMenuAddToFavorites = "mb_af"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
-    case browsingMenuWhitelist = "mb_wl"
-    case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
     case browsingMenuFindInPage = "mb_fp"
-
+    case browsingMenuWhitelistAdd = "mb_wla"
+    case browsingMenuWhitelistRemove = "mb_wlr"
+    case browsingMenuReportBrokenSite = "mb_rb"
+    
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"

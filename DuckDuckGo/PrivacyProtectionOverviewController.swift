@@ -82,6 +82,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         guard isViewLoaded else { return }
         
         header.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
+        footer.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()

@@ -62,6 +62,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private let contentBlockerConfiguration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -884,6 +885,17 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
+        if isNewTargetBlankRequest(navigationAction: navigationAction) {
+            delegate?.tab(self, didRequestNewTabForUrl: url)
+            completion(.cancel)
+            return
+        }
+        
+        if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+            completion(.allow)
+            return
+        }
+
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
@@ -895,13 +907,7 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             if let shouldLoad = self?.shouldLoad(url: url, forDocument: documentUrl), shouldLoad {
-                if let strongSelf = self, navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
-                    // Handle <a href target="_blank">
-                    self?.delegate?.tab(strongSelf, didRequestNewTabForUrl: url)
-                    completion(.cancel)
-                } else {
-                    completion(.allow)
-                }
+                completion(.allow)
                 return
             }
             
@@ -909,6 +915,10 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
+    private func isNewTargetBlankRequest(navigationAction: WKNavigationAction) -> Bool {
+        return navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil
+    }
+
     private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
         guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
         

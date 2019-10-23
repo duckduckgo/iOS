@@ -22,19 +22,32 @@ import UIKit
 import Core
 
 class PrivacyProtectionFooterController: UIViewController {
-
+    
+    private struct DisplayConstants {
+        static let tallScreenHeight: CGFloat = 746
+        static let tallLeaderboardTopPadding: CGFloat = 108
+        static let defaultLeaderboardTopPadding: CGFloat = 8
+    }
+    
     @IBOutlet weak var privacyProtectionView: UIView!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
-    
+    @IBOutlet weak var leaderboardTopConstraint: NSLayoutConstraint!
+
     fileprivate var domain: String?
     fileprivate var contentBlockerConfiguration: ContentBlockerConfigurationStore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         leaderboard.didLoad()
+        update(forHeight: view?.frame.size.height ?? 0)
     }
-
+    
+    func update(forHeight height: CGFloat) {
+        let tall = height > DisplayConstants.tallScreenHeight
+        leaderboardTopConstraint.constant = tall ? DisplayConstants.tallLeaderboardTopPadding : DisplayConstants.defaultLeaderboardTopPadding
+    }
+    
     @IBAction func toggleProtection() {
         guard let domain = domain else { return }
         let whitelisted = !privacyProtectionSwitch.isOn
@@ -58,6 +71,17 @@ class PrivacyProtectionFooterController: UIViewController {
         let isWhitelisted = contentBlockerConfiguration.whitelisted(domain: domain)
         privacyProtectionSwitch.isOn = !isWhitelisted
         privacyProtectionView.backgroundColor = isWhitelisted ? UIColor.ppGray : UIColor.ppGreen
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is WhitelistViewController {
+            Pixel.fire(pixel: .privacyDashboardManageWhitelist)
+            return
+        }
+        if segue.destination is SiteFeedbackViewController {
+            Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
+            return
+        }
     }
 }
 

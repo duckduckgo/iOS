@@ -33,6 +33,8 @@ public enum PixelName: String {
     case privacyDashboardGlobalStats = "mp_s"
     case privacyDashboardWhitelistAdd = "mp_wla"
     case privacyDashboardWhitelistRemove = "mp_wlr"
+    case privacyDashboardManageWhitelist = "mp_mw"
+    case privacyDashboardReportBrokenSite = "mp_rb"
     
     case httpsNoLookup = "m_https_nl"
     case httpsLocalUpgrade = "m_https_lu"
@@ -66,6 +68,7 @@ public enum PixelName: String {
     case settingsHomePageSimple = "ms_hp_s"
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
+    case settingsdManageWhitelist = "ms_mw"
 
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"

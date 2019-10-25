@@ -22,60 +22,98 @@ import CoreData
 import Core
 
 class DatabaseMigration {
-
+    
+    private enum LegacyStores: String, CaseIterable {
+        case appRating = "AppRatingPrompt"
+        case networkLeaderboard = "NetworkLeaderboard"
+        case httpsUpgrade = "HTTPSUpgrade"
+    }
+    
+    // swiftlint:disable function_body_length
     static func migrate(to context: NSManagedObjectContext) {
         let group = DispatchGroup()
+        
+        var success = true
         group.enter()
-        migrate(db: "AppRatingPrompt", to: context,
+        migrate(db: LegacyStores.appRating.rawValue, to: context,
                 with: { (source: AppRatingPromptEntity, destination: AppRatingPromptEntity) in
-            destination.lastAccess = source.lastAccess
-            destination.lastShown = source.lastShown
-            destination.uniqueAccessDays = source.uniqueAccessDays
-        }, completion: { group.leave() })
+                    destination.lastAccess = source.lastAccess
+                    destination.lastShown = source.lastShown
+                    destination.uniqueAccessDays = source.uniqueAccessDays
+        }, completion: { result in
+            group.leave()
+            success = success && result
+        })
         
         group.enter()
-        migrate(db: "NetworkLeaderboard", to: context,
+        migrate(db: LegacyStores.networkLeaderboard.rawValue, to: context,
                 with: { (source: PPTrackerNetwork, destination: PPTrackerNetwork) in
-            destination.detectedOnCount = source.detectedOnCount
-            destination.trackersCount = source.trackersCount
-            destination.name = source.name
-        }, completion: { group.leave() })
+                    destination.detectedOnCount = source.detectedOnCount
+                    destination.trackersCount = source.trackersCount
+                    destination.name = source.name
+        }, completion: { result in
+            group.leave()
+            success = success && result
+        })
         
         group.enter()
-        migrate(db: "NetworkLeaderboard", to: context,
+        migrate(db: LegacyStores.networkLeaderboard.rawValue, to: context,
                 with: { (source: PPPageStats, destination: PPPageStats) in
-            destination.httpsUpgrades = source.httpsUpgrades
-            destination.pagesLoaded = source.pagesLoaded
-            destination.pagesWithTrackers = source.pagesWithTrackers
-            destination.startDate = source.startDate
-        }, completion: { group.leave() })
+                    destination.httpsUpgrades = source.httpsUpgrades
+                    destination.pagesLoaded = source.pagesLoaded
+                    destination.pagesWithTrackers = source.pagesWithTrackers
+                    destination.startDate = source.startDate
+        }, completion: { result in
+            group.leave()
+            success = success && result
+        })
         
         group.enter()
-        migrate(db: "HTTPSUpgrade", to: context,
+        migrate(db: LegacyStores.httpsUpgrade.rawValue, to: context,
                 with: { (source: HTTPSStoredBloomFilterSpecification, destination: HTTPSStoredBloomFilterSpecification) in
-            destination.errorRate = source.errorRate
-            destination.totalEntries = source.totalEntries
-            destination.sha256 = source.sha256
-        }, completion: { group.leave() })
+                    destination.errorRate = source.errorRate
+                    destination.totalEntries = source.totalEntries
+                    destination.sha256 = source.sha256
+        }, completion: { result in
+            group.leave()
+            success = success && result
+        })
         
         group.enter()
-        migrate(db: "HTTPSUpgrade", to: context,
+        migrate(db: LegacyStores.httpsUpgrade.rawValue, to: context,
                 with: { (source: HTTPSWhitelistedDomain, destination: HTTPSWhitelistedDomain) in
-            destination.domain = source.domain
-        }, completion: { group.leave() })
+                    destination.domain = source.domain
+        }, completion: { result in
+            group.leave()
+            success = success && result
+        })
         
         group.wait()
+        
+        if success,
+            let model = context.persistentStoreCoordinator?.managedObjectModel {
+            
+            for legacyStore in LegacyStores.allCases {
+                removeDatabase(dbName: legacyStore.rawValue, model: model)
+            }
+        }
     }
+    // swiftlint:enable function_body_length
     
     static func migrate<T: NSManagedObject>(db name: String,
                                             to destination: NSManagedObjectContext,
                                             with logic: @escaping (_ source: T, _ dest: T) -> Void,
-                                            completion: @escaping () -> Void) {
+                                            completion: @escaping (Bool) -> Void) {
+        guard isDatabaseAvailable(dbName: name) else {
+            completion(true)
+            return
+        }
+        
         let oldStack = DDGPersistenceContainer(name: name,
                                                model: destination.persistentStoreCoordinator!.managedObjectModel,
                                                concurrencyType: .privateQueueConcurrencyType)
         guard let stack = oldStack else {
-            completion()
+            completion(false)
             return
         }
         
@@ -84,17 +122,25 @@ class DatabaseMigration {
                          to: destination,
                          with: logic,
                          completion: completion)
+            
+            guard let store = stack.persistenceStoreCoordinator.persistentStores.last else { return }
+            
+            do {
+                try stack.persistenceStoreCoordinator.remove(store)
+            } catch {
+                Logger.log(text: "Error removing store: \(error.localizedDescription)")
+            }
         }
     }
     
     static func migrate<T: NSManagedObject>(from source: NSManagedObjectContext,
                                             to destination: NSManagedObjectContext,
                                             with logic: (_ source: T, _ dest: T) -> Void,
-                                            completion: () -> Void) {
+                                            completion: (Bool) -> Void) {
         let fetchRequest = T.fetchRequest()
         
         guard let existingEntities = try? source.fetch(fetchRequest) as? [T] else {
-            completion()
+            completion(false)
             return
         }
         
@@ -107,7 +153,7 @@ class DatabaseMigration {
             do {
                 try destination.save()
             } catch {
-                completion()
+                completion(false)
                 return
             }
         }
@@ -117,7 +163,37 @@ class DatabaseMigration {
             try source.save()
         } catch {}
         
-        completion()
+        completion(true)
+    }
+
+    private static func isDatabaseAvailable(dbName: String) -> Bool {
+        guard let url = DDGPersistenceContainer.storeURL(for: dbName) else { return false }
+        
+        return (try? url.checkResourceIsReachable()) ?? false
+    }
+    
+    private static func removeDatabase(dbName: String, model: NSManagedObjectModel) {
+        guard let oldStack = DDGPersistenceContainer(name: dbName,
+                                                     model: model,
+                                                     concurrencyType: .privateQueueConcurrencyType),
+            let storeURL = oldStack.persistenceStoreCoordinator.persistentStores.last?.url else { return }
+        
+        Logger.log(text: "Destroying store: \(dbName)")
+        
+        do {
+            try oldStack.persistenceStoreCoordinator.destroyPersistentStore(at: storeURL,
+                                                                            ofType: NSSQLiteStoreType,
+                                                                            options: nil)
+            
+            try FileManager.default.removeItem(at: storeURL)
+
+            let walURL = URL(fileURLWithPath: storeURL.path.appending("-wal"))
+            try FileManager.default.removeItem(at: walURL)
+            let shmURL = URL(fileURLWithPath: storeURL.path.appending("-shm"))
+            try FileManager.default.removeItem(at: shmURL)
+        } catch {
+            Logger.log(text: "Error destroying store: \(error.localizedDescription)")
+        }
     }
 }
 

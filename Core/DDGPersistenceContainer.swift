@@ -39,12 +39,9 @@ public class DDGPersistenceContainer {
         managedObjectContext.persistentStoreCoordinator = persistenceStoreCoordinator
     }
 
-    private class func createPersistenceStoreCoordinator(name: String, model: NSManagedObjectModel) -> NSPersistentStoreCoordinator? {
-        let fileManager = FileManager.default
-        guard let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last else { return nil }
-
-        let storeName = name + ".sqlite"
-        let storeURL = docsDir.appendingPathComponent(storeName)
+    private static func createPersistenceStoreCoordinator(name: String, model: NSManagedObjectModel) -> NSPersistentStoreCoordinator? {
+        guard let storeURL = storeURL(for: name) else { return nil }
+        
         let persistenceStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         let options = [ NSMigratePersistentStoresAutomaticallyOption: true,
                         NSInferMappingModelAutomaticallyOption: true ]
@@ -55,6 +52,14 @@ public class DDGPersistenceContainer {
         }
 
         return persistenceStoreCoordinator
+    }
+    
+    public static func storeURL(for name: String) -> URL? {
+        let fileManager = FileManager.default
+        guard let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last else { return nil }
+
+        let storeName = name + ".sqlite"
+        return docsDir.appendingPathComponent(storeName)
     }
 
     public func save() -> Bool {
@@ -68,5 +73,4 @@ public class DDGPersistenceContainer {
 
         return true
     }
-
 }

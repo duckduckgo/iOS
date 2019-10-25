@@ -78,7 +78,7 @@ class DatabaseMigrationTests: XCTestCase {
                                   with: { (source: PPTrackerNetwork, dest: PPTrackerNetwork) in
                                     dest.name = source.name
         },
-                                  completion: { migrated.fulfill() })
+                                  completion: { _ in migrated.fulfill() })
         
         result = (try? destination.fetch(PPTrackerNetwork.fetchRequest())) ?? []
         XCTAssert(result.count == 2)
@@ -113,7 +113,7 @@ class DatabaseMigrationTests: XCTestCase {
                                   with: { (source: PPTrackerNetwork, dest: PPTrackerNetwork) in
                                     dest.name = source.name
         },
-                                  completion: { migrated.fulfill() })
+                                  completion: { _ in migrated.fulfill() })
         
         result = (try? destination.fetch(PPTrackerNetwork.fetchRequest())) ?? []
         XCTAssert(result.count == 2)

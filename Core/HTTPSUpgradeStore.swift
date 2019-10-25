@@ -114,7 +114,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     private func deleteBloomFilterSpecification() {
         context.performAndWait {
-            context.deleteAll(entities: try? context.fetch(HTTPSStoredBloomFilterSpecification.fetchRequest()))
+            context.deleteAll(matching: HTTPSStoredBloomFilterSpecification.fetchRequest())
         }
     }
     
@@ -152,7 +152,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     private func deleteWhitelist() {
         context.performAndWait {
-            context.deleteAll(entities: try? context.fetch(HTTPSWhitelistedDomain.fetchRequest()))
+            context.deleteAll(matching: HTTPSWhitelistedDomain.fetchRequest())
         }
     }
     

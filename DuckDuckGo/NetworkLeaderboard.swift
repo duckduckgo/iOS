@@ -50,8 +50,8 @@ class NetworkLeaderboard {
     }
     
     func reset() {
-        context.deleteAll(entities: try? context.fetch(PPTrackerNetwork.fetchRequest()))
-        context.deleteAll(entities: try? context.fetch(PPPageStats.fetchRequest()))
+        context.deleteAll(matching: PPTrackerNetwork.fetchRequest())
+        context.deleteAll(matching: PPPageStats.fetchRequest())
         createNewPageStatsEntity()
         try? context.save()
     }

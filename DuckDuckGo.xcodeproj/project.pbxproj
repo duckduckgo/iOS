@@ -294,6 +294,8 @@
 		983054442302E4F40017BED0 /* OnboardingNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */; };
 		9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */ = {isa = PBXBuildFile; fileRef = 9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
+		983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB7236198F6003948D1 /* DatabaseMigration.swift */; };
+		983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB923619986003948D1 /* DatabaseMigrationTests.swift */; };
 		9849942922B8FAF70019E4FA /* SiteRatingViewPerfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */; };
 		9849942B22B8FFED0019E4FA /* PerformanceTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */; };
 		9849942D22B9083A0019E4FA /* WebViewConfigurationPerfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942C22B9083A0019E4FA /* WebViewConfigurationPerfTests.swift */; };
@@ -882,6 +884,8 @@
 		983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingNotificationsViewController.swift; sourceTree = "<group>"; };
 		9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "debug-messaging-disabled.js"; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
+		983EABB7236198F6003948D1 /* DatabaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigration.swift; sourceTree = "<group>"; };
+		983EABB923619986003948D1 /* DatabaseMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigrationTests.swift; sourceTree = "<group>"; };
 		9846AA6622BD3BBF007DE48E /* InitHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitHelpers.swift; sourceTree = "<group>"; };
 		9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingViewPerfTests.swift; sourceTree = "<group>"; };
 		9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTestsHelper.swift; sourceTree = "<group>"; };
@@ -2284,6 +2288,7 @@
 			children = (
 				F1134EC21F40E24600B73467 /* AppVersionExtensionTests.swift */,
 				85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */,
+				983EABB923619986003948D1 /* DatabaseMigrationTests.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2488,6 +2493,7 @@
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				853C5F6021C277C7001F7A05 /* global.swift */,
 				850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */,
+				983EABB7236198F6003948D1 /* DatabaseMigration.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -3466,6 +3472,7 @@
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
 				851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */,
 				8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */,
+				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
@@ -3542,6 +3549,7 @@
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
+				983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
 				85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,

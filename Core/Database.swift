@@ -24,6 +24,8 @@ public class Database {
     
     fileprivate struct Constants {
         static let databaseGroupID = "group.com.duckduckgo.database"
+        
+        static let databaseName = "Database"
     }
     
     public static let shared = Database()
@@ -31,20 +33,35 @@ public class Database {
     private let lock = NSLock()
     private let container: NSPersistentContainer
     
-    init() {
+    public var model: NSManagedObjectModel {
+        return container.managedObjectModel
+    }
+    
+    convenience init() {
         let mainBundle = Bundle.main
         let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
         
         guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { fatalError("No DB scheme found") }
         
-        container = DDGPersistentContainer(name: "Database", managedObjectModel: managedObjectModel)
-        
-        loadStore()
+        self.init(name: Constants.databaseName, model: managedObjectModel)
     }
     
-    private func loadStore() {
+    init(name: String, model: NSManagedObjectModel) {
+        container = DDGPersistentContainer(name: name, managedObjectModel: model)
+    }
+    
+    public func loadStore(migrate: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
         lock.lock()
-        container.loadPersistentStores { _, _ in self.lock.unlock() }
+        container.loadPersistentStores { _, _ in
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.persistentStoreCoordinator = self.container.persistentStoreCoordinator
+            context.name = "Migration"
+            
+            context.perform {
+                migrate(context)
+                self.lock.unlock()
+            }
+        }
     }
     
     public func makeContext(concurrencyType: NSManagedObjectContextConcurrencyType, name: String? = nil) -> NSManagedObjectContext {
@@ -60,10 +77,24 @@ public class Database {
 
 extension NSManagedObjectContext {
     
-    public func deleteAll(entities: [NSManagedObject]?) {
-        guard let entities = entities else { return }
+    public func deleteAll(entities: [NSManagedObject] = []) {
         for entity in entities {
             delete(entity)
+        }
+    }
+    
+    public func deleteAll<T: NSManagedObject>(matching request: NSFetchRequest<T>) {
+            if let result = try? fetch(request) {
+                deleteAll(entities: result)
+            }
+    }
+    
+    public func deleteAll(entityDescriptions: [NSEntityDescription] = []) {
+        for entityDescription in entityDescriptions {
+            let request = NSFetchRequest<NSManagedObject>()
+            request.entity = entityDescription
+            
+            deleteAll(matching: request)
         }
     }
 }

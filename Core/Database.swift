@@ -50,15 +50,22 @@ public class Database {
         container = DDGPersistentContainer(name: name, managedObjectModel: model)
     }
     
-    public func loadStore(migrate: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
+    public func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
         lock.lock()
-        container.loadPersistentStores { _, _ in
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                Pixel.fire(pixel: .dbInitializationError, error: error)
+                // Give Pixel a chance to be sent, but not too long
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not load DB: \(error.localizedDescription)")
+            }
+            
             let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             context.persistentStoreCoordinator = self.container.persistentStoreCoordinator
             context.name = "Migration"
             
             context.perform {
-                migrate(context)
+                handler(context)
                 self.lock.unlock()
             }
         }

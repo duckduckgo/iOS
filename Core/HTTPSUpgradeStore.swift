@@ -108,7 +108,12 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
                 storedEntity.sha256 = specification.sha256
                 
             }
-            try? context.save()
+            
+            do {
+                try context.save()
+            } catch {
+                Pixel.fire(pixel: .dbSaveBloomFilterError, error: error)
+            }
         }
     }
     
@@ -144,6 +149,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
             do {
                 try context.save()
             } catch {
+                Pixel.fire(pixel: .dbSaveWhitelistError, error: error)
                 result = false
             }
         }

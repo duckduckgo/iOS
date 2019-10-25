@@ -128,6 +128,7 @@ class DatabaseMigration {
             do {
                 try stack.persistenceStoreCoordinator.remove(store)
             } catch {
+                Pixel.fire(pixel: .dbRemovalError, error: error)
                 Logger.log(text: "Error removing store: \(error.localizedDescription)")
             }
         }
@@ -153,6 +154,7 @@ class DatabaseMigration {
             do {
                 try destination.save()
             } catch {
+                Pixel.fire(pixel: .dbMigrationError, error: error)
                 completion(false)
                 return
             }
@@ -192,6 +194,7 @@ class DatabaseMigration {
             let shmURL = URL(fileURLWithPath: storeURL.path.appending("-shm"))
             try FileManager.default.removeItem(at: shmURL)
         } catch {
+            Pixel.fire(pixel: .dbDestroyError, error: error)
             Logger.log(text: "Error destroying store: \(error.localizedDescription)")
         }
     }

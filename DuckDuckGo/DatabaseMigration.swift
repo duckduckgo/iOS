@@ -28,45 +28,55 @@ class DatabaseMigration {
         let group = DispatchGroup()
         
         group.enter()
-        migrate(db: "AppRatingPrompt", to: context, with: { (existing: AppRatingPromptEntity, new: AppRatingPromptEntity) in
-            existing.lastAccess = new.lastAccess
-            existing.lastShown = new.lastShown
-            existing.uniqueAccessDays = new.uniqueAccessDays
+        migrate(db: "AppRatingPrompt",
+                to: context,
+                with: { (source: AppRatingPromptEntity, destination: AppRatingPromptEntity) in
+            destination.lastAccess = source.lastAccess
+            destination.lastShown = source.lastShown
+            destination.uniqueAccessDays = source.uniqueAccessDays
         }, completion: {
             group.leave()
         })
         
         group.enter()
-        migrate(db: "NetworkLeaderboard", to: context, with: { (existing: PPTrackerNetwork, new: PPTrackerNetwork) in
-            existing.detectedOnCount = new.detectedOnCount
-            existing.trackersCount = new.trackersCount
-            existing.name = new.name
+        migrate(db: "NetworkLeaderboard",
+                to: context,
+                with: { (source: PPTrackerNetwork, destination: PPTrackerNetwork) in
+            destination.detectedOnCount = source.detectedOnCount
+            destination.trackersCount = source.trackersCount
+            destination.name = source.name
         }, completion: {
             group.leave()
         })
         
         group.enter()
-        migrate(db: "NetworkLeaderboard", to: context, with: { (existing: PPPageStats, new: PPPageStats) in
-            existing.httpsUpgrades = new.httpsUpgrades
-            existing.pagesLoaded = new.pagesLoaded
-            existing.pagesWithTrackers = new.pagesWithTrackers
-            existing.startDate = new.startDate
+        migrate(db: "NetworkLeaderboard",
+                to: context,
+                with: { (source: PPPageStats, destination: PPPageStats) in
+            destination.httpsUpgrades = source.httpsUpgrades
+            destination.pagesLoaded = source.pagesLoaded
+            destination.pagesWithTrackers = source.pagesWithTrackers
+            destination.startDate = source.startDate
         }, completion: {
             group.leave()
         })
         
         group.enter()
-        migrate(db: "HTTPSUpgrade", to: context, with: { (existing: HTTPSStoredBloomFilterSpecification, new: HTTPSStoredBloomFilterSpecification) in
-            existing.errorRate = new.errorRate
-            existing.totalEntries = new.totalEntries
-            existing.sha256 = new.sha256
+        migrate(db: "HTTPSUpgrade",
+                to: context,
+                with: { (source: HTTPSStoredBloomFilterSpecification, destination: HTTPSStoredBloomFilterSpecification) in
+            destination.errorRate = source.errorRate
+            destination.totalEntries = source.totalEntries
+            destination.sha256 = source.sha256
         }, completion: {
             group.leave()
         })
         
         group.enter()
-        migrate(db: "HTTPSUpgrade", to: context, with: { (existing: HTTPSWhitelistedDomain, new: HTTPSWhitelistedDomain) in
-            existing.domain = new.domain
+        migrate(db: "HTTPSUpgrade",
+                to: context,
+                with: { (source: HTTPSWhitelistedDomain, destination: HTTPSWhitelistedDomain) in
+            destination.domain = source.domain
         }, completion: {
             group.leave()
         })
@@ -76,7 +86,7 @@ class DatabaseMigration {
     
     static func migrate<T: NSManagedObject>(db name: String,
                                             to destination: NSManagedObjectContext,
-                                            with logic: @escaping (T, T) -> Void,
+                                            with logic: @escaping (_ source: T, _ dest: T) -> Void,
                                             completion: @escaping () -> Void) {
         let oldStack = DDGPersistenceContainer(name: name,
                                                model: destination.persistentStoreCoordinator!.managedObjectModel,

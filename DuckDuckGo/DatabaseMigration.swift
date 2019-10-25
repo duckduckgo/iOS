@@ -24,62 +24,45 @@ import Core
 class DatabaseMigration {
 
     static func migrate(to context: NSManagedObjectContext) {
-        
         let group = DispatchGroup()
-        
         group.enter()
-        migrate(db: "AppRatingPrompt",
-                to: context,
+        migrate(db: "AppRatingPrompt", to: context,
                 with: { (source: AppRatingPromptEntity, destination: AppRatingPromptEntity) in
             destination.lastAccess = source.lastAccess
             destination.lastShown = source.lastShown
             destination.uniqueAccessDays = source.uniqueAccessDays
-        }, completion: {
-            group.leave()
-        })
+        }, completion: { group.leave() })
         
         group.enter()
-        migrate(db: "NetworkLeaderboard",
-                to: context,
+        migrate(db: "NetworkLeaderboard", to: context,
                 with: { (source: PPTrackerNetwork, destination: PPTrackerNetwork) in
             destination.detectedOnCount = source.detectedOnCount
             destination.trackersCount = source.trackersCount
             destination.name = source.name
-        }, completion: {
-            group.leave()
-        })
+        }, completion: { group.leave() })
         
         group.enter()
-        migrate(db: "NetworkLeaderboard",
-                to: context,
+        migrate(db: "NetworkLeaderboard", to: context,
                 with: { (source: PPPageStats, destination: PPPageStats) in
             destination.httpsUpgrades = source.httpsUpgrades
             destination.pagesLoaded = source.pagesLoaded
             destination.pagesWithTrackers = source.pagesWithTrackers
             destination.startDate = source.startDate
-        }, completion: {
-            group.leave()
-        })
+        }, completion: { group.leave() })
         
         group.enter()
-        migrate(db: "HTTPSUpgrade",
-                to: context,
+        migrate(db: "HTTPSUpgrade", to: context,
                 with: { (source: HTTPSStoredBloomFilterSpecification, destination: HTTPSStoredBloomFilterSpecification) in
             destination.errorRate = source.errorRate
             destination.totalEntries = source.totalEntries
             destination.sha256 = source.sha256
-        }, completion: {
-            group.leave()
-        })
+        }, completion: { group.leave() })
         
         group.enter()
-        migrate(db: "HTTPSUpgrade",
-                to: context,
+        migrate(db: "HTTPSUpgrade", to: context,
                 with: { (source: HTTPSWhitelistedDomain, destination: HTTPSWhitelistedDomain) in
             destination.domain = source.domain
-        }, completion: {
-            group.leave()
-        })
+        }, completion: { group.leave() })
         
         group.wait()
     }

@@ -30,7 +30,7 @@ public class Database {
     
     public static let shared = Database()
 
-    private let lock = NSLock()
+    private let semaphore = DispatchSemaphore(value: 0)
     private let container: NSPersistentContainer
     
     public var model: NSManagedObjectModel {
@@ -51,7 +51,6 @@ public class Database {
     }
     
     public func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
-        lock.lock()
         container.loadPersistentStores { _, error in
             if let error = error {
                 Pixel.fire(pixel: .dbInitializationError, error: error)
@@ -63,20 +62,19 @@ public class Database {
             let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             context.persistentStoreCoordinator = self.container.persistentStoreCoordinator
             context.name = "Migration"
-            
             context.perform {
                 handler(context)
-                self.lock.unlock()
+                self.semaphore.signal()
             }
         }
     }
     
     public func makeContext(concurrencyType: NSManagedObjectContextConcurrencyType, name: String? = nil) -> NSManagedObjectContext {
-        lock.lock()
+        semaphore.wait()
         let context = NSManagedObjectContext(concurrencyType: concurrencyType)
         context.persistentStoreCoordinator = container.persistentStoreCoordinator
         context.name = name
-        lock.unlock()
+        semaphore.signal()
         
         return context
     }

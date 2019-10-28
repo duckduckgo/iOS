@@ -23,16 +23,9 @@ import Core
 
 class PrivacyProtectionFooterController: UIViewController {
     
-    private struct DisplayConstants {
-        static let tallScreenHeight: CGFloat = 746
-        static let tallLeaderboardTopPadding: CGFloat = 108
-        static let defaultLeaderboardTopPadding: CGFloat = 8
-    }
-    
     @IBOutlet weak var privacyProtectionView: UIView!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
-    @IBOutlet weak var leaderboardTopConstraint: NSLayoutConstraint!
 
     fileprivate var domain: String?
     fileprivate var contentBlockerConfiguration: ContentBlockerConfigurationStore!
@@ -40,12 +33,6 @@ class PrivacyProtectionFooterController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         leaderboard.didLoad()
-        update(forHeight: view?.frame.size.height ?? 0)
-    }
-    
-    func update(forHeight height: CGFloat) {
-        let tall = height > DisplayConstants.tallScreenHeight
-        leaderboardTopConstraint.constant = tall ? DisplayConstants.tallLeaderboardTopPadding : DisplayConstants.defaultLeaderboardTopPadding
     }
     
     @IBAction func toggleProtection() {

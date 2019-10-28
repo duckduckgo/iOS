@@ -87,17 +87,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateTrackers()
         updatePrivacyPractices()
     }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
-        let orientation = UIApplication.shared.statusBarOrientation
-        if orientation.isPortrait {
-            footer.update(forHeight: coordinator.containerView.bounds.size.height)
-        } else {
-            footer.update(forHeight: coordinator.containerView.bounds.size.width)
-        }
-     }
-    
     private func updateEncryption() {
         
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()

@@ -882,7 +882,7 @@ extension TabViewController: WKNavigationDelegate {
         
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
-            completion(allowPolicy)
+            completion(.cancel)
             return
         }
         

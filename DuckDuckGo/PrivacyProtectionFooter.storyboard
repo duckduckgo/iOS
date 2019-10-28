@@ -59,7 +59,7 @@
                                 <rect key="frame" x="0.0" y="56" width="320" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYR-ib-UyP">
-                                        <rect key="frame" x="16" y="13" width="127" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="159" height="56"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <state key="normal" title="Manage Whitelist">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -79,7 +79,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho9-ly-gsa">
-                                        <rect key="frame" x="177" y="13" width="127" height="30"/>
+                                        <rect key="frame" x="161" y="0.0" width="159" height="56"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <state key="normal" title="Report Broken Site">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -95,15 +95,19 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="aYR-ib-UyP" firstAttribute="centerY" secondItem="BNZ-s9-vLz" secondAttribute="centerY" id="1oF-iU-53G"/>
-                                    <constraint firstItem="aYR-ib-UyP" firstAttribute="leading" secondItem="BNZ-s9-vLz" secondAttribute="leading" constant="16" id="3mh-ve-BME"/>
+                                    <constraint firstItem="aYR-ib-UyP" firstAttribute="leading" secondItem="BNZ-s9-vLz" secondAttribute="leading" id="3mh-ve-BME"/>
                                     <constraint firstItem="ho9-ly-gsa" firstAttribute="centerY" secondItem="BNZ-s9-vLz" secondAttribute="centerY" id="6pW-2a-IQg"/>
-                                    <constraint firstItem="ho9-ly-gsa" firstAttribute="leading" secondItem="Vny-eN-hLG" secondAttribute="trailing" constant="16" id="K4F-LQ-lkq"/>
-                                    <constraint firstAttribute="trailing" secondItem="ho9-ly-gsa" secondAttribute="trailing" constant="16" id="LOU-tA-ZvP"/>
+                                    <constraint firstItem="ho9-ly-gsa" firstAttribute="leading" secondItem="Vny-eN-hLG" secondAttribute="trailing" id="K4F-LQ-lkq"/>
+                                    <constraint firstAttribute="trailing" secondItem="ho9-ly-gsa" secondAttribute="trailing" id="LOU-tA-ZvP"/>
                                     <constraint firstAttribute="height" constant="56" id="MRZ-8u-a1U"/>
+                                    <constraint firstAttribute="bottom" secondItem="aYR-ib-UyP" secondAttribute="bottom" id="Yng-8B-Gem"/>
+                                    <constraint firstItem="aYR-ib-UyP" firstAttribute="top" secondItem="BNZ-s9-vLz" secondAttribute="top" id="bam-wN-eHw"/>
                                     <constraint firstItem="Vny-eN-hLG" firstAttribute="top" secondItem="BNZ-s9-vLz" secondAttribute="top" constant="16" id="gBH-zT-6HT"/>
+                                    <constraint firstAttribute="bottom" secondItem="ho9-ly-gsa" secondAttribute="bottom" id="h2Q-AB-Go9"/>
                                     <constraint firstAttribute="bottom" secondItem="Vny-eN-hLG" secondAttribute="bottom" constant="16" id="hJ8-Vu-dQu"/>
+                                    <constraint firstItem="ho9-ly-gsa" firstAttribute="top" secondItem="BNZ-s9-vLz" secondAttribute="top" id="ruL-4j-k62"/>
                                     <constraint firstItem="Vny-eN-hLG" firstAttribute="centerX" secondItem="BNZ-s9-vLz" secondAttribute="centerX" id="ttp-Be-qeR"/>
-                                    <constraint firstItem="Vny-eN-hLG" firstAttribute="leading" secondItem="aYR-ib-UyP" secondAttribute="trailing" constant="16" id="z9Q-Se-gD0"/>
+                                    <constraint firstItem="Vny-eN-hLG" firstAttribute="leading" secondItem="aYR-ib-UyP" secondAttribute="trailing" id="z9Q-Se-gD0"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jR-2G-yON">

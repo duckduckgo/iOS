@@ -856,6 +856,8 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        let allowPolicy = determineAllowPolicy()
+        
         let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
@@ -864,7 +866,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let url = navigationAction.request.url else {
-            completion(.allow)
+            completion(allowPolicy)
             return
         }
         
@@ -874,7 +876,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            completion(.allow)
+            completion(allowPolicy)
             return
         }
         
@@ -900,13 +902,18 @@ extension TabViewController: WKNavigationDelegate {
                     self?.delegate?.tab(strongSelf, didRequestNewTabForUrl: url)
                     completion(.cancel)
                 } else {
-                    completion(.allow)
+                    completion(allowPolicy)
                 }
                 return
             }
             
             completion(.cancel)
         }
+    }
+    
+    private func determineAllowPolicy() -> WKNavigationActionPolicy {
+        let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
+        return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks
     }
     
     private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {

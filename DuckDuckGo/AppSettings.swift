@@ -25,5 +25,7 @@ protocol AppSettings {
     var autoClearTiming: AutoClearSettingsModel.Timing { get set }
 
     var homePage: HomePageConfiguration.ConfigName { get set }
-    
+
+    var allowUniversalLinks: Bool { get set }
+
 }

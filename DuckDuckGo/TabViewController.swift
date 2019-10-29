@@ -894,7 +894,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
-            completion(.allow)
+            completion(allowPolicy)
             return
         }
 

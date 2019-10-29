@@ -161,9 +161,7 @@ class DatabaseMigration {
         }
 
         source.deleteAll(entities: existingEntities)
-        do {
-            try source.save()
-        } catch {}
+        try? source.save()
         
         completion(true)
     }

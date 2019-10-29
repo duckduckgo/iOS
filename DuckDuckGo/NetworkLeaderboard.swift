@@ -32,7 +32,7 @@ class NetworkLeaderboard {
 
     }
 
-    private lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard", concurrencyType: .mainQueueConcurrencyType)!
+    private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: "NetworkLeaderboard")
 
     var startDate: Date? {
         return pageStats?.startDate
@@ -40,7 +40,7 @@ class NetworkLeaderboard {
     
     private var pageStats: PPPageStats? {
         let request: NSFetchRequest<PPPageStats> = PPPageStats.fetchRequest()
-        return try? container.managedObjectContext.fetch(request).first
+        return try? context.fetch(request).first
     }
     
     init() {
@@ -50,39 +50,39 @@ class NetworkLeaderboard {
     }
     
     func reset() {
-        container.deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
-        container.deleteAll(entities: try? container.managedObjectContext.fetch(PPPageStats.fetchRequest()))
+        context.deleteAll(matching: PPTrackerNetwork.fetchRequest())
+        context.deleteAll(matching: PPPageStats.fetchRequest())
         createNewPageStatsEntity()
-        _ = container.save()
+        try? context.save()
     }
 
     func incrementPagesLoaded() {
         if let pageStats = pageStats {
             pageStats.pagesLoaded += 1
-            _ = container.save()
+            try? context.save()
         }
     }
     
     func incrementPagesWithTrackers() {
         if let pageStats = pageStats {
             pageStats.pagesWithTrackers += 1
-            _ = container.save()
+            try? context.save()
         }
     }
     
     func incrementHttpsUpgrades() {
         if let pageStats = pageStats {
             pageStats.httpsUpgrades += 1
-            _ = container.save()
+            try? context.save()
         }
     }
     
     private func createNewPageStatsEntity() {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.pageStats, into: container.managedObjectContext)
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.pageStats, into: context)
         guard let stats = managedObject as? PPPageStats else { return }
         stats.startDate = Date()
         stats.pagesLoaded = 0
-        _ = container.save()
+        try? context.save()
     }
     
     func pagesVisited() -> Int {
@@ -100,7 +100,7 @@ class NetworkLeaderboard {
     func networksDetected() -> [PPTrackerNetwork] {
         let request: NSFetchRequest<PPTrackerNetwork> = PPTrackerNetwork.fetchRequest()
         request.sortDescriptors = [ NSSortDescriptor(key: "detectedOnCount", ascending: false) ]
-        guard let results = try? container.managedObjectContext.fetch(request) else { return [] }
+        guard let results = try? context.fetch(request) else { return [] }
         let pagesVisitedCount = Float(pagesVisited())
         return results.filter { Float($0.detectedOnCount) / pagesVisitedCount >= 0.01 }
     }
@@ -116,7 +116,7 @@ class NetworkLeaderboard {
             return
         }
         network.detectedOnCount += 1
-        _ = container.save()
+        try? context.save()
     }
     
     func incrementTrackersCount(forNetworkNamed networkName: String) {
@@ -125,21 +125,21 @@ class NetworkLeaderboard {
             return
         }
         network.trackersCount += 1
-        _ = container.save()
+        try? context.save()
     }
     
     private func createNewNetworkEntity(named networkName: String) {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.trackerNetwork, into: container.managedObjectContext)
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.trackerNetwork, into: context)
         guard let trackerNetwork = managedObject as? PPTrackerNetwork else { return }
         trackerNetwork.name = networkName
         trackerNetwork.detectedOnCount = 1
-        _ = container.save()
+        try? context.save()
     }
 
     private func findNetwork(byName network: String) -> PPTrackerNetwork? {
         let request: NSFetchRequest<PPTrackerNetwork> = PPTrackerNetwork.fetchRequest()
         request.predicate = NSPredicate(format: "name LIKE %@", network)
-        guard let results = try? container.managedObjectContext.fetch(request) else { return nil }
+        guard let results = try? context.fetch(request) else { return nil }
         return results.first
     }
 

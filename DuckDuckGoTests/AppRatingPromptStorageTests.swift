@@ -52,8 +52,8 @@ class AppRatingPromptStorageTests: XCTestCase {
 
     private func reset() {
         let storage = AppRatingPromptCoreDataStorage()
-        storage.persistence.managedObjectContext.delete(storage.entity())
-        try? storage.persistence.managedObjectContext.save()
+        storage.context.delete(storage.entity())
+        try? storage.context.save()
     }
     
 }

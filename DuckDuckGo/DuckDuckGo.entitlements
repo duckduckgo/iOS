@@ -7,6 +7,7 @@
 		<string>$(GROUP_ID_PREFIX).bookmarks</string>
 		<string>$(GROUP_ID_PREFIX).contentblocker</string>
 		<string>$(GROUP_ID_PREFIX).statistics</string>
+		<string>$(GROUP_ID_PREFIX).database</string>
 	</array>
 </dict>
 </plist>

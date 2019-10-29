@@ -71,7 +71,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().lastAccess = newValue
-            _ = persistence.save()
+            try? context.save() 
         }
     }
     
@@ -82,7 +82,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().uniqueAccessDays = Int64(newValue)
-            _ = persistence.save()
+            try? context.save()
         }
     }
     
@@ -93,22 +93,22 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().lastShown = newValue
-            _ = persistence.save()
+            try? context.save()
         }
     }
     
-    let persistence: DDGPersistenceContainer = DDGPersistenceContainer(name: "AppRatingPrompt", concurrencyType: .mainQueueConcurrencyType)!
+    let context: NSManagedObjectContext = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: "AppRatingPrompt")
     
     public init() { }
     
     func entity() -> AppRatingPromptEntity {
         let fetchRequest: NSFetchRequest<AppRatingPromptEntity> = AppRatingPromptEntity.fetchRequest()
         
-        guard let results = try? persistence.managedObjectContext.fetch(fetchRequest) else {
+        guard let results = try? context.fetch(fetchRequest) else {
             fatalError("Error fetching AppRatingPromptEntity")
         }
         
-        return results.first ?? AppRatingPromptEntity(context: persistence.managedObjectContext)
+        return results.first ?? AppRatingPromptEntity(context: context)
     }
     
 }

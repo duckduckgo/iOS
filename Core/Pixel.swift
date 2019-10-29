@@ -159,6 +159,13 @@ public enum PixelName: String {
     case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
     
+    case dbMigrationError = "m_d_dbme"
+    case dbRemovalError = "m_d_dbre"
+    case dbDestroyError = "m_d_dbde"
+    case dbInitializationError = "m_d_dbie"
+    case dbSaveWhitelistError = "m_d_dbsw"
+    case dbSaveBloomFilterError = "m_d_dbsb"
+    
     case configurationFetchInfo = "m_d_cfgfetch"
     case brokenSiteReported = "m_bsr"
 }
@@ -207,6 +214,17 @@ public class Pixel {
         }
     }
     
+}
+
+extension Pixel {
+    
+    public static func fire(pixel: PixelName, error: Error) {
+        let nsError = error as NSError
+        
+        let params: [String: String?] = ["e": "\(nsError.code)", "d": nsError.domain]
+        
+        fire(pixel: pixel, withAdditionalParameters: params)
+    }
 }
 
 public class TimedPixel {

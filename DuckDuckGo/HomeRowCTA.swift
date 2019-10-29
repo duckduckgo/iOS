@@ -43,6 +43,7 @@ class HomeRowCTA {
     }
 
     func shouldShow(currentDate: Date = Date()) -> Bool {
+        return true 
         guard tutorialSettings.hasSeenOnboarding else {
             return false
         }

@@ -174,14 +174,14 @@
                                 <rect key="frame" x="0.0" y="814" width="768" height="210"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZSS-8i-hm1">
-                                        <rect key="frame" x="350" y="-35" width="68" height="70"/>
+                                        <rect key="frame" x="354" y="-30" width="60" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="73g-Aq-I6D"/>
-                                            <constraint firstAttribute="width" constant="68" id="JNR-ia-3ae"/>
+                                            <constraint firstAttribute="width" secondItem="ZSS-8i-hm1" secondAttribute="height" multiplier="1:1" id="9gP-68-H5W"/>
+                                            <constraint firstAttribute="width" constant="60" id="JNR-ia-3ae"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="10"/>
+                                                <integer key="value" value="14"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
@@ -238,7 +238,7 @@
                                 <constraints>
                                     <constraint firstItem="GLI-KC-6iK" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="0mg-Cg-eyU"/>
                                     <constraint firstItem="Xhf-hW-8u5" firstAttribute="top" secondItem="GLI-KC-6iK" secondAttribute="bottom" constant="20" id="2K6-Nx-Mp6"/>
-                                    <constraint firstItem="ZSS-8i-hm1" firstAttribute="top" secondItem="qyc-ZG-rZz" secondAttribute="top" constant="-35" id="5qB-3G-23e"/>
+                                    <constraint firstItem="ZSS-8i-hm1" firstAttribute="top" secondItem="qyc-ZG-rZz" secondAttribute="top" constant="-30" id="5qB-3G-23e"/>
                                     <constraint firstItem="PPH-ME-N2p" firstAttribute="width" secondItem="qyc-ZG-rZz" secondAttribute="width" constant="-20" id="9CX-Ld-LCy"/>
                                     <constraint firstAttribute="bottom" secondItem="n5p-Tg-2ou" secondAttribute="bottom" constant="12" id="AaW-zk-WVa"/>
                                     <constraint firstItem="Xhf-hW-8u5" firstAttribute="width" secondItem="qyc-ZG-rZz" secondAttribute="width" constant="-20" id="GSn-h5-AHs"/>

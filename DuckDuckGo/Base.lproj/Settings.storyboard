@@ -961,9 +961,22 @@ upgraded by Privacy Protection.</string>
                                     <color key="textColor" red="0.7434888482093811" green="0.76165848970413208" blue="0.79455751180648804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWM-CB-n4U">
+                                    <rect key="frame" x="20" y="25" width="30" height="22"/>
+                                    <accessibility key="accessibilityConfiguration" identifier="backButton"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="VaN-oE-vZF"/>
+                                    </constraints>
+                                    <state key="normal" image="PP Arrow Back"/>
+                                    <connections>
+                                        <action selector="onBackPressed" destination="UEu-y1-KbY" eventType="touchUpInside" id="1JT-Hi-jBy"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="centerX" secondItem="FGH-RR-RSf" secondAttribute="centerX" id="B2p-OU-KbG"/>
+                                <constraint firstItem="SWM-CB-n4U" firstAttribute="leading" secondItem="FGH-RR-RSf" secondAttribute="leading" constant="20" id="Npr-t4-BQD"/>
+                                <constraint firstItem="SWM-CB-n4U" firstAttribute="centerY" secondItem="zvh-2e-Wmz" secondAttribute="centerY" id="TRo-Q2-km7"/>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="centerY" secondItem="FGH-RR-RSf" secondAttribute="centerY" id="dJp-bP-2uG"/>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="width" secondItem="FGH-RR-RSf" secondAttribute="width" id="oX4-WQ-JuS"/>
                             </constraints>
@@ -1040,6 +1053,7 @@ upgraded by Privacy Protection.</string>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="SWM-CB-n4U" id="vIB-TK-wlR"/>
                         <outlet property="infoText" destination="zvh-2e-Wmz" id="qi7-fU-1h8"/>
                     </connections>
                 </tableViewController>
@@ -1104,5 +1118,6 @@ upgraded by Privacy Protection.</string>
     </scenes>
     <resources>
         <image name="LogoLightText" width="160" height="128"/>
+        <image name="PP Arrow Back" width="10" height="16"/>
     </resources>
 </document>

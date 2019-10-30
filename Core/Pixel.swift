@@ -68,8 +68,8 @@ public enum PixelName: String {
     case settingsHomePageSimple = "ms_hp_s"
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
-    case settingsdManageWhitelist = "ms_mw"
-
+    case settingsManageWhitelist = "ms_mw"
+    
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"
     case autoClearActionOptionTabs = "macwhat_t"

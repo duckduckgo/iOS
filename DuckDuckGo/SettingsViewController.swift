@@ -92,7 +92,7 @@ class SettingsViewController: UITableViewController {
         }
         
         if segue.destination is WhitelistViewController {
-            Pixel.fire(pixel: .settingsdManageWhitelist)
+            Pixel.fire(pixel: .settingsManageWhitelist)
             return
         }
         

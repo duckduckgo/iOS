@@ -61,14 +61,21 @@ class PrivacyProtectionFooterController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is WhitelistViewController {
-            Pixel.fire(pixel: .privacyDashboardManageWhitelist)
+        if let whitelistController = segue.destination as? WhitelistViewController {
+            prepareforSegue(to: whitelistController)
             return
         }
         if segue.destination is SiteFeedbackViewController {
             Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
             return
         }
+    }
+    
+    private func prepareforSegue(to whitelistController: WhitelistViewController) {
+        if isPad {
+            whitelistController.showBackButton = true
+        }
+        Pixel.fire(pixel: .privacyDashboardManageWhitelist)
     }
 }
 

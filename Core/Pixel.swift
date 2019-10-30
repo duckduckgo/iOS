@@ -23,6 +23,8 @@ import Alamofire
 public enum PixelName: String {
     
     case appLaunch = "ml"
+
+    case forgetAllPressed = "mf_p"
     case forgetAllExecuted = "mf"
     
     case privacyDashboardOpened = "mp"

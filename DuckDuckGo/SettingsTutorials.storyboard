@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="proximanova-regular.otf">
-            <string>ProximaNova-Regular</string>
-        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -27,16 +22,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wnB-Aw-E1n">
-                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ca0-bl-yHs">
-                                        <rect key="frame" x="224" y="250" width="320" height="504"/>
+                                        <rect key="frame" x="224" y="260" width="320" height="504"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="av1-fn-YeM">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SafariShapeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fa0-fb-9s2">
-                                                        <rect key="frame" x="147.5" y="36" width="24" height="24"/>
+                                                        <rect key="frame" x="148" y="36" width="24" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-jo-PSC">
                                                         <rect key="frame" x="16" y="79" width="288" height="21"/>
@@ -79,7 +74,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="uTz-yz-wF7">
                                                 <rect key="frame" x="40" y="220" width="240" height="50"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialSettings" translatesAutoresizingMaskIntoConstraints="NO" id="Cu4-dV-yIe">
+                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialSettings" translatesAutoresizingMaskIntoConstraints="NO" id="Cu4-dV-yIe">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="5UW-a7-Jch"/>
@@ -121,7 +116,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mjf-Mh-ryk">
                                                 <rect key="frame" x="40" y="290" width="240" height="50"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialSafari" translatesAutoresizingMaskIntoConstraints="NO" id="iJq-pY-l2e">
+                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialSafari" translatesAutoresizingMaskIntoConstraints="NO" id="iJq-pY-l2e">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="NDI-it-aC2"/>
@@ -170,7 +165,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MK2-fk-p3N">
                                                 <rect key="frame" x="40" y="360" width="240" height="53"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialTick" translatesAutoresizingMaskIntoConstraints="NO" id="gtM-ZZ-Xsr">
+                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialTick" translatesAutoresizingMaskIntoConstraints="NO" id="gtM-ZZ-Xsr">
                                                         <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="53" id="TXL-r3-ydj"/>
@@ -203,7 +198,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bw5-c9-4tY">
-                                                <rect key="frame" x="290" y="7.5" width="22" height="22"/>
+                                                <rect key="frame" x="290" y="8" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="22" id="2C5-h0-T6k"/>
                                                     <constraint firstAttribute="height" constant="22" id="stj-Ig-169"/>
@@ -290,7 +285,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Remove" width="12" height="12"/>
+        <image name="Remove" width="24" height="24"/>
         <image name="SafariShapeIcon" width="24" height="24"/>
         <image name="UseInSafariTutorialSafari" width="62" height="64"/>
         <image name="UseInSafariTutorialSettings" width="62" height="64"/>

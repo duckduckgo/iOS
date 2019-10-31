@@ -24,7 +24,8 @@ public enum PixelName: String {
     
     case appLaunch = "ml"
 
-    case forgetAllPressed = "mf_p"
+    case forgetAllPressedBrowsing = "mf_bp"
+    case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
     
     case privacyDashboardOpened = "mp"

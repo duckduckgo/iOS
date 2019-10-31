@@ -28,10 +28,7 @@ class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
 
     private struct Constants {
-        static let unsupportedUrlErrorCode = -1002
-        static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
-        static let minimumProgress: CGFloat = 0.1
     }
 
     private struct UserAgent {

@@ -864,12 +864,12 @@ extension TabViewController: WKNavigationDelegate {
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
         }
-        
+
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
         }
-        
+
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
             completion(.cancel)
             return
@@ -885,7 +885,20 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
             return
         }
-        
+
+        if navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
+
+            // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
+            if url.isCustomURLScheme() {
+                completion(allowPolicy)
+                return
+            }
+
+            delegate?.tab(self, didRequestNewTabForUrl: url)
+            completion(.cancel)
+            return
+        }
+
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
@@ -897,13 +910,7 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             if let shouldLoad = self?.shouldLoad(url: url, forDocument: documentUrl), shouldLoad {
-                if let strongSelf = self, navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
-                    // Handle <a href target="_blank">
-                    self?.delegate?.tab(strongSelf, didRequestNewTabForUrl: url)
-                    completion(.cancel)
-                } else {
-                    completion(allowPolicy)
-                }
+                completion(allowPolicy)
                 return
             }
             

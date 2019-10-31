@@ -26,6 +26,8 @@ protocol AppSettings {
 
     var homePage: HomePageConfiguration.ConfigName { get set }
 
+    var hideLinkPreviews: Bool { get set }
+
     var allowUniversalLinks: Bool { get set }
 
 }

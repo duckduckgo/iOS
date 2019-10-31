@@ -53,11 +53,17 @@ class AppUrlsTests: XCTestCase {
         XCTAssertEqual("/t/ml_ios_formfactor", pixelUrl.path)
         XCTAssertEqual("x", pixelUrl.getParam(name: "atb"))
     }
-    
+
+    func testWhenDomainIsBadThenFaviconURLIsNil() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let faviconURL = testee.faviconUrl(forDomain: "Contains spaces because the website is broken")
+        XCTAssertNil(faviconURL)
+    }
+
     func testWhenFaviconUrlForDomainRequestedThenCorrectDomainIsCreated() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         let faviconURL = testee.faviconUrl(forDomain: "example.com")
-        XCTAssertEqual("https://duckduckgo.com/ip3/example.com.ico", faviconURL.absoluteString)
+        XCTAssertEqual("https://duckduckgo.com/ip3/example.com.ico", faviconURL?.absoluteString)
     }
 
     func testBaseUrlDoesNotHaveSubDomain() {

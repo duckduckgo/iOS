@@ -106,8 +106,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         
         iconBackground.backgroundColor = host.color
         
-        if let domain = link.url.host {
-            let resource = AppUrls().faviconUrl(forDomain: domain)
+        if let domain = link.url.host, let resource = AppUrls().faviconUrl(forDomain: domain) {
             iconImage.kf.setImage(with: resource,
                                   placeholder: nil,
                                   options: [

@@ -171,7 +171,7 @@ fileprivate extension Link {
 
     func removeCachedFavicon() {
         guard let domain = url.host else { return }
-        let url = AppUrls().faviconUrl(forDomain: domain)
+        guard let url = AppUrls().faviconUrl(forDomain: domain) else { return }
         ImageCache(name: BookmarksManager.imageCacheName).removeImage(forKey: url.absoluteString)
     }
 

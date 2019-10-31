@@ -296,6 +296,7 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
+        Pixel.fire(pixel: .forgetAllPressedBrowsing)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
         alert.addAction(forgetAllAction())

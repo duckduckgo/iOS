@@ -929,12 +929,11 @@ extension TabViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        
-        let code = (error as NSError).code
-        if  ![Constants.unsupportedUrlErrorCode, Constants.urlCouldNotBeLoaded].contains(code) {
+
+        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
             showError(message: error.localizedDescription)
         }
-        
+
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
@@ -1046,6 +1045,14 @@ extension TabViewController: Themable {
         }
     }
     
+}
+
+extension NSError {
+
+    var failedUrl: URL? {
+        return userInfo[NSURLErrorFailingURLErrorKey] as? URL
+    }
+
 }
 
 // swiftlint:enable file_length

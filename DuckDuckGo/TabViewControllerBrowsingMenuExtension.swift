@@ -149,7 +149,7 @@ extension TabViewController {
         let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
         
         return UIAlertAction(title: title, style: .default) { _ in
-            Pixel.fire(pixel: .browsingMenuWhitelist)
+            Pixel.fire(pixel: whitelisted ?.browsingMenuWhitelistRemove : .browsingMenuWhitelistAdd)
             operation(domain)
         }
     }

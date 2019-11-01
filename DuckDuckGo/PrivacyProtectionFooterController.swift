@@ -22,28 +22,29 @@ import UIKit
 import Core
 
 class PrivacyProtectionFooterController: UIViewController {
-
+    
     @IBOutlet weak var privacyProtectionView: UIView!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
 
-    let configuration: ContentBlockerConfigurationStore = AppDependencyProvider.shared.storageCache.current.configuration
-
+    fileprivate var domain: String?
+    fileprivate var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         leaderboard.didLoad()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        update()
-    }
-
+    
     @IBAction func toggleProtection() {
-        let contentBlockingOn = privacyProtectionSwitch.isOn
-        self.configuration.enabled = contentBlockingOn
+        guard let domain = domain else { return }
+        let whitelisted = !privacyProtectionSwitch.isOn
+        if whitelisted {
+            contentBlockerConfiguration.addToWhitelist(domain: domain)
+        } else {
+            contentBlockerConfiguration.removeFromWhitelist(domain: domain)
+        }
         update()
-        Pixel.fire(pixel: contentBlockingOn ? .privacyDashboardToggleProtectionOn : .privacyDashboardToggleProtectionOff)
+        Pixel.fire(pixel: whitelisted ? .privacyDashboardWhitelistAdd : .privacyDashboardWhitelistRemove)
     }
 
     private func update() {
@@ -53,8 +54,37 @@ class PrivacyProtectionFooterController: UIViewController {
     }
 
     private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = configuration.enabled
-        privacyProtectionView.backgroundColor = configuration.enabled ? UIColor.ppGreen : UIColor.ppGray
+        guard let domain = domain else { return }
+        let isWhitelisted = contentBlockerConfiguration.whitelisted(domain: domain)
+        privacyProtectionSwitch.isOn = !isWhitelisted
+        privacyProtectionView.backgroundColor = isWhitelisted ? UIColor.ppGray : UIColor.ppGreen
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let whitelistController = segue.destination as? WhitelistViewController {
+            prepareforSegue(to: whitelistController)
+            return
+        }
+        if segue.destination is SiteFeedbackViewController {
+            Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
+            return
+        }
+    }
+    
+    private func prepareforSegue(to whitelistController: WhitelistViewController) {
+        if isPad {
+            whitelistController.showBackButton = true
+        }
+        Pixel.fire(pixel: .privacyDashboardManageWhitelist)
+    }
+}
+
+extension PrivacyProtectionFooterController: PrivacyProtectionInfoDisplaying {
+
+    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+        self.domain = siteRating.domain
+        self.contentBlockerConfiguration = configuration
+        update()
     }
 
 }

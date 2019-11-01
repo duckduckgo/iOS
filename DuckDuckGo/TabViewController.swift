@@ -59,6 +59,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private let contentBlockerConfiguration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -882,17 +883,20 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
             return
         }
-
-        if navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
-
+        
+        if isNewTargetBlankRequest(navigationAction: navigationAction) {
             // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
             if url.isCustomURLScheme() {
                 completion(allowPolicy)
                 return
             }
-
             delegate?.tab(self, didRequestNewTabForUrl: url)
             completion(.cancel)
+            return
+        }
+        
+        if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+            completion(allowPolicy)
             return
         }
 
@@ -915,6 +919,10 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
+    private func isNewTargetBlankRequest(navigationAction: WKNavigationAction) -> Bool {
+        return navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil
+    }
+
     private func determineAllowPolicy() -> WKNavigationActionPolicy {
         let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
         return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks

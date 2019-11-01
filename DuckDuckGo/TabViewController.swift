@@ -960,7 +960,7 @@ extension TabViewController: PrivacyProtectionDelegate {
 extension TabViewController: WKUIDelegate {
     public func webView(_ webView: WKWebView,
                         createWebViewWith configuration: WKWebViewConfiguration,
-                        for navigationAction: WKNavigationActions,
+                        for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
         webView.load(navigationAction.request)
         return nil

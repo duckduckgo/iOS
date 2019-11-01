@@ -1,4 +1,5 @@
-• We have a new icon! Please let us know what you think.
-• You can now prevent other apps from launching when browsing.  Visit settings for more info.
-• We've improved how we handle long and badly formed links.
-• Other minor bug fixes and improvements.
+• We have a new icon! Please let us know what you think.
+• Privacy protection toggle now applies only to individual sites and not the entire app, giving you more control over which sites you whitelist.
+• You can now prevent other apps from launching when browsing.  Visit settings for more info.
+• We've improved how we handle long and badly formed links.
+• Other minor bug fixes and improvements.

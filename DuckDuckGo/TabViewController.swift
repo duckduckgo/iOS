@@ -28,10 +28,7 @@ class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
 
     private struct Constants {
-        static let unsupportedUrlErrorCode = -1002
-        static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
-        static let minimumProgress: CGFloat = 0.1
     }
 
     private struct UserAgent {
@@ -62,6 +59,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private let contentBlockerConfiguration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -856,25 +854,27 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        let allowPolicy = determineAllowPolicy()
+        
         let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
         }
-        
+
         guard let url = navigationAction.request.url else {
-            completion(.allow)
+            completion(allowPolicy)
             return
         }
-        
+
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
             completion(.cancel)
             return
         }
         
         guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            completion(.allow)
+            completion(allowPolicy)
             return
         }
         
@@ -884,6 +884,22 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
+        if isNewTargetBlankRequest(navigationAction: navigationAction) {
+            // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
+            if url.isCustomURLScheme() {
+                completion(allowPolicy)
+                return
+            }
+            delegate?.tab(self, didRequestNewTabForUrl: url)
+            completion(.cancel)
+            return
+        }
+        
+        if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+            completion(allowPolicy)
+            return
+        }
+
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
@@ -895,18 +911,21 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             if let shouldLoad = self?.shouldLoad(url: url, forDocument: documentUrl), shouldLoad {
-                if let strongSelf = self, navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
-                    // Handle <a href target="_blank">
-                    self?.delegate?.tab(strongSelf, didRequestNewTabForUrl: url)
-                    completion(.cancel)
-                } else {
-                    completion(.allow)
-                }
+                completion(allowPolicy)
                 return
             }
             
             completion(.cancel)
         }
+    }
+    
+    private func isNewTargetBlankRequest(navigationAction: WKNavigationAction) -> Bool {
+        return navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil
+    }
+
+    private func determineAllowPolicy() -> WKNavigationActionPolicy {
+        let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
+        return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks
     }
     
     private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
@@ -922,12 +941,11 @@ extension TabViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        
-        let code = (error as NSError).code
-        if  ![Constants.unsupportedUrlErrorCode, Constants.urlCouldNotBeLoaded].contains(code) {
+
+        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
             showError(message: error.localizedDescription)
         }
-        
+
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
@@ -1039,6 +1057,14 @@ extension TabViewController: Themable {
         }
     }
     
+}
+
+extension NSError {
+
+    var failedUrl: URL? {
+        return userInfo[NSURLErrorFailingURLErrorKey] as? URL
+    }
+
 }
 
 // swiftlint:enable file_length

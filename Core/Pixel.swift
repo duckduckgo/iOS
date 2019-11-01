@@ -23,6 +23,9 @@ import Alamofire
 public enum PixelName: String {
     
     case appLaunch = "ml"
+
+    case forgetAllPressedBrowsing = "mf_bp"
+    case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
     
     case privacyDashboardOpened = "mp"
@@ -31,8 +34,10 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    case privacyDashboardToggleProtectionOn = "mp_ta"
-    case privacyDashboardToggleProtectionOff = "mp_tb"
+    case privacyDashboardWhitelistAdd = "mp_wla"
+    case privacyDashboardWhitelistRemove = "mp_wlr"
+    case privacyDashboardManageWhitelist = "mp_mw"
+    case privacyDashboardReportBrokenSite = "mp_rb"
     
     case httpsNoLookup = "m_https_nl"
     case httpsLocalUpgrade = "m_https_lu"
@@ -66,7 +71,8 @@ public enum PixelName: String {
     case settingsHomePageSimple = "ms_hp_s"
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
-
+    case settingsManageWhitelist = "ms_mw"
+    
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"
     case autoClearActionOptionTabs = "macwhat_t"
@@ -84,11 +90,12 @@ public enum PixelName: String {
     case browsingMenuAddToFavorites = "mb_af"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
-    case browsingMenuWhitelist = "mb_wl"
-    case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
     case browsingMenuFindInPage = "mb_fp"
-
+    case browsingMenuWhitelistAdd = "mb_wla"
+    case browsingMenuWhitelistRemove = "mb_wlr"
+    case browsingMenuReportBrokenSite = "mb_rb"
+    
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
@@ -155,6 +162,13 @@ public enum PixelName: String {
     case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
     
+    case dbMigrationError = "m_d_dbme"
+    case dbRemovalError = "m_d_dbre"
+    case dbDestroyError = "m_d_dbde"
+    case dbInitializationError = "m_d_dbie"
+    case dbSaveWhitelistError = "m_d_dbsw"
+    case dbSaveBloomFilterError = "m_d_dbsb"
+    
     case configurationFetchInfo = "m_d_cfgfetch"
     case brokenSiteReported = "m_bsr"
 }
@@ -203,6 +217,17 @@ public class Pixel {
         }
     }
     
+}
+
+extension Pixel {
+    
+    public static func fire(pixel: PixelName, error: Error) {
+        let nsError = error as NSError
+        
+        let params: [String: String?] = ["e": "\(nsError.code)", "d": nsError.domain]
+        
+        fire(pixel: pixel, withAdditionalParameters: params)
+    }
 }
 
 public class TimedPixel {

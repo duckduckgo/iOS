@@ -106,9 +106,9 @@ public struct AppUrls {
         return URL(string: Url.feedback)!
     }
     
-    public func faviconUrl(forDomain domain: String) -> URL {
+    public func faviconUrl(forDomain domain: String) -> URL? {
         let urlString = String(format: Url.faviconService, domain)
-        return URL(string: urlString)!
+        return URL(string: urlString)
     }
 
     public var initialAtb: URL {

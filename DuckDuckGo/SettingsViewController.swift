@@ -31,7 +31,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var homePageAccessoryText: UILabel!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
-    
+    @IBOutlet weak var openUniversalLinksToggle: UISwitch!
+
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -53,6 +54,7 @@ class SettingsViewController: UITableViewController {
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
+        configureUniversalLinksToggle()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -86,6 +88,11 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? HomePageSettingsViewController {
             Pixel.fire(pixel: .settingsHomePageShown)
             controller.delegate = homePageSettingsDelegate
+            return
+        }
+        
+        if segue.destination is WhitelistViewController {
+            Pixel.fire(pixel: .settingsManageWhitelist)
             return
         }
         
@@ -155,6 +162,10 @@ class SettingsViewController: UITableViewController {
     private func configureVersionText() {
         versionText.text = versionProvider.localized
     }
+    
+    private func configureUniversalLinksToggle() {
+        openUniversalLinksToggle.isOn = appSettings.allowUniversalLinks
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -198,6 +209,10 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onAutocompleteToggled(_ sender: UISwitch) {
         appSettings.autocomplete = sender.isOn
+    }
+    
+    @IBAction func onAllowUniversalLinksToggled(_ sender: UISwitch) {
+        appSettings.allowUniversalLinks = sender.isOn
     }
 }
 

@@ -887,8 +887,10 @@ extension TabViewController: WKNavigationDelegate {
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
             // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
             if url.isCustomURLScheme() {
-                delegate?.tab(self, didRequestNewTabForUrl: url)
+                completion(allowPolicy)
+                return
             }
+            delegate?.tab(self, didRequestNewTabForUrl: url)
             completion(.cancel)
             return
         }
@@ -958,7 +960,7 @@ extension TabViewController: PrivacyProtectionDelegate {
 extension TabViewController: WKUIDelegate {
     public func webView(_ webView: WKWebView,
                         createWebViewWith configuration: WKWebViewConfiguration,
-                        for navigationAction: WKNavigationAction,
+                        for navigationAction: WKNavigationActions,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
         webView.load(navigationAction.request)
         return nil

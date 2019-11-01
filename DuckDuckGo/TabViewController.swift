@@ -28,10 +28,7 @@ class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
 
     private struct Constants {
-        static let unsupportedUrlErrorCode = -1002
-        static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
-        static let minimumProgress: CGFloat = 0.1
     }
 
     private struct UserAgent {
@@ -865,12 +862,12 @@ extension TabViewController: WKNavigationDelegate {
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
         }
-        
+
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
         }
-        
+
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
             completion(.cancel)
             return
@@ -888,7 +885,10 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url)
+            // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
+            if url.isCustomURLScheme() {
+                delegate?.tab(self, didRequestNewTabForUrl: url)
+            }
             completion(.cancel)
             return
         }
@@ -939,12 +939,11 @@ extension TabViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        
-        let code = (error as NSError).code
-        if  ![Constants.unsupportedUrlErrorCode, Constants.urlCouldNotBeLoaded].contains(code) {
+
+        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
             showError(message: error.localizedDescription)
         }
-        
+
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
@@ -1056,6 +1055,14 @@ extension TabViewController: Themable {
         }
     }
     
+}
+
+extension NSError {
+
+    var failedUrl: URL? {
+        return userInfo[NSURLErrorFailingURLErrorKey] as? URL
+    }
+
 }
 
 // swiftlint:enable file_length

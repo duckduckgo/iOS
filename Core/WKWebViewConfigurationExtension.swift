@@ -157,12 +157,11 @@ private class Loader {
     private func loadBlockerData() {
 
         let surrogates = loadSurrogateJson(storageCache.surrogateStore)
-        let blockingEnabled = storageCache.configuration.enabled
         let whitelist = storageCache.configuration.domainWhitelist.toJsonLookupString()
         let disconnectMeStore = storageCache.disconnectMeStore
 
         javascriptLoader.load(script: .blockerData, withReplacements: [
-            "${blocking_enabled}": "\(blockingEnabled)",
+            "${blocking_enabled}": "true",
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
             "${whitelist}": whitelist,

@@ -23,7 +23,6 @@ import SafariServices
 public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
 
     private struct Keys {
-        static let enabled = "com.duckduckgo.contentblocker.enabled"
         static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
@@ -36,17 +35,6 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
 
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: suiteName)
-    }
-
-    public var enabled: Bool {
-        get {
-            guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.enabled, defaultValue: true)
-        }
-        set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.enabled)
-            onStoreChanged()
-        }
     }
 
     public private(set) var domainWhitelist: Set<String> {
@@ -79,8 +67,8 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
     }
 
     public func protecting(domain: String?) -> Bool {
-        guard let domain = domain else { return enabled }
-        return enabled && !whitelisted(domain: domain)
+        guard let domain = domain else { return true }
+        return !whitelisted(domain: domain)
     }
 
     private func onStoreChanged() {

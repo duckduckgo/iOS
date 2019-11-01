@@ -117,7 +117,7 @@
                                         <rect key="frame" x="0.0" y="32" width="320" height="88"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rO0-0v-ngG">
-                                                <rect key="frame" x="38" y="50" width="244" height="28"/>
+                                                <rect key="frame" x="38" y="52" width="244" height="28"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-FS-KoR" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="76" height="28"/>
@@ -233,13 +233,13 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AA-Ma-AG6">
-                                                <rect key="frame" x="0.0" y="20" width="320" height="12"/>
+                                                <rect key="frame" x="0.0" y="20" width="320" height="14"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                 <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="5NM-vg-MQe">
-                                                <rect key="frame" x="290" y="36" width="10" height="16"/>
+                                                <rect key="frame" x="280" y="28" width="20" height="32"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -258,19 +258,19 @@
                                         <rect key="frame" x="0.0" y="16" width="320" height="120"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Leaderboard No Stats" translatesAutoresizingMaskIntoConstraints="NO" id="gPE-Br-bJP">
-                                                <rect key="frame" x="110.99999999999999" y="8" width="98.000000000000043" height="48"/>
+                                                <rect key="frame" x="62" y="8" width="196" height="48"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="LPU-2C-SJH"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHx-Qp-lvj">
-                                                <rect key="frame" x="0.0" y="72" width="320" height="12"/>
+                                                <rect key="frame" x="0.0" y="72" width="320" height="14"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                 <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqv-VR-7we">
-                                                <rect key="frame" x="0.0" y="92" width="320" height="36"/>
+                                                <rect key="frame" x="0.0" y="94" width="320" height="42"/>
                                                 <attributedString key="attributedText">
                                                     <fragment>
                                                         <string key="content">We're still collecting data to show how

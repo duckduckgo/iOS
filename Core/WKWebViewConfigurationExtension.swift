@@ -109,12 +109,14 @@ private class Loader {
     }
 
     func load() {
-        Logger.log(text: "Loading scripts")
+        DOMContentLoadedMonitor.shared.start()
+        let spid = Instruments.shared.startTimedEvent(.injectScripts)
         loadDocumentLevelScripts()
 
         if injectContentBlockingScripts {
             loadContentBlockingScripts()
         }
+        Instruments.shared.endTimedEvent(for: spid)
     }
 
     private func loadDocumentLevelScripts() {

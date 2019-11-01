@@ -31,26 +31,21 @@ public class Instruments {
         case tabInitialisation
         
         case clearingData
+
+        case injectScripts
+        case domContentLoaded
     }
     
     static public let shared = Instruments()
     
-    private var eventsLog: OSLog?
+    static var eventsLog = OSLog(subsystem: "com.duckduckgo.instrumentation", category: "Events")
 
-    private init() {
-        if #available(iOSApplicationExtension 12.0, *) {
-            eventsLog = OSLog(subsystem: "com.duckduckgo.instrumentation",
-                              category: "Events")
-        }
-    }
-    
     public func startTimedEvent(_ event: TimedEvent, info: String? = nil) -> Any? {
-        if #available(iOSApplicationExtension 12.0, *),
-            let log = eventsLog {
-            let id = OSSignpostID(log: log)
+        if #available(iOSApplicationExtension 12.0, *) {
+            let id = OSSignpostID(log: Instruments.eventsLog)
             
             os_signpost(.begin,
-                        log: log,
+                        log: Instruments.eventsLog,
                         name: "Timed Event",
                         signpostID: id,
                         "Event: %@ info: %@", event.rawValue, info ?? "")
@@ -61,13 +56,28 @@ public class Instruments {
     
     public func endTimedEvent(for spid: Any?, result: String? = nil) {
         if #available(iOSApplicationExtension 12.0, *),
-            let log = eventsLog,
             let id = spid as? OSSignpostID {
             os_signpost(.end,
-                        log: log,
+                        log: Instruments.eventsLog,
                         name: "Timed Event",
                         signpostID: id,
                         "Result: %@", result ?? "")
         }
     }
+}
+
+public class DOMContentLoadedMonitor {
+
+    public static let shared = DOMContentLoadedMonitor()
+
+    var spid: Any?
+
+    public func start() {
+        spid = Instruments.shared.startTimedEvent(.domContentLoaded)
+    }
+
+    public func finished() {
+        Instruments.shared.endTimedEvent(for: spid)
+    }
+
 }

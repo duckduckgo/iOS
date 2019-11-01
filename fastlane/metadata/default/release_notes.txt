@@ -1,3 +1,5 @@
-• We fixed an image saving issue on iOS 13 and added a page preview when you long press a link.
-• The tab switcher now highlights the correct tab when you close a tab.
-• A few other minor bug fixes and improvements.
+• We have a new icon! Please let us know what you think.
+• Privacy protection toggle now applies only to individual sites and not the entire app, giving you more control over which sites you whitelist.
+• You can now prevent other apps from launching when browsing.  Visit settings for more info.
+• We've improved how we handle long and badly formed links.
+• Other minor bug fixes and improvements.

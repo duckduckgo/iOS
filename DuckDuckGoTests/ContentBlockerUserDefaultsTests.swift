@@ -35,23 +35,6 @@ class ContentBlockerUserDefaultsTests: XCTestCase {
         testee = ContentBlockerConfigurationUserDefaults(suiteName: Constants.userDefaultsSuit)
     }
 
-    func testWhenInitialisedThenEnableIsTrue() {
-        XCTAssertTrue(testee.enabled)
-    }
-
-    func testWhenBlockingDisabledThenDisabledIsTrue() {
-        testee.enabled = false
-        XCTAssertFalse(testee.enabled)
-    }
-
-    func testWhenBlockingEnabledThenEnabledIsTrue() {
-        // default value is true so start be setting to false to ensure test is accurate
-        testee.enabled = false
-
-        testee.enabled = true
-        XCTAssertTrue(testee.enabled)
-    }
-
     func testWhenNothingInWhitelistThenWhitelistedIsFalse() {
         XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
     }

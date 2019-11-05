@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>0</string>
+	<key>DuckDuckGoGroupIdentifierPrefix</key>
+	<string>$(GROUP_ID_PREFIX)</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -32,8 +34,8 @@
                 SUBQUERY (
                     $extensionItem.attachments,
                     $attachment,
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url" ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text"
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.url&quot; ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.plain-text&quot;
                     ).@count &lt;= 2
             ).@count == 1
             </string>

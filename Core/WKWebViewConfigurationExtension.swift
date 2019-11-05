@@ -109,7 +109,6 @@ private class Loader {
     }
 
     func load() {
-        DOMContentLoadedMonitor.shared.start()
         let spid = Instruments.shared.startTimedEvent(.injectScripts)
         loadDocumentLevelScripts()
 

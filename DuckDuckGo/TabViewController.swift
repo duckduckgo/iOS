@@ -624,9 +624,6 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private func handleLog(message: WKScriptMessage) {
-        if message.body as? String == "{\"0\":\"DOMContentLoaded\"}" {
-            DOMContentLoadedMonitor.shared.finished()
-        }
         Logger.log(text: String(describing: message.body))
     }
 

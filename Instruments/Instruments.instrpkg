@@ -254,6 +254,11 @@
                 <title>Total time</title>
                 <sum>duration</sum>
             </column>
+
+            <column>
+                <title>Standard deviation</title>
+                <std-dev>duration</std-dev>
+            </column>
         </aggregation>
         
         <list>

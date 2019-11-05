@@ -33,7 +33,6 @@ public class Instruments {
         case clearingData
 
         case injectScripts
-        case domContentLoaded
     }
     
     static public let shared = Instruments()
@@ -64,20 +63,4 @@ public class Instruments {
                         "Result: %@", result ?? "")
         }
     }
-}
-
-public class DOMContentLoadedMonitor {
-
-    public static let shared = DOMContentLoadedMonitor()
-
-    var spid: Any?
-
-    public func start() {
-        spid = Instruments.shared.startTimedEvent(.domContentLoaded)
-    }
-
-    public func finished() {
-        Instruments.shared.endTimedEvent(for: spid)
-    }
-
 }

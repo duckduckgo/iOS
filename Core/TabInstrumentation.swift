@@ -85,7 +85,7 @@ public class TabInstrumentation {
             let currentURL = self.currentURL ?? "unknown"
             let status = blocked ? "Blocked" : "Allowed"
             // 0 is treated as 1ms
-            let timeInNS: UInt64 = timeInMs > 0 ? UInt64(timeInMs * 1000 * 1000) : 1000000
+            let timeInNS: UInt64 = timeInMs.asNanos
             
             os_log(.debug,
                    log: type(of: self).tabsLog,
@@ -97,11 +97,19 @@ public class TabInstrumentation {
         if #available(iOSApplicationExtension 12.0, *) {
             let currentURL = self.currentURL ?? "unknown"
             // 0 is treated as 1ms
-            let timeInNS: UInt64 = timeInMs > 0 ? UInt64(timeInMs * 1000 * 1000) : 1000000
+            let timeInNS: UInt64 = timeInMs.asNanos
             
             os_log(.debug,
                    log: type(of: self).tabsLog,
                    "[%@] JSEvent: %@ executedIn: %llu", currentURL, name, timeInNS)
         }
     }
+}
+
+extension Double {
+
+    var asNanos: UInt64 {
+        return self > 0 ? UInt64(self * 1000 * 1000) : 1000000
+    }
+
 }

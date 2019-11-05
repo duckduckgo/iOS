@@ -19,10 +19,6 @@
 
 (function() {
 
-    document.addEventListener("DOMContentLoaded", function() {
-        duckduckgoDebugMessaging.log("DOMContentLoaded");
-    });
-
     duckduckgoDebugMessaging.log("installing beforeload detection")
     document.addEventListener("beforeload", function(event) {
 

@@ -221,8 +221,6 @@ public struct UserText {
         let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
         return message.format(arguments: number)
     }
-
-    public static let confirm = NSLocalizedString("confirm", comment: "Confirm clear tabs and data")
     
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")

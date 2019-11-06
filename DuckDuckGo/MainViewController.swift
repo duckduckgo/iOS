@@ -513,8 +513,6 @@ class MainViewController: UIViewController {
         let action = UIAlertAction(title: UserText.actionForgetTabs, style: .destructive) { [weak self] _ in
             self?.forgetTabsWithAnimation {}
         }
-        // TODO
-        action.accessibilityLabel = UserText.confirm
         return action
     }
 
@@ -522,8 +520,6 @@ class MainViewController: UIViewController {
         let action = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
             self?.forgetAllWithAnimation {}
         }
-        // TODO
-        action.accessibilityLabel = UserText.confirm
         return action
     }
 

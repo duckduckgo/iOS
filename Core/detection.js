@@ -33,19 +33,14 @@
         }
 
         duckduckgoDebugMessaging.log("checking " + event.url + " (" + type + ")");
-        duckduckgoContentBlocking.shouldBlock(event.url, type, function(url, block) {
-            if (!block) { 
-                duckduckgoDebugMessaging.log("don't block " + url);
-                return 
-            }
-
+        if (duckduckgoContentBlocking.shouldBlock(event.url, type)) {
             duckduckgoDebugMessaging.log("blocking beforeload")
-            if (duckduckgoContentBlocking.loadSurrogate(event.url)) {                
-                duckduckgoDebugMessaging.log("surrogate loaded for " + event.url)
-            }
             event.preventDefault()
             event.stopPropagation()
-        })
+        } else {
+            duckduckgoDebugMessaging.log("don't block " + event.url);
+            return 
+        }
     }, true)
 
 
@@ -61,14 +56,12 @@
             set: function(value) {
 
                 var instance = this
-                duckduckgoContentBlocking.shouldBlock(value, "image", function(url, block) {
-                    if (block) {
-                        duckduckgoDebugMessaging.log("blocking image src: " + url)
-                    } else {
-                        originalImageSrc.set.call(instance, value);
-                        duckduckgoDebugMessaging.log("allowing image src: " + url)
-                    }
-                })
+                if (duckduckgoContentBlocking.shouldBlock(value, "image")) {
+                    duckduckgoDebugMessaging.log("blocking image src: " + value)
+                } else {
+                    originalImageSrc.set.call(instance, value);
+                    duckduckgoDebugMessaging.log("allowing image src: " + value)
+                }
                 
             }
         })
@@ -86,9 +79,9 @@
         xhr.open = function() {
             var args = arguments
             var url = arguments[1]
-            duckduckgoContentBlocking.shouldBlock(url, "xmlhttprequest", function(url, block) {                                                  
-                args[1] = block ? "about:blank" : url 
-            })
+            if (duckduckgoContentBlocking.shouldBlock(url, "xmlhttprequest")) { 
+                args[1] = "about:blank"
+            }
             duckduckgoDebugMessaging.log("sending xhr " + url + " to " + args[1])
             return originalOpen.apply(this, args);
         }

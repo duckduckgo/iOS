@@ -129,19 +129,20 @@ private class Loader {
     private func loadContentBlockingScripts() {
         loadContentBlockerDependencyScripts()
         loadBlockerData()
-        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
-        load(scripts: [ .detection ], forMainFrameOnly: false)
+//        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+        load(scripts: [ .detection, .contentblocker ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {
-        let tlds = storageCache.tld
+//        let tlds = storageCache.tld
 
-        if #available(iOS 10, *) {
-            load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)
-        } else {
-            load(scripts: [ .messaging, .apbfilterES2015 ], forMainFrameOnly: false)
-        }
-        
+//        if #available(iOS 10, *) {
+//            load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)
+//        } else {
+//            load(scripts: [ .messaging, .apbfilterES2015 ], forMainFrameOnly: false)
+//        }
+        load(scripts: [ .messaging ], forMainFrameOnly: false)
+
         if isDebugBuild {
             javascriptLoader.load(script: .debugMessagingEnabled,
                                   into: userContentController,
@@ -152,27 +153,27 @@ private class Loader {
                                   forMainFrameOnly: false)
         }
 
-        javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
+        // javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
     }
 
     private func loadBlockerData() {
 
-        let surrogates = loadSurrogateJson(storageCache.surrogateStore)
-        let blockingEnabled = storageCache.configuration.enabled
-        let whitelist = storageCache.configuration.domainWhitelist.toJsonLookupString()
-        let disconnectMeStore = storageCache.disconnectMeStore
+//        let surrogates = loadSurrogateJson(storageCache.surrogateStore)
+//        let blockingEnabled = storageCache.configuration.enabled
+//        let whitelist = storageCache.configuration.domainWhitelist.toJsonLookupString()
+//        let disconnectMeStore = storageCache.disconnectMeStore
 
-        javascriptLoader.load(script: .blockerData, withReplacements: [
-            "${blocking_enabled}": "\(blockingEnabled)",
-            "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
-            "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
-            "${whitelist}": whitelist,
-            "${surrogates}": surrogates
-            ],
-                              into: userContentController,
-                              forMainFrameOnly: false)
+//        javascriptLoader.load(script: .blockerData, withReplacements: [
+//            "${blocking_enabled}": "\(blockingEnabled)",
+//            "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
+//            "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
+//            "${whitelist}": whitelist,
+//            "${surrogates}": surrogates
+//            ],
+//                              into: userContentController,
+//                              forMainFrameOnly: false)
 
-        loadEasylist()
+//        loadEasylist()
 
     }
 
@@ -191,48 +192,48 @@ private class Loader {
         return surrogateJson
     }
 
-    fileprivate func injectCompiledEasylist(_ cachedEasylistWhitelist: String) {
-        Logger.log(text: "using cached easylist")
-
-        if #available(iOS 10, *) {
-            javascriptLoader.load(.bloom, into: userContentController, forMainFrameOnly: false)
-        } else {
-            javascriptLoader.load(.bloomES2015, into: userContentController, forMainFrameOnly: false)
-        }
-
-        javascriptLoader.load(script: .cachedEasylist, withReplacements: [
-            "${easylist_privacy_json}": "{}",
-            "${easylist_general_json}": "{}",
-            "${easylist_whitelist_json}": cachedEasylistWhitelist ],
-                              into: userContentController,
-                              forMainFrameOnly: false)
-    }
-
-    fileprivate func injectRawEasylist(_ easylistWhitelist: String) {
-        Logger.log(text: "parsing easylist")
-
-        javascriptLoader.load(script: .easylistParsing, withReplacements: [
-            "${easylist_privacy}": "",
-            "${easylist_general}": "",
-            "${easylist_whitelist}": easylistWhitelist ],
-                              into: userContentController,
-                              forMainFrameOnly: false)
-
-    }
-
-    private func loadEasylist() {
-        
-        if let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
-            injectCompiledEasylist(cachedEasylistWhitelist)
-            return
-        }
-        
-        let easylistStore = storageCache.easylistStore
-
-        if let easylistWhitelist = easylistStore.easylistWhitelist {
-            injectRawEasylist(easylistWhitelist)
-        }
-    }
+//    fileprivate func injectCompiledEasylist(_ cachedEasylistWhitelist: String) {
+//        Logger.log(text: "using cached easylist")
+//
+//        if #available(iOS 10, *) {
+//            javascriptLoader.load(.bloom, into: userContentController, forMainFrameOnly: false)
+//        } else {
+//            javascriptLoader.load(.bloomES2015, into: userContentController, forMainFrameOnly: false)
+//        }
+//
+//        javascriptLoader.load(script: .cachedEasylist, withReplacements: [
+//            "${easylist_privacy_json}": "{}",
+//            "${easylist_general_json}": "{}",
+//            "${easylist_whitelist_json}": cachedEasylistWhitelist ],
+//                              into: userContentController,
+//                              forMainFrameOnly: false)
+//    }
+//
+//    fileprivate func injectRawEasylist(_ easylistWhitelist: String) {
+//        Logger.log(text: "parsing easylist")
+//
+//        javascriptLoader.load(script: .easylistParsing, withReplacements: [
+//            "${easylist_privacy}": "",
+//            "${easylist_general}": "",
+//            "${easylist_whitelist}": easylistWhitelist ],
+//                              into: userContentController,
+//                              forMainFrameOnly: false)
+//
+//    }
+//
+//    private func loadEasylist() {
+//
+//        if let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
+//            injectCompiledEasylist(cachedEasylistWhitelist)
+//            return
+//        }
+//
+//        let easylistStore = storageCache.easylistStore
+//
+//        if let easylistWhitelist = easylistStore.easylistWhitelist {
+//            injectRawEasylist(easylistWhitelist)
+//        }
+//    }
 
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         for script in scripts {

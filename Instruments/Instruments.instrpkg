@@ -371,6 +371,42 @@
             <column>website-url</column>
             <column>duration</column>
         </list>
+
+        <aggregation>
+            <title>Website Loading (aggregation)</title>
+            <table-ref>website-events-table</table-ref>
+
+            <column>
+                <title>Count</title>
+                <count></count>
+            </column>
+
+            <column>
+                <title>Min duration</title>
+                <min>duration</min>
+            </column>
+
+            <column>
+                <title>Max duration</title>
+                <max>duration</max>
+            </column>
+
+            <column>
+                <title>Average duration</title>
+                <average>duration</average>
+            </column>
+
+            <column>
+                <title>Standard deviation</title>
+                <std-dev>duration</std-dev>
+            </column>
+
+            <column>
+                <title>Total time</title>
+                <sum>duration</sum>
+            </column>
+        </aggregation>
+
     </instrument>
     
     <template>

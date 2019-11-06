@@ -644,7 +644,12 @@ extension TabViewController: WKScriptMessageHandler {
                 let url = dict["url"] as? String {
                 instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
             }
-        } else if event == "Request Blocked" {
+        } else if event == "Tracker Allowed" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
+                let url = dict["url"] as? String {
+                instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
+            }
+        } else if event == "Tracker Blocked" {
             if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {
                 instrumentation.request(url: url, blockedIn: elapsedTimeInMs)

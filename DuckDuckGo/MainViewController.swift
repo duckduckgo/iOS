@@ -299,13 +299,14 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
+        alert.addAction(forgetTabsAction())
         alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: toolbar)
     }
     
     func onQuickFirePressed() {
-        forgetAll {}
+        forgetAllWithAnimation {}
         dismiss(animated: true)
     }
 
@@ -507,11 +508,21 @@ class MainViewController: UIViewController {
     fileprivate func launchBrowsingMenu() {
         currentTab?.launchBrowsingMenu()
     }
+    
+    private func forgetTabsAction() -> UIAlertAction {
+        let action = UIAlertAction(title: UserText.actionForgetTabs, style: .destructive) { [weak self] _ in
+            self?.forgetTabsWithAnimation {}
+        }
+        // TODO
+        action.accessibilityLabel = UserText.confirm
+        return action
+    }
 
     private func forgetAllAction() -> UIAlertAction {
         let action = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
-            self?.forgetAll {}
+            self?.forgetAllWithAnimation {}
         }
+        // TODO
         action.accessibilityLabel = UserText.confirm
         return action
     }
@@ -918,7 +929,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        forgetAll {
+        forgetAllWithAnimation {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
@@ -1004,7 +1015,20 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.clear()
     }
     
-    fileprivate func forgetAll(completion: @escaping () -> Void) {
+    fileprivate func forgetTabsWithAnimation(completion: @escaping () -> Void) {
+        let spid = Instruments.shared.startTimedEvent(.clearingTabs)
+        findInPageView.done()
+        Pixel.fire(pixel: .forgetTabsExecuted)
+        FireAnimation.animate {
+            self.forgetTabs()
+            completion()
+            Instruments.shared.endTimedEvent(for: spid)
+        }
+        let window = UIApplication.shared.keyWindow
+        window?.showBottomToast(UserText.actionForgetTabsDone, duration: 1)
+    }
+    
+    fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)

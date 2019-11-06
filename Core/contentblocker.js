@@ -18583,13 +18583,11 @@ trackers.setLists([{
 		}
 
 		var blocked = false;
-
-		if (result.action === 'blocked') {
+		if (result.action === 'block') {
 			blocked = true;
 		} else if (result.matchedRule && result.matchedRule.surrogate) {
 			blocked = true;
 		}
-
 
         duckduckgoMessaging.trackerDetected({
 	        url: trackerUrl,
@@ -18612,7 +18610,7 @@ trackers.setLists([{
                                                    time: performance.now() - startTime})
         }
 
-		return result.block
+		return blocked;
 	}
 
 	// Init 

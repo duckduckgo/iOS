@@ -234,6 +234,7 @@ extension SettingsViewController: Themable {
         
         autocompleteToggle.onTintColor = theme.buttonTintColor
         authenticationToggle.onTintColor = theme.buttonTintColor
+        openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

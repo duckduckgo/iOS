@@ -59,6 +59,11 @@ public enum PixelName: String {
     case quickActionExtensionBookmarks = "mqe_b"
     case bookmarksExtensionBookmark = "mbe_b"
     
+    case bookmarkTapped = "m_b_t"
+    case bookmarkRemoved = "m_b_r"
+    case bookmarksEditPressed = "m_b_e"
+    case overlayFavoriteLaunched = "m_ov_f"
+    
     case settingsOpened = "ms"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
@@ -99,6 +104,7 @@ public enum PixelName: String {
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
+    case tabBarBookmarksLongPressed = "mt_bl"
     case tabBarTabSwitcherPressed = "mt_tb"
 
     case onboardingShown = "m_o"

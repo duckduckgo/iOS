@@ -853,6 +853,22 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
+    private func isValid(navigationAction: WKNavigationAction) -> Bool {
+        guard let url = navigationAction.request.url else {
+            return true
+        }
+        
+        if url.scheme == "sms" && navigationAction.navigationType != .linkActivated {
+            return false
+        }
+        
+        if url.absoluteString.hasPrefix("x-apple-data-detectors://") {
+            return false
+        }
+        
+        return true
+    }
+    
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
         
@@ -862,17 +878,17 @@ extension TabViewController: WKNavigationDelegate {
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
         }
+        
+        guard isValid(navigationAction: navigationAction) else {
+            completion(.cancel)
+            return
+        }
 
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
         }
 
-        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
-            completion(.cancel)
-            return
-        }
-        
         guard let documentUrl = navigationAction.request.mainDocumentURL else {
             completion(allowPolicy)
             return

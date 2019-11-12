@@ -37,9 +37,9 @@
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
 "action.title.newBackgroundTabForUrl" = "Open in Background";
-"action.title.forgetTabs" = "Clear Tabs";
-"action.title.forgetAll" = "Clear Tabs and Data";
-"action.title.forgetTabsDone" = "Tabs cleared";
+"action.title.forgetTabs" = "Close Tabs";
+"action.title.forgetAll" = "Close Tabs and Clear Data";
+"action.title.forgetTabsDone" = "Tabs closed";
 "action.title.forgetAllDone" = "Tabs and data cleared";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";

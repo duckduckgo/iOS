@@ -973,6 +973,8 @@ extension MainViewController: GestureToolbarButtonDelegate {
             view.showBottomToast(UserText.webSaveBookmarkNone)
             return
         }
+        
+        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         currentTab!.promptSaveBookmarkAction()
     }
     

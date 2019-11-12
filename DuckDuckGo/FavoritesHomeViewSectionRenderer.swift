@@ -256,7 +256,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
         guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
-        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         UISelectionFeedbackGenerator().selectionChanged()
         controller?.favoritesRenderer(self, didSelect: link)
     }

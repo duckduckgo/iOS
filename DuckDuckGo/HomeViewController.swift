@@ -216,6 +216,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
+        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         delegate?.home(self, didRequestUrl: link.url)
     }
 }

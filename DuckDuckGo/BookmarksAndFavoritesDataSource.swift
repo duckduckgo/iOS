@@ -60,6 +60,8 @@ class BookmarksAndFavoritesDataSource: BookmarksDataSource {
         if editingStyle == .delete {
             var reload = false
             
+            Pixel.fire(pixel: .bookmarkRemoved)
+            
             if indexPath.section == 0 {
                 bookmarksManager.deleteFavorite(at: indexPath.row)
                 reload = bookmarksManager.favoritesCount == 0

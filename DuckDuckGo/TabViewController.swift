@@ -73,7 +73,7 @@ class TabViewController: UIViewController {
     private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
     
-    private var tearDownCount = 0
+    private var tearDownExecuted = false
     private var tips: BrowsingTips?
     
     public var url: URL? {
@@ -544,10 +544,10 @@ class TabViewController: UIViewController {
     }
     
     public func tearDown() {
-        guard tearDownCount == 0 else {
-            fatalError("tearDown has already happened")
+        guard !tearDownExecuted else {
+            return
         }
-        tearDownCount += 1
+        tearDownExecuted = true
         removeObservers()
         webView.removeFromSuperview()
 

@@ -46,7 +46,9 @@ public struct UserText {
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", comment: "Open in New Tab action")
     public static let actionNewBackgroundTabForUrl = NSLocalizedString("action.title.newBackgroundTabForUrl", comment: "Open in New Background Tab action")
+    public static let actionForgetTabs = NSLocalizedString("action.title.forgetTabs", comment: "Clear Tabs action")
     public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", comment: "Clear Tabs and Data action")
+    public static let actionForgetTabsDone = NSLocalizedString("action.title.forgetTabsDone", comment: "Tabs Cleared")
     public static let actionForgetAllDone = NSLocalizedString("action.title.forgetAllDone", comment: "Tabs and Data Cleared")
     public static let actionOpen = NSLocalizedString("action.title.open", comment: "Open action")
     public static let actionReadingList = NSLocalizedString("action.title.readingList", comment: "Reading List action")
@@ -219,8 +221,6 @@ public struct UserText {
         let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
         return message.format(arguments: number)
     }
-
-    public static let confirm = NSLocalizedString("confirm", comment: "Confirm clear tabs and data")
     
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")

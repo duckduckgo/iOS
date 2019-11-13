@@ -73,7 +73,7 @@ class TabViewController: UIViewController {
     private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
     
-    private var tearDownCount = 0
+    private var tearDownExecuted = false
     private var tips: BrowsingTips?
     
     public var url: URL? {
@@ -544,10 +544,10 @@ class TabViewController: UIViewController {
     }
     
     public func tearDown() {
-        guard tearDownCount == 0 else {
-            fatalError("tearDown has already happened")
+        guard !tearDownExecuted else {
+            return
         }
-        tearDownCount += 1
+        tearDownExecuted = true
         removeObservers()
         webView.removeFromSuperview()
 
@@ -853,6 +853,22 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
+    private func isValid(navigationAction: WKNavigationAction) -> Bool {
+        guard let url = navigationAction.request.url else {
+            return true
+        }
+        
+        if url.scheme == "sms" && navigationAction.navigationType != .linkActivated {
+            return false
+        }
+        
+        if url.absoluteString.hasPrefix("x-apple-data-detectors://") {
+            return false
+        }
+        
+        return true
+    }
+    
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
         
@@ -862,17 +878,17 @@ extension TabViewController: WKNavigationDelegate {
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
         }
+        
+        guard isValid(navigationAction: navigationAction) else {
+            completion(.cancel)
+            return
+        }
 
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
         }
 
-        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
-            completion(.cancel)
-            return
-        }
-        
         guard let documentUrl = navigationAction.request.mainDocumentURL else {
             completion(allowPolicy)
             return

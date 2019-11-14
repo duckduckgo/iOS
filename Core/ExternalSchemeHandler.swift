@@ -21,33 +21,32 @@ public class ExternalSchemeHandler {
         case other
     }
     
-    // Enum FTW
-    private static let whitelistedSchemes: Set<String> = [
-        "tel",
-        "mailto",
-        "maps",
-        "sms",
-        "itms",
-        "itmss",
-        "itms-apps",
-        "itms-appss",
-        "itunes"
-    ]
-
-    private static let blacklistedSchemes: Set<String> = [
-        "about"
-    ]
+    private enum WhitelistedScheme: String {
+        case tel
+        case mailto
+        case maps
+        case sms
+        case itms
+        case itmss
+        case itmsApps = "itms-apps"
+        case itmsAppss = "itms-appss"
+        case itunes
+    }
+    
+    private enum BlacklistedScheme: String {
+        case about
+    }
     
     public static func schemeType(for url: URL) -> SchemeType {
-        guard let scheme = url.scheme else { return .other }
+        guard let schemeString = url.scheme else { return .other }
         
-        guard !blacklistedSchemes.contains(scheme) else {
+        guard BlacklistedScheme(rawValue: schemeString) == nil else {
             return .external(.cancel)
         }
         
-        if whitelistedSchemes.contains(scheme) {
+        if let scheme = WhitelistedScheme(rawValue: schemeString) {
             
-            if scheme == "sms" {
+            if scheme == .sms || scheme == .mailto {
                 return .external(.askForConfirmation)
             }
             

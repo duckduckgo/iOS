@@ -876,11 +876,6 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else { // Move logic to scheme handling?
-            completion(.cancel)
-            return
-        }
-        
         if isExternallyHandled(url: url, for: navigationAction) {
             completion(.cancel)
             return

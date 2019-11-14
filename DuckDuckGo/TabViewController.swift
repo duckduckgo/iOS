@@ -888,11 +888,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
-            if url.isCustomURLScheme() {
-                completion(allowPolicy)
-                return
-            } // to check
             delegate?.tab(self, didRequestNewTabForUrl: url)
             completion(.cancel)
             return

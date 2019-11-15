@@ -866,7 +866,7 @@ extension TabViewController: WKNavigationDelegate {
             lastUpgradedURL = nil
         }
         
-        guard navigationAction.request.mainDocumentURL != nil else { // Can this be removed?
+        guard navigationAction.request.mainDocumentURL != nil else {
             completion(allowPolicy)
             return
         }
@@ -898,7 +898,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in // flow for non-http?
+        httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
                 NetworkLeaderboard.shared.incrementHttpsUpgrades()

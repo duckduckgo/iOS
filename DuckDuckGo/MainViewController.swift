@@ -297,11 +297,13 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.overrideUserInterfaceStyle()
-        alert.addAction(forgetTabsAction())
-        alert.addAction(forgetAllAction())
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        
+        let alert = ForgetDataAlert.buildAlert(forgetTabsHandler: { [weak self] in
+            self?.forgetTabsWithAnimation {}
+        }, forgetTabsAndDataHandler: { [weak self] in
+            self?.forgetAllWithAnimation {}
+        })
+        
         present(controller: alert, fromView: toolbar)
     }
     
@@ -509,20 +511,6 @@ class MainViewController: UIViewController {
         currentTab?.launchBrowsingMenu()
     }
     
-    private func forgetTabsAction() -> UIAlertAction {
-        let action = UIAlertAction(title: UserText.actionForgetTabs, style: .destructive) { [weak self] _ in
-            self?.forgetTabsWithAnimation {}
-        }
-        return action
-    }
-
-    private func forgetAllAction() -> UIAlertAction {
-        let action = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
-            self?.forgetAllWithAnimation {}
-        }
-        return action
-    }
-
     fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
@@ -922,6 +910,12 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         remove(tabAt: index)
+    }
+    
+    func tabSwitcherDidRequestForgetTabs(tabSwitcher: TabSwitcherViewController) {
+        forgetTabsWithAnimation {
+            tabSwitcher.dismiss(animated: false, completion: nil)
+        }
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {

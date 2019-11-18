@@ -26,6 +26,8 @@ public class ExternalSchemeHandler {
         case mailto
         case maps
         case sms
+        case facetime
+        case facetimeAudio = "facetime-audio"
         case itms
         case itmss
         case itmsApps = "itms-apps"

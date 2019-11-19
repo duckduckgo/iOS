@@ -76,7 +76,7 @@ extension TabViewController {
     
     private func onNewTabAction(url: URL) {
         Pixel.fire(pixel: .longPressMenuNewTabItem)
-        delegate?.tab(self, didRequestNewTabForUrl: url)
+        delegate?.tab(self, didRequestNewTabForUrl: url, animated: false)
     }
     
     private func onBackgroundTabAction(url: URL) {

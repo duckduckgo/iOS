@@ -855,9 +855,18 @@ extension MainViewController: TabDelegate {
         animateBackgroundTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, animated: Bool) {
         _ = findInPageView.resignFirstResponder()
-        loadUrlInNewTab(url)
+
+        if animated {
+            newTabAnimation {
+                self.loadUrlInNewTab(url)
+            }
+            self.tabSwitcherButton.incrementAnimated()
+        } else {
+            loadUrlInNewTab(url)
+        }
+
     }
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
@@ -886,6 +895,24 @@ extension MainViewController: TabDelegate {
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+    }
+
+    private func newTabAnimation(completion: @escaping () -> Void) {
+
+        let x = view.frame.midX
+        let y = view.frame.midY
+
+        let view = UIView(frame: CGRect(x: x, y: y, width: 5, height: 5))
+        view.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+        view.center = self.view.center
+        self.view.addSubview(view)
+        UIView.animate(withDuration: 0.3, animations: {
+            view.frame = self.view.frame
+            view.alpha = 0.9
+        }, completion: { _ in
+            view.removeFromSuperview()
+            completion()
+        })
     }
 
 }

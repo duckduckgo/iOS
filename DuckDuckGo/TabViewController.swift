@@ -490,14 +490,6 @@ class TabViewController: UIViewController {
         present(controller: alert, fromView: webView, atPoint: point)
     }
     
-    private func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        if shouldOpenExternally(url: url) {
-            openExternally(url: url)
-            return false
-        }
-        return true
-    }
-    
     private func openExternally(url: URL) {
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
@@ -506,32 +498,43 @@ class TabViewController: UIViewController {
         }
     }
 
-    private func shouldOpenExternally(url: URL) -> Bool {
-        if SupportedExternalURLScheme.isSupported(url: url) {
-            return true
-        }
+    private func isExternallyHandled(url: URL, for navigationAction: WKNavigationAction) -> Bool {
+        let schemeType = ExternalSchemeHandler.schemeType(for: url)
         
-        if SupportedExternalURLScheme.isProhibited(url: url) {
+        switch schemeType {
+        case .external(let action):
+            guard navigationAction.navigationType == .linkActivated else {
+                // Ignore extrnal URLs if not triggered by the User.
+                return true
+            }
+            switch action {
+            case .open:
+                openExternally(url: url)
+            case .askForConfirmation:
+                presentOpenInExternalAppAlert(url: url)
+            case .cancel:
+                break
+            }
+            
+            return true
+        case .other:
             return false
         }
+    }
+    
+    func presentOpenInExternalAppAlert(url: URL) {
+        let title = UserText.customUrlSchemeTitle
+        let message = UserText.forCustomUrlSchemePrompt(url: url)
+        let open = UserText.customUrlSchemeOpen
+        let dontOpen = UserText.customUrlSchemeDontOpen
         
-        if url.isCustomURLScheme() {
-            
-            let title = UserText.customUrlSchemeTitle
-            let message = UserText.forCustomUrlSchemePrompt(url: url)
-            let open = UserText.customUrlSchemeOpen
-            let dontOpen = UserText.customUrlSchemeDontOpen
-            
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.overrideUserInterfaceStyle()
-            alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
-            alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
-                self.openExternally(url: url)
-            }))
-            show(alert, sender: self)
-        }
-        
-        return false
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle()
+        alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+        alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
+            self.openExternally(url: url)
+        }))
+        show(alert, sender: self)
     }
 
     func dismiss() {
@@ -853,22 +856,6 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
-    private func isValid(navigationAction: WKNavigationAction) -> Bool {
-        guard let url = navigationAction.request.url else {
-            return true
-        }
-        
-        if url.scheme == "sms" && navigationAction.navigationType != .linkActivated {
-            return false
-        }
-        
-        if url.absoluteString.hasPrefix("x-apple-data-detectors://") {
-            return false
-        }
-        
-        return true
-    }
-    
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
         
@@ -879,18 +866,18 @@ extension TabViewController: WKNavigationDelegate {
             lastUpgradedURL = nil
         }
         
-        guard isValid(navigationAction: navigationAction) else {
-            completion(.cancel)
+        guard navigationAction.request.mainDocumentURL != nil else {
+            completion(allowPolicy)
             return
         }
-
+        
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
         }
-
-        guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            completion(allowPolicy)
+        
+        if isExternallyHandled(url: url, for: navigationAction) {
+            completion(.cancel)
             return
         }
         
@@ -901,11 +888,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            // don't open a new tab for custom urls but do allow them to be opened (user will be prompted to confirm)
-            if url.isCustomURLScheme() {
-                completion(allowPolicy)
-                return
-            }
             delegate?.tab(self, didRequestNewTabForUrl: url)
             completion(.cancel)
             return
@@ -925,13 +907,8 @@ extension TabViewController: WKNavigationDelegate {
                 completion(.cancel)
                 return
             }
-            
-            if let shouldLoad = self?.shouldLoad(url: url, forDocument: documentUrl), shouldLoad {
-                completion(allowPolicy)
-                return
-            }
-            
-            completion(.cancel)
+
+            completion(allowPolicy)
         }
     }
     

@@ -20,40 +20,47 @@
 import XCTest
 @testable import Core
 
-class SupportedExternalUrlSchemeTests: XCTestCase {
+class ExternalUrlSchemeTests: XCTestCase {
 
     func testThatEmailIsSupported() {
         let url = URL(string: "mailto://someurl")!
-        XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+                       ExternalSchemeHandler.SchemeType.external(.askForConfirmation))
     }
 
     func testThatSmsIsSupported() {
         let url = URL(string: "sms://someurl")!
-        XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+        ExternalSchemeHandler.SchemeType.external(.askForConfirmation))
     }
 
     func testThatMapsAreSupported() {
         let url = URL(string: "maps://someurl")!
-        XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+                       ExternalSchemeHandler.SchemeType.external(.open))
     }
 
     func testThatCallsAreSupported() {
         let url = URL(string: "tel://someurl")!
-        XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+                       ExternalSchemeHandler.SchemeType.external(.open))
     }
 
     func testThatUrlsWithNoSchemeAreNotSupported() {
         let url = URL(string: "telzzz")!
-        XCTAssertFalse(SupportedExternalURLScheme.isSupported(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+                       ExternalSchemeHandler.SchemeType.other)
     }
 
     func testThatUnknownSchemesAreNotSupported() {
         let url = URL(string: "other://")!
-        XCTAssertFalse(SupportedExternalURLScheme.isSupported(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+                       ExternalSchemeHandler.SchemeType.other)
     }
     
     func testThatAboutSchemesAreProhibited() {
         let url = URL(string: "about:blank")!
-        XCTAssertTrue(SupportedExternalURLScheme.isProhibited(url: url))
+        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
+                       ExternalSchemeHandler.SchemeType.external(.cancel))
     }
 }

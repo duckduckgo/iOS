@@ -55,5 +55,12 @@ public struct AppVersion {
     public var buildNumber: String {
         return bundle.object(forInfoDictionaryKey: Keys.buildNumber) as? String ?? ""
     }
-
+    
+    public var versionAndBuildNumber: String {
+        return "\(versionNumber).\(buildNumber)"
+    }
+    
+    public var localized: String {
+        return "\(name) \(versionAndBuildNumber)"
+    }
 }

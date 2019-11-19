@@ -184,6 +184,7 @@ public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
+    static let appVersion = "appVersion"
 }
 
 public struct PixelValues {
@@ -209,6 +210,7 @@ public class Pixel {
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
+        newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }

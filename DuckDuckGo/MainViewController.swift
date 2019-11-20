@@ -898,6 +898,7 @@ extension MainViewController: TabDelegate {
     }
 
     private func newTabAnimation(completion: @escaping () -> Void) {
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
 
         let x = view.frame.midX
         let y = view.frame.midY

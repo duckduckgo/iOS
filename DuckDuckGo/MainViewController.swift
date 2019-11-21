@@ -836,6 +836,10 @@ extension MainViewController: HomeControllerDelegate {
 
 extension MainViewController: TabDelegate {
 
+    func tabDidClose(_ tab: TabViewController) {
+        closeTab(tab.tabModel)
+    }
+
     func tabLoadingStateDidChange(tab: TabViewController) {
         findInPageView.done()
         

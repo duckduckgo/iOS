@@ -855,6 +855,10 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(decision)
         }
     }
+
+    func webViewDidClose(_ webView: WKWebView) {
+        delegate?.tabDidClose(self)
+    }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()

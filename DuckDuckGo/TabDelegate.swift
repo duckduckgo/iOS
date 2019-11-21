@@ -42,4 +42,6 @@ protocol TabDelegate: class {
 
     func showBars()
 
+    func tabDidClose(_ tab: TabViewController)
+
 }

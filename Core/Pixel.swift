@@ -27,6 +27,7 @@ public enum PixelName: String {
     case forgetAllPressedBrowsing = "mf_bp"
     case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
+    case forgetTabsExecuted = "mf_t"
     
     case privacyDashboardOpened = "mp"
     case privacyDashboardScorecard = "mp_c"
@@ -34,8 +35,10 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    case privacyDashboardToggleProtectionOn = "mp_ta"
-    case privacyDashboardToggleProtectionOff = "mp_tb"
+    case privacyDashboardWhitelistAdd = "mp_wla"
+    case privacyDashboardWhitelistRemove = "mp_wlr"
+    case privacyDashboardManageWhitelist = "mp_mw"
+    case privacyDashboardReportBrokenSite = "mp_rb"
     
     case httpsNoLookup = "m_https_nl"
     case httpsLocalUpgrade = "m_https_lu"
@@ -57,6 +60,11 @@ public enum PixelName: String {
     case quickActionExtensionBookmarks = "mqe_b"
     case bookmarksExtensionBookmark = "mbe_b"
     
+    case bookmarkTapped = "m_b_t"
+    case bookmarkRemoved = "m_b_r"
+    case bookmarksEditPressed = "m_b_e"
+    case overlayFavoriteLaunched = "m_ov_f"
+    
     case settingsOpened = "ms"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
@@ -69,7 +77,8 @@ public enum PixelName: String {
     case settingsHomePageSimple = "ms_hp_s"
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
-
+    case settingsManageWhitelist = "ms_mw"
+    
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"
     case autoClearActionOptionTabs = "macwhat_t"
@@ -87,14 +96,16 @@ public enum PixelName: String {
     case browsingMenuAddToFavorites = "mb_af"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
-    case browsingMenuWhitelist = "mb_wl"
-    case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
     case browsingMenuFindInPage = "mb_fp"
-
+    case browsingMenuWhitelistAdd = "mb_wla"
+    case browsingMenuWhitelistRemove = "mb_wlr"
+    case browsingMenuReportBrokenSite = "mb_rb"
+    
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
+    case tabBarBookmarksLongPressed = "mt_bl"
     case tabBarTabSwitcherPressed = "mt_tb"
 
     case onboardingShown = "m_o"
@@ -173,6 +184,7 @@ public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
+    static let appVersion = "appVersion"
 }
 
 public struct PixelValues {
@@ -198,6 +210,7 @@ public class Pixel {
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
+        newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }

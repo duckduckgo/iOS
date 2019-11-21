@@ -85,6 +85,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            Pixel.fire(pixel: .bookmarkRemoved)
             bookmarksManager.deleteBookmark(at: indexPath.row)
         }
         tableView.reloadData()

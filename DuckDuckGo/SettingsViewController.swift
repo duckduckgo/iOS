@@ -93,6 +93,11 @@ class SettingsViewController: UITableViewController {
             return
         }
         
+        if segue.destination is WhitelistViewController {
+            Pixel.fire(pixel: .settingsManageWhitelist)
+            return
+        }
+        
         if segue.destination is HomeRowInstructionsViewController {
             Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
             return

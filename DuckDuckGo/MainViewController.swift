@@ -903,12 +903,13 @@ extension MainViewController: TabDelegate {
 
         let x = view.frame.midX
         let y = view.frame.midY
-
+        
+        let theme = ThemeManager.shared.currentTheme
         let view = UIView(frame: CGRect(x: x, y: y, width: 5, height: 5))
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+        view.layer.borderColor = theme.barTintColor.cgColor
+        view.backgroundColor = theme.backgroundColor
         view.center = self.view.center
         self.view.addSubview(view)
         UIView.animate(withDuration: 0.3, animations: {

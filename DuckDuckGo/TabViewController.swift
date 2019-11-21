@@ -888,7 +888,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url)
+            delegate?.tab(self, didRequestNewTabForUrl: url, animated: true)
             completion(.cancel)
             return
         }

@@ -905,6 +905,9 @@ extension MainViewController: TabDelegate {
         let y = view.frame.midY
 
         let view = UIView(frame: CGRect(x: x, y: y, width: 5, height: 5))
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 10
+        view.layer.borderColor = UIColor.black.cgColor
         view.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
         view.center = self.view.center
         self.view.addSubview(view)

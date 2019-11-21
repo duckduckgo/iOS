@@ -955,7 +955,13 @@ extension TabViewController: WKUIDelegate {
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        webView.load(navigationAction.request)
+            
+        if let url = navigationAction.request.url {
+            delegate?.tab(self, didRequestNewTabForUrl: url, animated: true)
+        } else {
+            webView.load(navigationAction.request)
+        }
+        
         return nil
     }
     

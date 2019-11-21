@@ -119,7 +119,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="4cy-nR-Oqa">
+                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="4cy-nR-Oqa">
                                         <rect key="frame" x="0.0" y="187.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="4cy-nR-Oqa" id="lje-xd-APn">
@@ -138,8 +138,7 @@
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1R-um-rgF">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                             <connections>
-                                                                <action selector="onAllowUniversalLinksToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="TO1-sH-1ax"/>
-                                                                <action selector="onHideLinkPreviewsToggle:" destination="fAo-H3-Yyo" eventType="valueChanged" id="gQ2-OY-S7T"/>
+                                                                <action selector="onLinkPreviewsToggle:" destination="fAo-H3-Yyo" eventType="valueChanged" id="xdR-R3-c5g"/>
                                                             </connections>
                                                         </switch>
                                                     </subviews>
@@ -435,6 +434,7 @@
                         <outlet property="autoClearAccessoryText" destination="Ccm-w6-p6U" id="1wX-zy-6k5"/>
                         <outlet property="autocompleteToggle" destination="PNd-rx-En1" id="KD7-z4-4OW"/>
                         <outlet property="homePageAccessoryText" destination="O9k-vm-boT" id="qTg-od-oXj"/>
+                        <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
                         <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
@@ -460,11 +460,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="0TO-1x-wGv" userLabel="Send Feedback Tap">
-                    <connections>
-                        <action selector="sendFeedback" destination="fAo-H3-Yyo" id="53g-CE-YCb"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="0TO-1x-wGv" userLabel="Send Feedback Tap"/>
             </objects>
             <point key="canvasLocation" x="1933.3333333333335" y="52.989130434782609"/>
         </scene>

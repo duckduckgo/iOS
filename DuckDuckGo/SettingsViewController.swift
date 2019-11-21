@@ -34,6 +34,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
 
+    @IBOutlet weak var longPressCell: UITableViewCell!
+
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -56,7 +58,7 @@ class SettingsViewController: UITableViewController {
         configureSecurityToggles()
         configureVersionText()
         configureUniversalLinksToggle()
-        configureHideLinkPreviewsToggle()
+        configureLinkPreviewsToggle()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -169,7 +171,10 @@ class SettingsViewController: UITableViewController {
         openUniversalLinksToggle.isOn = appSettings.allowUniversalLinks
     }
 
-    private func configureHideLinkPreviewsToggle() {
+    private func configureLinkPreviewsToggle() {
+        if #available(iOS 13, *) {
+            longPressCell.isHidden = false
+        }
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 
@@ -205,6 +210,11 @@ class SettingsViewController: UITableViewController {
         }
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
@@ -221,7 +231,7 @@ class SettingsViewController: UITableViewController {
         appSettings.allowUniversalLinks = sender.isOn
     }
 
-    @IBAction func onHideLinkPreviewsToggle(_ sender: UISwitch) {
+    @IBAction func onLinkPreviewsToggle(_ sender: UISwitch) {
         appSettings.longPressPreviews = sender.isOn
         Pixel.fire(pixel: appSettings.longPressPreviews ? .settingsLinkPreviewsOn : .settingsLinkPreviewsOff)
     }

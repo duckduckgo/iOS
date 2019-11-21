@@ -223,6 +223,7 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onHideLinkPreviewsToggle(_ sender: UISwitch) {
         appSettings.longPressPreviews = sender.isOn
+        Pixel.fire(pixel: appSettings.longPressPreviews ? .settingsLinkPreviewsOn : .settingsLinkPreviewsOff)
     }
 }
 

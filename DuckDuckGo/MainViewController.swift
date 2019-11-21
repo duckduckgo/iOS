@@ -859,10 +859,11 @@ extension MainViewController: TabDelegate {
         _ = findInPageView.resignFirstResponder()
 
         if animated {
+            showBars()
             newTabAnimation {
                 self.loadUrlInNewTab(url)
             }
-            self.tabSwitcherButton.incrementAnimated()
+            tabSwitcherButton.incrementAnimated()
         } else {
             loadUrlInNewTab(url)
         }

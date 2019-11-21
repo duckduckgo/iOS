@@ -128,7 +128,7 @@ extension TabViewController {
         }
 
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-            return AppUserDefaults().hideLinkPreviews ? nil : self.buildPreview(for: url)
+            return AppUserDefaults().longPressPreviews ? self.buildPreview(for: url) : nil
         }, actionProvider: { elements in
 
             let provided = elements.filter({

@@ -43,7 +43,7 @@ public class AppUserDefaults: AppSettings {
         
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
         static let allowUniversalLinks = "com.duckduckgo.app.allowUniversalLinks"
-        static let hideLinkPreviews = "com.duckduckgo.app.hideLinkPreviews"
+        static let longPressPreviews = "com.duckduckgo.app.longPressPreviews"
     }
 
     private var userDefaults: UserDefaults? {
@@ -139,13 +139,13 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    var hideLinkPreviews: Bool {
+    var longPressPreviews: Bool {
         get {
-            return userDefaults?.object(forKey: Keys.hideLinkPreviews) as? Bool ?? false
+            return userDefaults?.object(forKey: Keys.longPressPreviews) as? Bool ?? true
         }
 
         set {
-            userDefaults?.set(newValue, forKey: Keys.hideLinkPreviews)
+            userDefaults?.set(newValue, forKey: Keys.longPressPreviews)
         }
     }
     

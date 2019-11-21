@@ -32,7 +32,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
-    @IBOutlet weak var hideLinkPreviewsToggle: UISwitch!
+    @IBOutlet weak var longPressPreviewsToggle: UISwitch!
 
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -170,7 +170,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureHideLinkPreviewsToggle() {
-        hideLinkPreviewsToggle.isOn = appSettings.hideLinkPreviews
+        longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -222,7 +222,7 @@ class SettingsViewController: UITableViewController {
     }
 
     @IBAction func onHideLinkPreviewsToggle(_ sender: UISwitch) {
-        appSettings.hideLinkPreviews = sender.isOn
+        appSettings.longPressPreviews = sender.isOn
     }
 }
 
@@ -245,7 +245,7 @@ extension SettingsViewController: Themable {
         autocompleteToggle.onTintColor = theme.buttonTintColor
         authenticationToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
-        hideLinkPreviewsToggle.onTintColor = theme.buttonTintColor
+        longPressPreviewsToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

@@ -27,7 +27,22 @@ class AppUserDefaultsTests: XCTestCase {
     override func setUp() {
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
-    
+
+    func testWhenLinkPreviewsIsSetThenItIsPersisted() {
+
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.longPressPreviews = false
+        XCTAssertFalse(appUserDefaults.longPressPreviews)
+
+    }
+
+    func testWhenSettingsIsNewThenDefaultForHideLinkPreviewsIsTrue() {
+
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertTrue(appUserDefaults.longPressPreviews)
+
+    }
+
     func testWhenAllowUniversalLinksIsSetThenItIsPersisted() {
 
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)

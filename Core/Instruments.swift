@@ -31,7 +31,6 @@ public class Instruments {
         case tabInitialisation
         
         case clearingData
-        case clearingTabs
     }
     
     static public let shared = Instruments()

@@ -298,9 +298,7 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
-        let alert = ForgetDataAlert.buildAlert(forgetTabsHandler: { [weak self] in
-            self?.forgetTabsWithAnimation {}
-        }, forgetTabsAndDataHandler: { [weak self] in
+        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
             self?.forgetAllWithAnimation {}
         })
         
@@ -944,12 +942,6 @@ extension MainViewController: TabSwitcherDelegate {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         remove(tabAt: index)
     }
-    
-    func tabSwitcherDidRequestForgetTabs(tabSwitcher: TabSwitcherViewController) {
-        forgetTabsWithAnimation {
-            tabSwitcher.dismiss(animated: false, completion: nil)
-        }
-    }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
         forgetAllWithAnimation {
@@ -1038,19 +1030,6 @@ extension MainViewController: AutoClearWorker {
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
         WebCacheManager.clear()
-    }
-    
-    fileprivate func forgetTabsWithAnimation(completion: @escaping () -> Void) {
-        let spid = Instruments.shared.startTimedEvent(.clearingTabs)
-        findInPageView.done()
-        Pixel.fire(pixel: .forgetTabsExecuted)
-        FireAnimation.animate {
-            self.forgetTabs()
-            completion()
-            Instruments.shared.endTimedEvent(for: spid)
-        }
-        let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetTabsDone, duration: 1)
     }
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {

@@ -27,7 +27,6 @@ public enum PixelName: String {
     case forgetAllPressedBrowsing = "mf_bp"
     case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
-    case forgetTabsExecuted = "mf_t"
     
     case privacyDashboardOpened = "mp"
     case privacyDashboardScorecard = "mp_c"
@@ -78,7 +77,9 @@ public enum PixelName: String {
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
     case settingsManageWhitelist = "ms_mw"
-    
+    case settingsLinkPreviewsOff = "ms_lp_f"
+    case settingsLinkPreviewsOn = "ms_lp_n"
+
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"
     case autoClearActionOptionTabs = "macwhat_t"
@@ -184,6 +185,7 @@ public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
+    static let appVersion = "appVersion"
 }
 
 public struct PixelValues {
@@ -209,6 +211,7 @@ public class Pixel {
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
+        newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }

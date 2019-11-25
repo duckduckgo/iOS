@@ -23,7 +23,7 @@ import CoreData
 public class Database {
     
     fileprivate struct Constants {
-        static let databaseGroupID = "group.com.duckduckgo.database"
+        static let databaseGroupID = "\(Global.groupIdPrefix).database"
         
         static let databaseName = "Database"
     }
@@ -107,6 +107,7 @@ extension NSManagedObjectContext {
 private class DDGPersistentContainer: NSPersistentContainer {
 
     override public class func defaultDirectoryURL() -> URL {
+        
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
     } 
 }

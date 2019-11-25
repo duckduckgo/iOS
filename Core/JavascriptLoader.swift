@@ -25,20 +25,10 @@ public class JavascriptLoader {
     public enum Script: String {
         case findinpage
         case document
-//        case disconnectme
         case contentblocker
-//        case apbfilter = "abp-filter-parser-packed"
-//        case apbfilterES2015 = "abp-filter-parser-packed-es2015"
-//        case tlds
         case messaging
         case debugMessagingEnabled = "debug-messaging-enabled"
         case debugMessagingDisabled = "debug-messaging-disabled"
-//        case bloom = "bloom-filter-packed"
-//        case bloomES2015 = "bloom-filter-packed-es2015"
-//        case cachedEasylist = "easylist-cached"
-//        case easylistParsing = "easylist-parsing"
-//        case blockerData = "blockerdata"
-//        case surrogate
         case detection
     }
 

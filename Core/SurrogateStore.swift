@@ -19,71 +19,32 @@
 
 import Foundation
 
+// TODO delete surrogates.js
 class SurrogateStore {
 
     private let groupIdentifier: String
 
-    public private(set) var jsFunctions: [String: String]?
+    public var contentsAsString: String? {
+        return try? String(contentsOf: persistenceLocation(), encoding: .utf8)
+    }
 
     init(groupIdentifier: String = ContentBlockerStoreConstants.groupName) {
         self.groupIdentifier = groupIdentifier
-        jsFunctions = NSDictionary(contentsOf: persistenceLocation()) as? [String: String]
     }
 
     @discardableResult
-    func parseAndPersist(data: Data) -> Bool {
-        guard let surrogateFile = String(data: data, encoding: .utf8) else { return false }
-        let jsFunctions = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
-        guard let plist = jsFunctions as NSDictionary? else { return false }
-        if plist.write(to: persistenceLocation(), atomically: true) {
-            self.jsFunctions = jsFunctions
+    func persist(data: Data) -> Bool {
+        do {
+            try data.write(to: persistenceLocation())
             return true
+        } catch {
+            return false
         }
-        return false
     }
 
     private func persistenceLocation() -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
-        return path!.appendingPathComponent("surrogate.js")
-    }
-
-}
-
-class SurrogateParser {
-
-    static func parse(lines: [String]) -> [String: String] {
-        var jsDict = [String: String]()
-
-        var resourceName: String?
-        var jsFunction: String?
-
-        for line in lines {
-
-            guard !line.hasPrefix("#") else { continue }
-
-            // We can only cope with scripts anyway, see contentblocker.js -> loadSurrogate(url)
-            if line.hasSuffix("application/javascript") {
-                resourceName = line.components(separatedBy: " ")[0]
-                jsFunction = ""
-                continue
-            }
-
-            guard jsFunction != nil else { continue }
-
-            jsFunction = "\(jsFunction!)\(line)\n"
-
-            if line.trimWhitespace() == "" {
-                jsDict[resourceName!] = jsFunction?.trimWhitespace()
-                jsFunction = nil
-                resourceName = nil
-            }
-        }
-
-        if let resourceName = resourceName {
-            jsDict[resourceName] = jsFunction?.trimWhitespace()
-        }
-
-        return jsDict
+        return path!.appendingPathComponent("surrogates.txt")
     }
 
 }

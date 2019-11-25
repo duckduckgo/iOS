@@ -93,7 +93,7 @@ public class StorageCache: StorageCacheUpdating {
             
         case .surrogates:
             guard let data = data as? Data else { return false }
-            return surrogateStore.parseAndPersist(data: data)
+            return surrogateStore.persist(data: data)
             
         case .entitylist:
             guard let data = data as? Data else { return false }

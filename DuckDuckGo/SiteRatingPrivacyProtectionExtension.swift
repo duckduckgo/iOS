@@ -92,8 +92,8 @@ extension SiteRating {
     }
     
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        guard let domain = domain else { return contentBlocker.enabled }
-        return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(domain)
+        guard let domain = domain else { return true }
+        return !contentBlocker.domainWhitelist.contains(domain)
     }
     
     static let gradeImages: [Grade.Grading: UIImage] = [

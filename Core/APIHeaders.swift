@@ -40,9 +40,8 @@ public class APIHeaders {
     }
 
     public var userAgent: String {
-        let fullVersion = "\(appVersion.versionNumber).\(appVersion.buildNumber)"
         let osVersion = UIDevice.current.systemVersion
-        return "ddg_ios/\(fullVersion) (\(appVersion.identifier); iOS \(osVersion))"
+        return "ddg_ios/\(appVersion.versionAndBuildNumber) (\(appVersion.identifier); iOS \(osVersion))"
     }
 
     public func addHeaders(to request: inout URLRequest) {

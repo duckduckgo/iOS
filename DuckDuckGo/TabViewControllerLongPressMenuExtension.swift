@@ -76,7 +76,7 @@ extension TabViewController {
     
     private func onNewTabAction(url: URL) {
         Pixel.fire(pixel: .longPressMenuNewTabItem)
-        delegate?.tab(self, didRequestNewTabForUrl: url)
+        delegate?.tab(self, didRequestNewTabForUrl: url, animated: false)
     }
     
     private func onBackgroundTabAction(url: URL) {
@@ -128,7 +128,7 @@ extension TabViewController {
         }
 
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-            return self.buildPreview(for: url)
+            return AppUserDefaults().longPressPreviews ? self.buildPreview(for: url) : nil
         }, actionProvider: { elements in
 
             let provided = elements.filter({

@@ -24,7 +24,7 @@ protocol TabDelegate: class {
 
     func tabDidRequestNewTab(_ tab: TabViewController)
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, animated: Bool)
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL)
     

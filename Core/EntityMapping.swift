@@ -19,64 +19,45 @@
 
 import Foundation
 
+public typealias EntityName = String
+public typealias DomainName = String
+
 public class EntityMapping {
     
-    private struct Entity: Decodable {
-        
-        let properties: [String]?
-        let resources: [String]?
-        
-    }
-    
-    private let entities: [String: String]
-    
-    public init(store: EntityMappingStore) {
-        
-        if let data = store.load(), let entities = try? EntityMapping.process(data) {
-            self.entities = entities
-        } else {
-            self.entities = [:]
-        }
+    public struct Entity: Decodable {
+
+        public let displayName: String?
+        public let domains: [String]?
+        public let prevalence: Double?
         
     }
+
+    let domains: [DomainName: EntityName]
+    let entities: [EntityName: Entity]
     
-    func findEntity(forHost host: String) -> String? {
-        var parts = host.split(separator: ".")
-        
-        while !parts.isEmpty {
-            if let entity = entities[parts.joined(separator: ".")] { return entity }
-            parts = Array(parts.dropFirst())
-        }
-        
-        return nil
+    public init(entities: [EntityName: Entity], domains: [DomainName: EntityName]) {
+        self.domains = domains
+        self.entities = entities
     }
     
-    private static func process(_ data: Data) throws -> [String: String] {
-        if let decoded = decode(data) {
-            var entities = [String: String]()
-            
-            decoded.forEach {
-                let entityName = $0.key
-                $0.value.properties?.forEach {
-                    entities[$0] = entityName
-                }
-                $0.value.resources?.forEach {
-                    entities[$0] = entityName
-                }
+    public func findEntity(forHost host: String) -> Entity? {
+        for host in variations(of: host) {
+            if let entityName = domains[host] {
+                return entities[entityName]
             }
-            
-            return entities
-        }
-        return [:]
-    }
-    
-    private static func decode(_ data: Data) -> [String: Entity]? {
-        do {
-            return try JSONDecoder().decode([String: Entity].self, from: data)
-        } catch {
-            Logger.log(items: error)
         }
         return nil
+    }
+    
+    private func variations(of host: String) -> [String] {
+        var parts = host.components(separatedBy: ".")
+        var domains = [String]()
+        while parts.count > 1 {
+            let domain = parts.joined(separator: ".")
+            domains.append(domain)
+            parts.removeFirst()
+        }
+        return domains
     }
     
 }

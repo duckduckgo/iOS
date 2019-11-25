@@ -20,7 +20,7 @@
 import Foundation
 
 // TODO delete surrogates.js
-class SurrogateStore {
+public class SurrogateStore {
 
     private let groupIdentifier: String
 

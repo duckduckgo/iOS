@@ -27,7 +27,7 @@ public class WhitelistManager {
         return contentBlockerConfigurationStore.domainWhitelist.count
     }
 
-    private var domains: [String]?
+    private(set) var domains: [String]?
 
     public init(contentBlockerConfigurationStore: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
         self.contentBlockerConfigurationStore = contentBlockerConfigurationStore

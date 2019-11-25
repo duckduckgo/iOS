@@ -87,7 +87,7 @@ extension WKWebViewConfiguration {
 
 }
 
-private class Loader {
+private struct Loader {
 
     struct CacheNames {
 
@@ -97,15 +97,21 @@ private class Loader {
     
     let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
-    let storageCache: StorageCache
 
     let userContentController: WKUserContentController
     let injectContentBlockingScripts: Bool
+    
+    let whitelist: String
+    let surrogates: String
+    let trackerData: String
 
     init(contentController: WKUserContentController, storageCache: StorageCache, injectContentBlockingScripts: Bool) {
-        self.storageCache = storageCache
         self.userContentController = contentController
         self.injectContentBlockingScripts = injectContentBlockingScripts
+        
+        self.whitelist = WhitelistManager().domains?.joined(separator: "\n") ?? ""
+        self.surrogates = storageCache.surrogateStore.contentsAsString ?? ""
+        self.trackerData = "{}"
     }
 
     func load() {
@@ -131,7 +137,9 @@ private class Loader {
         loadContentBlockerDependencyScripts()
         load(scripts: [ .detection ], forMainFrameOnly: false)
         javascriptLoader.load(script: .contentblocker, withReplacements: [
-            :
+            "whitelist": whitelist,
+            "trackerData": trackerData,
+            "surrogates": surrogates
         ], into: userContentController, forMainFrameOnly: false)
     }
 
@@ -149,25 +157,10 @@ private class Loader {
         }
     }
 
-    private func loadSurrogateJson(_ store: SurrogateStore) -> String {
-        return store.contentsAsString ?? ""
-    }
-
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         for script in scripts {
             javascriptLoader.load(script, into: userContentController, forMainFrameOnly: forMainFrameOnly)
         }
-    }
-
-}
-
-fileprivate extension Set where Element == String {
-
-    func toJsonLookupString() -> String {
-        return reduce("{", { (result, next) -> String in
-            let separator = result != "{" ? ", " : ""
-            return "\(result)\(separator) \"\(next)\" : true"
-        }).appending("}")
     }
 
 }

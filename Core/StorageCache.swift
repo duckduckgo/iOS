@@ -19,12 +19,6 @@
 
 import Foundation
 
-protocol EtagOOSCheckStore {
-    
-    var hasDisconnectMeData: Bool { get }
-    var hasEasylistData: Bool { get }
-}
-
 protocol StorageCacheUpdating {
     
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool
@@ -32,55 +26,34 @@ protocol StorageCacheUpdating {
 
 public class StorageCache: StorageCacheUpdating {
     
-    let easylistStore = EasylistStore()
-    let surrogateStore = SurrogateStore()
-    
-    public let disconnectMeStore = DisconnectMeStore()
+    public let surrogateStore = SurrogateStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
-    public let entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
-    public var entityMapping: EntityMapping
     
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     
     // Read only
     public let tld: TLD
     public let termsOfServiceStore: TermsOfServiceStore
-    public let prevalenceStore: PrevalenceStore
     
     public init() {
-        entityMapping = EntityMapping(store: entityMappingStore)
         tld = TLD()
         termsOfServiceStore = EmbeddedTermsOfServiceStore()
-        prevalenceStore = EmbeddedPrevalenceStore()
     }
     
-    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore, prevalenceStore: PrevalenceStore) {
-        entityMapping = EntityMapping(store: entityMappingStore)
+    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore) {
         self.tld = tld
         self.termsOfServiceStore = termsOfServiceStore
-        self.prevalenceStore = prevalenceStore
     }
     
     public var hasData: Bool {
-        return disconnectMeStore.hasData && easylistStore.hasData
+        // TODO return disconnectMeStore.hasData && easylistStore.hasData
+        return true
     }
     
     // swiftlint:disable cyclomatic_complexity
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
         
         switch configuration {
-        case .trackersWhitelist:
-            guard let data = data as? Data else { return false }
-            return easylistStore.persistEasylistWhitelist(data: data)
-            
-        case .disconnectMe:
-            guard let data = data as? Data else { return false }
-            do {
-                try disconnectMeStore.persist(data: data)
-                return true
-            } catch {
-                return false
-            }
         case .httpsWhitelist:
             guard let whitelist = data as? [String] else { return false }
             return httpsUpgradeStore.persistWhitelist(domains: whitelist)
@@ -94,26 +67,10 @@ public class StorageCache: StorageCacheUpdating {
         case .surrogates:
             guard let data = data as? Data else { return false }
             return surrogateStore.persist(data: data)
-            
-        case .entitylist:
-            guard let data = data as? Data else { return false }
-            let result = entityMappingStore.persist(data: data)
-            entityMapping = EntityMapping(store: entityMappingStore)
-            return result
-            
+                        
         default:
             return false
         }
     }
     // swiftlint:enable cyclomatic_complexity
-}
-
-extension StorageCache: EtagOOSCheckStore {
-    
-    var hasDisconnectMeData: Bool {
-        return disconnectMeStore.hasData
-    }
-    var hasEasylistData: Bool {
-        return easylistStore.hasData
-    }
 }

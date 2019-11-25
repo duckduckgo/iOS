@@ -19,49 +19,41 @@
 
 import Foundation
 
-// Populated with relevant info at the point of detection.  If networkName or category are nil, they are genuinely not known.
+// Populated with relevant info at the point of detection.
 public struct DetectedTracker {
 
     public let url: String
+    public let knownTracker: KnownTracker?
+    public let entity: EntityMapping.Entity?
     public let blocked: Bool
-    public let networkName: String?
-    public let category: String?
-
-    public init(url: String, networkName: String?, category: String?, blocked: Bool) {
+    
+    public init(url: String, knownTracker: KnownTracker?, entity: EntityMapping.Entity?, blocked: Bool) {
         self.url = url
-        self.networkName = networkName
-        self.category = category
+        self.knownTracker = knownTracker
+        self.entity = entity
         self.blocked = blocked
     }
 
     public var domain: String? {
         return URL(string: url)?.host
     }
-
-    public var isIpTracker: Bool {
-        return URL.isValidIpHost(domain ?? "")
-    }
     
     public var networkNameForDisplay: String {
-        return networkName ?? domain ?? url
+        return entity?.displayName ?? domain ?? url
     }
 
 }
 
-extension DetectedTracker: Hashable {
-
-    public func hash( into hasher: inout Hasher) {
-        hasher.combine(url)
-        hasher.combine(blocked)
-        hasher.combine(networkName)
-        hasher.combine(category)
-    }
-
+extension DetectedTracker: Hashable, Equatable {
+    
     public static func == (lhs: DetectedTracker, rhs: DetectedTracker) -> Bool {
-        return lhs.url == rhs.url
-            && lhs.blocked == rhs.blocked
-            && lhs.networkName == rhs.networkName
-            && lhs.category == rhs.category
+        return ((lhs.entity != nil || rhs.entity != nil) && lhs.entity?.displayName == rhs.entity?.displayName)
+            && lhs.domain ?? "" == rhs.domain ?? ""
     }
-
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.entity?.displayName)
+        hasher.combine(self.domain)
+    }
+    
 }

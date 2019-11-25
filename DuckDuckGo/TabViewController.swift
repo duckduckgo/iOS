@@ -453,7 +453,7 @@ class TabViewController: UIViewController {
     }
     
     private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = storageCache.entityMapping
+        let entityMapping = EntityMapping(entities: [:], domains: [:]) // TODO get from TDS
         let privacyPractices = PrivacyPractices(tld: storageCache.tld,
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
                                                 entityMapping: entityMapping)
@@ -461,8 +461,7 @@ class TabViewController: UIViewController {
         return SiteRating(url: url,
                           httpsForced: httpsForced,
                           entityMapping: entityMapping,
-                          privacyPractices: privacyPractices,
-                          prevalenceStore: storageCache.prevalenceStore)
+                          privacyPractices: privacyPractices)
     }
 
     private func updateSiteRating() {
@@ -677,16 +676,8 @@ extension TabViewController: WKScriptMessageHandler {
             return
         }
 
-        let url = URL(string: urlString.trimWhitespace())
-        var networkName: String?
-        var category: String?
-        if let domain = url?.host {
-            let networkNameAndCategory = storageCache.disconnectMeStore.networkNameAndCategory(forDomain: domain)
-            networkName = networkNameAndCategory.networkName
-            category = networkNameAndCategory.category
-        }
-
-        let tracker = DetectedTracker(url: urlString, networkName: networkName, category: category, blocked: blocked)
+        let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
+        
         siteRating.trackerDetected(tracker)
         onSiteRatingChanged()
         
@@ -694,16 +685,24 @@ extension TabViewController: WKScriptMessageHandler {
             NetworkLeaderboard.shared.incrementPagesWithTrackers()
             pageHasTrackers = true
         }
-        
-        if let networkName = networkName {
-            if !trackerNetworksDetectedOnPage.contains(networkName) {
-                trackerNetworksDetectedOnPage.insert(networkName)
-                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
-            }
-            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
-        }
+  
+// TODO network leaderboard
+//        if let networkName = networkName {
+//            if !trackerNetworksDetectedOnPage.contains(networkName) {
+//                trackerNetworksDetectedOnPage.insert(networkName)
+//                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
+//            }
+//            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
+//        }
 
     }
+
+    private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
+        let knownTracker: KnownTracker? = nil // TODO lookup the known tracker for the url
+        let entity: EntityMapping.Entity? = nil // TODO lookup the entity for the tracker
+        return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+    }
+    
 }
 
 extension TabViewController: WKNavigationDelegate {

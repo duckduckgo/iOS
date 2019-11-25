@@ -39,8 +39,11 @@ class PrivacyPracticesTests: XCTestCase {
             "sibling4.com": TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: [])
             ])
         
-        let entityMappingStore = MockEntityMappingStore()
-        let entityMapping = EntityMapping(store: entityMappingStore)
+        let entityMapping = EntityMapping(entities: ["Sibling": EntityMapping.Entity(displayName: "Sibling", domains: nil, prevalence: 100)],
+                                          domains: ["sibling1.com": "Sibling",
+                                                    "sibling2.com": "Sibling",
+                                                    "sibling3.com": "Sibling",
+                                                    "sibling4.com": "Sibling"])
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
         XCTAssertEqual(10, testee.findPractice(forHost: "sibling1.com").score)
         
@@ -52,24 +55,21 @@ class PrivacyPracticesTests: XCTestCase {
             "orphan.com": TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: [])
             ])
         
-        let entityMappingStore = MockEntityMappingStore()
-        let entityMapping = EntityMapping(store: entityMappingStore)
+        let entityMapping = EntityMapping(entities: [:], domains: [:])
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
         XCTAssertEqual(10, testee.findPractice(forHost: "orphan.com").score)
 
     }
     
     func testWhenDomainUsedForLookupThenTermsAreReturned() {
-        let entityMappingStore = MockEntityMappingStore()
-        let entityMapping = EntityMapping(store: entityMappingStore)
+        let entityMapping = EntityMapping(entities: [:], domains: [:])
         let testee = PrivacyPractices(entityMapping: entityMapping)
         let practice = testee.findPractice(forHost: "google.com")
         XCTAssertEqual(.poor, practice.summary)
     }
 
     func testWhenSubDomainUsedForLookupThenTermsAreReturned() {
-        let entityMappingStore = MockEntityMappingStore()
-        let entityMapping = EntityMapping(store: entityMappingStore)
+        let entityMapping = EntityMapping(entities: [:], domains: [:])
         let testee = PrivacyPractices(entityMapping: entityMapping)
         let practice = testee.findPractice(forHost: "maps.google.com")
         XCTAssertEqual(.poor, practice.summary)
@@ -80,33 +80,5 @@ class PrivacyPracticesTests: XCTestCase {
 private struct MockTermsOfServiceStore: TermsOfServiceStore {
     
     var terms: [String: TermsOfService]
-    
-}
-
-private class MockEntityMappingStore: EntityMappingStore {
-    
-    func load() -> Data? {
-        return """
-{
-    "Google": {
-        "properties": [
-            "google.com"
-        ]
-    },
-    "SharedParent": {
-        "properties": [
-            "sibling1.com",
-            "sibling2.com",
-            "sibling3.com",
-            "sibling4.com"
-        ]
-    }
-}
-""".data(using: .utf8)
-    }
-    
-    func persist(data: Data) -> Bool {
-        return true
-    }
     
 }

@@ -38,46 +38,10 @@ class SurrogateTests: XCTestCase {
 
     func testWhenSurrogatesFileStoredThenCanBeLoadedLater() {
         let persister = SurrogateStore()
-        persister.parseAndPersist(data: data)
+        persister.persist(data: data)
 
         let loader = SurrogateStore()
-        XCTAssertNotNil(loader.jsFunctions)
-        XCTAssertEqual(2, loader.jsFunctions?.count)
+        XCTAssertNotNil(loader.contentsAsString)
     }
-
-    func testWhenSurrogatesFileProperlyFormattedThenParsedInToFunctionDictionary() {
-
-        guard let surrogateFile = String(data: data, encoding: .utf8) else {
-            XCTFail("Failed to convert mock surrogate data in to a String")
-            return
-        }
-
-        let dict = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
-        XCTAssertEqual(2, dict.count)
-
-        XCTAssertTrue(dict["example.com/script1.js"]?.hasPrefix("(function() {") ?? false)
-        XCTAssertTrue(dict["example.com/script1.js"]?.contains("console.log(\"Sample function 1\")") ?? false)
-        XCTAssertTrue(dict["example.com/script1.js"]?.hasSuffix("})();") ?? false)
-
-        XCTAssertTrue(dict["example.com/script2.js"]?.hasPrefix("(function() {") ?? false)
-        XCTAssertTrue(dict["example.com/script2.js"]?.contains("console.log(\"Sample function 2\")") ?? false)
-        XCTAssertTrue(dict["example.com/script2.js"]?.hasSuffix("}) ();") ?? false)
-
-    }
-
-    func testWhenFileHasTrailingWhitespaceThenParsingSucceeds() {
-        guard let data = try? FileLoader().load(fileName: "MockFiles/surrogates2.txt", fromBundle: bundle) else {
-            XCTFail("Failed to load MockFiles/surrogates2.txt")
-            return
-        }
-
-        guard let surrogateFile = String(data: data, encoding: .utf8) else {
-            XCTFail("Failed to convert mock surrogate data in to a String")
-            return
-        }
-
-        let dict = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
-        XCTAssertEqual(1, dict.count)
-    }
-
+    
 }

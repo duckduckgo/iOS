@@ -37,12 +37,17 @@ class SiteRatingTests: XCTestCase {
     }
 
     struct TrackerMock {
-        static let blockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: true)
-        static let unblockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: false)
-        static let differentTracker = DetectedTracker(url: Url.differentTracker,
-                                                      networkName: Url.differentTracker,
-                                                      category: "tracker",
-                                                      blocked: true)
+        
+        static let knownTracker1 = KnownTracker(domain: "tracker1.com", owner: KnownTracker.Owner(name: "Owner 1"), categories: ["tracker"])
+        static let knownTracker2 = KnownTracker(domain: "tracker1.com", owner: KnownTracker.Owner(name: "Owner 2"), categories: ["tracker"])
+        
+        static let entity1 = EntityMapping.Entity(displayName: "Entity 1", domains: nil, prevalence: 1)
+        static let entity2 = EntityMapping.Entity(displayName: "Entity 2", domains: nil, prevalence: 2)
+
+        static let blockedTracker = DetectedTracker(url: Url.tracker, knownTracker: knownTracker1, entity: entity1, blocked: true)
+        static let unblockedTracker = DetectedTracker(url: Url.tracker, knownTracker: knownTracker1, entity: entity1, blocked: false)
+        static let differentTracker = DetectedTracker(url: Url.differentTracker, knownTracker: knownTracker2, entity: entity2, blocked: true)
+                                                      
     }
 
     fileprivate let classATOS = MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: -100)
@@ -66,18 +71,15 @@ class SiteRatingTests: XCTestCase {
     }
     
     func testWhenEntityHasHighPrevalenceThenScoreSetCorrectly() {
-        let entityMapping = MockEntityMapping(entity: "Google")
-
-        let highPrevalenceStore = MockPrevalenceStore(prevalences: ["Google": 100.0], major: false)
-        let testeeHighPrevalence = SiteRating(url: Url.googlemail, entityMapping: entityMapping, prevalenceStore: highPrevalenceStore)
+        let entityMappingLow = MockEntityMapping(entity: "Google", prevalence: 100)
+        let testeeHighPrevalence = SiteRating(url: Url.googlemail, entityMapping: entityMappingLow)
         let highPrevalenceScore = testeeHighPrevalence.scores.site.score
 
-        let lowPrevalenceStore = MockPrevalenceStore(prevalences: ["Google": 0.1], major: false)
-        let testeeLowPrevalence = SiteRating(url: Url.googlemail, entityMapping: entityMapping, prevalenceStore: lowPrevalenceStore)
+        let entityMappingHigh = MockEntityMapping(entity: "Google", prevalence: 1)
+        let testeeLowPrevalence = SiteRating(url: Url.googlemail, entityMapping: entityMappingHigh)
         let lowPevalenceScore = testeeLowPrevalence.scores.site.score
 
         XCTAssertTrue(highPrevalenceScore > lowPevalenceScore)
-        
     }
     
     func testWhenUrlHasTosThenTosReturned() {
@@ -107,60 +109,38 @@ class SiteRatingTests: XCTestCase {
     func testCountsAreInitiallyZero() {
         let testee = SiteRating(url: Url.https)
         XCTAssertEqual(testee.totalTrackersDetected, 0)
-        XCTAssertEqual(testee.uniqueTrackersDetected, 0)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
-        XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
 
-    func testWhenUniqueTrackersAreBlockedThenAllDetectionAndBlockCountsIncremenet() {
+    func testWhenUniqueTrackersAreBlockedThenBlockedCountsIncremented() {
         let testee = SiteRating(url: Url.https)
         testee.trackerDetected(TrackerMock.blockedTracker)
         testee.trackerDetected(TrackerMock.differentTracker)
-        XCTAssertEqual(testee.totalTrackersDetected, 2)
-        XCTAssertEqual(testee.uniqueTrackersDetected, 2)
+        XCTAssertEqual(testee.totalTrackersDetected, 0)
         XCTAssertEqual(testee.totalTrackersBlocked, 2)
-        XCTAssertEqual(testee.uniqueTrackersBlocked, 2)
     }
 
     func testWhenRepeatTrackersAreBlockedThenUniqueCountsOnlyIncrementOnce() {
         let testee = SiteRating(url: Url.https)
         testee.trackerDetected(TrackerMock.blockedTracker)
         testee.trackerDetected(TrackerMock.blockedTracker)
-        XCTAssertEqual(testee.totalTrackersDetected, 2)
-        XCTAssertEqual(testee.uniqueTrackersDetected, 1)
-        XCTAssertEqual(testee.totalTrackersBlocked, 2)
-        XCTAssertEqual(testee.uniqueTrackersBlocked, 1)
+        XCTAssertEqual(testee.totalTrackersDetected, 0)
+        XCTAssertEqual(testee.totalTrackersBlocked, 1)
     }
 
-    func testWhenNotBlockerThenDetectedCountsIncrementButBlockCountsDoNot() {
+    func testWhenRepeatTrackersAreDetectedThenUniqueCountsOnlyIncrementOnce() {
         let testee = SiteRating(url: Url.https)
         testee.trackerDetected(TrackerMock.unblockedTracker)
+        testee.trackerDetected(TrackerMock.unblockedTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 1)
-        XCTAssertEqual(testee.uniqueTrackersDetected, 1)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
-        XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
 
     func testWhenUrlDoeNotHaveTosThenPrivacyPracticesSummaryIsUnknown() {
         let testee = SiteRating(url: Url.http)
         XCTAssertEqual(.unknown, testee.privacyPractice.summary)
     }
-
-    func testUniqueMajorTrackersDetected() {
-        let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: false)
-        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
-        testee.trackerDetected(tracker)
-        XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksDetected)
-        XCTAssertEqual(0, testee.uniqueMajorTrackerNetworksBlocked)
-    }
-
-    func testUniqueMajorTrackersBlocked() {
-        let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: true)
-        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
-        testee.trackerDetected(tracker)
-        XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksBlocked)
-    }
-
+    
     func testWhenHttpsAndIsForcedThenEncryptionTypeIsForced() {
         let testee = SiteRating(url: Url.https, httpsForced: true)
         XCTAssertEqual(.forced, testee.encryptionType)
@@ -189,11 +169,9 @@ class SiteRatingTests: XCTestCase {
     }
     
     func testWhenUrlBelongsToMajorNetworkThenIsMajorNetworkReturnsTrue() {
-        let mockPrevalenceStore = MockPrevalenceStore(prevalences: ["TrickyAds": 100.0], major: true)
         let testee = SiteRating(url: Url.http,
-                                entityMapping: MockEntityMapping(entity: "TrickyAds"),
-                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS),
-                                prevalenceStore: mockPrevalenceStore)
+                                entityMapping: MockEntityMapping(entity: "TrickyAds", prevalence: 100),
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
         XCTAssertTrue(testee.isMajorTrackerNetwork)
     }
     
@@ -213,16 +191,18 @@ class SiteRatingTests: XCTestCase {
 private class MockEntityMapping: EntityMapping {
     
     private var entity: String?
+    private var prevalence: Double?
     
-    init(entity: String?) {
+    init(entity: String?, prevalence: Double? = nil) {
+        super.init(entities: [:], domains: [:])
         self.entity = entity
-        super.init(store: DownloadedEntityMappingStore())
+        self.prevalence = prevalence
     }
 
-    override func findEntity(forHost host: String) -> String? {
-        return entity
+    override func findEntity(forHost host: String) -> EntityMapping.Entity? {
+        return EntityMapping.Entity(displayName: entity, domains: nil, prevalence: prevalence)
     }
-    
+        
 }
 
 private class MockTermsOfServiceStore: TermsOfServiceStore {
@@ -244,17 +224,6 @@ private class MockTermsOfServiceStore: TermsOfServiceStore {
         
         terms[domain] = TermsOfService(classification: classification, score: score, goodReasons: goodReasons, badReasons: badReasons)
         return self
-    }
-    
-}
-
-private struct MockPrevalenceStore: PrevalenceStore {
-    
-    var prevalences: [String: Double]
-    var major: Bool
-    
-    func isMajorNetwork(named: String?) -> Bool {
-        return major
     }
     
 }

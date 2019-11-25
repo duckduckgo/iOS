@@ -32,17 +32,15 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case error
         case success(etag: String?, data: Data)
     }
-    
+
+    // TODO add tracker data
+    // TODO add temporary whitelist
+    // TODO delete old data
     enum Configuration: String {
-        case disconnectMe = "disconnectme"
-        case easylist = "easylist"
-        case easylistPrivacy = "easyprivacy"
-        case trackersWhitelist
         case httpsBloomFilterSpec
         case httpsBloomFilter
         case httpsWhitelist
         case surrogates
-        case entitylist = "entitylist2"
     }
     
     var requestCount = 0
@@ -71,15 +69,10 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         let appUrls = AppUrls()
         
         switch list {
-        case .disconnectMe: return appUrls.disconnectMeBlockList
-        case .easylist: return appUrls.easylistBlockList
-        case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
         case .httpsBloomFilterSpec: return appUrls.httpsBloomFilterSpec
         case .httpsBloomFilter: return appUrls.httpsBloomFilter
         case .httpsWhitelist: return appUrls.httpsWhitelist
-        case .trackersWhitelist: return appUrls.trackersWhitelist
         case .surrogates: return appUrls.surrogates
-        case .entitylist: return appUrls.entitylist
         }
     }
 }

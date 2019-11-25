@@ -34,16 +34,15 @@ public class ContentBlockerLoader {
         self.etagStorage = etagStorage
     }
 
-    func checkForUpdates(with store: EtagOOSCheckStore,
-                         dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
+    func checkForUpdates(dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
         
-        EasylistStore.removeLegacyLists()
+        // TODO remove all legacy data
 
         self.newData.removeAll()
         self.etags.removeAll()
         
         let semaphore = DispatchSemaphore(value: 0)
-        let numberOfRequests = startRequests(with: semaphore, store: store, dataSource: dataSource)
+        let numberOfRequests = startRequests(with: semaphore, dataSource: dataSource)
         
         for _ in 0 ..< numberOfRequests {
             semaphore.wait()
@@ -57,8 +56,7 @@ public class ContentBlockerLoader {
     func applyUpdate(to cache: StorageCacheUpdating) {
         
         for (config, info) in newData {
-            if (cache.update(config, with: info)),
-                let etag = etags[config] {
+            if cache.update(config, with: info), let etag = etags[config] {
                 etagStorage.set(etag: etag, for: config)
             } else {
                 Logger.log(text: "Failed to apply update to \(config.rawValue)")
@@ -67,13 +65,9 @@ public class ContentBlockerLoader {
     }
     
     private func startRequests(with semaphore: DispatchSemaphore,
-                               store: EtagOOSCheckStore,
                                dataSource: ContentBlockerRemoteDataSource) -> Int {
-        request(.entitylist, with: dataSource, store: store, semaphore)
-        request(.disconnectMe, with: dataSource, store: store, semaphore)
-        request(.trackersWhitelist, with: dataSource, store: store, semaphore)
-        request(.surrogates, with: dataSource, store: store, semaphore)
         
+        request(.surrogates, with: dataSource, semaphore)
         requestHttpsUpgrade(dataSource, semaphore)
         requestHttpsWhitelist(dataSource, semaphore)
         
@@ -82,7 +76,6 @@ public class ContentBlockerLoader {
     
     fileprivate func request(_ configuration: ContentBlockerRequest.Configuration,
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
-                             store: EtagOOSCheckStore,
                              _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(configuration) { response in
             
@@ -91,27 +84,8 @@ public class ContentBlockerLoader {
                 return
             }
             
-            let isCached = etag != nil && self.etagStorage.etag(for: configuration) == etag
             self.etags[configuration] = etag
-            
-            if isCached {
-                switch configuration {
-                case .disconnectMe:
-                    if !store.hasDisconnectMeData {
-                        self.newData[configuration] = data
-                        Pixel.fire(pixel: .etagStoreOOSWithDisconnectMeFix)
-                    }
-                case .trackersWhitelist:
-                    if !store.hasEasylistData {
-                        self.newData[configuration] = data
-                        Pixel.fire(pixel: .etagStoreOOSWithEasylistFix)
-                    }
-                default:
-                    break
-                }
-            } else {
-                self.newData[configuration] = data
-            }
+            self.newData[configuration] = data
 
             semaphore.signal()
         }

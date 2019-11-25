@@ -29,12 +29,9 @@ public struct AppUrls {
         
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
         static let autocomplete = "\(base)/ac/"
-        static let disconnectMeBlockList = "\(base)/contentblocking.js?l=disconnect"
-        static let easylistBlockList = "\(base)/contentblocking.js?l=easylist"
-        static let easylistPrivacyBlockList = "\(base)/contentblocking.js?l=easyprivacy"
-        static let trackersWhitelist = "\(base)/contentblocking/trackers-whitelist.txt"
+        
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        static let entitylist = "\(base)/contentblocking.js?l=entitylist2"
+        
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
@@ -78,28 +75,8 @@ public struct AppUrls {
         return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
 
-    public var disconnectMeBlockList: URL {
-        return URL(string: Url.disconnectMeBlockList)!
-    }
-
-    public var easylistBlockList: URL {
-        return URL(string: Url.easylistBlockList)!
-    }
-
-    public var easylistPrivacyBlockList: URL {
-        return URL(string: Url.easylistPrivacyBlockList)!
-    }
-    
-    public var trackersWhitelist: URL {
-        return URL(string: Url.trackersWhitelist)!
-    }
-
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
-    }
-
-    public var entitylist: URL {
-        return URL(string: Url.entitylist)!
     }
 
     public var feedback: URL {

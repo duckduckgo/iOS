@@ -21,6 +21,10 @@ import Foundation
 
 public class SiteRating {
 
+    struct Constants {
+        static let majorNetworkPrevalence = 7.0
+    }
+    
     public enum EncryptionType {
         case unencrypted, mixed, encrypted, forced
     }
@@ -39,36 +43,32 @@ public class SiteRating {
     public let url: URL
     public let httpsForced: Bool
     public let privacyPractice: PrivacyPractices.Practice
-    public let isMajorTrackerNetwork: Bool
     
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
-    public private (set) var trackersDetected = [DetectedTracker: Int]()
-    public private (set) var trackersBlocked = [DetectedTracker: Int]()
-
-    let prevalenceStore: PrevalenceStore
+    public private (set) var trackersDetected = Set<DetectedTracker>()
+    public private (set) var trackersBlocked = Set<DetectedTracker>()
     
     private let grade = Grade()
     private let cache = GradeCache.shared
+    private let entity: EntityMapping.Entity?
     
     public init(url: URL,
                 httpsForced: Bool = false,
                 entityMapping: EntityMapping,
-                privacyPractices: PrivacyPractices,
-                prevalenceStore: PrevalenceStore) {
+                privacyPractices: PrivacyPractices) {
 
         Logger.log(text: "new SiteRating(url: \(url), httpsForced: \(httpsForced))")
 
         if let host = url.host, let entity = entityMapping.findEntity(forHost: host) {
-            self.grade.setParentEntity(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
-            self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: entity)
+            self.grade.setParentEntity(named: entity.displayName ?? "", withPrevalence: entity.prevalence ?? 0)
+            self.entity = entity
         } else {
-            self.isMajorTrackerNetwork = false
+            entity = nil
         }
 
         self.url = url
         self.httpsForced = httpsForced
-        self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
         self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
         
@@ -94,87 +94,51 @@ public class SiteRating {
         return .unencrypted
     }
 
-    public var uniqueMajorTrackerNetworksDetected: Int {
-        return uniqueMajorTrackerNetworks(trackers: trackersDetected)
+    public var majorTrackerNetworksDetected: Int {
+        return trackersDetected.filter({ $0.entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
     }
 
-    public var uniqueMajorTrackerNetworksBlocked: Int {
-        return uniqueMajorTrackerNetworks(trackers: trackersBlocked)
+    public var majorTrackerNetworksBlocked: Int {
+        return trackersBlocked.filter({ $0.entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
     }
 
-    public var uniqueTrackerNetworksDetected: Int {
-        return uniqueTrackerNetworks(trackers: trackersDetected)
+    public var trackerNetworksDetected: Int {
+        return trackersDetected.filter({ $0.entity?.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
     }
 
     public var uniqueTrackerNetworksBlocked: Int {
-        return uniqueTrackerNetworks(trackers: trackersBlocked)
+        return trackersBlocked.filter({ $0.entity?.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
     }
 
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: majorNetworkFilter)
+        return majorTrackerNetworksBlocked > 0 || majorTrackerNetworksDetected > 0
     }
-
-    public var containsIpTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.isIpTracker })
+    
+    public var isMajorTrackerNetwork: Bool {
+        return entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence
     }
 
     public func trackerDetected(_ tracker: DetectedTracker) {
-        let detectedCount = trackersDetected[tracker] ?? 0
-        trackersDetected[tracker] = detectedCount + 1
-
-        let entity = tracker.networkNameForDisplay
-
+        let entity = tracker.entity
         if tracker.blocked {
-            let blockCount = trackersBlocked[tracker] ?? 0
-            trackersBlocked[tracker] = blockCount + 1
-            grade.addEntityBlocked(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
+            trackersBlocked.insert(tracker)
+            grade.addEntityBlocked(named: entity?.displayName ?? "", withPrevalence: entity?.prevalence ?? 0)
         } else {
-            grade.addEntityNotBlocked(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
+            trackersDetected.insert(tracker)
+            grade.addEntityNotBlocked(named: entity?.displayName ?? "", withPrevalence: entity?.prevalence ?? 0)
         }
     }
 
-    public var uniqueTrackersDetected: Int {
+    public var totalTrackersDetected: Int {
         return trackersDetected.count
     }
 
-    public var uniqueTrackersBlocked: Int {
-        return trackersBlocked.count
-    }
-
-    public var totalTrackersDetected: Int {
-        return trackersDetected.reduce(0) { $0 + $1.value }
-    }
-
     public var totalTrackersBlocked: Int {
-        return trackersBlocked.reduce(0) { $0 + $1.value }
-    }
-
-    public var majorNetworkTrackersDetected: [DetectedTracker: Int] {
-        return trackersDetected.filter(majorNetworkFilter)
-    }
-
-    public var majorNetworkTrackersBlocked: [DetectedTracker: Int] {
-        return trackersBlocked.filter(majorNetworkFilter)
+        return trackersBlocked.count
     }
     
     public func isFor(_ url: URL?) -> Bool {
         return self.url.host == url?.host
-    }
-
-    private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
-        let trackers = trackers
-            .filter(majorNetworkFilter)
-            .keys
-            .compactMap({ $0.networkName })
-        return Set(trackers).count
-    }
-
-    private func uniqueTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
-        return Set(trackers.keys.compactMap({ $0.networkName ?? $0.domain })).count
-    }
-
-    private func majorNetworkFilter(trackerDetected: (DetectedTracker, Int)) -> Bool {
-        return prevalenceStore.isMajorNetwork(named: trackerDetected.0.networkName)
     }
 
 }

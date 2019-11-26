@@ -118,10 +118,7 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockRequest.mockResponse = .success(etag: "test", data: Data())
         mockEtagStorage.set(etag: "test", for: .surrogates)
         
-        let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        
-        mockStorageCache.hasDisconnectMeData = false
-        mockStorageCache.hasEasylistData = false
+        let loader = ContentBlockerLoader(etagStorage: mockEtagStorage, fileStore: MockFileStore())
         
         XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
@@ -133,6 +130,14 @@ class ContentBlockerLoaderTests: XCTestCase {
         
         XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
     }
+}
+
+class MockFileStore: FileStore {
+    
+    override func loadAsData(forConfiguration config: ContentBlockerRequest.Configuration) -> Data? {
+        return nil
+    }
+    
 }
 
 class MockEtagStorage: BlockerListETagStorage {
@@ -164,9 +169,6 @@ class MockContenBlockingRequest: ContentBlockerRemoteDataSource {
 }
 
 class MockStorageCache: StorageCacheUpdating {
-    
-    var hasDisconnectMeData: Bool = true
-    var hasEasylistData: Bool = true
     
     var processedUpdates = [ContentBlockerRequest.Configuration: Any]()
     

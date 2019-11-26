@@ -451,7 +451,7 @@ class TabViewController: UIViewController {
         onSiteRatingChanged()
     }
     
-    private func makeSiteRating(url: URL) -> SiteRating {        
+    private func makeSiteRating(url: URL) -> SiteRating {
         let entityMapping = EntityMapping()
         let privacyPractices = PrivacyPractices(tld: storageCache.tld,
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
@@ -571,7 +571,7 @@ class TabViewController: UIViewController {
         dismiss()
         tearDown()
     }
-}
+}   
 
 extension TabViewController: WKScriptMessageHandler {
     

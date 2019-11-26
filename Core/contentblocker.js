@@ -362,11 +362,11 @@ var duckduckgoContentBlocking = function() {
         }
     ]);
 
-	let topLevelUrl = getTopLevelURL()
+	let topLevelUrl = getTopLevelURL();
 
-    let whitelist = `
-    ${whitelist}
-    `
+    let whitelisted = `
+        ${whitelist}
+    `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
 
 	// private 
 	function getTopLevelURL() {
@@ -385,16 +385,15 @@ var duckduckgoContentBlocking = function() {
         s.type = "application/javascript"
         s.async = true
         s.src = trackers.surrogateList[surrogatePattern]
-        sp = document.getElementsByTagName("script")[0]
-        sp.parentNode.insertBefore(s, sp)
+        if (sp = document.getElementsByTagName("script")[0]) {
+            sp.parentNode.insertBefore(s, sp)
+        }
     }
 
 	// public
-	function shouldBlock(trackerUrl, type, blockFunc) {
+	function shouldBlock(trackerUrl, type) {
         let startTime = performance.now()
         
-        // TODO check the whitelist
-
         let result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
         	type: type
         }, null);
@@ -407,7 +406,10 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		var blocked = false;
-		if (result.action === 'block') {
+        if (whitelisted) {
+            blocked = false;
+            result.reason = "whitelisted";
+        } else if (result.action === 'block') {
 			blocked = true;
 		} else if (result.matchedRule && result.matchedRule.surrogate) {
 			blocked = true;

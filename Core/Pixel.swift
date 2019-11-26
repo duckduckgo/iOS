@@ -176,6 +176,8 @@ public enum PixelName: String {
     
     case configurationFetchInfo = "m_d_cfgfetch"
     case brokenSiteReported = "m_bsr"
+    
+    case reloadTrackerDataFailed = "m_d_rldtds"
 }
 
 public struct PixelParameters {

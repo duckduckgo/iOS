@@ -29,7 +29,7 @@ public class TrackerDataManager {
             // The embedded data should NEVER fail, so fall back to it
             let embeddedData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
             self.trackerData = embeddedData!
-            // TODO fire a pixel
+            Pixel.fire(pixel: .reloadTrackerDataFailed)
         }
     }
     

@@ -68,6 +68,8 @@ public class ContentBlockerLoader {
                                dataSource: ContentBlockerRemoteDataSource) -> Int {
         
         request(.surrogates, with: dataSource, semaphore)
+        request(.trackerDataSet, with: dataSource, semaphore)
+        request(.temporaryWhitelist, with: dataSource, semaphore)
         requestHttpsUpgrade(dataSource, semaphore)
         requestHttpsWhitelist(dataSource, semaphore)
         

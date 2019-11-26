@@ -1,5 +1,5 @@
 //
-//  SurrogateStore.swift
+//  FileStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,32 +19,43 @@
 
 import Foundation
 
-// TODO delete surrogates.js
-public class SurrogateStore {
-
+public class FileStore {
+    
     private let groupIdentifier: String
-
-    public var contentsAsString: String? {
-        return try? String(contentsOf: persistenceLocation(), encoding: .utf8)
-    }
 
     init(groupIdentifier: String = ContentBlockerStoreConstants.groupName) {
         self.groupIdentifier = groupIdentifier
+        removeLegacyData()
     }
-
-    @discardableResult
-    func persist(data: Data) -> Bool {
+    
+    /// Remove all legacy data.
+    ///
+    /// Removes the following files
+    /// * surrogates.js
+    /// * xxx
+    ///
+    func removeLegacyData() {
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
+        try? FileManager.default.removeItem(at: path!.appendingPathComponent("surrogates.js"))
+    }
+    
+    func persist(_ data: Data?, forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
+        guard let data = data else { return false }
         do {
-            try data.write(to: persistenceLocation())
+            try data.write(to: persistenceLocation(forConfiguration: config))
             return true
         } catch {
             return false
         }
     }
-
-    private func persistenceLocation() -> URL {
+    
+    func loadAsString(forConfiguration config: ContentBlockerRequest.Configuration) -> String? {
+        return try? String(contentsOf: persistenceLocation(forConfiguration: config))
+    }
+    
+    func persistenceLocation(forConfiguration config: ContentBlockerRequest.Configuration) -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
-        return path!.appendingPathComponent("surrogates.txt")
+        return path!.appendingPathComponent(config.rawValue)
     }
 
 }

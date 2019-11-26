@@ -33,14 +33,14 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case success(etag: String?, data: Data)
     }
 
-    // TODO add tracker data
-    // TODO add temporary whitelist
     // TODO delete old data
     enum Configuration: String {
         case httpsBloomFilterSpec
         case httpsBloomFilter
         case httpsWhitelist
         case surrogates
+        case trackerDataSet
+        case temporaryWhitelist
     }
     
     var requestCount = 0
@@ -73,6 +73,8 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case .httpsBloomFilter: return appUrls.httpsBloomFilter
         case .httpsWhitelist: return appUrls.httpsWhitelist
         case .surrogates: return appUrls.surrogates
+        case .trackerDataSet: return appUrls.trackerDataSet
+        case .temporaryWhitelist: return appUrls.temporaryWhitelist
         }
     }
 }

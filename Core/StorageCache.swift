@@ -26,7 +26,7 @@ protocol StorageCacheUpdating {
 
 public class StorageCache: StorageCacheUpdating {
     
-    public let surrogateStore = SurrogateStore()
+    public let fileStore = FileStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
@@ -45,14 +45,8 @@ public class StorageCache: StorageCacheUpdating {
         self.termsOfServiceStore = termsOfServiceStore
     }
     
-    public var hasData: Bool {
-        // TODO return disconnectMeStore.hasData && easylistStore.hasData
-        return true
-    }
-    
     // swiftlint:disable cyclomatic_complexity
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
-        
         switch configuration {
         case .httpsWhitelist:
             guard let whitelist = data as? [String] else { return false }
@@ -65,11 +59,17 @@ public class StorageCache: StorageCacheUpdating {
             return result
             
         case .surrogates:
-            guard let data = data as? Data else { return false }
-            return surrogateStore.persist(data: data)
-                        
-        default:
+            return fileStore.persist(data as? Data, forConfiguration: configuration)
+            
+        case .httpsBloomFilterSpec:
             return false
+            
+        case .trackerDataSet:
+            return fileStore.persist(data as? Data, forConfiguration: configuration)
+            
+        case .temporaryWhitelist:
+            return fileStore.persist(data as? Data, forConfiguration: configuration)
+            
         }
     }
     // swiftlint:enable cyclomatic_complexity

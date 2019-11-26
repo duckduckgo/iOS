@@ -49,9 +49,7 @@ class PrivacyProtectionController: ThemableNavigationController {
         navigationBar.isHidden = isPad
         popoverPresentationController?.backgroundColor = UIColor.nearlyWhite
 
-        if !storageCache.hasData {
-            showBlockerListError()
-        } else if let errorText = errorText {
+        if let errorText = errorText {
             showError(withText: errorText)
         } else if siteRating == nil {
             showError(withText: UserText.unknownErrorOccurred)
@@ -67,12 +65,13 @@ class PrivacyProtectionController: ThemableNavigationController {
         pushViewController(controller, animated: true)
     }
 
-    private func showBlockerListError() {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
-        controller.errorText = UserText.privacyProtectionReloadBlockerLists
-        controller.delegate = self
-        pushViewController(controller, animated: true)
-    }
+    // TODO clean up showBlockerListError
+//    private func showBlockerListError() {
+//        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
+//        controller.errorText = UserText.privacyProtectionReloadBlockerLists
+//        controller.delegate = self
+//        pushViewController(controller, animated: true)
+//    }
 
     private func showInitialScreen() {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen")

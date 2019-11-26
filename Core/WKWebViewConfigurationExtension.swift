@@ -110,8 +110,9 @@ private struct Loader {
         self.injectContentBlockingScripts = injectContentBlockingScripts
         
         self.whitelist = WhitelistManager().domains?.joined(separator: "\n") ?? ""
-        self.surrogates = storageCache.surrogateStore.contentsAsString ?? ""
-        self.trackerData = "{}"
+        self.surrogates = storageCache.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
+        self.trackerData = storageCache.fileStore.loadAsString(forConfiguration: .trackerDataSet) ?? "{}" // TODO load embedded version
+        // TODO handle temporary whitelist
     }
 
     func load() {

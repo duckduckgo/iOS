@@ -28,21 +28,24 @@ public struct AppUrls {
         }
         
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+        static let staticBase = "https://staticcdn.duckduckgo.com"
+        
         static let autocomplete = "\(base)/ac/"
         
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        
+        static let trackerDataSet = "\(staticBase)/trackerblocking/tds.json"
+        static let temporaryWhitelist = "\(staticBase)/contentblocking.js?l=surrogates"
+
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
         static let faviconService = "\(base)/ip3/%@.ico"
  
-        static let staticBase = "https://staticcdn.duckduckgo.com"
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
         static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
         static let httpsLookupService = "\(base)/smarter_encryption.js"
-        
+
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
     }
@@ -77,6 +80,14 @@ public struct AppUrls {
 
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
+    }
+    
+    public var trackerDataSet: URL {
+        return URL(string: Url.trackerDataSet)!
+    }
+    
+    public var temporaryWhitelist: URL {
+        return URL(string: Url.temporaryWhitelist)!
     }
 
     public var feedback: URL {

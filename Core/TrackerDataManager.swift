@@ -24,7 +24,7 @@ public class TrackerDataManager {
         do {
             self.trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
         } catch {
-            Logger.log(text: error.localizedDescription)
+            Logger.log(text: "error loading downloaded tds [\(error.localizedDescription)], falling back to embedded")
             
             // The embedded data should NEVER fail, so fall back to it
             let embeddedData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())

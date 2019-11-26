@@ -113,7 +113,10 @@ private struct Loader {
             + "\n"
             + (storageCache.fileStore.loadAsString(forConfiguration: .temporaryWhitelist) ?? "")
         self.surrogates = storageCache.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
-        self.trackerData = storageCache.fileStore.loadAsString(forConfiguration: .trackerDataSet) ?? TrackerDataManager.loadEmbeddedAsString()
+
+        // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work
+        let encodedTrackerData = try? JSONEncoder().encode(TrackerDataManager.shared.trackerData)
+        self.trackerData = String(data: encodedTrackerData!, encoding: .utf8)!
     }
 
     func load() {

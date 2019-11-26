@@ -33,7 +33,6 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case success(etag: String?, data: Data)
     }
 
-    // TODO delete old data
     enum Configuration: String {
         case httpsBloomFilterSpec
         case httpsBloomFilter

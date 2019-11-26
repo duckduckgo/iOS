@@ -33,8 +33,8 @@ public struct AppUrls {
         static let autocomplete = "\(base)/ac/"
         
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
+        static let temporaryWhitelist = "\(base)/contentblocking/trackers-whitelist-temporary.txt"
         static let trackerDataSet = "\(staticBase)/trackerblocking/tds.json"
-        static let temporaryWhitelist = "\(staticBase)/contentblocking.js?l=surrogates"
 
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"

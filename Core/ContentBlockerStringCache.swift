@@ -21,7 +21,7 @@ import Foundation
 
 public class ContentBlockerStringCache {
 
-    static func removeLegacyData() {
+    public static func removeLegacyData() {
         let fileManager = FileManager.default
         let groupName = ContentBlockerStoreConstants.groupName
         let cacheDir = fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")

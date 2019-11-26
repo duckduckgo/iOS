@@ -21,22 +21,32 @@ import Foundation
 
 public class FileStore {
     
-    private let groupIdentifier: String
-
-    init(groupIdentifier: String = ContentBlockerStoreConstants.groupName) {
-        self.groupIdentifier = groupIdentifier
-        removeLegacyData()
+    struct Constants {
+        static let legacyFiles = [
+            "surrogates.js",
+            "easylist.txt",
+            "easylistPrivacy.txt",
+            "easylistWhitelist.txt",
+            "disconnectme.json",
+            "entitylist2.json"
+        ]
     }
     
+    private let groupIdentifier: String = ContentBlockerStoreConstants.groupName
+
+    public init() { }
+        
     /// Remove all legacy data.
     ///
     /// Removes the following files
     /// * surrogates.js
     /// * xxx
     ///
-    func removeLegacyData() {
+    public func removeLegacyData() {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
-        try? FileManager.default.removeItem(at: path!.appendingPathComponent("surrogates.js"))
+        Constants.legacyFiles.forEach {
+            try? FileManager.default.removeItem(at: path!.appendingPathComponent($0))
+        }
     }
     
     func persist(_ data: Data?, forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {

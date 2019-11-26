@@ -52,12 +52,10 @@ class FileStoreTests: XCTestCase {
     func testLegacyFiles() {
         
         XCTAssertEqual([
-            "surrogates.js",
-            "easylist.txt",
-            "easylistPrivacy.txt",
-            "easylistWhitelist.txt",
             "disconnectme.json",
-            "entitylist2.json"
+            "easylistWhitelist.txt",
+            "entitylist2.json",
+            "surrogate.js"
         ], FileStore.Constants.legacyFiles)
         
     }

@@ -190,7 +190,6 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
         controller.add(self, name: MessageHandlerNames.signpost)
-        controller.add(self, name: MessageHandlerNames.cache)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
         reloadScripts()
@@ -556,7 +555,6 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
-        controller.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
     }
@@ -587,7 +585,6 @@ extension TabViewController: WKScriptMessageHandler {
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
-        static let cache = "cacheMessage"
         static let log = "log"
         static let findInPageHandler = "findInPageHandler"
     }
@@ -595,9 +592,6 @@ extension TabViewController: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
         switch message.name {
-
-        case MessageHandlerNames.cache:
-            handleCache(message: message)
 
         case MessageHandlerNames.signpost:
             handleSignpost(message: message)
@@ -625,14 +619,6 @@ extension TabViewController: WKScriptMessageHandler {
 
     private func handleLog(message: WKScriptMessage) {
         Logger.log(text: String(describing: message.body))
-    }
-
-    private func handleCache(message: WKScriptMessage) {
-        Logger.log(text: "\(MessageHandlerNames.cache)")
-        guard let dict = message.body as? [String: Any] else { return }
-        guard let name = dict["name"] as? String else { return }
-        guard let data = dict["data"] as? String else { return }
-        ContentBlockerStringCache().put(name: name, value: data)
     }
     
     private func handleSignpost(message: WKScriptMessage) {

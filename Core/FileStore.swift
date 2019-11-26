@@ -23,12 +23,10 @@ public class FileStore {
     
     struct Constants {
         static let legacyFiles = [
-            "surrogates.js",
-            "easylist.txt",
-            "easylistPrivacy.txt",
-            "easylistWhitelist.txt",
             "disconnectme.json",
-            "entitylist2.json"
+            "easylistWhitelist.txt",
+            "entitylist2.json",
+            "surrogate.js"
         ]
     }
     

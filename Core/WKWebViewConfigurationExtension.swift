@@ -136,12 +136,12 @@ private struct Loader {
 
     private func loadContentBlockingScripts() {
         loadContentBlockerDependencyScripts()
-        load(scripts: [ .detection ], forMainFrameOnly: false)
         javascriptLoader.load(script: .contentblocker, withReplacements: [
-            "whitelist": whitelist,
-            "trackerData": trackerData,
-            "surrogates": surrogates
+            "${whitelist}": whitelist,
+            "${trackerData}": trackerData,
+            "${surrogates}": surrogates
         ], into: userContentController, forMainFrameOnly: false)
+        load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {

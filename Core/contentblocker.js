@@ -65,23 +65,22 @@ var duckduckgoContentBlocking = function() {
     // util.js
 
     // Buffer
-    (function() {
-        class Buffer {
-            static from(string) {
-                return Buffer(string, type)
-            }
-
-            constructor(string) {
-                this.string = string
-            }
-
-            toString(type) {
-                var aUTF16CodeUnits = new Uint16Array(sString.length);
-                Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
-                return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
-            }
+    class Buffer {
+        static from(string, type) {
+            return new Buffer(string);
         }
-    })
+
+        constructor(string) {
+            this.string = string;
+        }
+
+        toString(type) {
+            let string = this.string;
+            var aUTF16CodeUnits = new Uint16Array(string.length);
+            Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = string.charCodeAt(idx); });
+            return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+        }
+    }
     // Buffer
 
     // trackers.js - https://raw.githubusercontent.com/duckduckgo/privacy-grade/298ddcbdd9d55808233643d90639578cd063a439/src/classes/trackers.js

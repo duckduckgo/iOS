@@ -29,7 +29,6 @@ var duckduckgoMessaging = function() {
 
 	return {
 
-		cache: cache,
 		trackerDetected: trackerDetected
 
 	}

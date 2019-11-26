@@ -19,45 +19,12 @@
 
 import Foundation
 
-public typealias EntityName = String
-public typealias DomainName = String
-
 public class EntityMapping {
     
-    public struct Entity: Decodable {
-
-        public let displayName: String?
-        public let domains: [String]?
-        public let prevalence: Double?
-        
-    }
-
-    let domains: [DomainName: EntityName]
-    let entities: [EntityName: Entity]
-    
-    public init(entities: [EntityName: Entity], domains: [DomainName: EntityName]) {
-        self.domains = domains
-        self.entities = entities
-    }
+    public init() { }
     
     public func findEntity(forHost host: String) -> Entity? {
-        for host in variations(of: host) {
-            if let entityName = domains[host] {
-                return entities[entityName]
-            }
-        }
-        return nil
-    }
-    
-    private func variations(of host: String) -> [String] {
-        var parts = host.components(separatedBy: ".")
-        var domains = [String]()
-        while parts.count > 1 {
-            let domain = parts.joined(separator: ".")
-            domains.append(domain)
-            parts.removeFirst()
-        }
-        return domains
+        return TrackerDataManager.shared.findEntity(forHost: host)
     }
     
 }

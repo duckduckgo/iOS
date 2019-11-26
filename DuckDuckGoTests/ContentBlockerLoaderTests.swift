@@ -39,7 +39,7 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockRequest.mockResponse = .success(etag: "test", data: Data())
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], nil)
         
@@ -48,39 +48,43 @@ class ContentBlockerLoaderTests: XCTestCase {
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
     }
-
-    // TODO this test should use another API call to test against
-    func xtestWhenEtagIsPresentThenResponseIsStoredOnlyWhenNeeded() {
+    
+    func testWhenEtagIsPresentThenResponseIsStoredOnlyWhenNeeded() {
         
         mockRequest.mockResponse = .success(etag: "test", data: Data())
-        mockEtagStorage.set(etag: "test", for: .httpsWhitelist)
+        
+        // Incorect etag should be updated
         mockEtagStorage.set(etag: "old", for: .surrogates)
-        
+
+        // Has data and the correct etag
+        XCTAssertTrue(FileStore().persist("{}".data(using: .utf8), forConfiguration: .trackerDataSet))
+        mockEtagStorage.set(etag: "test", for: .trackerDataSet)
+
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
-        XCTAssertEqual(mockEtagStorage.etags[.httpsWhitelist], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.trackerDataSet], "test")
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "old")
-        XCTAssertEqual(mockEtagStorage.etags[.httpsBloomFilterSpec], nil)
+        XCTAssertEqual(mockEtagStorage.etags[.temporaryWhitelist], nil)
         
         loader.applyUpdate(to: mockStorageCache)
         
-        XCTAssertEqual(mockEtagStorage.etags[.httpsWhitelist], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.trackerDataSet], "test")
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.httpsBloomFilterSpec], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.temporaryWhitelist], "test")
 
-        XCTAssertNil(mockStorageCache.processedUpdates[.httpsWhitelist])
+        XCTAssertNil(mockStorageCache.processedUpdates[.trackerDataSet])
         XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.httpsBloomFilterSpec])
+        XCTAssertNotNil(mockStorageCache.processedUpdates[.temporaryWhitelist])
     }
-    
+
     func testWhenEtagIsMissingThenResponseIsStored() {
         
         mockRequest.mockResponse = .success(etag: nil, data: Data())
         mockEtagStorage.set(etag: "test", for: .surrogates)
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         
@@ -96,7 +100,7 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockRequest.mockResponse = .success(etag: "test", data: Data())
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
         XCTAssertNil(mockEtagStorage.etags[.surrogates])
         
@@ -119,7 +123,7 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockStorageCache.hasDisconnectMeData = false
         mockStorageCache.hasEasylistData = false
         
-        XCTAssert(loader.checkForUpdates(dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         

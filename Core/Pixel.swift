@@ -167,9 +167,6 @@ public enum PixelName: String {
     case notificationOptIn = "m_ne"
     case notificationOptOut = "m_nd"
     
-    case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
-    case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
-    
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
     case dbDestroyError = "m_d_dbde"

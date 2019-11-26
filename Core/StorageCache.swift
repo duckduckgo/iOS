@@ -45,7 +45,6 @@ public class StorageCache: StorageCacheUpdating {
         self.termsOfServiceStore = termsOfServiceStore
     }
     
-    // swiftlint:disable cyclomatic_complexity
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
         switch configuration {
         case .httpsWhitelist:
@@ -58,19 +57,22 @@ public class StorageCache: StorageCacheUpdating {
             HTTPSUpgrade.shared.loadData()
             return result
             
-        case .surrogates:
-            return fileStore.persist(data as? Data, forConfiguration: configuration)
-            
         case .httpsBloomFilterSpec:
             return false
             
-        case .trackerDataSet:
+        case .surrogates:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
+            
+        case .trackerDataSet:
+            if fileStore.persist(data as? Data, forConfiguration: configuration) {
+                TrackerDataManager.shared.reload()
+                return true
+            }
+            return false
             
         case .temporaryWhitelist:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
         }
     }
-    // swiftlint:enable cyclomatic_complexity
 }

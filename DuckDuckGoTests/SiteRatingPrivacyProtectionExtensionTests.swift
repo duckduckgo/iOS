@@ -62,28 +62,28 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
     func testSingleMajorNetworkBlockedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
-        let entity = EntityMapping.Entity(displayName: "Entity", domains: nil, prevalence: 100)
+        let entity = Entity(displayName: "Entity", domains: nil, prevalence: 100)
         rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: true))
         XCTAssertTrue(rating.majorNetworksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleMajorNetworkDetectedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
-        let entity = EntityMapping.Entity(displayName: "Entity", domains: nil, prevalence: 100)
+        let entity = Entity(displayName: "Entity", domains: nil, prevalence: 100)
         rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: false))
         XCTAssertTrue(rating.majorNetworksDetectedText().contains("Tracker Found"))
     }
 
     func testSingleNetworkBlockedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
-        let entity = EntityMapping.Entity(displayName: "Entity", domains: nil, prevalence: nil)
+        let entity = Entity(displayName: "Entity", domains: nil, prevalence: nil)
         rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: true))
         XCTAssertTrue(rating.networksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleNetworkDetectedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
-        let entity = EntityMapping.Entity(displayName: "Entity", domains: nil, prevalence: nil)
+        let entity = Entity(displayName: "Entity", domains: nil, prevalence: nil)
         rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: false))
         XCTAssertTrue(rating.networksDetectedText().contains("Tracker Found"))
     }

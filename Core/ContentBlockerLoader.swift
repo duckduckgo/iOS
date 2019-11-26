@@ -26,18 +26,18 @@ public class ContentBlockerLoader {
 
     private let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     private let etagStorage: BlockerListETagStorage
+    private let fileStore: FileStore
 
     private var newData = DataDict()
     private var etags = EtagDict()
 
-    init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
+    init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage(), fileStore: FileStore = FileStore()) {
         self.etagStorage = etagStorage
+        self.fileStore = fileStore
     }
 
     func checkForUpdates(dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
         
-        // TODO remove all legacy data
-
         self.newData.removeAll()
         self.etags.removeAll()
         
@@ -86,8 +86,12 @@ public class ContentBlockerLoader {
                 return
             }
             
+            let isCached = etag != nil && self.etagStorage.etag(for: configuration) == etag
             self.etags[configuration] = etag
-            self.newData[configuration] = data
+            
+            if !isCached || !self.fileStore.hasData(forConfiguration: configuration) {
+                self.newData[configuration] = data
+            }
 
             semaphore.signal()
         }

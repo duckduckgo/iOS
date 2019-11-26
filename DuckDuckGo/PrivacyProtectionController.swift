@@ -65,14 +65,6 @@ class PrivacyProtectionController: ThemableNavigationController {
         pushViewController(controller, animated: true)
     }
 
-    // TODO clean up showBlockerListError
-//    private func showBlockerListError() {
-//        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
-//        controller.errorText = UserText.privacyProtectionReloadBlockerLists
-//        controller.delegate = self
-//        pushViewController(controller, animated: true)
-//    }
-
     private func showInitialScreen() {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen")
             as? PrivacyProtectionOverviewController else { return }

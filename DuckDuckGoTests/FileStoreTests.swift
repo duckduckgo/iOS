@@ -14,6 +14,7 @@ class FileStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .surrogates))
+        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .temporaryWhitelist))
     }
     
     func testWhenNewThenStorageIsEmptyForConfiguration() {

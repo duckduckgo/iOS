@@ -24,10 +24,10 @@ public struct DetectedTracker {
 
     public let url: String
     public let knownTracker: KnownTracker?
-    public let entity: EntityMapping.Entity?
+    public let entity: Entity?
     public let blocked: Bool
     
-    public init(url: String, knownTracker: KnownTracker?, entity: EntityMapping.Entity?, blocked: Bool) {
+    public init(url: String, knownTracker: KnownTracker?, entity: Entity?, blocked: Bool) {
         self.url = url
         self.knownTracker = knownTracker
         self.entity = entity

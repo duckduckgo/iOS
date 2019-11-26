@@ -94,8 +94,6 @@ public struct UserText {
     public static let privacyProtectionTOSMixed = NSLocalizedString("privacy.protection.tos.mixed", comment: "Mixed Privacy Practices")
     public static let privacyProtectionTOSPoor = NSLocalizedString("privacy.protection.tos.poor", comment: "Poor Privacy Practices")
 
-    public static let privacyProtectionReloadBlockerLists = NSLocalizedString("privacy.protection.reload.blocker.lists", comment: "This can be caused by a loss of internet connection when loading the content blocking rules.")
-
     public static let ppEncryptionCertError = NSLocalizedString("privacy.protection.encryption.cert.error", comment: "Error extracting certificate")
     public static let ppEncryptionSubjectName = NSLocalizedString("privacy.protection.encryption.subject.name", comment:  "Subject Name")
     public static let ppEncryptionPublicKey = NSLocalizedString("privacy.protection.encryption.public.key", comment:  "Public Key")

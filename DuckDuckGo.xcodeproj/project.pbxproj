@@ -122,6 +122,10 @@
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
 		8521FDE3238C0D0D00A44CC3 /* KnownTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE2238C0D0D00A44CC3 /* KnownTracker.swift */; };
 		8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE4238D411400A44CC3 /* FileStoreTests.swift */; };
+		8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 8521FDE9238DA9D800A44CC3 /* trackerData.json */; };
+		8521FDEC238DA9E600A44CC3 /* TrackerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */; };
+		8521FDEE238DD1B500A44CC3 /* MockEntityMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */; };
+		8521FDF1238DD82700A44CC3 /* TrackerDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */; };
 		85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D222151221C00A0CE28 /* PrivacyPractices.swift */; };
 		85267D2521513FC700A0CE28 /* EntityMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2421513FC700A0CE28 /* EntityMapping.swift */; };
 		85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */; };
@@ -694,6 +698,10 @@
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
 		8521FDE2238C0D0D00A44CC3 /* KnownTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownTracker.swift; sourceTree = "<group>"; };
 		8521FDE4238D411400A44CC3 /* FileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStoreTests.swift; sourceTree = "<group>"; };
+		8521FDE9238DA9D800A44CC3 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
+		8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDataManager.swift; sourceTree = "<group>"; };
+		8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEntityMapping.swift; sourceTree = "<group>"; };
+		8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDataManagerTests.swift; sourceTree = "<group>"; };
 		85267D222151221C00A0CE28 /* PrivacyPractices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPractices.swift; sourceTree = "<group>"; };
 		85267D2421513FC700A0CE28 /* EntityMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMapping.swift; sourceTree = "<group>"; };
 		85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMappingTests.swift; sourceTree = "<group>"; };
@@ -1174,6 +1182,7 @@
 			children = (
 				8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */,
 				8341D808212D6159000514C2 /* HTTPSBloomFilterSpecificationTest.swift */,
+				8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -1283,6 +1292,8 @@
 				85C271D01FCF33C8007216B4 /* DetectedTracker.swift */,
 				8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */,
 				8521FDE2238C0D0D00A44CC3 /* KnownTracker.swift */,
+				8521FDE9238DA9D800A44CC3 /* trackerData.json */,
+				8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -2258,6 +2269,7 @@
 				98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */,
 				851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */,
 				857D1DC8223A9E7D00833940 /* MockAppSettings.swift */,
+				8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -3130,6 +3142,7 @@
 				85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
+				8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */,
 				85F1C3C81F7A4C7500161346 /* messaging.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3477,6 +3490,7 @@
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
+				8521FDF1238DD82700A44CC3 /* TrackerDataManagerTests.swift in Sources */,
 				83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
 				85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */,
@@ -3623,11 +3637,13 @@
 				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				9896632422C56716007BE4FE /* EtagStorage.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
+				8521FDEE238DD1B500A44CC3 /* MockEntityMapping.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,
 				85F1E9AE1FB49EA200A75AC1 /* ServerTrustCache.swift in Sources */,
 				857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */,
 				F14513571F46388F00710C46 /* SiteRating.swift in Sources */,
 				F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */,
+				8521FDEC238DA9E600A44CC3 /* TrackerDataManager.swift in Sources */,
 				85C743902154E981005CF998 /* GradeCache.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */,

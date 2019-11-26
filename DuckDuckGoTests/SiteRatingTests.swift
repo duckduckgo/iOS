@@ -38,11 +38,11 @@ class SiteRatingTests: XCTestCase {
 
     struct TrackerMock {
         
-        static let knownTracker1 = KnownTracker(domain: "tracker1.com", owner: KnownTracker.Owner(name: "Owner 1"), categories: ["tracker"])
-        static let knownTracker2 = KnownTracker(domain: "tracker1.com", owner: KnownTracker.Owner(name: "Owner 2"), categories: ["tracker"])
+        static let knownTracker1 = KnownTracker.build(domain: "tracker1.com", ownerName: "Owner 1", category: "tracker")
+        static let knownTracker2 = KnownTracker.build(domain: "tracker1.com", ownerName: "Owner 2", category: "tracker")
         
-        static let entity1 = EntityMapping.Entity(displayName: "Entity 1", domains: nil, prevalence: 1)
-        static let entity2 = EntityMapping.Entity(displayName: "Entity 2", domains: nil, prevalence: 2)
+        static let entity1 = Entity(displayName: "Entity 1", domains: nil, prevalence: 1)
+        static let entity2 = Entity(displayName: "Entity 2", domains: nil, prevalence: 2)
 
         static let blockedTracker = DetectedTracker(url: Url.tracker, knownTracker: knownTracker1, entity: entity1, blocked: true)
         static let unblockedTracker = DetectedTracker(url: Url.tracker, knownTracker: knownTracker1, entity: entity1, blocked: false)
@@ -188,23 +188,6 @@ class SiteRatingTests: XCTestCase {
 
 }
 
-private class MockEntityMapping: EntityMapping {
-    
-    private var entity: String?
-    private var prevalence: Double?
-    
-    init(entity: String?, prevalence: Double? = nil) {
-        super.init(entities: [:], domains: [:])
-        self.entity = entity
-        self.prevalence = prevalence
-    }
-
-    override func findEntity(forHost host: String) -> EntityMapping.Entity? {
-        return EntityMapping.Entity(displayName: entity, domains: nil, prevalence: prevalence)
-    }
-        
-}
-
 private class MockTermsOfServiceStore: TermsOfServiceStore {
     
     var terms = [String: TermsOfService]()
@@ -224,6 +207,15 @@ private class MockTermsOfServiceStore: TermsOfServiceStore {
         
         terms[domain] = TermsOfService(classification: classification, score: score, goodReasons: goodReasons, badReasons: badReasons)
         return self
+    }
+    
+}
+
+fileprivate extension KnownTracker {
+    
+    static func build(domain: String, ownerName: String, category: String) -> KnownTracker {
+        let owner = KnownTracker.Owner(name: ownerName, displayName: ownerName)
+        return KnownTracker(domain: domain, defaultAction: nil, owner: owner, prevalence: nil, subdomains: nil, categories: [category], rules: nil)
     }
     
 }

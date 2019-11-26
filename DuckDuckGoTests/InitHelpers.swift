@@ -25,7 +25,7 @@ extension PrivacyPractices {
     public convenience init(termsOfServiceStore: TermsOfServiceStore) {
         self.init(tld: TLD(),
                   termsOfServiceStore: termsOfServiceStore,
-                  entityMapping: EntityMapping(entities: [:], domains: [:]))
+                  entityMapping: EntityMapping())
     }
     
     public convenience init(entityMapping: EntityMapping) {
@@ -47,7 +47,7 @@ extension SiteRating {
     
     public convenience init(url: URL,
                             httpsForced: Bool = false,
-                            entityMapping: EntityMapping = EntityMapping(entities: [:], domains: [:]),
+                            entityMapping: EntityMapping = EntityMapping(),
                             privacyPractices: PrivacyPractices? = nil) {
         self.init(url: url,
                   httpsForced: httpsForced,
@@ -57,7 +57,7 @@ extension SiteRating {
     
     public convenience init(url: URL,
                             httpsForced: Bool = false,
-                            entityMapping: EntityMapping = EntityMapping(entities: [:], domains: [:])) {
+                            entityMapping: EntityMapping = EntityMapping()) {
         
         let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
         

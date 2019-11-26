@@ -39,11 +39,7 @@ class PrivacyPracticesTests: XCTestCase {
             "sibling4.com": TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: [])
             ])
         
-        let entityMapping = EntityMapping(entities: ["Sibling": EntityMapping.Entity(displayName: "Sibling", domains: nil, prevalence: 100)],
-                                          domains: ["sibling1.com": "Sibling",
-                                                    "sibling2.com": "Sibling",
-                                                    "sibling3.com": "Sibling",
-                                                    "sibling4.com": "Sibling"])
+        let entityMapping = MockEntityMapping(entity: "Sibling", prevalence: 100)
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
         XCTAssertEqual(10, testee.findPractice(forHost: "sibling1.com").score)
         
@@ -55,21 +51,21 @@ class PrivacyPracticesTests: XCTestCase {
             "orphan.com": TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: [])
             ])
         
-        let entityMapping = EntityMapping(entities: [:], domains: [:])
+        let entityMapping = MockEntityMapping(entity: "Orphan")
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
         XCTAssertEqual(10, testee.findPractice(forHost: "orphan.com").score)
 
     }
     
     func testWhenDomainUsedForLookupThenTermsAreReturned() {
-        let entityMapping = EntityMapping(entities: [:], domains: [:])
+        let entityMapping = MockEntityMapping(entity: "Google")
         let testee = PrivacyPractices(entityMapping: entityMapping)
         let practice = testee.findPractice(forHost: "google.com")
         XCTAssertEqual(.poor, practice.summary)
     }
 
     func testWhenSubDomainUsedForLookupThenTermsAreReturned() {
-        let entityMapping = EntityMapping(entities: [:], domains: [:])
+        let entityMapping = MockEntityMapping(entity: "Google")
         let testee = PrivacyPractices(entityMapping: entityMapping)
         let practice = testee.findPractice(forHost: "maps.google.com")
         XCTAssertEqual(.poor, practice.summary)

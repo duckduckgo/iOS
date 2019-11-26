@@ -36,8 +36,8 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testNetworkHasMultipleTrackersThenGroupedCorrectly() {
         
-        let entity1 = EntityMapping.Entity(displayName: "Entity 1", domains: nil, prevalence: 100)
-        let entity2 = EntityMapping.Entity(displayName: "Entity 2", domains: nil, prevalence: 0.01)
+        let entity1 = Entity(displayName: "Entity 1", domains: nil, prevalence: 100)
+        let entity2 = Entity(displayName: "Entity 2", domains: nil, prevalence: 0.01)
 
         let trackers = [
             DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: entity1, blocked: false),
@@ -54,8 +54,8 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMajorNetworkDetectedSectionBuiltWithRowPerUniqueMajorTracker() {
 
-        let major1 = EntityMapping.Entity(displayName: "Major 1", domains: nil, prevalence: 100)
-        let major2 = EntityMapping.Entity(displayName: "Major 2", domains: nil, prevalence: 99)
+        let major1 = Entity(displayName: "Major 1", domains: nil, prevalence: 100)
+        let major2 = Entity(displayName: "Major 2", domains: nil, prevalence: 99)
 
         let trackers = [
             DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: major1, blocked: true),
@@ -74,9 +74,9 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMajorNetworksInTrackersThenSortedToTopOrderedByPercentage() {
 
-        let major1 = EntityMapping.Entity(displayName: "Major 1", domains: nil, prevalence: 99)
-        let major2 = EntityMapping.Entity(displayName: "Major 2", domains: nil, prevalence: 100)
-        let minor = EntityMapping.Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
+        let major1 = Entity(displayName: "Major 1", domains: nil, prevalence: 99)
+        let major2 = Entity(displayName: "Major 2", domains: nil, prevalence: 100)
+        let minor = Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
 
         let trackers = [
             DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: minor, blocked: true),
@@ -95,7 +95,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMajorTrackersThenDomainsAreSorted() {
 
-        let major = EntityMapping.Entity(displayName: "Major 1", domains: nil, prevalence: 100)
+        let major = Entity(displayName: "Major 1", domains: nil, prevalence: 100)
 
         let trackers = [
             DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: major, blocked: true),
@@ -115,7 +115,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMinorTrackersThenDomainsAreSorted() {
 
-        let minor = EntityMapping.Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
+        let minor = Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
 
         let trackers = [
             DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: minor, blocked: true),

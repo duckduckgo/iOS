@@ -31,8 +31,8 @@ class DetectedTrackerTests: XCTestCase {
 
     func testWhenTrackersHaveSameEntityThenHashMatchesAndIsEqualsIsTrue() {
         
-        let entity1 = EntityMapping.Entity(displayName: "Entity", domains: nil, prevalence: nil)
-        let entity2 = EntityMapping.Entity(displayName: "Entity", domains: [ Constants.aParentDomain ], prevalence: 1)
+        let entity1 = Entity(displayName: "Entity", domains: nil, prevalence: nil)
+        let entity2 = Entity(displayName: "Entity", domains: [ Constants.aParentDomain ], prevalence: 1)
 
         let tracker1 = DetectedTracker(url: Constants.aUrl, knownTracker: nil, entity: entity1, blocked: true)
         let tracker2 = DetectedTracker(url: Constants.anotherUrl, knownTracker: nil, entity: entity2, blocked: false)

@@ -451,8 +451,8 @@ class TabViewController: UIViewController {
         onSiteRatingChanged()
     }
     
-    private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = EntityMapping(entities: [:], domains: [:]) // TODO get from TDS
+    private func makeSiteRating(url: URL) -> SiteRating {        
+        let entityMapping = EntityMapping()
         let privacyPractices = PrivacyPractices(tld: storageCache.tld,
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
                                                 entityMapping: entityMapping)
@@ -672,20 +672,19 @@ extension TabViewController: WKScriptMessageHandler {
             pageHasTrackers = true
         }
   
-// TODO network leaderboard
-//        if let networkName = networkName {
-//            if !trackerNetworksDetectedOnPage.contains(networkName) {
-//                trackerNetworksDetectedOnPage.insert(networkName)
-//                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
-//            }
-//            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
-//        }
+        if let networkName = tracker.entity?.displayName {
+            if !trackerNetworksDetectedOnPage.contains(networkName) {
+                trackerNetworksDetectedOnPage.insert(networkName)
+                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
+            }
+            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
+        }
 
     }
 
     private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
-        let knownTracker: KnownTracker? = nil // TODO lookup the known tracker for the url
-        let entity: EntityMapping.Entity? = nil // TODO lookup the entity for the tracker
+        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
+        let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
         return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
     }
     

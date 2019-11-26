@@ -36,9 +36,7 @@ public class FileStore {
         
     /// Remove all legacy data.
     ///
-    /// Removes the following files
-    /// * surrogates.js
-    /// * xxx
+    /// Removes files listed in `Constants.legacyFiles`
     ///
     public func removeLegacyData() {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
@@ -61,6 +59,17 @@ public class FileStore {
         return try? String(contentsOf: persistenceLocation(forConfiguration: config))
     }
     
+    func loadAsData(forConfiguration config: ContentBlockerRequest.Configuration) -> Data? {
+        return try? Data(contentsOf: persistenceLocation(forConfiguration: config))
+    }
+    
+    func hasData(forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
+        guard let data = loadAsData(forConfiguration: config), data.count > 0 else {
+            return false
+        }
+        return true
+    }
+
     func persistenceLocation(forConfiguration config: ContentBlockerRequest.Configuration) -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
         return path!.appendingPathComponent(config.rawValue)

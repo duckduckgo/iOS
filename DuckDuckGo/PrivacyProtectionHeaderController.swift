@@ -76,13 +76,19 @@ class PrivacyProtectionHeaderController: UIViewController {
 
         if contentBlockerConfiguration.domainWhitelist.contains(siteRating.domain ?? "") {
             stackView.addArrangedSubview(protectionDisabledLabel)
-        } else if siteRating.scores.enhanced != siteRating.scores.site {
+        } else if differentGrades() {
             protectionUpgraded.update(with: siteRating)
             stackView.addArrangedSubview(protectionUpgraded)
         } else {
             stackView.addArrangedSubview(privacyGradeLabel)
         }
         
+    }
+    
+    private func differentGrades() -> Bool {
+        let siteGrade = siteRating.scores.site.grade.normalize()
+        let enhancedGrade = siteRating.scores.enhanced.grade.normalize()
+        return siteGrade != enhancedGrade
     }
 
 }

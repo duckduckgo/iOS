@@ -105,6 +105,7 @@ extension MainViewController: OnboardingDelegate {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
+    
         homeController?.resetHomeRowCTAAnimations()
     }
     

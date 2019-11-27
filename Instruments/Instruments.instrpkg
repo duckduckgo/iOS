@@ -206,6 +206,7 @@
                     <instance-by>tab-id</instance-by>
                     <label-format>Tab %s</label-format>
                     <value-from>website-url</value-from>
+                    <qualified-by>website-url</qualified-by>
                 </plot-template>
             </lane>
             

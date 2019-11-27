@@ -79,7 +79,7 @@ public struct KnownTracker: Codable, Equatable {
 extension KnownTracker {
     
     public var category: String? {
-        return (categories?.isEmpty ?? true) ? categories?[0] : nil
+        return (categories?.isEmpty ?? true) ? nil : categories?[0]
     }
     
 }

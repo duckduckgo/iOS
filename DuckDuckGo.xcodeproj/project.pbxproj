@@ -120,7 +120,7 @@
 		85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */; };
 		85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */; };
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
-		8521FDE3238C0D0D00A44CC3 /* KnownTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE2238C0D0D00A44CC3 /* KnownTracker.swift */; };
+		8521FDE3238C0D0D00A44CC3 /* TrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE2238C0D0D00A44CC3 /* TrackerData.swift */; };
 		8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE4238D411400A44CC3 /* FileStoreTests.swift */; };
 		8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 8521FDE9238DA9D800A44CC3 /* trackerData.json */; };
 		8521FDEC238DA9E600A44CC3 /* TrackerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */; };
@@ -692,7 +692,7 @@
 		85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetworkLeaderboard.xcdatamodel; sourceTree = "<group>"; };
 		85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionNetworkLeaderboardController.swift; sourceTree = "<group>"; };
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
-		8521FDE2238C0D0D00A44CC3 /* KnownTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownTracker.swift; sourceTree = "<group>"; };
+		8521FDE2238C0D0D00A44CC3 /* TrackerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerData.swift; sourceTree = "<group>"; };
 		8521FDE4238D411400A44CC3 /* FileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStoreTests.swift; sourceTree = "<group>"; };
 		8521FDE9238DA9D800A44CC3 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDataManager.swift; sourceTree = "<group>"; };
@@ -1289,7 +1289,7 @@
 			children = (
 				85C271D01FCF33C8007216B4 /* DetectedTracker.swift */,
 				8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */,
-				8521FDE2238C0D0D00A44CC3 /* KnownTracker.swift */,
+				8521FDE2238C0D0D00A44CC3 /* TrackerData.swift */,
 				8521FDE9238DA9D800A44CC3 /* trackerData.json */,
 				8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */,
 			);
@@ -3646,7 +3646,7 @@
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
-				8521FDE3238C0D0D00A44CC3 /* KnownTracker.swift in Sources */,
+				8521FDE3238C0D0D00A44CC3 /* TrackerData.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,

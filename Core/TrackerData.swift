@@ -19,6 +19,33 @@
 
 import Foundation
 
+public struct TrackerData: Codable {
+
+    public typealias EntityName = String
+    public typealias TrackerDomain = String
+
+    public struct TrackerRules {
+        
+        let tracker: KnownTracker
+        
+    }
+    
+    public let trackers: [TrackerDomain: KnownTracker]
+    public let entities: [EntityName: Entity]
+    public let domains: [TrackerDomain: EntityName]
+    
+    public init(trackers: [String: KnownTracker], entities: [String: Entity], domains: [String: String]) {
+        self.trackers = trackers
+        self.entities = entities
+        self.domains = domains
+    }
+
+    func relatedDomains(for owner: KnownTracker.Owner?) -> [String]? {
+        return entities[owner?.name ?? ""]?.domains
+    }
+    
+}
+
 public struct KnownTracker: Codable, Equatable {
 
     public static func == (lhs: KnownTracker, rhs: KnownTracker) -> Bool {
@@ -81,5 +108,13 @@ extension KnownTracker {
     public var category: String? {
         return (categories?.isEmpty ?? true) ? nil : categories?[0]
     }
+    
+}
+
+public struct Entity: Codable, Hashable {
+    
+    public let displayName: String?
+    public let domains: [String]?
+    public let prevalence: Double?
     
 }

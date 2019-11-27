@@ -167,6 +167,10 @@ public enum PixelName: String {
     case notificationOptIn = "m_ne"
     case notificationOptOut = "m_nd"
     
+    case brokenSiteReported = "m_bsr"
+
+    // debug pixels:
+    
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
     case dbDestroyError = "m_d_dbde"
@@ -175,10 +179,12 @@ public enum PixelName: String {
     case dbSaveBloomFilterError = "m_d_dbsb"
     
     case configurationFetchInfo = "m_d_cfgfetch"
-    case brokenSiteReported = "m_bsr"
     
     case trackerDataParseFailed = "m_d_tds_p"
     case trackerDataReloadFailed = "m_d_tds_r"
+    case trackerDataCouldNotBeLoaded = "m_d_tds_l"
+    case fileStoreWriteFailed = "m_d_fswf"
+
 }
 
 public struct PixelParameters {
@@ -231,12 +237,12 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:]) {
         let nsError = error as NSError
-        
-        let params: [String: String?] = ["e": "\(nsError.code)", "d": nsError.domain]
-        
-        fire(pixel: pixel, withAdditionalParameters: params)
+        var newParams = params
+        newParams["e"] = "\(nsError.code)"
+        newParams["d"] = nsError.domain
+        fire(pixel: pixel, withAdditionalParameters: newParams)
     }
 }
 

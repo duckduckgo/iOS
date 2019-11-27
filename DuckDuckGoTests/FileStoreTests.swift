@@ -28,6 +28,14 @@ class FileStoreTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .temporaryWhitelist))
     }
     
+    func testWhenFileExistsThenHasDataReturnsTrue() {
+        let store = FileStore()
+        XCTAssertFalse(store.hasData(forConfiguration: .surrogates))
+        
+        XCTAssertTrue(store.persist(Data(), forConfiguration: .surrogates))
+        XCTAssertTrue(store.hasData(forConfiguration: .surrogates))
+    }
+    
     func testWhenNewThenStorageIsEmptyForConfiguration() {
         let store = FileStore()
         XCTAssertNil(store.loadAsString(forConfiguration: .surrogates))

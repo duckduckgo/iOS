@@ -24,8 +24,9 @@ public class TrackerDataManager {
     public enum DataSet {
         
         case embedded
+        case embeddedFallback
         case downloaded
-            
+
     }
     
     public static let shared = TrackerDataManager()
@@ -58,6 +59,7 @@ public class TrackerDataManager {
             let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
             self.trackerData = trackerData!
             Pixel.fire(pixel: .trackerDataParseFailed, error: error)
+            return .embeddedFallback
         }
                 
         return dataSet

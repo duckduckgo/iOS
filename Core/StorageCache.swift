@@ -67,6 +67,7 @@ public class StorageCache: StorageCacheUpdating {
             if fileStore.persist(data as? Data, forConfiguration: configuration) {
                 if TrackerDataManager.shared.reload() != .downloaded {
                     Pixel.fire(pixel: .trackerDataReloadFailed)
+                    return false
                 }
                 return true
             }

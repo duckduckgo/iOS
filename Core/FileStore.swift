@@ -51,6 +51,7 @@ public class FileStore {
             try data.write(to: persistenceLocation(forConfiguration: config))
             return true
         } catch {
+            Pixel.fire(pixel: .fileStoreWriteFailed, error: error, withAdditionalParameters: ["config": config.rawValue ])
             return false
         }
     }
@@ -60,14 +61,19 @@ public class FileStore {
     }
     
     func loadAsData(forConfiguration config: ContentBlockerRequest.Configuration) -> Data? {
-        return try? Data(contentsOf: persistenceLocation(forConfiguration: config))
+        do {
+            return try Data(contentsOf: persistenceLocation(forConfiguration: config))
+        } catch {
+            let nserror = error as NSError
+            if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileReadNoSuchFileError {
+                Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error)
+            }
+            return nil
+        }
     }
     
     func hasData(forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
-        guard let data = loadAsData(forConfiguration: config), data.count > 0 else {
-            return false
-        }
-        return true
+        return FileManager.default.fileExists(atPath: persistenceLocation(forConfiguration: config).path)
     }
 
     func persistenceLocation(forConfiguration config: ContentBlockerRequest.Configuration) -> URL {

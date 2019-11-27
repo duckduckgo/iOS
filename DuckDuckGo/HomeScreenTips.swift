@@ -52,9 +52,10 @@ class HomeScreenTips {
         self.storage = storage
     }
     
-    func trigger() {
+    func trigger(variantManager: VariantManager = DefaultVariantManager()) {
         guard storage.isEnabled else { return }
         guard tutorialSettings.hasSeenOnboarding else { return }
+        if variantManager.isSupported(feature: .firstOpenCTA), !UserDefaultsHomeRowCTAStorage().dismissed { return }
         guard let tip = Tips(rawValue: storage.nextHomeScreenTip) else { return }
         
         switch tip {

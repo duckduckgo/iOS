@@ -632,13 +632,14 @@ extension TabViewController: WKScriptMessageHandler {
             }
         } else if event == "Tracker Allowed" {
             if let elapsedTimeInMs = dict["time"] as? Double,
-                let url = dict["url"] as? String {
-                instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
+                let url = dict["url"] as? String,
+                let reason = dict["reason"] as? String? {
+                instrumentation.tracker(url: url, allowedIn: elapsedTimeInMs, reason: reason)
             }
         } else if event == "Tracker Blocked" {
             if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {
-                instrumentation.request(url: url, blockedIn: elapsedTimeInMs)
+                instrumentation.tracker(url: url, blockedIn: elapsedTimeInMs)
             }
         } else if event == "Generic" {
             if let name = dict["name"] as? String,

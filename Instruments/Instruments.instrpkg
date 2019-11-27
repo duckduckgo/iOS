@@ -120,7 +120,7 @@
         <subsystem>"com.duckduckgo.instrumentation"</subsystem>
         
         <pattern>
-            <message>"[" ?website-url "] Request: " ?tracker-lookup-url " - " ?tracker-lookup-result " in " ?tracker-lookup-duration</message>
+            <message>"[" ?website-url "] Request: " ?tracker-lookup-url " - " ?tracker-lookup-type " - " ?tracker-lookup-result " (" ?tracker-lookup-reason ") in " ?tracker-lookup-duration</message>
         </pattern>
         
         <column>
@@ -135,6 +135,20 @@
             <title>URL</title>
             <type>raw-string</type>
             <expression>?tracker-lookup-url</expression>
+        </column>
+        
+        <column>
+            <mnemonic>tracker-lookup-type</mnemonic>
+            <title>Type</title>
+            <type>raw-string</type>
+            <expression>?tracker-lookup-type</expression>
+        </column>
+        
+        <column>
+            <mnemonic>tracker-lookup-reason</mnemonic>
+            <title>Reason</title>
+            <type>raw-string</type>
+            <expression>?tracker-lookup-reason</expression>
         </column>
         
         <column>
@@ -266,7 +280,9 @@
             <table-ref>tracker-events-table</table-ref>
             <column>website-url</column>
             <column>tracker-lookup-url</column>
+            <column>tracker-lookup-type</column>
             <column>tracker-lookup-result</column>
+            <column>tracker-lookup-reason</column>
             <column>tracker-lookup-duration</column>
         </list>
         
@@ -280,7 +296,15 @@
                 </level>
                 
                 <level>
+                    <column>tracker-lookup-type</column>
+                </level>
+                
+                <level>
                     <column>tracker-lookup-result</column>
+                </level>
+                
+                <level>
+                    <column>tracker-lookup-reason</column>
                 </level>
             </hierarchy>
             

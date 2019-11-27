@@ -433,6 +433,7 @@ var duckduckgoContentBlocking = function() {
         } else {
             duckduckgoDebugMessaging.signpostEvent({event: "Tracker Allowed",
                                                    url: trackerUrl,
+                                                   reason: result.reason,
                                                    time: performance.now() - startTime})
         }
 

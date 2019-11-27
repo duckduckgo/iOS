@@ -104,9 +104,13 @@ public struct KnownTracker: Codable, Equatable {
 }
 
 extension KnownTracker {
-    
+
+    static let displayCategories = [
+        "Analytics", "Advertising", "Social Network"
+    ]
+
     public var category: String? {
-        return (categories?.isEmpty ?? true) ? nil : categories?[0]
+        return categories?.first(where: { Self.displayCategories.contains($0) })
     }
     
 }

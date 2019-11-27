@@ -21,12 +21,19 @@ import XCTest
 @testable import Core
 
 class KnownTrackerTests: XCTestCase {
-    
-    func testWhenCategoriesIsPopulatedThenCategoryIsFirstInList() {
+
+    func testWhenCategoriesIsPopulatedWithApprovedCategoryThenCategoryIsFirstApproved() {
+        let tracker = KnownTracker(domain: nil, defaultAction: nil, owner: nil, prevalence: nil, subdomains: nil, categories: [
+            "one", "Advertising", "three"
+        ], rules: nil)
+        XCTAssertEqual("Advertising", tracker.category)
+    }
+
+    func testWhenCategoriesIsPopulatedWithUnapprovedCategoriesThenCategoryIsNil() {
         let tracker = KnownTracker(domain: nil, defaultAction: nil, owner: nil, prevalence: nil, subdomains: nil, categories: [
             "one", "two", "three"
         ], rules: nil)
-        XCTAssertEqual("one", tracker.category)
+        XCTAssertNil(tracker.category)
     }
 
     func testWhenCategoriesIsEmptyThenCategoryIsNil() {

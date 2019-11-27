@@ -276,14 +276,19 @@ class Springboard {
             icon.press(forDuration: 1.3)
             
             let rearrangeButton = springboard.buttons["Rearrange Apps"]
-            _ = rearrangeButton.waitForExistence(timeout: AtbIntegrationTests.Constants.defaultTimeout)
-            rearrangeButton.tap()
-            
-            sleep(1)
-            // Tap the little "X" button at approximately where it is. The X is not exposed directly
+            if rearrangeButton.waitForExistence(timeout: 2) {
+                rearrangeButton.tap()
+                
+                sleep(1)
+                // Tap the little "X" button at approximately where it is. The X is not exposed directly
 
-            springboard.coordinate(withNormalizedOffset: CGVector(dx: (iconFrame.minX + 3) / springboardFrame.maxX,
-                                                                  dy: (iconFrame.minY + 3) / springboardFrame.maxY)).tap()
+                springboard.coordinate(withNormalizedOffset: CGVector(dx: (iconFrame.minX + 3) / springboardFrame.maxX,
+                                                                      dy: (iconFrame.minY + 3) / springboardFrame.maxY)).tap()
+            } else {
+                // Buttons have been rearranged for iOS 13.1+ version
+                let deleteButton = springboard.buttons["Delete App"]
+                deleteButton.tap()
+            }
             
             let deleteButton = springboard.alerts.buttons["Delete"]
             _ = deleteButton.waitForExistence(timeout: AtbIntegrationTests.Constants.defaultTimeout)

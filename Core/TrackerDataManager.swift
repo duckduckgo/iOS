@@ -1,5 +1,5 @@
 //
-//  TrackerData.swift
+//  TrackerDataManager.swift
 //  Core
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -21,6 +21,13 @@ import Foundation
 
 public class TrackerDataManager {
     
+    public enum DataSet {
+        
+        case embedded
+        case downloaded
+            
+    }
+    
     public static let shared = TrackerDataManager()
     
     private(set) public var trackerData: TrackerData!
@@ -29,19 +36,31 @@ public class TrackerDataManager {
         reload()
     }
     
-    public func reload() {
-        // valid use case is we don't have downloaded data yet
-        let data = FileStore().loadAsData(forConfiguration: .trackerDataSet) ?? Self.loadEmbeddedAsData()
-        do {
-            self.trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
-        } catch {
-            Logger.log(text: "error loading downloaded tds [\(error.localizedDescription)], falling back to embedded")
-            
-            // The embedded data should NEVER fail, so fall back to it
-            let embeddedData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
-            self.trackerData = embeddedData!
-            Pixel.fire(pixel: .reloadTrackerDataFailed)
+    @discardableResult
+    public func reload() -> DataSet {
+        
+        let dataSet: DataSet
+        let data: Data
+        
+        if let loadedData = FileStore().loadAsData(forConfiguration: .trackerDataSet) {
+            data = loadedData
+            dataSet = .downloaded
+        } else {
+            data = Self.loadEmbeddedAsData()
+            dataSet = .embedded
         }
+        
+        do {
+            // This maigh fail if the downloaded data is corrupt or format has changed unexpectedly
+            trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
+        } catch {
+            // This should NEVER fail
+            let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
+            self.trackerData = trackerData!
+            Pixel.fire(pixel: .trackerDataParseFailed, error: error)
+        }
+                
+        return dataSet
     }
     
     public func findTracker(forUrl url: String) -> KnownTracker? {

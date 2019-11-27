@@ -27,20 +27,20 @@ class TrackerDataManagerTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
     }
     
+    func testWhenReloadCalledInitiallyThenDataSetIsEmbedded() {
+        XCTAssertEqual(TrackerDataManager.shared.reload(), .embedded)
+    }
+
     func testFindTrackerByUrl() {
-        
         let tracker = TrackerDataManager.shared.findTracker(forUrl: "http://googletagmanager.com")
         XCTAssertNotNil(tracker)
         XCTAssertEqual("Google", tracker?.owner?.displayName)
-        
     }
     
     func testFindEntityByName() {
-        
         let entity = TrackerDataManager.shared.findEntity(byName: "Google LLC")
         XCTAssertNotNil(entity)
         XCTAssertEqual("Google", entity?.displayName)
-        
     }
     
     func testFindEntityForHost() {
@@ -100,7 +100,7 @@ class TrackerDataManagerTests: XCTestCase {
         """
 
         XCTAssertTrue(FileStore().persist(update.data(using: .utf8), forConfiguration: .trackerDataSet))
-        TrackerDataManager.shared.reload()
+        XCTAssertEqual(TrackerDataManager.shared.reload(), .downloaded)
         XCTAssertNil(TrackerDataManager.shared.findEntity(byName: "Google LLC"))
         XCTAssertNotNil(TrackerDataManager.shared.findEntity(byName: "Not Real"))
 

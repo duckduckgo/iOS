@@ -1,4 +1,1 @@
-• We've improved how we handle web addresses that want to launch other apps.
-• We removed the fire button "Close tabs" option after hearing your feedback.
-• You can now disable long press link previews. Check that out in settings.
-• We now show an animation when a web page opens a new tab.
+• Bug fixes and other improvements.

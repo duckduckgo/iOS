@@ -15,3 +15,4 @@
 
 #include "DuckDuckGoDeveloper.xcconfig"
 #include? "ExternalDeveloper.xcconfig"
+#include? "Version.xcconfig"

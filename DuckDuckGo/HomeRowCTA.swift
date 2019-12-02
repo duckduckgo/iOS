@@ -51,7 +51,7 @@ class HomeRowCTA {
             return true
         }
         
-        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.allCases.count {
+        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tip.allCases.count {
             return false
         }
         

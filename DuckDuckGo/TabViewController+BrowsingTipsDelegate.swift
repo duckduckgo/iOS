@@ -44,9 +44,11 @@ extension TabViewController: BrowsingTipsDelegate {
                                   preferences: preferences)
 
             tip.show(animated: true, forView: grade, withinSuperview: superView)
-            didShow(true)
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                tip.handleGlobalTouch()
+                tip.handleGlobalTouch {
+                    didShow(true)
+                }
             }
         }
 
@@ -74,9 +76,11 @@ extension TabViewController: BrowsingTipsDelegate {
                                   icon: icon,
                                   preferences: preferences)
             tip.show(forItem: button, withinSuperView: superView)            
-            didShow(true)
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                tip.handleGlobalTouch()
+                tip.handleGlobalTouch {
+                    didShow(true)
+                }
             }
         }
     }

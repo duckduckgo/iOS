@@ -50,7 +50,7 @@ extension EasyTipView {
         EasyTipView.globalPreferences = preferences
     }
     
-    func handleGlobalTouch() {
+    func handleGlobalTouch(completion: @escaping () -> Void) {
         
         let view = TouchView()
         UIApplication.shared.keyWindow?.addSubview(view)
@@ -59,6 +59,7 @@ extension EasyTipView {
         token = NotificationCenter.default.addObserver(forName: TouchView.touchNotification, object: nil, queue: nil) { _ in
             view.removeFromSuperview()
             self.dismiss()
+            completion()
             NotificationCenter.default.removeObserver(token!)
         }
     }

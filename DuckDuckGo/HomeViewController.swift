@@ -137,6 +137,8 @@ class HomeViewController: UIViewController {
     }
 
     func resetHomeRowCTAAnimations(variantManager: VariantManager = DefaultVariantManager()) {
+        installHomeScreenTips()
+        
         if variantManager.isSupported(feature: .firstOpenCTA) {
             if HomeRowCTA().shouldShow() {
                 showHomeRowCTA()

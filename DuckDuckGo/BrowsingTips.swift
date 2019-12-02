@@ -58,21 +58,20 @@ class BrowsingTips {
         guard !appUrls.isDuckDuckGo(url: url) else { return }
         guard let tip = Tips(rawValue: storage.nextBrowsingTip) else { return }
         
+        let completion: (Bool) -> Void = { shown in
+            guard shown else { return }
+            self.storage.nextBrowsingTip = tip.rawValue + 1
+        }
+        
         switch tip {
             
         case .privacyGrade:
-            delegate?.showPrivacyGradeTip(didShow: didShow)
+            delegate?.showPrivacyGradeTip(didShow: completion)
             
         case .fireButton:
-            delegate?.showFireButtonTip(didShow: didShow)
+            delegate?.showFireButtonTip(didShow: completion)
             
         }
         
     }
- 
-    private func didShow(_ shown: Bool) {
-        guard shown else { return }
-        storage.nextBrowsingTip += 1
-    }
-    
 }

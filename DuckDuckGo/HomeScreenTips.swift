@@ -30,7 +30,7 @@ protocol HomeScreenTipsDelegate: NSObjectProtocol {
 
 class HomeScreenTips {
     
-    enum Tips: Int, CaseIterable {
+    enum Tip: Int, CaseIterable {
         case privateSearch
         case showCustomize
     }
@@ -56,22 +56,21 @@ class HomeScreenTips {
         guard storage.isEnabled else { return }
         guard tutorialSettings.hasSeenOnboarding else { return }
         if variantManager.isSupported(feature: .firstOpenCTA), !UserDefaultsHomeRowCTAStorage().dismissed { return }
-        guard let tip = Tips(rawValue: storage.nextHomeScreenTip) else { return }
+        guard let tip = Tip(rawValue: storage.nextHomeScreenTip) else { return }
+        
+        let completion: (Bool) -> Void = { shown in
+            guard shown else { return }
+            self.storage.nextHomeScreenTip = tip.rawValue + 1
+        }
         
         switch tip {
             
         case .privateSearch:
-            delegate?.showPrivateSearchTip(didShow: didShow)
+            delegate?.showPrivateSearchTip(didShow: completion)
             
         case .showCustomize:
-            delegate?.showCustomizeTip(didShow: didShow)
+            delegate?.showCustomizeTip(didShow: completion)
         }
         
     }
-    
-    private func didShow(_ shown: Bool) {
-        guard shown else { return }
-        storage.nextHomeScreenTip += 1
-    }
-    
 }

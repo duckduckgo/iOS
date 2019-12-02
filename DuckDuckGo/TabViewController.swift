@@ -673,7 +673,7 @@ extension TabViewController: WKScriptMessageHandler {
             pageHasTrackers = true
         }
   
-        if let networkName = tracker.entity?.displayName {
+        if let networkName = tracker.knownTracker?.owner?.name {
             if !trackerNetworksDetectedOnPage.contains(networkName) {
                 trackerNetworksDetectedOnPage.insert(networkName)
                 NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)

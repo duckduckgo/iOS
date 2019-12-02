@@ -32,7 +32,7 @@ class HomeRowCTATests: XCTestCase {
         statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = false
         tipsStorage.isEnabled = true
-        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
+        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tip.allCases.count
 
         let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
         
@@ -43,7 +43,7 @@ class HomeRowCTATests: XCTestCase {
         statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = true
         tipsStorage.isEnabled = true
-        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
+        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tip.allCases.count
 
         let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
         

@@ -52,9 +52,11 @@ extension HomeViewController: HomeScreenTipsDelegate {
                                   icon: icon,
                                   preferences: preferences)
             tip.show(animated: true, forView: view, withinSuperview: superView)
-            didShow(true)
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                tip.handleGlobalTouch()
+                tip.handleGlobalTouch {
+                    didShow(true)
+                }
             }
         }
         
@@ -92,9 +94,11 @@ extension HomeViewController: HomeScreenTipsDelegate {
                                   preferences: preferences)
 
             tip.show(animated: true, forView: settings, withinSuperview: superView)
-            didShow(true)
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                tip.handleGlobalTouch()
+                tip.handleGlobalTouch {
+                    didShow(true)
+                }
             }
         }
 

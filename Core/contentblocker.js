@@ -346,6 +346,20 @@ var duckduckgoContentBlocking = function() {
     let trackerData = ${trackerData}
     // tracker data set
 
+    // overrides    
+    Trackers.prototype.findTrackerOwner = function(domain) {
+        var parts = domain.split(".")
+        while (parts.length > 1) {
+            let entityName = trackerData.domains[parts.join(".")]
+            if (entityName) {
+                return entityName
+            }
+            parts = parts.slice(1)
+        }
+        return null;
+    }
+
+    // create an instance to use
     let trackers = new Trackers({
         tldjs: tldjs,
         utils: utils

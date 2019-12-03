@@ -175,6 +175,7 @@ public enum PixelName: String {
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
     case dbDestroyError = "m_d_dbde"
+    case dbDestroyFileError = "m_d_dbdf"
     case dbInitializationError = "m_d_dbie"
     case dbSaveWhitelistError = "m_d_dbsw"
     case dbSaveBloomFilterError = "m_d_dbsb"

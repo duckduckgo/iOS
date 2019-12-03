@@ -184,16 +184,28 @@ class DatabaseMigration {
             try oldStack.persistenceStoreCoordinator.destroyPersistentStore(at: storeURL,
                                                                             ofType: NSSQLiteStoreType,
                                                                             options: nil)
-            
-            try FileManager.default.removeItem(at: storeURL)
-
-            let walURL = URL(fileURLWithPath: storeURL.path.appending("-wal"))
-            try FileManager.default.removeItem(at: walURL)
-            let shmURL = URL(fileURLWithPath: storeURL.path.appending("-shm"))
-            try FileManager.default.removeItem(at: shmURL)
         } catch {
             Pixel.fire(pixel: .dbDestroyError, error: error)
             Logger.log(text: "Error destroying store: \(error.localizedDescription)")
+        }
+        
+        removeFile(at: storeURL)
+        
+        let walURL = URL(fileURLWithPath: storeURL.path.appending("-wal"))
+        removeFile(at: walURL)
+        let shmURL = URL(fileURLWithPath: storeURL.path.appending("-shm"))
+        removeFile(at: shmURL)
+    }
+
+    private static func removeFile(at url: URL) {
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            let nserror = error as NSError
+            if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileNoSuchFileError {
+                Pixel.fire(pixel: .dbDestroyFileError, error: error)
+            }
+            Logger.log(text: "Error removing file: \(error.localizedDescription)")
         }
     }
 }

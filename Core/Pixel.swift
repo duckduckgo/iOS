@@ -244,6 +244,11 @@ extension Pixel {
         var newParams = params
         newParams["e"] = "\(nsError.code)"
         newParams["d"] = nsError.domain
+        
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+            newParams["ue"] = "\(underlyingError.code)"
+            newParams["ud"] = underlyingError.domain
+        }
         fire(pixel: pixel, withAdditionalParameters: newParams)
     }
 }

@@ -194,6 +194,14 @@ public struct PixelParameters {
     public static let duration = "dur"
     static let test = "test"
     static let appVersion = "appVersion"
+    
+    static let applicationState = "as"
+    static let dataAvailiability = "dp"
+    
+    static let errorCode = "e"
+    static let errorDesc = "d"
+    static let underlyingErrorCode = "ue"
+    static let underlyingErrorDesc = "ud"
 }
 
 public struct PixelValues {
@@ -242,12 +250,12 @@ extension Pixel {
     public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:]) {
         let nsError = error as NSError
         var newParams = params
-        newParams["e"] = "\(nsError.code)"
-        newParams["d"] = nsError.domain
+        newParams[PixelParameters.errorCode] = "\(nsError.code)"
+        newParams[PixelParameters.errorDesc] = nsError.domain
         
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
-            newParams["ue"] = "\(underlyingError.code)"
-            newParams["ud"] = underlyingError.domain
+            newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
+            newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
         }
         fire(pixel: pixel, withAdditionalParameters: newParams)
     }

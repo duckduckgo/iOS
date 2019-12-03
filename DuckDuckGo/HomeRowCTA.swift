@@ -42,16 +42,16 @@ class HomeRowCTA {
         self.statistics = statistics
     }
 
-    func shouldShow(currentDate: Date = Date()) -> Bool {
-        guard tutorialSettings.hasSeenOnboarding else {
-            return false
-        }
-
-        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.allCases.count {
+    func shouldShow(currentDate: Date = Date(), variantManager: VariantManager = DefaultVariantManager()) -> Bool {
+        guard !storage.dismissed, tutorialSettings.hasSeenOnboarding else {
             return false
         }
         
-        if storage.dismissed {
+        if variantManager.isSupported(feature: .firstOpenCTA) {
+            return true
+        }
+        
+        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tip.allCases.count {
             return false
         }
         

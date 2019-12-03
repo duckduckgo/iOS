@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
 		83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */; };
@@ -568,6 +569,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
 		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
@@ -1459,6 +1461,7 @@
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				987E7FAF22D8F84200AD30A1 /* PrivacyReport */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
+				0A6CC0EE23904D5400E4F627 /* Settings.bundle */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F1E249411EF2075C008C947A /* SiteMonitoring */,
 				F13B4BF41F18C74500814661 /* Tabs */,
@@ -2618,6 +2621,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83491193217F491300610F35 /* Build configuration list for PBXNativeTarget "BookmarksTodayExtension" */;
 			buildPhases = (
+				0A991F5D23941D2F00AA1F64 /* Prevent Version Override */,
 				83491183217F491200610F35 /* Sources */,
 				83491184217F491200610F35 /* Frameworks */,
 				83491185217F491200610F35 /* Resources */,
@@ -2653,6 +2657,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8370943D2142C4C200A58838 /* Build configuration list for PBXNativeTarget "QuickActionsTodayExtension" */;
 			buildPhases = (
+				0A991F5E23941D4600AA1F64 /* Prevent Version Override */,
 				8370942B2142C4C200A58838 /* Sources */,
 				8370942C2142C4C200A58838 /* Frameworks */,
 				8370942D2142C4C200A58838 /* Resources */,
@@ -2670,6 +2675,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8390447720BDCE10006461CD /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
+				0A991F5C239419BF00AA1F64 /* Prevent Version Override */,
 				8390446820BDCE10006461CD /* Sources */,
 				8390446920BDCE10006461CD /* Frameworks */,
 				8390446A20BDCE10006461CD /* Resources */,
@@ -2705,6 +2711,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84E341BA1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGo" */;
 			buildPhases = (
+				0A991F5B239418D100AA1F64 /* Prevent Version Override */,
 				84E3418E1E2F7EFB00BDBA6F /* Sources */,
 				8558AA7D20EE3CB200A346E9 /* Swift Lint */,
 				84E3418F1E2F7EFB00BDBA6F /* Frameworks */,
@@ -3079,6 +3086,7 @@
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
 				85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */,
 				984E291B22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib in Resources */,
+				0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */,
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				8577B0AC2225C778009CCC71 /* Onboarding-iPad.storyboard in Resources */,
@@ -3143,6 +3151,78 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0A991F5B239418D100AA1F64 /* Prevent Version Override */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Prevent Version Override";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+		};
+		0A991F5C239419BF00AA1F64 /* Prevent Version Override */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Prevent Version Override";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+		};
+		0A991F5D23941D2F00AA1F64 /* Prevent Version Override */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Prevent Version Override";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+		};
+		0A991F5E23941D4600AA1F64 /* Prevent Version Override */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Prevent Version Override";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+		};
 		8558AA7D20EE3CB200A346E9 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3841,7 +3921,6 @@
 				INFOPLIST_FILE = BookmarksTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).BookmarksTodayExtension";
@@ -3871,7 +3950,6 @@
 				INFOPLIST_FILE = BookmarksTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).BookmarksTodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3924,7 +4002,6 @@
 				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).QuickActionsTodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3948,7 +4025,6 @@
 				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).QuickActionsTodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3971,7 +4047,6 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3994,7 +4069,6 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4164,7 +4238,6 @@
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4187,7 +4260,6 @@
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 7.33.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

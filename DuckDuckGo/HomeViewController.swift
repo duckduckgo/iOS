@@ -136,8 +136,16 @@ class HomeViewController: UIViewController {
         collectionView.reloadData()
     }
 
-    func resetHomeRowCTAAnimations() {
-        hideHomeRowCTA()
+    func resetHomeRowCTAAnimations(variantManager: VariantManager = DefaultVariantManager()) {
+        installHomeScreenTips()
+        
+        if variantManager.isSupported(feature: .firstOpenCTA) {
+            if HomeRowCTA().shouldShow() {
+                showHomeRowCTA()
+            }
+        } else {
+            hideHomeRowCTA()
+        }
     }
 
     @IBAction func hideKeyboard() {

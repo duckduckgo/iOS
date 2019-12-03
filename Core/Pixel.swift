@@ -65,6 +65,7 @@ public enum PixelName: String {
     case overlayFavoriteLaunched = "m_ov_f"
     
     case settingsOpened = "ms"
+    case settingsOpenedFromTabsSwitcher = "ms_ot"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
     case settingsThemeShown = "ms_tp"

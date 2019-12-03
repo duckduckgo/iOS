@@ -143,7 +143,7 @@ class TabSwitcherViewController: UIViewController {
     
     @IBAction func onSettingsPressed(_ sender: UIButton) {
         // Segue performed from storyboard
-        Pixel.fire(pixel: .settingsOpened)
+        Pixel.fire(pixel: .settingsOpenedFromTabsSwitcher)
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {

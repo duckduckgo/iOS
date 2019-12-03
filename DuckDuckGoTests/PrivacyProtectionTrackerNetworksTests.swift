@@ -24,12 +24,10 @@ import XCTest
 
 class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     
-    let prevalenceStore: PrevalenceStore = MockPrevalenceStore(prevalences: [ "Major 1": 25.0, "Major 2": 50.0 ])
-
     func testWhenNetworkNotKnownSectionHasNoRows() {
-        let trackers = [DetectedTracker(url: "http://tracker1.com", networkName: nil, category: nil, blocked: false): 1]
+        let trackers = [DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: nil, blocked: false)]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: EmbeddedPrevalenceStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("tracker1.com", sections[0].name)
@@ -37,14 +35,17 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     }
 
     func testNetworkHasMultipleTrackersThenGroupedCorrectly() {
+        
+        let entity1 = Entity(displayName: "Entity 1", domains: nil, prevalence: 100)
+        let entity2 = Entity(displayName: "Entity 2", domains: nil, prevalence: 0.01)
 
         let trackers = [
-            DetectedTracker(url: "http://tracker1.com", networkName: "Network 1", category: nil, blocked: false): 1,
-            DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: nil, blocked: false): 1,
-            DetectedTracker(url: "http://tracker3.com", networkName: "Network 2", category: nil, blocked: false): 1
+            DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: entity1, blocked: false),
+            DetectedTracker(url: "http://tracker2.com", knownTracker: nil, entity: entity1, blocked: false),
+            DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: entity2, blocked: false)
         ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: EmbeddedPrevalenceStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(2, sections.count)
         XCTAssertEqual(2, sections[0].rows.count)
@@ -53,13 +54,16 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMajorNetworkDetectedSectionBuiltWithRowPerUniqueMajorTracker() {
 
+        let major1 = Entity(displayName: "Major 1", domains: nil, prevalence: 100)
+        let major2 = Entity(displayName: "Major 2", domains: nil, prevalence: 99)
+
         let trackers = [
-            DetectedTracker(url: "http://tracker1.com", networkName: "Major 1", category: "Category 1", blocked: true): 1,
-            DetectedTracker(url: "http://tracker2.com", networkName: "Major 1", category: "Category 2", blocked: true): 1,
-            DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 3", blocked: true): 1
+            DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: major1, blocked: true),
+            DetectedTracker(url: "http://tracker2.com", knownTracker: nil, entity: major1, blocked: true),
+            DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: major2, blocked: true)
         ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: EmbeddedPrevalenceStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(2, sections.count)
         XCTAssertEqual("Major 1", sections[0].name)
@@ -70,13 +74,17 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMajorNetworksInTrackersThenSortedToTopOrderedByPercentage() {
 
+        let major1 = Entity(displayName: "Major 1", domains: nil, prevalence: 99)
+        let major2 = Entity(displayName: "Major 2", domains: nil, prevalence: 100)
+        let minor = Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
+
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 1", blocked: true): 1,
-            DetectedTracker(url: "http://tracker1.com", networkName: "Major 1", category: "Category 2", blocked: true): 1,
-            DetectedTracker(url: "http://tracker2.com", networkName: "Major 2", category: "Category 3", blocked: true): 1
+            DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: minor, blocked: true),
+            DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: major1, blocked: true),
+            DetectedTracker(url: "http://tracker2.com", knownTracker: nil, entity: major2, blocked: true)
         ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(3, sections.count)
         XCTAssertEqual("Major 2", sections[0].name)
@@ -87,13 +95,15 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMajorTrackersThenDomainsAreSorted() {
 
+        let major = Entity(displayName: "Major 1", domains: nil, prevalence: 100)
+
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com", networkName: "Major 1", category: "Category 1", blocked: true): 1,
-            DetectedTracker(url: "http://tracker1.com", networkName: "Major 1", category: "Category 2", blocked: true): 1,
-            DetectedTracker(url: "http://tracker2.com", networkName: "Major 1", category: "Category 3", blocked: true): 1
+            DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: major, blocked: true),
+            DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: major, blocked: true),
+            DetectedTracker(url: "http://tracker2.com", knownTracker: nil, entity: major, blocked: true)
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("Major 1", sections[0].name)
@@ -105,13 +115,15 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
     func testWhenMinorTrackersThenDomainsAreSorted() {
 
+        let minor = Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
+
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 1", blocked: true): 1,
-            DetectedTracker(url: "http://tracker1.com", networkName: "Minor", category: "Category 2", blocked: true): 1,
-            DetectedTracker(url: "http://tracker2.com", networkName: "Minor", category: "Category 3", blocked: true): 1
+            DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: minor, blocked: true),
+            DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: minor, blocked: true),
+            DetectedTracker(url: "http://tracker2.com", knownTracker: nil, entity: minor, blocked: true)
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("Minor", sections[0].name)
@@ -124,12 +136,12 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenUnknownTrackerNetworkThenDomainsAreSortedAndHaveOwnSection() {
 
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com", networkName: nil, category: "Category 1", blocked: true): 1,
-            DetectedTracker(url: "http://tracker1.com", networkName: nil, category: "Category 2", blocked: true): 1,
-            DetectedTracker(url: "http://tracker2.com", networkName: nil, category: "Category 3", blocked: true): 1
+            DetectedTracker(url: "http://tracker3.com", knownTracker: nil, entity: nil, blocked: true),
+            DetectedTracker(url: "http://tracker1.com", knownTracker: nil, entity: nil, blocked: true),
+            DetectedTracker(url: "http://tracker2.com", knownTracker: nil, entity: nil, blocked: true)
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(3, sections.count)
         XCTAssertEqual("tracker1.com", sections[0].name)
@@ -141,10 +153,10 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenNoProtocolThenTrackerAddedByDomain() {
 
         let trackers = [
-            DetectedTracker(url: "//tracker.com", networkName: nil, category: "Category 1", blocked: true): 1
+            DetectedTracker(url: "//tracker.com", knownTracker: nil, entity: nil, blocked: true)
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("tracker.com", sections[0].name)
@@ -153,21 +165,12 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenNoDomainThenTrackerIgnored() {
 
         let trackers = [
-            DetectedTracker(url: "/tracker3.js", networkName: nil, category: "Category 1", blocked: true): 1
+            DetectedTracker(url: "/tracker3.js", knownTracker: nil, entity: nil, blocked: true)
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
 
         XCTAssertEqual(0, sections.count)
     }
 
-}
-
-private struct MockPrevalenceStore: PrevalenceStore {
-    
-    var prevalences: [String: Double]
-    
-    func isMajorNetwork(named: String?) -> Bool {
-        return true
-    }
 }

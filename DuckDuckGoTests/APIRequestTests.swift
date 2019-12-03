@@ -23,8 +23,8 @@ import OHHTTPStubs
 
 class APIRequestTests: XCTestCase {
 
-    let host = AppUrls().disconnectMeBlockList.host!
-    let url = AppUrls().disconnectMeBlockList
+    let host = AppUrls().surrogates.host!
+    let url = AppUrls().surrogates
 
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()

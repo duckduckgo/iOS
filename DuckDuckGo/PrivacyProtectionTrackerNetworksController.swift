@@ -30,7 +30,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     private var siteRating: SiteRating!
     private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
-    private var prevalenceStore: PrevalenceStore = AppDependencyProvider.shared.storageCache.current.prevalenceStore
 
     struct Section {
 
@@ -70,16 +69,16 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     func update() {
         guard isViewLoaded else { return }
 
-        sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers(), prevalenceStore: prevalenceStore).build()
+        sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers()).build()
         updateDomain()
         updateSubtitle()
         updateIcon()
         tableView.reloadData()
     }
 
-    private func trackers() -> [DetectedTracker: Int] {
+    private func trackers() -> [DetectedTracker] {
         let protecting = siteRating.protecting(contentBlockerConfiguration)
-        return protecting ? siteRating.trackersBlocked : siteRating.trackersDetected
+        return [DetectedTracker](protecting ? siteRating.trackersBlocked : siteRating.trackersDetected)
     }
 
     private func updateDomain() {
@@ -92,7 +91,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     private func updateIcon() {
 
-        if protecting() || siteRating.uniqueTrackerNetworksDetected == 0 {
+        if protecting() || siteRating.trackerNetworksDetected == 0 {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")
@@ -157,40 +156,24 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 }
 
-class SiteRatingTrackerNetworkSectionBuilder {
+struct SiteRatingTrackerNetworkSectionBuilder {
 
-    let prevalenceStore: PrevalenceStore
-    let trackers: [DetectedTracker: Int]
-
-    init(trackers: [DetectedTracker: Int], prevalenceStore: PrevalenceStore) {
-        self.trackers = trackers
-        self.prevalenceStore = prevalenceStore
-    }
+    let trackers: [DetectedTracker]
 
     func build() -> [PrivacyProtectionTrackerNetworksController.Section] {
-        return toSections(trackers: trackers)
+        return toSections()
     }
 
-    private func toSections(trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
+    private func toSections() -> [PrivacyProtectionTrackerNetworksController.Section] {
         var sections = [PrivacyProtectionTrackerNetworksController.Section]()
 
-        // work around bug in first party detection - everything *should* have a URL with host
-        let trackers = trackers.compactMap({ $0.key }).filter({ $0.domain != nil }).sorted(by: { $0.domain! < $1.domain! })
-
-        // group by tracker types, sorted appropriately
-        let majorTrackers = trackers.filter({ prevalenceStore.isMajorNetwork(named: $0.networkName) })
-            .sorted(by: compareTrackersByPrevalence)
-        
-        let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil && !prevalenceStore.isMajorNetwork(named: $0.networkName) })
-            .sorted(by: { $0.networkName! < $1.networkName! })
-        
-        let unknownTrackers = trackers.filter({ $0.networkName == nil })
-
-        for tracker in majorTrackers + nonMajorKnownTrackers + unknownTrackers {
+        let sortedTrackers = trackers.sorted(by: compareTrackersByHostName).sorted(by: compareTrackersByPrevalence)
+        for tracker in sortedTrackers {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: tracker.category ?? "")
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.dropPrefix(prefix: "www."),
+                                                                     value: tracker.knownTracker?.category ?? "")
 
             if let sectionIndex = sections.firstIndex(where: { $0.name == networkName }) {
                 if row.name != networkName {
@@ -207,9 +190,11 @@ class SiteRatingTrackerNetworkSectionBuilder {
     }
     
     func compareTrackersByPrevalence(tracker1: DetectedTracker, tracker2: DetectedTracker) -> Bool {
-        let prevalence1 = prevalenceStore.prevalences[tracker1.networkName ?? ""] ?? 0.0
-        let prevalence2 = prevalenceStore.prevalences[tracker2.networkName ?? ""] ?? 0.0
-        return prevalence1 > prevalence2
+        return tracker1.entity?.prevalence ?? 0 > tracker2.entity?.prevalence ?? 0
+    }
+    
+    func compareTrackersByHostName(tracker1: DetectedTracker, tracker2: DetectedTracker) -> Bool {
+        return tracker1.domain ?? "" < tracker2.domain ?? ""
     }
 
 }

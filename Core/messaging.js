@@ -19,17 +19,6 @@
 
 var duckduckgoMessaging = function() {
 
-	function cache(name, value) {
-		try {
-			webkit.messageHandlers.cacheMessage.postMessage({
-				name: name, 
-				data: value
-			});
-		} catch(error) {
-			// webkit might not be defined
-		}
-	}
-
 	function trackerDetected(data) {
 		try {
 			webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
@@ -40,7 +29,6 @@ var duckduckgoMessaging = function() {
 
 	return {
 
-		cache: cache,
 		trackerDetected: trackerDetected
 
 	}

@@ -19,12 +19,6 @@
 
 import Foundation
 
-protocol EtagOOSCheckStore {
-    
-    var hasDisconnectMeData: Bool { get }
-    var hasEasylistData: Bool { get }
-}
-
 protocol StorageCacheUpdating {
     
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool
@@ -32,55 +26,27 @@ protocol StorageCacheUpdating {
 
 public class StorageCache: StorageCacheUpdating {
     
-    let easylistStore = EasylistStore()
-    let surrogateStore = SurrogateStore()
-    
-    public let disconnectMeStore = DisconnectMeStore()
+    public let fileStore = FileStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
-    public let entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
-    public var entityMapping: EntityMapping
     
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     
     // Read only
     public let tld: TLD
     public let termsOfServiceStore: TermsOfServiceStore
-    public let prevalenceStore: PrevalenceStore
     
     public init() {
-        entityMapping = EntityMapping(store: entityMappingStore)
         tld = TLD()
         termsOfServiceStore = EmbeddedTermsOfServiceStore()
-        prevalenceStore = EmbeddedPrevalenceStore()
     }
     
-    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore, prevalenceStore: PrevalenceStore) {
-        entityMapping = EntityMapping(store: entityMappingStore)
+    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore) {
         self.tld = tld
         self.termsOfServiceStore = termsOfServiceStore
-        self.prevalenceStore = prevalenceStore
     }
     
-    public var hasData: Bool {
-        return disconnectMeStore.hasData && easylistStore.hasData
-    }
-    
-    // swiftlint:disable cyclomatic_complexity
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
-        
         switch configuration {
-        case .trackersWhitelist:
-            guard let data = data as? Data else { return false }
-            return easylistStore.persistEasylistWhitelist(data: data)
-            
-        case .disconnectMe:
-            guard let data = data as? Data else { return false }
-            do {
-                try disconnectMeStore.persist(data: data)
-                return true
-            } catch {
-                return false
-            }
         case .httpsWhitelist:
             guard let whitelist = data as? [String] else { return false }
             return httpsUpgradeStore.persistWhitelist(domains: whitelist)
@@ -91,29 +57,25 @@ public class StorageCache: StorageCacheUpdating {
             HTTPSUpgrade.shared.loadData()
             return result
             
-        case .surrogates:
-            guard let data = data as? Data else { return false }
-            return surrogateStore.parseAndPersist(data: data)
-            
-        case .entitylist:
-            guard let data = data as? Data else { return false }
-            let result = entityMappingStore.persist(data: data)
-            entityMapping = EntityMapping(store: entityMappingStore)
-            return result
-            
-        default:
+        case .httpsBloomFilterSpec:
             return false
+            
+        case .surrogates:
+            return fileStore.persist(data as? Data, forConfiguration: configuration)
+            
+        case .trackerDataSet:
+            if fileStore.persist(data as? Data, forConfiguration: configuration) {
+                if TrackerDataManager.shared.reload() != .downloaded {
+                    Pixel.fire(pixel: .trackerDataReloadFailed)
+                    return false
+                }
+                return true
+            }
+            return false
+            
+        case .temporaryWhitelist:
+            return fileStore.persist(data as? Data, forConfiguration: configuration)
+            
         }
-    }
-    // swiftlint:enable cyclomatic_complexity
-}
-
-extension StorageCache: EtagOOSCheckStore {
-    
-    var hasDisconnectMeData: Bool {
-        return disconnectMeStore.hasData
-    }
-    var hasEasylistData: Bool {
-        return easylistStore.hasData
     }
 }

@@ -21,50 +21,11 @@ import Foundation
 
 public class ContentBlockerStringCache {
 
-    struct Constants {
-        // bump the cache version if you know the cache should be invalidated on the next release
-        static let cacheVersion = 5
-        static let cacheVersionKey = "com.duckduckgo.contentblockerstringcache.version"
-    }
-
-    private var cacheDir: URL {
+    public static func removeLegacyData() {
+        let fileManager = FileManager.default
         let groupName = ContentBlockerStoreConstants.groupName
-        return fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
-    }
-
-    private var fileManager: FileManager {
-        return FileManager.default
-    }
-
-    public init(userDefaults: UserDefaults = UserDefaults.standard) {
-        let lastSeenVersion = userDefaults.integer(forKey: Constants.cacheVersionKey)
-        if lastSeenVersion < Constants.cacheVersion {
-            clearCache()
-            userDefaults.set(Constants.cacheVersion, forKey: Constants.cacheVersionKey)
-        }
-    }
-
-    private func clearCache() {
+        let cacheDir = fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
         try? fileManager.removeItem(atPath: cacheDir.path)
-    }
-
-    public func get(named name: String) -> String? {
-        return try? String(contentsOf: persistenceLocation(for: name), encoding: .utf8)
-    }
-
-    public func put(name: String, value: String) {
-        try? value.write(to: persistenceLocation(for: name), atomically: true, encoding: .utf8)
-    }
-
-    public func remove(named name: String) {
-        try? fileManager.removeItem(at: persistenceLocation(for: name))
-    }
-
-    private func persistenceLocation(for name: String) -> URL {
-        try? fileManager.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
-        let location = cacheDir.appendingPathComponent(name)
-        Logger.log(text: "cache \(name) \(location)")
-        return location
     }
 
 }

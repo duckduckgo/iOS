@@ -31,7 +31,7 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockRequest.mockResponse = .error
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssertFalse(loader.checkForUpdates(with: mockStorageCache, dataSource: mockRequest))
+        XCTAssertFalse(loader.checkForUpdates(dataSource: mockRequest))
     }
     
     func testWhenNoEtagIsPresentThenResponseIsStored() {
@@ -39,57 +39,59 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockRequest.mockResponse = .success(etag: "test", data: Data())
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(with: mockStorageCache, dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], nil)
+        XCTAssertEqual(mockEtagStorage.etags[.surrogates], nil)
         
         loader.applyUpdate(to: mockStorageCache)
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.disconnectMe])
+        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
+        XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
     }
-
+    
     func testWhenEtagIsPresentThenResponseIsStoredOnlyWhenNeeded() {
         
         mockRequest.mockResponse = .success(etag: "test", data: Data())
-        mockEtagStorage.set(etag: "test", for: .disconnectMe)
+        
+        // Incorect etag should be updated
         mockEtagStorage.set(etag: "old", for: .surrogates)
-        
+
+        // Has data and the correct etag
+        XCTAssertTrue(FileStore().persist("{}".data(using: .utf8), forConfiguration: .trackerDataSet))
+        mockEtagStorage.set(etag: "test", for: .trackerDataSet)
+
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(with: mockStorageCache, dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.trackerDataSet], "test")
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "old")
-        XCTAssertEqual(mockEtagStorage.etags[.trackersWhitelist], nil)
+        XCTAssertEqual(mockEtagStorage.etags[.temporaryWhitelist], nil)
         
         loader.applyUpdate(to: mockStorageCache)
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.trackerDataSet], "test")
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.trackersWhitelist], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.temporaryWhitelist], "test")
 
-        XCTAssertNil(mockStorageCache.processedUpdates[.disconnectMe])
+        XCTAssertNil(mockStorageCache.processedUpdates[.trackerDataSet])
         XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.trackersWhitelist])
+        XCTAssertNotNil(mockStorageCache.processedUpdates[.temporaryWhitelist])
     }
-    
+
     func testWhenEtagIsMissingThenResponseIsStored() {
         
         mockRequest.mockResponse = .success(etag: nil, data: Data())
-        mockEtagStorage.set(etag: "test", for: .disconnectMe)
+        mockEtagStorage.set(etag: "test", for: .surrogates)
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(with: mockStorageCache, dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.surrogates], nil)
+        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         
         loader.applyUpdate(to: mockStorageCache)
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.surrogates], nil)
+        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.disconnectMe])
         XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
     }
     
@@ -98,15 +100,15 @@ class ContentBlockerLoaderTests: XCTestCase {
         mockRequest.mockResponse = .success(etag: "test", data: Data())
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssert(loader.checkForUpdates(with: mockStorageCache, dataSource: mockRequest))
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
-        XCTAssertNil(mockEtagStorage.etags[.disconnectMe])
+        XCTAssertNil(mockEtagStorage.etags[.surrogates])
         
         mockStorageCache.shouldFail = true
         loader.applyUpdate(to: mockStorageCache)
         
-        XCTAssertNil(mockEtagStorage.etags[.disconnectMe])
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.disconnectMe])
+        XCTAssertNil(mockEtagStorage.etags[.surrogates])
+        XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
     }
     
     // Etag OOS tests
@@ -114,27 +116,28 @@ class ContentBlockerLoaderTests: XCTestCase {
     func testWhenEtagIsPresentButStoreHasNoDataThenResponseIsStored() {
         
         mockRequest.mockResponse = .success(etag: "test", data: Data())
-        mockEtagStorage.set(etag: "test", for: .disconnectMe)
-        mockEtagStorage.set(etag: "test", for: .trackersWhitelist)
+        mockEtagStorage.set(etag: "test", for: .surrogates)
         
-        let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
+        let loader = ContentBlockerLoader(etagStorage: mockEtagStorage, fileStore: MockFileStore())
         
-        mockStorageCache.hasDisconnectMeData = false
-        mockStorageCache.hasEasylistData = false
+        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
         
-        XCTAssert(loader.checkForUpdates(with: mockStorageCache, dataSource: mockRequest))
-        
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.trackersWhitelist], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         
         loader.applyUpdate(to: mockStorageCache)
         
-        XCTAssertEqual(mockEtagStorage.etags[.disconnectMe], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.trackersWhitelist], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
         
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.disconnectMe])
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.trackersWhitelist])
+        XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
     }
+}
+
+class MockFileStore: FileStore {
+    
+    override func loadAsData(forConfiguration config: ContentBlockerRequest.Configuration) -> Data? {
+        return nil
+    }
+    
 }
 
 class MockEtagStorage: BlockerListETagStorage {
@@ -165,10 +168,7 @@ class MockContenBlockingRequest: ContentBlockerRemoteDataSource {
     }
 }
 
-class MockStorageCache: StorageCacheUpdating, EtagOOSCheckStore {
-    
-    var hasDisconnectMeData: Bool = true
-    var hasEasylistData: Bool = true
+class MockStorageCache: StorageCacheUpdating {
     
     var processedUpdates = [ContentBlockerRequest.Configuration: Any]()
     

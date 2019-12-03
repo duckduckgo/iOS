@@ -190,7 +190,6 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
         controller.add(self, name: MessageHandlerNames.signpost)
-        controller.add(self, name: MessageHandlerNames.cache)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
         reloadScripts()
@@ -453,7 +452,7 @@ class TabViewController: UIViewController {
     }
     
     private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = storageCache.entityMapping
+        let entityMapping = EntityMapping()
         let privacyPractices = PrivacyPractices(tld: storageCache.tld,
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
                                                 entityMapping: entityMapping)
@@ -461,8 +460,7 @@ class TabViewController: UIViewController {
         return SiteRating(url: url,
                           httpsForced: httpsForced,
                           entityMapping: entityMapping,
-                          privacyPractices: privacyPractices,
-                          prevalenceStore: storageCache.prevalenceStore)
+                          privacyPractices: privacyPractices)
     }
 
     private func updateSiteRating() {
@@ -557,7 +555,6 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
-        controller.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
     }
@@ -574,7 +571,7 @@ class TabViewController: UIViewController {
         dismiss()
         tearDown()
     }
-}
+}   
 
 extension TabViewController: WKScriptMessageHandler {
     
@@ -588,7 +585,6 @@ extension TabViewController: WKScriptMessageHandler {
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
-        static let cache = "cacheMessage"
         static let log = "log"
         static let findInPageHandler = "findInPageHandler"
     }
@@ -596,9 +592,6 @@ extension TabViewController: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
         switch message.name {
-
-        case MessageHandlerNames.cache:
-            handleCache(message: message)
 
         case MessageHandlerNames.signpost:
             handleSignpost(message: message)
@@ -627,14 +620,6 @@ extension TabViewController: WKScriptMessageHandler {
     private func handleLog(message: WKScriptMessage) {
         Logger.log(text: String(describing: message.body))
     }
-
-    private func handleCache(message: WKScriptMessage) {
-        Logger.log(text: "\(MessageHandlerNames.cache)")
-        guard let dict = message.body as? [String: Any] else { return }
-        guard let name = dict["name"] as? String else { return }
-        guard let data = dict["data"] as? String else { return }
-        ContentBlockerStringCache().put(name: name, value: data)
-    }
     
     private func handleSignpost(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any],
@@ -645,10 +630,16 @@ extension TabViewController: WKScriptMessageHandler {
                 let url = dict["url"] as? String {
                 instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
             }
-        } else if event == "Request Blocked" {
+        } else if event == "Tracker Allowed" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
+                let url = dict["url"] as? String,
+                let reason = dict["reason"] as? String? {
+                instrumentation.tracker(url: url, allowedIn: elapsedTimeInMs, reason: reason)
+            }
+        } else if event == "Tracker Blocked" {
             if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {
-                instrumentation.request(url: url, blockedIn: elapsedTimeInMs)
+                instrumentation.tracker(url: url, blockedIn: elapsedTimeInMs)
             }
         } else if event == "Generic" {
             if let name = dict["name"] as? String,
@@ -672,16 +663,8 @@ extension TabViewController: WKScriptMessageHandler {
             return
         }
 
-        let url = URL(string: urlString.trimWhitespace())
-        var networkName: String?
-        var category: String?
-        if let domain = url?.host {
-            let networkNameAndCategory = storageCache.disconnectMeStore.networkNameAndCategory(forDomain: domain)
-            networkName = networkNameAndCategory.networkName
-            category = networkNameAndCategory.category
-        }
-
-        let tracker = DetectedTracker(url: urlString, networkName: networkName, category: category, blocked: blocked)
+        let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
+        
         siteRating.trackerDetected(tracker)
         onSiteRatingChanged()
         
@@ -689,8 +672,8 @@ extension TabViewController: WKScriptMessageHandler {
             NetworkLeaderboard.shared.incrementPagesWithTrackers()
             pageHasTrackers = true
         }
-        
-        if let networkName = networkName {
+  
+        if let networkName = tracker.knownTracker?.owner?.name {
             if !trackerNetworksDetectedOnPage.contains(networkName) {
                 trackerNetworksDetectedOnPage.insert(networkName)
                 NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
@@ -699,6 +682,13 @@ extension TabViewController: WKScriptMessageHandler {
         }
 
     }
+
+    private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
+        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
+        let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
+        return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+    }
+    
 }
 
 extension TabViewController: WKNavigationDelegate {

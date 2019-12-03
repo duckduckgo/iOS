@@ -112,7 +112,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     private func updateTrackers() {
         trackersCell.summaryLabel.text = siteRating.networksText(configuration: contentBlockerConfiguration)
         
-        if protecting() || siteRating.uniqueTrackersDetected == 0 {
+        if protecting() || siteRating.trackersDetected.count == 0 {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
         } else {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")

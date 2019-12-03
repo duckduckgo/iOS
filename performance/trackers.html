@@ -1,0 +1,47 @@
+<html>
+<script>
+
+	const trackers = 100;
+	const interval = 1000 / 10;
+
+	var token = null;
+	var loaded = 0;
+
+	function addTracker() {
+
+		var trackers = document.getElementById("trackers");
+		var counter = document.getElementById("counter");
+		var holder = document.createElement("div");
+
+		if (loaded++ >= 100) {
+			counter.innerHTML = "Done";
+			clearTimeout(token);			
+		} else {
+			counter.innerHTML = `${loaded}`;
+			var script = document.createElement("script");
+			script.src = "//www.googletagmanager.com/gtmx.js";
+			holder.append(script);
+		}
+
+		trackers.append(holder);
+	}
+
+	function loadTrackers() {
+		token = setInterval(addTracker, interval);
+	}
+
+	document.addEventListener("DOMContentLoaded", loadTrackers);
+
+</script>
+<body>
+
+Loading 100 trackers, one every 1/10 of a second.
+
+<div id="counter">
+</div>
+
+<div id="trackers">
+</div>
+
+</body>
+</html>

@@ -49,6 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
+        DispatchQueue.global(qos: .background).async {
+            FileStore().removeLegacyData()
+            ContentBlockerStringCache.removeLegacyData()
+        }
+        
         Database.shared.loadStore { context in
             DatabaseMigration.migrate(to: context)
         }

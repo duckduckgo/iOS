@@ -55,7 +55,7 @@ public class SiteRatingView: UIView {
     public func refresh(with storageCache: StorageCache?) {
         circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
 
-        guard let storageCache = storageCache, storageCache.hasData else { return }
+        guard let storageCache = storageCache else { return }
         guard let siteRating = siteRating else { return }
 
         let grades = siteRating.scores

@@ -1,8 +1,8 @@
 //
-//  blockerdata.js
-//  DuckDuckGo
+//  MockEntityMapping.swift
+//  Core
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,15 +17,20 @@
 //  limitations under the License.
 //
 
-var duckduckgoBlockerData = {
+import Foundation
 
-    blockingEnabled: ${blocking_enabled},
-	disconnectmeBanned: ${disconnectmeBanned},
-    disconnectmeAllowed: ${disconnectmeAllowed},
-    whitelist: ${whitelist},
-    easylist: {},
-    easylistPrivacy: {},
-    easylistWhitelist: {},
-    surrogates: ${surrogates}
+class MockEntityMapping: EntityMapping {
+    
+    private var entity: String?
+    private var prevalence: Double?
+    
+    init(entity: String?, prevalence: Double? = nil) {
+        self.entity = entity
+        self.prevalence = prevalence
+    }
 
+    override func findEntity(forHost host: String) -> Entity? {
+        return Entity(displayName: entity, domains: nil, prevalence: prevalence)
+    }
+        
 }

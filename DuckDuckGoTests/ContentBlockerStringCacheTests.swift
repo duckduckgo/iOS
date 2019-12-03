@@ -22,41 +22,24 @@ import XCTest
 
 class ContentBlockerStringCacheTests: XCTestCase {
 
-    private var testee: ContentBlockerStringCache!
-    private var userDefaults: UserDefaults!
-
-    override func setUp() {
-        userDefaults = UserDefaults(suiteName: "test")
-        userDefaults.removePersistentDomain(forName: "test")
-        testee = ContentBlockerStringCache(userDefaults: userDefaults)
-    }
-
-    func testWhenItemsAddedAndCacheClearedItemIsNotReturned() {
-        testee.put(name: "item", value: "value")
-        userDefaults.removePersistentDomain(forName: "test")
-        XCTAssertNil(ContentBlockerStringCache(userDefaults: userDefaults).get(named: "item"))
-    }
-
-    func testWhenItemAddedDifferentInstanceReturnsIt() {
-        let expected = UUID.init().uuidString
-        testee.put(name: "uuid", value: expected)
-        XCTAssertEqual(expected, ContentBlockerStringCache(userDefaults: userDefaults).get(named: "uuid"))
-    }
-
-    func testWhenItemRemovedGetReturnsNil() {
-        testee.put(name: "value", value: "some value")
-        testee.remove(named: "value")
-        XCTAssertNil(testee.get(named: "value"))
-    }
-
-    func testWhenAddItemGetReturnsIt() {
-        let expected = UUID.init().uuidString
-        testee.put(name: "uuid", value: expected)
-        XCTAssertEqual(expected, testee.get(named: "uuid"))
-    }
-
-    func testWhenGetUnknownItemReturnsNil() {
-        XCTAssertNil(testee.get(named: "nonesense"))
+    func testWhenRemovingLegacyDataThenStringCacheDirectoryIsRemoved() {
+        
+        let fileManager = FileManager.default
+        let groupName = ContentBlockerStoreConstants.groupName
+        let cacheDir = fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
+        try? fileManager.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
+        let file = cacheDir.appendingPathComponent("test")
+    
+        do {
+            try "test".write(to: file, atomically: true, encoding: .utf8)
+        } catch {
+            XCTFail("Unable to write file \(error.localizedDescription)")
+        }
+        
+        ContentBlockerStringCache.removeLegacyData()
+        
+        XCTAssertFalse(fileManager.fileExists(atPath: cacheDir.absoluteString))
+        
     }
 
 }

@@ -31,6 +31,10 @@ public class Grade {
         case d = "D"
         case dMinus = "D-"
         
+        public func normalize() -> Grading {
+            self == .dMinus ? .d : self
+        }
+        
     }
     
     public struct Score: Codable, Equatable {

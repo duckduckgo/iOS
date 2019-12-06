@@ -45,6 +45,7 @@ class TabViewCell: UICollectionViewCell {
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
     var isCurrent = false
+    var isDeleting = false
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
@@ -53,14 +54,69 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let recognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
+        addGestureRecognizer(recognizer)
+    }
+
+    var startX: CGFloat = 0
+    @objc func handleSwipe(recognizer: UIGestureRecognizer) {
+        let currentLocation = recognizer.location(in: nil)
+        let diff = startX - currentLocation.x
+
+        switch recognizer.state {
+
+        case .began:
+            startX = currentLocation.x
+
+        case .changed:
+            let offset = max(0, startX - currentLocation.x)
+            transform = CGAffineTransform.identity.translatedBy(x: -offset, y: 0)
+            if diff > frame.width / 2 {
+                if background.backgroundColor == .white {
+                    UISelectionFeedbackGenerator().selectionChanged()
+                }
+                background.backgroundColor = UIColor.systemRed
+            } else {
+                background.backgroundColor = .white
+            }
+
+        case .ended:
+            if diff > frame.width / 2 {
+
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.transform = CGAffineTransform.identity.translatedBy(x: -self.frame.width, y: 0)
+                }, completion: { _ in
+                    self.isHidden = true
+                    self.isDeleting = true
+                    self.deleteTab()
+                })
+
+            } else {
+                UIView.animate(withDuration: 0.2) {
+                    self.transform = .identity
+                }
+            }
+            background.backgroundColor = .white
+
+        default: break
+
+        }
+
+    }
+
     func update(withTab tab: Tab) {
+        print("***", #function, isHidden, isDeleting)
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
         tab.addObserver(self)
         self.tab = tab
-        
-        isHidden = false
+
+        if !isDeleting {
+            isHidden = false
+        }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
@@ -84,17 +140,8 @@ class TabViewCell: UICollectionViewCell {
     }
     
     @IBAction func deleteTab() {
-
         guard let tab = tab else { return }
         self.delegate?.deleteTab(tab: tab)
-
-        UIView.animate(withDuration: 0.3, animations: {
-            guard let superview = self.superview else { return }
-            self.transform.tx = -superview.frame.width * 1.5
-        }, completion: { _ in
-            self.transform.tx = 0
-        })
-
     }
 
     private func configureFavicon(forDomain domain: String?) {

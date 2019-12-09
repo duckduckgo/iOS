@@ -22,93 +22,12 @@ import XCTest
 
 class EntityMappingTests: XCTestCase {
     
-    struct SampleData {
-    
-        static let jsonWithUnexpectedItem = """
-{
-    "365Media": {
-        "properties": [
-            "aggregateintelligence.com"
-        ],
-        "resources": [
-            "aggregateintelligence.com"
-        ],
-        "unexpected": 100
-    }
-}
-"""
-   
-        static let validJson = """
-{
-    "365Media": {
-        "properties": [
-            "aggregateintelligence.com"
-        ],
-        "resources": [
-            "365dm.com",
-            "365media.com",
-            "aggregateintelligence.com"
-        ]
-    },
-    "4mads": {
-        "properties": [
-            "4mads.com"
-        ],
-        "resources": [
-            "4madsaye.com"
-        ]
-    }
-}
-"""
-        
-        static let invalidJson = "{"
-        
-    }
-
+    /// This is now based on the embedded tracker data so if this test fails it might be because the embedded data was updated.
     func testWhenDomainHasSubdomainThenParentEntityIsFound() {
-        let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.validJson.data(using: .utf8)))
-        XCTAssertEqual("365Media", testee.findEntity(forHost: "sub.domain.365dm.com"))
-        XCTAssertEqual("4mads", testee.findEntity(forHost: "www.4mads.com"))
+        let testee = EntityMapping()
+        XCTAssertEqual("comScore", testee.findEntity(forHost: "sub.domain.comscore.com")?.displayName)
+        XCTAssertEqual("comScore", testee.findEntity(forHost: "www.comscore.com")?.displayName)
+        XCTAssertEqual("comScore", testee.findEntity(forHost: "comscore.com")?.displayName)
     }
     
-    func testWhenJsonContainsUnexpectedPropertiesThenCorrectEntitiesAreExtracted() {
-        let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.jsonWithUnexpectedItem.data(using: .utf8)))
-        XCTAssertEqual("365Media", testee.findEntity(forHost: "aggregateintelligence.com"))
-    }
-
-    func testWhenJsonIsInvalidThenNoEntitiesFound() {
-        let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.invalidJson.data(using: .utf8)))
-        XCTAssertNil(testee.findEntity(forHost: "aggregateintelligence.com"))
-    }
-    
-    func testWhenJsonIsValidThenCorrectEntitiesAreExtracted() {
-        
-        let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.validJson.data(using: .utf8)))
-        XCTAssertEqual("365Media", testee.findEntity(forHost: "aggregateintelligence.com"))
-        XCTAssertEqual("365Media", testee.findEntity(forHost: "365media.com"))
-        XCTAssertEqual("365Media", testee.findEntity(forHost: "365dm.com"))
-        XCTAssertEqual("4mads", testee.findEntity(forHost: "4mads.com"))
-        XCTAssertEqual("4mads", testee.findEntity(forHost: "4madsaye.com"))
-
-    }
-    
-}
-
-private class MockEntityMappingStore: EntityMappingStore {
-    
-    var data: Data?
-
-    init(data: Data?) {
-        self.data = data
-    }
-    
-    func load() -> Data? {
-        return data
-    }
-    
-    func persist(data: Data) -> Bool {
-        self.data = data
-        return true
-    }
-
 }

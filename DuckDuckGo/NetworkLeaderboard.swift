@@ -25,6 +25,14 @@ class NetworkLeaderboard {
 
     public static let shared = NetworkLeaderboard()
 
+    struct Constants {
+        
+        // Increment this to cause a reset on startup (e.g. if we know the TDS has changed significantly)
+        static let dataVersion = 1
+        static let dataVersionKey = "com.duckduckgo.mobile.ios.networkleaderboard.dataversion"
+        
+    }
+    
     struct EntityNames {
 
         static let pageStats = "PPPageStats"
@@ -33,9 +41,14 @@ class NetworkLeaderboard {
     }
 
     private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: "NetworkLeaderboard")
-
+    private var userDefaults: UserDefaults
+    
     var startDate: Date? {
         return pageStats?.startDate
+    }
+    
+    var needsDataReset: Bool {
+        return userDefaults.integer(forKey: Constants.dataVersionKey) < Constants.dataVersion
     }
     
     private var pageStats: PPPageStats? {
@@ -43,8 +56,9 @@ class NetworkLeaderboard {
         return try? context.fetch(request).first
     }
     
-    init() {
-        if pageStats == nil {
+    init(userDefaults: UserDefaults = UserDefaults.standard) {
+        self.userDefaults = userDefaults
+        if pageStats == nil || needsDataReset {
             reset()
         }
     }
@@ -54,6 +68,7 @@ class NetworkLeaderboard {
         context.deleteAll(matching: PPPageStats.fetchRequest())
         createNewPageStatsEntity()
         try? context.save()
+        userDefaults.set(Constants.dataVersion, forKey: Constants.dataVersionKey)
     }
 
     func incrementPagesLoaded() {

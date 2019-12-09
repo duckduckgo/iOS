@@ -23,7 +23,7 @@ import CoreData
 public class Database {
     
     fileprivate struct Constants {
-        static let databaseGroupID = "group.com.duckduckgo.database"
+        static let databaseGroupID = "\(Global.groupIdPrefix).database"
         
         static let databaseName = "Database"
     }
@@ -50,10 +50,16 @@ public class Database {
         container = DDGPersistentContainer(name: name, managedObjectModel: model)
     }
     
-    public func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
+    public func loadStore(application: UIApplication? = nil, andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
         container.loadPersistentStores { _, error in
             if let error = error {
-                Pixel.fire(pixel: .dbInitializationError, error: error)
+                var parameters = [String: String]()
+                if let application = application {
+                    parameters[PixelParameters.applicationState] = "\(application.applicationState.rawValue)"
+                    parameters[PixelParameters.dataAvailiability] = "\(application.isProtectedDataAvailable)"
+                }
+                
+                Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters, isCounted: true)
                 // Give Pixel a chance to be sent, but not too long
                 Thread.sleep(forTimeInterval: 1)
                 fatalError("Could not load DB: \(error.localizedDescription)")
@@ -107,6 +113,7 @@ extension NSManagedObjectContext {
 private class DDGPersistentContainer: NSPersistentContainer {
 
     override public class func defaultDirectoryURL() -> URL {
+        
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
     } 
 }

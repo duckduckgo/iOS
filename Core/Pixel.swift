@@ -65,6 +65,7 @@ public enum PixelName: String {
     case overlayFavoriteLaunched = "m_ov_f"
     
     case settingsOpened = "ms"
+    case settingsOpenedFromTabsSwitcher = "ms_ot"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
     case settingsThemeShown = "ms_tp"
@@ -167,18 +168,25 @@ public enum PixelName: String {
     case notificationOptIn = "m_ne"
     case notificationOptOut = "m_nd"
     
-    case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
-    case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
+    case brokenSiteReported = "m_bsr"
+
+    // debug pixels:
     
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
     case dbDestroyError = "m_d_dbde"
+    case dbDestroyFileError = "m_d_dbdf"
     case dbInitializationError = "m_d_dbie"
     case dbSaveWhitelistError = "m_d_dbsw"
     case dbSaveBloomFilterError = "m_d_dbsb"
     
     case configurationFetchInfo = "m_d_cfgfetch"
-    case brokenSiteReported = "m_bsr"
+    
+    case trackerDataParseFailed = "m_d_tds_p"
+    case trackerDataReloadFailed = "m_d_tds_r"
+    case trackerDataCouldNotBeLoaded = "m_d_tds_l"
+    case fileStoreWriteFailed = "m_d_fswf"
+
 }
 
 public struct PixelParameters {
@@ -186,6 +194,15 @@ public struct PixelParameters {
     public static let duration = "dur"
     static let test = "test"
     static let appVersion = "appVersion"
+    
+    static let applicationState = "as"
+    static let dataAvailiability = "dp"
+    
+    static let errorCode = "e"
+    static let errorDesc = "d"
+    static let errorCount = "c"
+    static let underlyingErrorCode = "ue"
+    static let underlyingErrorDesc = "ud"
 }
 
 public struct PixelValues {
@@ -231,12 +248,22 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
         let nsError = error as NSError
+        var newParams = params
+        newParams[PixelParameters.errorCode] = "\(nsError.code)"
+        newParams[PixelParameters.errorDesc] = nsError.domain
         
-        let params: [String: String?] = ["e": "\(nsError.code)", "d": nsError.domain]
+        if isCounted {
+            let count = PixelCounterStore().incrementCountFor(pixel)
+            newParams[PixelParameters.errorCount] = "\(count)"
+        }
         
-        fire(pixel: pixel, withAdditionalParameters: params)
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+            newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
+            newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
+        }
+        fire(pixel: pixel, withAdditionalParameters: newParams)
     }
 }
 

@@ -28,24 +28,24 @@ public struct AppUrls {
         }
         
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+        static let staticBase = "https://staticcdn.duckduckgo.com"
+        
         static let autocomplete = "\(base)/ac/"
-        static let disconnectMeBlockList = "\(base)/contentblocking.js?l=disconnect"
-        static let easylistBlockList = "\(base)/contentblocking.js?l=easylist"
-        static let easylistPrivacyBlockList = "\(base)/contentblocking.js?l=easyprivacy"
-        static let trackersWhitelist = "\(base)/contentblocking/trackers-whitelist.txt"
+        
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        static let entitylist = "\(base)/contentblocking.js?l=entitylist2"
+        static let temporaryWhitelist = "\(base)/contentblocking/trackers-whitelist-temporary.txt"
+        static let trackerDataSet = "\(staticBase)/trackerblocking/v2/tds.json"
+
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
         static let faviconService = "\(base)/ip3/%@.ico"
  
-        static let staticBase = "https://staticcdn.duckduckgo.com"
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
         static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
         static let httpsLookupService = "\(base)/smarter_encryption.js"
-        
+
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
     }
@@ -78,28 +78,16 @@ public struct AppUrls {
         return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
 
-    public var disconnectMeBlockList: URL {
-        return URL(string: Url.disconnectMeBlockList)!
-    }
-
-    public var easylistBlockList: URL {
-        return URL(string: Url.easylistBlockList)!
-    }
-
-    public var easylistPrivacyBlockList: URL {
-        return URL(string: Url.easylistPrivacyBlockList)!
-    }
-    
-    public var trackersWhitelist: URL {
-        return URL(string: Url.trackersWhitelist)!
-    }
-
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
     }
-
-    public var entitylist: URL {
-        return URL(string: Url.entitylist)!
+    
+    public var trackerDataSet: URL {
+        return URL(string: Url.trackerDataSet)!
+    }
+    
+    public var temporaryWhitelist: URL {
+        return URL(string: Url.temporaryWhitelist)!
     }
 
     public var feedback: URL {

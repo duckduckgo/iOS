@@ -49,18 +49,17 @@ public class StorageCacheProvider {
     
     public func update(completion: @escaping StorageCacheUpdateCompletion) {
     
-        type(of: self).updateQueue.async {
+        Self.updateQueue.async {
             let loader = ContentBlockerLoader()
             let currentCache = self.current
             
-            guard loader.checkForUpdates(with: currentCache) else {
+            guard loader.checkForUpdates() else {
                 completion(nil)
                 return
             }
             
             let newCache = StorageCache(tld: currentCache.tld,
-                                        termsOfServiceStore: currentCache.termsOfServiceStore,
-                                        prevalenceStore: currentCache.prevalenceStore)
+                                        termsOfServiceStore: currentCache.termsOfServiceStore)
             loader.applyUpdate(to: newCache)
             
             self.current = newCache

@@ -56,6 +56,11 @@ public class TabsModel: NSObject, NSCoding {
     var isEmpty: Bool {
         return tabs.isEmpty
     }
+    
+    var currentTab: Tab? {
+        guard let index = currentIndex else { return nil }
+        return tabs[index]
+    }
 
     var count: Int {
         return tabs.count
@@ -80,6 +85,21 @@ public class TabsModel: NSObject, NSCoding {
 
     func insert(tab: Tab, at index: Int) {
         tabs.insert(tab, at: index)
+    }
+    
+    func moveTab(from sourceIndex: Int, to destIndex: Int) {
+        guard sourceIndex >= 0, sourceIndex < tabs.count,
+            destIndex >= 0, destIndex < tabs.count else {
+                return
+        }
+        
+        let previouslyCurrentTab = currentTab
+        let tab = tabs.remove(at: sourceIndex)
+        tabs.insert(tab, at: destIndex)
+        
+        if let reselectTab = previouslyCurrentTab {
+            currentIndex = indexOf(tab: reselectTab)
+        }
     }
 
     func remove(at index: Int) {

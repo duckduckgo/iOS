@@ -50,6 +50,7 @@ class TabViewCell: UICollectionViewCell {
     weak var tab: Tab?
     var isCurrent = false
     var isDeleting = false
+    var canDelete = false
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
@@ -76,22 +77,27 @@ class TabViewCell: UICollectionViewCell {
 
         case .changed:
             let offset = max(0, startX - currentLocation.x)
-            transform = CGAffineTransform.identity.translatedBy(x: -offset, y: 0)
+            transform = CGAffineTransform.identity.translatedBy(x: -offset, y: 0)            
             if diff > removeThreshold {
-                if background.backgroundColor == .white {
+                if !canDelete {
                     UIImpactFeedbackGenerator().impactOccurred()
                 }
+                canDelete = true
+            } else {
+                canDelete = false
             }
 
         case .ended:
-            if diff > removeThreshold {
+            if canDelete {
                 startRemoveAnimation()
             } else {
                 startCancelAnimation()
             }
+            canDelete = false
 
         case .cancelled:
             startCancelAnimation()
+            canDelete = false
 
         default: break
 

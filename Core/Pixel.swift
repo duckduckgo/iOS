@@ -175,6 +175,7 @@ public enum PixelName: String {
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
     case dbDestroyError = "m_d_dbde"
+    case dbDestroyFileError = "m_d_dbdf"
     case dbInitializationError = "m_d_dbie"
     case dbSaveWhitelistError = "m_d_dbsw"
     case dbSaveBloomFilterError = "m_d_dbsb"
@@ -193,6 +194,15 @@ public struct PixelParameters {
     public static let duration = "dur"
     static let test = "test"
     static let appVersion = "appVersion"
+    
+    static let applicationState = "as"
+    static let dataAvailiability = "dp"
+    
+    static let errorCode = "e"
+    static let errorDesc = "d"
+    static let errorCount = "c"
+    static let underlyingErrorCode = "ue"
+    static let underlyingErrorDesc = "ud"
 }
 
 public struct PixelValues {
@@ -238,11 +248,21 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:]) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
         let nsError = error as NSError
         var newParams = params
-        newParams["e"] = "\(nsError.code)"
-        newParams["d"] = nsError.domain
+        newParams[PixelParameters.errorCode] = "\(nsError.code)"
+        newParams[PixelParameters.errorDesc] = nsError.domain
+        
+        if isCounted {
+            let count = PixelCounterStore().incrementCountFor(pixel)
+            newParams[PixelParameters.errorCount] = "\(count)"
+        }
+        
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+            newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
+            newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
+        }
         fire(pixel: pixel, withAdditionalParameters: newParams)
     }
 }

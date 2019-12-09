@@ -112,7 +112,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
             do {
                 try context.save()
             } catch {
-                Pixel.fire(pixel: .dbSaveBloomFilterError, error: error)
+                Pixel.fire(pixel: .dbSaveBloomFilterError, error: error, isCounted: true)
             }
         }
     }
@@ -149,7 +149,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
             do {
                 try context.save()
             } catch {
-                Pixel.fire(pixel: .dbSaveWhitelistError, error: error)
+                Pixel.fire(pixel: .dbSaveWhitelistError, error: error, isCounted: true)
                 result = false
             }
         }

@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ContentBlockerStringCache.removeLegacyData()
         }
         
-        Database.shared.loadStore { context in
+        Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
         }
         

@@ -35,9 +35,9 @@ class TabsModelTests: XCTestCase {
 
     private var filledModel: TabsModel {
         let model = TabsModel()
-        model.add(tab: Tab(link: nil))
-        model.add(tab: Tab(link: nil))
-        model.add(tab: Tab(link: nil))
+        model.add(tab: Tab(link: Link(title: "url1", url: URL(string: "https://ur1l.com")!)))
+        model.add(tab: Tab(link: Link(title: "url2", url: URL(string: "https://ur12.com")!)))
+        model.add(tab: Tab(link: Link(title: "url3", url: URL(string: "https://ur13.com")!)))
         return model
     }
     
@@ -57,10 +57,10 @@ class TabsModelTests: XCTestCase {
         let model = filledModel
         model.insert(tab: Tab(link: link), at: 1)
 
-        XCTAssertNil(model.tabs[0].link)
-        XCTAssertNotNil(model.tabs[1].link)
-        XCTAssertNil(model.tabs[2].link)
-        XCTAssertNil(model.tabs[3].link)
+        XCTAssertNotNil(model.tabs[0].link)
+        XCTAssertEqual("https://example.com", model.tabs[1].link?.url.absoluteString)
+        XCTAssertNotNil(model.tabs[2].link)
+        XCTAssertNotNil(model.tabs[3].link)
 
     }
 
@@ -74,6 +74,31 @@ class TabsModelTests: XCTestCase {
 
     func testCurrentIsInitiallyNil() {
         XCTAssertNil(TabsModel().currentIndex)
+    }
+    
+    func testWhenTabMovedToInvalidPositionNoChangeMadeToCurrentIndex() {
+        let testee = filledModel
+        testee.select(tabAt: 1)
+        testee.moveTab(from: 1, to: 3)
+        XCTAssertEqual(1, testee.currentIndex)
+        testee.moveTab(from: 1, to: -1)
+        XCTAssertEqual(1, testee.currentIndex)
+    }
+    
+    func testWhenTabMovedToStartOfListThenCurrentIndexUpdatedCorrectly() {
+        let testee = filledModel
+        testee.select(tabAt: 1)
+        
+        testee.moveTab(from: 1, to: 0)
+        XCTAssertEqual(0, testee.currentIndex)
+    }
+
+    func testWhenTabMovedToEndOfListThenCurrentIndexUpdatedCorrectly() {
+        let testee = filledModel
+        testee.select(tabAt: 1)
+        
+        testee.moveTab(from: 1, to: 2)
+        XCTAssertEqual(2, testee.currentIndex)
     }
 
     func testWhenTabExistsThenIndexReturned() {

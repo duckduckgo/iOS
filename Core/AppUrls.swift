@@ -34,7 +34,7 @@ public struct AppUrls {
         
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
         static let temporaryWhitelist = "\(base)/contentblocking/trackers-whitelist-temporary.txt"
-        static let trackerDataSet = "\(staticBase)/trackerblocking/tds.json"
+        static let trackerDataSet = "\(staticBase)/trackerblocking/v2/tds.json"
 
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"

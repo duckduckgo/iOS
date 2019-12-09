@@ -200,6 +200,7 @@ public struct PixelParameters {
     
     static let errorCode = "e"
     static let errorDesc = "d"
+    static let errorCount = "c"
     static let underlyingErrorCode = "ue"
     static let underlyingErrorDesc = "ud"
 }
@@ -247,11 +248,16 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:]) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
         newParams[PixelParameters.errorDesc] = nsError.domain
+        
+        if isCounted {
+            let count = PixelCounterStore().incrementCountFor(pixel)
+            newParams[PixelParameters.errorCount] = "\(count)"
+        }
         
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"

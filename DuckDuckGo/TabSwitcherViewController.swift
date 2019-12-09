@@ -56,9 +56,30 @@ class TabSwitcherViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
+        
         collectionView.reloadData()
     }
 
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
+            collectionView.beginInteractiveMovementForItem(at: path)
+            
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
+            
+        case .ended:
+            collectionView.endInteractiveMovement()
+            
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollToInitialTab()
@@ -78,7 +99,7 @@ class TabSwitcherViewController: UIViewController {
         }
         
     }
-    
+        
     private func scrollToInitialTab() {
         guard let index = tabsModel.currentIndex else { return }
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
@@ -201,6 +222,10 @@ extension TabSwitcherViewController: TabViewCellDelegate {
 
 extension TabSwitcherViewController: UICollectionViewDataSource {
 
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tabsModel.count
     }
@@ -236,6 +261,25 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         currentSelection = indexPath.row
         markCurrentAsViewedAndDismiss()
     }
+   
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        return proposedIndexPath
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        tabsModel.moveTab(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        currentSelection = tabsModel.currentIndex
+    }
+
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
@@ -245,7 +289,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 70)
     }
-
+    
 }
 
 extension TabSwitcherViewController: Themable {

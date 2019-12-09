@@ -42,6 +42,10 @@ class TabViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "TabCell"
 
+    var removeThreshold: CGFloat {
+        return frame.width / 3
+    }
+
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
     var isCurrent = false
@@ -73,37 +77,42 @@ class TabViewCell: UICollectionViewCell {
         case .changed:
             let offset = max(0, startX - currentLocation.x)
             transform = CGAffineTransform.identity.translatedBy(x: -offset, y: 0)
-            if diff > frame.width / 2 {
+            if diff > removeThreshold {
                 if background.backgroundColor == .white {
-                    UISelectionFeedbackGenerator().selectionChanged()
+                    UIImpactFeedbackGenerator().impactOccurred()
                 }
-                background.backgroundColor = UIColor.systemRed
-            } else {
-                background.backgroundColor = .white
             }
 
         case .ended:
-            if diff > frame.width / 2 {
-
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.transform = CGAffineTransform.identity.translatedBy(x: -self.frame.width, y: 0)
-                }, completion: { _ in
-                    self.isHidden = true
-                    self.isDeleting = true
-                    self.deleteTab()
-                })
-
+            if diff > removeThreshold {
+                startRemoveAnimation()
             } else {
-                UIView.animate(withDuration: 0.2) {
-                    self.transform = .identity
-                }
+                startCancelAnimation()
             }
-            background.backgroundColor = .white
+
+        case .cancelled:
+            startCancelAnimation()
 
         default: break
 
         }
 
+    }
+
+    private func startRemoveAnimation() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.transform = CGAffineTransform.identity.translatedBy(x: -self.frame.width, y: 0)
+        }, completion: { _ in
+            self.isHidden = true
+            self.isDeleting = true
+            self.deleteTab()
+        })
+    }
+
+    private func startCancelAnimation() {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = .identity
+        }
     }
 
     func update(withTab tab: Tab) {

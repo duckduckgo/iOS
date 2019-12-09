@@ -3170,7 +3170,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
 		};
 		0A991F5C239419BF00AA1F64 /* Prevent Version Override */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3188,7 +3188,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
 		};
 		0A991F5D23941D2F00AA1F64 /* Prevent Version Override */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3206,7 +3206,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
 		};
 		0A991F5E23941D4600AA1F64 /* Prevent Version Override */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3224,7 +3224,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SOURCE_ROOT/check_version.sh\n";
+			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
 		};
 		8558AA7D20EE3CB200A346E9 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;

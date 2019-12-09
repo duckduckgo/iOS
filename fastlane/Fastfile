@@ -9,13 +9,13 @@ default_platform :ios
 
 lane :release do 
 
-  version_number = get_version_number(
-    target: "DuckDuckGo"
-  )
-
-  increment_version_number(
-    version_number: version_number,
-  )
+#  version_number = get_version_number(
+#    target: "DuckDuckGo"
+#  )
+#
+#  increment_version_number(
+#    version_number: version_number,
+#  )
 
   gym(
     scheme: "DuckDuckGo",

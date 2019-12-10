@@ -238,7 +238,6 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         }
         cell.delegate = self
 
-        print("***", #function, indexPath.row)
         cell.isDeleting = false
         cell.update(withTab: tab)
         return cell

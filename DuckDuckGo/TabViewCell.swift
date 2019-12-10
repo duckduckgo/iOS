@@ -122,7 +122,6 @@ class TabViewCell: UICollectionViewCell {
     }
 
     func update(withTab tab: Tab) {
-        print("***", #function, isHidden, isDeleting)
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()

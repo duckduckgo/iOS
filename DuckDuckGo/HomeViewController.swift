@@ -138,13 +138,9 @@ class HomeViewController: UIViewController {
 
     func resetHomeRowCTAAnimations(variantManager: VariantManager = DefaultVariantManager()) {
         installHomeScreenTips()
-        
-        if variantManager.isSupported(feature: .firstOpenCTA) {
-            if HomeRowCTA().shouldShow() {
-                showHomeRowCTA()
-            }
-        } else {
-            hideHomeRowCTA()
+
+        if HomeRowCTA().shouldShow() {
+            showHomeRowCTA()
         }
     }
 
@@ -194,10 +190,16 @@ class HomeViewController: UIViewController {
         homeRowCTAController = nil
     }
 
-    private func showHomeRowCTA() {
+    private func showHomeRowCTA(variantManager: VariantManager = DefaultVariantManager()) {
         guard homeRowCTAController == nil else { return }
-
-        let childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
+        
+        let childViewController: UIViewController
+        if variantManager.isSupported(feature: .unifiedCTA) {
+            childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
+        } else {
+            childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
+        }
+        
         addChild(childViewController)
         view.addSubview(childViewController.view)
         childViewController.view.frame = view.bounds

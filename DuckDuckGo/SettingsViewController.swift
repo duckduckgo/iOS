@@ -44,7 +44,6 @@ class SettingsViewController: UITableViewController {
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
-    fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
 
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -272,11 +271,5 @@ extension SettingsViewController: Themable {
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MFMailComposeViewController {
-    static func create() -> MFMailComposeViewController? {
-        return MFMailComposeViewController()
     }
 }

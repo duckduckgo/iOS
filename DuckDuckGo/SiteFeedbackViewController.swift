@@ -24,11 +24,6 @@ import Core
 import ToastSwiftFramework
 
 class SiteFeedbackViewController: UIViewController {
-
-    private struct ViewConstants {
-        static let urlTextHeight: CGFloat = 38
-        static let urlTextPadding: CGFloat = 4
-    }
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -161,21 +156,9 @@ class SiteFeedbackViewController: UIViewController {
         return nil
     }
 
-    private func updateMessagePlaceholder(withText text: String) {
-        messagePlaceholderText.setAttributedTextString(text)
-    }
-
     @IBAction func onUrlChanged(_ sender: UITextField) {
         feedbackModel.url = sender.text
         refreshButton()
-    }
-
-    private func showMessagePlaceholder() {
-        messagePlaceholderText.isHidden = false
-    }
-
-    private func hideMessagePlaceholder() {
-        messagePlaceholderText.isHidden = true
     }
 
     private func refreshButton() {

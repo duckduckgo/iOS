@@ -40,50 +40,6 @@ class LocalNotifications: NSObject {
             }
         }
     }
-    
-    func checkPermissions(completion: @escaping (UNAuthorizationStatus, UNNotificationSetting) -> Void) {
-        
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            DispatchQueue.main.async {
-                completion(settings.authorizationStatus, settings.alertSetting)
-            }
-        }
-    }
-    
-    func cancelNotifications(withIdentifiers identifiers: [String]) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
-    }
-    
-    func scheduleNotification(title: String,
-                              body: String = "",
-                              identifier: String,
-                              timeInterval: TimeInterval) {
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
-        
-        scheduleNotification(title: title, body: body, identifier: identifier, trigger: trigger)
-    }
-        
-    private func scheduleNotification(title: String,
-                                      body: String = "",
-                                      identifier: String,
-                                      trigger: UNNotificationTrigger) {
-        
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.badge = 1
-        
-        let request = UNNotificationRequest(identifier: identifier,
-                                            content: content,
-                                            trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                Logger.log(items: "Failed to schedule notification. \(error.localizedDescription)")
-            }
-        }
-    }
 }
 
 extension LocalNotifications: UNUserNotificationCenterDelegate {

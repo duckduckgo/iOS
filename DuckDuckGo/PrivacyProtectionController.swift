@@ -22,8 +22,6 @@ import Core
 
 protocol PrivacyProtectionDelegate: class {
 
-    func omniBarTextTapped()
-
     func reload(scripts: Bool)
 
 }

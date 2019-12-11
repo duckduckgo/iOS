@@ -65,11 +65,6 @@ class NotificationView: UIView {
         update()
     }
 
-    func setIcon(image: UIImage) {
-        icon.image = image
-        update()
-    }
-
     func update() {
         guard let superview = superview else { return }
         let height = titleLabel.frame.height + messageLabel.frame.height + 24

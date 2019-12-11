@@ -25,8 +25,7 @@ class FeedbackPickerViewController: UITableViewController {
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var supplementaryText: UILabel!
     
-    private var entries = [FeedbackEntry]()
-    private var selectionHandler: (Feedback.Model) -> Void = { _ in }
+    private var entries = [FeedbackEntry]() 
     
     private var feedbackModel: Feedback.Model?
     
@@ -78,10 +77,6 @@ class FeedbackPickerViewController: UITableViewController {
         supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: category))
         
         self.entries = entries
-    }
-    
-    func setSelectionHandler(_ handler: @escaping (Feedback.Model) -> Void) {
-        self.selectionHandler = handler
     }
     
     @IBAction func dismissButtonPressed() {

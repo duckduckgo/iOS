@@ -68,7 +68,6 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
     
     private func updateContent(_ controller: OnboardingContentViewController) {
-        controller.delegate = self
         continueButton.isEnabled = controller.canContinue
         contentController = controller
         subheader.setAttributedTextString(controller.subtitle ?? "")
@@ -156,14 +155,6 @@ class OnboardingViewController: UIViewController, Onboarding {
 
     override var shouldAutorotate: Bool {
         return true 
-    }
-    
-}
-
-extension OnboardingViewController: OnboardingContentDelegate {
-    
-    func setContinueEnabled(_ enabled: Bool) {
-        continueButton.isEnabled = enabled
     }
     
 }

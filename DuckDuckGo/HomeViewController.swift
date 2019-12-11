@@ -35,11 +35,6 @@ class HomeViewController: UIViewController {
     var navigationBar: UIView? {
         return (parent as? MainViewController)?.customNavigationBar
     }
-    
-    var bottomOffset: CGFloat {
-        // doesn't take in to account extra space on iPhone X but is good enough to show the bottom items in the collection view
-        return ((parent as? MainViewController)?.toolbar.frame.height ?? 0)
-    }
 
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
@@ -61,7 +56,6 @@ class HomeViewController: UIViewController {
     weak var homeRowCTAController: UIViewController?
     
     private var viewHasAppeared = false
-    private var defaultVerticalAlignConstant: CGFloat = 0
     
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -203,10 +197,6 @@ class HomeViewController: UIViewController {
         childViewController.view.frame = view.bounds
         childViewController.didMove(toParent: self)
         self.homeRowCTAController = childViewController
-    }
-
-    func load(url: URL) {
-        delegate?.home(self, didRequestUrl: url)
     }
 
     func dismiss() {

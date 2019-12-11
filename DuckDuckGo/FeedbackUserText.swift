@@ -31,8 +31,6 @@ extension UserText {
                                                                comment: "Which website is broken?")
     public static let siteFeedbackMessagePlaceholder = NSLocalizedString("siteFeedback.messagePlaceholder",
                                                                      comment: "Which content or functionality is breaking?")
-    public static let siteFeedbackButtonText = NSLocalizedString("siteFeedback.buttonText",
-                                                                         comment: "Submit Report")
     
     public static let feedbackStartHeader = NSLocalizedString("feedback.start.header",
                                                               comment: "Let's get started!")

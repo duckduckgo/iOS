@@ -22,7 +22,6 @@ import UIKit
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     struct Constants {
-        static let privacyCellMaxWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
         static let itemSpacing: CGFloat = 10
     }
     

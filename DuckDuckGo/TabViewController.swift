@@ -576,9 +576,7 @@ class TabViewController: UIViewController {
 extension TabViewController: WKScriptMessageHandler {
     
     struct TrackerDetectedKey {
-        static let protectionId = "protectionId"
         static let blocked = "blocked"
-        static let networkName = "networkName"
         static let url = "url"
     }
 
@@ -935,9 +933,7 @@ extension TabViewController: WKNavigationDelegate {
 }
 
 extension TabViewController: PrivacyProtectionDelegate {
-    func omniBarTextTapped() {
-        chromeDelegate?.omniBar.becomeFirstResponder()
-    }
+    
 }
 
 extension TabViewController: WKUIDelegate {

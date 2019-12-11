@@ -19,7 +19,7 @@
 
 import Foundation
 
-public class PrivacyUserDefaults: PrivacyStore {
+public class PrivacyUserDefaults {
 
     private struct Keys {
         static let authentication = "com.duckduckgo.privacy.authentication"

@@ -29,12 +29,7 @@ protocol Onboarding {
 
 protocol OnboardingContent {
     
-    var subtitle: String? { get }
     var canContinue: Bool { get }
-    var delegate: OnboardingContentDelegate? { get set }
-
-    func onContinuePressed(navigationHandler: @escaping () -> Void)
-    func onSkipPressed(navigationHandler: @escaping () -> Void)
 }
 
 protocol OnboardingDelegate: NSObjectProtocol {
@@ -43,16 +38,9 @@ protocol OnboardingDelegate: NSObjectProtocol {
     
 }
 
-protocol OnboardingContentDelegate: NSObjectProtocol {
-    
-    func setContinueEnabled(_ enabled: Bool)
-    
-}
-
 class OnboardingContentViewController: UIViewController, OnboardingContent {
 
     var canContinue: Bool = true
-    weak var delegate: OnboardingContentDelegate?
     
     var subtitle: String? {
         return title

@@ -22,7 +22,6 @@ import Core
 
 protocol TutorialSettings {
 
-    var lastVersionSeen: Int { get }
     var hasSeenOnboarding: Bool { get set }
 
 }

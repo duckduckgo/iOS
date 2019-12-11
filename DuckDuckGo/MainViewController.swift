@@ -77,7 +77,6 @@ class MainViewController: UIViewController {
     private lazy var appUrls: AppUrls = AppUrls()
 
     var tabManager: TabManager!
-    fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings & PrivacyStatsExperimentStore = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
@@ -319,10 +318,6 @@ class MainViewController: UIViewController {
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
-    }
-
-    public var siteRating: SiteRating? {
-        return currentTab?.siteRating
     }
 
     func loadQueryInNewTab(_ query: String) {
@@ -600,16 +595,6 @@ class MainViewController: UIViewController {
         tabSwitcherButton.incrementAnimated()
     }
 
-    func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
-        guard let items = toolbar.items else { return }
-
-        let newItems = items.compactMap({
-            $0 == target ? replacement : $0
-        })
-
-        toolbar.setItems(newItems, animated: false)
-    }
-
     func newTab() {
         attachHomeScreen()
         homeController?.openedAsNewTab()
@@ -802,10 +787,6 @@ extension MainViewController: HomeControllerDelegate {
     func showPrivacyReport(_ home: HomeViewController) {
         launchPrivacyReport()
     }
-    
-    func home(_ home: HomeViewController, didRequestQuery query: String) {
-        loadQueryInNewTab(query)
-    }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         loadUrlInNewTab(url)
@@ -814,12 +795,6 @@ extension MainViewController: HomeControllerDelegate {
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
         allowContentUnderflow = shouldOverflow
         return contentUnderflow
-    }
-
-    func homeDidDeactivateOmniBar(home: HomeViewController) {
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
     }
 
     func showInstructions(_ home: HomeViewController) {

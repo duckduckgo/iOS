@@ -26,12 +26,6 @@ extension UIViewController {
         return view.frame.height <= 568
     }
 
-    public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
-        let activities = [SaveBookmarkActivity()]
-        let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
-        present(controller: shareController, fromButtonItem: buttonItem)
-    }
-
     public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
         let activities = [SaveBookmarkActivity()]
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
@@ -39,13 +33,6 @@ extension UIViewController {
             shareController.excludedActivityTypes = [.markupAsPDF]
         }
         present(controller: shareController, fromView: sourceView, atPoint: point)
-    }
-
-    public func present(controller: UIViewController, fromButtonItem buttonItem: UIBarButtonItem) {
-        if let popover = controller.popoverPresentationController {
-            popover.barButtonItem = buttonItem
-        }
-        present(controller, animated: true, completion: nil)
     }
 
     public func present(controller: UIViewController, fromView sourceView: UIView, atPoint point: Point? = nil) {

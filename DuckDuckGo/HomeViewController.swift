@@ -195,7 +195,7 @@ class HomeViewController: UIViewController {
         
         let childViewController: UIViewController
         if variantManager.isSupported(feature: .unifiedCTA) {
-            childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
+            childViewController = UnifiedAddToHomeRowCTAViewController.loadFromStoryboard()
         } else {
             childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
         }

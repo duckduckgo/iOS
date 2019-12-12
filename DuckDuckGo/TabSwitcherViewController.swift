@@ -57,9 +57,16 @@ class TabSwitcherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // `backgroundView` can be tapped in lieu of tapping the 'done()' button
+        collectionView.backgroundView = UIView(frame: collectionView.frame)
+        collectionView.backgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:))))
         collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
-        
+
         collectionView.reloadData()
+    }
+    
+    @objc func handleTap(gesture: UITapGestureRecognizer) {
+        dismiss()
     }
 
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {

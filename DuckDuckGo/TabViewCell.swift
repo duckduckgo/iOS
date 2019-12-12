@@ -37,6 +37,7 @@ class TabViewCell: UICollectionViewCell {
         static let unselectedBorderWidth: CGFloat = 0.0
         static let selectedAlpha: CGFloat = 1.0
         static let unselectedAlpha: CGFloat = 0.92
+        static let swipeToDeleteAlpha: CGFloat = 0.5
         
     }
     
@@ -80,10 +81,14 @@ class TabViewCell: UICollectionViewCell {
             transform = CGAffineTransform.identity.translatedBy(x: -offset, y: 0)            
             if diff > removeThreshold {
                 if !canDelete {
+                    makeTranslucent()
                     UIImpactFeedbackGenerator().impactOccurred()
                 }
                 canDelete = true
             } else {
+                if canDelete {
+                   makeOpaque()
+                }
                 canDelete = false
             }
 
@@ -103,6 +108,18 @@ class TabViewCell: UICollectionViewCell {
 
         }
 
+    }
+    
+    private func makeTranslucent() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.alpha = Constants.swipeToDeleteAlpha
+        })
+    }
+    
+    private func makeOpaque() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.alpha = 1.0
+        })
     }
 
     private func startRemoveAnimation() {

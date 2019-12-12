@@ -43,7 +43,6 @@ class HomeRowCTA {
     }
 
     func shouldShow(currentDate: Date = Date(), variantManager: VariantManager = DefaultVariantManager()) -> Bool {
-        return true
         guard !storage.dismissed, tutorialSettings.hasSeenOnboarding else {
             return false
         }

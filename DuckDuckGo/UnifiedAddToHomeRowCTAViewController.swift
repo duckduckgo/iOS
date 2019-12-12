@@ -74,6 +74,18 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
 //        Pixel.fire(pixel: .homeRowCTANoThanksTapped)
         dismiss()
     }
+    
+    @IBAction func playVideo() {
+        guard let player = player else { return }
+        
+        if !userInteracted {
+            userInteracted = true
+//            Pixel.fire(pixel: .homeRowInstructionsReplayed)
+        }
+        
+        player.seek(to: CMTime(seconds: 0.0, preferredTimescale: player.currentTime().timescale))
+        startVideo()
+    }
 
     @objc func onKeyboardWillShow(notification: NSNotification) {
         UIView.animate(withDuration: notification.keyboardAnimationDuration()) {
@@ -136,9 +148,6 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
             videoContainerView.layer.addSublayer(layer)
             layer.frame = videoContainerView.bounds
             videoContainerView.playerLayer = layer
-//            videoContainerHeightConstraint.constant = layer.frame.size.height
-//            videoContainerWidthConstraint.constant = layer.frame.size.width
-//            view.layoutIfNeeded()
         }
         
         NotificationCenter.default.addObserver(self,

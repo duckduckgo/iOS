@@ -90,6 +90,11 @@ class TabSwitcherViewController: UIViewController {
         super.viewDidDisappear(animated)
         delegate?.tabSwitcherDidDisappear(self)
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

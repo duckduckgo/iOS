@@ -28,16 +28,13 @@ protocol HomeRowCTAStorage: class {
 class HomeRowCTA {
     
     private let storage: HomeRowCTAStorage
-    private let tipsStorage: ContextualTipsStorage
     private let tutorialSettings: TutorialSettings
     private let statistics: StatisticsStore
 
     init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(),
-         tipsStorage: ContextualTipsStorage = DefaultContextualTipsStorage(),
          tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
          statistics: StatisticsStore = StatisticsUserDefaults()) {
         self.storage = storage
-        self.tipsStorage = tipsStorage
         self.tutorialSettings = tutorialSettings
         self.statistics = statistics
     }

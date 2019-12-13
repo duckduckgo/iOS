@@ -85,6 +85,8 @@ class BrowsingTipsTests: XCTestCase {
         
         storage.isEnabled = true
         let tips = BrowsingTips(delegate: delegate, storage: storage)
+        XCTAssertNotNil(tips)
+        
         XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
         XCTAssertEqual(0, delegate.showFireButtonTipCounter)
         XCTAssertEqual(0, storage.nextBrowsingTip)

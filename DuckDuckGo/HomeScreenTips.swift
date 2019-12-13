@@ -52,10 +52,11 @@ class HomeScreenTips {
         self.storage = storage
     }
     
-    func trigger(variantManager: VariantManager = DefaultVariantManager()) {
+    func trigger(variantManager: VariantManager = DefaultVariantManager(),
+                 ctaStorage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage()) {
         guard storage.isEnabled else { return }
         guard tutorialSettings.hasSeenOnboarding else { return }
-        guard UserDefaultsHomeRowCTAStorage().dismissed else { return }
+        guard ctaStorage.dismissed else { return }
         guard let tip = Tip(rawValue: storage.nextHomeScreenTip) else { return }
         
         let completion: (Bool) -> Void = { shown in

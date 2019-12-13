@@ -162,6 +162,7 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
     }
 
     @objc func playerDidFinishPlaying(note: NSNotification) {
+        HomeRowReminder().setShown()
         playButton.isHidden = false
     }
     

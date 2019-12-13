@@ -71,7 +71,7 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
     }
 
     @IBAction func gotItButtonPressed() {
-//        Pixel.fire(pixel: .homeRowCTANoThanksTapped)
+        Pixel.fire(pixel: .homeRowCTAGotItTapped)
         dismiss()
     }
     
@@ -80,7 +80,7 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
         
         if !userInteracted {
             userInteracted = true
-//            Pixel.fire(pixel: .homeRowInstructionsReplayed)
+            Pixel.fire(pixel: .homeRowInstructionsReplayed)
         }
         
         player.seek(to: CMTime(seconds: 0.0, preferredTimescale: player.currentTime().timescale))

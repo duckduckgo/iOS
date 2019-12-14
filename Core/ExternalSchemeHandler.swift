@@ -47,7 +47,6 @@ public class ExternalSchemeHandler {
     }
     
     private enum BlacklistedScheme: String {
-        case about
         case appleDataDetectors = "x-apple-data-detectors"
     }
     

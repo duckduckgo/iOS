@@ -65,11 +65,6 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
         startVideo()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        HomeRowCTA().dismissed()
-    }
-
     @IBAction func gotItButtonPressed() {
         Pixel.fire(pixel: .homeRowCTAGotItTapped)
         dismiss()

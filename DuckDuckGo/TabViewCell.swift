@@ -63,6 +63,7 @@ class TabViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
+        recognizer.delegate = self
         addGestureRecognizer(recognizer)
     }
 
@@ -194,6 +195,21 @@ extension TabViewCell: TabObserver {
     
     func didChange(tab: Tab) {
         update(withTab: tab)
+    }
+    
+}
+
+extension TabViewCell: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+ 
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return true }
+        let velocity = pan.velocity(in: self)
+        return abs(velocity.y) < abs(velocity.x)
     }
     
 }

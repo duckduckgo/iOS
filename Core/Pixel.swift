@@ -125,6 +125,7 @@ public enum PixelName: String {
     
     case homeRowCTAShowMeTapped = "m_ha"
     case homeRowCTANoThanksTapped = "m_hb"
+    case homeRowCTAGotItTapped = "m_hg"
     
     case homeRowCTAReminderTapped = "m_hc"
     case homeRowCTAReminderDismissed = "m_hd"

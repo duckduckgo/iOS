@@ -87,7 +87,7 @@ class HomeRowInstructionsViewController: UIViewController {
         if #available(iOS 13, *) {
             movieURL = Bundle.main.url(forResource: "ios13-home-row", withExtension: "mp4")!
         } else {
-            movieURL = Bundle.main.url(forResource: "home-row-instructions", withExtension: "mp4")!
+            movieURL = Bundle.main.url(forResource: "ios12-home-row", withExtension: "mp4")!
         }
 
         player = AVPlayer(url: movieURL)

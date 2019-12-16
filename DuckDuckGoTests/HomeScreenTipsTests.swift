@@ -28,6 +28,8 @@ class HomeScreenTipsTests: XCTestCase {
     // swiftlint:enable weak_delegate
 
     var storage = MockContextualTipsStorage()
+    let ctaStorage = MockCTAStorage()
+    
     var tutorialSettings = MockTutorialSettings()
 
     func testWhenNotShownThenNextTipIsUnchanged() {
@@ -39,7 +41,7 @@ class HomeScreenTipsTests: XCTestCase {
         let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
         XCTAssertNotNil(tips)
 
-        tips?.trigger()
+        tips?.trigger(ctaStorage: ctaStorage)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
 
@@ -48,11 +50,31 @@ class HomeScreenTipsTests: XCTestCase {
     
     func testWhenFeatureEnabledButOnboardingNotShownThenTriggerDoesNothing() {
 
+        storage.isEnabled = true
         let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
+        XCTAssertNotNil(tips)
+        
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
 
-        tips?.trigger()
+        tips?.trigger(ctaStorage: ctaStorage)
+        XCTAssertEqual(0, delegate.showCustomizeTipCounter)
+        XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
+
+    }
+    
+    func testWhenFeatureEnabledOnboardingShownButCTANotDismissedThenTriggerDoesNothing() {
+
+        storage.isEnabled = true
+        tutorialSettings.hasSeenOnboarding = true
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
+        XCTAssertNotNil(tips)
+
+        XCTAssertEqual(0, delegate.showCustomizeTipCounter)
+        XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
+
+        ctaStorage.dismissed = false
+        tips?.trigger(ctaStorage: ctaStorage)
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
 
@@ -77,17 +99,17 @@ class HomeScreenTipsTests: XCTestCase {
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
         XCTAssertEqual(0, storage.nextHomeScreenTip)
 
-        tips?.trigger()
+        tips?.trigger(ctaStorage: ctaStorage)
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
         XCTAssertEqual(1, storage.nextHomeScreenTip)
 
-        tips?.trigger()
+        tips?.trigger(ctaStorage: ctaStorage)
         XCTAssertEqual(1, delegate.showCustomizeTipCounter)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
         XCTAssertEqual(2, storage.nextHomeScreenTip)
 
-        tips?.trigger()
+        tips?.trigger(ctaStorage: ctaStorage)
         XCTAssertEqual(1, delegate.showCustomizeTipCounter)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
         XCTAssertEqual(2, storage.nextHomeScreenTip)
@@ -111,6 +133,10 @@ class MockHomeScreenTipsDelegate: NSObject, HomeScreenTipsDelegate {
         didShow(shown)
     }
     
+}
+
+class MockCTAStorage: HomeRowCTAStorage {
+    var dismissed = true
 }
 
 class MockTutorialSettings: TutorialSettings {

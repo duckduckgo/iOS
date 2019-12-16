@@ -1,4 +1,3 @@
-• We've upgraded our tracker protection to block even more third party trackers.
-• We've improved browsing performance.
-• You can now re-order tabs in the tab switcher using a long press.
+• You can now swipe to close tabs.
+• Fixed some layout issues in the tab switcher.
 • Other bug fixes and improvements.

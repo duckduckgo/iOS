@@ -216,7 +216,8 @@ extension TabSwitcherViewController: TabViewCellDelegate {
         collectionView.performBatchUpdates({
             self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
         }, completion: { _ in
-            self.collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+            guard let current = self.currentSelection else { return }
+            self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
         })
         
     }

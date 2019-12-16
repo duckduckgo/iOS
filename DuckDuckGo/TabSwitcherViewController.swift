@@ -212,7 +212,13 @@ extension TabSwitcherViewController: TabViewCellDelegate {
         delegate.tabSwitcher(self, didRemoveTab: tab)
         currentSelection = tabsModel.currentIndex
         refreshTitle()
-        collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+        
+        collectionView.performBatchUpdates({
+            self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+        }, completion: { _ in
+            self.collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+        })
+        
     }
     
     func isCurrent(tab: Tab) -> Bool {

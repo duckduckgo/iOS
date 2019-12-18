@@ -54,6 +54,10 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
     var canContinue: Bool = true
     weak var delegate: OnboardingContentDelegate?
     
+    var header: String {
+        return "Welcome to DuckDuckGo!"
+    }
+    
     var subtitle: String? {
         return title
     }

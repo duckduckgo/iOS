@@ -36,7 +36,7 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
     }
     
     override var continueButtonTitle: String {
-        return UserText.onboardingStartBrowsing
+        return UserText.onboardingContinue
     }
     
     override func viewDidDisappear(_ animated: Bool) {

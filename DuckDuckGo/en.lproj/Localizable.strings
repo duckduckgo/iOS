@@ -132,6 +132,8 @@
 "home.row.reminder.title" = "Take DuckDuckGo home";
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
+"home.row.onboarding.header" = "Add DuckDuckGo to your dock!";
+
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
 "prompt.custom.url.scheme.title" = "Open in Another App?";

@@ -28,16 +28,13 @@ protocol HomeRowCTAStorage: class {
 class HomeRowCTA {
     
     private let storage: HomeRowCTAStorage
-    private let tipsStorage: ContextualTipsStorage
     private let tutorialSettings: TutorialSettings
     private let statistics: StatisticsStore
 
     init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(),
-         tipsStorage: ContextualTipsStorage = DefaultContextualTipsStorage(),
          tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
          statistics: StatisticsStore = StatisticsUserDefaults()) {
         self.storage = storage
-        self.tipsStorage = tipsStorage
         self.tutorialSettings = tutorialSettings
         self.statistics = statistics
     }
@@ -47,21 +44,11 @@ class HomeRowCTA {
             return false
         }
         
-        if variantManager.isSupported(feature: .firstOpenCTA) {
-            return true
-        }
-        
-        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tip.allCases.count {
-            return false
-        }
-        
-        guard let installDate = statistics.installDate else {
+        guard statistics.installDate != nil else {
             // no install date, then show it as they're upgrading
             return true
         }
-        
-        // only show if we're on a different day
-        return !Calendar.current.isDate(installDate, inSameDayAs: currentDate)
+        return true
     }
 
     func dismissed() {

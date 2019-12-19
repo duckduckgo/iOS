@@ -37,14 +37,21 @@ class TabViewCell: UICollectionViewCell {
         static let unselectedBorderWidth: CGFloat = 0.0
         static let selectedAlpha: CGFloat = 1.0
         static let unselectedAlpha: CGFloat = 0.92
+        static let swipeToDeleteAlpha: CGFloat = 0.5
         
     }
     
     static let reuseIdentifier = "TabCell"
 
+    var removeThreshold: CGFloat {
+        return frame.width / 3
+    }
+
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
     var isCurrent = false
+    var isDeleting = false
+    var canDelete = false
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
@@ -53,14 +60,95 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let recognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
+        recognizer.delegate = self
+        addGestureRecognizer(recognizer)
+    }
+
+    var startX: CGFloat = 0
+    @objc func handleSwipe(recognizer: UIGestureRecognizer) {
+        let currentLocation = recognizer.location(in: nil)
+        let diff = startX - currentLocation.x
+
+        switch recognizer.state {
+
+        case .began:
+            startX = currentLocation.x
+
+        case .changed:
+            let offset = max(0, startX - currentLocation.x)
+            transform = CGAffineTransform.identity.translatedBy(x: -offset, y: 0)            
+            if diff > removeThreshold {
+                if !canDelete {
+                    makeTranslucent()
+                    UIImpactFeedbackGenerator().impactOccurred()
+                }
+                canDelete = true
+            } else {
+                if canDelete {
+                   makeOpaque()
+                }
+                canDelete = false
+            }
+
+        case .ended:
+            if canDelete {
+                startRemoveAnimation()
+            } else {
+                startCancelAnimation()
+            }
+            canDelete = false
+
+        case .cancelled:
+            startCancelAnimation()
+            canDelete = false
+
+        default: break
+
+        }
+
+    }
+    
+    private func makeTranslucent() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.alpha = Constants.swipeToDeleteAlpha
+        })
+    }
+    
+    private func makeOpaque() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.alpha = 1.0
+        })
+    }
+
+    private func startRemoveAnimation() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.transform = CGAffineTransform.identity.translatedBy(x: -self.frame.width, y: 0)
+        }, completion: { _ in
+            self.isHidden = true
+            self.isDeleting = true
+            self.deleteTab()
+        })
+    }
+
+    private func startCancelAnimation() {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = .identity
+        }
+    }
+
     func update(withTab tab: Tab) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
         tab.addObserver(self)
         self.tab = tab
-        
-        isHidden = false
+
+        if !isDeleting {
+            isHidden = false
+        }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
@@ -84,17 +172,8 @@ class TabViewCell: UICollectionViewCell {
     }
     
     @IBAction func deleteTab() {
-
         guard let tab = tab else { return }
         self.delegate?.deleteTab(tab: tab)
-
-        UIView.animate(withDuration: 0.3, animations: {
-            guard let superview = self.superview else { return }
-            self.transform.tx = -superview.frame.width * 1.5
-        }, completion: { _ in
-            self.transform.tx = 0
-        })
-
     }
 
     private func configureFavicon(forDomain domain: String?) {
@@ -116,6 +195,21 @@ extension TabViewCell: TabObserver {
     
     func didChange(tab: Tab) {
         update(withTab: tab)
+    }
+    
+}
+
+extension TabViewCell: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+ 
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return true }
+        let velocity = pan.velocity(in: self)
+        return abs(velocity.y) < abs(velocity.x)
     }
     
 }

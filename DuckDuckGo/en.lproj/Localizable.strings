@@ -209,7 +209,7 @@
 "siteFeedback.buttonText" = "Submit Report";
 
 "feedback.start.header" = "Let's get started!";
-"feedback.start.supplementary" = "How would you catagorize your feedback?";
+"feedback.start.supplementary" = "How would you categorize your feedback?";
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
 
 "feedback.positive.header" = "Awesome to hear!";

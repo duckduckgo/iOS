@@ -66,6 +66,9 @@ class HomePageSettingsViewController: UITableViewController {
             
         case .centerSearchAndFavorites:
             Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
+
+        case .simpleAndFavorites: break;
+            
         }
         
         appSettings.homePage = config

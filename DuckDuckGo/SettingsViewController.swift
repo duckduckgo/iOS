@@ -159,6 +159,9 @@ class SettingsViewController: UITableViewController {
         case .centerSearchAndFavorites:
             homePageAccessoryText.text = UserText.homePageCenterSearchAndFavorites
 
+        case .simpleAndFavorites:
+            homePageAccessoryText.text = "Simple with Favorites"
+
         }
         
     }

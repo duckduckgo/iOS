@@ -29,7 +29,15 @@ class BookmarksViewController: UITableViewController {
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        return appSettings.homePage == .centerSearchAndFavorites ? BookmarksAndFavoritesDataSource() : BookmarksDataSource()
+        switch appSettings.homePage {
+
+        case .simple, .centerSearch:
+            return BookmarksDataSource()
+
+        case .centerSearchAndFavorites, .simpleAndFavorites:
+            return BookmarksAndFavoritesDataSource()
+
+        }
     }()
     
     override func viewDidLoad() {

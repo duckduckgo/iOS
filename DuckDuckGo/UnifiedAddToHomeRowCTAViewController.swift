@@ -139,7 +139,7 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
 
         layer = AVPlayerLayer(player: player)
         if let layer = layer {
-            layer.videoGravity = .resizeAspect
+            layer.videoGravity = .resizeAspectFill
             videoContainerView.layer.addSublayer(layer)
             layer.frame = videoContainerView.bounds
             videoContainerView.playerLayer = layer
@@ -178,6 +178,14 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
     static func loadFromStoryboard() -> UnifiedAddToHomeRowCTAViewController {
         let sb = UIStoryboard(name: "HomeRow", bundle: nil)
         guard let controller = sb.instantiateViewController(withIdentifier: "UnifiedHomeRowCTA") as? UnifiedAddToHomeRowCTAViewController else {
+            fatalError("Failed to load view controller for HomeRowCTA")
+        }
+        return controller
+    }
+    
+    static func loadAlertFromStoryboard() -> UnifiedAddToHomeRowCTAViewController {
+        let sb = UIStoryboard(name: "HomeRow", bundle: nil)
+        guard let controller = sb.instantiateViewController(withIdentifier: "UnifiedHomeRowCTAAlert") as? UnifiedAddToHomeRowCTAViewController else {
             fatalError("Failed to load view controller for HomeRowCTA")
         }
         return controller

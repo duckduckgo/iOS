@@ -80,12 +80,7 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
 }
 
 extension MainViewController {
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        startOnboardingFlowIfNotSeenBefore()
-    }
-    
+        
     func startOnboardingFlowIfNotSeenBefore() {
         
         let settings = DefaultTutorialSettings()
@@ -99,22 +94,6 @@ extension MainViewController {
         performSegue(withIdentifier: onboardingFlow, sender: self)
 
         homeController?.resetHomeRowCTAAnimations()
-    }
-    
-}
-
-extension MainViewController: OnboardingDelegate {
-        
-    func onboardingCompleted(controller: UIViewController) {
-        markOnboardingSeen()
-        controller.modalTransitionStyle = .crossDissolve
-        controller.dismiss(animated: true)
-        homeController?.resetHomeRowCTAAnimations()
-    }
-    
-    func markOnboardingSeen() {
-        var settings = DefaultTutorialSettings()
-        settings.hasSeenOnboarding = true
     }
     
 }

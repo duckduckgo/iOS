@@ -123,7 +123,7 @@ class HomeViewController: UIViewController {
         Pixel.fire(pixel: .homeScreenShown)
         
         if HomeRowCTA().shouldShow() {
-            showHomeRowCTA()
+            //showHomeRowCTA()
         }
         
         installHomeScreenTips()

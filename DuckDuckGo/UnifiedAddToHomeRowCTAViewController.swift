@@ -139,7 +139,7 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
 
         layer = AVPlayerLayer(player: player)
         if let layer = layer {
-            layer.videoGravity = .resizeAspectFill
+            layer.videoGravity = .resizeAspect
             videoContainerView.layer.addSublayer(layer)
             layer.frame = videoContainerView.bounds
             videoContainerView.playerLayer = layer

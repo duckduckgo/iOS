@@ -1122,7 +1122,7 @@ extension MainViewController {
     }
 
     private func showHomeRowCTA(variantManager: VariantManager = DefaultVariantManager()) {
-        guard homeRowCTAController == nil else { return }
+        guard variantManager.isSupported(feature: .alertCTA), homeRowCTAController == nil else { return }
         
         let childViewController =  UnifiedAddToHomeRowCTAViewController.loadAlertFromStoryboard()
         addChild(childViewController)

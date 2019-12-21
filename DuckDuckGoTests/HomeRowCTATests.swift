@@ -45,14 +45,12 @@ class HomeRowCTATests: XCTestCase {
         XCTAssertTrue(feature.shouldShow())
     }
     
-    func testWhenNotAllHomeScreenTipsShownAndDay0CTAEnabledThenDontShowCTA() {
+    func testWhenNotAllHomeScreenTipsShownThenDontShowCTA() {
         statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = true
         
         let feature = HomeRowCTA(storage: storage, tutorialSettings: tutorialSettings, statistics: statistics)
-        
-        let variantManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
-        XCTAssert(feature.shouldShow(variantManager: variantManager))
+        XCTAssert(feature.shouldShow())
     }
 
     func testWhenDismissedThenDismissedStateStored() {
@@ -91,9 +89,7 @@ class HomeRowCTATests: XCTestCase {
         tutorialSettings.hasSeenOnboarding = true
         
         let feature = HomeRowCTA(storage: storage, tutorialSettings: tutorialSettings, statistics: statistics)
-        
-        let variantManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
-        XCTAssert(feature.shouldShow(currentDate: installDate, variantManager: variantManager))
+        XCTAssert(feature.shouldShow(currentDate: installDate))
     }
     
 }

@@ -123,7 +123,7 @@ class HomeViewController: UIViewController {
         Pixel.fire(pixel: .homeScreenShown)
         
         if HomeRowCTA().shouldShow() {
-            //showHomeRowCTA()
+            showHomeRowCTA()
         }
         
         installHomeScreenTips()
@@ -191,7 +191,8 @@ class HomeViewController: UIViewController {
     }
 
     private func showHomeRowCTA(variantManager: VariantManager = DefaultVariantManager()) {
-        guard homeRowCTAController == nil else { return }
+        guard !variantManager.isSupported(feature: .alertCTA),
+            homeRowCTAController == nil else { return }
         
         let childViewController: UIViewController
         if variantManager.isSupported(feature: .unifiedCTA) {

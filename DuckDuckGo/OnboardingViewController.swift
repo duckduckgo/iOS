@@ -22,8 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
     
-    //TODO - variant
-    var controllerNames = ["onboardingSummary"/*, "onboardingHomeRow"*/]
+    var controllerNames = [String]()
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
@@ -33,6 +32,8 @@ class OnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var continueButton: UIButton!
 
     var contentController: OnboardingContentViewController?
+    
+    private let variantManager = DefaultVariantManager()
     
     weak var delegate: OnboardingDelegate?
     
@@ -44,6 +45,12 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
     
     private func loadInitialContent() {
+        if variantManager.isSupported(feature: .onboardingCTA) {
+            controllerNames = ["onboardingSummary", "onboardingHomeRow"]
+        } else {
+            controllerNames = ["onboardingSummary"]
+        }
+        
         guard let name = controllerNames.first,
             let controller = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController else {
                 fatalError("Unable to load initial content")
@@ -142,7 +149,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         let skipButtonTitle = nextScreen.skipButtonTitle
         skipButton.setTitle(skipButtonTitle, for: .normal)
         skipButton.setTitle(skipButtonTitle, for: .disabled)
-        skipButton.isHidden = true //TODO
+        skipButton.isHidden = true
     }
     
     func done() {

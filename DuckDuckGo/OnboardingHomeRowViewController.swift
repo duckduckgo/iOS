@@ -37,6 +37,8 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startVideo()
+        
+        HomeRowCTA().dismissed()
     }
     
     override var header: String {

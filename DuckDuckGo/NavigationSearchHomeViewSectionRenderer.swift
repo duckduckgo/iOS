@@ -20,18 +20,7 @@
 import UIKit
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
-    
-    struct Constants {
-        static let privacyCellMaxWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
-        static let itemSpacing: CGFloat = 10
-    }
-    
-    private let withOffset: Bool
-    
-    init(withOffset: Bool) {
-        self.withOffset = withOffset
-    }
-    
+
     weak var controller: HomeViewController?
     
     func install(into controller: HomeViewController) {
@@ -61,9 +50,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var size = collectionView.frame.size
-        size.height = 0
-        return size
+        return .zero
     }
   
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

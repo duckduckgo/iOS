@@ -30,15 +30,15 @@ class HomePageConfiguration {
             switch self {
             case .simple:
                 if includePrivacySection {
-                    return [ .privacyProtection, .navigationBarSearch(withOffset: true), .logo(withOffset: false) ]
+                    return [ .privacyProtection, .navigationBarSearch, .logo(withOffset: false) ]
                 }
-                return [ .navigationBarSearch(withOffset: false), .logo(withOffset: false) ]
+                return [ .navigationBarSearch, .logo(withOffset: false) ]
 
             case .simpleAndFavorites:
                 if includePrivacySection {
-                    return [ .privacyProtection, .navigationBarSearch(withOffset: false), .favorites(withHeader: true), .padding(withOffset: true) ]
+                    return [ .privacyProtection, .navigationBarSearch, .favorites(withHeader: true), .padding(withOffset: true) ]
                 }
-                return [ .navigationBarSearch(withOffset: false), .favorites(withHeader: false), .padding(withOffset: false) ]
+                return [ .navigationBarSearch, .favorites(withHeader: false), .padding(withOffset: false) ]
 
             case .centerSearch:
                 if includePrivacySection {
@@ -65,7 +65,7 @@ class HomePageConfiguration {
     enum Component: Equatable {
         case privacyProtection
         case logo(withOffset: Bool)
-        case navigationBarSearch(withOffset: Bool)
+        case navigationBarSearch
         case centeredSearch(fixed: Bool)
         case favorites(withHeader: Bool)
         case padding(withOffset: Bool)

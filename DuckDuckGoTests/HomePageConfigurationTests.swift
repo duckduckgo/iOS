@@ -36,7 +36,7 @@ class HomePageConfigurationTests: XCTestCase {
         let config = HomePageConfiguration(settings: settings)
         
         XCTAssertEqual(config.components(withVariantManger: variantManager),
-                       [ .navigationBarSearch(withOffset: false) ])
+                       [ .navigationBarSearch, .logo(withOffset: false) ])
     }
 
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
@@ -71,7 +71,7 @@ class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
         let config = HomePageConfiguration(settings: settings)
         
         XCTAssertEqual(config.components(withVariantManger: variantManager),
-                       [ .privacyProtection, .navigationBarSearch(withOffset: true) ])
+                       [ .privacyProtection, .navigationBarSearch, .logo(withOffset: false) ])
     }
     
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {

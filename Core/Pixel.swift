@@ -75,6 +75,7 @@ public enum PixelName: String {
 
     case settingsHomePageShown = "ms_hp"
     case settingsHomePageSimple = "ms_hp_s"
+    case settingsHomePageSimpleAndFavorites = "ms_hp_sf"
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
     case settingsManageWhitelist = "ms_mw"

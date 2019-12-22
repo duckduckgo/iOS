@@ -30,7 +30,7 @@ class HomePageConfiguration {
             switch self {
             case .simple:
                 if includePrivacySection {
-                    return [ .privacyProtection, .navigationBarSearch, .logo(withOffset: false) ]
+                    return [ .privacyProtection, .navigationBarSearch, .logo(withOffset: true) ]
                 }
                 return [ .navigationBarSearch, .logo(withOffset: false) ]
 

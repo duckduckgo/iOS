@@ -39,10 +39,12 @@ protocol HomeViewSectionRenderer {
     func omniBarCancelPressed()
     
     func openedAsNewTab()
-    
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem]?
+
+    func openedFromAppLaunch()
     
     func launchNewSearch()
+
+    func menuItemsFor(itemAt: Int) -> [UIMenuItem]?
     
     func collectionView(_ collectionView: UICollectionView,
                         canMoveItemAt indexPath: IndexPath) -> Bool
@@ -88,6 +90,8 @@ extension HomeViewSectionRenderer {
     func omniBarCancelPressed() { }
     
     func openedAsNewTab() { }
+
+    func openedFromAppLaunch() { }
     
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
         return nil
@@ -183,6 +187,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func openedAsNewTab() {
         renderers.forEach { renderer in
             renderer.openedAsNewTab()
+        }
+    }
+
+    func openedFromAppLaunch() {
+        renderers.forEach { renderer in
+            renderer.openedFromAppLaunch()
         }
     }
     

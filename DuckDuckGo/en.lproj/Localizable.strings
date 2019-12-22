@@ -190,6 +190,7 @@
 "autoclear.off" = "Off";
 
 "homepage.simple" = "Simple";
+"homepage.simpleAndFavorites" = "Simple with Favorites";
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
 

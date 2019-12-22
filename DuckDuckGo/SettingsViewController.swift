@@ -160,7 +160,7 @@ class SettingsViewController: UITableViewController {
             homePageAccessoryText.text = UserText.homePageCenterSearchAndFavorites
 
         case .simpleAndFavorites:
-            homePageAccessoryText.text = "Simple with Favorites"
+            homePageAccessoryText.text = UserText.homePageSimpleAndFavorites
 
         }
         

@@ -33,12 +33,22 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true
+
+        showKeyboard()
     }
     
     func openedAsNewTab() {
-        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
+        showKeyboard()
     }
-    
+
+    func openedFromAppLaunch() {
+        showKeyboard()
+    }
+
+    func launchNewSearch() {
+        showKeyboard()
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 0
     }
@@ -58,11 +68,10 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        controller?.chromeDelegate?.omniBar.resignFirstResponder()
+        showKeyboard()
     }
-    
-    func launchNewSearch() {
+
+    private func showKeyboard() {
         controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }
-    
 }

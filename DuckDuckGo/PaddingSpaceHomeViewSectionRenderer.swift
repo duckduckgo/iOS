@@ -81,11 +81,11 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
         let keyboardHeight = value.cgRectValue.height
         guard keyboardHeight > paddingHeight else { return }
         let height = keyboardHeight - 50 // roughly the navigation bar
-        controller?.collectionView.contentInset = UIEdgeInsets(top: HomeCollectionView.Constants.topInset, left: 0, bottom: height, right: 0)
+        controller?.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
     }
     
     @objc func onKeyboardWillHide(notification: Notification) {
-        controller?.collectionView.contentInset = UIEdgeInsets(top: HomeCollectionView.Constants.topInset, left: 0, bottom: 0, right: 0)
+        controller?.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
 }

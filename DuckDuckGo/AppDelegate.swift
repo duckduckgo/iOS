@@ -89,6 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
+
+        mainViewController?.applicationDidBecomeActive()
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {

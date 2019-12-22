@@ -108,6 +108,10 @@ class HomeViewController: UIViewController {
     func openedAsNewTab() {
         collectionView.openedAsNewTab()
     }
+
+    func applicationDidBecomeActive() {
+        collectionView.openedFromAppLaunch()
+    }
     
     @IBAction func launchSettings() {
         delegate?.showSettings(self)

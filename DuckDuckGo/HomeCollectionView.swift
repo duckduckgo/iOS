@@ -21,10 +21,6 @@ import UIKit
 
 class HomeCollectionView: UICollectionView {
     
-    struct Constants {
-        static let topInset: CGFloat = 79
-    }
-    
     private weak var controller: HomeViewController!
     
     private var renderers: HomeViewSectionRenderers!
@@ -58,7 +54,6 @@ class HomeCollectionView: UICollectionView {
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                  withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
         
-        contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {
@@ -146,6 +141,10 @@ class HomeCollectionView: UICollectionView {
     
     func openedAsNewTab() {
         renderers.openedAsNewTab()
+    }
+
+    func openedFromAppLaunch() {
+        renderers.openedFromAppLaunch()
     }
     
     func viewDidTransition(to size: CGSize) {

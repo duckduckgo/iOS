@@ -185,6 +185,10 @@ class MainViewController: UIViewController {
         bookmarksButton.isAccessibilityElement = true
         bookmarksButton.accessibilityTraits = .button
     }
+
+    func applicationDidBecomeActive() {
+        homeController?.applicationDidBecomeActive()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 

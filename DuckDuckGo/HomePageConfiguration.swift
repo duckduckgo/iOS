@@ -21,38 +21,56 @@ import Foundation
 import Core
 
 class HomePageConfiguration {
-    
+
+    class Builder {
+
+        var components = [Component]()
+
+        func add(_ component: Component) {
+            components.append(component)
+        }
+
+        func add(_ component: Component, enabled: Bool) {
+            if enabled {
+                components.append(component)
+            }
+        }
+
+    }
+
     enum ConfigName: Int {
 
         func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
-            let includePrivacySection = variantManger.isSupported(feature: .privacyOnHomeScreen)
+            let builder = Builder()
+
+            let includePrivacySection = true // variantManger.isSupported(feature: .privacyOnHomeScreen)
             
             switch self {
             case .simple:
-                if includePrivacySection {
-                    return [ .privacyProtection, .navigationBarSearch, .logo(withOffset: true) ]
-                }
-                return [ .navigationBarSearch, .logo(withOffset: false) ]
+                builder.add(.privacyProtection, enabled: includePrivacySection)
+                builder.add(.navigationBarSearch)
+                builder.add(.logo(withOffset: includePrivacySection))
 
             case .simpleAndFavorites:
-                if includePrivacySection {
-                    return [ .privacyProtection, .navigationBarSearch, .favorites(withHeader: true), .padding(withOffset: true) ]
-                }
-                return [ .navigationBarSearch, .favorites(withHeader: false), .padding(withOffset: false) ]
+                builder.add(.privacyProtection, enabled: includePrivacySection)
+                builder.add(.navigationBarSearch)
+                builder.add(.favorites(withHeader: includePrivacySection))
+                builder.add(.padding(withOffset: includePrivacySection))
 
             case .centerSearch:
-                if includePrivacySection {
-                    return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
-                }
-                return [ .centeredSearch(fixed: true), .empty ]
-                
+                builder.add(.centeredSearch(fixed: true))
+                builder.add(.privacyProtection, enabled: includePrivacySection)
+                builder.add(.empty)
+
             case .centerSearchAndFavorites:
-                if includePrivacySection {
-                    return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ]
-                }
-                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ]
+                builder.add(.centeredSearch(fixed: false))
+                builder.add(.privacyProtection, enabled: includePrivacySection)
+                builder.add(.favorites(withHeader: includePrivacySection))
+                builder.add(.padding(withOffset: includePrivacySection))
+
             }
-            
+
+            return builder.components
         }
         
         case simple

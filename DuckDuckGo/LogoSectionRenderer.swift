@@ -46,10 +46,6 @@ class LogoSectionRenderer: HomeViewSectionRenderer {
         controller.settingsButton.isHidden = true
     }
 
-    func openedAsNewTab() {
-        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
-    }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }

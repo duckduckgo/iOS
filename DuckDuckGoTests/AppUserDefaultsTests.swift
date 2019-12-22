@@ -91,18 +91,18 @@ class AppUserDefaultsTests: XCTestCase {
     func testWhenNewThenDefaultHomePageIsSimple() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(appUserDefaults.homePage, .simple)
+        XCTAssertEqual(appUserDefaults.homePageConfig, .simple)
         
     }
     
     func testWhenHomePageSetThenSettingIsStored() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.homePage = .centerSearch
-        XCTAssertEqual(appUserDefaults.homePage, .centerSearch)
+        appUserDefaults.homePageConfig = .centerSearch
+        XCTAssertEqual(appUserDefaults.homePageConfig, .centerSearch)
         
         let otherDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(otherDefaults.homePage, .centerSearch)
+        XCTAssertEqual(otherDefaults.homePageConfig, .centerSearch)
 
     }
     

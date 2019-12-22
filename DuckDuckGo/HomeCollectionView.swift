@@ -139,14 +139,6 @@ class HomeCollectionView: UICollectionView {
         renderers.omniBarCancelPressed()
     }
     
-    func openedAsNewTab() {
-        renderers.openedAsNewTab()
-    }
-
-    func openedFromAppLaunch() {
-        renderers.openedFromAppLaunch()
-    }
-    
     func viewDidTransition(to size: CGSize) {
         controller.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         controller.collectionView.reloadData()

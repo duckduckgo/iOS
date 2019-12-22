@@ -36,9 +36,9 @@ public class AtbAndVariantCleanup {
         // Home page experiment migration
         var mutableSettings = settings
         if "mn" == variant {
-            mutableSettings.homePage = .centerSearch
+            mutableSettings.homePageConfig = .centerSearch
         } else if ["ml", "mm"].contains(variant) {
-            mutableSettings.homePage = .centerSearchAndFavorites
+            mutableSettings.homePageConfig = .centerSearchAndFavorites
         }
         
         // remove existing variant if not in an active experiment

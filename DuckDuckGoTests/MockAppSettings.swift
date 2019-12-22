@@ -25,7 +25,10 @@ class MockAppSettings: AppSettings {
     var currentThemeName: ThemeName = ThemeName.dark
     var autoClearTiming: AutoClearSettingsModel.Timing = .termination
     var autoClearAction: AutoClearSettingsModel.Action = []
-    var homePage: HomePageConfiguration.ConfigName = .simple
+    var homePageConfig: HomePageConfiguration.ConfigName = .simple
+    var homePageKeyboardOnAppLaunch: Bool = true
+    var homePageKeyboardOnNewTab: Bool = true
+    var homePageKeyboardAfterFireButton: Bool = true
     var allowUniversalLinks: Bool = true
     var longPressPreviews: Bool = true
     

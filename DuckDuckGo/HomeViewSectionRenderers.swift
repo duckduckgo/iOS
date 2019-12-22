@@ -37,11 +37,7 @@ protocol HomeViewSectionRenderer {
     func install(into controller: HomeViewController)
     
     func omniBarCancelPressed()
-    
-    func openedAsNewTab()
 
-    func openedFromAppLaunch()
-    
     func launchNewSearch()
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]?
@@ -88,11 +84,7 @@ extension HomeViewSectionRenderer {
     func install(into controller: HomeViewController) { }
     
     func omniBarCancelPressed() { }
-    
-    func openedAsNewTab() { }
-
-    func openedFromAppLaunch() { }
-    
+        
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
         return nil
     }
@@ -181,18 +173,6 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func omniBarCancelPressed() {
         renderers.forEach { renderer in
             renderer.omniBarCancelPressed()
-        }
-    }
-    
-    func openedAsNewTab() {
-        renderers.forEach { renderer in
-            renderer.openedAsNewTab()
-        }
-    }
-
-    func openedFromAppLaunch() {
-        renderers.forEach { renderer in
-            renderer.openedFromAppLaunch()
         }
     }
     

@@ -73,7 +73,7 @@ class SettingsViewController: UITableViewController {
     
     private func migrateFavoritesIfNeeded() {
         // This ensures the user does not loose access to their favorites if they change the home page setting
-        if appSettings.homePage != .centerSearchAndFavorites {
+        if appSettings.homePageConfig != .centerSearchAndFavorites {
             BookmarksManager().migrateFavoritesToBookmarks()
         }
     }
@@ -148,7 +148,7 @@ class SettingsViewController: UITableViewController {
     
     private func configureHomePageCellAccessory() {
 
-        switch appSettings.homePage {
+        switch appSettings.homePageConfig {
             
         case .simple:
             homePageAccessoryText.text = UserText.homePageSimple

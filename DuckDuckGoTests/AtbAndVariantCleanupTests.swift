@@ -82,7 +82,7 @@ class AtbAndVariantCleanupTests: XCTestCase {
             let mockSettings = MockAppSettings()
             mockStorage.variant = testCase.key
             AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager, settings: mockSettings)
-            XCTAssertEqual(mockSettings.homePage, testCase.value)
+            XCTAssertEqual(mockSettings.homePageConfig, testCase.value)
         }
         
     }

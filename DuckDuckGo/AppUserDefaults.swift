@@ -31,8 +31,11 @@ public class AppUserDefaults: AppSettings {
         static let autoClearActionKey = "com.duckduckgo.app.autoClearActionKey"
         static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
         
-        static let homePage = "com.duckduckgo.app.homePage"
-        
+        static let homePageConfig = "com.duckduckgo.app.homePage"
+        static let homePageKeyboardOnAppLaunch = "com.duckduckgo.app.homePage.keyboard.app"
+        static let homePageKeyboardOnNewTab = "com.duckduckgo.app.homePage.keyboard.tab"
+        static let homePageKeyboardAfterFireButton = "com.duckduckgo.app.homePage.keyboard.fire"
+
         static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
         static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
         static let foregroundFetchNewDataCount = "com.duckduckgo.app.fgFetchNewDataCount"
@@ -118,17 +121,47 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    var homePage: HomePageConfiguration.ConfigName {
+    var homePageConfig: HomePageConfiguration.ConfigName {
         get {
-            let index = userDefaults?.integer(forKey: Keys.homePage) ?? 0
+            let index = userDefaults?.integer(forKey: Keys.homePageConfig) ?? 0
             return HomePageConfiguration.ConfigName(rawValue: index)!
         }
         
         set {
-            userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePage)
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePageConfig)
         }
     }
-    
+
+    var homePageKeyboardOnAppLaunch: Bool {
+        get {
+            return userDefaults?.bool(forKey: Keys.homePageKeyboardOnAppLaunch) ?? false
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.homePageKeyboardOnAppLaunch)
+        }
+    }
+
+    var homePageKeyboardOnNewTab: Bool {
+        get {
+            return userDefaults?.object(forKey: Keys.homePageKeyboardOnNewTab) as? Bool ?? true
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.homePageKeyboardOnNewTab)
+        }
+    }
+
+    var homePageKeyboardAfterFireButton: Bool {
+        get {
+            return userDefaults?.object(forKey: Keys.homePageKeyboardAfterFireButton) as? Bool ?? true
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.homePageKeyboardAfterFireButton)
+        }
+    }
+
     var allowUniversalLinks: Bool {
         get {
             return userDefaults?.object(forKey: Keys.allowUniversalLinks) as? Bool ?? true

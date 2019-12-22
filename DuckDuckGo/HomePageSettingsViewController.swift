@@ -47,23 +47,67 @@ class HomePageSettingsViewController: UITableViewController {
         
         // Checkmark color
         cell.tintColor = theme.buttonTintColor
-        
-        cell.accessoryType = indexPath.row == appSettings.homePage.rawValue ? .checkmark : .none
+
+        if indexPath.section == 0 {
+            cell.accessoryType = indexPath.row == appSettings.homePageConfig.rawValue ? .checkmark : .none
+        } else {
+
+            switch indexPath.row {
+            case 0:
+                cell.accessoryType = appSettings.homePageKeyboardOnAppLaunch ? .checkmark : .none
+
+            case 1:
+                cell.accessoryType = appSettings.homePageKeyboardOnNewTab ? .checkmark : .none
+
+            case 2:
+                cell.accessoryType = appSettings.homePageKeyboardAfterFireButton ? .checkmark : .none
+
+            default: break
+
+            }
+
+        }
+
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard appSettings.homePage.rawValue != indexPath.row else { return }
-        let config = HomePageConfiguration.ConfigName(rawValue: indexPath.row)!
-        
+
+        if indexPath.section == 0 {
+            updateHomePageSetting(row: indexPath.row)
+        } else {
+            updateKeyboardSetting(row: indexPath.row)
+        }
+
+        tableView.reloadData()
+    }
+
+    private func updateKeyboardSetting(row: Int) {
+        switch row {
+        case 0:
+            appSettings.homePageKeyboardOnAppLaunch = !appSettings.homePageKeyboardOnAppLaunch
+
+        case 1:
+            appSettings.homePageKeyboardOnNewTab = !appSettings.homePageKeyboardOnNewTab
+
+        case 2:
+            appSettings.homePageKeyboardAfterFireButton = !appSettings.homePageKeyboardAfterFireButton
+
+        default: break
+        }
+    }
+
+    private func updateHomePageSetting(row: Int) {
+        guard appSettings.homePageConfig.rawValue != row else { return }
+        let config = HomePageConfiguration.ConfigName(rawValue: row)!
+
         switch config {
         case .simple:
             Pixel.fire(pixel: .settingsHomePageSimple)
 
         case .centerSearch:
             Pixel.fire(pixel: .settingsHomePageCenterSearch)
-            
+
         case .centerSearchAndFavorites:
             Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
 
@@ -71,10 +115,9 @@ class HomePageSettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsHomePageSimpleAndFavorites)
 
         }
-        
-        appSettings.homePage = config
+
+        appSettings.homePageConfig = config
         delegate?.homePageChanged(to: config)
-        tableView.reloadData()
     }
     
 }

@@ -75,7 +75,7 @@ class HomePageConfiguration {
     let settings: AppSettings
     
     func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
-        return settings.homePage.components(withVariantManger: variantManger)
+        return settings.homePageConfig.components(withVariantManger: variantManger)
     }
     
     init(settings: AppSettings = AppUserDefaults()) {

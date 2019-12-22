@@ -24,7 +24,10 @@ protocol AppSettings {
     var autoClearAction: AutoClearSettingsModel.Action { get set }
     var autoClearTiming: AutoClearSettingsModel.Timing { get set }
 
-    var homePage: HomePageConfiguration.ConfigName { get set }
+    var homePageConfig: HomePageConfiguration.ConfigName { get set }
+    var homePageKeyboardOnAppLaunch: Bool { get set }
+    var homePageKeyboardOnNewTab: Bool { get set }
+    var homePageKeyboardAfterFireButton: Bool { get set }
 
     var longPressPreviews: Bool { get set }
 

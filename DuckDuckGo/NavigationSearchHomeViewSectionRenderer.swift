@@ -33,8 +33,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true
-
-        showKeyboard()
     }
     
     func openedAsNewTab() {

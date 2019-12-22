@@ -106,11 +106,15 @@ class HomeViewController: UIViewController {
     }
     
     func openedAsNewTab() {
-        collectionView.openedAsNewTab()
+        if AppUserDefaults().homePageKeyboardOnNewTab {
+            chromeDelegate?.omniBar.becomeFirstResponder()
+        }
     }
 
     func applicationDidBecomeActive() {
-        collectionView.openedFromAppLaunch()
+        if AppUserDefaults().homePageKeyboardOnAppLaunch {
+            chromeDelegate?.omniBar.becomeFirstResponder()
+        }
     }
     
     @IBAction func launchSettings() {

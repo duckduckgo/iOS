@@ -451,7 +451,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        guard appSettings.homePage.components().contains(where: {
+        guard appSettings.homePageConfig.components().contains(where: {
             if case .favorites = $0 { return true }
             return false
         }) else { return }
@@ -1027,6 +1027,11 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
+
+        if appSettings.homePageKeyboardAfterFireButton {
+            omniBar.becomeFirstResponder()
+        }
+
     }
     
     func forgetData() {

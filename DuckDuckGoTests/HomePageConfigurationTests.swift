@@ -40,7 +40,7 @@ class HomePageConfigurationTests: XCTestCase {
     }
 
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
-        settings.homePage = .centerSearch
+        settings.homePageConfig = .centerSearch
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual(config.components(withVariantManger: variantManager),
                        [ .centeredSearch(fixed: true), .empty ])
@@ -48,7 +48,7 @@ class HomePageConfigurationTests: XCTestCase {
 
     func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
         let settings = MockAppSettings()
-        settings.homePage = .centerSearchAndFavorites
+        settings.homePageConfig = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual(config.components(withVariantManger: variantManager),
                        [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ])
@@ -75,7 +75,7 @@ class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
     }
     
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
-        settings.homePage = .centerSearch
+        settings.homePageConfig = .centerSearch
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual(config.components(withVariantManger: variantManager),
                        [ .centeredSearch(fixed: true), .privacyProtection, .empty ])
@@ -83,7 +83,7 @@ class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
     
     func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
         let settings = MockAppSettings()
-        settings.homePage = .centerSearchAndFavorites
+        settings.homePageConfig = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual(config.components(withVariantManger: variantManager),
                        [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ])

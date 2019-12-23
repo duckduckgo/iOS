@@ -80,8 +80,6 @@ class HomeCollectionView: UICollectionView {
             case .padding(let withOffset):
                 renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer(withOffset: withOffset))
                 
-            case .empty:
-                renderers.install(renderer: EmptySectionRenderer())
             }
         }
         

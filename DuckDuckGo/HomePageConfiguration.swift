@@ -77,7 +77,6 @@ class HomePageConfiguration {
         case centeredSearch(fixed: Bool)
         case favorites(withHeader: Bool)
         case padding(withOffset: Bool)
-        case empty
     }
     
     let settings: AppSettings

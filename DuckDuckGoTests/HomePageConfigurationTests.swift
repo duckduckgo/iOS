@@ -25,24 +25,22 @@ import XCTest
 class HomePageConfigurationTests: XCTestCase {
     
     var settings: MockAppSettings!
-    var variantManager: MockVariantManager!
-    
+
     override func setUp() {
         settings = MockAppSettings()
-        variantManager = MockVariantManager()
     }
   
     func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
         let config = HomePageConfiguration(settings: settings)
         
-        XCTAssertEqual(config.components(withVariantManger: variantManager),
+        XCTAssertEqual(config.components(),
                        [ .navigationBarSearch, .logo(withOffset: false) ])
     }
 
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
         settings.homePageConfig = .centerSearch
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual(config.components(withVariantManger: variantManager),
+        XCTAssertEqual(config.components(),
                        [ .centeredSearch(fixed: true), .empty ])
     }
 
@@ -50,7 +48,7 @@ class HomePageConfigurationTests: XCTestCase {
         let settings = MockAppSettings()
         settings.homePageConfig = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual(config.components(withVariantManger: variantManager),
+        XCTAssertEqual(config.components(),
                        [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ])
     }
 
@@ -70,14 +68,14 @@ class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
     func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
         let config = HomePageConfiguration(settings: settings)
         
-        XCTAssertEqual(config.components(withVariantManger: variantManager),
+        XCTAssertEqual(config.components(),
                        [ .privacyProtection, .navigationBarSearch, .logo(withOffset: false) ])
     }
     
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
         settings.homePageConfig = .centerSearch
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual(config.components(withVariantManger: variantManager),
+        XCTAssertEqual(config.components(),
                        [ .centeredSearch(fixed: true), .privacyProtection, .empty ])
     }
     
@@ -85,7 +83,7 @@ class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
         let settings = MockAppSettings()
         settings.homePageConfig = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual(config.components(withVariantManger: variantManager),
+        XCTAssertEqual(config.components(),
                        [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ])
     }
     

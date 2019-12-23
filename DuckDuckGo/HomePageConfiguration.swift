@@ -40,35 +40,26 @@ class HomePageConfiguration {
 
     enum ConfigName: Int {
 
-        func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
+        func components() -> [Component] {
             let builder = Builder()
 
-            let includePrivacySection = true // variantManger.isSupported(feature: .privacyOnHomeScreen)
+            let appSettings = AppUserDefaults()
+            let includePrivacySection = appSettings.homePageFeaturePrivacyStats
+            let includeFavorites = appSettings.homePageFeatureFavorites
             
             switch self {
-            case .simple:
+            case .simple, .simpleAndFavorites:
                 builder.add(.privacyProtection, enabled: includePrivacySection)
                 builder.add(.navigationBarSearch)
-                builder.add(.logo(withOffset: includePrivacySection))
+                builder.add(.logo(withOffset: includePrivacySection), enabled: !includeFavorites)
 
-            case .simpleAndFavorites:
+            case .centerSearch, .centerSearchAndFavorites:
+                builder.add(.centeredSearch(fixed: !includeFavorites))
                 builder.add(.privacyProtection, enabled: includePrivacySection)
-                builder.add(.navigationBarSearch)
-                builder.add(.favorites(withHeader: includePrivacySection))
-                builder.add(.padding(withOffset: includePrivacySection))
-
-            case .centerSearch:
-                builder.add(.centeredSearch(fixed: true))
-                builder.add(.privacyProtection, enabled: includePrivacySection)
-                builder.add(.empty)
-
-            case .centerSearchAndFavorites:
-                builder.add(.centeredSearch(fixed: false))
-                builder.add(.privacyProtection, enabled: includePrivacySection)
-                builder.add(.favorites(withHeader: includePrivacySection))
-                builder.add(.padding(withOffset: includePrivacySection))
-
             }
+
+            builder.add(.favorites(withHeader: includePrivacySection), enabled: includeFavorites)
+            builder.add(.padding(withOffset: includePrivacySection), enabled: includeFavorites)
 
             return builder.components
         }
@@ -92,8 +83,8 @@ class HomePageConfiguration {
     
     let settings: AppSettings
     
-    func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
-        return settings.homePageConfig.components(withVariantManger: variantManger)
+    func components() -> [Component] {
+        return settings.homePageConfig.components()
     }
     
     init(settings: AppSettings = AppUserDefaults()) {

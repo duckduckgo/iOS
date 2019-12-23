@@ -48,40 +48,81 @@ class HomePageSettingsViewController: UITableViewController {
         // Checkmark color
         cell.tintColor = theme.buttonTintColor
 
-        if indexPath.section == 0 {
-            cell.accessoryType = indexPath.row == appSettings.homePageConfig.rawValue ? .checkmark : .none
-        } else {
+        switch indexPath.section {
+        case 0:
+            updateConfigAccessory(onCell: cell, forRow: indexPath.row)
 
-            switch indexPath.row {
-            case 0:
-                cell.accessoryType = appSettings.homePageKeyboardOnAppLaunch ? .checkmark : .none
+        case 1:
+            updateFeaturesAccessory(onCell: cell, forRow: indexPath.row)
 
-            case 1:
-                cell.accessoryType = appSettings.homePageKeyboardOnNewTab ? .checkmark : .none
+        case 2:
+            updateKeyboardAccessory(onCell: cell, forRow: indexPath.row)
 
-            case 2:
-                cell.accessoryType = appSettings.homePageKeyboardAfterFireButton ? .checkmark : .none
+        default: break
+        }
+    }
 
-            default: break
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
 
-            }
+        switch indexPath.section {
+        case 0:
+            updateHomePageSetting(row: indexPath.row)
 
+        case 1:
+            updateFeatureSetting(row: indexPath.row)
+
+        case 2:
+            updateKeyboardSetting(row: indexPath.row)
+
+        default: break
+        }
+
+        tableView.reloadData()
+        delegate?.homePageChanged(to: appSettings.homePageConfig)
+    }
+
+    private func updateConfigAccessory(onCell cell: UITableViewCell, forRow row: Int) {
+
+        switch appSettings.homePageConfig {
+
+        case .simple, .simpleAndFavorites:
+            cell.accessoryType = row == 0 ? .checkmark : .none
+
+        case .centerSearch, .centerSearchAndFavorites:
+            cell.accessoryType = row == 1 ? .checkmark : .none
+
+        }
+
+    }
+
+    private func updateFeaturesAccessory(onCell cell: UITableViewCell, forRow row: Int) {
+        switch row {
+        case 0:
+            cell.accessoryType = appSettings.homePageFeatureFavorites ? .checkmark : .none
+
+        case 1:
+            cell.accessoryType = appSettings.homePageFeaturePrivacyStats ? .checkmark : .none
+
+        default: break
+        }
+    }
+
+    private func updateKeyboardAccessory(onCell cell: UITableViewCell, forRow row: Int) {
+        switch row {
+        case 0:
+            cell.accessoryType = appSettings.homePageKeyboardOnAppLaunch ? .checkmark : .none
+
+        case 1:
+            cell.accessoryType = appSettings.homePageKeyboardOnNewTab ? .checkmark : .none
+
+        case 2:
+            cell.accessoryType = appSettings.homePageKeyboardAfterFireButton ? .checkmark : .none
+        default: break
         }
 
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        if indexPath.section == 0 {
-            updateHomePageSetting(row: indexPath.row)
-        } else {
-            updateKeyboardSetting(row: indexPath.row)
-        }
-
-        tableView.reloadData()
-    }
-
     private func updateKeyboardSetting(row: Int) {
         switch row {
         case 0:
@@ -97,27 +138,28 @@ class HomePageSettingsViewController: UITableViewController {
         }
     }
 
-    private func updateHomePageSetting(row: Int) {
-        guard appSettings.homePageConfig.rawValue != row else { return }
-        let config = HomePageConfiguration.ConfigName(rawValue: row)!
+    private func updateFeatureSetting(row: Int) {
+        switch row {
+        case 0:
+            appSettings.homePageFeatureFavorites = !appSettings.homePageFeatureFavorites
 
-        switch config {
-        case .simple:
-            Pixel.fire(pixel: .settingsHomePageSimple)
+        case 1:
+            appSettings.homePageFeaturePrivacyStats = !appSettings.homePageFeaturePrivacyStats
 
-        case .centerSearch:
-            Pixel.fire(pixel: .settingsHomePageCenterSearch)
-
-        case .centerSearchAndFavorites:
-            Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
-
-        case .simpleAndFavorites:
-            Pixel.fire(pixel: .settingsHomePageSimpleAndFavorites)
-
+        default: break
         }
+    }
 
-        appSettings.homePageConfig = config
-        delegate?.homePageChanged(to: config)
+    private func updateHomePageSetting(row: Int) {
+        switch row {
+        case 0:
+            appSettings.homePageConfig = .simple
+
+        case 1:
+            appSettings.homePageConfig = .centerSearch
+
+        default: break
+        }
     }
     
 }

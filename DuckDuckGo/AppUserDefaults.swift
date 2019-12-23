@@ -35,6 +35,8 @@ public class AppUserDefaults: AppSettings {
         static let homePageKeyboardOnAppLaunch = "com.duckduckgo.app.homePage.keyboard.app"
         static let homePageKeyboardOnNewTab = "com.duckduckgo.app.homePage.keyboard.tab"
         static let homePageKeyboardAfterFireButton = "com.duckduckgo.app.homePage.keyboard.fire"
+        static let homePageFeaturesFavorites = "com.duckduckgo.app.homePage.features.favorites"
+        static let homePageFeaturesPrivacyStats = "com.duckduckgo.app.homePage.features.privacystats"
 
         static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
         static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
@@ -134,7 +136,7 @@ public class AppUserDefaults: AppSettings {
 
     var homePageKeyboardOnAppLaunch: Bool {
         get {
-            return userDefaults?.bool(forKey: Keys.homePageKeyboardOnAppLaunch) ?? false
+            return userDefaults?.object(forKey: Keys.homePageKeyboardOnAppLaunch) as? Bool ?? false
         }
 
         set {
@@ -159,6 +161,26 @@ public class AppUserDefaults: AppSettings {
 
         set {
             userDefaults?.setValue(newValue, forKey: Keys.homePageKeyboardAfterFireButton)
+        }
+    }
+
+    var homePageFeatureFavorites: Bool {
+        get {
+            return userDefaults?.object(forKey: Keys.homePageFeaturesFavorites) as? Bool ?? false
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.homePageFeaturesFavorites)
+        }
+    }
+
+    var homePageFeaturePrivacyStats: Bool {
+        get {
+            return userDefaults?.object(forKey: Keys.homePageFeaturesPrivacyStats) as? Bool ?? false
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.homePageFeaturesPrivacyStats)
         }
     }
 

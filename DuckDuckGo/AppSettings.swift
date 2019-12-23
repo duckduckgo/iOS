@@ -28,6 +28,8 @@ protocol AppSettings {
     var homePageKeyboardOnAppLaunch: Bool { get set }
     var homePageKeyboardOnNewTab: Bool { get set }
     var homePageKeyboardAfterFireButton: Bool { get set }
+    var homePageFeatureFavorites: Bool { get set }
+    var homePageFeaturePrivacyStats: Bool { get set }
 
     var longPressPreviews: Bool { get set }
 

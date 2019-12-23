@@ -29,6 +29,8 @@ class MockAppSettings: AppSettings {
     var homePageKeyboardOnAppLaunch: Bool = true
     var homePageKeyboardOnNewTab: Bool = true
     var homePageKeyboardAfterFireButton: Bool = true
+    var homePageFeaturePrivacyStats: Bool = true
+    var homePageFeatureFavorites: Bool = true
     var allowUniversalLinks: Bool = true
     var longPressPreviews: Bool = true
     

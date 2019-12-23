@@ -922,14 +922,14 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="qzU-GV-UXg" style="IBUITableViewCellStyleDefault" id="pZm-A8-4w9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="lzp-z4-0SR" style="IBUITableViewCellStyleDefault" id="t17-hk-3xo">
                                         <rect key="frame" x="0.0" y="99.333332061767578" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pZm-A8-4w9" id="Xrg-nD-HWh">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t17-hk-3xo" id="ePu-m0-Byq">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Simple with Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qzU-GV-UXg">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Centered Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lzp-z4-0SR">
                                                     <rect key="frame" x="16" y="0.0" width="311" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -939,14 +939,18 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="lzp-z4-0SR" style="IBUITableViewCellStyleDefault" id="t17-hk-3xo">
-                                        <rect key="frame" x="0.0" y="143.33333206176758" width="375" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Features" id="QhA-TQ-k9h">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Urx-aF-Ymf" style="IBUITableViewCellStyleDefault" id="efH-oB-PCV">
+                                        <rect key="frame" x="0.0" y="199.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t17-hk-3xo" id="ePu-m0-Byq">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="efH-oB-PCV" id="meE-Mc-EI3">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Centered Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lzp-z4-0SR">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Urx-aF-Ymf">
                                                     <rect key="frame" x="16" y="0.0" width="343" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -956,14 +960,14 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="b6B-pf-gTH" style="IBUITableViewCellStyleDefault" id="CJF-om-elm">
-                                        <rect key="frame" x="0.0" y="187.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="JkO-Ob-ij7" style="IBUITableViewCellStyleDefault" id="XDN-pV-Szf">
+                                        <rect key="frame" x="0.0" y="243.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CJF-om-elm" id="fVR-WP-42I">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XDN-pV-Szf" id="SDf-Vx-ofR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Centered Search with Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b6B-pf-gTH">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Privacy Stats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JkO-Ob-ij7">
                                                     <rect key="frame" x="16" y="0.0" width="343" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -975,16 +979,16 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Show Keyboard" id="QhA-TQ-k9h">
+                            <tableViewSection headerTitle="Show Keyboard" id="lem-a0-ovR">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Urx-aF-Ymf" style="IBUITableViewCellStyleDefault" id="efH-oB-PCV">
-                                        <rect key="frame" x="0.0" y="287.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="6bb-bO-iIa" style="IBUITableViewCellStyleDefault" id="TKb-0a-Bdh">
+                                        <rect key="frame" x="0.0" y="343.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="efH-oB-PCV" id="meE-Mc-EI3">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TKb-0a-Bdh" id="MLB-R0-5cK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On App Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Urx-aF-Ymf">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On App Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6bb-bO-iIa">
                                                     <rect key="frame" x="16" y="0.0" width="343" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -994,14 +998,14 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="tiu-di-sj6" style="IBUITableViewCellStyleDefault" id="ysz-rF-fE5">
-                                        <rect key="frame" x="0.0" y="331.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="hmh-GP-5kR" style="IBUITableViewCellStyleDefault" id="dNH-tt-0mw">
+                                        <rect key="frame" x="0.0" y="387.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ysz-rF-fE5" id="3I5-lD-NU8">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dNH-tt-0mw" id="eA3-sy-cEX">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On New Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tiu-di-sj6">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On New Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hmh-GP-5kR">
                                                     <rect key="frame" x="16" y="0.0" width="311" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1011,14 +1015,14 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="JkO-Ob-ij7" style="IBUITableViewCellStyleDefault" id="XDN-pV-Szf">
-                                        <rect key="frame" x="0.0" y="375.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="h5H-fe-9Fy" style="IBUITableViewCellStyleDefault" id="kxz-7V-5kB">
+                                        <rect key="frame" x="0.0" y="431.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XDN-pV-Szf" id="SDf-Vx-ofR">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kxz-7V-5kB" id="mIV-Hl-4xU">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="After Fire Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JkO-Ob-ij7">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="After Fire Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h5H-fe-9Fy">
                                                     <rect key="frame" x="16" y="0.0" width="311" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1039,11 +1043,11 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                     <connections>
                         <outletCollection property="labels" destination="rZg-gB-8cW" collectionClass="NSMutableArray" id="lXo-RI-T7D"/>
                         <outletCollection property="labels" destination="lzp-z4-0SR" collectionClass="NSMutableArray" id="XTZ-PP-nDq"/>
-                        <outletCollection property="labels" destination="b6B-pf-gTH" collectionClass="NSMutableArray" id="4Fa-3X-X1U"/>
-                        <outletCollection property="labels" destination="qzU-GV-UXg" collectionClass="NSMutableArray" id="oAT-WA-k5a"/>
                         <outletCollection property="labels" destination="Urx-aF-Ymf" collectionClass="NSMutableArray" id="IJE-FG-fLi"/>
-                        <outletCollection property="labels" destination="tiu-di-sj6" collectionClass="NSMutableArray" id="g9U-cR-jv1"/>
                         <outletCollection property="labels" destination="JkO-Ob-ij7" collectionClass="NSMutableArray" id="u8m-yF-mAd"/>
+                        <outletCollection property="labels" destination="6bb-bO-iIa" collectionClass="NSMutableArray" id="FpG-il-Z5l"/>
+                        <outletCollection property="labels" destination="hmh-GP-5kR" collectionClass="NSMutableArray" id="kAD-Wf-Tr2"/>
+                        <outletCollection property="labels" destination="h5H-fe-9Fy" collectionClass="NSMutableArray" id="WNt-a2-Fh0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5N-h7-Sv7" userLabel="First Responder" sceneMemberID="firstResponder"/>

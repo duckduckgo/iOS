@@ -59,7 +59,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jf-KE-oXj" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="239" width="342" height="48"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
                                                             <rect key="frame" x="15" y="12" width="30" height="24"/>
                                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -300,7 +300,7 @@
     <resources>
         <image name="Add" width="24" height="24"/>
         <image name="LogoDarkText" width="160" height="128"/>
-        <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="Settings" width="24" height="24"/>
+        <image name="SuggestLoupe" width="24" height="24"/>
     </resources>
 </document>

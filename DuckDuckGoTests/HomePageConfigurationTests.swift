@@ -31,8 +31,8 @@ class HomePageConfigurationTests: XCTestCase {
     }
   
     func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
-        let config = HomePageConfiguration(settings: settings)
-        
+        settings.homePageConfig = .simple
+        let config = HomePageConfiguration(settings: settings)        
         XCTAssertEqual(config.components(),
                        [ .navigationBarSearch, .logo(withOffset: false) ])
     }

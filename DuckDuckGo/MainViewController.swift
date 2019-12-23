@@ -451,7 +451,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        guard appSettings.homePageConfig.components().contains(where: {
+        guard appSettings.homePageConfig.components(appSettings: appSettings).contains(where: {
             if case .favorites = $0 { return true }
             return false
         }) else { return }

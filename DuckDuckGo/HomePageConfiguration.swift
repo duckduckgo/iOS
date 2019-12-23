@@ -40,10 +40,9 @@ class HomePageConfiguration {
 
     enum ConfigName: Int {
 
-        func components() -> [Component] {
+        func components(appSettings: AppSettings) -> [Component] {
             let builder = Builder()
 
-            let appSettings = AppUserDefaults()
             let includePrivacySection = appSettings.homePageFeaturePrivacyStats
             let includeFavorites = appSettings.homePageFeatureFavorites
             
@@ -84,7 +83,7 @@ class HomePageConfiguration {
     let settings: AppSettings
     
     func components() -> [Component] {
-        return settings.homePageConfig.components()
+        return settings.homePageConfig.components(appSettings: settings)
     }
     
     init(settings: AppSettings = AppUserDefaults()) {

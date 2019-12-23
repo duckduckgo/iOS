@@ -26,11 +26,11 @@ class MockAppSettings: AppSettings {
     var autoClearTiming: AutoClearSettingsModel.Timing = .termination
     var autoClearAction: AutoClearSettingsModel.Action = []
     var homePageConfig: HomePageConfiguration.ConfigName = .simple
-    var homePageKeyboardOnAppLaunch: Bool = true
-    var homePageKeyboardOnNewTab: Bool = true
-    var homePageKeyboardAfterFireButton: Bool = true
-    var homePageFeaturePrivacyStats: Bool = true
-    var homePageFeatureFavorites: Bool = true
+    var homePageKeyboardOnAppLaunch: Bool = false
+    var homePageKeyboardOnNewTab: Bool = false
+    var homePageKeyboardAfterFireButton: Bool = false
+    var homePageFeaturePrivacyStats: Bool = false
+    var homePageFeatureFavorites: Bool = false
     var allowUniversalLinks: Bool = true
     var longPressPreviews: Bool = true
     

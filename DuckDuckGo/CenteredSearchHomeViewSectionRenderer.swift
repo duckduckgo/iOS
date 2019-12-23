@@ -41,7 +41,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private weak var cell: CenteredSearchHomeCell?
 
     private var heightRatio: CGFloat {
-        return fixed ? 1.875 : 2.0
+        return fixed ? 1.375 : 1.5
     }
     
     private var indexPath: IndexPath?

@@ -45,7 +45,6 @@ class HomePageConfigurationTests: XCTestCase {
     }
 
     func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
-        let settings = MockAppSettings()
         settings.homePageConfig = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual(config.components(),
@@ -53,7 +52,6 @@ class HomePageConfigurationTests: XCTestCase {
     }
 
     func testWhenHomePageIsCenterAndFavoritesEnabledThenCorrectConfigReturned() {
-        let settings = MockAppSettings()
         settings.homePageConfig = .centerSearchAndFavorites
         settings.homePageFeatureFavorites = true
         let config = HomePageConfiguration(settings: settings)

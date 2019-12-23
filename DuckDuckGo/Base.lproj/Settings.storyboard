@@ -536,7 +536,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="100.66666666666667" y="224" width="173.66666666666663" height="20"/>
+                                                <rect key="frame" x="100.66666666666669" y="224" width="173.66666666666663" height="20"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -943,93 +943,178 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                             </tableViewSection>
                             <tableViewSection headerTitle="Features" id="QhA-TQ-k9h">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Urx-aF-Ymf" style="IBUITableViewCellStyleDefault" id="efH-oB-PCV">
-                                        <rect key="frame" x="0.0" y="199.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="48" id="efH-oB-PCV">
+                                        <rect key="frame" x="0.0" y="199.33333206176758" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="efH-oB-PCV" id="meE-Mc-EI3">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Urx-aF-Ymf">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PDf-PC-tle">
+                                                    <rect key="frame" x="21" y="8.6666666666666643" width="333" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HXn-Xe-Wep">
+                                                            <rect key="frame" x="0.0" y="9" width="284" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NeH-Ii-1Bz">
+                                                            <rect key="frame" x="284" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="toggleUpdated" destination="kab-gs-Drm" eventType="valueChanged" id="Xoi-Iu-4FD"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="PDf-PC-tle" firstAttribute="centerX" secondItem="meE-Mc-EI3" secondAttribute="centerX" id="ElU-Zh-5fE"/>
+                                                <constraint firstItem="PDf-PC-tle" firstAttribute="centerY" secondItem="meE-Mc-EI3" secondAttribute="centerY" id="VS7-Lx-egB"/>
+                                                <constraint firstItem="PDf-PC-tle" firstAttribute="height" secondItem="meE-Mc-EI3" secondAttribute="height" id="Zvr-Bt-HE2"/>
+                                                <constraint firstItem="PDf-PC-tle" firstAttribute="width" secondItem="meE-Mc-EI3" secondAttribute="width" constant="-42" id="bCP-Gi-DRt"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="JkO-Ob-ij7" style="IBUITableViewCellStyleDefault" id="XDN-pV-Szf">
-                                        <rect key="frame" x="0.0" y="243.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="48" id="T5A-ee-Ly2">
+                                        <rect key="frame" x="0.0" y="247.33333206176758" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XDN-pV-Szf" id="SDf-Vx-ofR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T5A-ee-Ly2" id="XFs-Go-0tL">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Privacy Stats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JkO-Ob-ij7">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9FK-Ib-hf7">
+                                                    <rect key="frame" x="21" y="8.6666666666666643" width="333" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Privacy Stats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZQh-YB-ET7">
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="284" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Rr-1b-a5h">
+                                                            <rect key="frame" x="284" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="toggleUpdated" destination="kab-gs-Drm" eventType="valueChanged" id="LmX-Xo-NO2"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9FK-Ib-hf7" firstAttribute="centerY" secondItem="XFs-Go-0tL" secondAttribute="centerY" id="H1D-2p-BVw"/>
+                                                <constraint firstItem="9FK-Ib-hf7" firstAttribute="centerX" secondItem="XFs-Go-0tL" secondAttribute="centerX" id="NZ1-mS-BAZ"/>
+                                                <constraint firstItem="9FK-Ib-hf7" firstAttribute="width" secondItem="XFs-Go-0tL" secondAttribute="width" constant="-42" id="bXW-T6-Ujv"/>
+                                                <constraint firstItem="9FK-Ib-hf7" firstAttribute="height" secondItem="XFs-Go-0tL" secondAttribute="height" id="l0w-PS-cL5"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Show Keyboard" id="lem-a0-ovR">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="6bb-bO-iIa" style="IBUITableViewCellStyleDefault" id="TKb-0a-Bdh">
-                                        <rect key="frame" x="0.0" y="343.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="48" id="sNN-ov-fFQ">
+                                        <rect key="frame" x="0.0" y="351.33333206176758" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TKb-0a-Bdh" id="MLB-R0-5cK">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sNN-ov-fFQ" id="06E-Ta-98M">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On App Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6bb-bO-iIa">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Imx-vL-kI0">
+                                                    <rect key="frame" x="21" y="8.6666666666666643" width="333" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On App Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0q4-jE-GJM">
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="284" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qf5-JW-DTS">
+                                                            <rect key="frame" x="284" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="toggleUpdated" destination="kab-gs-Drm" eventType="valueChanged" id="00m-4f-ocb"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Imx-vL-kI0" firstAttribute="width" secondItem="06E-Ta-98M" secondAttribute="width" constant="-42" id="9F2-20-92O"/>
+                                                <constraint firstItem="Imx-vL-kI0" firstAttribute="centerY" secondItem="06E-Ta-98M" secondAttribute="centerY" id="NA3-Hi-CBL"/>
+                                                <constraint firstItem="Imx-vL-kI0" firstAttribute="centerX" secondItem="06E-Ta-98M" secondAttribute="centerX" id="Z98-zc-Nao"/>
+                                                <constraint firstItem="Imx-vL-kI0" firstAttribute="height" secondItem="06E-Ta-98M" secondAttribute="height" id="iu3-wk-dRD"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="hmh-GP-5kR" style="IBUITableViewCellStyleDefault" id="dNH-tt-0mw">
-                                        <rect key="frame" x="0.0" y="387.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="48" id="6zV-s8-nDb">
+                                        <rect key="frame" x="0.0" y="399.33333206176758" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dNH-tt-0mw" id="eA3-sy-cEX">
-                                            <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6zV-s8-nDb" id="6Sy-ms-oHg">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On New Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hmh-GP-5kR">
-                                                    <rect key="frame" x="16" y="0.0" width="311" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="P6K-4W-ryF">
+                                                    <rect key="frame" x="21" y="8.6666666666666643" width="333" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On New Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vei-JE-N7N">
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="284" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hcb-OH-IiL">
+                                                            <rect key="frame" x="284" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="toggleUpdated" destination="kab-gs-Drm" eventType="valueChanged" id="jlv-dl-cyi"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="P6K-4W-ryF" firstAttribute="height" secondItem="6Sy-ms-oHg" secondAttribute="height" id="1tG-Gp-Jad"/>
+                                                <constraint firstItem="P6K-4W-ryF" firstAttribute="width" secondItem="6Sy-ms-oHg" secondAttribute="width" constant="-42" id="NiC-Pu-0Tk"/>
+                                                <constraint firstItem="P6K-4W-ryF" firstAttribute="centerY" secondItem="6Sy-ms-oHg" secondAttribute="centerY" id="s4e-Ru-W2b"/>
+                                                <constraint firstItem="P6K-4W-ryF" firstAttribute="centerX" secondItem="6Sy-ms-oHg" secondAttribute="centerX" id="yAF-LM-Vsi"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="h5H-fe-9Fy" style="IBUITableViewCellStyleDefault" id="kxz-7V-5kB">
-                                        <rect key="frame" x="0.0" y="431.33333206176758" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="48" id="yNS-0p-wQp">
+                                        <rect key="frame" x="0.0" y="447.33333206176758" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kxz-7V-5kB" id="mIV-Hl-4xU">
-                                            <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yNS-0p-wQp" id="wzw-V6-TBS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="After Fire Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h5H-fe-9Fy">
-                                                    <rect key="frame" x="16" y="0.0" width="311" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yUa-aC-o3I">
+                                                    <rect key="frame" x="21" y="8.6666666666666643" width="333" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="After Fire Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u9X-Ft-3AH">
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="284" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1TJ-nr-fLl">
+                                                            <rect key="frame" x="284" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="toggleUpdated" destination="kab-gs-Drm" eventType="valueChanged" id="lNv-aQ-2mJ"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="yUa-aC-o3I" firstAttribute="centerX" secondItem="wzw-V6-TBS" secondAttribute="centerX" id="7HV-Zg-UcP"/>
+                                                <constraint firstItem="yUa-aC-o3I" firstAttribute="height" secondItem="wzw-V6-TBS" secondAttribute="height" id="S66-4Q-GS3"/>
+                                                <constraint firstItem="yUa-aC-o3I" firstAttribute="width" secondItem="wzw-V6-TBS" secondAttribute="width" constant="-42" id="YpZ-me-cgT"/>
+                                                <constraint firstItem="yUa-aC-o3I" firstAttribute="centerY" secondItem="wzw-V6-TBS" secondAttribute="centerY" id="dhX-JX-ypU"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -1041,18 +1126,23 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="afterFireButtonToggle" destination="1TJ-nr-fLl" id="S1K-Js-Kwx"/>
+                        <outlet property="favoritesToggle" destination="NeH-Ii-1Bz" id="Upg-do-Rr3"/>
+                        <outlet property="onAppLaunchToggle" destination="qf5-JW-DTS" id="Vn7-g9-hhM"/>
+                        <outlet property="onNewTabToggle" destination="hcb-OH-IiL" id="Fx0-1i-7rC"/>
+                        <outlet property="privacyStatsToggle" destination="2Rr-1b-a5h" id="nyd-wb-bqL"/>
                         <outletCollection property="labels" destination="rZg-gB-8cW" collectionClass="NSMutableArray" id="lXo-RI-T7D"/>
                         <outletCollection property="labels" destination="lzp-z4-0SR" collectionClass="NSMutableArray" id="XTZ-PP-nDq"/>
-                        <outletCollection property="labels" destination="Urx-aF-Ymf" collectionClass="NSMutableArray" id="IJE-FG-fLi"/>
-                        <outletCollection property="labels" destination="JkO-Ob-ij7" collectionClass="NSMutableArray" id="u8m-yF-mAd"/>
-                        <outletCollection property="labels" destination="6bb-bO-iIa" collectionClass="NSMutableArray" id="FpG-il-Z5l"/>
-                        <outletCollection property="labels" destination="hmh-GP-5kR" collectionClass="NSMutableArray" id="kAD-Wf-Tr2"/>
-                        <outletCollection property="labels" destination="h5H-fe-9Fy" collectionClass="NSMutableArray" id="WNt-a2-Fh0"/>
+                        <outletCollection property="labels" destination="HXn-Xe-Wep" collectionClass="NSMutableArray" id="lnm-2p-gL9"/>
+                        <outletCollection property="labels" destination="ZQh-YB-ET7" collectionClass="NSMutableArray" id="A3P-0Q-igw"/>
+                        <outletCollection property="labels" destination="0q4-jE-GJM" collectionClass="NSMutableArray" id="cbK-ah-Dru"/>
+                        <outletCollection property="labels" destination="Vei-JE-N7N" collectionClass="NSMutableArray" id="qww-zn-KEB"/>
+                        <outletCollection property="labels" destination="u9X-Ft-3AH" collectionClass="NSMutableArray" id="jKy-Pd-wUP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5N-h7-Sv7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3420" y="930"/>
+            <point key="canvasLocation" x="3420" y="929.55665024630548"/>
         </scene>
         <!--Whitelist-->
         <scene sceneID="tsd-dd-bMe">

@@ -30,6 +30,12 @@ class HomePageSettingsViewController: UITableViewController {
     
     @IBOutlet var labels: [UILabel]!
 
+    @IBOutlet weak var favoritesToggle: UISwitch!
+    @IBOutlet weak var privacyStatsToggle: UISwitch!
+    @IBOutlet weak var onAppLaunchToggle: UISwitch!
+    @IBOutlet weak var onNewTabToggle: UISwitch!
+    @IBOutlet weak var afterFireButtonToggle: UISwitch!
+
     weak var delegate: HomePageSettingsDelegate?
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -38,6 +44,7 @@ class HomePageSettingsViewController: UITableViewController {
         super.viewDidLoad()
         
         applyTheme(ThemeManager.shared.currentTheme)
+        updateTogglesFromSettings()
     }
  
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -48,38 +55,47 @@ class HomePageSettingsViewController: UITableViewController {
         // Checkmark color
         cell.tintColor = theme.buttonTintColor
 
-        switch indexPath.section {
-        case 0:
+        if indexPath.section == 0 {
             updateConfigAccessory(onCell: cell, forRow: indexPath.row)
-
-        case 1:
-            updateFeaturesAccessory(onCell: cell, forRow: indexPath.row)
-
-        case 2:
-            updateKeyboardAccessory(onCell: cell, forRow: indexPath.row)
-
-        default: break
         }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        switch indexPath.section {
-        case 0:
+        if indexPath.section == 0 {
             updateHomePageSetting(row: indexPath.row)
-
-        case 1:
-            updateFeatureSetting(row: indexPath.row)
-
-        case 2:
-            updateKeyboardSetting(row: indexPath.row)
-
-        default: break
         }
 
         tableView.reloadData()
         delegate?.homePageChanged(to: appSettings.homePageConfig)
+    }
+
+    @IBAction func toggleUpdated() {
+        updateSettingsFromToggles()
+        delegate?.homePageChanged(to: appSettings.homePageConfig)
+    }
+
+    private func updateSettingsFromToggles() {
+
+        appSettings.homePageFeatureFavorites = favoritesToggle.isOn
+        appSettings.homePageFeaturePrivacyStats = privacyStatsToggle.isOn
+
+        appSettings.homePageKeyboardOnAppLaunch = onAppLaunchToggle.isOn
+        appSettings.homePageKeyboardOnNewTab = onNewTabToggle.isOn
+        appSettings.homePageKeyboardAfterFireButton = afterFireButtonToggle.isOn
+
+    }
+
+    private func updateTogglesFromSettings() {
+
+        favoritesToggle.isOn = appSettings.homePageFeatureFavorites
+        privacyStatsToggle.isOn = appSettings.homePageFeaturePrivacyStats
+
+        onAppLaunchToggle.isOn = appSettings.homePageKeyboardOnAppLaunch
+        onNewTabToggle.isOn = appSettings.homePageKeyboardOnNewTab
+        afterFireButtonToggle.isOn = appSettings.homePageKeyboardAfterFireButton
+
     }
 
     private func updateConfigAccessory(onCell cell: UITableViewCell, forRow row: Int) {
@@ -94,60 +110,6 @@ class HomePageSettingsViewController: UITableViewController {
 
         }
 
-    }
-
-    private func updateFeaturesAccessory(onCell cell: UITableViewCell, forRow row: Int) {
-        switch row {
-        case 0:
-            cell.accessoryType = appSettings.homePageFeatureFavorites ? .checkmark : .none
-
-        case 1:
-            cell.accessoryType = appSettings.homePageFeaturePrivacyStats ? .checkmark : .none
-
-        default: break
-        }
-    }
-
-    private func updateKeyboardAccessory(onCell cell: UITableViewCell, forRow row: Int) {
-        switch row {
-        case 0:
-            cell.accessoryType = appSettings.homePageKeyboardOnAppLaunch ? .checkmark : .none
-
-        case 1:
-            cell.accessoryType = appSettings.homePageKeyboardOnNewTab ? .checkmark : .none
-
-        case 2:
-            cell.accessoryType = appSettings.homePageKeyboardAfterFireButton ? .checkmark : .none
-        default: break
-        }
-
-    }
-    
-    private func updateKeyboardSetting(row: Int) {
-        switch row {
-        case 0:
-            appSettings.homePageKeyboardOnAppLaunch = !appSettings.homePageKeyboardOnAppLaunch
-
-        case 1:
-            appSettings.homePageKeyboardOnNewTab = !appSettings.homePageKeyboardOnNewTab
-
-        case 2:
-            appSettings.homePageKeyboardAfterFireButton = !appSettings.homePageKeyboardAfterFireButton
-
-        default: break
-        }
-    }
-
-    private func updateFeatureSetting(row: Int) {
-        switch row {
-        case 0:
-            appSettings.homePageFeatureFavorites = !appSettings.homePageFeatureFavorites
-
-        case 1:
-            appSettings.homePageFeaturePrivacyStats = !appSettings.homePageFeaturePrivacyStats
-
-        default: break
-        }
     }
 
     private func updateHomePageSetting(row: Int) {
@@ -167,11 +129,13 @@ class HomePageSettingsViewController: UITableViewController {
 extension HomePageSettingsViewController: Themable {
 
     func decorate(with theme: Theme) {
-        
-        for label in labels {
-            label.textColor = theme.tableCellTextColor
+
+        labels.forEach { $0.textColor = theme.tableCellTextColor }
+
+        [ favoritesToggle, privacyStatsToggle, onAppLaunchToggle, onNewTabToggle, afterFireButtonToggle ].forEach {
+            $0?.onTintColor = theme.buttonTintColor
         }
-        
+
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         

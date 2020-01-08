@@ -132,9 +132,9 @@ private struct Loader {
 
     private func loadDocumentLevelScripts() {
         if #available(iOS 13, *) {
-            load(scripts: [ .findinpage ] )
+            load(scripts: [ .findinpage, .login  ] )
         } else {
-            load(scripts: [ .document, .findinpage ] )
+            load(scripts: [ .document, .findinpage, .login ] )
         }
     }
 

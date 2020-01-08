@@ -75,6 +75,7 @@
 		850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */; };
 		85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
+		850559C923C61B5D0055C0D5 /* login.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* login.js */; };
 		85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */; };
 		85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */; };
 		85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
@@ -655,6 +656,7 @@
 		850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbAndVariantCleanupTests.swift; sourceTree = "<group>"; };
 		85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoader.swift; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		850559C823C61B5D0055C0D5 /* login.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = login.js; sourceTree = "<group>"; };
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
 		85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderers.swift; sourceTree = "<group>"; };
 		850819D51FDB68F9006561FD /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
@@ -1250,6 +1252,7 @@
 				987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */,
 				9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */,
 				85325A8C2024BB7C003EB195 /* detection.js */,
+				850559C823C61B5D0055C0D5 /* login.js */,
 			);
 			name = contentblocking;
 			sourceTree = "<group>";
@@ -3145,6 +3148,7 @@
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
 				85325A8D2024BB7C003EB195 /* detection.js in Resources */,
+				850559C923C61B5D0055C0D5 /* login.js in Resources */,
 				856D57C5206568BE000170B5 /* tlds.json in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,

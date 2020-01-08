@@ -76,6 +76,8 @@ class TabViewController: UIViewController {
     private var tearDownExecuted = false
     private var tips: BrowsingTips?
     
+    var lastRequestPost = false
+    
     public var url: URL? {
         didSet {
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -189,6 +191,7 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
+        controller.add(self, name: MessageHandlerNames.possibleLogin)
         controller.add(self, name: MessageHandlerNames.signpost)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
@@ -554,6 +557,7 @@ class TabViewController: UIViewController {
 
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.possibleLogin)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
@@ -583,6 +587,7 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private struct MessageHandlerNames {
+        static let possibleLogin = "possibleLogin"
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
         static let log = "log"
@@ -599,6 +604,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
+        case MessageHandlerNames.possibleLogin:
+            possibleLogin()
+
         case MessageHandlerNames.log:
             handleLog(message: message)
 
@@ -610,6 +618,10 @@ extension TabViewController: WKScriptMessageHandler {
         }
     }
 
+    private func possibleLogin() {
+        print("*** possible login", webView.url?.absoluteString ?? "unknown url")
+    }
+    
     private func handleFindInPage(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any] else { return }
         let currentResult = dict["currentResult"] as? Int
@@ -723,7 +735,7 @@ extension TabViewController: WKNavigationDelegate {
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
-        
+                
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -831,18 +843,50 @@ extension TabViewController: WKNavigationDelegate {
         updateSiteRating()
     }
     
+    func rememberCookies(completion: @escaping () -> Void) {
+        guard #available(iOS 11.0, *) else {
+            completion()
+            return
+        }
+
+        let url = webView.url
+        webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+            let domainCookies = cookies.filter { $0.domain == url?.host }
+            print("***", domainCookies)
+            completion()
+        }
+    }
+        
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision == .allow {
+                // we're going to make the request
+                
+                // TODO cleanup
+                
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
+                
                 self?.findInPage?.done()
+                
+                self?.lastRequestPost = navigationAction.request.httpMethod == "POST"
+                if self?.lastRequestPost ?? false {
+                    print("*** POST")
+                    self?.rememberCookies {
+                        decisionHandler(decision)
+                    }
+                }
+                
             }
-            decisionHandler(decision)
+            
+            if !(self?.lastRequestPost ?? false) {
+                decisionHandler(decision)
+            }
+            
         }
     }
     

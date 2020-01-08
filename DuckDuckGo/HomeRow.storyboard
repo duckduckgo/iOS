@@ -42,16 +42,16 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZO-bI-rzI">
-                                        <rect key="frame" x="0.0" y="0.0" width="296" height="122"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="296" height="115"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take DuckDuckGo Home" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tah-vQ-mf9">
-                                                <rect key="frame" x="8" y="51" width="280" height="20"/>
+                                                <rect key="frame" x="8" y="51" width="280" height="17"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock for quick and easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-QY-3H3">
-                                                <rect key="frame" x="48" y="82" width="200" height="28"/>
+                                                <rect key="frame" x="48" y="79" width="200" height="24"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -153,150 +153,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1675" y="-7"/>
-        </scene>
-        <!--Add To Home RowCTA View Controller-->
-        <scene sceneID="KFn-Wr-GXw">
-            <objects>
-                <viewController storyboardIdentifier="HomeRowCTA" id="C4P-N4-t83" customClass="AddToHomeRowCTAViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9hh-Sd-Ezv">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gw9-C7-D61">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kSn-ac-A1B">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <blurEffect style="dark"/>
-                            </visualEffectView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qyc-ZG-rZz">
-                                <rect key="frame" x="0.0" y="814" width="768" height="210"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZSS-8i-hm1">
-                                        <rect key="frame" x="354" y="-30" width="60" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="ZSS-8i-hm1" secondAttribute="height" multiplier="1:1" id="9gP-68-H5W"/>
-                                            <constraint firstAttribute="width" constant="60" id="JNR-ia-3ae"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="14"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPH-ME-N2p">
-                                        <rect key="frame" x="10" y="51" width="748" height="22.5"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="19"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For easy access to private browsing." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLI-KC-6iK">
-                                        <rect key="frame" x="10" y="77.5" width="748" height="19"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                        <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xhf-hW-8u5">
-                                        <rect key="frame" x="224" y="116.5" width="320" height="44"/>
-                                        <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="yn2-hB-jiU"/>
-                                            <constraint firstAttribute="width" constant="320" id="yyE-Yk-vfH"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
-                                        <state key="normal" title="Show Me">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="yyE-Yk-vfH"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="yyE-Yk-vfH"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="showMe" destination="C4P-N4-t83" eventType="touchUpInside" id="k9C-3e-adO"/>
-                                            <segue destination="A5s-B8-hd1" kind="presentation" modalPresentationStyle="overFullScreen" id="v6i-Nh-xCn"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5p-Tg-2ou">
-                                        <rect key="frame" x="343" y="166" width="82" height="32"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
-                                        <state key="normal" title="No Thanks">
-                                            <color key="titleColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="noThanks" destination="C4P-N4-t83" eventType="touchUpInside" id="nbn-c0-EPl"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="GLI-KC-6iK" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="0mg-Cg-eyU"/>
-                                    <constraint firstItem="Xhf-hW-8u5" firstAttribute="top" secondItem="GLI-KC-6iK" secondAttribute="bottom" constant="20" id="2K6-Nx-Mp6"/>
-                                    <constraint firstItem="ZSS-8i-hm1" firstAttribute="top" secondItem="qyc-ZG-rZz" secondAttribute="top" constant="-30" id="5qB-3G-23e"/>
-                                    <constraint firstItem="PPH-ME-N2p" firstAttribute="width" secondItem="qyc-ZG-rZz" secondAttribute="width" constant="-20" id="9CX-Ld-LCy"/>
-                                    <constraint firstAttribute="bottom" secondItem="n5p-Tg-2ou" secondAttribute="bottom" constant="12" id="AaW-zk-WVa"/>
-                                    <constraint firstItem="Xhf-hW-8u5" firstAttribute="width" secondItem="qyc-ZG-rZz" secondAttribute="width" constant="-20" id="GSn-h5-AHs"/>
-                                    <constraint firstItem="Xhf-hW-8u5" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="Lrc-a4-3it"/>
-                                    <constraint firstItem="PPH-ME-N2p" firstAttribute="top" secondItem="qyc-ZG-rZz" secondAttribute="top" constant="51" id="XAN-x9-BMi"/>
-                                    <constraint firstItem="n5p-Tg-2ou" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="YBq-4F-IRA"/>
-                                    <constraint firstAttribute="bottom" secondItem="n5p-Tg-2ou" secondAttribute="bottom" constant="24" id="YYi-ne-Ijb"/>
-                                    <constraint firstAttribute="width" constant="400" id="YjV-DL-kea"/>
-                                    <constraint firstItem="GLI-KC-6iK" firstAttribute="width" secondItem="qyc-ZG-rZz" secondAttribute="width" constant="-20" id="ZC7-gS-ir9"/>
-                                    <constraint firstItem="ZSS-8i-hm1" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="c9G-dO-oz9"/>
-                                    <constraint firstAttribute="height" constant="230" id="cPa-Pg-beB"/>
-                                    <constraint firstItem="GLI-KC-6iK" firstAttribute="top" secondItem="PPH-ME-N2p" secondAttribute="bottom" constant="4" id="hji-AY-C3v"/>
-                                    <constraint firstAttribute="height" constant="210" id="lRD-5S-fYN"/>
-                                    <constraint firstItem="PPH-ME-N2p" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="uHP-V5-bSE"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="YjV-DL-kea"/>
-                                        <exclude reference="cPa-Pg-beB"/>
-                                        <exclude reference="GSn-h5-AHs"/>
-                                        <exclude reference="YYi-ne-Ijb"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="YjV-DL-kea"/>
-                                        <include reference="cPa-Pg-beB"/>
-                                        <exclude reference="lRD-5S-fYN"/>
-                                        <include reference="GSn-h5-AHs"/>
-                                        <exclude reference="AaW-zk-WVa"/>
-                                        <include reference="YYi-ne-Ijb"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="gw9-C7-D61" firstAttribute="centerY" secondItem="T9k-Fj-ONh" secondAttribute="centerY" id="0LF-uY-rhj"/>
-                            <constraint firstItem="T9k-Fj-ONh" firstAttribute="bottom" secondItem="qyc-ZG-rZz" secondAttribute="bottom" id="3Ze-la-fyW"/>
-                            <constraint firstItem="qyc-ZG-rZz" firstAttribute="width" secondItem="9hh-Sd-Ezv" secondAttribute="width" id="3aX-08-6ni"/>
-                            <constraint firstItem="gw9-C7-D61" firstAttribute="centerX" secondItem="T9k-Fj-ONh" secondAttribute="centerX" id="avT-2p-KG5"/>
-                            <constraint firstItem="qyc-ZG-rZz" firstAttribute="centerX" secondItem="T9k-Fj-ONh" secondAttribute="centerX" id="eOA-rU-NMI"/>
-                            <constraint firstItem="gw9-C7-D61" firstAttribute="width" secondItem="9hh-Sd-Ezv" secondAttribute="width" id="lvS-HV-6bX"/>
-                            <constraint firstItem="gw9-C7-D61" firstAttribute="height" secondItem="9hh-Sd-Ezv" secondAttribute="height" id="n28-kV-WCR"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="T9k-Fj-ONh"/>
-                    </view>
-                    <connections>
-                        <outlet property="blurView" destination="gw9-C7-D61" id="lu5-n7-7r9"/>
-                        <outlet property="infoView" destination="qyc-ZG-rZz" id="yvv-F4-PVT"/>
-                        <outlet property="noThanksButton" destination="n5p-Tg-2ou" id="rlh-sM-kF1"/>
-                        <outlet property="primaryText" destination="PPH-ME-N2p" id="VN1-bu-cs8"/>
-                        <outlet property="secondaryText" destination="GLI-KC-6iK" id="7FE-Ff-8RU"/>
-                        <outlet property="showMeButton" destination="Xhf-hW-8u5" id="ZEo-J1-0pv"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wHl-6E-S7E" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="210" y="-7"/>
         </scene>
         <!--Unified Add To Home RowCTA View Controller-->
         <scene sceneID="q9u-LO-7uc">
@@ -577,7 +433,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HomeRowAppIcon" width="512" height="512"/>
         <image name="PlayButton" width="80" height="80"/>
         <image name="Remove" width="24" height="24"/>
         <image name="Smile" width="18" height="18"/>

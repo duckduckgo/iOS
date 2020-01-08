@@ -194,13 +194,7 @@ class HomeViewController: UIViewController {
         guard !variantManager.isSupported(feature: .alertCTA),
             homeRowCTAController == nil else { return }
         
-        let childViewController: UIViewController
-        if variantManager.isSupported(feature: .unifiedCTA) {
-            childViewController = UnifiedAddToHomeRowCTAViewController.loadFromStoryboard()
-        } else {
-            childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
-        }
-        
+        let childViewController = UnifiedAddToHomeRowCTAViewController.loadFromStoryboard()
         addChild(childViewController)
         view.addSubview(childViewController.view)
         childViewController.view.frame = view.bounds

@@ -419,10 +419,10 @@ never been this easy.</string>
             </objects>
             <point key="canvasLocation" x="775" y="458"/>
         </scene>
-        <!--For easy access to private browsing.-->
+        <!--Search and browse privately, every day.-->
         <scene sceneID="Yxp-L7-vF3">
             <objects>
-                <viewController storyboardIdentifier="onboardingHomeRow" title="For easy access to private browsing." id="Xjr-gI-tDG" customClass="OnboardingHomeRowViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboardingHomeRow" title="Search and browse privately, every day." id="Xjr-gI-tDG" customClass="OnboardingHomeRowViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VId-rQ-yCx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -1,16 +1,20 @@
-
 (function() {
-    console.log("DDG - login.js");
+
+    duckduckgoDebugMessaging.log("DDG - login.js");
+
+    function onSubmit() {
+        duckduckgoMessaging.possibleLogin();
+    }
 
     function addFormListener(form) {
         var inputs = form.getElementsByTagName("input");
+        if (!inputs || inputs.length == 0) { return }
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs[i];
             if (input.type == "password") {
-                duckduckgoDebugMessaging.log("adding login listener");
-                form.addEventListener("submit", () => {
-                    duckduckgoMessaging.possibleLogin();
-                }, false)
+                duckduckgoDebugMessaging.log("DDG - adding login listener");
+                form.removeEventListener("submit", onSubmit);
+                form.addEventListener("submit", onSubmit, false);
                 return;
             }
         }
@@ -43,4 +47,5 @@
 
     var observer = new MutationObserver(mutationCallback);
     observer.observe(document, observerOptions);
-})
+
+}) ()

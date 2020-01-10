@@ -55,7 +55,7 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
     weak var delegate: OnboardingContentDelegate?
     
     var header: String {
-        return "Welcome to DuckDuckGo!"
+        return UserText.onboardingWelcomeHeader
     }
     
     var subtitle: String? {

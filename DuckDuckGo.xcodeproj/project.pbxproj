@@ -77,6 +77,7 @@
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
 		850559C923C61B5D0055C0D5 /* formDetection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* formDetection.js */; };
 		850559CB23C775410055C0D5 /* LoginDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CA23C775410055C0D5 /* LoginDetection.swift */; };
+		850559CE23C8E27C0055C0D5 /* LoginDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */; };
 		85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */; };
 		85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */; };
 		85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
@@ -659,6 +660,7 @@
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
 		850559C823C61B5D0055C0D5 /* formDetection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = formDetection.js; sourceTree = "<group>"; };
 		850559CA23C775410055C0D5 /* LoginDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetection.swift; sourceTree = "<group>"; };
+		850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetectionTests.swift; sourceTree = "<group>"; };
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
 		85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderers.swift; sourceTree = "<group>"; };
 		850819D51FDB68F9006561FD /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
@@ -2110,6 +2112,7 @@
 				F13B4BFA1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift */,
 				F189AED61F18F6DE001EBAE1 /* TabTests.swift */,
 				8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */,
+				850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -3579,6 +3582,7 @@
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
 				8521FDF1238DD82700A44CC3 /* TrackerDataManagerTests.swift in Sources */,
+				850559CE23C8E27C0055C0D5 /* LoginDetectionTests.swift in Sources */,
 				83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
 				85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */,

@@ -24,19 +24,14 @@ protocol LoginDetectionNavigation: NSObjectProtocol {
 protocol LoginDetectionAction {
     
     var method: String? { get }
-    
+
 }
 
 class LoginDetection {
     
-    private var navigation: LoginDetectionNavigation?
     private var cookies: [HTTPCookie]?
     
-    func navigation(_ navigation: LoginDetectionNavigation,
-                    forWebView webView: LoginDetectionWebView,
-                    allowedAction action: LoginDetectionAction,
-                    completion: @escaping () -> Void) {
-        
+    func webView(_ webView: LoginDetectionWebView, allowedAction action: LoginDetectionAction, completion: @escaping () -> Void) {
         guard #available(iOS 11, *) else {
             completion()
             return
@@ -48,14 +43,26 @@ class LoginDetection {
         }
         
         webView.getAllCookies { cookies in
-            self.cookies = cookies.filter { $0.domain == webView.url?.host }
-            self.navigation = navigation
+            self.cookies = self.cookiesForDomain(webView.url?.host, from: cookies)
             completion()
         }
     }
     
-    func navigation(_ navigation: LoginDetectionNavigation, didFinishForWebView webView: LoginDetectionWebView) {
+    /// Completion passes true if the navigation was a post and resulted in different cookies.
+    func webViewDidFinishNavigation(_ webView: LoginDetectionWebView, completion: @escaping (Bool) -> Void) {
+        guard #available(iOS 11, *) else {
+            completion(false)
+            return
+        }
         
+        webView.getAllCookies { cookies in
+            let cookies = self.cookiesForDomain(webView.url?.host, from: cookies)
+            completion(cookies != self.cookies)
+        }
+    }
+    
+    private func cookiesForDomain(_ domain: String?, from cookies: [HTTPCookie]) -> [HTTPCookie] {
+        return cookies.filter { $0.domain == domain }.sorted(by: { $0.name < $1.name })
     }
     
 }
@@ -70,5 +77,5 @@ extension WKWebView: LoginDetectionWebView {
 }
 
 extension WKNavigation: LoginDetectionNavigation {
-    
+
 }

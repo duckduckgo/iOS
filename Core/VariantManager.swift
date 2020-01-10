@@ -24,7 +24,8 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
-    case unifiedCTA
+    case onboardingCTA
+    case alertCTA
     
     case privacyOnHomeScreen
 }
@@ -39,8 +40,9 @@ public struct Variant {
         Variant(name: "sd", weight: 1, features: []),
         Variant(name: "se", weight: 1, features: []),
         
-        Variant(name: "ma", weight: 1, features: []),
-        Variant(name: "mb", weight: 1, features: [.unifiedCTA]),
+        Variant(name: "mg", weight: 1, features: []),
+        Variant(name: "mt", weight: 1, features: [.onboardingCTA]),
+        Variant(name: "my", weight: 1, features: [.alertCTA]),
         
         Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
     ]

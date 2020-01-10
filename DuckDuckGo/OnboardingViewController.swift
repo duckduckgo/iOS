@@ -22,7 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
     
-    var controllerNames = ["onboardingSummary"]
+    var controllerNames = [String]()
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
@@ -32,6 +32,8 @@ class OnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var continueButton: UIButton!
 
     var contentController: OnboardingContentViewController?
+    
+    private let variantManager = DefaultVariantManager()
     
     weak var delegate: OnboardingDelegate?
     
@@ -43,6 +45,12 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
     
     private func loadInitialContent() {
+        if variantManager.isSupported(feature: .onboardingCTA) {
+            controllerNames = ["onboardingSummary", "onboardingHomeRow"]
+        } else {
+            controllerNames = ["onboardingSummary"]
+        }
+        
         guard let name = controllerNames.first,
             let controller = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController else {
                 fatalError("Unable to load initial content")
@@ -71,6 +79,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         controller.delegate = self
         continueButton.isEnabled = controller.canContinue
         contentController = controller
+        header.setAttributedTextString(controller.header)
         subheader.setAttributedTextString(controller.subtitle ?? "")
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: header)
     }
@@ -105,6 +114,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         addChild(newController)
         transition(from: oldController, to: newController, duration: 0.6, options: [], animations: {
             
+            self.header.alpha = 0.0
             self.subheader.alpha = 0.0
             oldController.view.center.x -= frame.width * 1.0
             newController.view.center.x = frame.midX
@@ -115,15 +125,15 @@ class OnboardingViewController: UIViewController, Onboarding {
             newController.didMove(toParent: self)
             self.contentContainer.addSubview(newController.view)
             self.updateContent(newController)
-            self.animateInSubtitle()
-            
+            self.animateInHeaders()
         })
         
         prepareFor(nextScreen: newController)
     }
     
-    private func animateInSubtitle() {
+    private func animateInHeaders() {
         UIView.animate(withDuration: 0.3) {
+            self.header.alpha = 1.0
             self.subheader.alpha = 1.0
         }
     }
@@ -139,7 +149,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         let skipButtonTitle = nextScreen.skipButtonTitle
         skipButton.setTitle(skipButtonTitle, for: .normal)
         skipButton.setTitle(skipButtonTitle, for: .disabled)
-        skipButton.isHidden = controllerNames.isEmpty
+        skipButton.isHidden = true
     }
     
     func done() {

@@ -146,6 +146,8 @@ public struct UserText {
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     
+    public static let homeRowOnboardingHeader = NSLocalizedString("home.row.onboarding.header", comment:  "Home Row onboarding Header")
+    
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     
     public static let customUrlSchemeTitle = NSLocalizedString("prompt.custom.url.scheme.title", comment: "Switch apps?")
@@ -233,6 +235,7 @@ public struct UserText {
     public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
     public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
 
+    public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", comment: "Welcome to DuckDuckGo!")
     public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue")
     public static let onboardingSkip = NSLocalizedString("onboardingSkip", comment: "Skip")
     public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")

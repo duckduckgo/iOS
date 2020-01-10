@@ -3,6 +3,7 @@
 if [ -z "$1" ]; then
    echo Usage: ./set_version NUMBER
    echo Example: ./set_version 7.100.1
+   echo Current version: `cat Configuration/Version.xcconfig | cut -d' ' -f3`
    exit 1
 fi
 

@@ -24,8 +24,9 @@ public class PersistentLogger {
     class LogHandle: TextOutputStream {
         
         private let handle: FileHandle
+        let expiresAt: Date
         
-        init?(url: URL) {
+        init?(url: URL, expirationDate: Date) {
             if !FileManager.default.fileExists(atPath: url.path) {
                 FileManager.default.createFile(atPath: url.path,
                                                contents: nil,
@@ -36,6 +37,7 @@ public class PersistentLogger {
             handle.seekToEndOfFile()
             
             self.handle = handle
+            self.expiresAt = expirationDate
         }
         
         func write(_ string: String) {
@@ -48,51 +50,65 @@ public class PersistentLogger {
         }
     }
     
-    static var currentLogfileExpirationDate = Date()
+    static let lock = NSLock()
     
     static private var _logfile: LogHandle?
-    static private var logfile: LogHandle? {
-        guard let url = logsDirectoryURL()?.appendingPathComponent(currentLogfileName()) else { return nil }
-        
+    static private func logfile(with date: Date) -> LogHandle? {
+        lock.lock()
         let handle: LogHandle?
         if let logfile = _logfile {
-            handle = logfile
+            if logfile.expiresAt <= date {
+                handle = prepareLogHandle(with: date)
+            } else {
+                handle = logfile
+            }
         } else {
-            print("---> \(url)")
-            handle = LogHandle(url: url)
+            handle = prepareLogHandle(with: date)
             _logfile = handle
         }
-
+        lock.unlock()
         return handle
+    }
+    
+    static private func prepareLogHandle(with date: Date) -> LogHandle? {
+        guard let url = logsDirectoryURL()?.appendingPathComponent(logfileName(for: date)) else { return nil }
+        print("---> \(url)")
+        
+        let calendar = Calendar.current
+        let nextDay = calendar.date(byAdding: .day, value: 1, to: date)!
+        let components = calendar.dateComponents([.day, .month, .year], from: nextDay)
+        let startOfNextDay = calendar.date(from: components)!
+        
+        return LogHandle(url: url, expirationDate: startOfNextDay)
     }
     
     public static func logsDirectoryURL() -> URL? {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
     }
     
-    public static func currentLogfileName() -> String {
-        return "log.log"
+    public static func logfileName(for date: Date) -> String {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withFullDate]
+        dateFormatter.timeZone = TimeZone.current
+        return "\(dateFormatter.string(from: date)).log"
     }
     
     private static let dateFormatter: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         if #available(iOSApplicationExtension 11.0, *) {
-            dateFormatter.formatOptions = [
-                .withInternetDateTime, .withFractionalSeconds
-            ]
+            dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         } else {
-            dateFormatter.formatOptions = [
-                .withInternetDateTime
-            ]
+            dateFormatter.formatOptions = [.withInternetDateTime]
         }
         dateFormatter.timeZone = TimeZone.current
         return dateFormatter
     }()
     
     public static func log(_ items: String...) {
-        guard let handle = logfile else { return }
+        let date = Date()
+        guard let handle = logfile(with: date) else { return }
         
-        let dateString = dateFormatter.string(from: Date())
+        let dateString = dateFormatter.string(from: date)
         handle.write(dateString + " - " + items.joined(separator: " ") + "\n")
     }
 }

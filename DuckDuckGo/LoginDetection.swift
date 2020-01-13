@@ -64,7 +64,7 @@ class LoginDetection {
         
         cookiesProvider.getAllCookies { cookies in
             let cookies = self.cookiesForDomain(self.domain, from: cookies)
-            completion(self.equals(self.cookies, cookies))
+            completion(!self.equals(self.cookies, cookies))
         }
     }
     

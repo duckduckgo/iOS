@@ -23,7 +23,7 @@ import XCTest
 class LoginDetectionTests: XCTestCase {
 
     func testWhenMethodIsPostAndCookiesHaveSameCookiesAfterFinishingLoadingThenProbablyNotALogin() {
-        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let url = URLProvider(url: URL(string: "http://example.com")!)
         let cookies = CookiesProvider(cookies: [cookie("name", "value")])
         let action = Action(method: "POST")
 
@@ -43,7 +43,7 @@ class LoginDetectionTests: XCTestCase {
     }
 
     func testWhenMethodIsPostAndCookiesHaveDifferentPathsAfterFinishingLoadingThenIndicatePossibleLogin() {
-        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let url = URLProvider(url: URL(string: "http://example.com")!)
         let cookies = CookiesProvider(cookies: [cookie("name", "value", path: "/")])
         let action = Action(method: "POST")
 
@@ -63,7 +63,7 @@ class LoginDetectionTests: XCTestCase {
     }
     
     func testWhenMethodIsPostAndCookiesHaveChangedNamesAndValuesAfterFinishingLoadingThenIndicatePossibleLogin() {
-        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let url = URLProvider(url: URL(string: "http://example.com")!)
         let cookies = CookiesProvider(cookies: [cookie("name", "value")])
         let action = Action(method: "POST")
 
@@ -83,7 +83,7 @@ class LoginDetectionTests: XCTestCase {
     }
     
     func testWhenMethodIsPostAndCookiesHaveChangedCountAfterFinishingLoadingThenIndicatePossibleLogin() {
-        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let url = URLProvider(url: URL(string: "http://example.com")!)
         let cookies = CookiesProvider(cookies: [])
         let action = Action(method: "POST")
 
@@ -92,7 +92,7 @@ class LoginDetectionTests: XCTestCase {
 
         detection.webView(withURL: url, andCookies: cookies, allowedAction: action, completion: {})
         
-        detection.webViewDidFinishNavigation(withCookies: CookiesProvider(cookies: [HTTPCookie()])) { possibleLogin in
+        detection.webViewDidFinishNavigation(withCookies: CookiesProvider(cookies: [cookie("name", "value")])) { possibleLogin in
             XCTAssertTrue(possibleLogin)
             expect.fulfill()
         }
@@ -101,7 +101,7 @@ class LoginDetectionTests: XCTestCase {
     }
     
     func testWhenWebViewAllowsActionThenCompletionCalled() {
-        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let url = URLProvider(url: URL(string: "http://example.com")!)
         let cookies = CookiesProvider(cookies: [])
         let action = Action(method: "POST")
 

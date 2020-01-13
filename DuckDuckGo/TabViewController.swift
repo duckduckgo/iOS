@@ -605,7 +605,7 @@ extension TabViewController: WKScriptMessageHandler {
             handleTrackerDetected(message: message)
 
         case MessageHandlerNames.possibleLogin:
-            possibleLogin(forDomain: webView.url?.host)
+            possibleLogin(forDomain: webView.url?.host, source: "JS")
 
         case MessageHandlerNames.log:
             handleLog(message: message)
@@ -618,8 +618,8 @@ extension TabViewController: WKScriptMessageHandler {
         }
     }
 
-    private func possibleLogin(forDomain domain: String?) {
-        print("*** possible login", domain ?? "nil")
+    private func possibleLogin(forDomain domain: String?, source: String) {
+        print("*** possible login", domain ?? "nil", source)
     }
     
     private func handleFindInPage(message: WKScriptMessage) {
@@ -708,6 +708,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        print("***", #function)
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
@@ -732,6 +733,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        print("***", #function, navigation)
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
@@ -774,11 +776,13 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        print("***", #function)
         decisionHandler(.allow)
         url = webView.url
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        print("***", #function, navigation)
         lastError = nil
         shouldReloadOnError = false
         hideErrorMessage()
@@ -786,9 +790,11 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("***", #function, navigation)
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
+        checkLoginDetectionAfterNavigation()
     }
     
     private func onWebpageDidFinishLoading() {
@@ -799,16 +805,24 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
         tips?.onFinishedLoading(url: url, error: isError)
+    }
+
+    private func checkLoginDetectionAfterNavigation() {
         
-        let domain = webView.url?.host
-        loginDetection?.webViewDidFinishNavigation(withCookies: webView, completion: { [weak self] isPossibleLogin in
-            if isPossibleLogin {
-                self?.possibleLogin(forDomain: domain)
-            }
-        })
+        if let loginDetection = self.loginDetection {
+            let domain = webView.url?.host
+            loginDetection.webViewDidFinishNavigation(withCookies: webView, completion: { [weak self] isPossibleLogin in
+                if isPossibleLogin {
+                    self?.possibleLogin(forDomain: domain, source: "POST")
+                    self?.loginDetection = nil
+                }
+            })
+        }
+
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("***", #function)
         hideProgressIndicator()
         webpageDidFailToLoad()
         checkForReloadOnError()
@@ -826,6 +840,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("***", #function)
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
@@ -844,10 +859,12 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        print("***", #function, navigation)
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = makeSiteRating(url: url)
         updateSiteRating()
+        checkLoginDetectionAfterNavigation()
     }
     
     func rememberCookies(completion: @escaping () -> Void) {
@@ -868,6 +885,8 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
+        print("***", #function)
+
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision != .cancel {
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
@@ -875,9 +894,13 @@ extension TabViewController: WKNavigationDelegate {
                 }
                 
                 self?.findInPage?.done()
-            
-                self?.loginDetection = LoginDetection()
-                self?.loginDetection?.webView(withURL: webView, andCookies: webView, allowedAction: navigationAction) {
+                            
+                let loginDetection = LoginDetection()
+                loginDetection.webView(withURL: webView, andCookies: webView, allowedAction: navigationAction) { isPost in
+                    if isPost {
+                        print("*** is post, setting login detection")
+                        self?.loginDetection = loginDetection
+                    }
                     decisionHandler(decision)
                 }
             } else {
@@ -985,11 +1008,13 @@ extension TabViewController: WKUIDelegate {
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
+        print("***", #function)
         webView.load(navigationAction.request)
         return nil
     }
     
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        print("***", #function)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
 }
@@ -1059,6 +1084,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     
     // Prevents rare accidental display of preview previous to iOS 12
     func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
+        print("***", #function)
         return false
     }
     

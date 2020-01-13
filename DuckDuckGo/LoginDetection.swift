@@ -32,18 +32,25 @@ class LoginDetection {
     private var cookies: [HTTPCookie]?
     private var domain: String?
     
+    init() {
+        print("*** LoginDetection init")
+    }
+    
     func webView(withURL urlProvider: LoginDetectionURLProvider,
                  andCookies cookiesProvider: LoginDetectionCookiesProvider,
                  allowedAction action: LoginDetectionAction,
-                 completion: @escaping () -> Void) {
+                 completion: @escaping (Bool) -> Void) {
+
+        self.cookies = nil
+        self.domain = nil
         
         guard #available(iOS 11, *) else {
-            completion()
+            completion(false)
             return
         }
         
         guard action.method == "POST" else {
-            completion()
+            completion(false)
             return
         }
         
@@ -51,7 +58,7 @@ class LoginDetection {
         cookiesProvider.getAllCookies { cookies in
             self.cookies = self.cookiesForDomain(domain, from: cookies)
             self.domain = domain
-            completion()
+            completion(true)
         }
     }
     
@@ -62,9 +69,15 @@ class LoginDetection {
             return
         }
         
+        guard let initialCookies = self.cookies else {
+            completion(false)
+            return
+        }
+        
         cookiesProvider.getAllCookies { cookies in
-            let cookies = self.cookiesForDomain(self.domain, from: cookies)
-            completion(!self.equals(self.cookies, cookies))
+            let postCookies = self.cookiesForDomain(self.domain, from: cookies)
+            let isPossibleLogin = !self.equals(initialCookies, postCookies)
+            completion(isPossibleLogin)
         }
     }
     
@@ -72,12 +85,11 @@ class LoginDetection {
         return cookies.filter { $0.domain == domain }.sorted(by: { $0.name < $1.name })
     }
     
-    private func equals(_ startingCookies: [HTTPCookie]?, _ currentCookies: [HTTPCookie]) -> Bool {
-        guard let startingCookies = startingCookies,
-            startingCookies.count == currentCookies.count else { return false }
+    private func equals(_ lhs: [HTTPCookie], _ rhs: [HTTPCookie]) -> Bool {
+        guard lhs.count == rhs.count else { return false }
         
-        for i in 0 ..< startingCookies.count {
-            if !equals(startingCookies[i], currentCookies[i]) {
+        for i in 0 ..< lhs.count {
+            if !equals(lhs[i], rhs[i]) {
                 return false
             }
         }

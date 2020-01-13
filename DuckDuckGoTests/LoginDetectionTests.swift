@@ -21,30 +21,117 @@ import XCTest
 @testable import DuckDuckGo
 
 class LoginDetectionTests: XCTestCase {
-        
-    var url: URL?
-    var cookies: [HTTPCookie] = []
-    var method: String?
-    
-    func testWhenWebViewAllowsActionThenCompletionCalled() {
+
+    func testWhenMethodIsPostAndCookiesHaveSameCookiesAfterFinishingLoadingThenProbablyNotALogin() {
+        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let cookies = CookiesProvider(cookies: [cookie("name", "value")])
+        let action = Action(method: "POST")
+
         let expect = expectation(description: #function)
         let detection = LoginDetection()
-        detection.webView(self, allowedAction: self) {
+
+        detection.webView(withURL: url, andCookies: cookies, allowedAction: action, completion: {})
+        
+        let newCookies = CookiesProvider(cookies: [cookie("name", "value")])
+
+        detection.webViewDidFinishNavigation(withCookies: newCookies) { possibleLogin in
+            XCTAssertFalse(possibleLogin)
             expect.fulfill()
         }
+        
+        wait(for: [expect], timeout: 5.0)
+    }
+
+    func testWhenMethodIsPostAndCookiesHaveDifferentPathsAfterFinishingLoadingThenIndicatePossibleLogin() {
+        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let cookies = CookiesProvider(cookies: [cookie("name", "value", path: "/")])
+        let action = Action(method: "POST")
+
+        let expect = expectation(description: #function)
+        let detection = LoginDetection()
+
+        detection.webView(withURL: url, andCookies: cookies, allowedAction: action, completion: {})
+        
+        let newCookies = CookiesProvider(cookies: [cookie("name", "value", path: "/path")])
+
+        detection.webViewDidFinishNavigation(withCookies: newCookies) { possibleLogin in
+            XCTAssertTrue(possibleLogin)
+            expect.fulfill()
+        }
+        
         wait(for: [expect], timeout: 5.0)
     }
     
-}
+    func testWhenMethodIsPostAndCookiesHaveChangedNamesAndValuesAfterFinishingLoadingThenIndicatePossibleLogin() {
+        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let cookies = CookiesProvider(cookies: [cookie("name", "value")])
+        let action = Action(method: "POST")
 
-extension LoginDetectionTests: LoginDetectionWebView {
-    
-    func getAllCookies(completion: @escaping ([HTTPCookie]) -> Void) {
-        completion(cookies)
+        let expect = expectation(description: #function)
+        let detection = LoginDetection()
+
+        detection.webView(withURL: url, andCookies: cookies, allowedAction: action, completion: {})
+        
+        let newCookies = CookiesProvider(cookies: [cookie("name", "other value")])
+
+        detection.webViewDidFinishNavigation(withCookies: newCookies) { possibleLogin in
+            XCTAssertTrue(possibleLogin)
+            expect.fulfill()
+        }
+        
+        wait(for: [expect], timeout: 5.0)
     }
     
-}
+    func testWhenMethodIsPostAndCookiesHaveChangedCountAfterFinishingLoadingThenIndicatePossibleLogin() {
+        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let cookies = CookiesProvider(cookies: [])
+        let action = Action(method: "POST")
 
-extension LoginDetectionTests: LoginDetectionAction {
+        let expect = expectation(description: #function)
+        let detection = LoginDetection()
+
+        detection.webView(withURL: url, andCookies: cookies, allowedAction: action, completion: {})
+        
+        detection.webViewDidFinishNavigation(withCookies: CookiesProvider(cookies: [HTTPCookie()])) { possibleLogin in
+            XCTAssertTrue(possibleLogin)
+            expect.fulfill()
+        }
+        
+        wait(for: [expect], timeout: 5.0)
+    }
     
+    func testWhenWebViewAllowsActionThenCompletionCalled() {
+        let url = URLProvider(url: URL(string: "http://www.example.com")!)
+        let cookies = CookiesProvider(cookies: [])
+        let action = Action(method: "POST")
+
+        let expect = expectation(description: #function)
+        let detection = LoginDetection()
+        
+        detection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
+            expect.fulfill()
+        }
+        
+        wait(for: [expect], timeout: 5.0)
+    }
+    
+    private func cookie(_ name: String, _ value: String, path: String = "/") -> HTTPCookie {
+        return HTTPCookie(properties: [.path: path, .name: name, .value: value, .domain: "example.com"])!
+    }
+    
+    struct URLProvider: LoginDetectionURLProvider {
+        let url: URL?
+    }
+    
+    struct CookiesProvider: LoginDetectionCookiesProvider {
+        let cookies: [HTTPCookie]
+        
+        func getAllCookies(completion: @escaping ([HTTPCookie]) -> Void) {
+            completion(cookies)
+        }
+    }
+    
+    struct Action: LoginDetectionAction {
+        let method: String?
+    }
 }

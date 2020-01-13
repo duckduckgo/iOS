@@ -8,9 +8,13 @@
 
 import WebKit
 
-protocol LoginDetectionWebView {
+protocol LoginDetectionURLProvider {
     
     var url: URL? { get }
+    
+}
+
+protocol LoginDetectionCookiesProvider {
     
     @available (iOS 11, *)
     func getAllCookies(completion: @escaping ([HTTPCookie]) -> Void)
@@ -30,8 +34,13 @@ protocol LoginDetectionAction {
 class LoginDetection {
     
     private var cookies: [HTTPCookie]?
+    private var domain: String?
     
-    func webView(_ webView: LoginDetectionWebView, allowedAction action: LoginDetectionAction, completion: @escaping () -> Void) {
+    func webView(withURL urlProvider: LoginDetectionURLProvider,
+                 andCookies cookiesProvider: LoginDetectionCookiesProvider,
+                 allowedAction action: LoginDetectionAction,
+                 completion: @escaping () -> Void) {
+        
         guard #available(iOS 11, *) else {
             completion()
             return
@@ -42,22 +51,24 @@ class LoginDetection {
             return
         }
         
-        webView.getAllCookies { cookies in
-            self.cookies = self.cookiesForDomain(webView.url?.host, from: cookies)
+        let domain = urlProvider.url?.host
+        cookiesProvider.getAllCookies { cookies in
+            self.cookies = self.cookiesForDomain(domain, from: cookies)
+            self.domain = domain
             completion()
         }
     }
     
     /// Completion passes true if the navigation was a post and resulted in different cookies.
-    func webViewDidFinishNavigation(_ webView: LoginDetectionWebView, completion: @escaping (Bool) -> Void) {
+    func webViewDidFinishNavigation(withCookies cookiesProvider: LoginDetectionCookiesProvider, completion: @escaping (Bool) -> Void) {
         guard #available(iOS 11, *) else {
             completion(false)
             return
         }
         
-        webView.getAllCookies { cookies in
-            let cookies = self.cookiesForDomain(webView.url?.host, from: cookies)
-            completion(cookies != self.cookies)
+        cookiesProvider.getAllCookies { cookies in
+            let cookies = self.cookiesForDomain(self.domain, from: cookies)
+            completion(self.equals(self.cookies, cookies))
         }
     }
     
@@ -65,9 +76,28 @@ class LoginDetection {
         return cookies.filter { $0.domain == domain }.sorted(by: { $0.name < $1.name })
     }
     
+    private func equals(_ startingCookies: [HTTPCookie]?, _ currentCookies: [HTTPCookie]) -> Bool {
+        guard let startingCookies = startingCookies,
+            startingCookies.count == currentCookies.count else { return false }
+        
+        for i in 0 ..< startingCookies.count {
+            if !equals(startingCookies[i], currentCookies[i]) {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    private func equals(_ lhs: HTTPCookie, _ rhs: HTTPCookie) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.value == rhs.value
+            && lhs.path == rhs.path
+    }
+    
 }
 
-extension WKWebView: LoginDetectionWebView {
+extension WKWebView: LoginDetectionURLProvider, LoginDetectionCookiesProvider {
 
     @available (iOS 11, *)
     func getAllCookies(completion: @escaping ([HTTPCookie]) -> Void) {

@@ -75,8 +75,8 @@ class TabViewController: UIViewController {
     
     private var tearDownExecuted = false
     private var tips: BrowsingTips?
-    
-    var lastRequestPost = false
+
+    private var loginDetection: LoginDetection?
     
     public var url: URL? {
         didSet {
@@ -605,7 +605,7 @@ extension TabViewController: WKScriptMessageHandler {
             handleTrackerDetected(message: message)
 
         case MessageHandlerNames.possibleLogin:
-            possibleLogin()
+            possibleLogin(forDomain: webView.url?.host)
 
         case MessageHandlerNames.log:
             handleLog(message: message)
@@ -618,8 +618,8 @@ extension TabViewController: WKScriptMessageHandler {
         }
     }
 
-    private func possibleLogin() {
-        print("*** possible login", webView.url?.absoluteString ?? "unknown url")
+    private func possibleLogin(forDomain domain: String?) {
+        print("*** possible login", domain ?? "nil")
     }
     
     private func handleFindInPage(message: WKScriptMessage) {
@@ -799,6 +799,13 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
         tips?.onFinishedLoading(url: url, error: isError)
+        
+        let domain = webView.url?.host
+        loginDetection?.webViewDidFinishNavigation(withCookies: webView, completion: { [weak self] isPossibleLogin in
+            if isPossibleLogin {
+                self?.possibleLogin(forDomain: domain)
+            }
+        })
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -862,31 +869,20 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision == .allow {
-                // we're going to make the request
-                
-                // TODO cleanup
-                
+            if let url = navigationAction.request.url, decision != .cancel {
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
                 
                 self?.findInPage?.done()
-                
-                self?.lastRequestPost = navigationAction.request.httpMethod == "POST"
-                if self?.lastRequestPost ?? false {
-                    print("*** POST")
-                    self?.rememberCookies {
-                        decisionHandler(decision)
-                    }
-                }
-                
-            }
             
-            if !(self?.lastRequestPost ?? false) {
+                self?.loginDetection = LoginDetection()
+                self?.loginDetection?.webView(withURL: webView, andCookies: webView, allowedAction: navigationAction) {
+                    decisionHandler(decision)
+                }
+            } else {
                 decisionHandler(decision)
             }
-            
         }
     }
     

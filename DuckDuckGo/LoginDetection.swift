@@ -21,10 +21,6 @@ protocol LoginDetectionCookiesProvider {
     
 }
 
-protocol LoginDetectionNavigation: NSObjectProtocol {
-    
-}
-
 protocol LoginDetectionAction {
     
     var method: String? { get }
@@ -106,6 +102,10 @@ extension WKWebView: LoginDetectionURLProvider, LoginDetectionCookiesProvider {
     
 }
 
-extension WKNavigation: LoginDetectionNavigation {
+extension WKNavigationAction: LoginDetectionAction {
 
+    var method: String? {
+        return request.httpMethod
+    }
+    
 }

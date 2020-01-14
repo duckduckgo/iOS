@@ -1,3 +1,2 @@
-• You can now swipe to close tabs.
-• Fixed some layout issues in the tab switcher.
-• Other bug fixes and improvements.
+• Improvements to onboarding flow.
+• Bug fixes.

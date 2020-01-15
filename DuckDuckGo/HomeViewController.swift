@@ -131,11 +131,6 @@ class HomeViewController: UIViewController {
         viewHasAppeared = true
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        collectionView.reloadData()
-    }
-
     func resetHomeRowCTAAnimations(variantManager: VariantManager = DefaultVariantManager()) {
         installHomeScreenTips()
 

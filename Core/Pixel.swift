@@ -23,6 +23,9 @@ import Alamofire
 public enum PixelName: String {
     
     case appLaunch = "ml"
+
+    case forgetAllPressedBrowsing = "mf_bp"
+    case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
     
     case privacyDashboardOpened = "mp"
@@ -31,8 +34,10 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    case privacyDashboardToggleProtectionOn = "mp_ta"
-    case privacyDashboardToggleProtectionOff = "mp_tb"
+    case privacyDashboardWhitelistAdd = "mp_wla"
+    case privacyDashboardWhitelistRemove = "mp_wlr"
+    case privacyDashboardManageWhitelist = "mp_mw"
+    case privacyDashboardReportBrokenSite = "mp_rb"
     
     case httpsNoLookup = "m_https_nl"
     case httpsLocalUpgrade = "m_https_lu"
@@ -54,7 +59,13 @@ public enum PixelName: String {
     case quickActionExtensionBookmarks = "mqe_b"
     case bookmarksExtensionBookmark = "mbe_b"
     
+    case bookmarkTapped = "m_b_t"
+    case bookmarkRemoved = "m_b_r"
+    case bookmarksEditPressed = "m_b_e"
+    case overlayFavoriteLaunched = "m_ov_f"
+    
     case settingsOpened = "ms"
+    case settingsOpenedFromTabsSwitcher = "ms_ot"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
     case settingsThemeShown = "ms_tp"
@@ -66,6 +77,9 @@ public enum PixelName: String {
     case settingsHomePageSimple = "ms_hp_s"
     case settingsHomePageCenterSearch = "ms_hp_c"
     case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
+    case settingsManageWhitelist = "ms_mw"
+    case settingsLinkPreviewsOff = "ms_lp_f"
+    case settingsLinkPreviewsOn = "ms_lp_n"
 
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"
@@ -84,14 +98,16 @@ public enum PixelName: String {
     case browsingMenuAddToFavorites = "mb_af"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
-    case browsingMenuWhitelist = "mb_wl"
-    case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
     case browsingMenuFindInPage = "mb_fp"
-
+    case browsingMenuWhitelistAdd = "mb_wla"
+    case browsingMenuWhitelistRemove = "mb_wlr"
+    case browsingMenuReportBrokenSite = "mb_rb"
+    
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
+    case tabBarBookmarksLongPressed = "mt_bl"
     case tabBarTabSwitcherPressed = "mt_tb"
 
     case onboardingShown = "m_o"
@@ -109,6 +125,7 @@ public enum PixelName: String {
     
     case homeRowCTAShowMeTapped = "m_ha"
     case homeRowCTANoThanksTapped = "m_hb"
+    case homeRowCTAGotItTapped = "m_hg"
     
     case homeRowCTAReminderTapped = "m_hc"
     case homeRowCTAReminderDismissed = "m_hd"
@@ -152,17 +169,43 @@ public enum PixelName: String {
     case notificationOptIn = "m_ne"
     case notificationOptOut = "m_nd"
     
-    case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
-    case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
+    case brokenSiteReported = "m_bsr"
+
+    // debug pixels:
+    
+    case dbMigrationError = "m_d_dbme"
+    case dbRemovalError = "m_d_dbre"
+    case dbDestroyError = "m_d_dbde"
+    case dbDestroyFileError = "m_d_dbdf"
+    case dbInitializationError = "m_d_dbie"
+    case dbSaveWhitelistError = "m_d_dbsw"
+    case dbSaveBloomFilterError = "m_d_dbsb"
     
     case configurationFetchInfo = "m_d_cfgfetch"
-    case brokenSiteReported = "m_bsr"
+    
+    case trackerDataParseFailed = "m_d_tds_p"
+    case trackerDataReloadFailed = "m_d_tds_r"
+    case trackerDataCouldNotBeLoaded = "m_d_tds_l"
+    case fileStoreWriteFailed = "m_d_fswf"
+    
+    case webKitDidTerminate = "m_d_wkt"
+
 }
 
 public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
+    static let appVersion = "appVersion"
+    
+    static let applicationState = "as"
+    static let dataAvailiability = "dp"
+    
+    static let errorCode = "e"
+    static let errorDesc = "d"
+    static let errorCount = "c"
+    static let underlyingErrorCode = "ue"
+    static let underlyingErrorDesc = "ud"
 }
 
 public struct PixelValues {
@@ -188,6 +231,7 @@ public class Pixel {
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
+        newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }
@@ -203,6 +247,27 @@ public class Pixel {
         }
     }
     
+}
+
+extension Pixel {
+    
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
+        let nsError = error as NSError
+        var newParams = params
+        newParams[PixelParameters.errorCode] = "\(nsError.code)"
+        newParams[PixelParameters.errorDesc] = nsError.domain
+        
+        if isCounted {
+            let count = PixelCounterStore().incrementCountFor(pixel)
+            newParams[PixelParameters.errorCount] = "\(count)"
+        }
+        
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+            newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
+            newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
+        }
+        fire(pixel: pixel, withAdditionalParameters: newParams)
+    }
 }
 
 public class TimedPixel {

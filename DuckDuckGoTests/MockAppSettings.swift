@@ -26,5 +26,7 @@ class MockAppSettings: AppSettings {
     var autoClearTiming: AutoClearSettingsModel.Timing = .termination
     var autoClearAction: AutoClearSettingsModel.Action = []
     var homePage: HomePageConfiguration.ConfigName = .simple
+    var allowUniversalLinks: Bool = true
+    var longPressPreviews: Bool = true
     
 }

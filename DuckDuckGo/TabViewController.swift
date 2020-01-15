@@ -28,10 +28,7 @@ class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
 
     private struct Constants {
-        static let unsupportedUrlErrorCode = -1002
-        static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
-        static let minimumProgress: CGFloat = 0.1
     }
 
     private struct UserAgent {
@@ -62,6 +59,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private let contentBlockerConfiguration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -75,7 +73,7 @@ class TabViewController: UIViewController {
     private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
     
-    private var tearDownCount = 0
+    private var tearDownExecuted = false
     private var tips: BrowsingTips?
     
     public var url: URL? {
@@ -192,7 +190,6 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
         controller.add(self, name: MessageHandlerNames.signpost)
-        controller.add(self, name: MessageHandlerNames.cache)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
         reloadScripts()
@@ -455,7 +452,7 @@ class TabViewController: UIViewController {
     }
     
     private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = storageCache.entityMapping
+        let entityMapping = EntityMapping()
         let privacyPractices = PrivacyPractices(tld: storageCache.tld,
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
                                                 entityMapping: entityMapping)
@@ -463,8 +460,7 @@ class TabViewController: UIViewController {
         return SiteRating(url: url,
                           httpsForced: httpsForced,
                           entityMapping: entityMapping,
-                          privacyPractices: privacyPractices,
-                          prevalenceStore: storageCache.prevalenceStore)
+                          privacyPractices: privacyPractices)
     }
 
     private func updateSiteRating() {
@@ -492,14 +488,6 @@ class TabViewController: UIViewController {
         present(controller: alert, fromView: webView, atPoint: point)
     }
     
-    private func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        if shouldOpenExternally(url: url) {
-            openExternally(url: url)
-            return false
-        }
-        return true
-    }
-    
     private func openExternally(url: URL) {
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
@@ -508,32 +496,43 @@ class TabViewController: UIViewController {
         }
     }
 
-    private func shouldOpenExternally(url: URL) -> Bool {
-        if SupportedExternalURLScheme.isSupported(url: url) {
-            return true
-        }
+    private func isExternallyHandled(url: URL, for navigationAction: WKNavigationAction) -> Bool {
+        let schemeType = ExternalSchemeHandler.schemeType(for: url)
         
-        if SupportedExternalURLScheme.isProhibited(url: url) {
+        switch schemeType {
+        case .external(let action):
+            guard navigationAction.navigationType == .linkActivated else {
+                // Ignore extrnal URLs if not triggered by the User.
+                return true
+            }
+            switch action {
+            case .open:
+                openExternally(url: url)
+            case .askForConfirmation:
+                presentOpenInExternalAppAlert(url: url)
+            case .cancel:
+                break
+            }
+            
+            return true
+        case .other:
             return false
         }
+    }
+    
+    func presentOpenInExternalAppAlert(url: URL) {
+        let title = UserText.customUrlSchemeTitle
+        let message = UserText.forCustomUrlSchemePrompt(url: url)
+        let open = UserText.customUrlSchemeOpen
+        let dontOpen = UserText.customUrlSchemeDontOpen
         
-        if url.isCustomURLScheme() {
-            
-            let title = UserText.customUrlSchemeTitle
-            let message = UserText.forCustomUrlSchemePrompt(url: url)
-            let open = UserText.customUrlSchemeOpen
-            let dontOpen = UserText.customUrlSchemeDontOpen
-            
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.overrideUserInterfaceStyle()
-            alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
-            alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
-                self.openExternally(url: url)
-            }))
-            show(alert, sender: self)
-        }
-        
-        return false
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle()
+        alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+        alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
+            self.openExternally(url: url)
+        }))
+        show(alert, sender: self)
     }
 
     func dismiss() {
@@ -546,17 +545,16 @@ class TabViewController: UIViewController {
     }
     
     public func tearDown() {
-        guard tearDownCount == 0 else {
-            fatalError("tearDown has already happened")
+        guard !tearDownExecuted else {
+            return
         }
-        tearDownCount += 1
+        tearDownExecuted = true
         removeObservers()
         webView.removeFromSuperview()
 
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
-        controller.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
     }
@@ -573,7 +571,7 @@ class TabViewController: UIViewController {
         dismiss()
         tearDown()
     }
-}
+}   
 
 extension TabViewController: WKScriptMessageHandler {
     
@@ -587,7 +585,6 @@ extension TabViewController: WKScriptMessageHandler {
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
-        static let cache = "cacheMessage"
         static let log = "log"
         static let findInPageHandler = "findInPageHandler"
     }
@@ -595,9 +592,6 @@ extension TabViewController: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
         switch message.name {
-
-        case MessageHandlerNames.cache:
-            handleCache(message: message)
 
         case MessageHandlerNames.signpost:
             handleSignpost(message: message)
@@ -626,14 +620,6 @@ extension TabViewController: WKScriptMessageHandler {
     private func handleLog(message: WKScriptMessage) {
         Logger.log(text: String(describing: message.body))
     }
-
-    private func handleCache(message: WKScriptMessage) {
-        Logger.log(text: "\(MessageHandlerNames.cache)")
-        guard let dict = message.body as? [String: Any] else { return }
-        guard let name = dict["name"] as? String else { return }
-        guard let data = dict["data"] as? String else { return }
-        ContentBlockerStringCache().put(name: name, value: data)
-    }
     
     private func handleSignpost(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any],
@@ -644,10 +630,16 @@ extension TabViewController: WKScriptMessageHandler {
                 let url = dict["url"] as? String {
                 instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
             }
-        } else if event == "Request Blocked" {
+        } else if event == "Tracker Allowed" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
+                let url = dict["url"] as? String,
+                let reason = dict["reason"] as? String? {
+                instrumentation.tracker(url: url, allowedIn: elapsedTimeInMs, reason: reason)
+            }
+        } else if event == "Tracker Blocked" {
             if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {
-                instrumentation.request(url: url, blockedIn: elapsedTimeInMs)
+                instrumentation.tracker(url: url, blockedIn: elapsedTimeInMs)
             }
         } else if event == "Generic" {
             if let name = dict["name"] as? String,
@@ -671,16 +663,8 @@ extension TabViewController: WKScriptMessageHandler {
             return
         }
 
-        let url = URL(string: urlString.trimWhitespace())
-        var networkName: String?
-        var category: String?
-        if let domain = url?.host {
-            let networkNameAndCategory = storageCache.disconnectMeStore.networkNameAndCategory(forDomain: domain)
-            networkName = networkNameAndCategory.networkName
-            category = networkNameAndCategory.category
-        }
-
-        let tracker = DetectedTracker(url: urlString, networkName: networkName, category: category, blocked: blocked)
+        let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
+        
         siteRating.trackerDetected(tracker)
         onSiteRatingChanged()
         
@@ -688,8 +672,8 @@ extension TabViewController: WKScriptMessageHandler {
             NetworkLeaderboard.shared.incrementPagesWithTrackers()
             pageHasTrackers = true
         }
-        
-        if let networkName = networkName {
+  
+        if let networkName = tracker.knownTracker?.owner?.name {
             if !trackerNetworksDetectedOnPage.contains(networkName) {
                 trackerNetworksDetectedOnPage.insert(networkName)
                 NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
@@ -698,6 +682,13 @@ extension TabViewController: WKScriptMessageHandler {
         }
 
     }
+
+    private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
+        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
+        let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
+        return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+    }
+    
 }
 
 extension TabViewController: WKNavigationDelegate {
@@ -856,6 +847,8 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        let allowPolicy = determineAllowPolicy()
+        
         let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
@@ -863,18 +856,18 @@ extension TabViewController: WKNavigationDelegate {
             lastUpgradedURL = nil
         }
         
+        guard navigationAction.request.mainDocumentURL != nil else {
+            completion(allowPolicy)
+            return
+        }
+        
         guard let url = navigationAction.request.url else {
-            completion(.allow)
+            completion(allowPolicy)
             return
         }
         
-        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
+        if isExternallyHandled(url: url, for: navigationAction) {
             completion(.cancel)
-            return
-        }
-        
-        guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            completion(.allow)
             return
         }
         
@@ -884,6 +877,17 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
+        if isNewTargetBlankRequest(navigationAction: navigationAction) {
+            delegate?.tab(self, didRequestNewTabForUrl: url, animated: true)
+            completion(.cancel)
+            return
+        }
+        
+        if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+            completion(allowPolicy)
+            return
+        }
+
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
@@ -893,20 +897,18 @@ extension TabViewController: WKNavigationDelegate {
                 completion(.cancel)
                 return
             }
-            
-            if let shouldLoad = self?.shouldLoad(url: url, forDocument: documentUrl), shouldLoad {
-                if let strongSelf = self, navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil {
-                    // Handle <a href target="_blank">
-                    self?.delegate?.tab(strongSelf, didRequestNewTabForUrl: url)
-                    completion(.cancel)
-                } else {
-                    completion(.allow)
-                }
-                return
-            }
-            
-            completion(.cancel)
+
+            completion(allowPolicy)
         }
+    }
+    
+    private func isNewTargetBlankRequest(navigationAction: WKNavigationAction) -> Bool {
+        return navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil
+    }
+
+    private func determineAllowPolicy() -> WKNavigationActionPolicy {
+        let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
+        return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks
     }
     
     private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
@@ -922,12 +924,11 @@ extension TabViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        
-        let code = (error as NSError).code
-        if  ![Constants.unsupportedUrlErrorCode, Constants.urlCouldNotBeLoaded].contains(code) {
+
+        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
             showError(message: error.localizedDescription)
         }
-        
+
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
@@ -949,6 +950,7 @@ extension TabViewController: WKUIDelegate {
     }
     
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
 }
@@ -1039,6 +1041,14 @@ extension TabViewController: Themable {
         }
     }
     
+}
+
+extension NSError {
+
+    var failedUrl: URL? {
+        return userInfo[NSURLErrorFailingURLErrorKey] as? URL
+    }
+
 }
 
 // swiftlint:enable file_length

@@ -64,15 +64,15 @@ extension SiteRating {
     }
     
     func majorNetworksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(configuration) ? uniqueMajorTrackerNetworksBlocked : uniqueMajorTrackerNetworksDetected) <= 0
+        return (protecting(configuration) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
     }
     
     func majorNetworksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionMajorTrackersBlocked, uniqueMajorTrackerNetworksBlocked)
+        return String(format: UserText.privacyProtectionMajorTrackersBlocked, majorTrackerNetworksBlocked)
     }
     
     func majorNetworksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionMajorTrackersFound, uniqueMajorTrackerNetworksDetected)
+        return String(format: UserText.privacyProtectionMajorTrackersFound, majorTrackerNetworksDetected)
     }
     
     func networksText(configuration: ContentBlockerConfigurationStore) -> String {
@@ -80,20 +80,20 @@ extension SiteRating {
     }
     
     func networksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(configuration) ? uniqueTrackersBlocked : uniqueTrackersDetected) <= 0
+        return (protecting(configuration) ? trackersBlocked.count : trackersDetected.count) <= 0
     }
     
     func networksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackersBlocked)
+        return String(format: UserText.privacyProtectionTrackersBlocked, trackersBlocked.count)
     }
     
     func networksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackersDetected)
+        return String(format: UserText.privacyProtectionTrackersFound, trackersDetected.count)
     }
     
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        guard let domain = domain else { return contentBlocker.enabled }
-        return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(domain)
+        guard let domain = domain else { return true }
+        return !contentBlocker.domainWhitelist.contains(domain)
     }
     
     static let gradeImages: [Grade.Grading: UIImage] = [

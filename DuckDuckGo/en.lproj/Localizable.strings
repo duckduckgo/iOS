@@ -37,7 +37,9 @@
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
 "action.title.newBackgroundTabForUrl" = "Open in Background";
-"action.title.forgetAll" = "Clear Tabs and Data";
+"action.title.forgetTabs" = "Close Tabs";
+"action.title.forgetAll" = "Close Tabs and Clear Data";
+"action.title.forgetTabsDone" = "Tabs closed";
 "action.title.forgetAllDone" = "Tabs and data cleared";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";
@@ -130,6 +132,8 @@
 "home.row.reminder.title" = "Take DuckDuckGo home";
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
+"home.row.onboarding.header" = "Add DuckDuckGo to your home screen!";
+
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
 "prompt.custom.url.scheme.title" = "Open in Another App?";
@@ -192,7 +196,6 @@
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
 
 "privacy.protection.site.grade" = "Privacy grade %@";
-"confirm" = "Confirm";
 
 "tab.open.with.title.and.address" = "Open \"%@\" at %@";
 "tab.close.with.title.and.address" = "Close \"%@\" at %@";
@@ -208,7 +211,7 @@
 "siteFeedback.buttonText" = "Submit Report";
 
 "feedback.start.header" = "Let's get started!";
-"feedback.start.supplementary" = "How would you catagorize your feedback?";
+"feedback.start.supplementary" = "How would you categorize your feedback?";
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
 
 "feedback.positive.header" = "Awesome to hear!";
@@ -279,6 +282,7 @@
 
 "feedback.form.caption" = "Please tell us what we can improve";
 
+"onboardingWelcomeHeader" = "Welcome to DuckDuckGo!";
 "onboardingContinue" = "Continue";
 "onboardingSkip" = "Skip";
 "onboardingStartBrowsing" = "Start Browsing";

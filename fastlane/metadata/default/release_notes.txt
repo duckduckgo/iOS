@@ -1,3 +1,2 @@
-• From iOS 13, you can change the in-app theme to match the system default.
-• We made search queries faster.
-• We fixed a bug to ensure that duckduckgo website settings are maintained when using the fire button.
+• Improvements to onboarding flow.
+• Bug fixes.

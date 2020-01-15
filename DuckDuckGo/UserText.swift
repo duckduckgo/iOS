@@ -46,7 +46,9 @@ public struct UserText {
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", comment: "Open in New Tab action")
     public static let actionNewBackgroundTabForUrl = NSLocalizedString("action.title.newBackgroundTabForUrl", comment: "Open in New Background Tab action")
+    public static let actionForgetTabs = NSLocalizedString("action.title.forgetTabs", comment: "Clear Tabs action")
     public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", comment: "Clear Tabs and Data action")
+    public static let actionForgetTabsDone = NSLocalizedString("action.title.forgetTabsDone", comment: "Tabs Cleared")
     public static let actionForgetAllDone = NSLocalizedString("action.title.forgetAllDone", comment: "Tabs and Data Cleared")
     public static let actionOpen = NSLocalizedString("action.title.open", comment: "Open action")
     public static let actionReadingList = NSLocalizedString("action.title.readingList", comment: "Reading List action")
@@ -91,8 +93,6 @@ public struct UserText {
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", comment: "Good Privacy Practices")
     public static let privacyProtectionTOSMixed = NSLocalizedString("privacy.protection.tos.mixed", comment: "Mixed Privacy Practices")
     public static let privacyProtectionTOSPoor = NSLocalizedString("privacy.protection.tos.poor", comment: "Poor Privacy Practices")
-
-    public static let privacyProtectionReloadBlockerLists = NSLocalizedString("privacy.protection.reload.blocker.lists", comment: "This can be caused by a loss of internet connection when loading the content blocking rules.")
 
     public static let ppEncryptionCertError = NSLocalizedString("privacy.protection.encryption.cert.error", comment: "Error extracting certificate")
     public static let ppEncryptionSubjectName = NSLocalizedString("privacy.protection.encryption.subject.name", comment:  "Subject Name")
@@ -145,6 +145,8 @@ public struct UserText {
     
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
+    
+    public static let homeRowOnboardingHeader = NSLocalizedString("home.row.onboarding.header", comment:  "Home Row onboarding Header")
     
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     
@@ -219,8 +221,6 @@ public struct UserText {
         let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
         return message.format(arguments: number)
     }
-
-    public static let confirm = NSLocalizedString("confirm", comment: "Confirm clear tabs and data")
     
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")
@@ -235,6 +235,7 @@ public struct UserText {
     public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
     public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
 
+    public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", comment: "Welcome to DuckDuckGo!")
     public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue")
     public static let onboardingSkip = NSLocalizedString("onboardingSkip", comment: "Skip")
     public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")

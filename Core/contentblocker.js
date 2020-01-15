@@ -19,49 +19,368 @@
 
 var duckduckgoContentBlocking = function() {
 
-	var parentEntityUrl = null
-	var topLevelUrl = null
+    // tld.js
+    var tldjs = {
 
-	// private
-	function handleDetection(url, detectionMethod) {
-		if (isAssociatedFirstPartyDomain(url)) {
-			duckduckgoDebugMessaging.log("first party url: " + url)
-			return null
-		}
+        parse: function(url) {
 
-		if (!duckduckgoBlockerData.blockingEnabled) {
-			return {
-				method: detectionMethod,
-				block: false,
-				reason: "protection disabled"
-			}
-		}
+            if (url.startsWith("//")) {
+                url = "http:" + url;
+            }
 
-		if (currentDomainIsWhitelisted()) {
-			duckduckgoDebugMessaging.log("domain whitelisted: " + url)
-			return {
-				method: detectionMethod,
-				block: false,
-				reason: "domain whitelisted"
-			}
-		}
+            try {
+                var parsed = new URL(url);
+                return {
+                    domain: parsed.hostname,
+                    hostname: parsed.hostname
+                }
+            } catch {
+                return {
+                    domain: "",
+                    hostname: ""
+                }
+            }
+        }
 
-		duckduckgoDebugMessaging.log("blocking: " + url)
-		return {
-			method: detectionMethod,
-			block: true,
-			reason: "tracker detected"
-		}
-	}
+    };
+    // tld.js
 
-	// private
-	function toURL(url, protocol) {
-		try {
-			return new URL(url.startsWith("//") ? protocol + url : url)
-		} catch(error) {
-			return null
-		}
-	}
+    // util.js
+    var utils = {
+
+        extractHostFromURL: function(url, shouldKeepWWW) {
+            if (!url) return ''
+
+            let urlObj = tldjs.parse(url)
+            let hostname = urlObj.hostname || ''
+
+            if (!shouldKeepWWW) {
+                hostname = hostname.replace(/^www\./, '')
+            }
+
+            return hostname
+        }
+
+    };
+    // util.js
+
+    // Buffer
+    class Buffer {
+        static from(string, type) {
+            return new Buffer(string);
+        }
+
+        constructor(string) {
+            this.string = string;
+        }
+
+        toString(type) {
+            let string = this.string;
+            var aUTF16CodeUnits = new Uint16Array(string.length);
+            Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = string.charCodeAt(idx); });
+            return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+        }
+    }
+    // Buffer
+
+    // trackers.js - https://raw.githubusercontent.com/duckduckgo/privacy-grade/298ddcbdd9d55808233643d90639578cd063a439/src/classes/trackers.js
+    (function () {
+        class Trackers {
+            constructor (ops) {
+                this.tldjs = ops.tldjs
+                this.utils = ops.utils
+            }
+
+        setLists (lists) {
+            lists.forEach(list => {
+                if (list.name === 'tds') {
+                    this.entityList = this.processEntityList(list.data.entities)
+                    this.trackerList = this.processTrackerList(list.data.trackers)
+                    this.domains = list.data.domains
+                } else if (list.name === 'surrogates') {
+                    this.surrogateList = this.processSurrogateList(list.data)
+                }
+            })
+        }
+
+        processTrackerList (data) {
+            for (let name in data) {
+                if (data[name].rules) {
+                    for (let i in data[name].rules) {
+                        data[name].rules[i].rule = new RegExp(data[name].rules[i].rule, 'ig')
+                    }
+                }
+            }
+            return data
+        }
+
+        processEntityList (data) {
+            const processed = {}
+            for (let entity in data) {
+                data[entity].domains.forEach(domain => {
+                    processed[domain] = entity
+                })
+            }
+            return processed
+        }
+
+        processSurrogateList (text) {
+            const b64dataheader = 'data:application/javascript;base64,'
+            const surrogateList = {}
+            const splitSurrogateList = text.trim().split('\n\n')
+
+            splitSurrogateList.forEach(sur => {
+                // remove comment lines
+                const lines = sur.split('\n').filter((line) => {
+                    return !(/^#.*/).test(line)
+                })
+
+                // remove first line, store it
+                const firstLine = lines.shift()
+
+                // take identifier from first line
+                const pattern = firstLine.split(' ')[0].split('/')[1]
+                const b64surrogate = Buffer.from(lines.join('\n').toString(), 'binary').toString('base64')
+                surrogateList[pattern] = b64dataheader + b64surrogate
+            })
+            return surrogateList
+        }
+
+        getTrackerData (urlToCheck, siteUrl, request, ops) {
+            ops = ops || {}
+
+            if (!this.entityList || !this.trackerList) {
+                throw new Error('tried to detect trackers before rules were loaded')
+            }
+
+            // single object with all of our requeest and site data split and
+            // processed into the correct format for the tracker set/get functions.
+            // This avoids repeat calls to split and util functions.
+            const requestData = {
+                ops: ops,
+                siteUrl: siteUrl,
+                request: request,
+                siteDomain: this.tldjs.parse(siteUrl).domain,
+                siteUrlSplit: this.utils.extractHostFromURL(siteUrl).split('.'),
+                urlToCheck: urlToCheck,
+                urlToCheckDomain: this.tldjs.parse(urlToCheck).domain,
+                urlToCheckSplit: this.utils.extractHostFromURL(urlToCheck).split('.')
+            }
+
+            // finds a tracker definition by iterating over the whole trackerList and finding the matching tracker.
+            const tracker = this.findTracker(requestData)
+
+            if (!tracker) {
+                return null
+            }
+
+            // finds a matching rule by iterating over the rules in tracker.data and sets redirectUrl.
+            const matchedRule = this.findRule(tracker, requestData)
+
+            const redirectUrl = (matchedRule && matchedRule.surrogate) ? this.surrogateList[matchedRule.surrogate] : false
+
+            // sets tracker.exception by looking at tracker.rule exceptions (if any)
+            const matchedRuleException = matchedRule ? this.matchesRuleDefinition(matchedRule, 'exceptions', requestData) : false
+
+            const trackerOwner = this.findTrackerOwner(requestData.urlToCheckDomain)
+
+            const websiteOwner = this.findWebsiteOwner(requestData)
+
+            const firstParty = (trackerOwner && websiteOwner) ? trackerOwner === websiteOwner : false
+
+            const fullTrackerDomain = requestData.urlToCheckSplit.join('.')
+
+            const {action, reason} = this.getAction({
+                firstParty,
+                matchedRule,
+                matchedRuleException,
+                defaultAction: tracker.default,
+                redirectUrl
+            })
+
+            return {
+                action,
+                reason,
+                firstParty,
+                redirectUrl,
+                matchedRule,
+                matchedRuleException,
+                tracker,
+                fullTrackerDomain
+            }
+        }
+
+        /*
+         * Pull subdomains off of the reqeust rule and look for a matching tracker object in our data
+         */
+        findTracker (requestData) {
+            let urlList = Array.from(requestData.urlToCheckSplit)
+
+            while (urlList.length > 1) {
+                let trackerDomain = urlList.join('.')
+                urlList.shift()
+
+                const matchedTracker = this.trackerList[trackerDomain]
+                if (matchedTracker) {
+                    return matchedTracker
+                }
+            }
+        }
+
+        findTrackerOwner (trackerDomain) {
+            return this.entityList[trackerDomain]
+        }
+
+        /*
+        * Set parent and first party values on tracker
+        */
+        findWebsiteOwner (requestData) {
+            // find the site owner
+            let siteUrlList = Array.from(requestData.siteUrlSplit)
+
+            while (siteUrlList.length > 1) {
+                let siteToCheck = siteUrlList.join('.')
+                siteUrlList.shift()
+
+                if (this.entityList[siteToCheck]) {
+                    return this.entityList[siteToCheck]
+                }
+            }
+        }
+
+        /*
+         * Iterate through a tracker rule list and return the first matching rule, if any.
+         */
+        findRule (tracker, requestData) {
+            let matchedRule = null
+            // Find a matching rule from this tracker
+            if (tracker.rules && tracker.rules.length) {
+                tracker.rules.some(ruleObj => {
+                    if (this.requestMatchesRule(requestData, ruleObj)) {
+                        matchedRule = ruleObj
+                        return true
+                    }
+                })
+            }
+            return matchedRule
+        }
+
+        requestMatchesRule (requestData, ruleObj) {
+            if (requestData.urlToCheck.match(ruleObj.rule)) {
+                if (ruleObj.options) {
+                    return this.matchesRuleDefinition(ruleObj, 'options', requestData)
+                } else {
+                    return true
+                }
+            } else {
+                return false
+            }
+        }
+
+        /* Check the matched rule  options against the request data
+        *  return: true (all options matched)
+        */
+        matchesRuleDefinition (rule, type, requestData) {
+            if (!rule[type]) {
+                return false
+            }
+
+            const ruleDefinition = rule[type]
+
+            const matchTypes = (ruleDefinition.types && ruleDefinition.types.length)
+                ? ruleDefinition.types.includes(requestData.request.type) : true
+
+            const matchDomains = (ruleDefinition.domains && ruleDefinition.domains.length)
+                ? ruleDefinition.domains.some(domain => domain.match(requestData.siteDomain)) : true
+
+            return (matchTypes && matchDomains)
+        }
+
+        getAction (tracker) {
+            // Determine the blocking decision and reason.
+            let action, reason
+            if (tracker.firstParty) {
+                action = 'ignore'
+                reason = 'first party'
+            } else if (tracker.matchedRuleException) {
+                action = 'ignore'
+                reason = 'matched rule - exception'
+            } else if (!tracker.matchedRule && tracker.defaultAction === 'ignore') {
+                action = 'ignore'
+                reason = 'default ignore'
+            } else if (tracker.matchedRule && tracker.matchedRule.action === 'ignore') {
+                action = 'ignore'
+                reason = 'matched rule - ignore'
+            } else if (!tracker.matchedRule && tracker.defaultAction === 'block') {
+                action = 'block'
+                reason = 'default block'
+            } else if (tracker.matchedRule) {
+                if (tracker.redirectUrl) {
+                    action = 'redirect'
+                    reason = 'matched rule - surrogate'
+                } else {
+                    action = 'block'
+                    reason = 'matched rule - block'
+                }
+            }
+
+            return {action, reason}
+        }
+        }
+        
+        if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+            module.exports = Trackers
+        else
+            window.Trackers = Trackers
+
+    })()
+    // trackers.js
+
+    // surrogates
+    let surrogates = `
+    ${surrogates}
+    `
+    // surrogates
+        
+    // tracker data set
+    let trackerData = ${trackerData}
+    // tracker data set
+
+    // overrides    
+    Trackers.prototype.findTrackerOwner = function(domain) {
+        var parts = domain.split(".")
+        while (parts.length > 1) {
+            let entityName = trackerData.domains[parts.join(".")]
+            if (entityName) {
+                return entityName
+            }
+            parts = parts.slice(1)
+        }
+        return null;
+    }
+
+    // create an instance to use
+    let trackers = new Trackers({
+        tldjs: tldjs,
+        utils: utils
+    });
+
+    // update algorithm with the data it needs
+    trackers.setLists([{ 
+            name: "tds",
+            data: trackerData
+        },
+        {
+            name: "surrogates",
+            data: surrogates
+        }
+    ]);
+
+	let topLevelUrl = getTopLevelURL();
+
+    let whitelisted = `
+        ${whitelist}
+    `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
 
 	// private 
 	function getTopLevelURL() {
@@ -74,244 +393,73 @@ var duckduckgoContentBlocking = function() {
 		}
 	}
 
-	// private
-	function currentDomainIsWhitelisted() {
-		return duckduckgoBlockerData.whitelist[topLevelUrl.host]
-	}
-
-	// private
-	function trackerWhitelisted(trackerUrl, type) {
-		return abpMatch(trackerUrl, type, "whitelist", duckduckgoBlockerData.easylistWhitelist)
-	}
-
-	// from https://stackoverflow.com/a/7616484/73479
-	// private 
-	function hashCode(string) {
-		var hash = 0, i, chr;
-		if (string.length === 0) return hash;
-  		for (i = 0; i < string.length; i++) {
-    		chr   = string.charCodeAt(i);
-    		hash  = ((hash << 5) - hash) + chr;
-    		hash |= 0; 
-  		}
-  		return hash;
-	}
-
-	// private
-	function getStatus(url) {
-		return statuses[hashCode(event.url)]
-	}
-
-	// private
-	function domainsMatch(url1, url2) {
-		return duckduckgoTLDParser.extractDomain(url1) == duckduckgoTLDParser.extractDomain(url2)
-	}
-
-	// private
-	function isDuckDuckGo(url) {
-		return url.hostname.endsWith("duckduckgo.com")
-	}
-
-	// private
-	function urlBelongsToThisSite(urlToCheck) {
-		return domainsMatch(urlToCheck, topLevelUrl)
-	}
-
-	// private
-	function urlBelongsToSiteParent(urlToCheck) {
-		return parentEntityUrl && domainsMatch(parentEntityUrl, urlToCheck)
-	}
-
-	// private
-	function urlBelongsToRelatedSite(urlToCheck) {
-		if (!parentEntityUrl) {
-			return false
-		}
-
-		var related = DisconnectMe.parentTracker(urlToCheck)	
-		if (!related) {
-			return false
-		}
-
-		var relatedUrl = new URL(topLevelUrl.protocol + related.parent);
-		if (!domainsMatch(relatedUrl, parentEntityUrl)) {
-			return false
-		}
-
-		return true
-	}
-
-	// private
-	function isAssociatedFirstPartyDomain(trackerUrl) {
-		var urlToCheck = toURL(trackerUrl, topLevelUrl.protocol)
-		if (urlToCheck == null) {
-			return false
-		}
-
-		if (urlBelongsToThisSite(urlToCheck)) {
-			return true
-		}
-
-		if (urlBelongsToSiteParent(urlToCheck)) { 
-			return true
-		}
-
-		if (urlBelongsToRelatedSite(urlToCheck)) {
-			return true
-		}
-
-		return false
-	}
-
-	// private
-	function getParentEntityUrl() {
-		var parentEntity = DisconnectMe.parentTracker(topLevelUrl)
-		if (parentEntity) {
-			duckduckgoDebugMessaging.log("topLevelUrl: " + topLevelUrl.protocol + " parentEntity: " + JSON.stringify(parentEntity))
-			return new URL(topLevelUrl.protocol + parentEntity.parent)
-		}
-		return null
-	}
-
-	// private
-	function disconnectMeMatch(trackerUrl) {
-		var url = toURL(trackerUrl, topLevelUrl.protocol)
-		if (!url) {
-			return null
-		}
-
-		var result = DisconnectMe.parentTracker(url)
-		if (result && result.banned) {			
-			return handleDetection(trackerUrl, "disconnectme")
-		}		
-
-		return null
-	}
-
-	// private
-	function abpMatch(trackerUrl, type, name, list) {
-		if (Object.keys(list).length == 0) { return }
-
-		var typeMask = ABPFilterParser.elementTypes[type.toUpperCase()]
-
-		var config = {
-			domain: document.location.hostname,
-			elementTypeMask: typeMask
-		}
-
-		var result = ABPFilterParser.matches(list, trackerUrl, config)
-		return result
-	}
-
-	// private
-	function checkEasylist(trackerUrl, type, easylist, name) {
-		if (abpMatch(trackerUrl, type, name, easylist)) {			
-			return handleDetection(trackerUrl, name)
-		}
-		return null
-	}
-
-	// private
-	function easylistPrivacyMatch(trackerUrl, type) {
-		return checkEasylist(trackerUrl, type, duckduckgoBlockerData.easylistPrivacy, "easylist-privacy")
-	}
-
-	// private
-	function easylistMatch(trackerUrl, type) {
-		return checkEasylist(trackerUrl, type, duckduckgoBlockerData.easylist, "easylist")
-	}
-
-	// public 
-	function loadSurrogate(url) {
-		var withoutQueryString = url.split("?")[0]        	
-		duckduckgoDebugMessaging.log("looking for surrogate for " + withoutQueryString)
-
-        var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
-        for (var i = 0; i < suggorateKeys.length; i++) {
-        	var key = suggorateKeys[i]
-            if (withoutQueryString.endsWith(key)) {
-                var surrogate = duckduckgoBlockerData.surrogates[key]
-                var s = document.createElement("script")
-                s.type = "application/javascript"
-                s.async = true
-                s.src = surrogate
-                sp = document.getElementsByTagName("script")[0]
-                sp.parentNode.insertBefore(s, sp)
-                return true
-            }
+    // private
+    function loadSurrogate(surrogatePattern) {
+        var s = document.createElement("script")
+        s.type = "application/javascript"
+        s.async = true
+        s.src = trackers.surrogateList[surrogatePattern]
+        if (sp = document.getElementsByTagName("script")[0]) {
+            sp.parentNode.insertBefore(s, sp)
         }
-
-        return false
-	}
+    }
 
 	// public
-	function shouldBlock(trackerUrl, type, blockFunc) {
-        var startTime = performance.now()
+	function shouldBlock(trackerUrl, type) {
+        let startTime = performance.now()
         
-		if (trackerWhitelisted(trackerUrl, type)) {
-			blockFunc(trackerUrl, false)
-
-            duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
-                                                   url: trackerUrl,
-                                                   time: performance.now() - startTime})
-			return false
-		}
-
-		var detectors = [
-			disconnectMeMatch,
-			easylistPrivacyMatch,
-			easylistMatch
-		]
-
-		var result = null
-		for (var i = 0; i < detectors.length; i++) {
-			result = detectors[i](trackerUrl, type)
-			if (result != null) {
-				break;
-			}
-		}
+        let result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
+        	type: type
+        }, null);
 
 		if (result == null) {
-			blockFunc(trackerUrl, false)
-
             duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
 			return false;
 		}
 
-		blockFunc(trackerUrl, result.block)
+		var blocked = false;
+        if (whitelisted) {
+            blocked = false;
+            result.reason = "whitelisted";
+        } else if (result.action === 'block') {
+			blocked = true;
+		} else if (result.matchedRule && result.matchedRule.surrogate) {
+			blocked = true;
+		}
 
         duckduckgoMessaging.trackerDetected({
 	        url: trackerUrl,
-	        blocked: result.block,
-	        method: result.method,
-	        type: type
+	        blocked: blocked,
+	        reason: result.reason,
         })
         
-        if (result.block) {
-            duckduckgoDebugMessaging.signpostEvent({event: "Request Blocked",
+        if (blocked) {
+
+            if (result.matchedRule && result.matchedRule.surrogate) {
+            	loadSurrogate(result.matchedRule.surrogate)
+            }
+
+            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
         } else {
-            duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
+            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Allowed",
                                                    url: trackerUrl,
+                                                   reason: result.reason,
                                                    time: performance.now() - startTime})
         }
 
-		return result.block
+		return blocked;
 	}
 
 	// Init 
 	(function() {
-		topLevelUrl = getTopLevelURL()
-		parentEntityUrl = getParentEntityUrl()
 		duckduckgoDebugMessaging.log("content blocking initialised")
 	})()
 
 	return { 
-		loadSurrogate: loadSurrogate,
 		shouldBlock: shouldBlock
 	}
 }()
-

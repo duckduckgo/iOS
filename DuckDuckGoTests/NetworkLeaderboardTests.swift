@@ -25,8 +25,29 @@ class NetworkLeaderboardTests: XCTestCase {
 
     override func setUp() {
         NetworkLeaderboard().reset()
+        UserDefaults(suiteName: "test")?.removePersistentDomain(forName: "test")
     }
 
+    func testWhenNeedsDataResetThenDataIsRemoved() {
+        let userDefaults = UserDefaults(suiteName: "test")!
+        
+        let populatedLeaderboard = NetworkLeaderboard()
+        populatedLeaderboard.incrementDetectionCount(forNetworkNamed: "Test")
+        populatedLeaderboard.incrementPagesLoaded()
+        XCTAssertFalse(populatedLeaderboard.networksDetected().isEmpty)
+        
+        let updatedLeaderboard = NetworkLeaderboard(userDefaults: userDefaults)
+        XCTAssertTrue(updatedLeaderboard.networksDetected().isEmpty)
+
+        updatedLeaderboard.incrementDetectionCount(forNetworkNamed: "Other")
+        updatedLeaderboard.incrementPagesLoaded()
+        XCTAssertFalse(populatedLeaderboard.networksDetected().isEmpty)
+
+        let recreatedLeaderboard = NetworkLeaderboard(userDefaults: userDefaults)
+        XCTAssertFalse(recreatedLeaderboard.networksDetected().isEmpty)
+
+    }
+    
     func testWhenNetworkOnLessThan1PercentOfSitesItIsExcludedFromTheView() {
         let leaderboard = NetworkLeaderboard()
         for _ in 0 ..< 200 {

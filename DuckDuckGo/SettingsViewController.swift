@@ -31,7 +31,11 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var homePageAccessoryText: UILabel!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
-    
+    @IBOutlet weak var openUniversalLinksToggle: UISwitch!
+    @IBOutlet weak var longPressPreviewsToggle: UISwitch!
+
+    @IBOutlet weak var longPressCell: UITableViewCell!
+
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -53,6 +57,8 @@ class SettingsViewController: UITableViewController {
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
+        configureUniversalLinksToggle()
+        configureLinkPreviewsToggle()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -86,6 +92,11 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? HomePageSettingsViewController {
             Pixel.fire(pixel: .settingsHomePageShown)
             controller.delegate = homePageSettingsDelegate
+            return
+        }
+        
+        if segue.destination is WhitelistViewController {
+            Pixel.fire(pixel: .settingsManageWhitelist)
             return
         }
         
@@ -155,6 +166,17 @@ class SettingsViewController: UITableViewController {
     private func configureVersionText() {
         versionText.text = versionProvider.localized
     }
+    
+    private func configureUniversalLinksToggle() {
+        openUniversalLinksToggle.isOn = appSettings.allowUniversalLinks
+    }
+
+    private func configureLinkPreviewsToggle() {
+        if #available(iOS 13, *) {
+            longPressCell.isHidden = false
+        }
+        longPressPreviewsToggle.isOn = appSettings.longPressPreviews
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -188,6 +210,11 @@ class SettingsViewController: UITableViewController {
         }
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
@@ -198,6 +225,15 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onAutocompleteToggled(_ sender: UISwitch) {
         appSettings.autocomplete = sender.isOn
+    }
+    
+    @IBAction func onAllowUniversalLinksToggled(_ sender: UISwitch) {
+        appSettings.allowUniversalLinks = sender.isOn
+    }
+
+    @IBAction func onLinkPreviewsToggle(_ sender: UISwitch) {
+        appSettings.longPressPreviews = sender.isOn
+        Pixel.fire(pixel: appSettings.longPressPreviews ? .settingsLinkPreviewsOn : .settingsLinkPreviewsOff)
     }
 }
 
@@ -219,6 +255,8 @@ extension SettingsViewController: Themable {
         
         autocompleteToggle.onTintColor = theme.buttonTintColor
         authenticationToggle.onTintColor = theme.buttonTintColor
+        openUniversalLinksToggle.onTintColor = theme.buttonTintColor
+        longPressPreviewsToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

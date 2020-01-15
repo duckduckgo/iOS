@@ -43,25 +43,15 @@ class HomeRowCTA {
     }
 
     func shouldShow(currentDate: Date = Date()) -> Bool {
-        guard tutorialSettings.hasSeenOnboarding else {
-            return false
-        }
-
-        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.allCases.count {
+        guard !storage.dismissed, tutorialSettings.hasSeenOnboarding else {
             return false
         }
         
-        if storage.dismissed {
-            return false
-        }
-        
-        guard let installDate = statistics.installDate else {
+        guard statistics.installDate != nil else {
             // no install date, then show it as they're upgrading
             return true
         }
-        
-        // only show if we're on a different day
-        return !installDate.isSameDay(currentDate)
+        return true
     }
 
     func dismissed() {

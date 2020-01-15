@@ -41,12 +41,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-
+        
+        DispatchQueue.global(qos: .background).async {
+            FileStore().removeLegacyData()
+            ContentBlockerStringCache.removeLegacyData()
+        }
+        
+        Database.shared.loadStore(application: application) { context in
+            DatabaseMigration.migrate(to: context)
+        }
+        
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         

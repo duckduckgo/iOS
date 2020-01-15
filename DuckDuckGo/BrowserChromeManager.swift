@@ -37,6 +37,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     struct Constants {
         static let dragThreshold: CGFloat = 30
         static let zoomThreshold: CGFloat = 0.1
+        
+        static let contentSizeKVOKey = "contentSize"
     }
 
     weak var delegate: BrowserChromeDelegate? {
@@ -46,10 +48,33 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
     
     private let animator = BarsAnimator()
+    
+    private var observation: NSKeyValueObservation?
 
     private var dragging = false
     private var startZoomScale: CGFloat = 0
     
+    func attach(to scrollView: UIScrollView) {
+        detach()
+        
+        scrollView.delegate = self
+        
+        observation = scrollView.observe(\.contentSize, options: .new) { [weak self] scrollView, _ in
+            self?.scrollViewDidResizeContent(scrollView)
+        }
+    }
+    
+    func detach() {
+        observation?.invalidate()
+        observation = nil
+    }
+    
+    private func scrollViewDidResizeContent(_ scrollView: UIScrollView) {
+        if !canHideBars(for: scrollView) && animator.barsState != .revealed {
+            animator.revealBars(animated: true)
+        }
+    }
+        
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !scrollView.isZooming else { return }
         
@@ -60,9 +85,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
             }
             return
         }
-        
-        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
-        guard isInBottomBounceArea == false else { return }
 
         animator.didScroll(in: scrollView)
     }
@@ -93,7 +115,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         guard !scrollView.isZooming else { return }
         guard canHideBars(for: scrollView) else { return }
         
-        animator.didFinishScrolling(velocity: velocity.y)
+        animator.didFinishScrolling(in: scrollView, velocity: velocity.y)
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -130,11 +152,23 @@ private class BarsAnimator {
     var draggingStartPosY: CGFloat = 0
     
     var transitionStartPosY: CGFloat = 0
+
+    private var bottomRevealGestureState: BottomBounceRevealing = .possible
+    private var combinedBarsHeight: CGFloat {
+        guard let delegate = delegate else { return 0 }
+        return delegate.toolbarHeight + delegate.omniBar.frame.height
+    }
     
     enum State: String {
         case revealed
         case transitioning
         case hidden
+    }
+    
+    enum BottomBounceRevealing: String {
+        case possible
+        case triggered
+        case cancelled
     }
     
     func didStartScrolling(in scrollView: UIScrollView) {
@@ -168,6 +202,8 @@ private class BarsAnimator {
     
     private func revealedAndScrolling(in scrollView: UIScrollView) {
         guard scrollView.contentOffset.y > draggingStartPosY else { return }
+        guard scrollView.contentOffset.y < scrollView.contentOffsetYAtBottom - combinedBarsHeight else { return }
+        guard bottomRevealGestureState != .triggered else { return }
         
         // In case view has been "caught" in the middle of the animation above the (0.0, 0.0) offset,
         //wait till user scrolls to the top before animating any transition.
@@ -207,6 +243,18 @@ private class BarsAnimator {
     }
     
     private func hiddenAndScrolling(in scrollView: UIScrollView) {
+        let startedDraggingAtBottom = draggingStartPosY >= scrollView.contentOffsetYAtBottom
+        if startedDraggingAtBottom, bottomRevealGestureState == .possible {
+            let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
+            if isInBottomBounceArea {
+                revealBars(animated: true)
+                bottomRevealGestureState = .triggered
+            } else {
+                // If user starts scrolling up, invalidate the possible reverse (scroll down) gesture
+                bottomRevealGestureState = .cancelled
+            }
+        }
+        
         guard scrollView.contentOffset.y < 0 else { return }
         
         transitionStartPosY = 0
@@ -217,11 +265,22 @@ private class BarsAnimator {
         transitionProgress = ratio
     }
     
-    func didFinishScrolling(velocity: CGFloat) {
+    func didFinishScrolling(in scrollView: UIScrollView, velocity: CGFloat) {
+        defer {
+            bottomRevealGestureState = .possible
+        }
+        
+        guard bottomRevealGestureState != .triggered else {
+            return
+        }
+        
         guard velocity >= 0 else {
             revealBars(animated: true)
             return
         }
+        
+        let isAboveExtendedBottomBounceArea = scrollView.contentOffset.y < scrollView.contentOffsetYAtBottom - combinedBarsHeight
+        guard barsState == .transitioning || isAboveExtendedBottomBounceArea else { return }
         
         guard velocity == 0 else {
             hideBars(animated: true)
@@ -264,11 +323,11 @@ fileprivate extension UIScrollView {
     
     /// Calculate Y-axis content offset corresponding to very bottom of the scroll area
     var contentOffsetYAtBottom: CGFloat {
-        let yOffset = contentSize.height - bounds.height - contentInset.top + contentInset.bottom
+        let yOffset = contentSize.height - bounds.height
         if #available(iOS 11.0, *) {
-            return yOffset - safeAreaInsets.top + safeAreaInsets.bottom
+            return yOffset - adjustedContentInset.top + adjustedContentInset.bottom
         } else {
-            return yOffset
+            return yOffset - contentInset.top + contentInset.bottom
         }
     }
     

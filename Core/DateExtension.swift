@@ -1,8 +1,8 @@
 //
-//  DateExtension.swift
-//  Core
+//  Debounce.swift
+//  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
 extension Date {
     public func isSameDay(_ otherDate: Date?) -> Bool {

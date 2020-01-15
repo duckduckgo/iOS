@@ -27,9 +27,9 @@ var duckduckgoMessaging = function() {
 		}
 	}
     
-    function possibleLogin() {
+    function possibleLogin(source) {
         try {
-            webkit.messageHandlers.possibleLogin.postMessage(1);
+            webkit.messageHandlers.possibleLogin.postMessage({ "source": source });
         } catch(error) {
             // webkit might not be defined
         }

@@ -134,7 +134,7 @@ private struct Loader {
     }
 
     private func loadLoginScript() {
-        load(scripts: [ .formDetection ], forMainFrameOnly: false)
+        load(scripts: [ .loginDetection ], forMainFrameOnly: false)
     }
 
     private func loadMainFrameOnlyScripts() {

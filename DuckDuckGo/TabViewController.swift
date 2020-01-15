@@ -605,7 +605,7 @@ extension TabViewController: WKScriptMessageHandler {
             handleTrackerDetected(message: message)
 
         case MessageHandlerNames.possibleLogin:
-            possibleLogin(forDomain: webView.url?.host, source: "JS")
+            handlePossibleLogin(message: message)
 
         case MessageHandlerNames.log:
             handleLog(message: message)
@@ -617,9 +617,16 @@ extension TabViewController: WKScriptMessageHandler {
             assertionFailure("Unhandled message: \(message.name)")
         }
     }
+    
+    private func handlePossibleLogin(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any] else { return }
+        let source = dict["source"] as? String
+        possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
+    }
 
     private func possibleLogin(forDomain domain: String?, source: String) {
         print("*** possible login", domain ?? "nil", source)
+        view.showBottomToast("Login detected via \(source)")
     }
     
     private func handleFindInPage(message: WKScriptMessage) {

@@ -40,24 +40,18 @@ class AppRatingPrompt {
     }
     
     func registerUsage(onDate date: Date = Date()) {
-        if !sameDay(date1: storage.lastAccess, date2: date) {
+        if !date.isSameDay(storage.lastAccess) {
             storage.uniqueAccessDays += 1
         }        
         storage.lastAccess = date
     }
     
     func shouldPrompt(onDate date: Date = Date()) -> Bool {
-        return [3, 7].contains(storage.uniqueAccessDays) && !sameDay(date1: date, date2: storage.lastShown)
+        return [3, 7].contains(storage.uniqueAccessDays) && !date.isSameDay(storage.lastShown)
     }
     
     func shown(onDate date: Date = Date()) {
         storage.lastShown = date
-    }
- 
-    private func sameDay(date1: Date?, date2: Date?) -> Bool {
-        guard let date1 = date1 else { return false }
-        guard let date2 = date2 else { return false }
-        return Calendar.current.isDate(date1, inSameDayAs: date2)
     }
     
 }

@@ -131,11 +131,6 @@ class HomeViewController: UIViewController {
         viewHasAppeared = true
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        collectionView.reloadData()
-    }
-
     func resetHomeRowCTAAnimations(variantManager: VariantManager = DefaultVariantManager()) {
         installHomeScreenTips()
 
@@ -191,15 +186,10 @@ class HomeViewController: UIViewController {
     }
 
     private func showHomeRowCTA(variantManager: VariantManager = DefaultVariantManager()) {
-        guard homeRowCTAController == nil else { return }
+        guard !variantManager.isSupported(feature: .alertCTA),
+            homeRowCTAController == nil else { return }
         
-        let childViewController: UIViewController
-        if variantManager.isSupported(feature: .unifiedCTA) {
-            childViewController = UnifiedAddToHomeRowCTAViewController.loadFromStoryboard()
-        } else {
-            childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
-        }
-        
+        let childViewController = UnifiedAddToHomeRowCTAViewController.loadFromStoryboard()
         addChild(childViewController)
         view.addSubview(childViewController.view)
         childViewController.view.frame = view.bounds

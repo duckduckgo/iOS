@@ -39,7 +39,7 @@ class HomeRowCTA {
         self.statistics = statistics
     }
 
-    func shouldShow(currentDate: Date = Date(), variantManager: VariantManager = DefaultVariantManager()) -> Bool {
+    func shouldShow(currentDate: Date = Date()) -> Bool {
         guard !storage.dismissed, tutorialSettings.hasSeenOnboarding else {
             return false
         }

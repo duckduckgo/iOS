@@ -182,6 +182,14 @@ class UnifiedAddToHomeRowCTAViewController: UIViewController {
         }
         return controller
     }
+    
+    static func loadAlertFromStoryboard() -> UnifiedAddToHomeRowCTAViewController {
+        let sb = UIStoryboard(name: "HomeRow", bundle: nil)
+        guard let controller = sb.instantiateViewController(withIdentifier: "UnifiedHomeRowCTAAlert") as? UnifiedAddToHomeRowCTAViewController else {
+            fatalError("Failed to load view controller for HomeRowCTA")
+        }
+        return controller
+    }
 }
 
 extension UnifiedAddToHomeRowCTAViewController: Themable {

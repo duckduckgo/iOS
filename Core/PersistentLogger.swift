@@ -104,11 +104,12 @@ public class PersistentLogger {
         return dateFormatter
     }()
     
-    public static func log(_ items: String...) {
+    public static func log(_ items: Any...) {
         let date = Date()
         guard let handle = logfile(with: date) else { return }
         
         let dateString = dateFormatter.string(from: date)
-        handle.write(dateString + " - " + items.joined(separator: " ") + "\n")
+        let stringItems = items.map { String(describing: $0) }
+        handle.write(dateString + " - " + stringItems.joined(separator: " ") + "\n")
     }
 }

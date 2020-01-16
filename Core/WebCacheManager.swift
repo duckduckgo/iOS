@@ -19,27 +19,41 @@
 
 import WebKit
 
+public protocol WebCacheManagerCookieStore {
+    
+    func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
+    
+    func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
+
+}
+
+public protocol WebCacheManagerDataStore {
+    
+    var cookieStore: WebCacheManagerCookieStore? { get }
+    
+    func removeAllData(completion: @escaping () -> Void)
+    
+}
+
 public class WebCacheManager {
 
     private struct Constants {
         static let cookieDomain = "duckduckgo.com"
     }
+    
+    public static var shared = WebCacheManager()
+    
+    private init() { }
 
-    private static var allDataTypes: Set<String> {
-        return WKWebsiteDataStore.allWebsiteDataTypes()
-    }
-
-    private static var dataStore: WKWebsiteDataStore {
-        return WKWebsiteDataStore.default()
-    }
-
-    public static func consumeCookies(completion: @escaping () -> Void) {
-        guard #available(iOS 11, *) else {
+    public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
+                               httpCookieStore: WebCacheManagerCookieStore? = WKWebsiteDataStore.default().cookieStore,
+                               completion: @escaping () -> Void) {
+        
+        guard let httpCookieStore = httpCookieStore else {
             completion()
             return
         }
 
-        let cookieStorage = CookieStorage()
         let cookies = cookieStorage.cookies
         
         guard !cookies.isEmpty else {
@@ -47,18 +61,17 @@ public class WebCacheManager {
             return
         }
         
-        let semaphore = DispatchSemaphore(value: 0)
+        let group = DispatchGroup()
                         
         for cookie in cookies {
-            WebCacheManager.dataStore.httpCookieStore.setCookie(cookie) {
-                semaphore.signal()
+            group.enter()
+            httpCookieStore.setCookie(cookie) {
+                group.leave()
             }
         }
         
         DispatchQueue.global(qos: .userInitiated).async {
-            for _ in 0 ..< cookies.count {
-                semaphore.wait()
-            }
+            group.wait()
             
             DispatchQueue.main.async {
                 cookieStorage.clear()
@@ -67,31 +80,57 @@ public class WebCacheManager {
         }
     }
 
-    /**
-     Clears the cache of all data, except duckduckgo cookies
-     */
-    public static func clear() {
-        if #available(iOS 11, *) {
-            extractAllowedCookiesThenClear(in: WebCacheManager.dataStore.httpCookieStore)
-        } else {
-            WebCacheManager.dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) { }
+    public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+                      storedLogins: StoredLogins = StoredLogins.shared,
+                      completion: @escaping () -> Void) {
+        extractAllowedCookies(from: dataStore.cookieStore, storedLogins: storedLogins) {
+            self.clearAllData(dataStore: dataStore, completion: completion)
         }
     }
 
-    @available(iOS 11, *)
-    private static func extractAllowedCookiesThenClear(in cookieStore: WKHTTPCookieStore) {
+    private func clearAllData(dataStore: WebCacheManagerDataStore, completion: @escaping () -> Void) {
+        dataStore.removeAllData(completion: completion)
+    }
+    
+    private func extractAllowedCookies(from cookieStore: WebCacheManagerCookieStore?,
+                                       storedLogins: StoredLogins,
+                                       completion: @escaping () -> Void) {
+        
+        guard let cookieStore = cookieStore else {
+            completion()
+            return
+        }
+        
+        let allowedDomains = Set<String>(StoredLogins.shared.allowedDomains + [ Constants.cookieDomain ])
         let cookieStorage = CookieStorage()
         cookieStore.getAllCookies { cookies in
-            let cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
+            let cookies = cookies.filter({ allowedDomains.contains($0.domain) })
             for cookie in cookies {
                 cookieStorage.setCookie(cookie)
-
             }
-
-            DispatchQueue.main.async {
-                WebCacheManager.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
-            }
+            completion()
         }
+
+    }
+
+}
+
+@available(iOS 11, *)
+extension WKHTTPCookieStore: WebCacheManagerCookieStore {
+
+}
+
+extension WKWebsiteDataStore: WebCacheManagerDataStore {
+
+    public var cookieStore: WebCacheManagerCookieStore? {
+        guard #available(iOS 11, *) else { return nil }
+        return self.httpCookieStore
+    }
+
+    public func removeAllData(completion: @escaping () -> Void) {
+        removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                   modifiedSince: Date.distantPast,
+                   completionHandler: completion)
     }
 
 }

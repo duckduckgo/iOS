@@ -67,3 +67,18 @@ extension SiteRating {
                   privacyPractices: privacyPractices)
     }
 }
+
+extension HTTPCookie {
+    
+    static func make(_ name: String = "name", _ value: String = "value", _ domain: String = "example.com", _ path: String = "/") -> HTTPCookie {
+        
+        return HTTPCookie(properties: [
+            .name: name,
+            .value: value,
+            .domain: domain,
+            .path: path
+        ])!
+        
+    }
+    
+}

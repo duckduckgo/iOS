@@ -78,6 +78,8 @@
 		850559C923C61B5D0055C0D5 /* loginDetection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* loginDetection.js */; };
 		850559CB23C775410055C0D5 /* LoginDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CA23C775410055C0D5 /* LoginDetection.swift */; };
 		850559CE23C8E27C0055C0D5 /* LoginDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */; };
+		850559D023CF647C0055C0D5 /* StoredLogins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CF23CF647C0055C0D5 /* StoredLogins.swift */; };
+		850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */; };
 		85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */; };
 		85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */; };
 		85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
@@ -661,6 +663,8 @@
 		850559C823C61B5D0055C0D5 /* loginDetection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = loginDetection.js; sourceTree = "<group>"; };
 		850559CA23C775410055C0D5 /* LoginDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetection.swift; sourceTree = "<group>"; };
 		850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetectionTests.swift; sourceTree = "<group>"; };
+		850559CF23CF647C0055C0D5 /* StoredLogins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLogins.swift; sourceTree = "<group>"; };
+		850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCacheManagerTests.swift; sourceTree = "<group>"; };
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
 		85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderers.swift; sourceTree = "<group>"; };
 		850819D51FDB68F9006561FD /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
@@ -2185,6 +2189,7 @@
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
 				83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */,
 				988F3DCE237D5C0F00AEE34C /* ExternalSchemeHandler.swift */,
+				850559CF23CF647C0055C0D5 /* StoredLogins.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -2386,6 +2391,7 @@
 			children = (
 				F198D7971E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift */,
 				85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */,
+				850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3604,6 +3610,7 @@
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
+				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
 				983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */,
@@ -3719,6 +3726,7 @@
 				F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */,
 				85372447220DD103009D09CD /* UIKeyCommandExtension.swift in Sources */,
 				85A1B3B220C6CD9900C18F15 /* CookieStorage.swift in Sources */,
+				850559D023CF647C0055C0D5 /* StoredLogins.swift in Sources */,
 				9813F79822BA71AA00A80EDB /* StorageCache.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,

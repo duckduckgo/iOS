@@ -1,5 +1,5 @@
 //
-//  Debounce.swift
+//  DateExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.

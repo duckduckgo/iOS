@@ -19,6 +19,7 @@
 
 import Foundation
 import UIKit
+import Core
 
 protocol AutoClearWorker {
     
@@ -46,10 +47,12 @@ class AutoClear {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         if settings.action.contains(.clearData) {
+            PersistentLogger.log(#file, #function, "Clearing data")
             worker.forgetData()
         }
         
         if settings.action.contains(.clearTabs) {
+            PersistentLogger.log(#file, #function, "Clearing tabs")
             worker.forgetTabs()
         }
     }
@@ -59,6 +62,7 @@ class AutoClear {
         
         // Note: for startup, we clear only Data, as TabsModel is cleared on load
         if settings.action.contains(.clearData) {
+            PersistentLogger.log(#file, #function, "Clearing data")
             worker.forgetData()
         }
     }

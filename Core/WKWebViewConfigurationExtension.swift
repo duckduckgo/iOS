@@ -150,16 +150,10 @@ private struct Loader {
 
     private func loadContentBlockerDependencyScripts() {
         load(scripts: [ .messaging ], forMainFrameOnly: false)
-
-        if isDebugBuild {
-            javascriptLoader.load(script: .debugMessagingEnabled,
-                                  into: userContentController,
-                                  forMainFrameOnly: false)
-        } else {
-            javascriptLoader.load(script: .debugMessagingDisabled,
-                                  into: userContentController,
-                                  forMainFrameOnly: false)
-        }
+        
+        javascriptLoader.load(script: .debugMessagingEnabled,
+                              into: userContentController,
+                              forMainFrameOnly: false)
     }
 
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {

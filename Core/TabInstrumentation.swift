@@ -29,7 +29,7 @@ public class TabInstrumentation {
     
     private var siteLoadingSPID: Any?
     private var currentURL: String?
-    private var currentTabIdentifier: UInt64
+    public let currentTabIdentifier: UInt64
     
     public init() {
         type(of: self).tabMaxIdentifier += 1

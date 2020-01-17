@@ -72,7 +72,7 @@ public class PersistentLogger {
     
     static private func prepareLogHandle(with date: Date) -> LogHandle? {
         guard let url = logsDirectoryURL()?.appendingPathComponent(logfileName(for: date)) else { return nil }
-        print("---> \(url)")
+        print("-- Documents dir path: \(url)")
         
         let calendar = Calendar.current
         let nextDay = calendar.date(byAdding: .day, value: 1, to: date)!

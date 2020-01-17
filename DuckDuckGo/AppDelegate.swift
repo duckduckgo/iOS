@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
-        PersistentLogger.log(#file, #function, "State:", application.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "State:", application.applicationState.stateString)
         
         DispatchQueue.global(qos: .background).async {
             FileStore().removeLegacyData()
@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-        PersistentLogger.log(#file, #function, "State:", application.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "State:", application.applicationState.stateString)
         
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        PersistentLogger.log(#file, #function, "State:", application.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "State:", application.applicationState.stateString)
         
         if privacyStore.authenticationEnabled {
             beginAuthentication()
@@ -118,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        PersistentLogger.log(#file, #function, "State:", application.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "State:", application.applicationState.stateString)
         
         displayOverlay()
         autoClear?.applicationDidEnterBackground()
@@ -127,13 +127,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
-        PersistentLogger.log(#file, #function, "State:", application.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "State:", application.applicationState.stateString)
         
         handleShortCutItem(shortcutItem)
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        PersistentLogger.log(#file, #function, "State:", app.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "State:", app.applicationState.stateString)
         
         Logger.log(text: "App launched with url \(url.absoluteString)")
         mainViewController?.clearNavigationStack()
@@ -153,12 +153,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        PersistentLogger.log(#file, #function, "Started", "State:", application.applicationState.stateString)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "Started", "State:", application.applicationState.stateString)
 
         Logger.log(items: #function)
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
-            PersistentLogger.log(#file, #function,
+            PersistentLogger.log(formatFileInfo(#file, #line), #function,
                                  "Completed", newData ? "Has new data" : "No new data",
                                  "State:", application.applicationState.stateString)
             completionHandler(newData ? .newData : .noData)

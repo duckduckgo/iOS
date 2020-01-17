@@ -369,7 +369,7 @@ class MainViewController: UIViewController {
     }
 
     private func addTab(url: URL?) {
-        PersistentLogger.log(#file, #function)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         let tab = tabManager.add(url: url)
         omniBar.resignFirstResponder()
         addToView(tab: tab)
@@ -622,7 +622,7 @@ class MainViewController: UIViewController {
     }
 
     func newTab() {
-        PersistentLogger.log(#file, #function)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         attachHomeScreen()
         homeController?.openedAsNewTab()
     }
@@ -1038,7 +1038,7 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetData() {
-        PersistentLogger.log(#file, #function)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         findInPageView?.done()
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
@@ -1046,7 +1046,7 @@ extension MainViewController: AutoClearWorker {
     }
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
-        PersistentLogger.log(#file, #function)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)

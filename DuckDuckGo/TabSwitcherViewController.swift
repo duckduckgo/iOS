@@ -213,7 +213,7 @@ class TabSwitcherViewController: UIViewController {
 extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
-        PersistentLogger.log(#file, #function)
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         
         guard let index = tabsModel.indexOf(tab: tab) else { return }
         delegate.tabSwitcher(self, didRemoveTab: tab)

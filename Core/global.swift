@@ -34,3 +34,12 @@ struct Global {
         return groupIdPrefix
     }()
 }
+
+public func formatFileInfo(_ fileName: String, _ line: Int) -> String {
+    let lastComponentLowerBound = fileName.range(of: "/", options: .backwards)?.upperBound
+    
+    if let fileComponentLowerBound = lastComponentLowerBound {
+        return "\(fileName[fileComponentLowerBound..<fileName.endIndex]):\(line)"
+    }
+    return "UNKNOWN:\(line)"
+}

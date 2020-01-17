@@ -66,14 +66,14 @@ public class HTTPSUpgrade {
         Logger.log(text: "\(host) \(isLocallyUpgradable ? "is" : "is not") locally upgradable")
         if  isLocallyUpgradable {
             Pixel.fire(pixel: .httpsLocalUpgrade)
-            PersistentLogger.log(#file, #line, #function, "Local upgrade")
+            PersistentLogger.log(formatFileInfo(#file, #line), #function, "Local upgrade")
             completion(true)
             return
         }
         
         isInServiceUpgradeList(host: host) { result in
             Logger.log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
-            PersistentLogger.log(#file, #line, #function, "Request \(result.isInList ? "is" : "is not") service upgradable")
+            PersistentLogger.log(formatFileInfo(#file, #line), #function, "Request \(result.isInList ? "is" : "is not") service upgradable")
             if result.isInList {
                 Pixel.fire(pixel: result.isCached ? .httpsServiceCacheUpdgrade : .httpsServiceRequestUpgrade)
                 completion(true)

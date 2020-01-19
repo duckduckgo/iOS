@@ -219,6 +219,7 @@
                                     </view>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2qj-n8-fMW">
                                         <rect key="frame" x="15" y="298" width="290" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Llr-og-9as"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="320" id="eG8-hH-Cmr"/>
@@ -354,6 +355,7 @@
                                     </view>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VBu-ni-4hj">
                                         <rect key="frame" x="10" y="361.5" width="284" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="IHL-Q6-lbj"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="320" id="gXC-AN-MRQ"/>

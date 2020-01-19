@@ -191,6 +191,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Privacy Report" id="Mhd-x7-Vw1">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="mln-TG-er1">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Done"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onClosePressed:" destination="upZ-Vg-la9" id="XX1-08-4rh"/>
                             </connections>

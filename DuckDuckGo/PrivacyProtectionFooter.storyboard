@@ -298,6 +298,9 @@ many trackers we've blocked.</string>
                                         <viewLayoutGuide key="safeArea" id="km0-kI-tep"/>
                                     </view>
                                 </subviews>
+                                <accessibility key="accessibilityConfiguration" identifier="networkOffenders">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstItem="qJ5-kn-0oZ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SLL-zs-goU" secondAttribute="bottom" constant="16" id="OaW-2B-zek"/>
                                     <constraint firstItem="SLL-zs-goU" firstAttribute="width" secondItem="4jR-2G-yON" secondAttribute="width" id="SpZ-Zy-bIn"/>

@@ -115,7 +115,7 @@ fileprivate extension XCUIApplication {
         tables.cells["privacyPractices"].tap()
         Snapshot.snapshot("\(snapshotPrefix)05PrivacyPractices")
 
-        otherElements["siteRating"].tap()
+        tapOnNavigationBarDone()
     }
 
     func toggleProtection(_ snapshotPrefix: String) {
@@ -124,14 +124,18 @@ fileprivate extension XCUIApplication {
         tables.switches["privacyProtectionToggle"].tap()
         Snapshot.snapshot("\(snapshotPrefix)PrivacyToggled")
 
-        otherElements["siteRating"].tap()
+        tapOnNavigationBarDone()
     }
 
     func examineNetworkOffenders(_ snapshotPrefix: String) {
         otherElements["siteRating"].tap()
         tables.otherElements["networkOffenders"].tap()
         Snapshot.snapshot("\(snapshotPrefix)NetworkOffenders")
-        otherElements["siteRating"].tap()
+        tapOnNavigationBarDone()
+    }
+    
+    private func tapOnNavigationBarDone() {
+        navigationBars.buttons["Done"].tap()
     }
 
 }

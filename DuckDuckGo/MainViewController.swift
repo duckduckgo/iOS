@@ -321,12 +321,14 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onBackPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         Pixel.fire(pixel: .tabBarBackPressed)
         currentTab?.goBack()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
     }
@@ -730,6 +732,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onOmniQuerySubmitted(_ query: String) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         loadQuery(query)
         dismissFavoritesOverlay()
         dismissAutcompleteSuggestions()
@@ -745,6 +748,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onBookmarksPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
 
@@ -776,6 +780,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onRefreshPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         currentTab?.refresh()
     }
     
@@ -794,6 +799,7 @@ extension MainViewController: FavoritesOverlayDelegate {
 extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(selectedSuggestion suggestion: String) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         loadQuery(suggestion)
@@ -989,6 +995,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
         showTabSwitcher()
     }

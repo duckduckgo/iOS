@@ -740,7 +740,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("***", #function, navigation)
+        print("***", #function, navigation as Any)
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
@@ -789,7 +789,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        print("***", #function, navigation)
+        print("***", #function, navigation as Any)
         lastError = nil
         shouldReloadOnError = false
         hideErrorMessage()
@@ -797,7 +797,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("***", #function, navigation)
+        print("***", #function, navigation as Any)
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
@@ -818,7 +818,8 @@ extension TabViewController: WKNavigationDelegate {
         
         if let loginDetection = self.loginDetection {
             let domain = webView.url?.host
-            loginDetection.webViewDidFinishNavigation(withCookies: webView, completion: { [weak self] isPossibleLogin in
+            let dataStore =  webView.configuration.websiteDataStore
+            loginDetection.webViewDidFinishNavigation(withCookies: dataStore, completion: { [weak self] isPossibleLogin in
                 if isPossibleLogin {
                     self?.possibleLogin(forDomain: domain, source: "POST")
                     self?.loginDetection = nil
@@ -866,7 +867,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print("***", #function, navigation)
+        print("***", #function, navigation as Any)
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = makeSiteRating(url: url)
@@ -892,7 +893,7 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        print("***", #function, navigationAction.request.httpMethod)
+        print("***", #function, navigationAction.request.httpMethod ?? "no method")
 
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision != .cancel {
@@ -902,12 +903,11 @@ extension TabViewController: WKNavigationDelegate {
                 
                 self?.findInPage?.done()
                             
-                let loginDetection = LoginDetection()
-                loginDetection.webView(withURL: webView, andCookies: webView, allowedAction: navigationAction) { isPost in
-                    if isPost {
-                        print("*** is post, setting login detection")
-                        self?.loginDetection = loginDetection
-                    }
+                self?.loginDetection = nil
+                LoginDetection.webView(withURL: webView.url,
+                                       andCookies: webView.configuration.websiteDataStore,
+                                       allowedAction: navigationAction) { loginDetection in
+                    self?.loginDetection = loginDetection
                     decisionHandler(decision)
                 }
             } else {

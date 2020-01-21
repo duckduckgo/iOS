@@ -27,18 +27,13 @@ protocol Onboarding {
     
 }
 
-protocol OnboardingContent {
-    
-    var canContinue: Bool { get }
-}
-
 protocol OnboardingDelegate: NSObjectProtocol {
     
     func onboardingCompleted(controller: UIViewController)
     
 }
 
-class OnboardingContentViewController: UIViewController, OnboardingContent {
+class OnboardingContentViewController: UIViewController {
 
     var canContinue: Bool = true
     

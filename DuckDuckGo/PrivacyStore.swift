@@ -1,5 +1,5 @@
 //
-//  PrivacyUserDefaults.swift
+//  AuthenticationStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,24 +19,6 @@
 
 import Foundation
 
-public class PrivacyUserDefaults: PrivacyStore {
-
-    private struct Keys {
-        static let authentication = "com.duckduckgo.privacy.authentication"
-    }
-
-    private var userDefaults: UserDefaults {
-        return UserDefaults.standard
-    }
-
-    public init() {}
-
-    public var authenticationEnabled: Bool {
-        get {
-            return userDefaults.bool(forKey: Keys.authentication, defaultValue: false)
-        }
-        set(newValue) {
-            userDefaults.set(newValue, forKey: Keys.authentication)
-        }
-    }
+public protocol PrivacyStore {
+    var authenticationEnabled: Bool { get set }
 }

@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var overlayWindow: UIWindow?
     var window: UIWindow?
     
-    private lazy var privacyStore = PrivacyUserDefaults()
+    private lazy var privacyStore: PrivacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
 
     // MARK: lifecycle

@@ -88,6 +88,11 @@ class TabSwitcherViewController: UIViewController {
         super.viewDidDisappear(animated)
         delegate?.tabSwitcherDidDisappear(self)
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -97,7 +102,7 @@ class TabSwitcherViewController: UIViewController {
         }
         
     }
-        
+    
     private func scrollToInitialTab() {
         guard let index = tabsModel.currentIndex else { return }
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
@@ -206,10 +211,18 @@ class TabSwitcherViewController: UIViewController {
 extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
+        guard let index = tabsModel.indexOf(tab: tab) else { return }
         delegate.tabSwitcher(self, didRemoveTab: tab)
         currentSelection = tabsModel.currentIndex
         refreshTitle()
-        collectionView.reloadData()
+        
+        collectionView.performBatchUpdates({
+            self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+        }, completion: { _ in
+            guard let current = self.currentSelection else { return }
+            self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
+        })
+        
     }
     
     func isCurrent(tab: Tab) -> Bool {
@@ -234,6 +247,8 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
         }
         cell.delegate = self
+
+        cell.isDeleting = false
         cell.update(withTab: tab)
         return cell
     }

@@ -27,6 +27,8 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
     
     private var timedPixel: TimedPixel?
     
+    private let variantManager = DefaultVariantManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bulletsStack.spacing = isSmall ? 8 : 12
@@ -36,6 +38,9 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
     }
     
     override var continueButtonTitle: String {
+        if variantManager.isSupported(feature: .onboardingCTA) {
+            return UserText.onboardingContinue
+        }
         return UserText.onboardingStartBrowsing
     }
     

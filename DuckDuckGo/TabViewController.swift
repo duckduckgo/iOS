@@ -946,6 +946,7 @@ extension TabViewController: WKUIDelegate {
     }
     
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
 }

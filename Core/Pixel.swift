@@ -125,6 +125,7 @@ public enum PixelName: String {
     
     case homeRowCTAShowMeTapped = "m_ha"
     case homeRowCTANoThanksTapped = "m_hb"
+    case homeRowCTAGotItTapped = "m_hg"
     
     case homeRowCTAReminderTapped = "m_hc"
     case homeRowCTAReminderDismissed = "m_hd"
@@ -186,6 +187,8 @@ public enum PixelName: String {
     case trackerDataReloadFailed = "m_d_tds_r"
     case trackerDataCouldNotBeLoaded = "m_d_tds_l"
     case fileStoreWriteFailed = "m_d_fswf"
+    
+    case webKitDidTerminate = "m_d_wkt"
 
 }
 

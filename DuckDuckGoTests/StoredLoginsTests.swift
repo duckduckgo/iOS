@@ -36,11 +36,28 @@ class StoredLoginsTests: XCTestCase {
 
     }
 
+    func testWhenUserDecisionIsChangedThenItIsPersisted() {
+        
+        let logins = StoredLogins(userDefaults: userDefaults)
+        logins.userDecision = .unknown
+        XCTAssertEqual(logins.userDecision, .unknown)
+        XCTAssertEqual(StoredLogins(userDefaults: userDefaults).userDecision, .unknown)
+        
+    }
+
+    /// Existing users get the same behaviour as always
+    func testWhenNewThenDefaultUserDecisionIsForgetAll() {
+        
+        let logins = StoredLogins(userDefaults: userDefaults)
+        XCTAssertEqual(logins.userDecision, .forgetAll)
+        
+    }
+
     func testWhenPersistedThenStoredUnderExpectedKey() {
         
         let logins = StoredLogins(userDefaults: userDefaults)
         logins.add(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], userDefaults.array(forKey: StoredLogins.Constants.key) as? [String])
+        XCTAssertEqual(["www.example.com"], userDefaults.array(forKey: StoredLogins.Constants.allowedDomainsKey) as? [String])
         
     }
 

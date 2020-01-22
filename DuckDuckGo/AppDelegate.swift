@@ -65,7 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
-            // perform first time install logic here
+            // MARK: perform first time launch logic here
+            
+            // Set to unknown to force the prompt for new users only
+            StoredLogins.shared.userDecision = .unknown
         }
 
         if let main = mainViewController {

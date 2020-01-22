@@ -10,8 +10,35 @@ import Foundation
 
 public class StoredLogins {
     
+    struct Constants {
+        static let key = "com.duckduckgo.ios.StoredLogins"
+    }
+    
     public static let shared = StoredLogins()
     
-    let allowedDomains = [String]()
+    private var userDefaults: UserDefaults
+    
+    init(userDefaults: UserDefaults = UserDefaults.standard) {
+        self.userDefaults = userDefaults
+    }
+    
+    private(set) public var allowedDomains: [String] {
+        get {
+            return userDefaults.array(forKey: Constants.key) as? [String] ?? []
+        }
+        
+        set {
+            let domains = [String](Set<String>(newValue)).sorted()
+            userDefaults.set(domains, forKey: Constants.key)
+        }
+    }
+
+    public func add(domain: String) {
+        allowedDomains += [domain]
+    }
+    
+    public func clear() {
+        allowedDomains = []
+    }
     
 }

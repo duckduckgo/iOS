@@ -626,7 +626,11 @@ extension TabViewController: WKScriptMessageHandler {
 
     private func possibleLogin(forDomain domain: String?, source: String) {
         print("*** possible login", domain ?? "nil", source)
-        view.showBottomToast("Login detected via \(source)")
+        guard let domain = domain else { return }
+        if isDebugBuild {
+            view.showBottomToast("Login detected for \(domain) via \(source)")
+        }
+        StoredLogins.shared.add(domain: domain)
     }
     
     private func handleFindInPage(message: WKScriptMessage) {

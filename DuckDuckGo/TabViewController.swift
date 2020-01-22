@@ -786,6 +786,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, navigation ?? "null")
+        PersistentLogger.logMemoryFootprint()
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()

@@ -113,3 +113,38 @@ public class PersistentLogger {
         handle.write(dateString + " - " + stringItems.joined(separator: " ") + "\n")
     }
 }
+
+//MARK: memory
+// See https://forums.developer.apple.com/thread/105088#357415
+extension PersistentLogger {
+    
+    static private var memoryFootprint: mach_vm_size_t? {
+        // The `TASK_VM_INFO_COUNT` and `TASK_VM_INFO_REV1_COUNT` macros are too
+        // complex for the Swift C importer, so we have to define them ourselves.
+        let TASKVMINFOCOUNT = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<integer_t>.size)
+        let TASKVMINFOREV1COUNT = mach_msg_type_number_t(MemoryLayout.offset(of: \task_vm_info_data_t.min_address)! / MemoryLayout<integer_t>.size)
+        var info = task_vm_info_data_t()
+        var count = TASKVMINFOCOUNT
+        let kr = withUnsafeMutablePointer(to: &info) { infoPtr in
+            infoPtr.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { intPtr in
+                task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), intPtr, &count)
+            }
+        }
+        guard
+            kr == KERN_SUCCESS,
+            count >= TASKVMINFOREV1COUNT
+        else { return nil }
+        return info.phys_footprint
+    }
+    
+    static public func logMemoryFootprint() {
+        guard let footprint = memoryFootprint else {
+            log("Could not read memory footprint")
+            return
+        }
+        
+        let MB = Double(footprint) / 1024 / 1024
+        log("Memory usage: \(MB)MB")
+    }
+    
+}

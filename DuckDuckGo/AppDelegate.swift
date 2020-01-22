@@ -164,6 +164,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             completionHandler(newData ? .newData : .noData)
         }
     }
+    
+    func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
+        PersistentLogger.logMemoryFootprint()
+    }
 
     // MARK: private
 

@@ -12,7 +12,7 @@ import XCTest
 class WebCacheManagerTests: XCTestCase {
 
     func testWhenClearedThenDDGCookiesAreRetained() {
-        let storedLogins = MockStoredLogins(domains: [
+        let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
 
@@ -24,7 +24,7 @@ class WebCacheManagerTests: XCTestCase {
         let cookieStorage = MockCookieStorage()
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, appCookieStorage: cookieStorage, storedLogins: storedLogins) {
+        WebCacheManager.shared.clear(dataStore: dataStore, appCookieStorage: cookieStorage, logins: logins) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 5.0)
@@ -33,8 +33,8 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(cookieStorage.cookies[0].domain, "duckduckgo.com")
     }
     
-    func testWhenClearedThenCookiesForStoredLoginsAreRetained() {
-        let storedLogins = MockStoredLogins(domains: [
+    func testWhenClearedThenCookiesForloginsAreRetained() {
+        let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
 
@@ -47,7 +47,7 @@ class WebCacheManagerTests: XCTestCase {
         let cookieStorage = MockCookieStorage()
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, appCookieStorage: cookieStorage, storedLogins: storedLogins) {
+        WebCacheManager.shared.clear(dataStore: dataStore, appCookieStorage: cookieStorage, logins: logins) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 5.0)
@@ -75,10 +75,10 @@ class WebCacheManagerTests: XCTestCase {
     
     func testWhenClearIsCalledThenCompletionIsCalled() {
         let dataStore = MockDataStore()
-        let storedLogins = MockStoredLogins(domains: [])
+        let logins = MockPreservedLogins(domains: [])
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, storedLogins: storedLogins) {
+        WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 5.0)
@@ -101,7 +101,7 @@ class WebCacheManagerTests: XCTestCase {
         
     }
     
-    class MockStoredLogins: StoredLogins {
+    class MockPreservedLogins: PreserveLogins {
         
         let domains: [String]
         

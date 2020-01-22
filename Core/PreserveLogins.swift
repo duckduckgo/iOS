@@ -1,5 +1,5 @@
 //
-//  StoredLogins.swift
+//  PreservedLogins.swift
 //  Core
 //
 //  Created by Chris Brind on 15/01/2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class StoredLogins {
+public class PreserveLogins {
     
     public enum UserDecision: Int {
         
@@ -19,11 +19,11 @@ public class StoredLogins {
     }
     
     struct Constants {
-        static let allowedDomainsKey = "com.duckduckgo.ios.StoredLogins.userDecision.allowedDomains"
-        static let userDecisionKey = "com.duckduckgo.ios.StoredLogins.userDecision"
+        static let allowedDomainsKey = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
+        static let userDecisionKey = "com.duckduckgo.ios.PreserveLogins.userDecision"
     }
     
-    public static let shared = StoredLogins()
+    public static let shared = PreserveLogins()
     
     private(set) public var allowedDomains: [String] {
         get {
@@ -43,6 +43,9 @@ public class StoredLogins {
         
         set {
             userDefaults.set(newValue.rawValue, forKey: Constants.userDecisionKey)
+            if newValue != .preserveLogins {
+                allowedDomains = []
+            }
         }
     }
 

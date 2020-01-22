@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // MARK: perform first time launch logic here
             
             // Set to unknown to force the prompt for new users only
-            StoredLogins.shared.userDecision = .unknown
+            PreserveLogins.shared.userDecision = .unknown
         }
 
         if let main = mainViewController {

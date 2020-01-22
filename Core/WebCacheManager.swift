@@ -82,9 +82,9 @@ public class WebCacheManager {
 
     public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
                       appCookieStorage: CookieStorage = CookieStorage(),
-                      storedLogins: StoredLogins = StoredLogins.shared,
+                      logins: PreserveLogins = PreserveLogins.shared,
                       completion: @escaping () -> Void) {
-        extractAllowedCookies(from: dataStore.cookieStore, cookieStorage: appCookieStorage, storedLogins: storedLogins) {
+        extractAllowedCookies(from: dataStore.cookieStore, cookieStorage: appCookieStorage, logins: logins) {
             self.clearAllData(dataStore: dataStore, completion: completion)
         }
     }
@@ -95,7 +95,7 @@ public class WebCacheManager {
     
     private func extractAllowedCookies(from cookieStore: WebCacheManagerCookieStore?,
                                        cookieStorage: CookieStorage,
-                                       storedLogins: StoredLogins,
+                                       logins: PreserveLogins,
                                        completion: @escaping () -> Void) {
         
         guard let cookieStore = cookieStore else {
@@ -103,7 +103,7 @@ public class WebCacheManager {
             return
         }
         
-        let allowedDomains = Set<String>(storedLogins.allowedDomains + [ Constants.cookieDomain ])
+        let allowedDomains = Set<String>(logins.allowedDomains + [ Constants.cookieDomain ])
         cookieStore.getAllCookies { cookies in
             let cookies = cookies.filter({ allowedDomains.contains($0.domain) })
             for cookie in cookies {

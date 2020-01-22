@@ -630,7 +630,7 @@ extension TabViewController: WKScriptMessageHandler {
         if isDebugBuild {
             view.showBottomToast("Login detected for \(domain) via \(source)")
         }
-        StoredLogins.shared.add(domain: domain)
+        PreserveLogins.shared.add(domain: domain)
     }
     
     private func handleFindInPage(message: WKScriptMessage) {

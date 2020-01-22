@@ -38,7 +38,7 @@ public class StoredLogins {
     }
     
     public func clear() {
-        allowedDomains = []
+        allowedDomains = [] 
     }
     
 }

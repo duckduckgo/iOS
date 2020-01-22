@@ -70,7 +70,7 @@ extension SiteRating {
 
 extension HTTPCookie {
     
-    static func make(_ name: String = "name", _ value: String = "value", _ domain: String = "example.com", _ path: String = "/") -> HTTPCookie {
+    static func make(name: String = "name", value: String = "value", domain: String = "example.com", path: String = "/") -> HTTPCookie {
         
         return HTTPCookie(properties: [
             .name: name,

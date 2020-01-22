@@ -28,7 +28,7 @@ public class StoredLogins {
         }
         
         set {
-            let domains = [String](Set<String>(newValue)).sorted()
+            let domains = [String](Set<String>(newValue))
             userDefaults.set(domains, forKey: Constants.key)
         }
     }

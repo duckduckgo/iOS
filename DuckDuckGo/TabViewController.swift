@@ -361,6 +361,7 @@ class TabViewController: UIViewController {
     }
     
     private func showError(message: String) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         webView.isHidden = true
         error.isHidden = false
         errorMessage.text = message
@@ -368,6 +369,7 @@ class TabViewController: UIViewController {
     }
     
     private func hideErrorMessage() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         error.isHidden = true
         webView.isHidden = false
     }
@@ -700,7 +702,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function)
+        PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Did receive challenge")
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
@@ -850,7 +852,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function)
+        PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decide Policy For Navigation Action")
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision == .allow {
@@ -865,7 +867,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function)
+        PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Deciding...")
         let allowPolicy = determineAllowPolicy()
         
         let tld = storageCache.tld
@@ -876,39 +878,39 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard navigationAction.request.mainDocumentURL != nil else {
-            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decision: " + allowPolicy.policyString)
+            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Nil document URL")
             completion(allowPolicy)
             return
         }
         
         guard let url = navigationAction.request.url else {
-            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decision: " + allowPolicy.policyString)
+            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Nil request URL")
             completion(allowPolicy)
             return
         }
         
         if isExternallyHandled(url: url, for: navigationAction) {
-            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decision: cancel")
+            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Handled externally")
             completion(.cancel)
             return
         }
         
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
-            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decision: cancel")
+            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Reissued search")
             completion(.cancel)
             return
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
             delegate?.tab(self, didRequestNewTabForUrl: url, animated: true)
-            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decision: cancel")
+            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Target blank request")
             completion(.cancel)
             return
         }
         
         if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
-            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Decision: " + allowPolicy.policyString)
+            PersistentLogger.log(tabID, formatFileInfo(#file, #line), #function, "Domain whitelisted")
             completion(allowPolicy)
             return
         }
@@ -919,12 +921,12 @@ extension TabViewController: WKNavigationDelegate {
                 NetworkLeaderboard.shared.incrementHttpsUpgrades()
                 self?.lastUpgradedURL = upgradedUrl
                 self?.load(url: upgradedUrl)
-                PersistentLogger.log(self?.tabID ?? "Null tab", #file, #function, "Decision: cancel")
+                PersistentLogger.log(self?.tabID ?? "Null tab", #file, #function, "Performing HTTPS upgrade")
                 completion(.cancel)
                 return
             }
 
-            PersistentLogger.log(self?.tabID ?? "Null tab", #file, #function, "Decision: " + allowPolicy.policyString)
+            PersistentLogger.log(self?.tabID ?? "Null tab", #file, #function, "Regular accept")
             completion(allowPolicy)
         }
     }
@@ -950,6 +952,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func showErrorNow() {
         guard let error = lastError else { return }
+        PersistentLogger.log(formatFileInfo(#file, #line), #function, "Has error")
         hideProgressIndicator()
 
         if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {

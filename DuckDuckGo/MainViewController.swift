@@ -358,14 +358,17 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         let queryUrl = appUrls.url(forQuery: query)
         loadUrl(queryUrl)
     }
 
     func loadUrl(_ url: URL) {
         if let currentTab = currentTab {
+            PersistentLogger.log(formatFileInfo(#file, #line), #function, "Current tab")
             currentTab.load(url: url)
         } else {
+            PersistentLogger.log(formatFileInfo(#file, #line), #function, "New tab")
             loadUrlInNewTab(url)
         }
     }
@@ -728,6 +731,7 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         displayAutocompleteSuggestions(forQuery: updatedQuery)
     }
 
@@ -740,10 +744,12 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         launchBrowsingMenu()
     }
 
@@ -757,10 +763,12 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSettingsPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         launchSettings()
     }
     
     func onCancelPressed() {
+        PersistentLogger.log(formatFileInfo(#file, #line), #function)
         dismissOmniBar()
         dismissFavoritesOverlay()
         autocompleteController?.keyboardEscape()

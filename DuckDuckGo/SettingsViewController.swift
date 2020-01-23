@@ -33,6 +33,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
+    @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
 
     @IBOutlet weak var longPressCell: UITableViewCell!
 
@@ -59,6 +60,7 @@ class SettingsViewController: UITableViewController {
         configureVersionText()
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
+        configureRememberLoginsAccessory()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -159,6 +161,20 @@ class SettingsViewController: UITableViewController {
         case .centerSearchAndFavorites:
             homePageAccessoryText.text = UserText.homePageCenterSearchAndFavorites
 
+        }
+        
+    }
+    
+    private func configureRememberLoginsAccessory() {
+        
+        switch PreserveLogins.shared.userDecision {
+            
+        case .preserveLogins:
+            rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOn
+            
+        case .forgetAll, .unknown:
+            rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOff
+            
         }
         
     }

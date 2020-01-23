@@ -293,3 +293,5 @@
 "preserveLogins.message" = "You are able to keep your logins without the cost of privacy. You can change this in Settings.";
 "preserveLogins.remember" = "Remember Logins";
 "preserveLogins.forget" = "Don't Remember Logins";
+"preserveLogins.accessory.on" = "On";
+"preserveLogins.accessory.off" = "Off";

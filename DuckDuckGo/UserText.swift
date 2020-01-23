@@ -246,5 +246,7 @@ public struct UserText {
     public static let preserveLoginsMessage = NSLocalizedString("preserveLogins.message", comment: "Preserve logins message")
     public static let preserveLoginsRemember = NSLocalizedString("preserveLogins.remember", comment: "Preserve logins remember")
     public static let preserveLoginsForget = NSLocalizedString("preserveLogins.forget", comment: "Preserve logins forget")
-    
+    public static let preserveLoginsAccessoryOn = NSLocalizedString("preserveLogins.accessory.on", comment: "Preserve logins accessory on")
+    public static let preserveLoginsAccessoryOff = NSLocalizedString("preserveLogins.accessory.off", comment: "Preserve logins accessory off")
+
 }

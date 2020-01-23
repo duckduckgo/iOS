@@ -67,8 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             
-            // Set to unknown to force the prompt for new users only
+            // Force the prompt for new users only
             PreserveLogins.shared.userDecision = .unknown
+            PreserveLogins.shared.prompted = true
         }
 
         if let main = mainViewController {

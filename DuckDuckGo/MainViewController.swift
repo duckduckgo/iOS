@@ -307,17 +307,19 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.forgetAllWithAnimation {}
-        })
-        
-        present(controller: alert, fromView: toolbar)
+        PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                self?.forgetAllWithAnimation {}
+            })
+            self.present(controller: alert, fromView: self.toolbar)
+        }
     }
     
     func onQuickFirePressed() {
-        forgetAllWithAnimation {}
-        dismiss(animated: true)
+        PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
+            self.forgetAllWithAnimation {}
+            self.dismiss(animated: true)
+        }
     }
 
     @IBAction func onBackPressed() {
@@ -954,7 +956,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        forgetAllWithAnimation {
+        self.forgetAllWithAnimation {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }

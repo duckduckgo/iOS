@@ -21,6 +21,7 @@ public class PreserveLogins {
     struct Constants {
         static let allowedDomainsKey = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
         static let userDecisionKey = "com.duckduckgo.ios.PreserveLogins.userDecision"
+        static let userPromptedKey = "com.duckduckgo.ios.PreserveLogins.userPrompted"
     }
     
     public static let shared = PreserveLogins()
@@ -45,7 +46,17 @@ public class PreserveLogins {
             userDefaults.set(newValue.rawValue, forKey: Constants.userDecisionKey)
             if newValue != .preserveLogins {
                 allowedDomains = []
-            }
+            }        
+        }
+    }
+    
+    public var prompted: Bool {
+        get {
+            return userDefaults.bool(forKey: Constants.userPromptedKey)
+        }
+        
+        set {
+            userDefaults.set(newValue, forKey: Constants.userPromptedKey)
         }
     }
 

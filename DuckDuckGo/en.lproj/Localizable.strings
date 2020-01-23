@@ -288,3 +288,8 @@
 "onboardingStartBrowsing" = "Start Browsing";
 "onboardingNotificationsAccept" = "Turn on Notifications";
 "onboardingNotificationsDeny" = "Not now";
+
+"preserveLogins.title" = "Would you like to remember logins when you clear data?";
+"preserveLogins.message" = "You are able to keep your logins without the cost of privacy. You can change this in Settings.";
+"preserveLogins.remember" = "Remember Logins";
+"preserveLogins.forget" = "Don't Remember Logins";

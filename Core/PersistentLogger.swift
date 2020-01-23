@@ -110,11 +110,13 @@ public class PersistentLogger {
         
         let dateString = dateFormatter.string(from: date)
         let stringItems = items.map { String(describing: $0) }
-        handle.write(dateString + " - " + stringItems.joined(separator: " ") + "\n")
+        let string = dateString + " - " + stringItems.joined(separator: " ") + "\n"
+        handle.write(string)
+        Logger.log(text: "---> \(string)")
     }
 }
 
-//MARK: memory
+// MARK: memory
 // See https://forums.developer.apple.com/thread/105088#357415
 extension PersistentLogger {
     

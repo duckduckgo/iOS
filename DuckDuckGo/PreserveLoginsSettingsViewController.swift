@@ -34,13 +34,13 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return PreserveLogins.shared.userDecision == .preserveLogins ? 3 : 1
+        return PreserveLogins.shared.userDecision == .preserveLogins ? 2 : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1: return 1 // based on model, or placeholder field if empty
-        default: return 1 // top row and bottom row
+        case 1: return model.isEmpty ? 1 : model.count
+        default: return 1
         }
     }
     

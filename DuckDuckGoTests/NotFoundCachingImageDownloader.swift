@@ -34,13 +34,15 @@ class NotFoundCachingDownloader: ImageDownloader {
                                 options: KingfisherOptionsInfo?,
                                 progressBlock: ImageDownloaderProgressBlock?,
                                 completionHandler: ImageDownloaderCompletionHandler?) -> RetrieveImageDownloadTask? {
-        
+        print("***", #function, url)
+
         if let cacheAddTime = NotFoundCachingDownloader.notFoundCache[url],
             Date().timeIntervalSince1970 - cacheAddTime < NotFoundCachingDownloader.oneHour {
+            completionHandler?(nil, nil, nil, nil)
             return nil
         }
         
-        NotFoundCachingDownloader.notFoundCache[url] = nil
+        Self.notFoundCache[url] = nil
         
         return super.downloadImage(with: url,
                                    retrieveImageTask: retrieveImageTask,
@@ -50,7 +52,8 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
     
     static func cacheNotFound(_ url: URL) {
-        NotFoundCachingDownloader.notFoundCache[url] = Date().timeIntervalSince1970
+        print("***", #function, url)
+        notFoundCache[url] = Date().timeIntervalSince1970
     }
     
 }

@@ -42,6 +42,10 @@ class FavoriteHomeCell: UICollectionViewCell {
     
     @IBOutlet var iconConstraints: [NSLayoutConstraint]!
     
+    static let appUrls = AppUrls()
+    static let downloader = NotFoundCachingDownloader()
+    static let targetCache = ImageCache(name: BookmarksManager.imageCacheName)
+    
     var isReordering = false {
         didSet {
             let scale: CGFloat = isReordering ? 1.2 : 1.0
@@ -105,32 +109,67 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconLabel.isHidden = false
         
         iconBackground.backgroundColor = host.color
+                    
+        if Self.appUrls.isDuckDuckGo(url: link.url) {
+            iconImage.image = UIImage(named: "Logo")
+            applyFavicon(iconImage.image!)
+        } else {
+            loadAppleTouchIcon(forLink: link)
+        }
+    }
+    
+    private func loadAppleTouchIcon(forLink link: Link) {
         
-        if let domain = link.url.host, let resource = AppUrls().faviconUrl(forDomain: domain) {
-            iconImage.kf.setImage(with: resource,
-                                  placeholder: nil,
-                                  options: [
-                                    .downloader(NotFoundCachingDownloader()),
-                                    .targetCache(ImageCache(name: BookmarksManager.imageCacheName))
-                                    ],
-                                  progressBlock: nil) { [weak self] image, error, _, _ in
-                                    
-                guard error == nil else {
-                    NotFoundCachingDownloader.cacheNotFound(resource)
-                    return
-                }
-                guard let image = image else {
-                    NotFoundCachingDownloader.cacheNotFound(resource)
-                    return
-                }
-                                    
-                guard image.size.width > Constants.smallFaviconSize else { return }
-                self?.applyFavicon(image)
+        guard let url = link.appleTouchIcon else {
+            loadFavicon(forLink: link)
+            return
+        }
+        
+        print("***", #function, url)
+        iconImage.kf.setImage(with: url,
+                              placeholder: nil,
+                              options: [
+                                .downloader(Self.downloader),
+                                .targetCache(Self.targetCache)
+                              ], progressBlock: nil) { [weak self] image, error, _, _ in
+          
+            print("***", #function, "completionHandler", error, image)
+            guard let image = image, error == nil else {
+                NotFoundCachingDownloader.cacheNotFound(url)
+                self?.loadFavicon(forLink: link)
+                return
             }
+                                
+            self?.applyFavicon(image)
         }
         
     }
     
+    private func loadFavicon(forLink link: Link) {
+        guard let domain = link.url.host, let resource = AppUrls().faviconUrl(forDomain: domain) else { return }
+            
+        print("***", #function, resource)
+
+        iconImage.kf.setImage(with: resource,
+                              placeholder: nil,
+                              options: [
+                                .downloader(Self.downloader),
+                                .targetCache(Self.targetCache)
+                                ],
+                              progressBlock: nil) { [weak self] image, error, _, _ in
+                                
+            guard let image = image, error == nil else {
+                NotFoundCachingDownloader.cacheNotFound(resource)
+                return
+            }
+                                
+            guard image.size.width > Constants.smallFaviconSize else { return }
+                                
+            self?.applyFavicon(image)
+        }
+    
+    }
+        
     private func applyFavicon(_ image: UIImage) {
 
         iconLabel.isHidden = true
@@ -211,6 +250,17 @@ fileprivate extension UIColor {
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: CGFloat(1.0)
         )
+    }
+    
+}
+
+fileprivate extension Link {
+    
+    var appleTouchIcon: URL? {
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        components?.path = "/apple-touch-icon.png"
+        components?.queryItems = nil
+        return try? components?.asURL()
     }
     
 }

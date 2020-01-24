@@ -105,10 +105,15 @@ public class WebCacheManager {
         
         let allowedDomains = Set<String>(logins.allowedDomains + [ Constants.cookieDomain ])
         cookieStore.getAllCookies { cookies in
-            let cookies = cookies.filter({ allowedDomains.contains($0.domain) })
+
             for cookie in cookies {
-                cookieStorage.setCookie(cookie)
+                if allowedDomains.contains(where: { domain in
+                    domain == cookie.domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain))
+                }) {
+                    cookieStorage.setCookie(cookie)
+                }
             }
+
             completion()
         }
 

@@ -36,15 +36,9 @@ class LoginDetection {
     static func webView(withURL url: URL?,
                         andCookies cookiesProvider: LoginDetectionCookiesProvider,
                         allowedAction action: LoginDetectionAction,
-                        preserveLogins: PreserveLogins = PreserveLogins.shared,
                         completion: @escaping (LoginDetection?) -> Void) {
                 
         guard #available(iOS 11, *) else {
-            completion(nil)
-            return
-        }
-        
-        guard preserveLogins.userDecision == .preserveLogins else {
             completion(nil)
             return
         }
@@ -62,18 +56,12 @@ class LoginDetection {
     
     /// Completion passes true if the navigation was a post and resulted in different cookies.
     func webViewDidFinishNavigation(withCookies cookiesProvider: LoginDetectionCookiesProvider,
-                                    preserveLogins: PreserveLogins = PreserveLogins.shared,
                                     completion: @escaping (Bool) -> Void) {
         guard #available(iOS 11, *) else {
             completion(false)
             return
         }
 
-        guard preserveLogins.userDecision == .preserveLogins else {
-            completion(false)
-            return
-        }
-        
         cookiesProvider.getAllCookies { cookies in
             let cookies = Self.cookiesForDomain(self.domain, from: cookies)
             let isPossibleLogin = !self.equals(self.cookies, cookies)

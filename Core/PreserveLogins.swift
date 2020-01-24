@@ -69,7 +69,11 @@ public class PreserveLogins {
     public func add(domain: String) {
         allowedDomains += [domain]
     }
-    
+
+    public func remove(domain: String) {
+        allowedDomains = allowedDomains.filter { $0 != domain }
+    }
+
     public func clear() {
         allowedDomains = [] 
     }

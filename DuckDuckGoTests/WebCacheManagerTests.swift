@@ -11,6 +11,31 @@ import XCTest
 
 class WebCacheManagerTests: XCTestCase {
 
+    func testWhenClearedThenCookiesWithParentDomainsAreRetained() {
+
+        let logins = MockPreservedLogins(domains: [
+            "www.example.com"
+        ])
+
+        let dataStore = MockDataStore()
+        dataStore.cookieStore = MockHTTPCookieStore(cookies: [
+            .make(domain: ".example.com"),
+            .make(domain: "facebook.com")
+        ])
+
+        let cookieStorage = MockCookieStorage()
+
+        let expect = expectation(description: #function)
+        WebCacheManager.shared.clear(dataStore: dataStore, appCookieStorage: cookieStorage, logins: logins) {
+            expect.fulfill()
+        }
+        wait(for: [expect], timeout: 5.0)
+
+        XCTAssertEqual(cookieStorage.cookies.count, 1)
+        XCTAssertEqual(cookieStorage.cookies[0].domain, ".example.com")
+        
+    }
+
     func testWhenClearedThenDDGCookiesAreRetained() {
         let logins = MockPreservedLogins(domains: [
             "www.example.com"

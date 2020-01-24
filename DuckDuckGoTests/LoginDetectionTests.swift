@@ -22,46 +22,6 @@ import XCTest
 @testable import Core
 
 class LoginDetectionTests: XCTestCase {
-
-    /// Majority of tests assume preserve is enabled
-    var preserveLogins = MockPreserveLogins(decision: .preserveLogins)
-    
-    override func setUp() {
-        super.setUp()
-        preserveLogins = MockPreserveLogins(decision: .preserveLogins)
-    }
-        
-    func testWhenPreserveLoginsIsSetToPreserveThenLoginDetectionCreated() {
-        let url = URL(string: "http://example.com")!
-        let cookies = CookiesProvider(cookies: [])
-        let action = Action(method: "POST")
-        preserveLogins.userDecision = .preserveLogins
-
-        let expect = expectation(description: #function)
-        
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
-            XCTAssertNotNil($0)
-            expect.fulfill()
-        }
-        
-        wait(for: [expect], timeout: 5.0)
-    }
-
-    func testWhenPreserveLoginsIsSetToForgetAllThenNoLoginDetectionCreated() {
-        let url = URL(string: "http://example.com")!
-        let cookies = CookiesProvider(cookies: [])
-        let action = Action(method: "POST")
-        preserveLogins.userDecision = .forgetAll
-
-        let expect = expectation(description: #function)
-        
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
-            XCTAssertNil($0)
-            expect.fulfill()
-        }
-        
-        wait(for: [expect], timeout: 5.0)
-    }
     
     func testWhenMethodIsNotPostAndCookiesHaveChangedCountAfterFinishingLoadingThenProbablyNotALogin() {
         let url = URL(string: "http://example.com")!
@@ -70,7 +30,7 @@ class LoginDetectionTests: XCTestCase {
 
         let expect = expectation(description: #function)
 
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNil($0)
             expect.fulfill()
         }
@@ -86,7 +46,7 @@ class LoginDetectionTests: XCTestCase {
         let creationExpectation = expectation(description: "\(#function) create")
         var detection: LoginDetection?
 
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNotNil($0)
             detection = $0
             creationExpectation.fulfill()
@@ -96,7 +56,7 @@ class LoginDetectionTests: XCTestCase {
         let updatedCookies = CookiesProvider(cookies: [cookie("name", "value")])
 
         let finishExpectation = expectation(description: "\(#function) finish")
-        detection?.webViewDidFinishNavigation(withCookies: updatedCookies, preserveLogins: preserveLogins) { possibleLogin in
+        detection?.webViewDidFinishNavigation(withCookies: updatedCookies) { possibleLogin in
             XCTAssertFalse(possibleLogin)
             finishExpectation.fulfill()
         }
@@ -112,7 +72,7 @@ class LoginDetectionTests: XCTestCase {
         let creationExpectation = expectation(description: "\(#function) create")
         var detection: LoginDetection?
 
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNotNil($0)
             detection = $0
             creationExpectation.fulfill()
@@ -122,7 +82,7 @@ class LoginDetectionTests: XCTestCase {
         let updatedCookies = CookiesProvider(cookies: [cookie("name", "other value", path: "/path")])
 
         let finishExpectation = expectation(description: "\(#function) finish")
-        detection?.webViewDidFinishNavigation(withCookies: updatedCookies, preserveLogins: preserveLogins) { possibleLogin in
+        detection?.webViewDidFinishNavigation(withCookies: updatedCookies) { possibleLogin in
             XCTAssertTrue(possibleLogin)
             finishExpectation.fulfill()
         }
@@ -138,7 +98,7 @@ class LoginDetectionTests: XCTestCase {
         let creationExpectation = expectation(description: "\(#function) create")
         var detection: LoginDetection?
 
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNotNil($0)
             detection = $0
             creationExpectation.fulfill()
@@ -148,7 +108,7 @@ class LoginDetectionTests: XCTestCase {
         let updatedCookies = CookiesProvider(cookies: [cookie("name", "other value")])
         
         let finishExpectation = expectation(description: "\(#function) finish")
-        detection?.webViewDidFinishNavigation(withCookies: updatedCookies, preserveLogins: preserveLogins) { possibleLogin in
+        detection?.webViewDidFinishNavigation(withCookies: updatedCookies) { possibleLogin in
             XCTAssertTrue(possibleLogin)
             finishExpectation.fulfill()
         }
@@ -164,7 +124,7 @@ class LoginDetectionTests: XCTestCase {
         let creationExpectation = expectation(description: "\(#function) create")
         var detection: LoginDetection?
 
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNotNil($0)
             detection = $0
             creationExpectation.fulfill()
@@ -174,7 +134,7 @@ class LoginDetectionTests: XCTestCase {
         let updatedCookies = CookiesProvider(cookies: [cookie("name", "value")])
         
         let finishExpectation = expectation(description: "\(#function) finish")
-        detection?.webViewDidFinishNavigation(withCookies: updatedCookies, preserveLogins: preserveLogins) { possibleLogin in
+        detection?.webViewDidFinishNavigation(withCookies: updatedCookies) { possibleLogin in
             XCTAssertTrue(possibleLogin)
             finishExpectation.fulfill()
         }
@@ -189,7 +149,7 @@ class LoginDetectionTests: XCTestCase {
 
         let expect = expectation(description: #function)
         
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNil($0)
             expect.fulfill()
         }
@@ -204,7 +164,7 @@ class LoginDetectionTests: XCTestCase {
 
         let expect = expectation(description: #function)
         
-        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action, preserveLogins: preserveLogins) {
+        LoginDetection.webView(withURL: url, andCookies: cookies, allowedAction: action) {
             XCTAssertNotNil($0)
             expect.fulfill()
         }

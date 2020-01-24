@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import Core
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
+
+    var model = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItems = [ editButton ]
+        model = PreserveLogins.shared.allowedDomains.sorted()
+        navigationItem.rightBarButtonItems = model.isEmpty ? nil : [ editButton ]
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     @IBAction func startEditing() {
@@ -29,7 +34,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return PreserveLogins.shared.userDecision == .preserveLogins ? 3 : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,7 +45,30 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "DomainCell")!
+
+        let theme = ThemeManager.shared.currentTheme
+        let cell: UITableViewCell
+        switch indexPath.section {
+
+        case 0:
+            guard let settingCell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? PreserveLoginsSwitchCell else {
+                fatalError("not SettingsCell")
+            }
+            settingCell.label.textColor = theme.tableCellTextColor
+            settingCell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
+            settingCell.controller = self
+            cell = settingCell
+
+        case 1:
+            cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell")!
+            cell.textLabel?.text = model.isEmpty ? "None" : model[indexPath.row] // TODO extract text
+
+        default:
+            cell = tableView.dequeueReusableCell(withIdentifier: "ClearAllCell")!
+
+        }
+        cell.decorate(with: theme)
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -51,19 +79,73 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         return section == 0 ? "Allows you to stay logged in when you burn your data" : nil
     }
     
-//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        // TODO if model has elements
-//        return indexPath.section == 1 ? .delete : .none
-//    }
-//
-//    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-//        // TODO if model has elements
-//        return indexPath.section == 1
-//    }
-    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // TODO if model has elements
         return indexPath.section == 1
     }
-    
+
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        guard !model.isEmpty, indexPath.section == 1 else { return .none }
+        return .delete
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        let domain = model.remove(at: indexPath.row)
+        PreserveLogins.shared.remove(domain: domain)
+
+        if model.count > 1 {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+
+    func forgetAll() {
+        print("***", #function)
+    }
+
+}
+
+extension PreserveLoginsSettingsViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        decorateNavigationBar(with: theme)
+
+        if #available(iOS 13.0, *) {
+            overrideSystemTheme(with: theme)
+        }
+
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.backgroundColor = theme.backgroundColor
+
+        tableView.reloadData()
+    }
+
+}
+
+class PreserveLoginsSwitchCell: UITableViewCell {
+
+    @IBOutlet weak var toggle: UISwitch!
+    @IBOutlet weak var label: UILabel!
+
+    weak var controller: PreserveLoginsSettingsViewController!
+
+    @IBAction func onToggle() {
+        PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
+        controller.tableView.reloadData()
+        if !toggle.isOn {
+            controller.forgetAll()
+        }
+    }
+
+}
+
+extension UITableViewCell: Themable {
+
+    func decorate(with theme: Theme) {
+        backgroundColor = theme.tableCellBackgroundColor
+        textLabel?.textColor = theme.tableCellTextColor
+        setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+    }
+
 }

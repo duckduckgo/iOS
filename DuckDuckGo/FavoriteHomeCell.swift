@@ -39,8 +39,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var highlightMask: UIView!
-    
-    @IBOutlet var iconConstraints: [NSLayoutConstraint]!
+    @IBOutlet weak var iconSize: NSLayoutConstraint!
     
     static let appUrls = AppUrls()
     static let downloader = NotFoundCachingDownloader()
@@ -78,7 +77,6 @@ class FavoriteHomeCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         FavoriteHomeCell.applyDropshadow(to: iconBackground)
-        iconImage.layer.cornerRadius = 3
     }
     
     @objc func doDelete(sender: Any?) {
@@ -109,6 +107,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconLabel.isHidden = false
         
         iconBackground.backgroundColor = host.color
+        useImageBorder(true)
                     
         if Self.appUrls.isDuckDuckGo(url: link.url) {
             iconImage.image = UIImage(named: "Logo")
@@ -116,6 +115,12 @@ class FavoriteHomeCell: UICollectionViewCell {
         } else {
             loadAppleTouchIcon(forLink: link)
         }
+    }
+
+    private func useImageBorder(_ border: Bool) {
+        iconSize.constant = border ? -24 : 0
+        iconImage.layer.masksToBounds = !border
+        iconImage.layer.cornerRadius = border ? 3 : 8
     }
     
     private func loadAppleTouchIcon(forLink link: Link) {
@@ -139,7 +144,8 @@ class FavoriteHomeCell: UICollectionViewCell {
                 self?.loadFavicon(forLink: link)
                 return
             }
-                                
+
+            self?.useImageBorder(false)
             self?.applyFavicon(image)
         }
         

@@ -136,6 +136,8 @@ class PreserveLoginsSwitchCell: UITableViewCell {
         if !toggle.isOn {
             controller.forgetAll()
         }
+        controller.model = PreserveLogins.shared.allowedDomains
+        controller.tableView.reloadData()
     }
 
 }

@@ -17,22 +17,70 @@ class PreserveLoginsTests: XCTestCase {
         userDefaults.removePersistentDomain(forName: "test")
     }
     
-    func testWhenClearIsCalledThenDomainsAreRemoved() {
+    func testWhenUserDisablesPreserveLoginsThenAllowedDomainsAreMovedToDetectedDomains() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
+        logins.add(domain: "www.example.com")
+        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
+        XCTAssertTrue(logins.detectedDomains.isEmpty)
+        
+        logins.userDecision = .forgetAll
+        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
+        XCTAssertTrue(logins.allowedDomains.isEmpty)
+    }
+
+    func testWhenUserEnablesPreserveLoginsThenDetectedDomainsAreMovedToAllowedDomains() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.add(domain: "www.example.com")
+        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
+        XCTAssertTrue(logins.allowedDomains.isEmpty)
+
+        logins.userDecision = .preserveLogins
+        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
+        XCTAssertTrue(logins.detectedDomains.isEmpty)
+        
+    }
+    
+    func testWhenClearIsCalledAndDecisionIsPreserveThenOnlyDetectedDomainsAreRemoved() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
+        logins.add(domain: "www.example.com")
+        logins.clear()
+        XCTAssertTrue(logins.detectedDomains.isEmpty)
+        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
+
+    }
+    
+    func testWhenClearIsCalledAndDecisionIsNotPreserveThenDomainsAreRemoved() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.add(domain: "www.example.com")
         logins.clear()
         XCTAssertTrue(logins.allowedDomains.isEmpty)
+        XCTAssertTrue(logins.detectedDomains.isEmpty)
         XCTAssertTrue(PreserveLogins(userDefaults: userDefaults).allowedDomains.isEmpty)
 
     }
-    
-    func testWhenDuplicateDomainAddedThenUniqueDomainsPersisted() {
+
+    func testWhenDuplicateDomainWhenPreserveLoginsIsSelectedAddedThenUniqueDomainsPersistedToAllowedDomains() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
+        logins.add(domain: "www.example.com")
+        logins.add(domain: "www.example.com")
+        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
+
+    }
+
+    func testWhenDuplicateDomainWhenPreserveLoginsIsNotSelectedAddedThenUniqueDomainsPersistedToDetectedDomains() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.add(domain: "www.example.com")
         logins.add(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
+        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
 
     }
     
@@ -92,17 +140,19 @@ class PreserveLoginsTests: XCTestCase {
         
     }
 
-    func testWhenPersistedThenStoredUnderExpectedKey() {
+    func testWhenDomainAddedWhenNotPreservingLoginsThenItIsPersistedToDetectedDomains() {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.add(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], userDefaults.array(forKey: PreserveLogins.Constants.allowedDomainsKey) as? [String])
-        
+        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
+        XCTAssertEqual(["www.example.com"], PreserveLogins(userDefaults: userDefaults).detectedDomains)
+    
     }
 
-    func testWhenDomainAddedThenItIsPersisted() {
+    func testWhenDomainAddedWhenPreservingLoginsThenItIsPersistedToAllowedDomains() {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
         logins.add(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.allowedDomains)
         XCTAssertEqual(["www.example.com"], PreserveLogins(userDefaults: userDefaults).allowedDomains)

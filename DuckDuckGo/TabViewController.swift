@@ -625,8 +625,6 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private func possibleLogin(forDomain domain: String?, source: String) {
-        guard PreserveLogins.shared.userDecision == .preserveLogins else { return }
-
         print("*** possible login", domain ?? "nil", source)
         guard let domain = domain else { return }
         if isDebugBuild {

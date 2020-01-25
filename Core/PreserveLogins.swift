@@ -19,6 +19,7 @@ public class PreserveLogins {
     }
     
     struct Constants {
+        static let detectedDomainsKey = "com.duckduckgo.ios.PreserveLogins.userDecision.detectedDomains"
         static let allowedDomainsKey = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
         static let userDecisionKey = "com.duckduckgo.ios.PreserveLogins.userDecision"
         static let userPromptedKey = "com.duckduckgo.ios.PreserveLogins.userPrompted"
@@ -36,7 +37,18 @@ public class PreserveLogins {
             userDefaults.set(domains, forKey: Constants.allowedDomainsKey)
         }
     }
-    
+
+    private(set) public var detectedDomains: [String] {
+        get {
+            return userDefaults.array(forKey: Constants.detectedDomainsKey) as? [String] ?? []
+        }
+        
+        set {
+            let domains = [String](Set<String>(newValue))
+            userDefaults.set(domains, forKey: Constants.detectedDomainsKey)
+        }
+    }
+
     public var userDecision: UserDecision {
         get {
             return UserDecision(rawValue: userDefaults.integer(forKey: Constants.userDecisionKey))!
@@ -44,9 +56,13 @@ public class PreserveLogins {
         
         set {
             userDefaults.set(newValue.rawValue, forKey: Constants.userDecisionKey)
-            if newValue != .preserveLogins {
+            if newValue == .preserveLogins {
+                allowedDomains = detectedDomains
+                detectedDomains = []
+            } else {
+                detectedDomains = allowedDomains
                 allowedDomains = []
-            }        
+            }
         }
     }
     
@@ -67,7 +83,11 @@ public class PreserveLogins {
     }
     
     public func add(domain: String) {
-        allowedDomains += [domain]
+        if userDecision == .preserveLogins {
+            allowedDomains += [domain]
+        } else {
+            detectedDomains += [domain]
+        }
     }
 
     public func remove(domain: String) {
@@ -75,7 +95,10 @@ public class PreserveLogins {
     }
 
     public func clear() {
-        allowedDomains = [] 
+        detectedDomains = []
+        if userDecision != .preserveLogins {
+            allowedDomains = []
+        }
     }
     
 }

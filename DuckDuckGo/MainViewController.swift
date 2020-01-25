@@ -1039,6 +1039,7 @@ extension MainViewController: AutoClearWorker {
     
     func forgetData() {
         findInPageView?.done()
+        PreserveLogins.shared.clear()
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
         WebCacheManager.shared.clear {

@@ -93,7 +93,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
 
-        if model.count > 1 {
+        if model.count > 0 {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         } else {
             tableView.reloadRows(at: [indexPath], with: .automatic)

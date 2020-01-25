@@ -1,7 +1,18 @@
 (function() {
 
     window.addEventListener("submit", function(event) {
-        duckduckgoMessaging.possibleLogin("form");
+
+    	var inputs = event.target.getElementsByTagName("input");
+    	if (inputs) {
+    		for (var i = 0; i < inputs.length; i++) {
+    			var input = inputs.item(i)
+    			if (input.type == "password") {
+			        duckduckgoMessaging.possibleLogin("form");
+			        return;
+    			}
+    		}
+    	}
+
     });
 
     // not available before iOS 11

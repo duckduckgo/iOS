@@ -90,6 +90,23 @@ public class PreserveLogins {
         }
     }
 
+    public func isAllowed(cookieDomain: String) -> Bool {
+
+        if allowedDomains.contains(where: { $0 == cookieDomain }) {
+            return true
+        }
+
+        if allowedDomains.contains(where: { ".\($0)" == cookieDomain }) {
+            return true
+        }
+
+        if allowedDomains.contains(where: { cookieDomain.hasPrefix(".") && $0.hasSuffix(cookieDomain) }) {
+            return true
+        }
+
+        return false
+    }
+
     public func remove(domain: String) {
         allowedDomains = allowedDomains.filter { $0 != domain }
     }

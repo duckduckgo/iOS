@@ -16,6 +16,33 @@ class PreserveLoginsTests: XCTestCase {
     override func setUp() {
         userDefaults.removePersistentDomain(forName: "test")
     }
+
+    func testWhenDomainWithSubdomainMatchesWildcardThenIsAllowed() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
+        logins.add(domain: "www.boardgamegeek.com")
+        XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
+
+    }
+
+    func testWhenDomainMatchesWildcardThenIsAllowed() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
+        logins.add(domain: "boardgamegeek.com")
+        XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
+
+    }
+
+    func testWhenDomainMatchesThenIsAllowed() {
+
+        let logins = PreserveLogins(userDefaults: userDefaults)
+        logins.userDecision = .preserveLogins
+        logins.add(domain: "boardgamegeek.com")
+        XCTAssertTrue(logins.isAllowed(cookieDomain: "boardgamegeek.com"))
+
+    }
     
     func testWhenUserDisablesPreserveLoginsThenAllowedDomainsAreMovedToDetectedDomains() {
 

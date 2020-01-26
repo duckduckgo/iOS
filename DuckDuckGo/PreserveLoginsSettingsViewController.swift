@@ -52,7 +52,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
         case 0:
             guard let settingCell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? PreserveLoginsSwitchCell else {
-                fatalError("not SettingsCell")
+                fatalError()
             }
             settingCell.label.textColor = theme.tableCellTextColor
             settingCell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
@@ -60,9 +60,13 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             cell = settingCell
 
         case 1:
-            cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell")!
-            cell.imageView?.loadFavicon(forDomain: model.isEmpty ? nil : model[indexPath.row])
-            cell.textLabel?.text = model.isEmpty ? "None" : model[indexPath.row] // TODO extract text
+            guard let domainCell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
+                fatalError()
+            }
+            domainCell.label.textColor = theme.tableCellTextColor
+            domainCell.faviconImage?.loadFavicon(forDomain: model.isEmpty ? nil : model[indexPath.row])
+            domainCell.label?.text = model.isEmpty ? "None" : model[indexPath.row] // TODO extract text
+            cell = domainCell
 
         default:
             cell = tableView.dequeueReusableCell(withIdentifier: "ClearAllCell")!
@@ -140,6 +144,13 @@ class PreserveLoginsSwitchCell: UITableViewCell {
         controller.model = PreserveLogins.shared.allowedDomains
         controller.tableView.reloadData()
     }
+
+}
+
+class PreserveLoginDomainCell: UITableViewCell {
+
+    @IBOutlet weak var faviconImage: UIImageView!
+    @IBOutlet weak var label: UILabel!
 
 }
 

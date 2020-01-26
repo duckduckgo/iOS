@@ -1229,26 +1229,44 @@ upgraded by Privacy Protection.</string>
                                     <outlet property="toggle" destination="aft-fU-nTk" id="hHy-y1-8cu"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DomainCell" textLabel="bWi-w8-xJv" imageView="E8Z-Wc-HGM" style="IBUITableViewCellStyleDefault" id="XvJ-um-Din">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DomainCell" id="QS7-xN-9G7" customClass="PreserveLoginDomainCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="99" width="375" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XvJ-um-Din" id="vtQ-Ob-Mtz">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QS7-xN-9G7" id="8MW-7Q-KmM">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bWi-w8-xJv">
-                                            <rect key="frame" x="55" y="0.0" width="304" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="GlobeSmall" id="E8Z-Wc-HGM">
-                                            <rect key="frame" x="16" y="9.6666666666666643" width="24" height="24"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="AKJ-BI-Dki">
+                                            <rect key="frame" x="16" y="14" width="343" height="16"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-Kb-pMQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="H9V-iK-LM3"/>
+                                                        <constraint firstAttribute="width" constant="16" id="ft7-h3-aYg"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6d-bN-xvz">
+                                                    <rect key="frame" x="28" y="0.0" width="315" height="16"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="AKJ-BI-Dki" firstAttribute="centerY" secondItem="8MW-7Q-KmM" secondAttribute="centerY" id="1Zi-1s-YCT"/>
+                                        <constraint firstItem="AKJ-BI-Dki" firstAttribute="leading" secondItem="8MW-7Q-KmM" secondAttribute="leadingMargin" id="3dj-k0-DTM"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="AKJ-BI-Dki" secondAttribute="trailing" id="VWM-d6-MPX"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="faviconImage" destination="u6L-Kb-pMQ" id="lrq-0Y-jbN"/>
+                                    <outlet property="label" destination="i6d-bN-xvz" id="8C1-DT-Fvh"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

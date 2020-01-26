@@ -75,6 +75,7 @@
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
 		850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */; };
+		850365F323DE087800D0F787 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850365F223DE087800D0F787 /* UIImageExtension.swift */; };
 		85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
 		850559C923C61B5D0055C0D5 /* loginDetection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* loginDetection.js */; };
@@ -665,6 +666,7 @@
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtbAndVariantCleanup.swift; path = ../Core/AtbAndVariantCleanup.swift; sourceTree = "<group>"; };
 		850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbAndVariantCleanupTests.swift; sourceTree = "<group>"; };
+		850365F223DE087800D0F787 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoader.swift; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
 		850559C823C61B5D0055C0D5 /* loginDetection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = loginDetection.js; sourceTree = "<group>"; };
@@ -2257,16 +2259,17 @@
 		F1668BCC1E798025008CBA04 /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
-				F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */,
-				F103076A1E800DC30059FEC7 /* BookmarksManager.swift */,
-				F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */,
-				F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */,
-				F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */,
 				F1D796EF1E7B07610019D451 /* BookmarkCell.swift */,
+				F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */,
+				85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */,
+				F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */,
+				F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */,
+				F103076A1E800DC30059FEC7 /* BookmarksManager.swift */,
+				F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */,
+				F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */,
 				F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */,
 				F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */,
-				F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */,
-				85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */,
+				850365F223DE087800D0F787 /* UIImageExtension.swift */,
 			);
 			name = Bookmarks;
 			sourceTree = "<group>";
@@ -3483,6 +3486,7 @@
 				853C5F5D21C117A6001F7A05 /* PaddingSpaceHomeViewSectionRenderer.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
+				850365F323DE087800D0F787 /* UIImageExtension.swift in Sources */,
 				839F46B620DD9D31003B8A66 /* SiteFeedbackViewController.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,

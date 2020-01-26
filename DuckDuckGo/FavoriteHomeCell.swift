@@ -152,28 +152,12 @@ class FavoriteHomeCell: UICollectionViewCell {
     }
     
     private func loadFavicon(forLink link: Link) {
-        guard let domain = link.url.host, let resource = AppUrls().faviconUrl(forDomain: domain) else { return }
-            
-        print("***", #function, resource)
 
-        iconImage.kf.setImage(with: resource,
-                              placeholder: nil,
-                              options: [
-                                .downloader(Self.downloader),
-                                .targetCache(Self.targetCache)
-                                ],
-                              progressBlock: nil) { [weak self] image, error, _, _ in
-                                
-            guard let image = image, error == nil else {
-                NotFoundCachingDownloader.cacheNotFound(resource)
-                return
-            }
-                                
-            guard image.size.width > Constants.smallFaviconSize else { return }
-                                
+        iconImage.loadFavicon(forDomain: link.url.host) { [weak self] image in
+            guard let image = image, image.size.width > Constants.smallFaviconSize else { return }
             self?.applyFavicon(image)
         }
-    
+
     }
         
     private func applyFavicon(_ image: UIImage) {

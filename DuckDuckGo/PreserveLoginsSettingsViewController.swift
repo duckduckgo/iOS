@@ -61,6 +61,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
         case 1:
             cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell")!
+            cell.imageView?.loadFavicon(forDomain: model.isEmpty ? nil : model[indexPath.row])
             cell.textLabel?.text = model.isEmpty ? "None" : model[indexPath.row] // TODO extract text
 
         default:

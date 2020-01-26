@@ -9,10 +9,18 @@
 import UIKit
 import Core
 
+protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
+
+    func forgetAllRequested()
+
+}
+
 class PreserveLoginsSettingsViewController: UITableViewController {
     
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
+
+    weak var delegate: PreserveLoginsSettingsDelegate?
 
     var model = [String]()
     
@@ -107,6 +115,10 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
     func forgetAll() {
         print("***", #function)
+        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            self?.delegate?.forgetAllRequested()
+        })
+        self.present(alert, animated: true)
     }
 
 }

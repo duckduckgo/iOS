@@ -221,6 +221,7 @@ class MainViewController: UIViewController {
         if let navigationController = segue.destination as? UINavigationController,
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self
+            controller.preserveLoginsSettingsDelegate = self
             return
         }
         
@@ -1049,7 +1050,6 @@ extension MainViewController: AutoClearWorker {
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
-        findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
@@ -1099,6 +1099,14 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
+}
+
+extension MainViewController: PreserveLoginsSettingsDelegate {
+
+    func forgetAllRequested() {
+        forgetAllWithAnimation { }
+    }
+
 }
 
 extension MainViewController: OnboardingDelegate {

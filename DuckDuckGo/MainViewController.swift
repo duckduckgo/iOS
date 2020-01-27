@@ -1109,8 +1109,8 @@ extension MainViewController: HomePageSettingsDelegate {
 
 extension MainViewController: PreserveLoginsSettingsDelegate {
 
-    func forgetAllRequested() {
-        forgetAllWithAnimation { }
+    func forgetAllRequested(completion: @escaping () -> Void) {
+        forgetAllWithAnimation(completion: completion)
     }
 
 }

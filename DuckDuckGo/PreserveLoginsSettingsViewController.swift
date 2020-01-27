@@ -11,7 +11,7 @@ import Core
 
 protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
 
-    func forgetAllRequested()
+    func forgetAllRequested(completion: @escaping () -> Void)
 
 }
 
@@ -65,25 +65,13 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         switch indexPath.section {
 
         case 0:
-            guard let settingCell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? PreserveLoginsSwitchCell else {
-                fatalError()
-            }
-            settingCell.label.textColor = theme.tableCellTextColor
-            settingCell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
-            settingCell.controller = self
-            cell = settingCell
+            cell = createSwitchCell(forTableView: tableView, withTheme: theme)
 
         case 1:
             if model.isEmpty {
                 cell = tableView.dequeueReusableCell(withIdentifier: "NoDomainsCell")!
             } else {
-                guard let domainCell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
-                    fatalError()
-                }
-                domainCell.label.textColor = theme.tableCellTextColor
-                domainCell.faviconImage?.loadFavicon(forDomain: model[indexPath.row])
-                domainCell.label?.text = model[indexPath.row]
-                cell = domainCell
+                cell = createDomainCell(forTableView: tableView, withTheme: theme, forIndex: indexPath.row)
             }
             
         default:
@@ -129,20 +117,38 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
     }
     
+    func createSwitchCell(forTableView tableView: UITableView, withTheme theme: Theme) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? PreserveLoginsSwitchCell else {
+            fatalError()
+        }
+        cell.label.textColor = theme.tableCellTextColor
+        cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
+        cell.controller = self
+        return cell
+    }
+    
+    func createDomainCell(forTableView tableView: UITableView, withTheme theme: Theme, forIndex index: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
+            fatalError()
+        }
+        cell.label.textColor = theme.tableCellTextColor
+        cell.faviconImage?.loadFavicon(forDomain: model[index])
+        cell.label?.text = model[index]
+        return cell
+    }
+    
     func forgetAll() {
         print("***", #function)
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.clear()
-            self?.delegate?.forgetAllRequested()
+            PreserveLogins.shared.clearAll()
+            self?.delegate?.forgetAllRequested {
+                self?.refreshModel()
+                self?.endEditing()
+            }
         })
         self.present(alert, animated: true)
     }
     
-    func clear() {
-        PreserveLogins.shared.clearAll()
-        refreshModel()
-    }
-
     func refreshModel() {
         model = PreserveLogins.shared.allowedDomains.sorted()
         tableView.reloadData()

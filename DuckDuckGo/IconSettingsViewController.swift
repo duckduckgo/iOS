@@ -23,29 +23,19 @@ import Core
 class IconSettingsViewController: UICollectionViewController {
 
     private var icons = Icon.allCases
-    private var initialSelectedIndexPath: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         applyTheme(ThemeManager.shared.currentTheme)
-        initFirstSelection()
+        initSelection()
     }
 
-    private func initFirstSelection() {
+    private func initSelection() {
         let icon = IconManager.shared.applicationIcon
         let index = icons.firstIndex(of: icon) ?? 0
-        initialSelectedIndexPath = IndexPath(row: index, section: 0)
-    }
-
-    private func selectIfNeeded(_ indexPath: IndexPath) {
-        if let firstSelectedIndexPath = initialSelectedIndexPath,
-            firstSelectedIndexPath == indexPath {
-            DispatchQueue.main.async {
-                self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .bottom)
-            }
-            self.initialSelectedIndexPath = nil
-        }
+        let indexPath = IndexPath(row: index, section: 0)
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
     }
 
     private func changeIcon(_ icon: Icon) {
@@ -69,7 +59,6 @@ class IconSettingsViewController: UICollectionViewController {
             as? IconSettingsCell else {
                 fatalError("Expected IconSettingsCell")
         }
-        selectIfNeeded(indexPath)
         cell.decorate(with: ThemeManager.shared.currentTheme)
 
         let icon = icons[indexPath.row]

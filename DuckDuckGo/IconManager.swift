@@ -41,8 +41,6 @@ class IconManager {
             UIApplication.shared.setAlternateIconName(alternateIconName) { error in
                 if let error = error {
                     print(error.localizedDescription)
-                } else {
-                    print("Done!")
                 }
             }
         } else {

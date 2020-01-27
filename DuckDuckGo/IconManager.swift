@@ -36,7 +36,7 @@ class IconManager {
     }
 
     func changeApplicationIcon(_ icon: Icon) throws {
-        if #available(iOS 10.3, *) {
+        if #available(iOS 10.3, *), isIconChangeSupported {
             let alternateIconName = icon != Icon.defaultIcon ? icon.rawValue : nil
             UIApplication.shared.setAlternateIconName(alternateIconName) { error in
                 if let error = error {

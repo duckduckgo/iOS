@@ -69,16 +69,15 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
         case 1:
             if model.isEmpty {
-                cell = tableView.dequeueReusableCell(withIdentifier: "NoDomainsCell")!
+                cell = createNoDomainCell(forTableView: tableView, withTheme: theme)
             } else {
                 cell = createDomainCell(forTableView: tableView, withTheme: theme, forIndex: indexPath.row)
             }
             
         default:
-            cell = tableView.dequeueReusableCell(withIdentifier: "ClearAllCell")!
+            cell = createClearAllCell(forTableView: tableView, withTheme: theme)
 
         }
-        cell.decorate(with: theme)
         return cell
     }
     
@@ -124,6 +123,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
         cell.controller = self
+        cell.decorate(with: theme)
         return cell
     }
     
@@ -134,9 +134,23 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         cell.label.textColor = theme.tableCellTextColor
         cell.faviconImage?.loadFavicon(forDomain: model[index])
         cell.label?.text = model[index]
+        cell.decorate(with: theme)
         return cell
     }
     
+    func createNoDomainCell(forTableView tableView: UITableView, withTheme theme: Theme) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NoDomainsCell")!
+        cell.decorate(with: theme)
+        return cell
+    }
+
+    func createClearAllCell(forTableView tableView: UITableView, withTheme theme: Theme) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ClearAllCell")!
+        cell.decorate(with: theme)
+        cell.textLabel?.textColor = UIColor(red: 0.914, green: 0.353, blue: 0.298, alpha: 1)
+        return cell
+    }
+
     func forgetAll() {
         print("***", #function)
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in

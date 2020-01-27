@@ -26,23 +26,29 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model = PreserveLogins.shared.allowedDomains.sorted()
-        navigationItem.rightBarButtonItems = model.isEmpty ? nil : [ editButton ]
+        navigationItem.rightBarButtonItems = [ editButton ]
+        refreshModel()
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
     @IBAction func startEditing() {
         tableView.isEditing = true
         navigationItem.rightBarButtonItems = [ doneButton ]
+        tableView.reloadData()
     }
     
     @IBAction func endEditing() {
         tableView.isEditing = false
         navigationItem.rightBarButtonItems = [ editButton ]
+        tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return PreserveLogins.shared.userDecision == .preserveLogins ? 2 : 1
+        var sections = 1 // the switch
+        sections += PreserveLogins.shared.userDecision == .preserveLogins ? 1 : 0 // the domains
+        sections += tableView.isEditing ? 1 : 0 // the clear all button
+        print("***", #function, sections)
+        return sections
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,14 +74,18 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             cell = settingCell
 
         case 1:
-            guard let domainCell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
-                fatalError()
+            if model.isEmpty {
+                cell = tableView.dequeueReusableCell(withIdentifier: "NoDomainsCell")!
+            } else {
+                guard let domainCell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
+                    fatalError()
+                }
+                domainCell.label.textColor = theme.tableCellTextColor
+                domainCell.faviconImage?.loadFavicon(forDomain: model[indexPath.row])
+                domainCell.label?.text = model[indexPath.row]
+                cell = domainCell
             }
-            domainCell.label.textColor = theme.tableCellTextColor
-            domainCell.faviconImage?.loadFavicon(forDomain: model.isEmpty ? nil : model[indexPath.row])
-            domainCell.label?.text = model.isEmpty ? "None" : model[indexPath.row] // TODO extract text
-            cell = domainCell
-
+            
         default:
             cell = tableView.dequeueReusableCell(withIdentifier: "ClearAllCell")!
 
@@ -93,7 +103,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1
+        return indexPath.section == 1 && !model.isEmpty
     }
 
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -105,22 +115,38 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         guard editingStyle == .delete else { return }
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
-
-        if model.count > 0 {
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        } else {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 && !model.isEmpty
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            forgetAll()
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
-
+    
     func forgetAll() {
         print("***", #function)
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            self?.clear()
             self?.delegate?.forgetAllRequested()
         })
         self.present(alert, animated: true)
     }
+    
+    func clear() {
+        PreserveLogins.shared.clearAll()
+        refreshModel()
+    }
 
+    func refreshModel() {
+        model = PreserveLogins.shared.allowedDomains.sorted()
+        tableView.reloadData()
+    }
 }
 
 extension PreserveLoginsSettingsViewController: Themable {

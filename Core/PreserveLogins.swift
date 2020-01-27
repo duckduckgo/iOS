@@ -102,11 +102,13 @@ public class PreserveLogins {
         allowedDomains = allowedDomains.filter { $0 != domain }
     }
 
-    public func clear() {
+    public func clearAll() {
         detectedDomains = []
-        if userDecision != .preserveLogins {
-            allowedDomains = []
-        }
+        allowedDomains = []
     }
     
+    public func clearDetected() {
+        detectedDomains = []
+    }
+
 }

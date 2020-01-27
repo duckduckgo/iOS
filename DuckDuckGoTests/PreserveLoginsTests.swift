@@ -70,25 +70,30 @@ class PreserveLoginsTests: XCTestCase {
         
     }
     
-    func testWhenClearIsCalledAndDecisionIsPreserveThenOnlyDetectedDomainsAreRemoved() {
+    func testWhenClearAllIsCalledThenAllowDomainsAreCleared() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
         logins.add(domain: "www.example.com")
-        logins.clear()
+        logins.clearAll()
         XCTAssertTrue(logins.detectedDomains.isEmpty)
-        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
-
+        XCTAssertTrue(logins.allowedDomains.isEmpty)
+        
+        logins.userDecision = .forgetAll
+        logins.add(domain: "www.example.com")
+        logins.clearAll()
+        XCTAssertTrue(logins.detectedDomains.isEmpty)
+        XCTAssertTrue(logins.allowedDomains.isEmpty)
+        
     }
     
-    func testWhenClearIsCalledAndDecisionIsNotPreserveThenDomainsAreRemoved() {
+    func testWhenClearDetectedIsCalledThenDetectedDomainsAreCleared() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.add(domain: "www.example.com")
-        logins.clear()
+        logins.clearDetected()
         XCTAssertTrue(logins.allowedDomains.isEmpty)
         XCTAssertTrue(logins.detectedDomains.isEmpty)
-        XCTAssertTrue(PreserveLogins(userDefaults: userDefaults).allowedDomains.isEmpty)
 
     }
 

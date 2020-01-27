@@ -109,6 +109,10 @@ extension UIColor {
         return UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
     }
     
+    public static var destructive: UIColor {
+        return UIColor(red: 0.914, green: 0.353, blue: 0.298, alpha: 1)
+    }
+    
 }
 
 extension UIColor {

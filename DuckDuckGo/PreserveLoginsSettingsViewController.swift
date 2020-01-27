@@ -147,7 +147,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     func createClearAllCell(forTableView tableView: UITableView, withTheme theme: Theme) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClearAllCell")!
         cell.decorate(with: theme)
-        cell.textLabel?.textColor = UIColor(red: 0.914, green: 0.353, blue: 0.298, alpha: 1)
+        cell.textLabel?.textColor = theme.destructiveColor
         return cell
     }
 

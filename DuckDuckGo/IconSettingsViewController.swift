@@ -28,7 +28,6 @@ class IconSettingsViewController: UICollectionViewController {
         super.viewDidLoad()
 
         applyTheme(ThemeManager.shared.currentTheme)
-        initSelection()
     }
 
     private func initSelection() {
@@ -81,6 +80,8 @@ extension IconSettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
         collectionView.backgroundColor = theme.backgroundColor
+        collectionView.reloadData()
+        initSelection()
     }
 
 }

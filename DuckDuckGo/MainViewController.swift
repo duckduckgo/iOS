@@ -308,12 +308,13 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-                self?.forgetAllWithAnimation {}
+                guard let self = self else { return }
+                PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
+                    self?.forgetAllWithAnimation {}
+                }
             })
             self.present(controller: alert, fromView: self.toolbar)
-        }
     }
     
     func onQuickFirePressed() {

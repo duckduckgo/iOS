@@ -153,7 +153,11 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
     func forgetAll() {
         print("***", #function)
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+        
+        let alert = ForgetDataAlert.buildAlert(cancelHandler: {
+            PreserveLogins.shared.userDecision = .preserveLogins
+            self.refreshModel()
+        }, forgetTabsAndDataHandler: { [weak self] in
             PreserveLogins.shared.clearAll()
             self?.delegate?.forgetAllRequested {
                 self?.refreshModel()

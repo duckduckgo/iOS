@@ -39,11 +39,12 @@ class IconSettingsViewController: UICollectionViewController {
     }
 
     private func changeIcon(_ icon: Icon) {
-        do {
-            try IconManager.shared.changeApplicationIcon(icon)
-        } catch {
-            Pixel.fire(pixel: .settingsIconChangeFailed, error: error)
-            Logger.log(text: "Error while changing icon: \(error.localizedDescription)")
+        IconManager.shared.changeApplicationIcon(icon) { error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.initSelection()
+                }
+            }
         }
     }
 

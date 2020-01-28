@@ -191,6 +191,7 @@ public enum PixelName: String {
     case webKitDidTerminate = "m_d_wkt"
 
     case settingsIconChangeFailed = "m_d_icf"
+    case settingsIconChangeNotSupported = "m_d_icns"
 }
 
 public struct PixelParameters {

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class IconManager {
 
@@ -35,16 +36,23 @@ class IconManager {
         case changeNotSupported
     }
 
-    func changeApplicationIcon(_ icon: Icon) throws {
+    func changeApplicationIcon(_ icon: Icon, completionHandler: ((Error?) -> Void)? = nil) {
         if #available(iOS 10.3, *), isIconChangeSupported {
             let alternateIconName = icon != Icon.defaultIcon ? icon.rawValue : nil
             UIApplication.shared.setAlternateIconName(alternateIconName) { error in
                 if let error = error {
-                    print(error.localizedDescription)
+                    Pixel.fire(pixel: .settingsIconChangeFailed, error: error)
+                    Logger.log(text: "Error while changing icon: \(error.localizedDescription)")
+                    completionHandler?(error)
+                } else {
+                    completionHandler?(nil)
                 }
             }
         } else {
-            throw IconManagerError.changeNotSupported
+            let error = IconManagerError.changeNotSupported
+            Pixel.fire(pixel: .settingsIconChangeNotSupported, error: error)
+            Logger.log(text: "Error while changing icon: \(error.localizedDescription)")
+            completionHandler?(error)
         }
     }
 

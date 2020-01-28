@@ -1028,7 +1028,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="25" minimumInteritemSpacing="17" id="TaH-Kk-wvu">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="25" minimumInteritemSpacing="17" sectionInsetReference="safeArea" id="TaH-Kk-wvu">
                             <size key="itemSize" width="68" height="68"/>
                             <size key="estimatedItemSize" width="68" height="68"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>

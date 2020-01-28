@@ -178,7 +178,7 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>AppIconBlue76x76</string>
-					<string>AppIconBlue83x83</string>
+					<string>AppIconBlue83.5x83.5</string>
 				</array>
 			</dict>
 			<key>green</key>
@@ -186,7 +186,7 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>AppIconGreen76x76</string>
-					<string>AppIconGreen83x83</string>
+					<string>AppIconGreen83.5x83.5</string>
 				</array>
 			</dict>
 			<key>purple</key>
@@ -194,7 +194,7 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>AppIconPurple76x76</string>
-					<string>AppIconPurple83x83</string>
+					<string>AppIconPurple83.5x83.5</string>
 				</array>
 			</dict>
 			<key>yellow</key>
@@ -202,7 +202,7 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>AppIconYellow76x76</string>
-					<string>AppIconYellow83x83</string>
+					<string>AppIconYellow83.5x83.5</string>
 				</array>
 			</dict>
 		</dict>

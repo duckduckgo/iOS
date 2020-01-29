@@ -31,6 +31,24 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        switch PreserveLogins.shared.userDecision {
+            
+        case .forgetAll:
+            Pixel.fire(pixel: .preserveLoginsSettingsWhilePreserving)
+            
+        case .preserveLogins:
+            Pixel.fire(pixel: .preserveLoginsSettingsWhilePreserving)
+
+        case .unknown:
+            Pixel.fire(pixel: .preserveLoginsSettingsNewUser)
+
+        }
+        
+    }
+    
     @IBAction func startEditing() {
         tableView.isEditing = true
         navigationItem.rightBarButtonItems = [ doneButton ]

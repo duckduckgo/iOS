@@ -26,8 +26,8 @@ class SettingsViewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet weak var themeAccessoryText: UILabel!
-    @IBOutlet weak var iconCell: UITableViewCell!
-    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var appIconCell: UITableViewCell!
+    @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var homePageAccessoryText: UILabel!
@@ -134,10 +134,10 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureIconViews() {
-        if IconManager.shared.isIconChangeSupported {
-            iconImageView.image = IconManager.shared.applicationIcon.smallImage
+        if AppIconManager.shared.isAppIconChangeSupported {
+            appIconImageView.image = AppIconManager.shared.appIcon.smallImage
         } else {
-            iconCell.isHidden = true
+            appIconCell.isHidden = true
         }
     }
 

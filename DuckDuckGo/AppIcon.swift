@@ -1,5 +1,5 @@
 //
-//  Icon.swift
+//  AppIcon.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import UIKit
 
-enum Icon: String, CaseIterable {
+enum AppIcon: String, CaseIterable {
     case red
     case yellow
     case green
@@ -27,7 +27,7 @@ enum Icon: String, CaseIterable {
     case purple
     case black
 
-    static var defaultIcon: Icon {
+    static var defaultAppIcon: AppIcon {
         return .red
     }
 

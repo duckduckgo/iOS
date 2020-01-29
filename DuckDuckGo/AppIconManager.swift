@@ -1,5 +1,5 @@
 //
-//  IconManager.swift
+//  AppIconManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -20,11 +20,11 @@
 import UIKit
 import Core
 
-class IconManager {
+class AppIconManager {
 
-    static var shared = IconManager()
+    static var shared = AppIconManager()
 
-    var isIconChangeSupported: Bool {
+    var isAppIconChangeSupported: Bool {
         if #available(iOS 10.3, *) {
             return UIApplication.shared.supportsAlternateIcons
         } else {
@@ -32,45 +32,45 @@ class IconManager {
         }
     }
 
-    enum IconManagerError: Error {
+    enum AppIconManagerError: Error {
         case changeNotSupported
     }
 
-    func changeApplicationIcon(_ icon: Icon, completionHandler: ((Error?) -> Void)? = nil) {
-        if applicationIcon == icon {
+    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
+        if self.appIcon == appIcon {
             completionHandler?(nil)
             return
         }
 
-        if #available(iOS 10.3, *), isIconChangeSupported {
-            let alternateIconName = icon != Icon.defaultIcon ? icon.rawValue : nil
+        if #available(iOS 10.3, *), isAppIconChangeSupported {
+            let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
             UIApplication.shared.setAlternateIconName(alternateIconName) { error in
                 if let error = error {
-                    Pixel.fire(pixel: .settingsIconChangeFailed, error: error)
-                    Logger.log(text: "Error while changing icon: \(error.localizedDescription)")
+                    Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
+                    Logger.log(text: "Error while changing app icon: \(error.localizedDescription)")
                     completionHandler?(error)
                 } else {
                     completionHandler?(nil)
                 }
             }
         } else {
-            let error = IconManagerError.changeNotSupported
-            Pixel.fire(pixel: .settingsIconChangeNotSupported, error: error)
-            Logger.log(text: "Error while changing icon: \(error.localizedDescription)")
+            let error = AppIconManagerError.changeNotSupported
+            Pixel.fire(pixel: .settingsAppIconChangeNotSupported, error: error)
+            Logger.log(text: "Error while changing app icon: \(error.localizedDescription)")
             completionHandler?(error)
         }
     }
 
-    var applicationIcon: Icon {
+    var appIcon: AppIcon {
         if #available(iOS 10.3, *) {
-            guard let iconName = UIApplication.shared.alternateIconName,
-                let icon = Icon(rawValue: iconName) else {
-                return Icon.defaultIcon
+            guard let appIconName = UIApplication.shared.alternateIconName,
+                let appIcon = AppIcon(rawValue: appIconName) else {
+                return AppIcon.defaultAppIcon
             }
 
-            return icon
+            return appIcon
         } else {
-            return Icon.defaultIcon
+            return AppIcon.defaultAppIcon
         }
     }
 

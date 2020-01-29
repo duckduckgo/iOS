@@ -1,5 +1,5 @@
 //
-//  IconSettingsViewController.swift
+//  AppIconSettingsViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -20,9 +20,9 @@
 import UIKit
 import Core
 
-class IconSettingsViewController: UICollectionViewController {
+class AppIconSettingsViewController: UICollectionViewController {
 
-    private var icons = Icon.allCases
+    private var appIcons = AppIcon.allCases
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +31,14 @@ class IconSettingsViewController: UICollectionViewController {
     }
 
     private func initSelection() {
-        let icon = IconManager.shared.applicationIcon
-        let index = icons.firstIndex(of: icon) ?? 0
+        let icon = AppIconManager.shared.appIcon
+        let index = appIcons.firstIndex(of: icon) ?? 0
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
     }
 
-    private func changeIcon(_ icon: Icon) {
-        IconManager.shared.changeApplicationIcon(icon) { error in
+    private func changeAppIcon(_ appIcon: AppIcon) {
+        AppIconManager.shared.changeAppIcon(appIcon) { error in
             if error != nil {
                 DispatchQueue.main.async {
                     self.initSelection()
@@ -50,19 +50,19 @@ class IconSettingsViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return icons.count
+        return appIcons.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IconSettingsCell.reuseIdentifier,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppIconSettingsCell.reuseIdentifier,
                                                             for: indexPath)
-            as? IconSettingsCell else {
+            as? AppIconSettingsCell else {
                 fatalError("Expected IconSettingsCell")
         }
         cell.decorate(with: ThemeManager.shared.currentTheme)
 
-        let icon = icons[indexPath.row]
-        cell.imageView.image = icon.mediumImage
+        let appIcon = appIcons[indexPath.row]
+        cell.imageView.image = appIcon.mediumImage
 
         return cell
     }
@@ -70,13 +70,13 @@ class IconSettingsViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let icon = icons[indexPath.row]
-        changeIcon(icon)
+        let appIcon = appIcons[indexPath.row]
+        changeAppIcon(appIcon)
     }
 
 }
 
-extension IconSettingsViewController: Themable {
+extension AppIconSettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
         collectionView.backgroundColor = theme.backgroundColor

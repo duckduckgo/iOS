@@ -337,10 +337,10 @@
 		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
 		98FD3E2823A3010C005ABD42 /* ios12-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */; };
-		AA3D854523D9942200788410 /* IconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* IconSettingsViewController.swift */; };
-		AA3D854723D9E88E00788410 /* IconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* IconSettingsCell.swift */; };
-		AA3D854923DA1DFB00788410 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854823DA1DFB00788410 /* Icon.swift */; };
-		AA4D6A6A23DB87B1007E8790 /* IconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4D6A6923DB87B1007E8790 /* IconManager.swift */; };
+		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
+		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
+		AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854823DA1DFB00788410 /* AppIcon.swift */; };
+		AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4D6A6923DB87B1007E8790 /* AppIconManager.swift */; };
 		AA4D6A8C23DE49A5007E8790 /* AppIconBlack40x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA4D6A8223DE49A4007E8790 /* AppIconBlack40x40@2x.png */; };
 		AA4D6A8D23DE49A5007E8790 /* AppIconBlack40x40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA4D6A8323DE49A4007E8790 /* AppIconBlack40x40@3x.png */; };
 		AA4D6A8E23DE49A5007E8790 /* AppIconBlack60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA4D6A8423DE49A4007E8790 /* AppIconBlack60x60@2x.png */; };
@@ -971,10 +971,10 @@
 		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
 		98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios12-home-row.mp4"; sourceTree = "<group>"; };
-		AA3D854423D9942200788410 /* IconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsViewController.swift; sourceTree = "<group>"; };
-		AA3D854623D9E88E00788410 /* IconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsCell.swift; sourceTree = "<group>"; };
-		AA3D854823DA1DFB00788410 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
-		AA4D6A6923DB87B1007E8790 /* IconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconManager.swift; sourceTree = "<group>"; };
+		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
+		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
+		AA3D854823DA1DFB00788410 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
+		AA4D6A6923DB87B1007E8790 /* AppIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconManager.swift; sourceTree = "<group>"; };
 		AA4D6A8223DE49A4007E8790 /* AppIconBlack40x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconBlack40x40@2x.png"; sourceTree = "<group>"; };
 		AA4D6A8323DE49A4007E8790 /* AppIconBlack40x40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconBlack40x40@3x.png"; sourceTree = "<group>"; };
 		AA4D6A8423DE49A4007E8790 /* AppIconBlack60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconBlack60x60@2x.png"; sourceTree = "<group>"; };
@@ -1558,7 +1558,7 @@
 				839F119520DBC489007CD8C2 /* Feedback */,
 				85F2FFFE2215C163006BB258 /* FindInPage */,
 				F13B4BF31F18C73A00814661 /* Home */,
-				AA4D6A8023DE4973007E8790 /* Icon */,
+				AA4D6A8023DE4973007E8790 /* AppIcon */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				85AE668C20971FCA0014CF04 /* Notifications */,
@@ -1973,11 +1973,11 @@
 			name = Themes;
 			sourceTree = "<group>";
 		};
-		AA4D6A8023DE4973007E8790 /* Icon */ = {
+		AA4D6A8023DE4973007E8790 /* AppIcon */ = {
 			isa = PBXGroup;
 			children = (
-				AA4D6A6923DB87B1007E8790 /* IconManager.swift */,
-				AA3D854823DA1DFB00788410 /* Icon.swift */,
+				AA4D6A6923DB87B1007E8790 /* AppIconManager.swift */,
+				AA3D854823DA1DFB00788410 /* AppIcon.swift */,
 				AA4D6A8123DE4981007E8790 /* Black */,
 				AA4D6A9623DE4BB3007E8790 /* Blue */,
 				AA4D6AAB23DE4CC9007E8790 /* Green */,
@@ -1985,7 +1985,7 @@
 				AA4D6AF323DF0282007E8790 /* Red */,
 				AA4D6AAD23DE4D01007E8790 /* Yellow */,
 			);
-			name = Icon;
+			name = AppIcon;
 			sourceTree = "<group>";
 		};
 		AA4D6A8123DE4981007E8790 /* Black */ = {
@@ -2614,8 +2614,8 @@
 				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
 				851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */,
 				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
-				AA3D854423D9942200788410 /* IconSettingsViewController.swift */,
-				AA3D854623D9E88E00788410 /* IconSettingsCell.swift */,
+				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
+				AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3637,7 +3637,7 @@
 				85E00179225E0D4E00877BF6 /* OnboardingSummaryViewController.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
-				AA3D854923DA1DFB00788410 /* Icon.swift in Sources */,
+				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				85B9CB8B21AEBE22009001F1 /* AddFavoriteHomeCell.swift in Sources */,
 				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,
 				857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */,
@@ -3659,7 +3659,7 @@
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				851B129C22243178004781BC /* BrowsingTips.swift in Sources */,
-				AA3D854523D9942200788410 /* IconSettingsViewController.swift in Sources */,
+				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
@@ -3747,7 +3747,7 @@
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
-				AA4D6A6A23DB87B1007E8790 /* IconManager.swift in Sources */,
+				AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				980891A32237146B00313A70 /* Feedback.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
@@ -3778,7 +3778,7 @@
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,
 				983C390F239F8AB600850CA0 /* UnifiedAddToHomeRowCTAViewController.swift in Sources */,
-				AA3D854723D9E88E00788410 /* IconSettingsCell.swift in Sources */,
+				AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */,

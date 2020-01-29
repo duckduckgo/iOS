@@ -19,9 +19,9 @@
 
 import UIKit
 
-class IconSettingsCell: UICollectionViewCell {
+class AppIconSettingsCell: UICollectionViewCell {
 
-    static let reuseIdentifier = "IconSettingsCell"
+    static let reuseIdentifier = "AppIconSettingsCell"
 
     @IBOutlet weak var imageView: UIImageView!
 
@@ -33,7 +33,7 @@ class IconSettingsCell: UICollectionViewCell {
 
 }
 
-extension IconSettingsCell: Themable {
+extension AppIconSettingsCell: Themable {
 
     func decorate(with theme: Theme) {
         layer.borderColor = theme.iconCellBorderColor.cgColor

@@ -63,6 +63,8 @@ struct LightTheme: Theme {
     var tableCellHighlightedBackgroundColor = UIColor.mercury
     var tableHeaderTextColor = UIColor.greyish3
     
+    var iconCellBorderColor = UIColor.darkGreyish
+
     var buttonTintColor = UIColor.cornflowerBlue
     var placeholderColor = UIColor.greyish3
     

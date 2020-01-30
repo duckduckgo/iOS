@@ -50,14 +50,18 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     @IBAction func startEditing() {
+        navigationItem.setHidesBackButton(true, animated: true)
+        navigationItem.setRightBarButton(doneButton, animated: true)
+        
         tableView.isEditing = true
-        navigationItem.rightBarButtonItems = [ doneButton ]
         tableView.reloadData()
     }
     
     @IBAction func endEditing() {
+        navigationItem.setHidesBackButton(false, animated: true)
+        navigationItem.setRightBarButton(editButton, animated: true)
+        
         tableView.isEditing = false
-        navigationItem.rightBarButtonItems = [ editButton ]
         tableView.reloadData()
     }
     

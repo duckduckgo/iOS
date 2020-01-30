@@ -57,7 +57,7 @@ public class PreserveLogins {
         set {
             userDefaults.set(newValue.rawValue, forKey: Constants.userDecisionKey)
             if newValue == .preserveLogins {
-                allowedDomains = detectedDomains
+                allowedDomains += detectedDomains
                 detectedDomains = []
             } else {
                 detectedDomains = allowedDomains

@@ -173,7 +173,6 @@ public enum PixelName: String {
 
     case preserveLoginsUserDecisionPreserve = "m_pl_p"
     case preserveLoginsUserDecisionForget = "m_pl_f"
-    
     case preserveLoginsSettingsWhilePreserving = "m_pl_s_p"
     case preserveLoginsSettingsWhileForgetting = "m_pl_s_f"
     case preserveLoginsSettingsNewUser = "m_pl_s_u"

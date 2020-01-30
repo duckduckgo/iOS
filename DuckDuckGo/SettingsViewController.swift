@@ -91,6 +91,11 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsThemeShown)
             return
         }
+
+        if segue.destination is AppIconSettingsViewController {
+            Pixel.fire(pixel: .settingsAppIconShown)
+            return
+        }
         
         if let controller = segue.destination as? HomePageSettingsViewController {
             Pixel.fire(pixel: .settingsHomePageShown)

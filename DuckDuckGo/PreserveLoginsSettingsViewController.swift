@@ -181,7 +181,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
 
     func forgetAll() {
-        print("***", #function)
+        guard !model.isEmpty else { return }
         
         let alert = ForgetDataAlert.buildAlert(cancelHandler: {
             PreserveLogins.shared.userDecision = .preserveLogins

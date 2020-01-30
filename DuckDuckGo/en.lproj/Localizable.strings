@@ -295,3 +295,5 @@
 "preserveLogins.forget" = "Don't Remember Logins";
 "preserveLogins.accessory.on" = "On";
 "preserveLogins.accessory.off" = "Off";
+"preserveLogins.domain.list.title" = "Logins";
+"preserveLogins.switch.footer" = "Allows you to stay logged in when you burn your data";

@@ -248,5 +248,7 @@ public struct UserText {
     public static let preserveLoginsForget = NSLocalizedString("preserveLogins.forget", comment: "Preserve logins forget")
     public static let preserveLoginsAccessoryOn = NSLocalizedString("preserveLogins.accessory.on", comment: "Preserve logins accessory on")
     public static let preserveLoginsAccessoryOff = NSLocalizedString("preserveLogins.accessory.off", comment: "Preserve logins accessory off")
+    public static let preserveLoginsDomainListHeaderTitle = NSLocalizedString("preserveLogins.domain.list.title", comment: "Preserve logins domain list title")
+    public static let preserveLoginsSwitchFooter = NSLocalizedString("preserveLogins.switch.footer", comment: "Preserve logins switch footer")
 
 }

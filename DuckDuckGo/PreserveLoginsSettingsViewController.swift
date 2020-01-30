@@ -26,8 +26,8 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItems = [ editButton ]
         refreshModel()
+        navigationItem.rightBarButtonItems = model.isEmpty ? [] : [ editButton ]
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -59,7 +59,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     @IBAction func endEditing() {
         navigationItem.setHidesBackButton(false, animated: true)
-        navigationItem.setRightBarButton(editButton, animated: true)
+        navigationItem.setRightBarButton(model.isEmpty ? nil : editButton, animated: true)
         
         tableView.isEditing = false
         tableView.reloadData()
@@ -104,11 +104,11 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? "Logins" : nil
+        return section == 1 ? UserText.preserveLoginsDomainListHeaderTitle : nil
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return section == 0 ? "Allows you to stay logged in when you burn your data" : nil
+        return section == 0 ? UserText.preserveLoginsSwitchFooter : nil
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -124,7 +124,12 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         guard editingStyle == .delete else { return }
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
-        tableView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if self.model.isEmpty {
+                self.endEditing()
+            }
+            tableView.reloadData()
+        }
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
@@ -145,6 +150,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
         cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
+        cell.toggle.isEnabled = !tableView.isEditing
         cell.controller = self
         cell.decorate(with: theme)
         return cell

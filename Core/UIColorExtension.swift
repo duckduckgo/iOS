@@ -110,7 +110,7 @@ extension UIColor {
     }
     
     public static var destructive: UIColor {
-        return UIColor(red: 0.914, green: 0.353, blue: 0.298, alpha: 1)
+        return UIColor.systemRed
     }
     
 }

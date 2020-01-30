@@ -70,6 +70,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureAutoClearCellAccessory()
+        configureRememberLoginsAccessory()
         configureHomePageCellAccessory()
         migrateFavoritesIfNeeded()
     }

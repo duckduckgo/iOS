@@ -139,6 +139,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             fatalError()
         }
         cell.label.textColor = theme.tableCellTextColor
+        cell.toggle.onTintColor = theme.buttonTintColor
         cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
         cell.controller = self
         cell.decorate(with: theme)

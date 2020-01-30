@@ -177,11 +177,11 @@ public enum PixelName: String {
     case preserveLoginsSettingsWhilePreserving = "m_pl_s_p"
     case preserveLoginsSettingsWhileForgetting = "m_pl_s_f"
     case preserveLoginsSettingsNewUser = "m_pl_s_u"
-    
     case preserveLoginsSettingsSwitchOn = "m_pl_s_on"
     case preserveLoginsSettingsSwitchOff = "m_pl_s_off"
     case preserveLoginsSettingsEdit = "m_pl_s_c_e"
-    case preserveLoginsSettingsClearIndividual = "m_pl_s_c_i"
+    case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
+    case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
     case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
     
     // debug pixels:

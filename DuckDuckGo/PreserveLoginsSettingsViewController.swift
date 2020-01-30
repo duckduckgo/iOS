@@ -50,6 +50,8 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     @IBAction func startEditing() {
+        Pixel.fire(pixel: .preserveLoginsSettingsEdit)
+        
         navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.setRightBarButton(doneButton, animated: true)
         
@@ -122,6 +124,9 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
+        
+        Pixel.fire(pixel: tableView.isEditing ? .preserveLoginsSettingsDeleteEditing : .preserveLoginsSettingsDeleteNotEditing)
+        
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -138,6 +143,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
+            Pixel.fire(pixel: .preserveLoginsSettingsClearAll)
             forgetAll()
             tableView.deselectRow(at: indexPath, animated: true)
         }
@@ -227,6 +233,7 @@ class PreserveLoginsSwitchCell: UITableViewCell {
     weak var controller: PreserveLoginsSettingsViewController!
 
     @IBAction func onToggle() {
+        Pixel.fire(pixel: toggle.isOn ? .preserveLoginsSettingsSwitchOn : .preserveLoginsSettingsSwitchOff)
         PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
         controller.tableView.reloadData()
         if !toggle.isOn {

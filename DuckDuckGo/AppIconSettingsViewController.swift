@@ -39,12 +39,25 @@ class AppIconSettingsViewController: UICollectionViewController {
 
     private func changeAppIcon(_ appIcon: AppIcon) {
         AppIconManager.shared.changeAppIcon(appIcon) { error in
-            if error != nil {
+            guard error == nil else {
                 DispatchQueue.main.async {
                     self.initSelection()
                 }
+                return
             }
+
+            self.firePixel(with: appIcon)
         }
+    }
+
+    private func firePixel(with appIcon: AppIcon) {
+        let pixelNameString = PixelName.settingsAppIconChangedPrefix.rawValue + appIcon.rawValue
+
+        guard let pixel = PixelName(rawValue: pixelNameString) else {
+            fatalError("Could not match AppIcon with Pixel")
+        }
+
+        Pixel.fire(pixel: pixel)
     }
 
     // MARK: UICollectionViewDataSource

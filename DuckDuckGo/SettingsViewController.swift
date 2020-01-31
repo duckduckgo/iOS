@@ -26,6 +26,8 @@ class SettingsViewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet weak var themeAccessoryText: UILabel!
+    @IBOutlet weak var appIconCell: UITableViewCell!
+    @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var homePageAccessoryText: UILabel!
@@ -69,6 +71,7 @@ class SettingsViewController: UITableViewController {
         configureAutoClearCellAccessory()
         configureHomePageCellAccessory()
         migrateFavoritesIfNeeded()
+        configureIconViews()
     }
     
     private func migrateFavoritesIfNeeded() {
@@ -86,6 +89,11 @@ class SettingsViewController: UITableViewController {
         
         if segue.destination is ThemeSettingsViewController {
             Pixel.fire(pixel: .settingsThemeShown)
+            return
+        }
+
+        if segue.destination is AppIconSettingsViewController {
+            Pixel.fire(pixel: .settingsAppIconShown)
             return
         }
         
@@ -127,6 +135,14 @@ class SettingsViewController: UITableViewController {
             themeAccessoryText.text = UserText.themeAccessoryLight
         case .dark:
             themeAccessoryText.text = UserText.themeAccessoryDark
+        }
+    }
+
+    private func configureIconViews() {
+        if AppIconManager.shared.isAppIconChangeSupported {
+            appIconImageView.image = AppIconManager.shared.appIcon.smallImage
+        } else {
+            appIconCell.isHidden = true
         }
     }
 

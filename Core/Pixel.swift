@@ -73,6 +73,15 @@ public enum PixelName: String {
     case settingsThemeChangedLight = "ms_tl"
     case settingsThemeChangedDark = "ms_td"
 
+    case settingsAppIconShown = "ms_ais"
+    case settingsAppIconChangedPrefix = "ms_aic_"
+    case settingsAppIconChangedRed = "ms_aic_red"
+    case settingsAppIconChangedYellow = "ms_aic_yellow"
+    case settingsAppIconChangedGreen = "ms_aic_green"
+    case settingsAppIconChangedBlue = "ms_aic_blue"
+    case settingsAppIconChangedPurple = "ms_aic_purple"
+    case settingsAppIconChangedBlack = "ms_aic_black"
+
     case settingsHomePageShown = "ms_hp"
     case settingsHomePageSimple = "ms_hp_s"
     case settingsHomePageCenterSearch = "ms_hp_c"
@@ -190,6 +199,8 @@ public enum PixelName: String {
     
     case webKitDidTerminate = "m_d_wkt"
 
+    case settingsAppIconChangeFailed = "m_d_aicf"
+    case settingsAppIconChangeNotSupported = "m_d_aicns"
 }
 
 public struct PixelParameters {

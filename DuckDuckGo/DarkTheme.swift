@@ -57,6 +57,8 @@ struct DarkTheme: Theme {
     var tableCellHighlightedBackgroundColor = UIColor.greyishBrown
     var tableHeaderTextColor = UIColor.greyish3
     
+    var iconCellBorderColor = UIColor.lightGreyish
+
     var buttonTintColor = UIColor.cornflowerBlue
     var placeholderColor = UIColor.greyish
     

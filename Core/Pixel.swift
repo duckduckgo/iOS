@@ -220,6 +220,7 @@ public struct PixelParameters {
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
     static let underlyingErrorDesc = "ud"
+    
 }
 
 public struct PixelValues {

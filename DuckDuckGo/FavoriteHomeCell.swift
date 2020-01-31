@@ -130,7 +130,6 @@ class FavoriteHomeCell: UICollectionViewCell {
             return
         }
         
-        print("***", #function, url)
         iconImage.kf.setImage(with: url,
                               placeholder: nil,
                               options: [
@@ -138,7 +137,6 @@ class FavoriteHomeCell: UICollectionViewCell {
                                 .targetCache(Self.targetCache)
                               ], progressBlock: nil) { [weak self] image, error, _, _ in
           
-            print("***", #function, "completionHandler", error, image)
             guard let image = image, error == nil else {
                 NotFoundCachingDownloader.cacheNotFound(url)
                 self?.loadFavicon(forLink: link)

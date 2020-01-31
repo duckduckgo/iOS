@@ -34,7 +34,6 @@ class NotFoundCachingDownloader: ImageDownloader {
                                 options: KingfisherOptionsInfo?,
                                 progressBlock: ImageDownloaderProgressBlock?,
                                 completionHandler: ImageDownloaderCompletionHandler?) -> RetrieveImageDownloadTask? {
-        print("***", #function, url)
 
         if let cacheAddTime = NotFoundCachingDownloader.notFoundCache[url],
             Date().timeIntervalSince1970 - cacheAddTime < NotFoundCachingDownloader.oneHour {
@@ -52,7 +51,6 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
     
     static func cacheNotFound(_ url: URL) {
-        print("***", #function, url)
         notFoundCache[url] = Date().timeIntervalSince1970
     }
     

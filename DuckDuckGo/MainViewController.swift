@@ -307,14 +307,15 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedBrowsing)
-            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-                guard let self = self else { return }
-                PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
-                    self?.forgetAllWithAnimation {}
-                }
-            })
-            self.present(controller: alert, fromView: self.toolbar)
+        Pixel.fire(pixel: .forgetAllPressedBrowsing, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+
+        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            guard let self = self else { return }
+            PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
+                self?.forgetAllWithAnimation {}
+            }
+        })
+        self.present(controller: alert, fromView: self.toolbar)
     }
     
     func onQuickFirePressed() {
@@ -1050,14 +1051,12 @@ extension MainViewController: AutoClearWorker {
         
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
-        WebCacheManager.shared.clear {
-            print("*** clear complete")
-        }
+        WebCacheManager.shared.clear { }
     }
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
-        Pixel.fire(pixel: .forgetAllExecuted)
+        Pixel.fire(pixel: .forgetAllExecuted, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()

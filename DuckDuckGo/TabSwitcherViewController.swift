@@ -192,7 +192,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedTabSwitching)
+        Pixel.fire(pixel: .forgetAllPressedTabSwitching, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
         
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
             guard let self = self else { return }

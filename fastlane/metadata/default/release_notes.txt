@@ -1,2 +1,2 @@
-• Improvements to onboarding flow.
-• Bug fixes.
+• You can now customize your app icon from settings!
+• Other minor bug fixes and improvements.

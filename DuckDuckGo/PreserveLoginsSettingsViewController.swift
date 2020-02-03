@@ -139,6 +139,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
+        WebCacheManager.shared.removeCookies(forDomains: [domain]) { }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if self.model.isEmpty {
                 self.endEditing()
@@ -199,18 +200,15 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     func forgetAll() {
         guard !model.isEmpty else { return }
         
-        let alert = ForgetDataAlert.buildAlert(cancelHandler: {
+        PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
             PreserveLogins.shared.userDecision = .preserveLogins
-            self.refreshModel()
-            self.endEditing()
-        }, forgetTabsAndDataHandler: { [weak self] in
+            self?.refreshModel()
+        }, confirmed: { [weak self] in
+            WebCacheManager.shared.removeCookies(forDomains: self?.model ?? []) { }
             PreserveLogins.shared.clearAll()
-            self?.delegate?.forgetAllRequested {
-                self?.refreshModel()
-                self?.endEditing()
-            }
+            self?.refreshModel()
+            self?.endEditing()
         })
-        self.present(alert, animated: true)
     }
     
     func refreshModel() {

@@ -25,6 +25,8 @@ public protocol WebCacheManagerCookieStore {
     
     func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
 
+    func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
+    
 }
 
 public protocol WebCacheManagerDataStore {
@@ -79,6 +81,33 @@ public class WebCacheManager {
             }
         }
     }
+    
+    public func removeCookies(forDomains domains: [String],
+                              dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+                              completion: @escaping () -> Void) {
+        
+        guard let cookieStore = dataStore.cookieStore else {
+            completion()
+            return
+        }
+        
+        cookieStore.getAllCookies { cookies in
+            let group = DispatchGroup()
+            cookies.forEach { cookie in
+                domains.forEach { domain in
+                    if cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain)) {
+                        group.enter()
+                        dataStore.cookieStore?.delete(cookie) {
+                            group.leave()
+                        }
+                    }
+                }
+            }
+            group.wait()
+            completion()
+        }
+        
+    }
 
     public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
                       appCookieStorage: CookieStorage = CookieStorage(),
@@ -118,7 +147,7 @@ public class WebCacheManager {
 
 @available(iOS 11, *)
 extension WKHTTPCookieStore: WebCacheManagerCookieStore {
-
+        
 }
 
 extension WKWebsiteDataStore: WebCacheManagerDataStore {
@@ -133,5 +162,5 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
                    modifiedSince: Date.distantPast,
                    completionHandler: completion)
     }
-
+    
 }

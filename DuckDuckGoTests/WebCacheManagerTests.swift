@@ -21,6 +21,23 @@ import XCTest
 @testable import Core
 
 class WebCacheManagerTests: XCTestCase {
+    
+    func testWhenRemovingCookieForDomainThenItIsRemovedFromCookieStorage() {
+
+        let dataStore = MockDataStore()
+        let cookieStore = MockHTTPCookieStore(cookies: [
+            .make(domain: "www.example.com"),
+            .make(domain: ".example.com")
+        ])
+        dataStore.cookieStore = cookieStore
+        let expect = expectation(description: #function)
+        WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: dataStore) {
+            expect.fulfill()
+        }
+        wait(for: [expect], timeout: 5.0)
+        
+        XCTAssertEqual(cookieStore.deletedCookies.count, 2)
+    }
 
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() {
 
@@ -69,7 +86,7 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(cookieStorage.cookies[0].domain, "duckduckgo.com")
     }
     
-    func testWhenClearedThenCookiesForloginsAreRetained() {
+    func testWhenClearedThenCookiesForLoginsAreRetained() {
         let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
@@ -153,6 +170,7 @@ class WebCacheManagerTests: XCTestCase {
     
     class MockHTTPCookieStore: WebCacheManagerCookieStore {
         
+        var deletedCookies = [HTTPCookie]()
         var cookies: [HTTPCookie]
         
         init(cookies: [HTTPCookie] = []) {
@@ -165,6 +183,11 @@ class WebCacheManagerTests: XCTestCase {
         
         func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?) {
             cookies.append(cookie)
+            completionHandler?()
+        }
+        
+        func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?) {
+            deletedCookies.append(cookie)
             completionHandler?()
         }
                 

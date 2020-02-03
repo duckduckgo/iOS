@@ -22,7 +22,7 @@ import Core
 
 class PreserveLoginsAlert {
     
-    class func showInitialPromptIfNeeded(usingController controller: UIViewController, completion: @escaping () -> Void) {
+    static func showInitialPromptIfNeeded(usingController controller: UIViewController, completion: @escaping () -> Void) {
         let logins = PreserveLogins.shared
         guard logins.userDecision == .unknown, !logins.detectedDomains.isEmpty else {
             completion()
@@ -44,6 +44,22 @@ class PreserveLoginsAlert {
             completion()
         }
         controller.present(prompt, animated: true)
+    }
+    
+    static func showClearAllAlert(usingController controller: UIViewController, cancelled: @escaping () -> Void, confirmed: @escaping () -> Void) {
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(title: UserText.preserveLoginsSignOut, style: .destructive) {
+            confirmed()
+        }
+        
+        alert.addAction(title: UserText.actionCancel, style: .cancel) {
+            cancelled()
+        }
+        
+        controller.present(alert, animated: true)
+        
     }
     
 }

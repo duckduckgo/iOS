@@ -48,7 +48,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         switch PreserveLogins.shared.userDecision {
             
         case .forgetAll:
-            Pixel.fire(pixel: .preserveLoginsSettingsWhilePreserving)
+            Pixel.fire(pixel: .preserveLoginsSettingsWhileForgetting)
             
         case .preserveLogins:
             Pixel.fire(pixel: .preserveLoginsSettingsWhilePreserving)

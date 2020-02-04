@@ -295,6 +295,6 @@
 "preserveLogins.forget" = "Sign Me Out";
 "preserveLogins.accessory.on" = "On";
 "preserveLogins.accessory.off" = "Off";
-"preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
-"preserveLogins.domain.list.title" = "Signed In Websites";
-"preserveLogins.sign.out" = "Sign Out of All Websites";
+"preserveLogins.switch.footer" = "Allows you to stay signed in to sites when you clear your data";
+"preserveLogins.domain.list.title" = "Signed In Sites";
+"preserveLogins.sign.out" = "Sign Out of All Site";

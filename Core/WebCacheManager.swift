@@ -97,14 +97,22 @@ public class WebCacheManager {
                 domains.forEach { domain in
                     if cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain)) {
                         group.enter()
-                        dataStore.cookieStore?.delete(cookie) {
+                        cookieStore.delete(cookie) {
                             group.leave()
                         }
+                        
+                        // don't try to delete the cookie twice as it doesn't always work (esecially on the simulator)
+                        return
                     }
                 }
             }
-            group.wait()
-            completion()
+            
+            DispatchQueue.global(qos: .background).async {
+                _ = group.wait(timeout: .now() + 5)
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
         }
         
     }

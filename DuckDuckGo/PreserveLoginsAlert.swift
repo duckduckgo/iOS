@@ -48,17 +48,25 @@ class PreserveLoginsAlert {
     
     static func showClearAllAlert(usingController controller: UIViewController, cancelled: @escaping () -> Void, confirmed: @escaping () -> Void) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(title: UserText.preserveLoginsSignOut, style: .destructive) {
-            confirmed()
+        if isPad {
+            let alert = UIAlertController(title: UserText.preserveLoginsSignOut, message: nil, preferredStyle: .alert)
+            alert.addAction(title: "OK", style: .destructive) {
+                confirmed()
+            }
+            alert.addAction(title: UserText.actionCancel, style: .cancel) {
+                cancelled()
+            }
+            controller.present(alert, animated: true)
+        } else {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(title: UserText.preserveLoginsSignOut, style: .destructive) {
+                confirmed()
+            }
+            alert.addAction(title: UserText.actionCancel, style: .cancel) {
+                cancelled()
+            }
+            controller.present(alert, animated: true)
         }
-        
-        alert.addAction(title: UserText.actionCancel, style: .cancel) {
-            cancelled()
-        }
-        
-        controller.present(alert, animated: true)
         
     }
     

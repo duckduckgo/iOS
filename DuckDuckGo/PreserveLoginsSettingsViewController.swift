@@ -155,7 +155,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
             Pixel.fire(pixel: .preserveLoginsSettingsClearAll)
-            forgetAll()
+            clearAll()
             tableView.deselectRow(at: indexPath, animated: true)
         }
     }
@@ -197,7 +197,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         return cell
     }
 
-    func forgetAll() {
+    func clearAll() {
         guard !model.isEmpty else { return }
         
         PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
@@ -246,10 +246,11 @@ class PreserveLoginsSwitchCell: UITableViewCell {
         PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
         controller.tableView.reloadData()
         if !toggle.isOn {
-            controller.forgetAll()
+            controller.clearAll()
+        } else {
+            controller.refreshModel()
+            controller.endEditing()
         }
-        controller.model = PreserveLogins.shared.allowedDomains
-        controller.tableView.reloadData()
     }
 
 }

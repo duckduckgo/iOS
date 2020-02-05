@@ -35,6 +35,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
+    @IBOutlet weak var rememberLoginsCell: UITableViewCell!
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
 
     @IBOutlet weak var longPressCell: UITableViewCell!
@@ -63,7 +64,7 @@ class SettingsViewController: UITableViewController {
         configureVersionText()
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
-        configureRememberLoginsAccessory()
+        configureRememberLogins()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -72,7 +73,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureAutoClearCellAccessory()
-        configureRememberLoginsAccessory()
+        configureRememberLogins()
         configureHomePageCellAccessory()
         migrateFavoritesIfNeeded()
         configureIconViews()
@@ -188,16 +189,23 @@ class SettingsViewController: UITableViewController {
         
     }
     
-    private func configureRememberLoginsAccessory() {
+    private func configureRememberLogins() {
         
-        switch PreserveLogins.shared.userDecision {
+        if #available(iOS 13, *) {
+            rememberLoginsCell.isHidden = false
             
-        case .preserveLogins:
-            rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOn
+            switch PreserveLogins.shared.userDecision {
+                
+            case .preserveLogins:
+                rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOn
+                
+            case .forgetAll, .unknown:
+                rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOff
+                
+            }
             
-        case .forgetAll, .unknown:
-            rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOff
-            
+        } else {
+            rememberLoginsCell.isHidden = true
         }
         
     }

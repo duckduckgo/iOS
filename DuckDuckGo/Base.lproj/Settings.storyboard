@@ -511,6 +511,7 @@
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
                         <outlet property="rememberLoginsAccessoryText" destination="QAv-VN-hEJ" id="iTM-4P-y54"/>
+                        <outlet property="rememberLoginsCell" destination="Iez-TI-0JI" id="GXZ-Fh-Glp"/>
                         <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
                         <outletCollection property="margins" destination="zJZ-MR-uhS" collectionClass="NSMutableArray" id="o3p-WG-avM"/>

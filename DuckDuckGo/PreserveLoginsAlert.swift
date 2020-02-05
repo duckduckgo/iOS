@@ -23,6 +23,11 @@ import Core
 class PreserveLoginsAlert {
     
     static func showInitialPromptIfNeeded(usingController controller: UIViewController, completion: @escaping () -> Void) {
+        guard #available(iOS 13, *) else {
+            completion()
+            return
+        }
+        
         let logins = PreserveLogins.shared
         guard logins.userDecision == .unknown, !logins.detectedDomains.isEmpty else {
             completion()

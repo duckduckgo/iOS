@@ -625,10 +625,16 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private func possibleLogin(forDomain domain: String?, source: String) {
+        guard #available(iOS 13, *) else {
+            // We can't be sure about leaking cookies before iOS 13 so don't allow logins to be saved
+            return
+        }
+        
         guard let domain = domain else { return }
         if isDebugBuild {
             view.showBottomToast("Login detected for \(domain) via \(source)")
         }
+        
         PreserveLogins.shared.add(domain: domain)
     }
     

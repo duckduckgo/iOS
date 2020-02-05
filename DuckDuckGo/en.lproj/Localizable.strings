@@ -289,12 +289,12 @@
 "onboardingNotificationsAccept" = "Turn on Notifications";
 "onboardingNotificationsDeny" = "Not now";
 
-"preserveLogins.title" = "Stay Signed In to Sites When Clearing Data?";
-"preserveLogins.message" = "When you clear your data, we can clear logins too, or keep you signed in to all sites, so you don't have to log in again. You can always change this behavior later in settings.";
-"preserveLogins.remember" = "Stay Signed In";
-"preserveLogins.forget" = "Sign Me Out";
+"preserveLogins.title" = "Stay Signed In To Websites?";
+"preserveLogins.message" = "Data needed to keep you signed in will be saved each time you clear your data. You can change this later in settings.";
+"preserveLogins.remember" = "Yes";
+"preserveLogins.forget" = "No, Clear Everything";
 "preserveLogins.accessory.on" = "On";
 "preserveLogins.accessory.off" = "Off";
-"preserveLogins.switch.footer" = "Allows you to stay signed in to sites when you clear your data";
-"preserveLogins.domain.list.title" = "Signed In Sites";
+"preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
+"preserveLogins.domain.list.title" = "Signed In Websites";
 "preserveLogins.sign.out" = "Sign Out";

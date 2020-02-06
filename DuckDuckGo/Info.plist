@@ -8,99 +8,6 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>ddgNewSearch</string>
-				<string>ddgQuickLink</string>
-				<string>ddgBookmarks</string>
-				<string>ddgFire</string>
-			</array>
-		</dict>
-	</array>
-	<key>CFBundleVersion</key>
-	<string>0</string>
-	<key>DuckDuckGoGroupIdentifierPrefix</key>
-	<string>$(GROUP_ID_PREFIX)</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Allows you to upload photographs and videos</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Allows you to unlock using Face ID</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allows you to share your location</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Allows you to share recordings</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allows you to save images to your device</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to upload photographs and videos</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>proximanova-extrabold.otf</string>
-		<string>proximanova-light.otf</string>
-		<string>proximanova-regular.otf</string>
-		<string>proximanova-bold.otf</string>
-		<string>proximanova-semibold.otf</string>
-	</array>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>Clipboard</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Paste from clipboard</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.duckduckgo.mobile.ios.clipboard</string>
-		</dict>
-	</array>
-	<key>UIApplicationShortcutWidget</key>
-	<string>$(APP_ID).QuickActionsTodayExtension</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>arm64</string>
-	</array>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleDefault</string>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>
@@ -216,5 +123,98 @@
 			<false/>
 		</dict>
 	</dict>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ddgNewSearch</string>
+				<string>ddgQuickLink</string>
+				<string>ddgBookmarks</string>
+				<string>ddgFire</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>0</string>
+	<key>DuckDuckGoGroupIdentifierPrefix</key>
+	<string>$(GROUP_ID_PREFIX)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Allows you to upload photographs and videos</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Allows you to unlock using Face ID</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allows you to share your location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allows you to share recordings</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allows you to save images to your device</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows you to upload photographs and videos</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>proximanova-extrabold.otf</string>
+		<string>proximanova-light.otf</string>
+		<string>proximanova-regular.otf</string>
+		<string>proximanova-bold.otf</string>
+		<string>proximanova-semibold.otf</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>Clipboard</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Paste from clipboard</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.duckduckgo.mobile.ios.clipboard</string>
+		</dict>
+	</array>
+	<key>UIApplicationShortcutWidget</key>
+	<string>$(APP_ID).QuickActionsTodayExtension</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

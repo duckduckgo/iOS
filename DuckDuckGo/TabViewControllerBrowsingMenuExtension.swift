@@ -129,6 +129,11 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
         tabModel.toggleDesktopMode()
         updateUserAgent()
+        
+        if #available(iOS 13, *) {
+            webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
+        }
+        
         tabModel.isDesktop ? load(url: url.toDesktopUrl()) : reload(scripts: false)
     }
     

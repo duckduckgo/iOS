@@ -132,6 +132,11 @@ class TabViewController: UIViewController {
             fatalError("Failed to instantiate controller as TabViewController")
         }
         controller.tabModel = model
+        
+        if isPad {
+            controller.tabModel.isDesktop = true
+        }
+        
         return controller
     }
 
@@ -177,11 +182,12 @@ class TabViewController: UIViewController {
         
         if #available(iOS 13, *) {
             webView.allowsLinkPreview = true
+            webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
         } else {
             attachLongPressHandler(webView: webView)
             webView.allowsLinkPreview = false
         }
-        
+                
         webView.allowsBackForwardNavigationGestures = true
         
         addObservers()

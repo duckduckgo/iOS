@@ -50,7 +50,7 @@ class SaveBookmarkActivity: UIActivity {
             activityDidFinish(false)
             return nil
         }
-
+            
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveBookmark,
             bookmark: bookmark,

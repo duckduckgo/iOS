@@ -64,8 +64,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
 
-        guard let link = link(at: indexPath) else { return cell }
-        cell.update(withLink: link)
+        cell.link = link(at: indexPath)
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor

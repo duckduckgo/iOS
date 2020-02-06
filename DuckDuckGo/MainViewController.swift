@@ -1016,7 +1016,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
         }
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        currentTab!.promptSaveBookmarkAction()
+        currentTab!.saveAsBookmark()
     }
     
 }

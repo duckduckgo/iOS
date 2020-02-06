@@ -21,7 +21,7 @@ import Foundation
 import Core
 
 extension TabViewController {
-    func promptSaveBookmarkAction() {
+    func saveAsBookmark() {
         
         if let link = link, !isError {
             let bookmarksManager = BookmarksManager()
@@ -30,15 +30,8 @@ extension TabViewController {
                 return
             }
             
-            let saveCompletion: (Link) -> Void = { [weak self] updatedBookmark in
-                bookmarksManager.save(bookmark: updatedBookmark)
-                self?.view.showBottomToast(UserText.webSaveBookmarkDone)
-            }
-            let alert = EditBookmarkAlert.buildAlert (
-                title: UserText.alertSaveBookmark,
-                bookmark: link,
-                saveCompletion: saveCompletion)
-            present(alert, animated: true, completion: nil)
+            bookmarksManager.save(bookmark: link)
+            self.view.showBottomToast(UserText.webSaveBookmarkDone)
         } else {
             Logger.log(text: "Invalid bookmark link found on bookmark long press")
         }

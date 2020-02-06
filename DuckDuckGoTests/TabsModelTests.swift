@@ -176,14 +176,7 @@ class TabsModelTests: XCTestCase {
         testee.remove(at: 0)
         XCTAssertNil(testee.currentIndex)
     }
-
-    func testWhenNoSelectionAndFinalItemRemovedThenCurrentIsNil() {
-        let testee = singleModel
-        testee.clearSelection()
-        testee.remove(at: 0)
-        XCTAssertNil(testee.currentIndex)
-    }
-
+    
     func testWhenAllClearedThenCountIsZeroAndCurrentIsNil() {
         let testee = filledModel
         testee.clearAll()

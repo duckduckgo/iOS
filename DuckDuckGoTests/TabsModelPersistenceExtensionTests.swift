@@ -87,16 +87,6 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
         XCTAssertEqual(loaded.currentIndex, 1)
     }
 
-    func testWhenModelWithClearedSelectionIsSavedThenGetLoadsModelWithNoCurrent() {
-        let saved = model
-        saved.clearSelection()
-        saved.save()
-
-        let loadedModel = TabsModel.get()!
-        XCTAssertEqual(loadedModel.count, 2)
-        XCTAssertNil(loadedModel.currentIndex)
-    }
-
     private func tab(title: String, url: String) -> Tab {
         return Tab(link: Link(title: title, url: URL(string: url)!))
     }

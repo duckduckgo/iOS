@@ -106,7 +106,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func scrollToInitialTab() {
-        guard let index = tabsModel.currentIndex else { return }
+        let index = tabsModel.currentIndex
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)

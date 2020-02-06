@@ -31,8 +31,9 @@ class TabManager {
     init(model: TabsModel, delegate: TabDelegate) {
         self.model = model
         self.delegate = delegate
-        if let index = model.currentIndex {
-            let tab = model.tabs[index]
+        let index = model.currentIndex
+        let tab = model.tabs[index]
+        if tab.link != nil {
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
         }
@@ -54,7 +55,7 @@ class TabManager {
 
     var current: TabViewController? {
 
-        guard let index = model.currentIndex else { return nil }
+        let index = model.currentIndex
         let tab = model.tabs[index]
 
         if let controller = cachedController(forTab: tab) {
@@ -79,12 +80,6 @@ class TabManager {
         return model.count
     }
 
-    func clearSelection() {
-        current?.dismiss()
-        model.clearSelection()
-        save()
-    }
-
     func select(tabAt index: Int) -> TabViewController {
         current?.dismiss()
         model.select(tabAt: index)
@@ -93,6 +88,25 @@ class TabManager {
         return current!
     }
 
+    func addOrSelectHomeTab() {
+        if model.tabs.last?.link != nil {
+            model.add(tab: Tab())
+        }
+        model.select(tabAt: model.count - 1)
+    }
+    
+    func loadUrlInCurrentTab(_ url: URL) -> TabViewController {
+        guard let tab = model.currentTab else {
+            fatalError("No current tab")
+
+        }
+        let controller = buildController(forTab: tab, url: url)
+        tabControllerCache.append(controller)
+        
+        save()
+        return controller
+    }
+    
     func add(url: URL?, inBackground: Bool = false) -> TabViewController {
 
         if !inBackground {
@@ -105,7 +119,8 @@ class TabManager {
         let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
 
-        if let index = model.currentIndex, inBackground {
+        let index = model.currentIndex
+        if inBackground {
             model.insert(tab: tab, at: index + 1)
         } else {
             model.add(tab: tab)

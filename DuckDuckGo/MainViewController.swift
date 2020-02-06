@@ -1016,6 +1016,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
         }
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         currentTab!.saveAsBookmark()
     }
     

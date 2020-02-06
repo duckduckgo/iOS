@@ -241,4 +241,15 @@ public struct UserText {
     public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")
     public static let onboardingNotificationsAccept = NSLocalizedString("onboardingNotificationsAccept", comment: "Turn on Notifications")
     public static let onboardingNotificationsDeny = NSLocalizedString("onboardingNotificationsDeny", comment: "Not now")
+    
+    public static let preserveLoginsTitle = NSLocalizedString("preserveLogins.title", comment: "Preserve logins title")
+    public static let preserveLoginsMessage = NSLocalizedString("preserveLogins.message", comment: "Preserve logins message")
+    public static let preserveLoginsRemember = NSLocalizedString("preserveLogins.remember", comment: "Preserve logins remember")
+    public static let preserveLoginsForget = NSLocalizedString("preserveLogins.forget", comment: "Preserve logins forget")
+    public static let preserveLoginsAccessoryOn = NSLocalizedString("preserveLogins.accessory.on", comment: "Preserve logins accessory on")
+    public static let preserveLoginsAccessoryOff = NSLocalizedString("preserveLogins.accessory.off", comment: "Preserve logins accessory off")
+    public static let preserveLoginsDomainListHeaderTitle = NSLocalizedString("preserveLogins.domain.list.title", comment: "Preserve logins domain list title")
+    public static let preserveLoginsSwitchFooter = NSLocalizedString("preserveLogins.switch.footer", comment: "Preserve logins switch footer")
+    public static let preserveLoginsSignOut = NSLocalizedString("preserveLogins.sign.out", comment: "Preserve logins clear all prompt")
+
 }

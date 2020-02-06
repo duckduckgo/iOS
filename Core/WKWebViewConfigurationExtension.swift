@@ -121,8 +121,11 @@ private struct Loader {
 
     func load() {
         let spid = Instruments.shared.startTimedEvent(.injectScripts)
-        loadDocumentLevelScripts()
+        loadMainFrameOnlyScripts()
 
+        loadMessagingScripts()
+        loadLoginScript()
+        
         if injectContentBlockingScripts {
             loadContentBlockingScripts()
         }
@@ -130,16 +133,19 @@ private struct Loader {
         Instruments.shared.endTimedEvent(for: spid)
     }
 
-    private func loadDocumentLevelScripts() {
+    private func loadLoginScript() {
+        load(scripts: [ .loginDetection ], forMainFrameOnly: false)
+    }
+
+    private func loadMainFrameOnlyScripts() {
         if #available(iOS 13, *) {
-            load(scripts: [ .findinpage ] )
+            load(scripts: [ .findinpage  ] )
         } else {
             load(scripts: [ .document, .findinpage ] )
         }
     }
 
     private func loadContentBlockingScripts() {
-        loadContentBlockerDependencyScripts()
         javascriptLoader.load(script: .contentblocker, withReplacements: [
             "${whitelist}": whitelist,
             "${trackerData}": trackerData,
@@ -148,7 +154,7 @@ private struct Loader {
         load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
-    private func loadContentBlockerDependencyScripts() {
+    private func loadMessagingScripts() {
         load(scripts: [ .messaging ], forMainFrameOnly: false)
 
         if isDebugBuild {

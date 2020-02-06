@@ -26,10 +26,19 @@ var duckduckgoMessaging = function() {
 			// webkit might not be defined
 		}
 	}
+    
+    function possibleLogin(source) {
+        try {
+            webkit.messageHandlers.possibleLogin.postMessage({ "source": source });
+        } catch(error) {
+            // webkit might not be defined
+        }
+    }
 
 	return {
 
-		trackerDetected: trackerDetected
+		trackerDetected: trackerDetected,
+        possibleLogin: possibleLogin
 
 	}
 }()

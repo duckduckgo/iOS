@@ -65,7 +65,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
-            // perform first time install logic here
+            // MARK: perform first time launch logic here
+            
+            // Force the prompt for new users only, and only if they are on iOS 13 or better
+            if #available(iOS 13, *) {
+                PreserveLogins.shared.userDecision = .unknown
+                PreserveLogins.shared.prompted = true
+            }
         }
 
         if let main = mainViewController {

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,12 +30,14 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SnK-Bc-1oh">
                                 <rect key="frame" x="12" y="12" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="SnK-Bc-1oh" secondAttribute="height" multiplier="1:1" id="Qmi-7f-TqF"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="SnK-Bc-1oh" firstAttribute="width" secondItem="0FF-Ic-U0T" secondAttribute="width" constant="-24" id="7cy-wR-boG"/>
-                            <constraint firstItem="SnK-Bc-1oh" firstAttribute="height" secondItem="0FF-Ic-U0T" secondAttribute="height" constant="-24" id="AVQ-Kp-VjR"/>
                             <constraint firstAttribute="height" constant="64" id="EBQ-Ev-yks"/>
                             <constraint firstItem="SnK-Bc-1oh" firstAttribute="centerX" secondItem="0FF-Ic-U0T" secondAttribute="centerX" id="HhS-Fg-RJX"/>
                             <constraint firstItem="SnK-Bc-1oh" firstAttribute="centerY" secondItem="0FF-Ic-U0T" secondAttribute="centerY" id="SIR-Lj-SPJ"/>
@@ -109,10 +109,10 @@
                 <outlet property="iconBackground" destination="0FF-Ic-U0T" id="NZd-EV-VJL"/>
                 <outlet property="iconImage" destination="SnK-Bc-1oh" id="YCV-0I-sqI"/>
                 <outlet property="iconLabel" destination="k9L-x7-zPq" id="9sN-5H-csC"/>
+                <outlet property="iconSize" destination="7cy-wR-boG" id="Ipf-Of-G81"/>
                 <outlet property="titleLabel" destination="igl-3v-DMO" id="wNh-Jl-GUm"/>
-                <outletCollection property="iconConstraints" destination="AVQ-Kp-VjR" collectionClass="NSMutableArray" id="s69-ME-qcM"/>
-                <outletCollection property="iconConstraints" destination="7cy-wR-boG" collectionClass="NSMutableArray" id="CJN-yV-IN5"/>
             </connections>
+            <point key="canvasLocation" x="139" y="117"/>
         </collectionViewCell>
     </objects>
 </document>

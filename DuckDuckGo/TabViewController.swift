@@ -75,6 +75,8 @@ class TabViewController: UIViewController {
     
     private var tearDownExecuted = false
     private var tips: BrowsingTips?
+
+    private var loginDetection: LoginDetection?
     
     public var url: URL? {
         didSet {
@@ -189,6 +191,7 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
+        controller.add(self, name: MessageHandlerNames.possibleLogin)
         controller.add(self, name: MessageHandlerNames.signpost)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
@@ -221,7 +224,7 @@ class TabViewController: UIViewController {
     
     private func consumeCookiesThenLoadUrl(_ url: URL?) {
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-            WebCacheManager.consumeCookies { [weak self] in
+            WebCacheManager.shared.consumeCookies { [weak self] in
                 guard let strongSelf = self else { return }
                 
                 if let url = url {
@@ -554,6 +557,7 @@ class TabViewController: UIViewController {
 
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.possibleLogin)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
@@ -583,6 +587,7 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private struct MessageHandlerNames {
+        static let possibleLogin = "possibleLogin"
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
         static let log = "log"
@@ -599,6 +604,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
+        case MessageHandlerNames.possibleLogin:
+            handlePossibleLogin(message: message)
+
         case MessageHandlerNames.log:
             handleLog(message: message)
 
@@ -609,7 +617,27 @@ extension TabViewController: WKScriptMessageHandler {
             assertionFailure("Unhandled message: \(message.name)")
         }
     }
+    
+    private func handlePossibleLogin(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any] else { return }
+        let source = dict["source"] as? String
+        possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
+    }
 
+    private func possibleLogin(forDomain domain: String?, source: String) {
+        guard #available(iOS 13, *) else {
+            // We can't be sure about leaking cookies before iOS 13 so don't allow logins to be saved
+            return
+        }
+        
+        guard let domain = domain else { return }
+        if isDebugBuild {
+            view.showBottomToast("Login detected for \(domain) via \(source)")
+        }
+        
+        PreserveLogins.shared.add(domain: domain)
+    }
+    
     private func handleFindInPage(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any] else { return }
         let currentResult = dict["currentResult"] as? Int
@@ -723,7 +751,7 @@ extension TabViewController: WKNavigationDelegate {
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
-        
+                
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -777,6 +805,7 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
+        checkLoginDetectionAfterNavigation()
     }
     
     private func onWebpageDidFinishLoading() {
@@ -787,6 +816,21 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
         tips?.onFinishedLoading(url: url, error: isError)
+    }
+
+    private func checkLoginDetectionAfterNavigation() {
+        
+        if let loginDetection = self.loginDetection {
+            let domain = webView.url?.host
+            let dataStore =  webView.configuration.websiteDataStore
+            loginDetection.webViewDidFinishNavigation(withCookies: dataStore, completion: { [weak self] isPossibleLogin in
+                if isPossibleLogin {
+                    self?.possibleLogin(forDomain: domain, source: "POST")
+                    self?.loginDetection = nil
+                }
+            })
+        }
+
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -829,20 +873,31 @@ extension TabViewController: WKNavigationDelegate {
         self.url = url
         self.siteRating = makeSiteRating(url: url)
         updateSiteRating()
+        checkLoginDetectionAfterNavigation()
     }
-    
+            
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision == .allow {
+            if let url = navigationAction.request.url, decision != .cancel {
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
+                
                 self?.findInPage?.done()
+                            
+                self?.loginDetection = nil
+                LoginDetection.webView(withURL: webView.url,
+                                       andCookies: webView.configuration.websiteDataStore,
+                                       allowedAction: navigationAction) { loginDetection in
+                    self?.loginDetection = loginDetection
+                    decisionHandler(decision)
+                }
+            } else {
+                decisionHandler(decision)
             }
-            decisionHandler(decision)
         }
     }
     

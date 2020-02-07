@@ -163,8 +163,23 @@ class TabViewCell: UICollectionViewCell {
         
         unread.isHidden = tab.viewed
 
-        link.text = tab.link?.url.absoluteString ?? ""
-        configureFavicon(forDomain: tab.link?.url.host)
+        if tab.link == nil {
+            var linkText = UserText.homeTabSearchOnly
+            for component in AppDependencyProvider.shared.appSettings.homePage.components() {
+                switch component {
+                case .favorites:
+                    linkText = UserText.homeTabSearchAndFavorites
+                default: break
+                }
+            }
+
+            title.text = UserText.homeTabTitle
+            link.text = linkText
+            favicon.image = UIImage(named: "Logo")
+        } else {
+            link.text = tab.link?.url.absoluteString ?? ""
+            configureFavicon(forDomain: tab.link?.url.host)
+        }
     }
 
     private func removeTabObserver() {

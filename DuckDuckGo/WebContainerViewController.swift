@@ -20,6 +20,7 @@
 import Core
 import UIKit
 import WebKit
+import os.log
 
 /// Use title property to set the displayed title
 class WebContainerViewController: UIViewController {
@@ -85,7 +86,7 @@ class WebContainerViewController: UIViewController {
             progress = Float(webView?.estimatedProgress ?? 0.0)
 
         default:
-            os_log(text: "Unhandled keyPath \(keyPath)")
+            os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
         }
     }
 

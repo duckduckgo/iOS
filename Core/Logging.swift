@@ -22,18 +22,3 @@ import os.log
 
 public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG General")
 public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")
-
-public func os_log(_ log: OSLog = generalLog, text: String) {
-    #if DEBUG
-    os_log("%@", log: log, type: .debug, text)
-    #endif
-}
-
-public func os_log(_ log: OSLog = generalLog, items: Any...) {
-    #if DEBUG
-    let textItems = items.map { String(reflecting: $0).dropPrefix(prefix: "\"").dropSuffix(suffix: "\"") }
-    let text = textItems.joined(separator: " ")
-
-    os_log("%@", log: log, type: .debug, text)
-    #endif
-}

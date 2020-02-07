@@ -19,6 +19,7 @@
 
 import Foundation
 import Alamofire
+import os.log
 
 public enum PixelName: String {
     
@@ -266,7 +267,7 @@ public class Pixel {
             .addParams(newParams)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
-            os_log(items: "Pixel fired \(pixel.rawValue)")
+            os_log("Pixel fired %s", log: generalLog, type: .debug, pixel.rawValue)
             onComplete(response.error)
         }
     }

@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import os.log
 
 extension TabViewController {
     func promptSaveBookmarkAction() {
@@ -40,7 +41,7 @@ extension TabViewController {
                 saveCompletion: saveCompletion)
             present(alert, animated: true, completion: nil)
         } else {
-            os_log(text: "Invalid bookmark link found on bookmark long press")
+            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
         }
     }
 }

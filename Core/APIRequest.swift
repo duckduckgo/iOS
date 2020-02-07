@@ -19,6 +19,7 @@
 
 import Foundation
 import Alamofire
+import os.log
 
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 
@@ -38,15 +39,18 @@ public class APIRequest {
                                method: HTTPMethod = .get,
                                parameters: [String: Any]? = nil,
                                completion: @escaping APIRequestCompletion) -> Request {
-        
-        os_log(text: "Requesting \(url)")
+        os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
         
         return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
             .responseData(queue: callbackQueue) { response in
-                
-                os_log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode))")
-                os_log(text: " and headers \(String(describing: response.response?.allHeaderFields))")
+
+                os_log("Request for %s completed with response code: %s and headers %s",
+                       log: generalLog,
+                       type: .debug,
+                       url.absoluteString,
+                       String(describing: response.response?.statusCode),
+                       String(describing: response.response?.allHeaderFields))
                 
                 if let error = response.error {
                     completion(nil, error)

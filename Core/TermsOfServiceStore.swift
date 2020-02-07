@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os.log
 
 public protocol TermsOfServiceStore {
 
@@ -44,7 +45,7 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
             let terms = try parser.convert(fromJsonData: data)
             self.terms = terms
         } catch {
-            os_log(lifecycleLog, items: error)
+            os_log("%s", log: lifecycleLog, type: .debug, error.localizedDescription)
             fatalError("Unable to decode tosdr json")
         }
     }

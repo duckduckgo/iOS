@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os.log
 
 protocol BlockerListETagStorage {
     
@@ -33,7 +34,7 @@ class UserDefaultsETagStorage: BlockerListETagStorage {
     
     func etag(for list: ContentBlockerRequest.Configuration) -> String? {
         let etag = defaults?.string(forKey: list.rawValue)
-        os_log(items: "stored etag for ", list.rawValue, etag as Any)
+        os_log("stored etag for %s %s", log: generalLog, type: .debug, list.rawValue, etag ?? "nil")
         return etag
     }
     

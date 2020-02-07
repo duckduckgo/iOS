@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import os.log
 
 /// Represents single component that is being sent to the server.
 /// Feedback as a whole can consist of multiple components. These components are included both in
@@ -92,9 +93,9 @@ struct FeedbackSubmitter: FeedbackSender {
 
         APIRequest.request(url: AppUrls().feedback, method: .post, parameters: parameters) { _, error in
             if let error = error {
-                os_log(text: "Feedback request failed, \(error.localizedDescription)")
+                os_log("Feedback request failed, %s", log: generalLog, type: .debug, error.localizedDescription)
             } else {
-                os_log(text: "Feedback response successful")
+                os_log("Feedback response successful", log: generalLog, type: .debug)
             }
         }
     }

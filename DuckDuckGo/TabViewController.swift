@@ -21,6 +21,7 @@ import WebKit
 import Core
 import Device
 import StoreKit
+import os.log
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -279,7 +280,7 @@ class TabViewController: UIViewController {
             delegate?.tabLoadingStateDidChange(tab: self)
             
         default:
-            os_log(text: "Unhandled keyPath \(keyPath)")
+            os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
         }
     }
     
@@ -646,7 +647,7 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private func handleLog(message: WKScriptMessage) {
-        os_log(text: String(describing: message.body))
+        os_log("%s", log: generalLog, type: .debug, String(describing: message.body))
     }
     
     private func handleSignpost(message: WKScriptMessage) {
@@ -679,7 +680,7 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private func handleTrackerDetected(message: WKScriptMessage) {
-        os_log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
+        os_log("%s %s", log: generalLog, type: .debug, MessageHandlerNames.trackerDetected, String(describing: message.body))
 
         guard let siteRating = siteRating else { return }
         guard let dict = message.body as? [String: Any] else { return }
@@ -687,7 +688,7 @@ extension TabViewController: WKScriptMessageHandler {
         guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
         
         guard siteRating.isFor(self.url) else {
-            os_log(text: "mismatching domain \(self.url as Any) vs \(siteRating.domain as Any)")
+            os_log("mismatching domain %s vs %s", log: generalLog, type: .debug, self.url?.absoluteString ?? "nil", siteRating.domain ?? "nil")
             return
         }
 
@@ -759,7 +760,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
-        os_log(items: "webpageLoading started:", Date().timeIntervalSince1970)
+        os_log("webpageLoading started", log: generalLog, type: .debug)
         self.httpsForced = httpsForced
         delegate?.showBars()
         
@@ -809,7 +810,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidFinishLoading() {
-        os_log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
+        os_log("webpageLoading finished", log: generalLog, type: .debug)
         siteRating?.finishedLoading = true
         updateSiteRating()
         tabModel.link = link
@@ -840,7 +841,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func webpageDidFailToLoad() {
-        os_log(items: "webpageLoading failed:", Date().timeIntervalSince1970)
+        os_log("webpageLoading failed", log: generalLog, type: .debug)
         if isError {
             showBars(animated: true)
         }

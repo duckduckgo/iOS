@@ -130,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        Logger.log(text: "App launched with url \(url.absoluteString)")
+        Logger.log(lifecycleLog, text: "App launched with url \(url.absoluteString)")
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         
@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        Logger.log(items: #function)
+        Logger.log(lifecycleLog, items: #function)
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
             completionHandler(newData ? .newData : .noData)

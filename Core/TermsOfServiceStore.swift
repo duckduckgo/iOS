@@ -44,7 +44,7 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
             let terms = try parser.convert(fromJsonData: data)
             self.terms = terms
         } catch {
-            Logger.log(items: error)
+            Logger.log(lifecycleLog, items: error)
             fatalError("Unable to decode tosdr json")
         }
     }

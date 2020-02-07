@@ -50,6 +50,13 @@ extension String {
         return self
     }
 
+    public func dropSuffix(suffix: String) -> String {
+        if hasSuffix(suffix) {
+            return String(dropLast(suffix.count))
+        }
+        return self
+    }
+
     /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to
     ///  retain the input as much as possible.
     public var punycodedUrl: URL? {

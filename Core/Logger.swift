@@ -17,17 +17,38 @@
 //  limitations under the License.
 //
 
+import Foundation
+import os.log
+
+public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG General")
+public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")
+
 public struct Logger {
 
-    public static func log(text: String) {
+    public static func log(_ log: OSLog = generalLog, text: String) {
         #if DEBUG
+
+        if #available(iOS 12.0, *) {
+            os_log("%@", log: log, type: .debug, text)
+        } else {
             print(text, separator: " ", terminator: "\n")
+        }
+
         #endif
     }
 
-    public static func log(items: Any...) {
+    public static func log(_ log: OSLog = generalLog, items: Any...) {
         #if DEBUG
-            debugPrint(items, separator: " ", terminator: "\n")
+
+        let textItems = items.map { String(reflecting: $0).dropPrefix(prefix: "\"").dropSuffix(suffix: "\"") }
+        let text = textItems.joined(separator: " ")
+
+        if #available(iOS 12.0, *) {
+            os_log("%@", log: log, type: .debug, text)
+        } else {
+            print(text, separator: " ", terminator: "\n")
+        }
+
         #endif
     }
 }

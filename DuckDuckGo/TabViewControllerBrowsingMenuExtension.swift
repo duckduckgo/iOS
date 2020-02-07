@@ -90,7 +90,7 @@ extension TabViewController {
                 bookmarksManager.save(bookmark: updatedBookmark)
                 self?.view.showBottomToast(UserText.webSaveBookmarkDone)
             }
-            let alert = EditBookmarkAlert.buildAlert (
+            let alert = EditBookmarkAlert.buildAlert(
                 title: UserText.alertSaveBookmark,
                 bookmark: link,
                 saveCompletion: saveCompletion)
@@ -110,7 +110,7 @@ extension TabViewController {
                 bookmarksManager.save(favorite: favorite)
                 self?.view.showBottomToast(UserText.webSaveFavoriteDone)
             }
-            let alert = EditBookmarkAlert.buildAlert (
+            let alert = EditBookmarkAlert.buildAlert(
                 title: UserText.alertSaveFavorite,
                 bookmark: link,
                 saveCompletion: saveCompletion)

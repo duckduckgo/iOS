@@ -53,10 +53,6 @@ public class TabsModel: NSObject, NSCoding {
         coder.encode(currentIndex, forKey: NSCodingKeys.currentIndex)
     }
 
-    var isEmpty: Bool {
-        return tabs.isEmpty
-    }
-    
     var currentTab: Tab? {
         let index = currentIndex
         return tabs[index]
@@ -64,6 +60,10 @@ public class TabsModel: NSObject, NSCoding {
 
     var count: Int {
         return tabs.count
+    }
+
+    var hasActiveTabs: Bool {
+        return tabs.count > 1 || tabs.last?.link != nil
     }
 
     func select(tabAt index: Int) {
@@ -80,7 +80,8 @@ public class TabsModel: NSObject, NSCoding {
     }
 
     func insert(tab: Tab, at index: Int) {
-        tabs.insert(tab, at: index)
+        currentIndex = max(0, index)
+        tabs.insert(tab, at: currentIndex)
     }
     
     func moveTab(from sourceIndex: Int, to destIndex: Int) {

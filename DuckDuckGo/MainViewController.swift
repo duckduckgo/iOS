@@ -352,6 +352,8 @@ class MainViewController: UIViewController {
         loadViewIfNeeded()
         addTab(url: url)
         refreshOmniBar()
+        refreshTabIcon()
+        refreshControls()
     }
 
     func launchNewSearch() {

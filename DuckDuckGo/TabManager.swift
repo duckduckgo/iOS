@@ -24,7 +24,7 @@ class TabManager {
 
     private(set) var model: TabsModel
     
-    private var tabControllerCache = [TabViewController]()
+    private var tabControllerCache = [Tab: TabViewController]()
 
     private weak var delegate: TabDelegate?
 
@@ -35,7 +35,7 @@ class TabManager {
         let tab = model.tabs[index]
         if tab.link != nil {
             let controller = buildController(forTab: tab)
-            tabControllerCache.append(controller)
+            tabControllerCache[tab] = controller
         }
     }
 
@@ -47,7 +47,7 @@ class TabManager {
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.isEmpty)
+        controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.hasActiveTabs)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         return controller
@@ -58,12 +58,12 @@ class TabManager {
         let index = model.currentIndex
         let tab = model.tabs[index]
 
-        if let controller = cachedController(forTab: tab) {
+        if let controller = tabControllerCache[tab] {
             return controller
         } else {
             Logger.log(text: "Tab not in cache, creating")
             let controller = buildController(forTab: tab)
-            tabControllerCache.append(controller)
+            tabControllerCache[tab] = controller
             return controller
         }
     }
@@ -101,7 +101,7 @@ class TabManager {
 
         }
         let controller = buildController(forTab: tab, url: url)
-        tabControllerCache.append(controller)
+        tabControllerCache[tab] = controller
         
         save()
         return controller
@@ -117,13 +117,15 @@ class TabManager {
         let tab = Tab(link: link)
         tab.viewed = !inBackground
         let controller = buildController(forTab: tab, url: url)
-        tabControllerCache.append(controller)
+        tabControllerCache[tab] = controller
 
         let index = model.currentIndex
         if inBackground {
             model.insert(tab: tab, at: index + 1)
-        } else {
+        } else if model.tabs.last?.link != nil {
             model.add(tab: tab)
+        } else {
+            model.insert(tab: tab, at: model.count - 1)
         }
 
         save()
@@ -133,7 +135,7 @@ class TabManager {
     func remove(at index: Int) {
         let tab = model.get(tabAt: index)
         model.remove(tab: tab)
-        if let controller = cachedController(forTab: tab) {
+        if let controller = tabControllerCache[tab] {
             removeFromCache(controller)
         }
         save()
@@ -146,24 +148,13 @@ class TabManager {
     }
 
     private func removeFromCache(_ controller: TabViewController) {
-        if let index = tabControllerCache.firstIndex(of: controller) {
-            tabControllerCache.remove(at: index)
-        }
+        tabControllerCache.removeValue(forKey: controller.tabModel)
         controller.destroy()
-    }
-
-    private func cachedController(forTab tab: Tab) -> TabViewController? {
-        let controller = tabControllerCache.filter({ $0.tabModel === tab }).first
-        if let link = controller?.link {
-            tab.link = link
-            save()
-        }
-        return controller
     }
 
     func removeAll() {
         model.clearAll()
-        for controller in tabControllerCache {
+        for controller in tabControllerCache.values {
             removeFromCache(controller)
         }
         save()
@@ -185,7 +176,7 @@ class TabManager {
 extension TabManager: Themable {
     
     func decorate(with theme: Theme) {
-        for tabController in tabControllerCache {
+        for tabController in tabControllerCache.values {
             tabController.decorate(with: theme)
         }
     }

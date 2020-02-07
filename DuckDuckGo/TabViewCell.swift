@@ -164,6 +164,7 @@ class TabViewCell: UICollectionViewCell {
         unread.isHidden = tab.viewed
 
         if tab.link == nil {
+            removeButton.isHidden = true
             var linkText = UserText.homeTabSearchOnly
             for component in AppDependencyProvider.shared.appSettings.homePage.components() {
                 switch component {
@@ -177,6 +178,7 @@ class TabViewCell: UICollectionViewCell {
             link.text = linkText
             favicon.image = UIImage(named: "Logo")
         } else {
+            removeButton.isHidden = false
             link.text = tab.link?.url.absoluteString ?? ""
             configureFavicon(forDomain: tab.link?.url.host)
         }

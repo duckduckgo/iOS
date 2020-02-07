@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  Logging.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -23,32 +23,17 @@ import os.log
 public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG General")
 public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")
 
-public struct Logger {
+public func os_log(_ log: OSLog = generalLog, text: String) {
+    #if DEBUG
+    os_log("%@", log: log, type: .debug, text)
+    #endif
+}
 
-    public static func log(_ log: OSLog = generalLog, text: String) {
-        #if DEBUG
+public func os_log(_ log: OSLog = generalLog, items: Any...) {
+    #if DEBUG
+    let textItems = items.map { String(reflecting: $0).dropPrefix(prefix: "\"").dropSuffix(suffix: "\"") }
+    let text = textItems.joined(separator: " ")
 
-        if #available(iOS 12.0, *) {
-            os_log("%@", log: log, type: .debug, text)
-        } else {
-            print(text, separator: " ", terminator: "\n")
-        }
-
-        #endif
-    }
-
-    public static func log(_ log: OSLog = generalLog, items: Any...) {
-        #if DEBUG
-
-        let textItems = items.map { String(reflecting: $0).dropPrefix(prefix: "\"").dropSuffix(suffix: "\"") }
-        let text = textItems.joined(separator: " ")
-
-        if #available(iOS 12.0, *) {
-            os_log("%@", log: log, type: .debug, text)
-        } else {
-            print(text, separator: " ", terminator: "\n")
-        }
-
-        #endif
-    }
+    os_log("%@", log: log, type: .debug, text)
+    #endif
 }

@@ -63,7 +63,7 @@ public class HTTPSUpgrade {
         }
         
         let isLocallyUpgradable = !isLocalListReloading() && isInLocalUpgradeList(host: host)
-        Logger.log(text: "\(host) \(isLocallyUpgradable ? "is" : "is not") locally upgradable")
+        os_log(text: "\(host) \(isLocallyUpgradable ? "is" : "is not") locally upgradable")
         if  isLocallyUpgradable {
             Pixel.fire(pixel: .httpsLocalUpgrade)
             completion(true)
@@ -71,7 +71,7 @@ public class HTTPSUpgrade {
         }
         
         isInServiceUpgradeList(host: host) { result in
-            Logger.log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
+            os_log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
             if result.isInList {
                 Pixel.fire(pixel: result.isCached ? .httpsServiceCacheUpdgrade : .httpsServiceRequestUpgrade)
                 completion(true)
@@ -123,7 +123,7 @@ public class HTTPSUpgrade {
     
     public func loadData() {
         if !dataReloadLock.try() {
-            Logger.log(text: "Reload already in progress")
+            os_log(text: "Reload already in progress")
             return
         }
         bloomFilter = store.bloomFilter()

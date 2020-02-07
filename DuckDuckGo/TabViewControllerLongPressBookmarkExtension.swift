@@ -40,7 +40,7 @@ extension TabViewController {
                 saveCompletion: saveCompletion)
             present(alert, animated: true, completion: nil)
         } else {
-            Logger.log(text: "Invalid bookmark link found on bookmark long press")
+            os_log(text: "Invalid bookmark link found on bookmark long press")
         }
     }
 }

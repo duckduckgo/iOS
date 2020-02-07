@@ -266,7 +266,7 @@ public class Pixel {
             .addParams(newParams)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
-            Logger.log(items: "Pixel fired \(pixel.rawValue)")
+            os_log(items: "Pixel fired \(pixel.rawValue)")
             onComplete(response.error)
         }
     }

@@ -47,7 +47,7 @@ class AppIconManager {
             UIApplication.shared.setAlternateIconName(alternateIconName) { error in
                 if let error = error {
                     Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
-                    Logger.log(text: "Error while changing app icon: \(error.localizedDescription)")
+                    os_log(text: "Error while changing app icon: \(error.localizedDescription)")
                     completionHandler?(error)
                 } else {
                     completionHandler?(nil)
@@ -56,7 +56,7 @@ class AppIconManager {
         } else {
             let error = AppIconManagerError.changeNotSupported
             Pixel.fire(pixel: .settingsAppIconChangeNotSupported, error: error)
-            Logger.log(text: "Error while changing app icon: \(error.localizedDescription)")
+            os_log(text: "Error while changing app icon: \(error.localizedDescription)")
             completionHandler?(error)
         }
     }

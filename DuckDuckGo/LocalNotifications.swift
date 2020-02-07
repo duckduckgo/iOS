@@ -80,7 +80,7 @@ class LocalNotifications: NSObject {
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                Logger.log(items: "Failed to schedule notification. \(error.localizedDescription)")
+                os_log(items: "Failed to schedule notification. \(error.localizedDescription)")
             }
         }
     }

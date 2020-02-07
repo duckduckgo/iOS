@@ -45,7 +45,7 @@ public class StatisticsLoader {
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
         APIRequest.request(url: appUrls.initialAtb) { response, error in
             if let error = error {
-                Logger.log(text: "Initial atb request failed with error \(error.localizedDescription)")
+                os_log(text: "Initial atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
@@ -63,7 +63,7 @@ public class StatisticsLoader {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
         APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in
             if let error = error {
-                Logger.log(text: "Exti request failed with error \(error.localizedDescription)")
+                os_log(text: "Exti request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
@@ -82,7 +82,7 @@ public class StatisticsLoader {
         
         APIRequest.request(url: url) { response, error in
             if let error = error {
-                Logger.log(text: "Search atb request failed with error \(error.localizedDescription)")
+                os_log(text: "Search atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
@@ -103,7 +103,7 @@ public class StatisticsLoader {
         
         APIRequest.request(url: url) { response, error in
             if let error = error {
-                Logger.log(text: "App atb request failed with error \(error.localizedDescription)")
+                os_log(text: "App atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }

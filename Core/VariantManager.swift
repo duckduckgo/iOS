@@ -95,17 +95,17 @@ public class DefaultVariantManager: VariantManager {
     
     public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
-            Logger.log(text: "no new variant needed for existing user")
+            os_log(text: "no new variant needed for existing user")
             return
         }
         
         if let variant = currentVariant {
-            Logger.log(text: "already assigned variant: \(variant)")
+            os_log(text: "already assigned variant: \(variant)")
             return
         }
         
         guard let variant = selectVariant() else {
-            Logger.log(text: "Failed to assign variant")
+            os_log(text: "Failed to assign variant")
             return
         }
         

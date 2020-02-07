@@ -129,7 +129,7 @@ class DatabaseMigration {
                 try stack.persistenceStoreCoordinator.remove(store)
             } catch {
                 Pixel.fire(pixel: .dbRemovalError, error: error)
-                Logger.log(text: "Error removing store: \(error.localizedDescription)")
+                os_log(text: "Error removing store: \(error.localizedDescription)")
             }
         }
     }
@@ -178,7 +178,7 @@ class DatabaseMigration {
                                                      concurrencyType: .privateQueueConcurrencyType),
             let storeURL = oldStack.persistenceStoreCoordinator.persistentStores.last?.url else { return }
         
-        Logger.log(text: "Destroying store: \(dbName)")
+        os_log(text: "Destroying store: \(dbName)")
         
         do {
             try oldStack.persistenceStoreCoordinator.destroyPersistentStore(at: storeURL,
@@ -186,7 +186,7 @@ class DatabaseMigration {
                                                                             options: nil)
         } catch {
             Pixel.fire(pixel: .dbDestroyError, error: error)
-            Logger.log(text: "Error destroying store: \(error.localizedDescription)")
+            os_log(text: "Error destroying store: \(error.localizedDescription)")
         }
         
         removeFile(at: storeURL)
@@ -205,7 +205,7 @@ class DatabaseMigration {
             if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileNoSuchFileError {
                 Pixel.fire(pixel: .dbDestroyFileError, error: error)
             }
-            Logger.log(text: "Error removing file: \(error.localizedDescription)")
+            os_log(text: "Error removing file: \(error.localizedDescription)")
         }
     }
 }

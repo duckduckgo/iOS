@@ -121,7 +121,7 @@ class TabSwitcherViewController: UIViewController {
             view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
-            Logger.log(text: "Failed to save \(failedToSaveCount) tabs")
+            os_log(text: "Failed to save \(failedToSaveCount) tabs")
             view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
         }
     }
@@ -141,7 +141,7 @@ class TabSwitcherViewController: UIViewController {
                     newBookmarksCount += 1
                 }
             } else {
-                Logger.log(text: "no valid link found for tab \(aTab)")
+                os_log(text: "no valid link found for tab \(aTab)")
             }
         }
         return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)

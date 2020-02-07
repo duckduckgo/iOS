@@ -72,7 +72,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     }
     
     public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
-        Logger.log(items: "HTTPS Bloom Filter", bloomFilterPath)
+        os_log(items: "HTTPS Bloom Filter", bloomFilterPath)
         guard data.sha256 == specification.sha256 else { return false }
         guard persistBloomFilter(data: data) else { return false }
         persistBloomFilterSpecification(specification)

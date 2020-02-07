@@ -39,14 +39,14 @@ public class APIRequest {
                                parameters: [String: Any]? = nil,
                                completion: @escaping APIRequestCompletion) -> Request {
         
-        Logger.log(text: "Requesting \(url)")
+        os_log(text: "Requesting \(url)")
         
         return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
             .responseData(queue: callbackQueue) { response in
                 
-                Logger.log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode))")
-                Logger.log(text: " and headers \(String(describing: response.response?.allHeaderFields))")
+                os_log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode))")
+                os_log(text: " and headers \(String(describing: response.response?.allHeaderFields))")
                 
                 if let error = response.error {
                     completion(nil, error)

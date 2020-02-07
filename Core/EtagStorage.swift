@@ -33,7 +33,7 @@ class UserDefaultsETagStorage: BlockerListETagStorage {
     
     func etag(for list: ContentBlockerRequest.Configuration) -> String? {
         let etag = defaults?.string(forKey: list.rawValue)
-        Logger.log(items: "stored etag for ", list.rawValue, etag as Any)
+        os_log(items: "stored etag for ", list.rawValue, etag as Any)
         return etag
     }
     

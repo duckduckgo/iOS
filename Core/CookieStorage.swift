@@ -38,7 +38,7 @@ public class CookieStorage {
                 })
 
                 if let cookie = HTTPCookie(properties: properties) {
-                    Logger.log(items: "read cookie", cookie.domain, cookie.name, cookie.value)
+                    os_log(items: "read cookie", cookie.domain, cookie.name, cookie.value)
                     storedCookies.append(cookie)
                 }
             }
@@ -53,11 +53,11 @@ public class CookieStorage {
 
     func clear() {
         userDefaults.removeObject(forKey: Constants.key)
-        Logger.log(items: "cleared cookies")
+        os_log(items: "cleared cookies")
     }
 
     func setCookie(_ cookie: HTTPCookie) {
-        Logger.log(items: "storing cookie", cookie.domain, cookie.name, cookie.value)
+        os_log(items: "storing cookie", cookie.domain, cookie.name, cookie.value)
         
         var cookieData = [String: Any?]()
         cookie.properties?.forEach({

@@ -29,7 +29,7 @@ protocol GestureToolbarButtonDelegate: NSObjectProtocol {
 class GestureToolbarButton: UIView {
     
     struct Constants {
-        static let minLongPressDuration = 0.8
+        static let minLongPressDuration = 0.4
         static let maxTouchDeviationPoints = 20.0
         static let animationDuration = 0.3
     }

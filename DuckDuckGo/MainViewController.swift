@@ -1026,6 +1026,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
     }
     
     func longPressDetected(in sender: GestureToolbarButton) {
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
             view.showBottomToast(UserText.webSaveBookmarkNone)
             return

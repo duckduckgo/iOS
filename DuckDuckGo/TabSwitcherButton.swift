@@ -121,6 +121,7 @@ class TabSwitcherButton: UIView {
         tint(alpha: Constants.tintAlpha)
         workItem?.cancel()
         let workItem = DispatchWorkItem {
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
             self.delegate?.launchNewTab(self)
             self.workItem = nil
         }

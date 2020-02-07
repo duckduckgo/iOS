@@ -41,7 +41,8 @@ public class TabsModel: NSObject, NSCoding {
 
     public convenience required init?(coder decoder: NSCoder) {
         guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
-        var currentIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int ?? 0
+
+        var currentIndex = decoder.decodeInteger(forKey: NSCodingKeys.currentIndex)
         if currentIndex < 0 || currentIndex >= tabs.count {
             currentIndex = 0
         }

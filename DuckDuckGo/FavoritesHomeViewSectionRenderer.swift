@@ -160,7 +160,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         Pixel.fire(pixel: .homeScreenEditFavorite)
-        let alert = EditBookmarkAlert.buildAlert (
+        let alert = EditBookmarkAlert.buildAlert(
             title: UserText.alertSaveFavorite,
             bookmark: bookmarksManager.favorite(atIndex: indexPath.row),
             saveCompletion: { [weak self] newLink in
@@ -262,7 +262,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
         Pixel.fire(pixel: .homeScreenAddFavorite)
-        let alert = EditBookmarkAlert.buildAlert (
+        let alert = EditBookmarkAlert.buildAlert(
             title: UserText.alertSaveFavorite,
             bookmark: nil,
             saveCompletion: { [weak self] newLink in

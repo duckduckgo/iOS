@@ -285,11 +285,16 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
+        return tabsModel.get(tabAt: indexPath.row).link != nil
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+
+        if tabsModel.get(tabAt: proposedIndexPath.row).link == nil {
+            return originalIndexPath
+        }
+
         return proposedIndexPath
     }
     

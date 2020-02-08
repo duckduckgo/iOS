@@ -35,35 +35,55 @@ class CookieStorageTests: XCTestCase {
         testee = CookieStorage(userDefaults: userDefaults)
     }
 
+    @available(iOS 13, *)
+    func testWhenCookieWithStrictSameSitePolicyIsAddedThenItRemainsStrict() {
+        let cookie = HTTPCookie.make(name: "name", value: "value", policy: .sameSiteStrict)
+        testee.setCookie(cookie)
+        XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteStrict)
+    }
+
+    @available(iOS 13, *)
+    func testWhenCookieWithLaxSameSitePolicyIsAddedThenItRemainsLax() {
+        let cookie = HTTPCookie.make(name: "name", value: "value", policy: .sameSiteLax)
+        testee.setCookie(cookie)
+        XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteLax)
+    }
+
+    @available(iOS 13, *)
+    func testWhenCookieWithNoSameSitePolicyIsAddedThenItIsSetToLax() {
+        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
+        XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteLax)
+    }
+    
     func testWhenMultipleCookiesAreSetThenClearCookiesOnNewInstanceClearsAll() {
-        testee.setCookie(cookie("name", "value"))
-        testee.setCookie(cookie("name2", "value2"))
+        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
+        testee.setCookie(HTTPCookie.make(name: "name2", value: "value2"))
         testee = CookieStorage(userDefaults: userDefaults)
         testee.clear()
         XCTAssertTrue(testee.cookies.isEmpty)
     }
 
     func testWhenMultipleCookiesAreSetBetweenInstancesThenCookiesCountMatches() {
-        testee.setCookie(cookie("name", "value"))
+        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
         testee = CookieStorage(userDefaults: userDefaults)
-        testee.setCookie(cookie("name2", "value2"))
+        testee.setCookie(HTTPCookie.make(name: "name2", value: "value2"))
         XCTAssertEqual(testee.cookies.count, 2)
     }
 
     func testWhenMultipleCookieIsSetThenClearRemovesIt() {
-        testee.setCookie(cookie("name", "value"))
+        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
         testee.clear()
         XCTAssertTrue(testee.cookies.isEmpty)
     }
 
     func testWhenMultipleCookiesAreSetThenCookiesCountMatches() {
-        testee.setCookie(cookie("name", "value"))
-        testee.setCookie(cookie("name2", "value2"))
+        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
+        testee.setCookie(HTTPCookie.make(name: "name2", value: "value2"))
         XCTAssertEqual(testee.cookies.count, 2)
     }
 
     func testWhenCookieIsSetThenCookiesContainsIt() {
-        testee.setCookie(cookie("name", "value"))
+        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
 
         XCTAssertEqual(testee.cookies.count, 1)
         XCTAssertEqual(testee.cookies[0].name, "name")
@@ -73,10 +93,6 @@ class CookieStorageTests: XCTestCase {
 
     func testWhenNewThenCookiesIsEmpty() {
         XCTAssertTrue(testee.cookies.isEmpty)
-    }
-
-    private func cookie(_ name: String, _ value: String) -> HTTPCookie {
-        return HTTPCookie(properties: [.name: name, .value: value, .path: "/", .domain: "example.com"])!
     }
 
 }

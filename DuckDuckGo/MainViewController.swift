@@ -221,6 +221,7 @@ class MainViewController: UIViewController {
         if let navigationController = segue.destination as? UINavigationController,
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self
+            controller.preserveLoginsSettingsDelegate = self
             return
         }
         
@@ -306,18 +307,22 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        
+        Pixel.fire(pixel: .forgetAllPressedBrowsing, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.forgetAllWithAnimation {}
+            guard let self = self else { return }
+            PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
+                self?.forgetAllWithAnimation {}
+            }
         })
-        
-        present(controller: alert, fromView: toolbar)
+        self.present(controller: alert, fromView: self.toolbar)
     }
     
     func onQuickFirePressed() {
-        forgetAllWithAnimation {}
-        dismiss(animated: true)
+        PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
+            self.forgetAllWithAnimation {}
+            self.dismiss(animated: true)
+        }
     }
 
     @IBAction func onBackPressed() {
@@ -954,7 +959,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        forgetAllWithAnimation {
+        self.forgetAllWithAnimation {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
@@ -1037,15 +1042,21 @@ extension MainViewController: AutoClearWorker {
     
     func forgetData() {
         findInPageView?.done()
+        
+        if PreserveLogins.shared.userDecision != .preserveLogins {
+            PreserveLogins.shared.clearAll()
+        } else {
+            PreserveLogins.shared.clearDetected()
+        }
+        
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
-        WebCacheManager.clear()
+        WebCacheManager.shared.clear { }
     }
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
-        findInPageView.done()
-        Pixel.fire(pixel: .forgetAllExecuted)
+        Pixel.fire(pixel: .forgetAllExecuted, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()
@@ -1094,6 +1105,14 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
+}
+
+extension MainViewController: PreserveLoginsSettingsDelegate {
+
+    func forgetAllRequested(completion: @escaping () -> Void) {
+        forgetAllWithAnimation(completion: completion)
+    }
+
 }
 
 extension MainViewController: OnboardingDelegate {

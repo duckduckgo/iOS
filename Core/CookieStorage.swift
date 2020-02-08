@@ -19,7 +19,7 @@
 
 import Foundation
 
-class CookieStorage {
+public class CookieStorage {
 
     struct Constants {
         static let key = "com.duckduckgo.allowedCookies"
@@ -47,7 +47,7 @@ class CookieStorage {
         return storedCookies
     }
 
-    init(userDefaults: UserDefaults = UserDefaults.standard) {
+    public init(userDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults
     }
 
@@ -58,19 +58,25 @@ class CookieStorage {
 
     func setCookie(_ cookie: HTTPCookie) {
         Logger.log(items: "storing cookie", cookie.domain, cookie.name, cookie.value)
+        
         var cookieData = [String: Any?]()
         cookie.properties?.forEach({
             cookieData[$0.key.rawValue] = $0.value
         })
+
+        // Same site policy is not returned in the cookie properties so have to use iOS 13 api to get it - setting is fine.  Leaving same site policy
+        //  untouched for previous versions of iOS as changing from Strict to Lax blindly could be a security issue if sites have set it as such.
+        //  See https://www.owasp.org/index.php/SameSite
+        if #available(iOS 13, *) {
+            cookieData[HTTPCookiePropertyKey.sameSitePolicy.rawValue] = cookie.sameSitePolicy ?? HTTPCookieStringPolicy.sameSiteLax
+        }
+        
         setCookie(cookieData)
     }
 
     private func setCookie(_ cookieData: [String: Any?]) {
-        var cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]]
-        if cookies == nil {
-            cookies = [[String: Any?]]()
-        }
-        cookies?.append(cookieData)
+        var cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] ?? []
+        cookies.append(cookieData)
         userDefaults.set(cookies, forKey: Constants.key)
     }
 

@@ -43,24 +43,7 @@ class BookmarkCell: UITableViewCell {
     func update(withLink link: Link) {
         self.link = link
         title.text = link.title
-        configureFavicon(forDomain: link.url.host)
+        linkImage.loadFavicon(forDomain: link.url.host)
     }
 
-    private func configureFavicon(forDomain domain: String?) {
-        let placeholder = #imageLiteral(resourceName: "GlobeSmall")
-        linkImage.image = placeholder
-
-        if let domain = domain {
-            let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
-
-            linkImage.kf.setImage(with: faviconUrl,
-                                  placeholder: placeholder,
-                                  options: [
-                                    .downloader(NotFoundCachingDownloader()),
-                                    .targetCache(ImageCache(name: BookmarksManager.imageCacheName))
-                                    ],
-                                  progressBlock: nil,
-                                  completionHandler: nil)
-        }
-    }
 }

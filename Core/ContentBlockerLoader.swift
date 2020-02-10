@@ -48,7 +48,7 @@ public class ContentBlockerLoader {
         for _ in 0 ..< numberOfRequests {
             semaphore.wait()
         }
-        os_log("ContentBlockerLoader completed %s", log: generalLog, type: .debug, self.newData.count)
+        os_log("ContentBlockerLoader completed %d", log: generalLog, type: .debug, self.newData.count)
         
         return !newData.isEmpty
     }
@@ -59,7 +59,7 @@ public class ContentBlockerLoader {
             if cache.update(config, with: info), let etag = etags[config] {
                 etagStorage.set(etag: etag, for: config)
             } else {
-                os_log("Failed to apply update to %s", log: generalLog, type: .debug, self.newData.count)
+                os_log("Failed to apply update to %d", log: generalLog, type: .debug, self.newData.count)
             }
         }
     }

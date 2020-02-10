@@ -59,7 +59,7 @@ public class SiteRating {
                 entityMapping: EntityMapping,
                 privacyPractices: PrivacyPractices) {
 
-        os_log("new SiteRating(url: %s, httpsForced: %s)", log: lifecycleLog, type: .debug, url.absoluteString, httpsForced)
+        os_log("new SiteRating(url: %s, httpsForced: %s)", log: lifecycleLog, type: .debug, url.absoluteString, String(describing: httpsForced))
 
         if let host = url.host, let entity = entityMapping.findEntity(forHost: host) {
             self.grade.setParentEntity(named: entity.displayName ?? "", withPrevalence: entity.prevalence ?? 0)

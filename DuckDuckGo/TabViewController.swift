@@ -907,15 +907,7 @@ extension TabViewController: WKNavigationDelegate {
                                  completion: completion)
             
         case .external(let action):
-
-            switch action {
-            case .open:
-                openExternally(url: url)
-            case .askForConfirmation:
-                presentOpenInExternalAppAlert(url: url)
-            case .cancel:
-                break
-            }
+            performExternalNavigationFor(url: url, action: action)
             
             completion(.cancel)
         case .unknown:
@@ -963,6 +955,17 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             completion(allowPolicy)
+        }
+    }
+    
+    private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {
+        switch action {
+        case .open:
+            openExternally(url: url)
+        case .askForConfirmation:
+            presentOpenInExternalAppAlert(url: url)
+        case .cancel:
+            break
         }
     }
     

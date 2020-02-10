@@ -24,7 +24,7 @@ class TabManager {
 
     private(set) var model: TabsModel
     
-    private var tabControllerCache = [Tab: TabViewController]()
+    private var tabControllerCache = [TabViewController]()
 
     private weak var delegate: TabDelegate?
 
@@ -35,7 +35,7 @@ class TabManager {
         let tab = model.tabs[index]
         if tab.link != nil {
             let controller = buildController(forTab: tab)
-            tabControllerCache[tab] = controller
+            tabControllerCache.append(controller)
         }
     }
 
@@ -58,14 +58,18 @@ class TabManager {
         let index = model.currentIndex
         let tab = model.tabs[index]
 
-        if let controller = tabControllerCache[tab] {
+        if let controller = controller(for: tab) {
             return controller
         } else {
             Logger.log(text: "Tab not in cache, creating")
             let controller = buildController(forTab: tab)
-            tabControllerCache[tab] = controller
+            tabControllerCache.append(controller)
             return controller
         }
+    }
+    
+    private func controller(for tab: Tab) -> TabViewController? {
+        return tabControllerCache.first { $0.tabModel === tab }
     }
 
     var isEmpty: Bool {
@@ -99,7 +103,7 @@ class TabManager {
 
         }
         let controller = buildController(forTab: tab, url: url)
-        tabControllerCache[tab] = controller
+        tabControllerCache.append(controller)
         
         save()
         return controller
@@ -115,7 +119,7 @@ class TabManager {
         let tab = Tab(link: link)
         tab.viewed = !inBackground
         let controller = buildController(forTab: tab, url: url)
-        tabControllerCache[tab] = controller
+        tabControllerCache.append(controller)
 
         let index = model.currentIndex
         if inBackground {
@@ -131,7 +135,7 @@ class TabManager {
     func remove(at index: Int) {
         let tab = model.get(tabAt: index)
         model.remove(tab: tab)
-        if let controller = tabControllerCache[tab] {
+        if let controller = controller(for: tab) {
             removeFromCache(controller)
         }
         save()
@@ -144,13 +148,15 @@ class TabManager {
     }
 
     private func removeFromCache(_ controller: TabViewController) {
-        tabControllerCache.removeValue(forKey: controller.tabModel)
+        if let index = tabControllerCache.firstIndex(of: controller) {
+            tabControllerCache.remove(at: index)
+        }
         controller.destroy()
     }
 
     func removeAll() {
         model.clearAll()
-        for controller in tabControllerCache.values {
+        for controller in tabControllerCache {
             removeFromCache(controller)
         }
         save()
@@ -172,7 +178,7 @@ class TabManager {
 extension TabManager: Themable {
     
     func decorate(with theme: Theme) {
-        for tabController in tabControllerCache.values {
+        for tabController in tabControllerCache {
             tabController.decorate(with: theme)
         }
     }

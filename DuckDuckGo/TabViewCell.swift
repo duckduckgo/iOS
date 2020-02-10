@@ -164,7 +164,6 @@ class TabViewCell: UICollectionViewCell {
         unread.isHidden = tab.viewed
 
         if tab.link == nil {
-            removeButton.isHidden = true
             var linkText = UserText.homeTabSearchOnly
             for component in AppDependencyProvider.shared.appSettings.homePage.components() {
                 switch component {

@@ -966,6 +966,9 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
+        if tabManager.count == 1 {
+            tabSwitcher.dismiss()
+        }
         closeTab(tab)
     }
     

@@ -320,7 +320,7 @@
 		9887DC252354D2AA005C85F5 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9887DC242354D2AA005C85F5 /* Database.swift */; };
 		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
-		988F3DCF237D5C0F00AEE34C /* ExternalSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F3DCE237D5C0F00AEE34C /* ExternalSchemeHandler.swift */; };
+		988F3DCF237D5C0F00AEE34C /* SchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */; };
 		988F3DD3237DE8D900AEE34C /* ForgetDataAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F3DD2237DE8D900AEE34C /* ForgetDataAlert.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
 		98982B3422F8D8E400578AC9 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98982B3322F8D8E400578AC9 /* Debounce.swift */; };
@@ -963,7 +963,7 @@
 		9887DC242354D2AA005C85F5 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
-		988F3DCE237D5C0F00AEE34C /* ExternalSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalSchemeHandler.swift; sourceTree = "<group>"; };
+		988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemeHandler.swift; sourceTree = "<group>"; };
 		988F3DD2237DE8D900AEE34C /* ForgetDataAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetDataAlert.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
 		98982B3322F8D8E400578AC9 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
@@ -2398,7 +2398,7 @@
 				830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */,
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
 				83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */,
-				988F3DCE237D5C0F00AEE34C /* ExternalSchemeHandler.swift */,
+				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
 				850559CF23CF647C0055C0D5 /* PreserveLogins.swift */,
 			);
 			name = Web;
@@ -3573,7 +3573,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		F17BA4411F1CD9D300460FFA /* Cathage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4034,7 +4034,7 @@
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,
 				F1134EC61F40E3B400B73467 /* AppVersion.swift in Sources */,
 				1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */,
-				988F3DCF237D5C0F00AEE34C /* ExternalSchemeHandler.swift in Sources */,
+				988F3DCF237D5C0F00AEE34C /* SchemeHandler.swift in Sources */,
 				9875E00722316B8400B1373F /* Instruments.swift in Sources */,
 				85C271D81FD0311A007216B4 /* HTTPSUpgradeParser.swift in Sources */,
 				8328AAAF212A3AE900293140 /* HashExtension.swift in Sources */,

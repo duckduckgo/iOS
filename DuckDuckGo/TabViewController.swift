@@ -498,30 +498,6 @@ class TabViewController: UIViewController {
             }
         }
     }
-
-    private func isExternallyHandled(url: URL, for navigationAction: WKNavigationAction) -> Bool {
-        let schemeType = ExternalSchemeHandler.schemeType(for: url)
-        
-        switch schemeType {
-        case .external(let action):
-            guard navigationAction.navigationType == .linkActivated else {
-                // Ignore extrnal URLs if not triggered by the User.
-                return true
-            }
-            switch action {
-            case .open:
-                openExternally(url: url)
-            case .askForConfirmation:
-                presentOpenInExternalAppAlert(url: url)
-            case .cancel:
-                break
-            }
-            
-            return true
-        case .other:
-            return false
-        }
-    }
     
     func presentOpenInExternalAppAlert(url: URL) {
         let title = UserText.customUrlSchemeTitle
@@ -921,10 +897,39 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if isExternallyHandled(url: url, for: navigationAction) {
+        let schemeType = SchemeHandler.schemeType(for: url)
+        
+        switch schemeType {
+        case .navigational:
+            performNavigationFor(url: url,
+                                 navigationAction: navigationAction,
+                                 allowPolicy: allowPolicy,
+                                 completion: completion)
+            
+        case .external(let action):
+
+            switch action {
+            case .open:
+                openExternally(url: url)
+            case .askForConfirmation:
+                presentOpenInExternalAppAlert(url: url)
+            case .cancel:
+                break
+            }
+            
             completion(.cancel)
-            return
+        case .unknown:
+            if navigationAction.navigationType == .linkActivated {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            completion(.cancel)
         }
+    }
+    
+    private func performNavigationFor(url: URL,
+                                      navigationAction: WKNavigationAction,
+                                      allowPolicy: WKNavigationActionPolicy,
+                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
@@ -942,7 +947,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(allowPolicy)
             return
         }
-
+        
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
@@ -952,7 +957,7 @@ extension TabViewController: WKNavigationDelegate {
                 completion(.cancel)
                 return
             }
-
+            
             completion(allowPolicy)
         }
     }

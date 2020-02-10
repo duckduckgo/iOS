@@ -635,7 +635,7 @@ class MainViewController: UIViewController {
 
     func newTab() {
         currentTab?.dismiss()
-        tabManager.addOrSelectHomeTab()
+        tabManager.addHomeTab()
         attachHomeScreen()
         homeController?.openedAsNewTab()
     }
@@ -962,7 +962,7 @@ extension MainViewController: TabSwitcherDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.onCancelPressed()
         }
-
+        
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {

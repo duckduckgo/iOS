@@ -88,10 +88,8 @@ class TabManager {
         return current!
     }
 
-    func addOrSelectHomeTab() {
-        if model.tabs.last?.link != nil {
-            model.add(tab: Tab())
-        }
+    func addHomeTab() {
+        model.add(tab: Tab())
         model.select(tabAt: model.count - 1)
     }
     
@@ -122,8 +120,6 @@ class TabManager {
         let index = model.currentIndex
         if inBackground {
             model.insert(tab: tab, at: index + 1)
-        } else if model.tabs.last?.link != nil {
-            model.add(tab: tab)
         } else {
             model.insert(tab: tab, at: model.count - 1)
         }

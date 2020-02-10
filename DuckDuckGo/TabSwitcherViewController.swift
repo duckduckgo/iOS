@@ -132,18 +132,17 @@ class TabSwitcherViewController: UIViewController {
         var newBookmarksCount: Int = 0
         var existingBookmarksCount: Int = 0
         
-        for aTab in tabs {
-            if let link = aTab.link {
+        tabs.forEach { tab in
+            if let link = tab.link {
                 if bookmarksManager.contains(url: link.url) {
                     existingBookmarksCount += 1
                 } else {
                     bookmarksManager.save(bookmark: link)
                     newBookmarksCount += 1
                 }
-            } else {
-                Logger.log(text: "no valid link found for tab \(aTab)")
             }
         }
+        
         return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
     }
     
@@ -285,16 +284,11 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return tabsModel.get(tabAt: indexPath.row).link != nil
+        return true
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-
-        if tabsModel.get(tabAt: proposedIndexPath.row).link == nil {
-            return originalIndexPath
-        }
-
         return proposedIndexPath
     }
     

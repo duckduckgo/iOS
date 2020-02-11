@@ -327,8 +327,10 @@ class TabViewController: UIViewController {
     }
     
     func updateUserAgent() {
-        let userAgent = tabModel.isDesktop ? UserAgent.desktop : nil
-        webView.customUserAgent = userAgent
+        webView.customUserAgent = tabModel.isDesktop ? UserAgent.desktop : nil
+        if #available(iOS 13, *) {
+            webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
+        }
     }
     
     func goBack() {

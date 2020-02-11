@@ -80,12 +80,16 @@ class TabViewController: UIViewController {
     
     public var url: URL? {
         didSet {
+            updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
         }
     }
     
-    public var name: String? {
-        return webView.title
+    override var title: String? {
+        didSet {
+            updateTabModel()
+            delegate?.tabLoadingStateDidChange(tab: self)
+        }
     }
     
     public var canGoBack: Bool {
@@ -118,7 +122,7 @@ class TabViewController: UIViewController {
             return tabModel.link
         }
         
-        let activeLink = Link(title: name, url: url)
+        let activeLink = Link(title: title, url: url)
         guard let storedLink = tabModel.link else {
             return activeLink
         }
@@ -156,6 +160,14 @@ class TabViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeBrowsingTips()
+    }
+    
+    func updateTabModel() {
+        if let url = url {
+            tabModel.link = Link(title: title, url: url)
+        } else {
+            tabModel.link = nil
+        }
     }
     
     func installBrowsingTips() {
@@ -213,6 +225,7 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
     }
     
     private func attachLongPressHandler(webView: WKWebView) {
@@ -263,21 +276,24 @@ class TabViewController: UIViewController {
         
         switch keyPath {
             
-        case WebViewKeyPaths.estimatedProgress:
+        case #keyPath(WKWebView.estimatedProgress):
             progressWorker.progressDidChange(webView.estimatedProgress)
             
-        case WebViewKeyPaths.hasOnlySecureContent:
+        case #keyPath(WKWebView.hasOnlySecureContent):
             hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
             
-        case WebViewKeyPaths.url:
-            urlDidChange()
+        case #keyPath(WKWebView.url):
+            self.url = self.webView.url
             
-        case WebViewKeyPaths.canGoBack:
+        case #keyPath(WKWebView.canGoBack):
             delegate?.tabLoadingStateDidChange(tab: self)
             
-        case WebViewKeyPaths.canGoForward:
+        case #keyPath(WKWebView.canGoForward):
             delegate?.tabLoadingStateDidChange(tab: self)
-            
+
+        case #keyPath(WKWebView.title):
+            title = webView.title
+
         default:
             Logger.log(text: "Unhandled keyPath \(keyPath)")
         }
@@ -287,12 +303,6 @@ class TabViewController: UIViewController {
         guard webView.url?.host == siteRating?.url.host else { return }
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
-    }
-    
-    private func urlDidChange() {
-        if self.url?.host == self.webView.url?.host {
-            self.url = self.webView.url
-        }
     }
     
     private func checkForReloadOnError() {
@@ -571,6 +581,7 @@ class TabViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
     }
 
     func destroy() {

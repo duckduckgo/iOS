@@ -81,7 +81,7 @@ class WebContainerViewController: UIViewController {
 
         switch keyPath {
 
-        case WebViewKeyPaths.estimatedProgress:
+        case #keyPath(WKWebView.estimatedProgress):
             progress = Float(webView?.estimatedProgress ?? 0.0)
 
         default:

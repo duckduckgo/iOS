@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import os.log
 
 extension TabViewController {
     func saveAsBookmark() {
@@ -33,7 +34,7 @@ extension TabViewController {
             bookmarksManager.save(bookmark: link)
             self.view.showBottomToast(UserText.webSaveBookmarkDone)
         } else {
-            Logger.log(text: "Invalid bookmark link found on bookmark long press")
+            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
         }
     }
 }

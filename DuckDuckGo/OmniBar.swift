@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import os.log
 
 extension OmniBar: NibLoading {}
 
@@ -123,7 +124,7 @@ class OmniBar: UIView {
 
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
-            Logger.log(text: "OmniBar entering \(newState.name) from \(state.name)")
+            os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
                 clear()
             }

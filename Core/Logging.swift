@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  Logging.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,17 +17,8 @@
 //  limitations under the License.
 //
 
-public struct Logger {
+import Foundation
+import os.log
 
-    public static func log(text: String) {
-        #if DEBUG
-            print(text, separator: " ", terminator: "\n")
-        #endif
-    }
-
-    public static func log(items: Any...) {
-        #if DEBUG
-            debugPrint(items, separator: " ", terminator: "\n")
-        #endif
-    }
-}
+public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG General")
+public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")

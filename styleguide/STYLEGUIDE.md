@@ -34,7 +34,7 @@ This won't be enforced by Swift Lint.
 
 ### Logging
 
-We currently use `Logger.log(text:String)` or `Logger.log(items: Any....)` for logging.  This may change in the future (e.g. `os_log`), but please continue to use the same approach for now.
+We use [unified logging system](https://developer.apple.com/documentation/os/logging) to capture log messages. To send a message to the logging system, call the `os_log` function. Please use debug log level to protect users' privacy.
 
 ### Unit test names
 

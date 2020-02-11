@@ -19,6 +19,7 @@
 
 import Core
 import WebKit
+import os.log
 
 class TabManager {
 
@@ -60,7 +61,7 @@ class TabManager {
         if let controller = cachedController(forTab: tab) {
             return controller
         } else {
-            Logger.log(text: "Tab not in cache, creating")
+            os_log("Tab not in cache, creating", log: generalLog, type: .debug)
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
             return controller

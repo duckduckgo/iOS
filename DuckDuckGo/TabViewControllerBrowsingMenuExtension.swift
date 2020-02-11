@@ -86,15 +86,8 @@ extension TabViewController {
         
         return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-            let saveCompletion: (Link) -> Void = { [weak self] updatedBookmark in
-                bookmarksManager.save(bookmark: updatedBookmark)
-                self?.view.showBottomToast(UserText.webSaveBookmarkDone)
-            }
-            let alert = EditBookmarkAlert.buildAlert(
-                title: UserText.alertSaveBookmark,
-                bookmark: link,
-                saveCompletion: saveCompletion)
-            self?.present(alert, animated: true, completion: nil)
+            bookmarksManager.save(bookmark: link)
+            self?.view.showBottomToast(UserText.webSaveBookmarkDone)
         }
     }
     
@@ -106,15 +99,8 @@ extension TabViewController {
 
         return UIAlertAction(title: UserText.actionSaveFavorite, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToFavorites)
-            let saveCompletion: (Link) -> Void = { [weak self] favorite in
-                bookmarksManager.save(favorite: favorite)
-                self?.view.showBottomToast(UserText.webSaveFavoriteDone)
-            }
-            let alert = EditBookmarkAlert.buildAlert(
-                title: UserText.alertSaveFavorite,
-                bookmark: link,
-                saveCompletion: saveCompletion)
-            self?.present(alert, animated: true, completion: nil)
+            bookmarksManager.save(favorite: link)
+            self?.view.showBottomToast(UserText.webSaveFavoriteDone)
         }
     }
 

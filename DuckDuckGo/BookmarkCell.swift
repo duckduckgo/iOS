@@ -28,7 +28,16 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var title: UILabel!
 
-    private(set) var link: Link?
+    var link: Link? {
+        didSet {
+            if let linkTitle = link?.title?.trimWhitespace(), !linkTitle.isEmpty {
+                title.text = linkTitle
+            } else {
+                title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
+            }
+            linkImage.loadFavicon(forDomain: link?.url.host)
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,12 +47,6 @@ class BookmarkCell: UITableViewCell {
     override func setEditing(_ editing: Bool, animated: Bool) {
         linkImage.isHidden = editing
         super.setEditing(editing, animated: animated)
-    }
-
-    func update(withLink link: Link) {
-        self.link = link
-        title.text = link.title
-        linkImage.loadFavicon(forDomain: link.url.host)
     }
 
 }

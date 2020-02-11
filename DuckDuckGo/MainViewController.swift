@@ -1052,7 +1052,11 @@ extension MainViewController: AutoClearWorker {
         
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
-        WebCacheManager.shared.clear { }
+
+        let pixel = TimedPixel(.forgetAllDataCleared)
+        WebCacheManager.shared.clear {
+            pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+        }
     }
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {

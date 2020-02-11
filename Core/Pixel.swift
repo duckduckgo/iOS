@@ -28,7 +28,8 @@ public enum PixelName: String {
     case forgetAllPressedBrowsing = "mf_bp"
     case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
-    
+    case forgetAllDataCleared = "mf_dc"
+
     case privacyDashboardOpened = "mp"
     case privacyDashboardScorecard = "mp_c"
     case privacyDashboardEncryption = "mp_e"
@@ -230,7 +231,8 @@ public struct PixelParameters {
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
     static let underlyingErrorDesc = "ud"
-    
+
+    public static let tabCount = "tc"
 }
 
 public struct PixelValues {
@@ -305,9 +307,11 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date()) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String?] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
-        Pixel.fire(pixel: pixel, withAdditionalParameters: [PixelParameters.duration: duration])
+        var newParams = params
+        newParams[PixelParameters.duration] = duration
+        Pixel.fire(pixel: pixel, withAdditionalParameters: newParams)
     }
     
 }

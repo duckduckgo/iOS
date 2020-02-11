@@ -21,6 +21,7 @@ import Foundation
 import UIKit
 import Core
 import UserNotifications
+import os.log
 
 class LocalNotifications: NSObject {
     
@@ -80,7 +81,7 @@ class LocalNotifications: NSObject {
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                Logger.log(items: "Failed to schedule notification. \(error.localizedDescription)")
+                os_log("Failed to schedule notification. %s", log: generalLog, type: .debug, error.localizedDescription)
             }
         }
     }

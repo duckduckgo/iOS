@@ -19,6 +19,7 @@
 
 import Foundation
 import Alamofire
+import os.log
 
 public class HTTPSUpgrade {
 
@@ -63,7 +64,7 @@ public class HTTPSUpgrade {
         }
         
         let isLocallyUpgradable = !isLocalListReloading() && isInLocalUpgradeList(host: host)
-        Logger.log(text: "\(host) \(isLocallyUpgradable ? "is" : "is not") locally upgradable")
+        os_log("%s %s locally upgradable", log: generalLog, type: .debug, host, isLocallyUpgradable ? "is" : "is not")
         if  isLocallyUpgradable {
             Pixel.fire(pixel: .httpsLocalUpgrade)
             completion(true)
@@ -71,7 +72,7 @@ public class HTTPSUpgrade {
         }
         
         isInServiceUpgradeList(host: host) { result in
-            Logger.log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
+            os_log("%s %s service upgradable", log: generalLog, type: .debug, host, result.isInList ? "is" : "is not")
             if result.isInList {
                 Pixel.fire(pixel: result.isCached ? .httpsServiceCacheUpdgrade : .httpsServiceRequestUpgrade)
                 completion(true)
@@ -123,7 +124,7 @@ public class HTTPSUpgrade {
     
     public func loadData() {
         if !dataReloadLock.try() {
-            Logger.log(text: "Reload already in progress")
+            os_log("Reload already in progress", log: generalLog, type: .debug)
             return
         }
         bloomFilter = store.bloomFilter()

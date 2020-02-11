@@ -2,6 +2,9 @@
 disabled_rules:
   - trailing_whitespace
 
+# Raise an error when there is 1 or more violations
+warning_threshold: 1
+
 # Rule Config
 line_length: 150
 identifier_name:

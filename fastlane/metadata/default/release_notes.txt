@@ -1,2 +1,1 @@
-• You can now customize your app icon from settings!
-• Other minor bug fixes and improvements.
+• You can now choose to stay signed in to websites when clearing data. Head over to settings to enable this feature.

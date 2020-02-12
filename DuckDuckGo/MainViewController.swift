@@ -346,7 +346,6 @@ class MainViewController: UIViewController {
     }
 
     func loadUrlInNewTab(_ url: URL) {
-        print(#function, "***")
         allowContentUnderflow = false
         customNavigationBar.alpha = 1
         loadViewIfNeeded()

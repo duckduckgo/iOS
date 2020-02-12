@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import WebKit
+import os.log
 
 class TabSwitcherViewController: UIViewController {
 
@@ -121,7 +122,7 @@ class TabSwitcherViewController: UIViewController {
             view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
-            Logger.log(text: "Failed to save \(failedToSaveCount) tabs")
+            os_log("Failed to save %d tabs", log: generalLog, type: .debug, failedToSaveCount)
             view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
         }
     }
@@ -140,6 +141,8 @@ class TabSwitcherViewController: UIViewController {
                     bookmarksManager.save(bookmark: link)
                     newBookmarksCount += 1
                 }
+            } else {
+                os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
             }
         }
         

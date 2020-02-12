@@ -19,6 +19,7 @@
 
 import Foundation
 import CoreData
+import os.log
 
 public protocol HTTPSUpgradeStore {
     
@@ -72,7 +73,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     }
     
     public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
-        Logger.log(items: "HTTPS Bloom Filter", bloomFilterPath)
+        os_log("HTTPS Bloom Filter %s", log: generalLog, type: .debug, bloomFilterPath.absoluteString)
         guard data.sha256 == specification.sha256 else { return false }
         guard persistBloomFilter(data: data) else { return false }
         persistBloomFilterSpecification(specification)

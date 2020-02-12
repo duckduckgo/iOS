@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import os.log
 
 class AutocompleteViewController: UIViewController {
     
@@ -120,7 +121,7 @@ class AutocompleteViewController: UIViewController {
         lastRequest = AutocompleteRequest(query: query, parser: parser)
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let suggestions = suggestions, error == nil else {
-                Logger.log(items: error ?? "Failed to retrieve suggestions")
+                os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
                 return
             }
             self?.updateSuggestions(suggestions)

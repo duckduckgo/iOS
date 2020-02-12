@@ -122,11 +122,7 @@ class TabManager {
         tabControllerCache.append(controller)
 
         let index = model.currentIndex
-        if inBackground {
-            model.insert(tab: tab, at: index + 1)
-        } else {
-            model.insert(tab: tab, at: model.count - 1)
-        }
+        model.insert(tab: tab, at: index + 1)
 
         save()
         return controller

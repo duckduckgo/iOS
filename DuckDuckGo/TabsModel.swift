@@ -92,8 +92,7 @@ public class TabsModel: NSObject, NSCoding {
     }
 
     func insert(tab: Tab, at index: Int) {
-        currentIndex = max(0, index)
-        tabs.insert(tab, at: currentIndex)
+        tabs.insert(tab, at: max(0, index))
     }
     
     func moveTab(from sourceIndex: Int, to destIndex: Int) {

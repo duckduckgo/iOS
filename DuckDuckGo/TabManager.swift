@@ -125,6 +125,10 @@ class TabManager {
         let index = model.currentIndex
         model.insert(tab: tab, at: index + 1)
 
+        if !inBackground {
+            model.select(tabAt: index + 1)
+        }
+
         save()
         return controller
     }

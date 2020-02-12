@@ -45,11 +45,11 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
     
     private func loadInitialContent() {
-        if variantManager.isSupported(feature: .onboardingCTA) {
+//        if variantManager.isSupported(feature: .onboardingCTA) {
             controllerNames = ["onboardingSummary", "onboardingHomeRow"]
-        } else {
-            controllerNames = ["onboardingSummary"]
-        }
+//        } else {
+            controllerNames = ["onboardingSummary", "onboardingHomeRow"]
+//        }
         
         guard let name = controllerNames.first,
             let controller = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController else {

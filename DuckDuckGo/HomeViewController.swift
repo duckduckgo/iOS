@@ -58,7 +58,6 @@ class HomeViewController: UIViewController {
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-    weak var homeRowCTAController: UIViewController?
     
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
@@ -121,41 +120,18 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         Pixel.fire(pixel: .homeScreenShown)
-        
-        if HomeRowCTA().shouldShow() {
-            showHomeRowCTA()
-        }
-        
         installHomeScreenTips()
-        
         viewHasAppeared = true
     }
     
-    func resetHomeRowCTAAnimations(variantManager: VariantManager = DefaultVariantManager()) {
+    func resetHomeRowCTAAnimations() {
         installHomeScreenTips()
-
-        if HomeRowCTA().shouldShow() {
-            showHomeRowCTA()
-        }
     }
 
     @IBAction func hideKeyboard() {
         // without this the keyboard hides instantly and abruptly
         UIView.animate(withDuration: 0.5) {
             self.chromeDelegate?.omniBar.resignFirstResponder()
-        }
-    }
-
-    @IBAction func showInstructions() {
-        delegate?.showInstructions(self)
-        dismissInstructions()
-    }
-
-    @IBAction func dismissInstructions() {
-        HomeRowCTA().dismissed()
-        hideHomeRowCTA()
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
         }
     }
 
@@ -177,24 +153,6 @@ class HomeViewController: UIViewController {
         if viewHasAppeared {
             UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
         }
-    }
-
-    private func hideHomeRowCTA() {
-        homeRowCTAController?.view.removeFromSuperview()
-        homeRowCTAController?.removeFromParent()
-        homeRowCTAController = nil
-    }
-
-    private func showHomeRowCTA(variantManager: VariantManager = DefaultVariantManager()) {
-        guard !variantManager.isSupported(feature: .alertCTA),
-            homeRowCTAController == nil else { return }
-        
-        let childViewController = UnifiedAddToHomeRowCTAViewController.loadFromStoryboard()
-        addChild(childViewController)
-        view.addSubview(childViewController.view)
-        childViewController.view.frame = view.bounds
-        childViewController.didMove(toParent: self)
-        self.homeRowCTAController = childViewController
     }
 
     func load(url: URL) {

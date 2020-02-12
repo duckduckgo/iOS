@@ -38,4 +38,5 @@ extension TabsModel {
         let data = NSKeyedArchiver.archivedData(withRootObject: self)
         UserDefaults.standard.set(data, forKey: Constants.key)
     }
+    
 }

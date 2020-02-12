@@ -298,3 +298,7 @@
 "preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
 "preserveLogins.domain.list.title" = "Signed In Websites";
 "preserveLogins.sign.out" = "Sign Out";
+
+"homeTab.searchOnly" = "Search in a new tab";
+"homeTab.searchAndFavorites" = "Search and favorites in a new tab";
+"homeTab.title" = "Home";

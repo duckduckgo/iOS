@@ -32,8 +32,9 @@ class TabManager {
     init(model: TabsModel, delegate: TabDelegate) {
         self.model = model
         self.delegate = delegate
-        if let index = model.currentIndex {
-            let tab = model.tabs[index]
+        let index = model.currentIndex
+        let tab = model.tabs[index]
+        if tab.link != nil {
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
         }
@@ -47,7 +48,7 @@ class TabManager {
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.isEmpty)
+        controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: !model.hasActiveTabs)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         return controller
@@ -55,10 +56,10 @@ class TabManager {
 
     var current: TabViewController? {
 
-        guard let index = model.currentIndex else { return nil }
+        let index = model.currentIndex
         let tab = model.tabs[index]
 
-        if let controller = cachedController(forTab: tab) {
+        if let controller = controller(for: tab) {
             return controller
         } else {
             os_log("Tab not in cache, creating", log: generalLog, type: .debug)
@@ -66,6 +67,10 @@ class TabManager {
             tabControllerCache.append(controller)
             return controller
         }
+    }
+    
+    private func controller(for tab: Tab) -> TabViewController? {
+        return tabControllerCache.first { $0.tabModel === tab }
     }
 
     var isEmpty: Bool {
@@ -80,12 +85,6 @@ class TabManager {
         return model.count
     }
 
-    func clearSelection() {
-        current?.dismiss()
-        model.clearSelection()
-        save()
-    }
-
     func select(tabAt index: Int) -> TabViewController {
         current?.dismiss()
         model.select(tabAt: index)
@@ -94,6 +93,23 @@ class TabManager {
         return current!
     }
 
+    func addHomeTab() {
+        model.add(tab: Tab())
+        model.select(tabAt: model.count - 1)
+    }
+    
+    func loadUrlInCurrentTab(_ url: URL) -> TabViewController {
+        guard let tab = model.currentTab else {
+            fatalError("No current tab")
+
+        }
+        let controller = buildController(forTab: tab, url: url)
+        tabControllerCache.append(controller)
+        
+        save()
+        return controller
+    }
+    
     func add(url: URL?, inBackground: Bool = false) -> TabViewController {
 
         if !inBackground {
@@ -106,10 +122,11 @@ class TabManager {
         let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
 
-        if let index = model.currentIndex, inBackground {
-            model.insert(tab: tab, at: index + 1)
-        } else {
-            model.add(tab: tab)
+        let index = model.currentIndex
+        model.insert(tab: tab, at: index + 1)
+
+        if !inBackground {
+            model.select(tabAt: index + 1)
         }
 
         save()
@@ -119,7 +136,7 @@ class TabManager {
     func remove(at index: Int) {
         let tab = model.get(tabAt: index)
         model.remove(tab: tab)
-        if let controller = cachedController(forTab: tab) {
+        if let controller = controller(for: tab) {
             removeFromCache(controller)
         }
         save()
@@ -136,15 +153,6 @@ class TabManager {
             tabControllerCache.remove(at: index)
         }
         controller.destroy()
-    }
-
-    private func cachedController(forTab tab: Tab) -> TabViewController? {
-        let controller = tabControllerCache.filter({ $0.tabModel === tab }).first
-        if let link = controller?.link {
-            tab.link = link
-            save()
-        }
-        return controller
     }
 
     func removeAll() {

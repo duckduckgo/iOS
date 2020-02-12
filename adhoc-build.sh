@@ -8,10 +8,13 @@ if [ -n "$2" ]; then
    SUFFIX="$2-"
 fi
 
-NAME="$1/DuckDuckGo-$SUFFIX`date "+%Y-%m-%d-%H-%M"`.ipa"
+NAME="DuckDuckGo-$SUFFIX`date "+%Y-%m-%d-%H-%M"`"
 echo Building $NAME
 echo
 
-fastlane gym --export_method ad-hoc --scheme DuckDuckGo -n DuckDuckGo-$SUFFIX`date "+%Y-%m-%d-%H-%M"`.ipa -o $1
+xcodebuild -scheme DuckDuckGo clean archive -configuration release -sdk iphoneos -archivePath $1/$NAME.xcarchive
+xcodebuild -exportArchive -archivePath $1/$NAME.xcarchive -exportOptionsPlist ./adhocExportOptions.plist -exportPath $1/$NAME
+
+mv $1/$NAME.xcarchive/DuckDuckGo.ipa $1/$NAME.xcarchive/$NAME.ipa
 
 open $1

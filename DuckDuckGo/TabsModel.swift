@@ -27,23 +27,35 @@ public class TabsModel: NSObject, NSCoding {
         static let tabs = "tabs"
     }
 
-    private(set) var currentIndex: Int?
+    private(set) var currentIndex: Int
     private(set) var tabs: [Tab]
 
     var hasUnread: Bool {
         return tabs.contains(where: { !$0.viewed })
     }
     
-    public init(tabs: [Tab] = [Tab](), currentIndex: Int? = nil) {
+    public init(tabs: [Tab] = [Tab()], currentIndex: Int = 0) {
         self.tabs = tabs
         self.currentIndex = currentIndex
     }
 
     public convenience required init?(coder decoder: NSCoder) {
         guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
-        var currentIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int
-        if let index = currentIndex, index < 0 || index >= tabs.count {
-            currentIndex = nil
+
+        // we migrated from an optional int to an actual int
+        var currentIndex = 0
+        if decoder.containsValue(forKey: NSCodingKeys.currentIndex) {
+            
+            if let storedIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int {
+                currentIndex = storedIndex
+            } else {
+                currentIndex = decoder.decodeInteger(forKey: NSCodingKeys.currentIndex)
+            }
+            
+        }
+        
+        if currentIndex < 0 || currentIndex >= tabs.count {
+            currentIndex = 0
         }
         self.init(tabs: tabs, currentIndex: currentIndex)
     }
@@ -53,12 +65,8 @@ public class TabsModel: NSObject, NSCoding {
         coder.encode(currentIndex, forKey: NSCodingKeys.currentIndex)
     }
 
-    var isEmpty: Bool {
-        return tabs.isEmpty
-    }
-    
     var currentTab: Tab? {
-        guard let index = currentIndex else { return nil }
+        let index = currentIndex
         return tabs[index]
     }
 
@@ -66,12 +74,12 @@ public class TabsModel: NSObject, NSCoding {
         return tabs.count
     }
 
-    func select(tabAt index: Int) {
-        currentIndex = index
+    var hasActiveTabs: Bool {
+        return tabs.count > 1 || tabs.last?.link != nil
     }
 
-    func clearSelection() {
-        currentIndex = nil
+    func select(tabAt index: Int) {
+        currentIndex = index
     }
 
     func get(tabAt index: Int) -> Tab {
@@ -80,11 +88,11 @@ public class TabsModel: NSObject, NSCoding {
 
     func add(tab: Tab) {
         tabs.append(tab)
-        currentIndex = indexOf(tab: tab)
+        currentIndex = tabs.count - 1
     }
 
     func insert(tab: Tab, at index: Int) {
-        tabs.insert(tab, at: index)
+        tabs.insert(tab, at: max(0, index))
     }
     
     func moveTab(from sourceIndex: Int, to destIndex: Int) {
@@ -98,7 +106,7 @@ public class TabsModel: NSObject, NSCoding {
         tabs.insert(tab, at: destIndex)
         
         if let reselectTab = previouslyCurrentTab {
-            currentIndex = indexOf(tab: reselectTab)
+            currentIndex = indexOf(tab: reselectTab) ?? 0
         }
     }
 
@@ -106,10 +114,11 @@ public class TabsModel: NSObject, NSCoding {
 
         tabs.remove(at: index)
 
-        guard let current = currentIndex else { return }
+        let current = currentIndex
 
         if tabs.isEmpty {
-            currentIndex = nil
+            tabs.append(Tab())
+            currentIndex = 0
             return
         }
 
@@ -127,11 +136,12 @@ public class TabsModel: NSObject, NSCoding {
     }
 
     func indexOf(tab: Tab) -> Int? {
-        return tabs.firstIndex { $0 === tab }        
+        return tabs.firstIndex { $0 === tab }
     }
 
     func clearAll() {
         tabs.removeAll()
-        currentIndex = nil
+        tabs.append(Tab())
+        currentIndex = 0
     }
 }

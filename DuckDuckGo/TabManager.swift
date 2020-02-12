@@ -47,7 +47,9 @@ class TabManager {
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.isEmpty)
+        controller.attachWebView(configuration: configuration,
+                                 andLoadRequest: url == nil ? nil : URLRequest(url: url!),
+                                 consumeCookies: model.isEmpty)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         return controller
@@ -92,6 +94,26 @@ class TabManager {
 
         save()
         return current!
+    }
+
+    func addURLRequest(_ request: URLRequest,
+                       withConfiguration configuration: WKWebViewConfiguration) -> TabViewController {
+
+        guard let configCopy = configuration.copy() as? WKWebViewConfiguration else {
+            fatalError("Failed to copy configuration")
+        }
+
+        let tab = Tab(link: request.url == nil ? nil : Link(title: nil, url: request.url!))
+        model.add(tab: tab)
+
+        let controller = TabViewController.loadFromStoryboard(model: tab)
+        controller.attachWebView(configuration: configCopy, andLoadRequest: request, consumeCookies: model.isEmpty)
+        controller.delegate = delegate
+        controller.loadViewIfNeeded()
+        tabControllerCache.append(controller)
+
+        save()
+        return controller
     }
 
     func add(url: URL?, inBackground: Bool = false) -> TabViewController {

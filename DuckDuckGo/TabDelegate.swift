@@ -24,7 +24,13 @@ protocol TabDelegate: class {
 
     func tabDidRequestNewTab(_ tab: TabViewController)
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, animated: Bool)
+    func tab(_ tab: TabViewController,
+             didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
+             for navigationAction: WKNavigationAction) -> WKWebView?
+
+    func tabDidRequestClose(_ tab: TabViewController)
+
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool)
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL)
     

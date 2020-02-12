@@ -267,7 +267,7 @@ class MainViewController: UIViewController {
     }
 
     private func loadInitialView() {
-        if let tab = currentTab {
+        if let tab = currentTab, tab.link != nil {
             addToView(tab: tab)
             refreshControls()
         } else {
@@ -286,6 +286,7 @@ class MainViewController: UIViewController {
         findInPageView.isHidden = true
         chromeManager.detach()
         
+        currentTab?.dismiss()
         removeHomeScreen()
 
         let controller = HomeViewController.loadFromStoryboard()
@@ -296,7 +297,6 @@ class MainViewController: UIViewController {
 
         addToView(controller: controller)
 
-        tabManager.clearSelection()
         refreshControls()
     }
 
@@ -351,6 +351,8 @@ class MainViewController: UIViewController {
         loadViewIfNeeded()
         addTab(url: url)
         refreshOmniBar()
+        refreshTabIcon()
+        refreshControls()
     }
 
     func launchNewSearch() {
@@ -366,11 +368,12 @@ class MainViewController: UIViewController {
     }
 
     func loadUrl(_ url: URL) {
-        if let currentTab = currentTab {
-            currentTab.load(url: url)
-        } else {
-            loadUrlInNewTab(url)
-        }
+        customNavigationBar.alpha = 1
+        allowContentUnderflow = false
+        currentTab?.load(url: url)
+        guard let tab = currentTab else { fatalError("no tab") }
+        select(tab: tab)
+        omniBar.resignFirstResponder()
     }
 
     private func addTab(url: URL?) {
@@ -385,8 +388,12 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
-        addToView(tab: tab)
-        refreshControls()
+        if tab.link == nil {
+            attachHomeScreen()
+        } else {
+            addToView(tab: tab)
+            refreshControls()
+        }
     }
 
     private func addToView(tab: TabViewController) {
@@ -430,7 +437,7 @@ class MainViewController: UIViewController {
     }
 
     private func refreshOmniBar() {
-        guard let tab = currentTab else {
+        guard let tab = currentTab, tab.link != nil else {
             omniBar.stopBrowsing()
             return
         }
@@ -626,6 +633,8 @@ class MainViewController: UIViewController {
     }
 
     func newTab() {
+        currentTab?.dismiss()
+        tabManager.addHomeTab()
         attachHomeScreen()
         homeController?.openedAsNewTab()
     }
@@ -823,7 +832,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-        loadUrlInNewTab(url)
+       loadUrl(url)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -944,12 +953,21 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
+
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
         select(tabAt: index)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.onCancelPressed()
+        }
+        
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
+        if tabManager.count == 1 {
+            tabSwitcher.dismiss()
+        }
         closeTab(tab)
     }
     

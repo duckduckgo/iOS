@@ -27,6 +27,6 @@ var isPortrait: Bool {
 }
 
 /// Shortcut to `UIDevice.current.userInterfaceIdiom == .pad`
-var isPad: Bool {
+public var isPad: Bool {
     return UIDevice.current.userInterfaceIdiom == .pad
 }

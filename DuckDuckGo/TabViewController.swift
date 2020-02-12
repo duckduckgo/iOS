@@ -960,7 +960,6 @@ extension TabViewController: WKNavigationDelegate {
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
             delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true)
-            print("***", #function)
             completion(.cancel)
             return
         }
@@ -1028,7 +1027,6 @@ extension TabViewController: WKUIDelegate {
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        print("***", #function)
         return delegate?.tab(self, didRequestNewWebViewWithConfiguration: configuration, for: navigationAction)
     }
 

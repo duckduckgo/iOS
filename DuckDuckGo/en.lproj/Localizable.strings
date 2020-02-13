@@ -286,6 +286,7 @@
 "onboardingContinue" = "Continue";
 "onboardingSkip" = "Skip";
 "onboardingStartBrowsing" = "Start Browsing";
+"onboardingSetAppIcon" = "Set App Icon";
 "onboardingNotificationsAccept" = "Turn on Notifications";
 "onboardingNotificationsDeny" = "Not now";
 

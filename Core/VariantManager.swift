@@ -25,7 +25,7 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
-    case iconOnboarding
+    case appIconOnboarding
     
     case privacyOnHomeScreen
 }
@@ -41,7 +41,7 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, features: []),
         
         Variant(name: "mg", weight: 1, features: []),
-        Variant(name: "my", weight: doNotAllocate, features: [.iconOnboarding]),
+        Variant(name: "my", weight: doNotAllocate, features: [.appIconOnboarding]),
         
         Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
     ]

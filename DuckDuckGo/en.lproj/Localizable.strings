@@ -133,6 +133,7 @@
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
 "home.row.onboarding.header" = "Add DuckDuckGo to your home screen!";
+"home.row.onboarding.iconHeader" = "Excellent! For quick access place it on your home screen!";
 
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 

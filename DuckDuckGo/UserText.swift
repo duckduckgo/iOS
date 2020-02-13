@@ -252,4 +252,8 @@ public struct UserText {
     public static let preserveLoginsSwitchFooter = NSLocalizedString("preserveLogins.switch.footer", comment: "Preserve logins switch footer")
     public static let preserveLoginsSignOut = NSLocalizedString("preserveLogins.sign.out", comment: "Preserve logins clear all prompt")
 
+    public static let homeTabSearchOnly = NSLocalizedString("homeTab.searchOnly", comment: "Home tab search only")
+    public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")
+    public static let homeTabTitle = NSLocalizedString("homeTab.title", comment: "Home tab title")
+
 }

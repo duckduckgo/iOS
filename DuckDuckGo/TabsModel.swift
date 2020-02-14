@@ -40,7 +40,7 @@ public class TabsModel: NSObject, NSCoding {
     }
 
     public convenience required init?(coder decoder: NSCoder) {
-        guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
+        guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab], !tabs.isEmpty else { return nil }
 
         // we migrated from an optional int to an actual int
         var currentIndex = 0

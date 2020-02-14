@@ -47,7 +47,9 @@ class TabViewController: UIViewController {
     var longPressGestureRecognizer: UILongPressGestureRecognizer?
     
     private let instrumentation = TabInstrumentation()
-   
+
+    var openedByPage = false
+    
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     var findInPage: FindInPage?
@@ -183,7 +185,7 @@ class TabViewController: UIViewController {
         shouldReloadOnError = true
     }
     
-    func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?, consumeCookies: Bool) {
+    func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -202,24 +204,31 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
-        let controller = webView.configuration.userContentController
-        controller.add(self, name: MessageHandlerNames.trackerDetected)
-        controller.add(self, name: MessageHandlerNames.possibleLogin)
-        controller.add(self, name: MessageHandlerNames.signpost)
-        controller.add(self, name: MessageHandlerNames.log)
-        controller.add(self, name: MessageHandlerNames.findInPageHandler)
+
+        removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
+        addMessageHandlers()
+
         reloadScripts()
         updateUserAgent()
         
         instrumentation.didPrepareWebView()
 
         if consumeCookies {
-            consumeCookiesThenLoadUrl(url)
-        } else if let url = url {
-            load(url: url)
+            consumeCookiesThenLoadRequest(request)
+        } else if let request = request {
+            load(urlRequest: request)
         }
     }
-    
+
+    private func addMessageHandlers() {
+        let controller = webView.configuration.userContentController
+        controller.add(self, name: MessageHandlerNames.trackerDetected)
+        controller.add(self, name: MessageHandlerNames.possibleLogin)
+        controller.add(self, name: MessageHandlerNames.signpost)
+        controller.add(self, name: MessageHandlerNames.log)
+        controller.add(self, name: MessageHandlerNames.findInPageHandler)
+    }
+
     private func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
@@ -236,16 +245,16 @@ class TabViewController: UIViewController {
         longPressGestureRecognizer = gestrueRecognizer
     }
     
-    private func consumeCookiesThenLoadUrl(_ url: URL?) {
+    private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.shared.consumeCookies { [weak self] in
                 guard let strongSelf = self else { return }
                 
-                if let url = url {
-                    strongSelf.load(url: url)
+                if let request = request {
+                    strongSelf.load(urlRequest: request)
                 }
                 
-                if url != nil {
+                if request != nil {
                     strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
                     strongSelf.onWebpageDidStartLoading(httpsForced: false)
                 }
@@ -567,7 +576,10 @@ class TabViewController: UIViewController {
         tearDownExecuted = true
         removeObservers()
         webView.removeFromSuperview()
+        removeMessageHandlers()
+    }
 
+    private func removeMessageHandlers() {
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.possibleLogin)
@@ -947,7 +959,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url, animated: true)
+            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true)
             completion(.cancel)
             return
         }
@@ -1010,18 +1022,25 @@ extension TabViewController: PrivacyProtectionDelegate {
 }
 
 extension TabViewController: WKUIDelegate {
+
     public func webView(_ webView: WKWebView,
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        webView.load(navigationAction.request)
-        return nil
+        return delegate?.tab(self, didRequestNewWebViewWithConfiguration: configuration, for: navigationAction)
     }
-    
+
+    func webViewDidClose(_ webView: WKWebView) {
+        if openedByPage {
+            delegate?.tabDidRequestClose(self)
+        }
+    }
+
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
+
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

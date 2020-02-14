@@ -78,16 +78,6 @@ public class PreserveLogins {
         }
     }
     
-    public var prompted: Bool {
-        get {
-            return userDefaults.bool(forKey: Constants.userPromptedKey)
-        }
-        
-        set {
-            userDefaults.set(newValue, forKey: Constants.userPromptedKey)
-        }
-    }
-
     private var userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults = UserDefaults.standard) {
@@ -140,8 +130,7 @@ extension PreserveLogins {
         }
 
         return [
-            "pls": value,
-            "plu": PreserveLogins.shared.prompted ? "n" : "e"
+            "pls": value
         ]
     }
 

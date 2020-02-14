@@ -62,7 +62,8 @@ public class PreserveLogins {
 
     public var userDecision: UserDecision {
         get {
-            return UserDecision(rawValue: userDefaults.integer(forKey: Constants.userDecisionKey))!
+            let decision = userDefaults.object(forKey: Constants.userDecisionKey) as? Int ?? UserDecision.unknown.rawValue
+            return UserDecision(rawValue: decision)!
         }
         
         set {

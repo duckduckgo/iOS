@@ -67,12 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            
-            // Force the prompt for new users only, and only if they are on iOS 13 or better
-            if #available(iOS 13, *) {
-                PreserveLogins.shared.userDecision = .unknown
-                PreserveLogins.shared.prompted = true
-            }
         }
 
         if let main = mainViewController {

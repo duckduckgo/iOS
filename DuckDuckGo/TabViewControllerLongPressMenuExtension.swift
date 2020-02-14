@@ -76,7 +76,7 @@ extension TabViewController {
     
     private func onNewTabAction(url: URL) {
         Pixel.fire(pixel: .longPressMenuNewTabItem)
-        delegate?.tab(self, didRequestNewTabForUrl: url, animated: false)
+        delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
     }
     
     private func onBackgroundTabAction(url: URL) {
@@ -152,7 +152,7 @@ extension TabViewController {
         let tabController = TabViewController.loadFromStoryboard(model: tab)
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
-        tabController.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: false)
+        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest(url: url), consumeCookies: false)
         tabController.loadViewIfNeeded()
         return tabController
     }

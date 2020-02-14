@@ -103,7 +103,8 @@ class TabManager {
         }
 
         let tab = Tab(link: request.url == nil ? nil : Link(title: nil, url: request.url!))
-        model.add(tab: tab)
+        model.insert(tab: tab, at: model.currentIndex + 1)
+        model.select(tabAt: model.currentIndex + 1)
 
         let controller = TabViewController.loadFromStoryboard(model: tab)
         controller.attachWebView(configuration: configCopy, andLoadRequest: request, consumeCookies: !model.hasActiveTabs)

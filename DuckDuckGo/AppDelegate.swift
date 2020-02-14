@@ -73,6 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 PreserveLogins.shared.userDecision = .unknown
                 PreserveLogins.shared.prompted = true
             }
+            
+            // Remove users with devices that does not support App Icon switching
+            return AppIconManager.shared.isAppIconChangeSupported
         }
 
         if let main = mainViewController {

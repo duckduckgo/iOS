@@ -26,6 +26,7 @@ class AppIconManager {
     static var shared = AppIconManager()
 
     var isAppIconChangeSupported: Bool {
+        return false
         if #available(iOS 10.3, *) {
             return UIApplication.shared.supportsAlternateIcons
         } else {

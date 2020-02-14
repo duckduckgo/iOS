@@ -212,6 +212,7 @@ public enum PixelName: String {
     case fileStoreWriteFailed = "m_d_fswf"
     
     case webKitDidTerminate = "m_d_wkt"
+    case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"

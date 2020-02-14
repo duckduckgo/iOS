@@ -3519,7 +3519,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$BITRISE_PROJECT_PATH\" ]; then\n    echo \"$BITRISE_PROJECT_PATH\"\n    exit 1\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n   if [ ! -z \"$BITRISE_PROJECT_PATH\" ] || [ \"$CONFIGURATION\" = \"Release\" ]; then\n       swiftlint lint --strict\n   else\n       swiftlint lint\n   fi\nelse\n   echo \"error: SwiftLint not installed. Install using \\`brew install swiftlint\\`\"\n   exit 1\nfi\n";
 		};
 		85F21DB92110817C002631A6 /* Carthage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

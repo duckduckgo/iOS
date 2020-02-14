@@ -29,8 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
-
-
+    
     private var testing = false
     private var appIsLaunching = false
     var overlayWindow: UIWindow?

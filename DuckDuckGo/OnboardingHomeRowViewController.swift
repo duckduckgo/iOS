@@ -54,9 +54,6 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     }
     
     override var continueButtonTitle: String {
-        if DefaultVariantManager().isSupported(feature: .appIconOnboarding) {
-            return UserText.onboardingGotIt
-        }
         return UserText.onboardingStartBrowsing
     }
         

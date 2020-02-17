@@ -124,7 +124,7 @@ class HomeViewController: UIViewController {
         viewHasAppeared = true
     }
     
-    func resetHomeRowCTAAnimations() {
+    func prepareForPresentation() {
         installHomeScreenTips()
     }
 

@@ -93,7 +93,7 @@ extension MainViewController {
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
 
-        homeController?.resetHomeRowCTAAnimations()
+        homeController?.prepareForPresentation()
     }
     
 }

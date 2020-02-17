@@ -1157,7 +1157,7 @@ extension MainViewController: OnboardingDelegate {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
-        homeController?.resetHomeRowCTAAnimations()
+        homeController?.prepareForPresentation()
     }
     
     func markOnboardingSeen() {

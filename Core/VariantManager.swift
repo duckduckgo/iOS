@@ -40,7 +40,7 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, features: []),
         Variant(name: "se", weight: doNotAllocate, features: []),
         
-        Variant(name: "mg", weight: 1, features: []),
+        Variant(name: "mg", weight: doNotAllocate, features: []),
         Variant(name: "my", weight: 1, features: [.appIconOnboarding]),
         
         Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])

@@ -22,8 +22,10 @@ import Foundation
 public class PreserveLogins {
     
     public enum UserDecision: Int {
+
+        static let `default` = UserDecision.unknown
         
-        case forgetAll = 0 // this is the default so that existing users have same behaviour
+        case forgetAll = 0
         case preserveLogins
         case unknown
 
@@ -62,7 +64,8 @@ public class PreserveLogins {
 
     public var userDecision: UserDecision {
         get {
-            return UserDecision(rawValue: userDefaults.integer(forKey: Constants.userDecisionKey))!
+            let decision = userDefaults.object(forKey: Constants.userDecisionKey) as? Int ?? UserDecision.default.rawValue
+            return UserDecision(rawValue: decision) ?? UserDecision.default
         }
         
         set {
@@ -77,16 +80,6 @@ public class PreserveLogins {
         }
     }
     
-    public var prompted: Bool {
-        get {
-            return userDefaults.bool(forKey: Constants.userPromptedKey)
-        }
-        
-        set {
-            userDefaults.set(newValue, forKey: Constants.userPromptedKey)
-        }
-    }
-
     private var userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults = UserDefaults.standard) {
@@ -139,8 +132,7 @@ extension PreserveLogins {
         }
 
         return [
-            "pls": value,
-            "plu": PreserveLogins.shared.prompted ? "n" : "e"
+            "pls": value
         ]
     }
 

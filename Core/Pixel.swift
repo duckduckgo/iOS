@@ -134,10 +134,6 @@ public enum PixelName: String {
     case homeScreenDeleteFavorite = "mh_df"
     case homeScreenPrivacyStatsTapped = "mh_ps"
     
-    case homeRowCTAShowMeTapped = "m_ha"
-    case homeRowCTANoThanksTapped = "m_hb"
-    case homeRowCTAGotItTapped = "m_hg"
-    
     case homeRowCTAReminderTapped = "m_hc"
     case homeRowCTAReminderDismissed = "m_hd"
     

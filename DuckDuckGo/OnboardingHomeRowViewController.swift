@@ -37,8 +37,6 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startVideo()
-        
-        HomeRowCTA().dismissed()
     }
     
     override var header: String {
@@ -103,5 +101,14 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+}
+
+class VideoContainerView: UIView {
+    var playerLayer: CALayer?
+
+    override func layoutSublayers(of layer: CALayer) {
+      super.layoutSublayers(of: layer)
+      playerLayer?.frame = self.bounds
     }
 }

@@ -38,10 +38,7 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
     }
     
     override var continueButtonTitle: String {
-        if variantManager.isSupported(feature: .onboardingCTA) {
-            return UserText.onboardingContinue
-        }
-        return UserText.onboardingStartBrowsing
+        return UserText.onboardingContinue
     }
     
     override func viewDidDisappear(_ animated: Bool) {

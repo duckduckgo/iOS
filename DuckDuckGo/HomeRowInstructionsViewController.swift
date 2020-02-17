@@ -66,7 +66,6 @@ class HomeRowInstructionsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        HomeRowCTA().dismissed()
         HomeRowReminder().setShown()
     }
 

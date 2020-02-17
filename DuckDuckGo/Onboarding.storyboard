@@ -495,16 +495,16 @@ never been this easy.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="276" id="xcr-Hn-rfT"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="17" sectionInsetReference="safeArea" id="AV8-aF-Wn4">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="12" sectionInsetReference="safeArea" id="AV8-aF-Wn4">
                                     <size key="itemSize" width="68" height="68"/>
                                     <size key="estimatedItemSize" width="68" height="68"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AppIconSettingsCell" id="90F-Va-efy" customClass="AppIconSettingsCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="25" y="0.0" width="68" height="68"/>
+                                        <rect key="frame" x="20" y="0.0" width="68" height="68"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eor-oU-Kyd">
                                             <rect key="frame" x="0.0" y="0.0" width="68" height="68"/>

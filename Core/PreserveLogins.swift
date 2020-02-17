@@ -22,8 +22,10 @@ import Foundation
 public class PreserveLogins {
     
     public enum UserDecision: Int {
+
+        static let `default` = UserDecision.unknown
         
-        case forgetAll = 0 // this is the default so that existing users have same behaviour
+        case forgetAll = 0
         case preserveLogins
         case unknown
 
@@ -62,8 +64,8 @@ public class PreserveLogins {
 
     public var userDecision: UserDecision {
         get {
-            let decision = userDefaults.object(forKey: Constants.userDecisionKey) as? Int ?? UserDecision.unknown.rawValue
-            return UserDecision(rawValue: decision)!
+            let decision = userDefaults.object(forKey: Constants.userDecisionKey) as? Int ?? UserDecision.default.rawValue
+            return UserDecision(rawValue: decision) ?? UserDecision.default
         }
         
         set {

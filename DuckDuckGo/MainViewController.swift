@@ -849,6 +849,27 @@ extension MainViewController: HomeControllerDelegate {
 
 extension MainViewController: TabDelegate {
 
+    func tab(_ tab: TabViewController,
+             didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
+             for navigationAction: WKNavigationAction) -> WKWebView? {
+
+        showBars()
+
+        let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
+        newTab.openedByPage = true
+        newTabAnimation {
+            self.omniBar.resignFirstResponder()
+            self.addToView(tab: newTab)
+            self.refreshOmniBar()
+        }
+
+        return newTab.webView
+    }
+
+    func tabDidRequestClose(_ tab: TabViewController) {
+        closeTab(tab.tabModel)
+    }
+
     func tabLoadingStateDidChange(tab: TabViewController) {
         findInPageView.done()
         
@@ -868,13 +889,14 @@ extension MainViewController: TabDelegate {
         animateBackgroundTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, animated: Bool) {
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool) {
         _ = findInPageView.resignFirstResponder()
 
-        if animated {
+        if openedByPage {
             showBars()
             newTabAnimation {
                 self.loadUrlInNewTab(url)
+                self.tabManager.current?.openedByPage = true
             }
             tabSwitcherButton.incrementAnimated()
         } else {

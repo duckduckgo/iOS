@@ -825,6 +825,7 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
+        detectedNewNavigation()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -842,6 +843,10 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
         tips?.onFinishedLoading(url: url, error: isError)
+    }
+    
+    private func detectedNewNavigation() {
+        Pixel.fire(pixel: .navigationDetected)
     }
 
     private func checkLoginDetectionAfterNavigation() {
@@ -899,6 +904,7 @@ extension TabViewController: WKNavigationDelegate {
         self.url = url
         self.siteRating = makeSiteRating(url: url)
         updateSiteRating()
+        detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
             

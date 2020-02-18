@@ -24,6 +24,7 @@ import os.log
 public enum PixelName: String {
     
     case appLaunch = "ml"
+    case navigationDetected = "m_n"
 
     case forgetAllPressedBrowsing = "mf_bp"
     case forgetAllPressedTabSwitching = "mf_tp"

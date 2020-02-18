@@ -55,7 +55,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
     
     weak var notificationView: NotificationView?
-    weak var homeRowCTAController: UIViewController?
 
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
@@ -114,10 +113,6 @@ class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startOnboardingFlowIfNotSeenBefore()
-
-        if HomeRowCTA().shouldShow() {
-            showHomeRowCTA()
-        }
     }
     
     private func registerForKeyboardNotifications() {
@@ -845,10 +840,6 @@ extension MainViewController: HomeControllerDelegate {
         dismissAutcompleteSuggestions()
         omniBar.resignFirstResponder()
     }
-
-    func showInstructions(_ home: HomeViewController) {
-        launchInstructions()
-    }
     
     func showSettings(_ home: HomeViewController) {
         launchSettings()
@@ -857,6 +848,27 @@ extension MainViewController: HomeControllerDelegate {
 }
 
 extension MainViewController: TabDelegate {
+
+    func tab(_ tab: TabViewController,
+             didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
+             for navigationAction: WKNavigationAction) -> WKWebView? {
+
+        showBars()
+
+        let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
+        newTab.openedByPage = true
+        newTabAnimation {
+            self.omniBar.resignFirstResponder()
+            self.addToView(tab: newTab)
+            self.refreshOmniBar()
+        }
+
+        return newTab.webView
+    }
+
+    func tabDidRequestClose(_ tab: TabViewController) {
+        closeTab(tab.tabModel)
+    }
 
     func tabLoadingStateDidChange(tab: TabViewController) {
         findInPageView.done()
@@ -877,13 +889,14 @@ extension MainViewController: TabDelegate {
         animateBackgroundTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, animated: Bool) {
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool) {
         _ = findInPageView.resignFirstResponder()
 
-        if animated {
+        if openedByPage {
             showBars()
             newTabAnimation {
                 self.loadUrlInNewTab(url)
+                self.tabManager.current?.openedByPage = true
             }
             tabSwitcherButton.incrementAnimated()
         } else {
@@ -1144,34 +1157,12 @@ extension MainViewController: OnboardingDelegate {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
-        homeController?.resetHomeRowCTAAnimations()
-        showHomeRowCTA()
+        homeController?.prepareForPresentation()
     }
     
     func markOnboardingSeen() {
         var settings = DefaultTutorialSettings()
         settings.hasSeenOnboarding = true
-    }
-    
-}
-
-extension MainViewController {
-    
-    private func hideHomeRowCTA() {
-        homeRowCTAController?.view.removeFromSuperview()
-        homeRowCTAController?.removeFromParent()
-        homeRowCTAController = nil
-    }
-
-    private func showHomeRowCTA(variantManager: VariantManager = DefaultVariantManager()) {
-        guard variantManager.isSupported(feature: .alertCTA), homeRowCTAController == nil else { return }
-        
-        let childViewController =  UnifiedAddToHomeRowCTAViewController.loadAlertFromStoryboard()
-        addChild(childViewController)
-        view.addSubview(childViewController.view)
-        childViewController.view.frame = view.bounds
-        childViewController.didMove(toParent: self)
-        self.homeRowCTAController = childViewController
     }
     
 }

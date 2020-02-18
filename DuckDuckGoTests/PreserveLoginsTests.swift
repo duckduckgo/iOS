@@ -149,15 +149,6 @@ class PreserveLoginsTests: XCTestCase {
 
     }
 
-    func testWhenPromptedIsChangedThenPersisted() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.prompted = true
-        XCTAssertTrue(logins.prompted)
-        XCTAssertTrue(PreserveLogins(userDefaults: userDefaults).prompted)
-        
-    }
-
     func testWhenUserDecisionIsChangedThenItIsPersisted() {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
@@ -167,19 +158,10 @@ class PreserveLoginsTests: XCTestCase {
         
     }
 
-    /// Existing users get the same behaviour as always
-    func testWhenNewThenDefaultPromptedIsFalse() {
+    func testWhenNewThenDefaultIsUnkonwn() {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
-        XCTAssertFalse(logins.prompted)
-        
-    }
-
-    /// Existing users get the same behaviour as always
-    func testWhenNewThenDefaultUserDecisionIsForgetAll() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        XCTAssertEqual(logins.userDecision, .forgetAll)
+        XCTAssertEqual(logins.userDecision, .unknown)
         
     }
 

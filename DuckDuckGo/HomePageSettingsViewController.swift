@@ -29,6 +29,7 @@ protocol HomePageSettingsDelegate: NSObjectProtocol {
 class HomePageSettingsViewController: UITableViewController {
     
     @IBOutlet var labels: [UILabel]!
+    @IBOutlet weak var favoritesToggle: UISwitch!
 
     weak var delegate: HomePageSettingsDelegate?
     
@@ -47,11 +48,15 @@ class HomePageSettingsViewController: UITableViewController {
         
         // Checkmark color
         cell.tintColor = theme.buttonTintColor
-        
+
+        guard indexPath.section == 0 else { return }
+
         cell.accessoryType = indexPath.row == appSettings.homePage.rawValue ? .checkmark : .none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == 0 else { return }
+
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard appSettings.homePage.rawValue != indexPath.row else { return }

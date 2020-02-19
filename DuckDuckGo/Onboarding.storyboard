@@ -97,7 +97,7 @@ example.</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                <rect key="frame" x="30" y="825" width="354" height="29"/>
+                                <rect key="frame" x="30" y="822" width="354" height="32"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Skip"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -179,7 +179,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fod-w3-gP6">
-                                                                <rect key="frame" x="0.0" y="30" width="238" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="238" height="40"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="Block trackers and browse securely by default.">
                                                                         <attributes>
@@ -227,7 +227,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSm-34-3X7">
-                                                                <rect key="frame" x="0.0" y="30" width="238" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="238" height="40"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="With DuckDuckGo, your searches are always private.">
                                                                         <attributes>
@@ -274,7 +274,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GyY-fx-NQs">
-                                                                <rect key="frame" x="0.0" y="30" width="238" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="238" height="40"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="Erase your browsing data with the tap of a button.">
                                                                         <attributes>
@@ -321,7 +321,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cp-CW-jNw">
-                                                                <rect key="frame" x="0.0" y="30" width="240" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="240" height="40"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="Pick a theme and customize privacy features.">
                                                                         <attributes>
@@ -481,10 +481,10 @@ never been this easy.</string>
             </objects>
             <point key="canvasLocation" x="1455" y="457"/>
         </scene>
-        <!--Customize the app and choose your favorite icon.-->
+        <!--Customize the app by choosing your favorite icon.-->
         <scene sceneID="a7B-Uf-4Mh">
             <objects>
-                <viewController storyboardIdentifier="onboardingAppIcon" title="Customize the app and choose your favorite icon." id="oMf-dZ-C5C" customClass="OnboardingAppIconViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboardingAppIcon" title="Customize the app by choosing your favorite icon." id="oMf-dZ-C5C" customClass="OnboardingAppIconViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o1o-Iy-rT7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

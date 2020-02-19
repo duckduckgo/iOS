@@ -15,6 +15,6 @@ echo
 xcodebuild -scheme DuckDuckGo clean archive -configuration release -sdk iphoneos -archivePath $1/$NAME.xcarchive
 xcodebuild -exportArchive -archivePath $1/$NAME.xcarchive -exportOptionsPlist ./adhocExportOptions.plist -exportPath $1/$NAME
 
-mv $1/$NAME.xcarchive/DuckDuckGo.ipa $1/$NAME.xcarchive/$NAME.ipa
+mv $1/$NAME/DuckDuckGo.ipa $1/$NAME/$NAME.ipa
 
 open $1

@@ -10,7 +10,7 @@ We are looking for a Senior Cross-Platform engineer to help shape our mobile app
 ## Building
 
 ### Submodules
-We use submodules, so you will need to bring it in to the project in order to build and run it:
+We use submodules, so you will need to bring them in to the project in order to build and run it:
 
 Run `git submodule update --init --recursive`
 
@@ -29,7 +29,7 @@ Run `carthage bootstrap --platform iOS` before opening the project in Xcode
 You can also run the unit tests to do the above and ensure everything seems in order: `./run_tests.sh`
 
 ### SwiftLint
-We use [SwifLint](https://github.com/realm/SwiftLint) for enforcing Swift style and conventions, so you'll need it [installed](https://github.com/realm/SwiftLint#installation).
+We use [SwifLint](https://github.com/realm/SwiftLint) for enforcing Swift style and conventions, so you'll need to [install it](https://github.com/realm/SwiftLint#installation).
 
 ### Fonts
 We use Proxima Nova fonts which are proprietary and cannot be committed to source control, see [fonts](https://github.com/duckduckgo/iOS/tree/develop/fonts/licensed). 

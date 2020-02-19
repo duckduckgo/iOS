@@ -118,14 +118,18 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    var homePage: HomePageConfiguration.ConfigName {
+    var homePage: HomePageConfiguration.ConfigName? {
         get {
-            let index = userDefaults?.integer(forKey: Keys.homePage) ?? 0
+            guard let index = userDefaults?.object(forKey: Keys.homePage) as? Int else { return nil }
             return HomePageConfiguration.ConfigName(rawValue: index)!
         }
         
         set {
-            userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePage)
+            if let newValue = newValue {
+                userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePage)
+            } else {
+                userDefaults?.removeObject(forKey: Keys.homePage)
+            }
         }
     }
     

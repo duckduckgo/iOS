@@ -22,6 +22,7 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
+/*
 class HomePageConfigurationTests: XCTestCase {
     
     var settings: MockAppSettings!
@@ -90,3 +91,4 @@ class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
     }
     
 }
+*/

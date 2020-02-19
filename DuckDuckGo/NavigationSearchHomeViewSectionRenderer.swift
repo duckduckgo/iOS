@@ -27,9 +27,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private let withOffset: Bool
+    private let fixed: Bool
     
-    init(withOffset: Bool) {
+    init(withOffset: Bool, fixed: Bool) {
         self.withOffset = withOffset
+        self.fixed = fixed
     }
     
     weak var controller: HomeViewController?
@@ -42,7 +44,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.searchHeaderTransition = 1.0
         controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
-        controller.collectionView.isScrollEnabled = false
+        controller.collectionView.isScrollEnabled = !fixed
         controller.settingsButton.isHidden = true
     }
     
@@ -51,7 +53,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return fixed ? 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

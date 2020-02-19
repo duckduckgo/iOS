@@ -75,17 +75,9 @@ class SettingsViewController: UITableViewController {
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureHomePageCellAccessory()
-        migrateFavoritesIfNeeded()
         configureIconViews()
     }
-    
-    private func migrateFavoritesIfNeeded() {
-        // This ensures the user does not loose access to their favorites if they change the home page setting
-        if appSettings.homePage != .centerSearchAndFavorites {
-            BookmarksManager().migrateFavoritesToBookmarks()
-        }
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? PreserveLoginsSettingsViewController {
             controller.delegate = preserveLoginsSettingsDelegate
@@ -174,16 +166,13 @@ class SettingsViewController: UITableViewController {
     
     private func configureHomePageCellAccessory() {
 
-        switch appSettings.homePage {
-            
-        case .simple:
-            homePageAccessoryText.text = UserText.homePageSimple
-            
-        case .centerSearch:
+        switch HomePageSettings().layout {
+
+        case .centered:
             homePageAccessoryText.text = UserText.homePageCenterSearch
 
-        case .centerSearchAndFavorites:
-            homePageAccessoryText.text = UserText.homePageCenterSearchAndFavorites
+        case .navigationBar:
+            homePageAccessoryText.text = UserText.homePageSimple
 
         }
         

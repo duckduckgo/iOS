@@ -92,7 +92,7 @@ extension TabViewController {
     }
     
     private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
-        guard AppDependencyProvider.shared.appSettings.homePage == .centerSearchAndFavorites else { return nil }
+        guard HomePageSettings().favorites else { return nil }
         
         let bookmarksManager = BookmarksManager()
         guard !bookmarksManager.contains(url: link.url) else { return nil }

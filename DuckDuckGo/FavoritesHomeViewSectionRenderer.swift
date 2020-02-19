@@ -50,7 +50,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private var numberOfItems: Int {
-        return bookmarksManager.favoritesCount + (allowsEditing ? 1 : 0)
+        return bookmarksManager.favoritesCount
     }
     
     func install(into controller: HomeViewController) {
@@ -124,28 +124,24 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if isAddFavoriteItem(indexPath) {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "addFavorite", for: indexPath)
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
-                fatalError("not a FavoriteCell")
-            }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
+            fatalError("not a FavoriteCell")
+        }
 
-            guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else {
-                return cell
-            }
-            cell.updateFor(link: link)
-
-            // can't use captured index path because deleting items can change it
-            cell.onDelete = { [weak self] in
-                self?.deleteFavorite(cell, collectionView)
-            }
-            cell.onEdit = { [weak self] in
-                self?.editFavorite(cell, collectionView)
-            }
+        guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else {
             return cell
         }
-        
+        cell.updateFor(link: link)
+
+        // can't use captured index path because deleting items can change it
+        cell.onDelete = { [weak self] in
+            self?.deleteFavorite(cell, collectionView)
+        }
+        cell.onEdit = { [weak self] in
+            self?.editFavorite(cell, collectionView)
+        }
+        return cell
+
     }
     
     private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
@@ -187,10 +183,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             return false
         }
         
-        if isAddFavoriteItem(indexPath) {
-            addNewFavorite(in: collectionView, at: indexPath)
-            return false
-        } else if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
             cell.isReordering = true
             reorderingCell = cell
             return true
@@ -205,7 +198,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath? {
         guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
-        guard !isAddFavoriteItem(proposedIndexPath) else { return originalIndexPath }
         return proposedIndexPath
     }
 
@@ -234,24 +226,13 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)
         ]
     }
-    
-    private func isAddFavoriteItem(_ indexPath: IndexPath) -> Bool {
-        guard allowsEditing else {
-            return false
-        }
-        return indexPath.row + 1 == numberOfItems
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isAddFavoriteItem(indexPath) {
-            addNewFavorite(in: collectionView, at: indexPath)
-        } else {
-            launchFavorite(in: collectionView, at: indexPath)
-        }
+        launchFavorite(in: collectionView, at: indexPath)
     }
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {

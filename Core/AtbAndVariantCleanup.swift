@@ -34,11 +34,13 @@ public class AtbAndVariantCleanup {
         }
         
         // Home page experiment migration
-        var mutableSettings = settings
+        var homePageSettings = HomePageSettings()
         if "mn" == variant {
-            mutableSettings.homePage = .centerSearch
+            homePageSettings.layout = .centered
+            homePageSettings.favorites = false
         } else if ["ml", "mm"].contains(variant) {
-            mutableSettings.homePage = .centerSearchAndFavorites
+            homePageSettings.layout = .centered
+            homePageSettings.favorites = true
         }
         
         // remove existing variant if not in an active experiment

@@ -58,7 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
         }
-        
+
+        migrateHomePageSettings()
+
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         
@@ -76,6 +78,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appIsLaunching = true
         return true
+    }
+
+    private func migrateHomePageSettings() {
+        var settings = HomePageSettings()
+        settings.migrate()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

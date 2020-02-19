@@ -464,11 +464,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        guard appSettings.homePage.components().contains(where: {
-            if case .favorites = $0 { return true }
-            return false
-        }) else { return }
-        
+        guard HomePageSettings().favorites else { return }
+
         guard favoritesOverlay == nil,
             BookmarksManager().favoritesCount > 0 else { return }
         
@@ -1135,7 +1132,7 @@ extension MainViewController: Themable {
 
 extension MainViewController: HomePageSettingsDelegate {
     
-    func homePageChanged(to config: HomePageConfiguration.ConfigName) {
+    func homePageChanged() {
         guard homeController != nil else { return }
         removeHomeScreen()
         attachHomeScreen()

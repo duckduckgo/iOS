@@ -22,7 +22,7 @@ import Core
 
 protocol HomePageSettingsDelegate: NSObjectProtocol {
     
-    func homePageChanged(to config: HomePageConfiguration.ConfigName)
+    func homePageChanged()
     
 }
 
@@ -51,30 +51,20 @@ class HomePageSettingsViewController: UITableViewController {
 
         guard indexPath.section == 0 else { return }
 
-        cell.accessoryType = indexPath.row == appSettings.homePage.rawValue ? .checkmark : .none
+        let layoutSetting = indexPath.row == 0 ? HomePageSettings.Layout.navigationBar : .centered
+        cell.accessoryType = HomePageSettings().layout == layoutSetting ? .checkmark : .none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
 
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard appSettings.homePage.rawValue != indexPath.row else { return }
-        let config = HomePageConfiguration.ConfigName(rawValue: indexPath.row)!
-        
-        switch config {
-        case .simple:
-            Pixel.fire(pixel: .settingsHomePageSimple)
 
-        case .centerSearch:
-            Pixel.fire(pixel: .settingsHomePageCenterSearch)
-            
-        case .centerSearchAndFavorites:
-            Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
-        }
-        
-        appSettings.homePage = config
-        delegate?.homePageChanged(to: config)
+        var settings = HomePageSettings()
+        settings.layout = indexPath.row == 0 ? .navigationBar : .centered
+
+        delegate?.homePageChanged()
+
         tableView.reloadData()
     }
     

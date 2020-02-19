@@ -171,6 +171,10 @@
 		8540BD5423D8D5080057FDD2 /* PreserveLoginsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */; };
 		8540BD5623D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */; };
 		85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */; };
+		85449EF523FDA02800512AAF /* KeyboardSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */; };
+		85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */; };
+		85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */; };
+		85449EFF23FDA97000512AAF /* HomePageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFE23FDA96F00512AAF /* HomePageSettings.swift */; };
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
 		855D914F206563A000C4B448 /* TLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914E206563A000C4B448 /* TLD.swift */; };
@@ -212,7 +216,6 @@
 		85B9CB8521AEBD92009001F1 /* NavigationSearchHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8421AEBD92009001F1 /* NavigationSearchHomeCell.swift */; };
 		85B9CB8721AEBDB7009001F1 /* CenteredSearchHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8621AEBDB7009001F1 /* CenteredSearchHomeCell.swift */; };
 		85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */; };
-		85B9CB8B21AEBE22009001F1 /* AddFavoriteHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8A21AEBE22009001F1 /* AddFavoriteHomeCell.swift */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
 		85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */; };
 		85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58591F3506AE00C6E8CA /* AppSettings.swift */; };
@@ -800,6 +803,10 @@
 		8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLoginsAlert.swift; sourceTree = "<group>"; };
 		8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLoginsSettingsViewController.swift; sourceTree = "<group>"; };
 		85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivacyProtection.xcassets; sourceTree = "<group>"; };
+		85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsViewController.swift; sourceTree = "<group>"; };
+		85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPropertyWrapper.swift; sourceTree = "<group>"; };
+		85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
+		85449EFE23FDA96F00512AAF /* HomePageSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSettings.swift; sourceTree = "<group>"; };
 		85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios13-home-row.mp4"; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* CompositeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTransition.swift; sourceTree = "<group>"; };
 		855D914E206563A000C4B448 /* TLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLD.swift; sourceTree = "<group>"; };
@@ -847,7 +854,6 @@
 		85B9CB8421AEBD92009001F1 /* NavigationSearchHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSearchHomeCell.swift; sourceTree = "<group>"; };
 		85B9CB8621AEBDB7009001F1 /* CenteredSearchHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredSearchHomeCell.swift; sourceTree = "<group>"; };
 		85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHomeCell.swift; sourceTree = "<group>"; };
-		85B9CB8A21AEBE22009001F1 /* AddFavoriteHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavoriteHomeCell.swift; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaultsTests.swift; sourceTree = "<group>"; };
 		85BA58591F3506AE00C6E8CA /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -1744,6 +1750,33 @@
 			name = Renderers;
 			sourceTree = "<group>";
 		};
+		85449EF623FDA03100512AAF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
+				AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */,
+				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
+				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
+				851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */,
+				85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */,
+				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
+				F176699D1E40BC86003D3222 /* Settings.storyboard */,
+				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
+				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
+				8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		85449EF723FDA03D00512AAF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				85449EFE23FDA96F00512AAF /* HomePageSettings.swift */,
+				85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8595BF491FE847EB00F692EC /* ios-js-support */ = {
 			isa = PBXGroup;
 			children = (
@@ -1778,7 +1811,6 @@
 		85B9CB8321AEBD72009001F1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				85B9CB8A21AEBE22009001F1 /* AddFavoriteHomeCell.swift */,
 				85B9CB8621AEBDB7009001F1 /* CenteredSearchHomeCell.swift */,
 				9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */,
 				85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */,
@@ -2372,6 +2404,7 @@
 				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
 				98982B3322F8D8E400578AC9 /* Debounce.swift */,
 				1CB7B82023CEA1F800AA24EA /* DateExtension.swift */,
+				85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2620,16 +2653,8 @@
 		F1AB2B401E3F75A000868554 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
-				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
-				851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */,
-				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
-				F176699D1E40BC86003D3222 /* Settings.storyboard */,
-				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
-				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
-				8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */,
-				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
-				AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */,
+				85449EF723FDA03D00512AAF /* Model */,
+				85449EF623FDA03100512AAF /* UI */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3656,7 +3681,6 @@
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
-				85B9CB8B21AEBE22009001F1 /* AddFavoriteHomeCell.swift in Sources */,
 				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,
 				857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
@@ -3710,12 +3734,14 @@
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
+				85449EFF23FDA97000512AAF /* HomePageSettings.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				851B128822200575004781BC /* Onboarding.swift in Sources */,
 				851B129822242E2D004781BC /* HomeViewController+HomeScreenDelegate.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				98DB8DCF22DC9F71001D6D6D /* PrivacyReportDataSource.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
+				85449EF523FDA02800512AAF /* KeyboardSettingsViewController.swift in Sources */,
 				85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */,
 				853C5F5D21C117A6001F7A05 /* PaddingSpaceHomeViewSectionRenderer.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
@@ -3759,6 +3785,7 @@
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
+				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,
 				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,
 				988F3DD3237DE8D900AEE34C /* ForgetDataAlert.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
@@ -3986,6 +4013,7 @@
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
+				85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,

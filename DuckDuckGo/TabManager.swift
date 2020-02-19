@@ -188,6 +188,7 @@ class TabManager {
 
     func invalidateCache(forController controller: TabViewController) {
         if current === controller {
+            Pixel.fire(pixel: .webKitTerminationDidReloadCurrentTab)
             current?.reload(scripts: false)
         } else {
             removeFromCache(controller)

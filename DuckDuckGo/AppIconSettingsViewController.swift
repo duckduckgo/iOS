@@ -78,8 +78,8 @@ class AppIconDataSource: NSObject, UICollectionViewDataSource {
 class AppIconWorker {
     
     enum Context: String {
-        case onboarding
-        case settings
+        case onboarding = "o"
+        case settings = "s"
     }
     
     private let context: Context

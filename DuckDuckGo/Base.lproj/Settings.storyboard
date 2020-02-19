@@ -1041,10 +1041,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Extras" id="JGP-CZ-v3m">
+                            <tableViewSection headerTitle="" id="JGP-CZ-v3m">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="XOp-J0-uGO">
-                                        <rect key="frame" x="0.0" y="199.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="183.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="XOp-J0-uGO" id="EUP-Uv-tde">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1063,6 +1063,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                             <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                             <connections>
                                                                 <action selector="onClearDataToggled:" destination="fdJ-b1-Des" eventType="valueChanged" id="gjQ-fE-hcJ"/>
+                                                                <action selector="toggleFavorites" destination="kab-gs-Drm" eventType="valueChanged" id="beY-MO-DBs"/>
                                                             </connections>
                                                         </switch>
                                                     </subviews>
@@ -1084,6 +1085,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="favoritesToggle" destination="A3Y-yJ-pjU" id="Pa4-c2-ozI"/>
                         <outletCollection property="labels" destination="rZg-gB-8cW" collectionClass="NSMutableArray" id="lXo-RI-T7D"/>
                         <outletCollection property="labels" destination="lzp-z4-0SR" collectionClass="NSMutableArray" id="XTZ-PP-nDq"/>
                         <outletCollection property="labels" destination="alN-YL-NVJ" collectionClass="NSMutableArray" id="hp8-fS-oob"/>

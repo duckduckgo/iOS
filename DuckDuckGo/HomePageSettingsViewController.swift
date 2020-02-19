@@ -32,13 +32,19 @@ class HomePageSettingsViewController: UITableViewController {
     @IBOutlet weak var favoritesToggle: UISwitch!
 
     weak var delegate: HomePageSettingsDelegate?
-    
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+
+    var settings = HomePageSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        favoritesToggle.isOn = settings.favorites
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    @IBAction func toggleFavorites() {
+        settings.favorites = favoritesToggle.isOn
+        delegate?.homePageChanged()
     }
  
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -77,7 +83,9 @@ extension HomePageSettingsViewController: Themable {
         for label in labels {
             label.textColor = theme.tableCellTextColor
         }
-        
+
+        favoritesToggle.onTintColor = theme.buttonTintColor
+
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         

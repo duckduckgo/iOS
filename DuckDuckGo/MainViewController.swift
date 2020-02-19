@@ -1009,7 +1009,11 @@ extension MainViewController: BookmarksDelegate {
     }
     
     func bookmarksUpdated() {
-        homeController?.refresh()
+        if bookmarkStore.favorites.isEmpty {
+            homePageChanged()
+        } else {
+            homeController?.refresh()
+        }
     }
 }
 

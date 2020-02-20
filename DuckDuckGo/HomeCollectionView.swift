@@ -76,9 +76,6 @@ class HomeCollectionView: UICollectionView {
             case .favorites(let withHeader):
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer(headerEnabled: withHeader))
                 
-            case .privacyProtection:
-                renderers.install(renderer: PrivacyProtectionHomeViewSectionRenderer())
-                
             case .empty:
                 renderers.install(renderer: EmptySectionRenderer())
             }

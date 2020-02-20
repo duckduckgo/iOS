@@ -211,15 +211,3 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
         }
     }
 }
-
-extension AppUserDefaults: PrivacyStatsExperimentStore {
-    var privacyStatsPixelFired: Bool {
-        get {
-            return userDefaults?.bool(forKey: PixelName.homeScreenPrivacyStatsTapped.rawValue) ?? false
-        }
-        set {
-            userDefaults?.set(newValue, forKey: PixelName.homeScreenPrivacyStatsTapped.rawValue)
-        }
-    }
-    
-}

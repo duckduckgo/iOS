@@ -273,7 +273,6 @@
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
-                        <segue destination="Dgd-Ab-eVN" kind="presentation" identifier="PrivacyReport" id="qzu-1j-vOC"/>
                         <segue destination="9Vl-Oh-arA" kind="presentation" identifier="Onboarding" animates="NO" modalPresentationStyle="overFullScreen" id="lRm-1E-WkW"/>
                         <segue destination="rGZ-0A-HjK" kind="presentation" identifier="Onboarding-iPad" animates="NO" modalPresentationStyle="overFullScreen" id="Wtv-32-dHC"/>
                     </connections>
@@ -289,14 +288,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="105" y="537"/>
-        </scene>
-        <!--PrivacyReportViewController-->
-        <scene sceneID="Xz0-AF-WQc">
-            <objects>
-                <viewControllerPlaceholder storyboardName="PrivacyReportViewController" id="Dgd-Ab-eVN" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aKW-N9-Ire" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="934" y="74"/>
         </scene>
         <!--Onboarding-->
         <scene sceneID="j2a-eV-zLp">

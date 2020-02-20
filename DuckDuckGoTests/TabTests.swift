@@ -42,11 +42,11 @@ class TabTests: XCTestCase {
 
     func testWhenDesktopModeToggledThenPropertyIsUpdated() {
         let tab = Tab(link: link())
-        XCTAssertFalse(!isPad)
+        XCTAssertFalse(isPad)
         tab.toggleDesktopMode()
-        XCTAssertTrue(isPad)
+        XCTAssertTrue(!isPad)
         tab.toggleDesktopMode()
-        XCTAssertFalse(!isPad)
+        XCTAssertFalse(isPad)
     }
 
     func testWhenEncodedWithDesktopPropertyThenDecodesSuccessfully() {

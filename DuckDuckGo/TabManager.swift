@@ -119,6 +119,7 @@ class TabManager {
     func addHomeTab() {
         model.add(tab: Tab())
         model.select(tabAt: model.count - 1)
+        save()
     }
     
     func loadUrlInCurrentTab(_ url: URL) -> TabViewController {

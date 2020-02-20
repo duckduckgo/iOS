@@ -87,6 +87,7 @@ extension MainViewController {
         if let controller = homeController {
             controller.launchNewSearch()
         } else {
+            showBars()
             omniBar.becomeFirstResponder()
         }
     }

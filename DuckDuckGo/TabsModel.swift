@@ -23,7 +23,8 @@ import Core
 public class TabsModel: NSObject, NSCoding {
 
     private struct NSCodingKeys {
-        static let currentIndex = "currentIndex"
+        static let legacyIndex = "currentIndex"
+        static let currentIndex = "currentIndex2"
         static let tabs = "tabs"
     }
 
@@ -44,14 +45,10 @@ public class TabsModel: NSObject, NSCoding {
 
         // we migrated from an optional int to an actual int
         var currentIndex = 0
-        if decoder.containsValue(forKey: NSCodingKeys.currentIndex) {
-            
-            if let storedIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int {
-                currentIndex = storedIndex
-            } else {
-                currentIndex = decoder.decodeInteger(forKey: NSCodingKeys.currentIndex)
-            }
-            
+        if let storedIndex = decoder.decodeObject(forKey: NSCodingKeys.legacyIndex) as? Int {
+            currentIndex = storedIndex
+        } else {
+            currentIndex = decoder.decodeInteger(forKey: NSCodingKeys.currentIndex)
         }
         
         if currentIndex < 0 || currentIndex >= tabs.count {

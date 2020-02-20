@@ -67,6 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
+            
+            // Remove users with devices that does not support App Icon switching
+            return AppIconManager.shared.isAppIconChangeSupported
         }
 
         if let main = mainViewController {

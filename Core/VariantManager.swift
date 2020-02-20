@@ -33,10 +33,9 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // SERP testing
-        Variant(name: "sc", weight: 1, features: []),
+        Variant(name: "sc", weight: doNotAllocate, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: 1, features: [])
-
+        Variant(name: "se", weight: doNotAllocate, features: []),
     ]
     
     public let name: String

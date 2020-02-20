@@ -35,16 +35,13 @@ class HomePageConfiguration {
         case navigationBarSearch(withOffset: Bool, fixed: Bool)
         case centeredSearch(fixed: Bool)
         case favorites(withHeader: Bool)
-        case padding(withOffset: Bool)
         case empty
     }
     
     let settings: HomePageSettings
     
-    func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
-       // return settings.homePage.components(withVariantManger: variantManger)
-
-        let fixed = !settings.favorites || BookmarksManager().favoritesCount == 0
+    func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
+        let fixed = !settings.favorites || bookmarksManager.favoritesCount == 0
 
         var components = [Component]()
         switch settings.layout {

@@ -71,18 +71,23 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     func testWhenPreviousVariantIsHomePageExperimentThenSettingsAreUpdatedCorrectly() {
         
-        let cases: [String: HomePageConfiguration.ConfigName] = [
-            "": .simple,
-            "mk": .simple,
-            "ml": .centerSearchAndFavorites,
-            "mm": .centerSearchAndFavorites,
-            "mn": .centerSearch]
+        let cases: [String: (HomePageSettings.Layout, Bool)] = [
+            "": (HomePageSettings.Layout.navigationBar, true),
+            "mk": (HomePageSettings.Layout.navigationBar, false),
+            "ml": (HomePageSettings.Layout.centered, true),
+            "mm": (HomePageSettings.Layout.centered, true),
+            "mn": (HomePageSettings.Layout.centered, false)]
 
         for testCase in cases {
-            let mockSettings = MockAppSettings()
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: UserDefaultsWrapper<String>.Key.layout.rawValue)
+            defaults.removeObject(forKey: UserDefaultsWrapper<String>.Key.favorites.rawValue)
+
+            let settings = HomePageSettings()
             mockStorage.variant = testCase.key
-            AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager, settings: mockSettings)
-            XCTAssertEqual(mockSettings.homePage, testCase.value)
+            AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager)
+            XCTAssertEqual(settings.layout, testCase.value.0, "\(testCase)")
+            XCTAssertEqual(settings.favorites, testCase.value.1, "\(testCase)")
         }
         
     }

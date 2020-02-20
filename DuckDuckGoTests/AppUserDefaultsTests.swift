@@ -88,10 +88,10 @@ class AppUserDefaultsTests: XCTestCase {
         
     }
     
-    func testWhenNewThenDefaultHomePageIsSimple() {
+    func testWhenNewThenDefaultHomePageIsNil() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(appUserDefaults.homePage, .simple)
+        XCTAssertEqual(appUserDefaults.homePage, nil)
         
     }
     

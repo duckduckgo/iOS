@@ -66,7 +66,6 @@ class HomePageSettingsViewController: UITableViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        var settings = HomePageSettings()
         settings.layout = indexPath.row == 0 ? .navigationBar : .centered
 
         delegate?.homePageChanged()

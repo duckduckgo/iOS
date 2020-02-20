@@ -79,6 +79,7 @@ class MainViewController: UIViewController {
     var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate lazy var homePageSettings = HomePageSettings()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -458,10 +459,9 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        guard HomePageSettings().favorites else { return }
+        guard homePageSettings.favorites else { return }
 
-        guard favoritesOverlay == nil,
-            BookmarksManager().favoritesCount > 0 else { return }
+        guard favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
         
         let controller = FavoritesOverlay()
         controller.install(into: self)

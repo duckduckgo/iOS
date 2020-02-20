@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -27,14 +28,14 @@
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
                                 <rect key="frame" x="45" y="94" width="324" height="140"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
                                         <rect key="frame" x="0.0" y="0.0" width="324" height="96"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
                                         <string key="text">Welcome to
 DuckDuckGo!</string>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Extrabld" family="Proxima Nova" pointSize="34"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Extrabld" family="Proxima Nova" pointSize="32"/>
                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -371,7 +372,7 @@ never been this easy.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M12-dB-i4I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1136" y="185"/>
+            <point key="canvasLocation" x="774" y="185"/>
         </scene>
         <!--Turn on notifications to receive important updates about your privacy.-->
         <scene sceneID="mnE-ri-bSO">
@@ -418,7 +419,9 @@ never been this easy.</string>
         <!--Search and browse privately, every day.-->
         <scene sceneID="Yxp-L7-vF3">
             <objects>
-                <viewController storyboardIdentifier="onboardingHomeRow" title="Search and browse privately, every day." id="Xjr-gI-tDG" customClass="OnboardingHomeRowViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboardingHomeRow" id="Xjr-gI-tDG" customClass="OnboardingHomeRowViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <string key="title">Search and browse privately,
+every day.</string>
                     <view key="view" contentMode="scaleToFill" id="VId-rQ-yCx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -479,6 +482,85 @@ never been this easy.</string>
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1455" y="457"/>
+        </scene>
+        <!--Customize the app by choosing your favorite icon.-->
+        <scene sceneID="a7B-Uf-4Mh">
+            <objects>
+                <viewController storyboardIdentifier="onboardingAppIcon" title="Customize the app by choosing your favorite icon." id="oMf-dZ-C5C" customClass="OnboardingAppIconViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="o1o-Iy-rT7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WfS-hD-woo">
+                                <rect key="frame" x="0.0" y="22" width="320" height="276"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="276" id="xcr-Hn-rfT"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="12" sectionInsetReference="safeArea" id="AV8-aF-Wn4">
+                                    <size key="itemSize" width="68" height="68"/>
+                                    <size key="estimatedItemSize" width="68" height="68"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AppIconSettingsCell" id="90F-Va-efy" customClass="AppIconSettingsCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="0.0" width="68" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eor-oU-Kyd">
+                                            <rect key="frame" x="0.0" y="0.0" width="68" height="68"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Jx-4W-E7I">
+                                                    <rect key="frame" x="4" y="4" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="FsQ-FM-IU2"/>
+                                                        <constraint firstAttribute="height" constant="60" id="gYK-dL-4wS"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="13"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="0Jx-4W-E7I" secondAttribute="trailing" constant="4" id="C3E-Zz-Yqr"/>
+                                                <constraint firstItem="0Jx-4W-E7I" firstAttribute="leading" secondItem="eor-oU-Kyd" secondAttribute="leading" constant="4" id="Sk7-oG-VTD"/>
+                                                <constraint firstAttribute="bottom" secondItem="0Jx-4W-E7I" secondAttribute="bottom" constant="4" id="T2O-CP-0Rm"/>
+                                                <constraint firstItem="0Jx-4W-E7I" firstAttribute="top" secondItem="eor-oU-Kyd" secondAttribute="top" constant="4" id="h0U-c7-ygA"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="68" height="68"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="imageView" destination="0Jx-4W-E7I" id="SzA-a7-p2H"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CcC-jb-aJ5" firstAttribute="trailing" secondItem="WfS-hD-woo" secondAttribute="trailing" id="Hef-ah-nek"/>
+                            <constraint firstItem="WfS-hD-woo" firstAttribute="leading" secondItem="CcC-jb-aJ5" secondAttribute="leading" id="NFx-Tp-fgP"/>
+                            <constraint firstItem="WfS-hD-woo" firstAttribute="centerY" secondItem="CcC-jb-aJ5" secondAttribute="centerY" id="mvz-zc-2iJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CcC-jb-aJ5"/>
+                    </view>
+                    <size key="freeformSize" width="320" height="276"/>
+                    <connections>
+                        <outlet property="collectionView" destination="WfS-hD-woo" id="D1a-qk-ndA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xOD-fV-eB9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1453.6231884057972" y="184.82142857142856"/>
         </scene>
     </scenes>
     <resources>

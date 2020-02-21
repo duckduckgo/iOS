@@ -39,7 +39,7 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, features: []),
 
         Variant(name: "mq", weight: 1, features: []),
-        Variant(name: "mr", weight: 1, features: [.appIconOnboarding]),
+        Variant(name: "mr", weight: 1, features: [.appIconOnboarding])
     ]
     
     public let name: String

@@ -172,7 +172,7 @@ class SettingsViewController: UITableViewController {
             homePageAccessoryText.text = UserText.homePageCenterSearch
 
         case .navigationBar:
-            homePageAccessoryText.text = UserText.homePageSimple
+            homePageAccessoryText.text = UserText.homePageNavigationBar
 
         }
         

@@ -202,14 +202,14 @@ public struct UserText {
     public static let themeNameLight = NSLocalizedString("theme.name.light", comment: "Light")
     public static let themeNameDark = NSLocalizedString("theme.name.dark", comment: "Dark")
     
-    public static let themeAccessoryDefault = NSLocalizedString("theme.acc.default", comment: "Default")
+    public static let themeAccessoryDefault = NSLocalizedString("theme.acc.default", comment: "System")
     public static let themeAccessoryLight = NSLocalizedString("theme.acc.light", comment: "Light")
     public static let themeAccessoryDark = NSLocalizedString("theme.acc.dark", comment: "Dark")
 
     public static let autoClearAccessoryOn = NSLocalizedString("autoclear.on", comment: "On")
     public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", comment: "Off")
 
-    public static let homePageSimple = NSLocalizedString("homepage.navigationBar", comment: "Simple")
+    public static let homePageNavigationBar = NSLocalizedString("homepage.navigationBar", comment: "Navigation Bar Search")
     public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
     
     public static func privacyGrade(_ grade: String) -> String {

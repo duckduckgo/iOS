@@ -21,6 +21,7 @@ import UIKit
 import Core
 import EasyTipView
 import UserNotifications
+import os.log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -67,11 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             
-            // Force the prompt for new users only, and only if they are on iOS 13 or better
-            if #available(iOS 13, *) {
-                PreserveLogins.shared.userDecision = .unknown
-                PreserveLogins.shared.prompted = true
-            }
+            // Remove users with devices that does not support App Icon switching
+            return AppIconManager.shared.isAppIconChangeSupported
         }
 
         if let main = mainViewController {
@@ -130,7 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        Logger.log(text: "App launched with url \(url.absoluteString)")
+        os_log("App launched with url %s", log: lifecycleLog, type: .debug, url.absoluteString)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         
@@ -149,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        Logger.log(items: #function)
+        os_log(#function, log: lifecycleLog, type: .debug)
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
             completionHandler(newData ? .newData : .noData)
@@ -206,7 +204,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
+        os_log("Handling shortcut item: %s", log: generalLog, type: .debug, shortcutItem.type)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {

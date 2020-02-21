@@ -56,7 +56,7 @@ public class Tab: NSObject, NSCoding {
         }
     }
 
-    init(link: Link?, viewed: Bool = true, desktop: Bool = false) {
+    public init(link: Link? = nil, viewed: Bool = true, desktop: Bool = isPad) {
         self.link = link
         self.viewed = viewed
         self.isDesktop = desktop

@@ -133,6 +133,7 @@
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
 "home.row.onboarding.header" = "Add DuckDuckGo to your home screen!";
+"home.row.onboarding.iconHeader" = "Excellent. Now place the app on your home screen.";
 
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
@@ -286,6 +287,7 @@
 "onboardingContinue" = "Continue";
 "onboardingSkip" = "Skip";
 "onboardingStartBrowsing" = "Start Browsing";
+"onboardingSetAppIcon" = "Set App Icon";
 "onboardingNotificationsAccept" = "Turn on Notifications";
 "onboardingNotificationsDeny" = "Not now";
 
@@ -298,3 +300,7 @@
 "preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
 "preserveLogins.domain.list.title" = "Signed In Websites";
 "preserveLogins.sign.out" = "Sign Out";
+
+"homeTab.searchOnly" = "Search in a new tab";
+"homeTab.searchAndFavorites" = "Search and favorites in a new tab";
+"homeTab.title" = "Home";

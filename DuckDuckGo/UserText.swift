@@ -147,6 +147,7 @@ public struct UserText {
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     
     public static let homeRowOnboardingHeader = NSLocalizedString("home.row.onboarding.header", comment:  "Home Row onboarding Header")
+    public static let homeRowOnboardingAppIconHeader = NSLocalizedString("home.row.onboarding.iconHeader", comment:  "Home Row onboarding Header for ApIcon experiment")
     
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     
@@ -239,6 +240,7 @@ public struct UserText {
     public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue")
     public static let onboardingSkip = NSLocalizedString("onboardingSkip", comment: "Skip")
     public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")
+    public static let onboardingSetAppIcon = NSLocalizedString("onboardingSetAppIcon", comment: "Set App Icon")
     public static let onboardingNotificationsAccept = NSLocalizedString("onboardingNotificationsAccept", comment: "Turn on Notifications")
     public static let onboardingNotificationsDeny = NSLocalizedString("onboardingNotificationsDeny", comment: "Not now")
     
@@ -251,5 +253,9 @@ public struct UserText {
     public static let preserveLoginsDomainListHeaderTitle = NSLocalizedString("preserveLogins.domain.list.title", comment: "Preserve logins domain list title")
     public static let preserveLoginsSwitchFooter = NSLocalizedString("preserveLogins.switch.footer", comment: "Preserve logins switch footer")
     public static let preserveLoginsSignOut = NSLocalizedString("preserveLogins.sign.out", comment: "Preserve logins clear all prompt")
+
+    public static let homeTabSearchOnly = NSLocalizedString("homeTab.searchOnly", comment: "Home tab search only")
+    public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")
+    public static let homeTabTitle = NSLocalizedString("homeTab.title", comment: "Home tab title")
 
 }

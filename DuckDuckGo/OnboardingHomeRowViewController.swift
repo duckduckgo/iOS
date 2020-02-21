@@ -37,12 +37,20 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startVideo()
-        
-        HomeRowCTA().dismissed()
     }
     
     override var header: String {
+        if DefaultVariantManager().isSupported(feature: .appIconOnboarding) {
+            return UserText.homeRowOnboardingAppIconHeader
+        }
         return UserText.homeRowOnboardingHeader
+    }
+    
+    override var subtitle: String? {
+        if DefaultVariantManager().isSupported(feature: .appIconOnboarding) {
+            return nil
+        }
+        return super.subtitle
     }
     
     override var continueButtonTitle: String {
@@ -103,5 +111,14 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+}
+
+class VideoContainerView: UIView {
+    var playerLayer: CALayer?
+
+    override func layoutSublayers(of layer: CALayer) {
+      super.layoutSublayers(of: layer)
+      playerLayer?.frame = self.bounds
     }
 }

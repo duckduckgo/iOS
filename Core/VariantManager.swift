@@ -25,6 +25,7 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
+    case appIconOnboarding
 }
 
 public struct Variant {
@@ -35,7 +36,10 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: doNotAllocate, features: [])
+        Variant(name: "se", weight: doNotAllocate, features: []),
+
+        Variant(name: "mq", weight: 1, features: []),
+        Variant(name: "mr", weight: 1, features: [.appIconOnboarding]),
     ]
     
     public let name: String
@@ -53,7 +57,7 @@ public protocol VariantRNG {
 public protocol VariantManager {
     
     var currentVariant: Variant? { get }
-    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void)
+    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Bool)
     func isSupported(feature: FeatureName) -> Bool
     
 }
@@ -84,7 +88,7 @@ public class DefaultVariantManager: VariantManager {
         return currentVariant?.features.contains(feature) ?? false
     }
     
-    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
+    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Bool) {
         guard !storage.hasInstallStatistics else {
             os_log("no new variant needed for existing user", log: generalLog, type: .debug)
             return
@@ -101,7 +105,9 @@ public class DefaultVariantManager: VariantManager {
         }
         
         storage.variant = variant.name
-        newInstallCompletion(self)
+        if !newInstallCompletion(self) {
+            storage.variant = nil
+        }
     }
     
     private func selectVariant() -> Variant? {

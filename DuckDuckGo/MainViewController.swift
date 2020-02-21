@@ -344,12 +344,11 @@ class MainViewController: UIViewController {
         refreshTabIcon()
         refreshControls()
     }
-
-    func launchNewSearch() {
-        loadViewIfNeeded()
-        attachHomeScreen()
-        homeController?.launchNewSearch()
-        omniBar.becomeFirstResponder()
+    
+    func enterSearch() {
+        if presentedViewController == nil {
+            omniBar.becomeFirstResponder()
+        }
     }
 
     fileprivate func loadQuery(_ query: String) {

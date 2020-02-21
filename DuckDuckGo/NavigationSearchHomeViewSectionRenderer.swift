@@ -49,7 +49,9 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func openedAsNewTab() {
-        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
+        if KeyboardSettings().onNewTab {
+            launchNewSearch()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

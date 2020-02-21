@@ -154,7 +154,9 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func openedAsNewTab() {
-        launchNewSearch()
+        if KeyboardSettings().onNewTab {
+            launchNewSearch()
+        }
     }
     
 }

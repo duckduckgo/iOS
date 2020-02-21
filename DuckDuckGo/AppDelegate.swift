@@ -97,6 +97,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
+        
+        if KeyboardSettings().onAppLaunch {
+            mainViewController?.enterSearch()
+        }
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
@@ -137,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear?.applicationWillMoveToForeground()
         
         if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.launchNewSearch()
+            mainViewController?.newTab()
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)

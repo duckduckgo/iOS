@@ -192,9 +192,8 @@
 "autoclear.on" = "On";
 "autoclear.off" = "Off";
 
-"homepage.simple" = "Simple";
+"homepage.navigationBar" = "Default";
 "homepage.centerSearch" = "Centered Search";
-"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
 
 "privacy.protection.site.grade" = "Privacy grade %@";
 

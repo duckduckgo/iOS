@@ -23,7 +23,8 @@ import Core
 public class AtbAndVariantCleanup {
 
     static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(),
-                        variantManager: VariantManager = DefaultVariantManager()) {
+                        variantManager: VariantManager = DefaultVariantManager(),
+                        homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
         
         guard let variant = statisticsStorage.variant else { return }
 
@@ -33,20 +34,20 @@ public class AtbAndVariantCleanup {
         }
         
         // Home page experiment migration
-        var homePageSettings = HomePageSettings()
+        var settings = homePageSettings
         switch variant {
 
         case "mn":
-            homePageSettings.layout = .centered
-            homePageSettings.favorites = false
+            settings.layout = .centered
+            settings.favorites = false
 
         case "ml", "mm":
-            homePageSettings.layout = .centered
-            homePageSettings.favorites = true
+            settings.layout = .centered
+            settings.favorites = true
 
         case "mk":
-            homePageSettings.layout = .navigationBar
-            homePageSettings.favorites = false
+            settings.layout = .navigationBar
+            settings.favorites = false
 
         default: break
 

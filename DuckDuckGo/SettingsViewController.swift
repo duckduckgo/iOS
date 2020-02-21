@@ -164,9 +164,9 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    private func configureHomePageCellAccessory() {
+    private func configureHomePageCellAccessory(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
 
-        switch HomePageSettings().layout {
+        switch homePageSettings.layout {
 
         case .centered:
             homePageAccessoryText.text = UserText.homePageCenterSearch

@@ -51,9 +51,8 @@ class BlankSnapshotViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    private func configureOmniBar() {
-        let settings = HomePageSettings()
-        if settings.layout == .navigationBar {
+    private func configureOmniBar(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+        if homePageSettings.layout == .navigationBar {
             omniBar = OmniBar.loadFromXib()
             omniBar.frame = customNavigationBar.bounds
             customNavigationBar.addSubview(omniBar)

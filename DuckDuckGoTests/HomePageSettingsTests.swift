@@ -25,21 +25,22 @@ class HomePageSettingsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        UserDefaults.clearStandard()
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<String>.Key.layout.rawValue)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<String>.Key.favorites.rawValue)
     }
     
     func testWhenNewThenDefaultLayoutIsNavigationBarAndFavoritesIsOn() {
-        XCTAssertEqual(HomePageSettings().layout, .navigationBar)
-        XCTAssertTrue(HomePageSettings().favorites)
+        XCTAssertEqual(DefaultHomePageSettings().layout, .navigationBar)
+        XCTAssertTrue(DefaultHomePageSettings().favorites)
     }
     
     func testWhenSettingsChangedThenTheyArePersisted() {
-        var settings = HomePageSettings()
+        let settings = DefaultHomePageSettings()
         settings.layout = .centered
         settings.favorites = false
         
-        XCTAssertEqual(HomePageSettings().layout, .centered)
-        XCTAssertFalse(HomePageSettings().favorites)
+        XCTAssertEqual(DefaultHomePageSettings().layout, .centered)
+        XCTAssertFalse(DefaultHomePageSettings().favorites)
     }
     
 }

@@ -19,24 +19,32 @@
 
 import Core
 
-struct HomePageSettings {
+enum HomePageLayout: Int, Codable {
 
-    enum Layout: Int, Codable {
+    case navigationBar
+    case centered
 
-        case navigationBar
-        case centered
+}
 
-    }
+protocol HomePageSettings {
+    
+    var layout: HomePageLayout { get set }
+ 
+    var favorites: Bool { get set }
+
+    func migrate(from appSettigs: inout AppSettings)
+    
+}
+
+class DefaultHomePageSettings: HomePageSettings {
 
     @UserDefaultsWrapper(key: .layout, defaultValue: .navigationBar)
-    var layout: Layout
+    var layout: HomePageLayout
 
     @UserDefaultsWrapper(key: .favorites, defaultValue: true)
     var favorites: Bool
 
-    // XXX test
-    mutating func migrate() {
-        let appSettings = AppUserDefaults()
+    func migrate(from appSettings: inout AppSettings) {
         guard let homePage = appSettings.homePage else { return }
 
         switch homePage {

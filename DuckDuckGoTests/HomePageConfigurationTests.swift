@@ -26,17 +26,11 @@ class HomePageConfigurationTests: XCTestCase {
 
     struct Test {
 
-        let layout: HomePageSettings.Layout
+        let layout: HomePageLayout
         let favorites: Bool
         let links: [Link]
         let expected: [HomePageConfiguration.Component]
 
-    }
-
-    var settings: HomePageSettings!
-
-    override func setUp() {
-        settings = HomePageSettings()
     }
 
     func test() {
@@ -66,10 +60,7 @@ class HomePageConfigurationTests: XCTestCase {
 
         for test in tests {
 
-            var settings = HomePageSettings()
-            settings.layout = test.layout
-            settings.favorites = test.favorites
-
+            let settings = SimpleHomePageSettings(layout: test.layout, favorites: test.favorites)
             let store = MockBookmarkStore()
             store.favorites = test.links
             let manager = BookmarksManager(dataStore: store)
@@ -86,4 +77,15 @@ class HomePageConfigurationTests: XCTestCase {
 
     }
 
+}
+
+struct SimpleHomePageSettings: HomePageSettings {
+
+    var layout: HomePageLayout
+    var favorites: Bool
+    
+    func migrate(from appSettigs: inout AppSettings) {
+        // no-op
+    }
+    
 }

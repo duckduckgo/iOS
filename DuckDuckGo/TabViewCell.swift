@@ -139,7 +139,7 @@ class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func update(withTab tab: Tab) {
+    func update(withTab tab: Tab, homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
@@ -164,7 +164,7 @@ class TabViewCell: UICollectionViewCell {
         unread.isHidden = tab.viewed
 
         if tab.link == nil {
-            let linkText = HomePageSettings().favorites ? UserText.homeTabSearchAndFavorites : UserText.homeTabSearchOnly
+            let linkText = homePageSettings.favorites ? UserText.homeTabSearchAndFavorites : UserText.homeTabSearchOnly
             title.text = UserText.homeTabTitle
             link.text = linkText
             favicon.image = UIImage(named: "Logo")

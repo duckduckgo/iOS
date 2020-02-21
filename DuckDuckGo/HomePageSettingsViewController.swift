@@ -33,7 +33,7 @@ class HomePageSettingsViewController: UITableViewController {
 
     weak var delegate: HomePageSettingsDelegate?
 
-    var settings = HomePageSettings()
+    var settings = DefaultHomePageSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +54,8 @@ class HomePageSettingsViewController: UITableViewController {
         
         guard indexPath.section == 0 else { return }
 
-        let layoutSetting = indexPath.row == 0 ? HomePageSettings.Layout.navigationBar : .centered
-        cell.accessoryType = HomePageSettings().layout == layoutSetting ? .checkmark : .none
+        let layoutSetting = indexPath.row == 0 ? HomePageLayout.navigationBar : .centered
+        cell.accessoryType = settings.layout == layoutSetting ? .checkmark : .none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -58,7 +58,7 @@ class HomePageConfiguration {
         return components
     }
     
-    init(settings: HomePageSettings = HomePageSettings()) {
+    init(settings: HomePageSettings = DefaultHomePageSettings()) {
         self.settings = settings
     }
     

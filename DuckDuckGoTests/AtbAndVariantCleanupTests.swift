@@ -76,25 +76,56 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     func testWhenPreviousVariantIsHomePageExperimentThenSettingsAreUpdatedCorrectly() {
         
-        let cases: [String: (HomePageSettings.Layout, Bool)] = [
-            "": (HomePageSettings.Layout.navigationBar, true),
-            "mk": (HomePageSettings.Layout.navigationBar, false),
-            "ml": (HomePageSettings.Layout.centered, true),
-            "mm": (HomePageSettings.Layout.centered, true),
-            "mn": (HomePageSettings.Layout.centered, false)]
+        let cases: [String: (HomePageLayout, Bool)] = [
+            "mk": (HomePageLayout.navigationBar, false),
+            "ml": (HomePageLayout.centered, true),
+            "mm": (HomePageLayout.centered, true),
+            "mn": (HomePageLayout.centered, false)]
 
         for testCase in cases {
             let defaults = UserDefaults.standard
             defaults.removeObject(forKey: UserDefaultsWrapper<String>.Key.layout.rawValue)
             defaults.removeObject(forKey: UserDefaultsWrapper<String>.Key.favorites.rawValue)
 
-            let settings = HomePageSettings()
+            let settings = MockHomePageSettings()
             mockStorage.variant = testCase.key
-            AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager)
-            XCTAssertEqual(settings.layout, testCase.value.0, "\(testCase)")
-            XCTAssertEqual(settings.favorites, testCase.value.1, "\(testCase)")
+            AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager, homePageSettings: settings)
+            
+            XCTAssertEqual(settings.layoutSet[0], testCase.value.0, "\(testCase)")
+            XCTAssertEqual(settings.favoritesSet[0], testCase.value.1, "\(testCase)")
         }
-        
+    
+    }
+    
+    func testWhenNoExperimentToCleanUpThenHomePageSettingsAreUnchanged() {
+        let settings = MockHomePageSettings()
+        mockStorage.variant = ""
+        AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager, homePageSettings: settings)
+        XCTAssertTrue(settings.layoutSet.isEmpty)
+        XCTAssertTrue(settings.favoritesSet.isEmpty)
+    }
+    
+}
+
+class MockHomePageSettings: HomePageSettings {
+    
+    var layoutSet = [HomePageLayout]()
+    var favoritesSet = [Bool]()
+    
+    var layout: HomePageLayout = .centered {
+        didSet {
+            layoutSet.append(layout)
+        }
+    }
+    
+    var favorites: Bool = false {
+        didSet {
+            favoritesSet.append(favorites)
+        }
+    }
+    
+    func migrate(from appSettigs: inout AppSettings) {
+        // no-op
     }
     
 }

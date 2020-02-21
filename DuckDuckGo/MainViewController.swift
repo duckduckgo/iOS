@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
     var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
-    fileprivate lazy var homePageSettings = HomePageSettings()
+    fileprivate lazy var homePageSettings: HomePageSettings = DefaultHomePageSettings()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?

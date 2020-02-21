@@ -1491,7 +1491,7 @@ upgraded by Privacy Protection.</string>
         <!--Home Screen-->
         <scene sceneID="fuM-fp-dKw">
             <objects>
-                <tableViewController title="Home Screen" id="zWP-d3-nVc" sceneMemberID="viewController">
+                <tableViewController title="Home Screen" id="zWP-d3-nVc" customClass="KeyboardSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="dlI-6w-HWO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1518,7 +1518,7 @@ upgraded by Privacy Protection.</string>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SqP-96-c27">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                             <connections>
-                                                                <action selector="onClearDataToggled:" destination="fdJ-b1-Des" eventType="valueChanged" id="I8m-NC-b7Z"/>
+                                                                <action selector="onNewTabValueChanged:" destination="zWP-d3-nVc" eventType="valueChanged" id="dFZ-Nt-kCe"/>
                                                             </connections>
                                                         </switch>
                                                     </subviews>
@@ -1550,7 +1550,7 @@ upgraded by Privacy Protection.</string>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6je-HV-qzW">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                             <connections>
-                                                                <action selector="onClearDataToggled:" destination="fdJ-b1-Des" eventType="valueChanged" id="6GG-BD-JEI"/>
+                                                                <action selector="onAppLaunchValueChanged:" destination="zWP-d3-nVc" eventType="valueChanged" id="zst-sK-Sfp"/>
                                                             </connections>
                                                         </switch>
                                                     </subviews>
@@ -1572,6 +1572,12 @@ upgraded by Privacy Protection.</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Keyboard" id="2pp-PM-6rW"/>
+                    <connections>
+                        <outlet property="appLaunchToggle" destination="6je-HV-qzW" id="cym-Se-Lz3"/>
+                        <outlet property="newTabToggle" destination="SqP-96-c27" id="RDw-di-NAA"/>
+                        <outletCollection property="labels" destination="Zpg-h0-rYv" collectionClass="NSMutableArray" id="lUB-Co-hLZ"/>
+                        <outletCollection property="labels" destination="13n-KI-KLq" collectionClass="NSMutableArray" id="Qtb-LY-At9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wb8-jY-5ve" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

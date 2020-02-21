@@ -48,13 +48,10 @@ class HomePageSettingsViewController: UITableViewController {
     }
  
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
-        // Checkmark color
-        cell.tintColor = theme.buttonTintColor
-
+        let theme = ThemeManager.shared.currentTheme
+        cell.decorate(with: theme)
+        
         guard indexPath.section == 0 else { return }
 
         let layoutSetting = indexPath.row == 0 ? HomePageSettings.Layout.navigationBar : .centered

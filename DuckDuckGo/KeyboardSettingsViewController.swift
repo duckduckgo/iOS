@@ -17,4 +17,57 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
+
+class KeyboardSettingsViewController: UITableViewController {
+    
+    @IBOutlet var labels: [UILabel]!
+
+    @IBOutlet weak var newTabToggle: UISwitch!
+    @IBOutlet weak var appLaunchToggle: UISwitch!
+    
+    var settings = KeyboardSettings()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        newTabToggle.isOn = settings.onNewTab
+        appLaunchToggle.isOn = settings.onAppLaunch
+        
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let theme = ThemeManager.shared.currentTheme
+        cell.decorate(with: theme)
+    }
+    
+    @IBAction func onNewTabValueChanged(_ sender: Any) {
+        settings.onNewTab = newTabToggle.isOn
+    }
+        
+    @IBAction func onAppLaunchValueChanged(_ sender: Any) {
+        settings.onAppLaunch = appLaunchToggle.isOn
+    }
+    
+}
+
+extension KeyboardSettingsViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        
+        for label in labels {
+            label.textColor = theme.tableCellTextColor
+        }
+
+        newTabToggle.onTintColor = theme.buttonTintColor
+        appLaunchToggle.onTintColor = theme.buttonTintColor
+
+        tableView.backgroundColor = theme.backgroundColor
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        
+        tableView.reloadData()
+
+    }
+    
+}

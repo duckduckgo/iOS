@@ -59,12 +59,17 @@ class TabTests: XCTestCase {
     }
 
     func testWhenEncodedWithDesktopPropertyThenDecodesSuccessfully() {
-        let tab = Tab(coder: CoderStub(properties: ["link": link(), "viewed": false, "desktop": true]))
+        let data = NSKeyedArchiver.archivedData(withRootObject: Tab(link: link(), viewed: false, desktop: true))
+        XCTAssertFalse(data.isEmpty)
+
+        let tab = NSKeyedUnarchiver.unarchiveObject(with: data) as? Tab
+        
         XCTAssertNotNil(tab?.link)
         XCTAssertFalse(tab?.viewed ?? true)
         XCTAssertTrue(tab?.isDesktop ?? false)
     }
 
+    /// This test supports the migration scenario where desktop was not a property of tab
     func testWhenEncodedWithoutDesktopPropertyThenDecodesSuccessfully() {
         let tab = Tab(coder: CoderStub(properties: ["link": link(), "viewed": false]))
         XCTAssertNotNil(tab?.link)
@@ -158,7 +163,7 @@ private class CoderStub: NSCoder {
     override func decodeBool(forKey key: String) -> Bool {
         return (properties[key] as? Bool)!
     }
-
+    
 }
 
 private class MockTabObserver: NSObject, TabObserver {

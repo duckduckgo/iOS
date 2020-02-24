@@ -219,17 +219,21 @@ extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
         guard let index = tabsModel.indexOf(tab: tab) else { return }
+        let isLastTab = tabsModel.count == 1
         delegate.tabSwitcher(self, didRemoveTab: tab)
         currentSelection = tabsModel.currentIndex
         refreshTitle()
         
-        collectionView.performBatchUpdates({
-            self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
-        }, completion: { _ in
-            guard let current = self.currentSelection else { return }
-            self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
-        })
-        
+        if isLastTab {
+            collectionView.reloadData()
+        } else {
+            collectionView.performBatchUpdates({
+                self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+            }, completion: { _ in
+                guard let current = self.currentSelection else { return }
+                self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
+            })
+        }
     }
     
     func isCurrent(tab: Tab) -> Bool {

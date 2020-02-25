@@ -42,19 +42,19 @@ class HomePageConfigurationTests: XCTestCase {
                  expected: [ .centeredSearch(fixed: true) ]),
 
             Test(layout: .centered, favorites: true, links: [],
-                 expected: [ .centeredSearch(fixed: true), .favorites(withHeader: false) ]),
+                 expected: [ .centeredSearch(fixed: true), .favorites ]),
 
             Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .centeredSearch(fixed: false), .favorites(withHeader: false)]),
+                 expected: [ .centeredSearch(fixed: false), .favorites ]),
 
             Test(layout: .navigationBar, favorites: false, links: [],
-                 expected: [ .navigationBarSearch(withOffset: false, fixed: true) ]),
+                 expected: [ .navigationBarSearch(fixed: true) ]),
 
             Test(layout: .navigationBar, favorites: true, links: [],
-                 expected: [ .navigationBarSearch(withOffset: false, fixed: true), .favorites(withHeader: false) ]),
+                 expected: [ .navigationBarSearch(fixed: true), .favorites ]),
 
             Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .navigationBarSearch(withOffset: false, fixed: false), .favorites(withHeader: false)])
+                 expected: [ .navigationBarSearch(fixed: false), .favorites ])
 
         ]
 

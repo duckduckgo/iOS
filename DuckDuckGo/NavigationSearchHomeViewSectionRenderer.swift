@@ -26,11 +26,9 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         static let itemSpacing: CGFloat = 10
     }
     
-    private let withOffset: Bool
     private let fixed: Bool
     
-    init(withOffset: Bool, fixed: Bool) {
-        self.withOffset = withOffset
+    init(fixed: Bool) {
         self.fixed = fixed
     }
     
@@ -71,10 +69,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             constant = 0
         }
         
-        if withOffset {
-            constant -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing) / 2
-        }
-        
         cell.verticalConstraint.constant = constant
         
         return cell
@@ -83,12 +77,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var size = collectionView.frame.size
-        
-        if withOffset {
-            size.height -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing)
-        }
-        return size
+        return collectionView.frame.size
     }
   
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

@@ -31,10 +31,9 @@ class HomePageConfiguration {
     }
     
     enum Component: Equatable {
-        case navigationBarSearch(withOffset: Bool, fixed: Bool)
+        case navigationBarSearch(fixed: Bool)
         case centeredSearch(fixed: Bool)
-        case favorites(withHeader: Bool)
-        case empty
+        case favorites
     }
     
     let settings: HomePageSettings
@@ -45,14 +44,14 @@ class HomePageConfiguration {
         var components = [Component]()
         switch settings.layout {
         case .navigationBar:
-            components.append(.navigationBarSearch(withOffset: false, fixed: fixed))
+            components.append(.navigationBarSearch(fixed: fixed))
 
         case .centered:
             components.append(.centeredSearch(fixed: fixed))
         }
 
         if settings.favorites {
-            components.append(.favorites(withHeader: false))
+            components.append(.favorites)
         }
 
         return components

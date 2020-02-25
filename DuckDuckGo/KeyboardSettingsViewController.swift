@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class KeyboardSettingsViewController: UITableViewController {
     
@@ -44,10 +45,12 @@ class KeyboardSettingsViewController: UITableViewController {
     
     @IBAction func onNewTabValueChanged(_ sender: Any) {
         settings.onNewTab = newTabToggle.isOn
+        Pixel.fire(pixel: newTabToggle.isOn ? .settingsKeyboardNewTabOn : .settingsKeyboardNewTabOff)
     }
         
     @IBAction func onAppLaunchValueChanged(_ sender: Any) {
         settings.onAppLaunch = appLaunchToggle.isOn
+        Pixel.fire(pixel: appLaunchToggle.isOn ? .settingsKeyboardAppLaunchOn : .settingsKeyboardAppLaunchOff)
     }
     
 }

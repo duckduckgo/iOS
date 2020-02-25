@@ -44,6 +44,7 @@ class HomePageSettingsViewController: UITableViewController {
 
     @IBAction func toggleFavorites() {
         settings.favorites = favoritesToggle.isOn
+        Pixel.fire(pixel: favoritesToggle.isOn ? .settingsNewTabFavoritesOn : .settingsNewTabFavoritesOff)
         delegate?.homePageChanged()
     }
  
@@ -65,6 +66,14 @@ class HomePageSettingsViewController: UITableViewController {
 
         settings.layout = indexPath.row == 0 ? .navigationBar : .centered
 
+        switch settings.layout {
+        case .centered:
+            Pixel.fire(pixel: .settingsNewTabCenteredSelected)
+            
+        case .navigationBar:
+            Pixel.fire(pixel: .settingsNewTabDefaultSelected)
+        }
+        
         delegate?.homePageChanged()
 
         tableView.reloadData()

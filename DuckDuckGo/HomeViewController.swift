@@ -115,8 +115,11 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Pixel.fire(pixel: .homeScreenShown)
-        installHomeScreenTips()
+        if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
+            Pixel.fire(pixel: .homeScreenShown)
+            installHomeScreenTips()
+        }
+        
         viewHasAppeared = true
     }
     

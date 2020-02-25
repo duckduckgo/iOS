@@ -85,10 +85,18 @@ public enum PixelName: String {
     case settingsAppIconChangedPurple = "ms_aic_purple"
     case settingsAppIconChangedBlack = "ms_aic_black"
 
-    case settingsHomePageShown = "ms_hp"
-    case settingsHomePageSimple = "ms_hp_s"
-    case settingsHomePageCenterSearch = "ms_hp_c"
-    case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
+    case settingsNewTabShown = "ms_nt"
+    case settingsNewTabDefaultSelected = "ms_nt_d"
+    case settingsNewTabCenteredSelected = "ms_nt_c"
+    case settingsNewTabFavoritesOn = "ms_nt_f_on"
+    case settingsNewTabFavoritesOff = "ms_nt_f_off"
+
+    case settingsKeyboardShown = "ms_ks"
+    case settingsKeyboardNewTabOn = "ms_ks_nt_on"
+    case settingsKeyboardNewTabOff = "ms_ks_nt_off"
+    case settingsKeyboardAppLaunchOn = "ms_ks_al_on"
+    case settingsKeyboardAppLaunchOff = "ms_ks_pl_off"
+    
     case settingsManageWhitelist = "ms_mw"
     case settingsLinkPreviewsOff = "ms_lp_f"
     case settingsLinkPreviewsOn = "ms_lp_n"
@@ -189,7 +197,7 @@ public enum PixelName: String {
     case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
     case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
     case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
-    
+
     // debug pixels:
     
     case dbMigrationError = "m_d_dbme"

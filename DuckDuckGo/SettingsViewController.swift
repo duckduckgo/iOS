@@ -100,11 +100,16 @@ class SettingsViewController: UITableViewController {
         }
         
         if let controller = segue.destination as? HomePageSettingsViewController {
-            Pixel.fire(pixel: .settingsHomePageShown)
+            Pixel.fire(pixel: .settingsNewTabShown)
             controller.delegate = homePageSettingsDelegate
             return
         }
-        
+
+        if segue.destination is KeyboardSettingsViewController {
+            Pixel.fire(pixel: .settingsKeyboardShown)
+            return
+        }
+
         if segue.destination is WhitelistViewController {
             Pixel.fire(pixel: .settingsManageWhitelist)
             return
@@ -114,7 +119,7 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
             return
         }
-        
+                
         if let navController = segue.destination as? UINavigationController, navController.topViewController is FeedbackViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet

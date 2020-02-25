@@ -173,6 +173,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         delegate?.home(self, didRequestUrl: link.url)
     }
+
 }
 
 extension HomeViewController: Themable {

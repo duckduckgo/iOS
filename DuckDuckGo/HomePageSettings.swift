@@ -19,7 +19,7 @@
 
 import Core
 
-enum HomePageLayout: Int, Codable {
+enum HomePageLayout: Int {
 
     case navigationBar
     case centered
@@ -38,8 +38,18 @@ protocol HomePageSettings {
 
 class DefaultHomePageSettings: HomePageSettings {
 
-    @UserDefaultsWrapper(key: .layout, defaultValue: .navigationBar)
-    var layout: HomePageLayout
+    @UserDefaultsWrapper(key: .layout, defaultValue: HomePageLayout.navigationBar.rawValue)
+    var layoutRaw: Int
+    
+    var layout: HomePageLayout {
+        get {
+            return HomePageLayout(rawValue: layoutRaw) ?? .navigationBar
+        }
+        
+        set {
+            layoutRaw = newValue.rawValue
+        }
+    }
 
     @UserDefaultsWrapper(key: .favorites, defaultValue: true)
     var favorites: Bool

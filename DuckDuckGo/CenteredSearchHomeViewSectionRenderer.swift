@@ -119,7 +119,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         }
 
         // search bar is transitioning
-        let percent = 1 - (diff / 46)
+        let percent = 1 - (diff / Constants.scrollUpAdjustment)
         controller?.searchHeaderTransition = percent
         cell?.searchHeaderTransition = percent
     }

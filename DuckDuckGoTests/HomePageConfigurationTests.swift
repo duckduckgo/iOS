@@ -60,7 +60,7 @@ class HomePageConfigurationTests: XCTestCase {
 
         for test in tests {
 
-            let settings = SimpleHomePageSettings(layout: test.layout, favorites: test.favorites)
+            let settings = StubHomePageSettings(layout: test.layout, favorites: test.favorites)
             let store = MockBookmarkStore()
             store.favorites = test.links
             let manager = BookmarksManager(dataStore: store)
@@ -79,7 +79,7 @@ class HomePageConfigurationTests: XCTestCase {
 
 }
 
-struct SimpleHomePageSettings: HomePageSettings {
+struct StubHomePageSettings: HomePageSettings {
 
     var layout: HomePageLayout
     var favorites: Bool

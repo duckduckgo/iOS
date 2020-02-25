@@ -24,6 +24,7 @@ protocol FavoritesHomeViewSectionRendererDelegate: class {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
                            didSelect link: Link)
+    
 }
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
@@ -32,6 +33,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
         static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
         static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
+        static let headerEnabledHeight: CGFloat = 45
+        static let defaultHeaderHeight: CGFloat = 20
+        static let horizontalMargin: CGFloat = 2
         
     }
     
@@ -43,14 +47,32 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private let allowsEditing: Bool
     private let headerEnabled: Bool
-    
+    private let cellWidth: CGFloat
+    private let cellHeight: CGFloat
+    private let omniBarHeight: CGFloat
+
     init(allowsEditing: Bool = true, headerEnabled: Bool = false) {
+        guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
+            fatalError("Failed to load FavoriteHomeCell")
+        }
+        
+        guard let omnibar = (UINib(nibName: "OmniBar", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
+            fatalError("Failed to load OmniBar")
+        }
+        
         self.allowsEditing = allowsEditing
         self.headerEnabled = headerEnabled
+        self.cellHeight = cell.frame.height
+        self.cellWidth = cell.frame.width
+        self.omniBarHeight = omnibar.frame.size.height
     }
     
     private var numberOfItems: Int {
         return bookmarksManager.favoritesCount
+    }
+    
+    private var headerHeight: CGFloat {
+        return headerEnabled ? Constants.headerEnabledHeight : Constants.defaultHeaderHeight
     }
     
     func install(into controller: HomeViewController) {
@@ -83,7 +105,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     // Visible margin is adjusted for offset inside Favorite Cells
     static func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
-        return sectionMargin(in: collectionView) + FavoriteHomeCell.Constants.horizontalMargin
+        return sectionMargin(in: collectionView) + Constants.horizontalMargin
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -175,7 +197,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: FavoriteHomeCell.Constants.width, height: FavoriteHomeCell.Constants.height)
+        return CGSize(width: Constants.horizontalMargin + cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -204,20 +226,14 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
-        if headerEnabled {
-            return CGSize(width: 1, height: 45)
-        }
-        return CGSize(width: 1, height: 20)
+        return CGSize(width: 1, height: headerHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
-        
-        if headerEnabled {
-            return .zero
-        }
-        return CGSize(width: 1, height: 20)
+        let paddingHeight = (controller?.view.frame.height ?? 0) - cellHeight - omniBarHeight - headerHeight
+        return CGSize(width: 1, height: paddingHeight)
     }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {

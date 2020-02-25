@@ -21,8 +21,10 @@ import Foundation
 
 // Inspired by https://swiftsenpai.com/swift/create-the-perfect-userdefaults-wrapper-using-property-wrapper/
 
+// enums are not supported on iOS 12 due to a bug in JSONEncoder, so just use primitive types or NSCodables
+
 @propertyWrapper
-public struct UserDefaultsWrapper<T: Codable> {
+public struct UserDefaultsWrapper<T> {
 
     public enum Key: String {
 
@@ -43,16 +45,10 @@ public struct UserDefaultsWrapper<T: Codable> {
 
     public var wrappedValue: T {
         get {
-            guard let data = UserDefaults.standard.object(forKey: key.rawValue) as? Data else {
-                return defaultValue
-            }
-
-            let value = try? JSONDecoder().decode(T.self, from: data)
-            return value ?? defaultValue
+            return UserDefaults.standard.object(forKey: key.rawValue) as? T ?? defaultValue
         }
         set {
-            let data = try? JSONEncoder().encode(newValue)
-            UserDefaults.standard.set(data, forKey: key.rawValue)
+            UserDefaults.standard.set(newValue, forKey: key.rawValue)
         }
     }
 }

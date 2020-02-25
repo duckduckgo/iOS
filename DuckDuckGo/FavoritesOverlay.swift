@@ -98,6 +98,7 @@ extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
         Pixel.fire(pixel: .overlayFavoriteLaunched)
         delegate?.favoritesOverlay(self, didSelect: link)
     }
+    
 }
 
 extension FavoritesOverlay: UICollectionViewDelegate {

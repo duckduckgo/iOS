@@ -19,6 +19,7 @@
 
 import XCTest
 import Swifter
+@testable import Core
 
 class AtbIntegrationTests: XCTestCase {
 
@@ -59,7 +60,7 @@ class AtbIntegrationTests: XCTestCase {
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
             "BASE_PIXEL_URL": "http://localhost:8080",
-            "VARIANT": "mp" // just has to match an existing variant to prevent one being allocated and written to storage
+            "VARIANT": Variant.defaultVariants[0].name // just has to match an existing variant to prevent one being allocated and written to storage
         ]
         
         addRequestHandlers()

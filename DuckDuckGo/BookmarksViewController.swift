@@ -30,7 +30,7 @@ class BookmarksViewController: UITableViewController {
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        return BookmarksAndFavoritesDataSource()
+        return BookmarksDataSource()
     }()
     
     override func viewDidLoad() {

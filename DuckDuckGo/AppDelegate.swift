@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
+    private var isLoadingUrl = false
 
     // MARK: lifecycle
 
@@ -101,9 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
-        if KeyboardSettings().onAppLaunch {
+        if KeyboardSettings().onAppLaunch && !isLoadingUrl {
             mainViewController?.enterSearch()
         }
+        
+        isLoadingUrl = false
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
@@ -148,6 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
+            isLoadingUrl = true
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {

@@ -200,6 +200,7 @@
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
+		8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */; };
 		859C5FB82147E6CE00E2A43D /* grade-cases.json in Resources */ = {isa = PBXBuildFile; fileRef = 859C5FB72147E6CE00E2A43D /* grade-cases.json */; };
 		859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C5FB92147E6E200E2A43D /* GradeTests.swift */; };
 		859C5FBD214972E400E2A43D /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C5FBB214971BA00E2A43D /* Grade.swift */; };
@@ -828,6 +829,7 @@
 		859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagiciOS.framework; path = Carthage/Build/iOS/SimulatorStatusMagiciOS.framework; sourceTree = "<group>"; };
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
+		8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsTests.swift; sourceTree = "<group>"; };
 		859C5FB72147E6CE00E2A43D /* grade-cases.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "grade-cases.json"; path = "submodules/privacy-grade/test/data/grade-cases.json"; sourceTree = SOURCE_ROOT; };
 		859C5FB92147E6E200E2A43D /* GradeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeTests.swift; sourceTree = "<group>"; };
 		859C5FBB214971BA00E2A43D /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Grade.swift; path = ../DuckDuckGo/Grade.swift; sourceTree = "<group>"; };
@@ -1969,6 +1971,7 @@
 				98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */,
 				981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */,
 				8519FDE823FED2E000CFF73A /* HomePageSettingsTests.swift */,
+				8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3859,6 +3862,7 @@
 				859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
+				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,

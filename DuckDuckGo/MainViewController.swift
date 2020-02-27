@@ -347,6 +347,7 @@ class MainViewController: UIViewController {
     
     func enterSearch() {
         if presentedViewController == nil {
+            showBars()
             omniBar.becomeFirstResponder()
         }
     }

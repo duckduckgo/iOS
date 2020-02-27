@@ -103,9 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if KeyboardSettings().onAppLaunch && !isLoadingUrl {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.mainViewController?.enterSearch()
-            }
+            self.mainViewController?.enterSearch()
         }
         
         isLoadingUrl = false

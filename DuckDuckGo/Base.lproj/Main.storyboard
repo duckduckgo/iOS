@@ -54,6 +54,11 @@
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Krm-hA-s9u">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ACG-Ld-ZlG">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="32"/>
+                                    </constraint>
+                                </constraints>
                                 <items>
                                     <barButtonItem enabled="NO" title="Browse Back" image="BrowsePrevious" id="Kc6-IR-lKx">
                                         <connections>

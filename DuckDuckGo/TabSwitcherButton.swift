@@ -87,7 +87,13 @@ class TabSwitcherButton: UIView {
         
         configureAnimationView()
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        anim.center = center
+        label.center = center
+    }
+
     private func configureAnimationView() {
         anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         anim.layer.masksToBounds = false

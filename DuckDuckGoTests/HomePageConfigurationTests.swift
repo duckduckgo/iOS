@@ -42,10 +42,10 @@ class HomePageConfigurationTests: XCTestCase {
                  expected: [ .centeredSearch(fixed: true) ]),
 
             Test(layout: .centered, favorites: true, links: [],
-                 expected: [ .centeredSearch(fixed: true), .favorites ]),
+                 expected: [ .centeredSearch(fixed: true), .favorites, .padding ]),
 
             Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .centeredSearch(fixed: false), .favorites ]),
+                 expected: [ .centeredSearch(fixed: false), .favorites, .padding ]),
 
             Test(layout: .navigationBar, favorites: false, links: [],
                  expected: [ .navigationBarSearch(fixed: true) ]),

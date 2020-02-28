@@ -34,6 +34,7 @@ class HomePageConfiguration {
         case navigationBarSearch(fixed: Bool)
         case centeredSearch(fixed: Bool)
         case favorites
+        case padding
     }
     
     let settings: HomePageSettings
@@ -52,6 +53,9 @@ class HomePageConfiguration {
 
         if settings.favorites {
             components.append(.favorites)
+            if settings.layout == .centered {
+                components.append(.padding)
+            }
         }
 
         return components

@@ -49,22 +49,16 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private let headerEnabled: Bool
     private let cellWidth: CGFloat
     private let cellHeight: CGFloat
-    private let omniBarHeight: CGFloat
 
     init(allowsEditing: Bool = true, headerEnabled: Bool = false) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
             fatalError("Failed to load FavoriteHomeCell")
         }
         
-        guard let omnibar = (UINib(nibName: "OmniBar", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
-            fatalError("Failed to load OmniBar")
-        }
-        
         self.allowsEditing = allowsEditing
         self.headerEnabled = headerEnabled
         self.cellHeight = cell.frame.height
         self.cellWidth = cell.frame.width
-        self.omniBarHeight = omnibar.frame.size.height
     }
     
     private var numberOfItems: Int {
@@ -232,8 +226,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
-        let paddingHeight = (controller?.view.frame.height ?? 0) - cellHeight - omniBarHeight - headerHeight
-        return CGSize(width: 1, height: paddingHeight)
+        return CGSize(width: 1, height: Constants.defaultHeaderHeight)
     }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {

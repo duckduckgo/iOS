@@ -175,6 +175,7 @@
 		85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */; };
 		85449EFF23FDA97000512AAF /* HomePageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFE23FDA96F00512AAF /* HomePageSettings.swift */; };
 		85449F0123FEAF3000512AAF /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */; };
+		854757B124088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854757B024088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift */; };
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
 		855D914F206563A000C4B448 /* TLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914E206563A000C4B448 /* TLD.swift */; };
@@ -802,6 +803,7 @@
 		85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
 		85449EFE23FDA96F00512AAF /* HomePageSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSettings.swift; sourceTree = "<group>"; };
 		85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
+		854757B024088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios13-home-row.mp4"; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* CompositeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTransition.swift; sourceTree = "<group>"; };
 		855D914E206563A000C4B448 /* TLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLD.swift; sourceTree = "<group>"; };
@@ -1732,6 +1734,7 @@
 				85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */,
 				85374D3B21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift */,
 				85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */,
+				854757B024088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -3743,6 +3746,7 @@
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
+				854757B124088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift in Sources */,
 				851B12CE2236CAB2004781BC /* HomePageSettingsViewController.swift in Sources */,
 				8505836D219F424500ED4EDB /* Point.swift in Sources */,
 				F114C5611E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift in Sources */,

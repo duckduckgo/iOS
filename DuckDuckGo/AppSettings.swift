@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-protocol AppSettings {
+protocol AppSettings: AnyObject {
     var autocomplete: Bool { get set }
     var currentThemeName: ThemeName { get set }
     

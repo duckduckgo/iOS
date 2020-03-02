@@ -85,8 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func migrateHomePageSettings(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
-        var appSettings = AppDependencyProvider.shared.appSettings
-        homePageSettings.migrate(from: &appSettings)
+        homePageSettings.migrate(from: AppDependencyProvider.shared.appSettings)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -84,7 +84,7 @@ struct StubHomePageSettings: HomePageSettings {
     var layout: HomePageLayout
     var favorites: Bool
     
-    func migrate(from appSettigs: inout AppSettings) {
+    func migrate(from appSettigs: AppSettings) {
         // no-op
     }
     

@@ -124,7 +124,7 @@ class MockHomePageSettings: HomePageSettings {
         }
     }
     
-    func migrate(from appSettigs: inout AppSettings) {
+    func migrate(from appSettings: AppSettings) {
         // no-op
     }
     

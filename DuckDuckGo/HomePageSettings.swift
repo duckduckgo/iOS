@@ -32,7 +32,7 @@ protocol HomePageSettings {
  
     var favorites: Bool { get set }
 
-    func migrate(from appSettigs: inout AppSettings)
+    func migrate(from appSettings: AppSettings)
     
 }
 
@@ -54,7 +54,7 @@ class DefaultHomePageSettings: HomePageSettings {
     @UserDefaultsWrapper(key: .favorites, defaultValue: true)
     var favorites: Bool
 
-    func migrate(from appSettings: inout AppSettings) {
+    func migrate(from appSettings: AppSettings) {
         guard let homePage = appSettings.homePage else { return }
 
         switch homePage {

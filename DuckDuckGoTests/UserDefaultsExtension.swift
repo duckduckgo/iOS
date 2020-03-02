@@ -1,8 +1,8 @@
 //
-//  PrivacyReportDataSource.swift
+//  UserDefaultsExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,26 +18,13 @@
 //
 
 import Foundation
-import Core
 
-protocol PrivacyStatsExperimentStore {
-    
-    var privacyStatsPixelFired: Bool { get set }
-}
+extension UserDefaults {
 
-class PrivacyReportDataSource {
-    
-    private let networkLeaderboard = NetworkLeaderboard()
-    
-    var startDate: Date? {
-        return networkLeaderboard.startDate
+    static func clearStandard() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
     }
-    
-    var trackersCount: Int {
-        return Int(networkLeaderboard.networksDetected().reduce(Int64(), { $0 + $1.trackersCount }))
-    }
-    
-    var httpsUpgradesCount: Int {
-        return networkLeaderboard.httpsUpgrades()
-    }
+
 }

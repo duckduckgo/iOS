@@ -261,13 +261,3 @@ class PreserveLoginDomainCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
 
 }
-
-extension UITableViewCell: Themable {
-
-    func decorate(with theme: Theme) {
-        backgroundColor = theme.tableCellBackgroundColor
-        textLabel?.textColor = theme.tableCellTextColor
-        setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-    }
-
-}

@@ -44,7 +44,7 @@ class GestureToolbarButton: UIView {
     
     weak var delegate: GestureToolbarButtonDelegate?
 
-    let iconImageView = UIImageView(frame: CGRect(x: 2.5, y: 10, width: ToolbarButton.ImageWidth, height: ToolbarButton.ImageHeight))
+    let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: ToolbarButton.ImageWidth, height: ToolbarButton.ImageHeight))
     
     var image: UIImage? {
         didSet {
@@ -54,7 +54,7 @@ class GestureToolbarButton: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         addSubview(iconImageView)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressHandler(_:)))
@@ -63,7 +63,12 @@ class GestureToolbarButton: UIView {
         addGestureRecognizer(longPressRecognizer)
 
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        iconImageView.center = center
+    }
+
     @objc func longPressHandler(_ sender: UIGestureRecognizer) {
         
         if sender.state == .began {

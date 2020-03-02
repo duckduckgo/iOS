@@ -1,5 +1,5 @@
 //
-//  PaddingSpaceHomeViewSectionRenderer.swift
+//  PaddingHomeViewSectionRenderer.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,43 +19,46 @@
 
 import UIKit
 
-class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
-    
+class PaddingHomeViewSectionRenderer: HomeViewSectionRenderer {
+
     lazy var bookmarksManager = BookmarksManager()
-    
+
     var paddingHeight: CGFloat = 0
     var controller: HomeViewController?
-    
-    private let withOffset: Bool
-    
-    init(withOffset: Bool) {
-        self.withOffset = withOffset
+
+    let cellHeight: CGFloat
+
+    init() {
+        guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
+            fatalError("Failed to load FavoriteHomeCell")
+        }
+        cellHeight = cell.frame.size.height
     }
-    
+
     func install(into controller: HomeViewController) {
-        
+
         self.controller = controller
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onKeyboardWillShow(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onKeyboardWillHide(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-        
+
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return collectionView.dequeueReusableCell(withReuseIdentifier: "space", for: indexPath)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -63,18 +66,15 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
         let maxFavoritesPerRow = isPad ? 5 : 4
         let itemsPerRow = collectionView.frame.width > 320 ? maxFavoritesPerRow : 3
         let rows = CGFloat((bookmarksManager.favoritesCount / itemsPerRow) + 1)
-        let spaceUsedByCells = (rows * FavoriteHomeCell.Constants.height)
+        let spaceUsedByCells = (rows * cellHeight)
         let spaceUsedByLineSpacing = (rows - 2) * 10
-        var spaceUsedByFavorites = spaceUsedByCells + spaceUsedByLineSpacing
-        
-        if withOffset {
-            spaceUsedByFavorites += 62
-        }
-        paddingHeight = collectionView.frame.size.height - FavoriteHomeCell.Constants.height - spaceUsedByFavorites
-        
+        let spaceUsedByFavorites = spaceUsedByCells + spaceUsedByLineSpacing
+
+        paddingHeight = collectionView.frame.size.height - cellHeight - spaceUsedByFavorites
+
         return CGSize(width: 1, height: max(0, paddingHeight))
     }
-    
+
     @objc func onKeyboardWillShow(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         guard let value = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
@@ -83,9 +83,15 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
         let height = keyboardHeight - 50 // roughly the navigation bar
         controller?.collectionView.contentInset = UIEdgeInsets(top: HomeCollectionView.Constants.topInset, left: 0, bottom: height, right: 0)
     }
-    
+
     @objc func onKeyboardWillHide(notification: Notification) {
         controller?.collectionView.contentInset = UIEdgeInsets(top: HomeCollectionView.Constants.topInset, left: 0, bottom: 0, right: 0)
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize? {
+        return CGSize(width: 1, height: 20)
+    }
+
 }

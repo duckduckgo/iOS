@@ -142,9 +142,6 @@ extension MainViewController {
         
         guard let tab = currentTab else { return }
         closeTab(tab.tabModel)
-        if tabManager.count == 0 {
-            launchNewSearch()
-        }
     }
     
     @objc func keyboardNextTab() {

@@ -24,7 +24,7 @@ public class AtbAndVariantCleanup {
 
     static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(),
                         variantManager: VariantManager = DefaultVariantManager(),
-                        settings: AppSettings = AppUserDefaults()) {
+                        homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
         
         guard let variant = statisticsStorage.variant else { return }
 
@@ -34,13 +34,25 @@ public class AtbAndVariantCleanup {
         }
         
         // Home page experiment migration
-        var mutableSettings = settings
-        if "mn" == variant {
-            mutableSettings.homePage = .centerSearch
-        } else if ["ml", "mm"].contains(variant) {
-            mutableSettings.homePage = .centerSearchAndFavorites
+        var settings = homePageSettings
+        switch variant {
+
+        case "mn":
+            settings.layout = .centered
+            settings.favorites = false
+
+        case "ml", "mm":
+            settings.layout = .centered
+            settings.favorites = true
+
+        case "mk":
+            settings.layout = .navigationBar
+            settings.favorites = false
+
+        default: break
+
         }
-        
+
         // remove existing variant if not in an active experiment
         if variantManager.currentVariant == nil {
             statisticsStorage.variant = nil

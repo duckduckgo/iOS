@@ -24,12 +24,6 @@ import Kingfisher
 class FavoriteHomeCell: UICollectionViewCell {
 
     struct Constants {
-        static let width: CGFloat = 68
-        static let height: CGFloat = 100
-        
-        // Left/Right margin between cell border and icon
-        static let horizontalMargin: CGFloat = 2
-        
         static let smallFaviconSize: CGFloat = 16
         static let largeFaviconSize: CGFloat = 40
     }

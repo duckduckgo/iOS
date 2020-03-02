@@ -78,7 +78,8 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
-    fileprivate lazy var appSettings: AppSettings & PrivacyStatsExperimentStore = AppUserDefaults()
+    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate lazy var homePageSettings: HomePageSettings = DefaultHomePageSettings()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -219,12 +220,6 @@ class MainViewController: UIViewController {
             controller.preserveLoginsSettingsDelegate = self
             return
         }
-        
-        if let navController = segue.destination as? UINavigationController, navController.topViewController is PrivacyReportViewController {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                segue.destination.modalPresentationStyle = .formSheet
-            }
-        }
 
         if var onboarding = segue.destination as? Onboarding {
             onboarding.delegate = self
@@ -317,6 +312,9 @@ class MainViewController: UIViewController {
         PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
             self.forgetAllWithAnimation {}
             self.dismiss(animated: true)
+            if KeyboardSettings().onAppLaunch {
+                self.enterSearch()
+            }
         }
     }
 
@@ -336,6 +334,7 @@ class MainViewController: UIViewController {
     }
 
     func loadQueryInNewTab(_ query: String) {
+        omniBar.resignFirstResponder()
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
     }
@@ -349,12 +348,12 @@ class MainViewController: UIViewController {
         refreshTabIcon()
         refreshControls()
     }
-
-    func launchNewSearch() {
-        loadViewIfNeeded()
-        attachHomeScreen()
-        homeController?.launchNewSearch()
-        omniBar.becomeFirstResponder()
+    
+    func enterSearch() {
+        if presentedViewController == nil {
+            showBars()
+            omniBar.becomeFirstResponder()
+        }
     }
 
     fileprivate func loadQuery(_ query: String) {
@@ -464,13 +463,9 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        guard appSettings.homePage.components().contains(where: {
-            if case .favorites = $0 { return true }
-            return false
-        }) else { return }
-        
-        guard favoritesOverlay == nil,
-            BookmarksManager().favoritesCount > 0 else { return }
+        guard homePageSettings.favorites else { return }
+
+        guard favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
         
         let controller = FavoritesOverlay()
         controller.install(into: self)
@@ -530,20 +525,6 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
-    fileprivate func launchPrivacyReport() {
-        sendPrivacyStatsTappedPixel()
-        performSegue(withIdentifier: "PrivacyReport", sender: self)
-    }
-    
-    private func sendPrivacyStatsTappedPixel() {
-        guard !appSettings.privacyStatsPixelFired else {
-            return
-        }
-        
-        appSettings.privacyStatsPixelFired = true
-        Pixel.fire(pixel: .homeScreenPrivacyStatsTapped)
-    }
-
     fileprivate func launchSettings() {
         Pixel.fire(pixel: .settingsOpened)
         performSegue(withIdentifier: "Settings", sender: self)
@@ -817,11 +798,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-    
-    func showPrivacyReport(_ home: HomeViewController) {
-        launchPrivacyReport()
-    }
-    
+
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
@@ -1012,7 +989,11 @@ extension MainViewController: BookmarksDelegate {
     }
     
     func bookmarksUpdated() {
-        homeController?.refresh()
+        if bookmarkStore.favorites.isEmpty {
+            homePageChanged()
+        } else {
+            homeController?.refresh()
+        }
     }
 }
 
@@ -1135,7 +1116,7 @@ extension MainViewController: Themable {
 
 extension MainViewController: HomePageSettingsDelegate {
     
-    func homePageChanged(to config: HomePageConfiguration.ConfigName) {
+    func homePageChanged() {
         guard homeController != nil else { return }
         removeHomeScreen()
         attachHomeScreen()

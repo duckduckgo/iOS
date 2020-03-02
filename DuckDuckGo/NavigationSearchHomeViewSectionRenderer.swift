@@ -64,9 +64,9 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         var constant: CGFloat
         if collectionView.traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)) {
-            constant = -25
-        } else {
             constant = 0
+        } else {
+            constant = -34
         }
         
         cell.verticalConstraint.constant = constant

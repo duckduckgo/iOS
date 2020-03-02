@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
-    private var isLoadingUrl = false
+    private var showKeyboardIfSettingOn = true
 
     // MARK: lifecycle
 
@@ -102,6 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
+        if KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn {
+            self.mainViewController?.enterSearch()
+            showKeyboardIfSettingOn = false
+        }
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
@@ -123,11 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         autoClear?.applicationWillMoveToForeground()
-        
-        if KeyboardSettings().onAppLaunch && !isLoadingUrl {
-            self.mainViewController?.enterSearch()
-        }
-        isLoadingUrl = false
+        showKeyboardIfSettingOn = true
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -145,13 +145,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         os_log("App launched with url %s", log: lifecycleLog, type: .debug, url.absoluteString)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
+        showKeyboardIfSettingOn = false
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab()
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
-            isLoadingUrl = true
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {

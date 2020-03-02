@@ -312,6 +312,9 @@ class MainViewController: UIViewController {
         PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
             self.forgetAllWithAnimation {}
             self.dismiss(animated: true)
+            if KeyboardSettings().onAppLaunch {
+                self.enterSearch()
+            }
         }
     }
 

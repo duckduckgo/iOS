@@ -26,8 +26,6 @@ public enum FeatureName: String {
     case dummy
     
     case appIconOnboarding
-    
-    case privacyOnHomeScreen
 }
 
 public struct Variant {
@@ -41,9 +39,7 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, features: []),
 
         Variant(name: "mq", weight: 1, features: []),
-        Variant(name: "mr", weight: 1, features: [.appIconOnboarding]),
-        
-        Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
+        Variant(name: "mr", weight: 1, features: [.appIconOnboarding])
     ]
     
     public let name: String

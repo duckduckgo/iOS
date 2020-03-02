@@ -91,8 +91,8 @@ extension TabViewController {
         }
     }
     
-    private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
-        guard AppDependencyProvider.shared.appSettings.homePage == .centerSearchAndFavorites else { return nil }
+    private func buildSaveFavoriteAction(forLink link: Link, homePageSettings: HomePageSettings = DefaultHomePageSettings()) -> UIAlertAction? {
+        guard homePageSettings.favorites else { return nil }
         
         let bookmarksManager = BookmarksManager()
         guard !bookmarksManager.contains(url: link.url) else { return nil }

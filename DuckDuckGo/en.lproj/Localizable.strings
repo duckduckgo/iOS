@@ -185,16 +185,15 @@
 "theme.name.light" = "Light";
 "theme.name.dark" = "Dark";
 
-"theme.acc.default" = "Default";
+"theme.acc.default" = "System";
 "theme.acc.light" = "Light";
 "theme.acc.dark" = "Dark";
 
 "autoclear.on" = "On";
 "autoclear.off" = "Off";
 
-"homepage.simple" = "Simple";
-"homepage.centerSearch" = "Centered Search";
-"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+"homepage.navigationBar" = "Top";
+"homepage.centerSearch" = "Center";
 
 "privacy.protection.site.grade" = "Privacy grade %@";
 

@@ -1,8 +1,8 @@
 //
-//  PrivacyReportFooterCell.swift
+//  KeyboardSettings.swift
 //  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,22 +17,14 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Core
 
-class PrivacyReportFooterCell: UICollectionViewCell {
-    
-    @IBOutlet weak var content: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        decorate(with: ThemeManager.shared.currentTheme)
-    }
-    
-}
+struct KeyboardSettings {
 
-extension PrivacyReportFooterCell: Themable {
-    
-    func decorate(with theme: Theme) {
-        content.textColor = theme.tableHeaderTextColor
-    }
+    @UserDefaultsWrapper(key: .keyboardOnNewTab, defaultValue: true)
+    var onNewTab: Bool
+
+    @UserDefaultsWrapper(key: .keyboardOnAppLaunch, defaultValue: false)
+    var onAppLaunch: Bool
+
 }

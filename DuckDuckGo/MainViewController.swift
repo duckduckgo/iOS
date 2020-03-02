@@ -331,6 +331,7 @@ class MainViewController: UIViewController {
     }
 
     func loadQueryInNewTab(_ query: String) {
+        omniBar.resignFirstResponder()
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
     }

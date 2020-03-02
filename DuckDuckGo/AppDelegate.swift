@@ -102,11 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
-        if KeyboardSettings().onAppLaunch && !isLoadingUrl {
-            self.mainViewController?.enterSearch()
-        }
-        
-        isLoadingUrl = false
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
@@ -128,6 +123,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         autoClear?.applicationWillMoveToForeground()
+        
+        if KeyboardSettings().onAppLaunch && !isLoadingUrl {
+            self.mainViewController?.enterSearch()
+        }
+        isLoadingUrl = false
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

@@ -80,6 +80,8 @@ class TabViewController: UIViewController {
     private var tips: BrowsingTips?
 
     private var loginDetection: LoginDetection?
+
+    private var isLoginFormDetected = false
     
     public var url: URL? {
         didSet {
@@ -224,6 +226,7 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
         controller.add(self, name: MessageHandlerNames.possibleLogin)
+        controller.add(self, name: MessageHandlerNames.loginFormDetected)
         controller.add(self, name: MessageHandlerNames.signpost)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
@@ -583,6 +586,7 @@ class TabViewController: UIViewController {
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.possibleLogin)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.loginFormDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
@@ -618,6 +622,7 @@ extension TabViewController: WKScriptMessageHandler {
         static let signpost = "signpostMessage"
         static let log = "log"
         static let findInPageHandler = "findInPageHandler"
+        static let loginFormDetected = "loginFormDetected"
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -633,6 +638,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.possibleLogin:
             handlePossibleLogin(message: message)
 
+        case MessageHandlerNames.loginFormDetected:
+            handleLoginFormDetected(message: message)
+
         case MessageHandlerNames.log:
             handleLog(message: message)
 
@@ -644,10 +652,17 @@ extension TabViewController: WKScriptMessageHandler {
         }
     }
     
+    private func handleLoginFormDetected(message: WKScriptMessage) {
+        print("***", #function)
+        isLoginFormDetected = true
+    }
+    
     private func handlePossibleLogin(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any] else { return }
         let source = dict["source"] as? String
-        possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
+        if isLoginFormDetected {
+            possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
+        }
     }
 
     private func possibleLogin(forDomain domain: String?, source: String) {
@@ -655,7 +670,7 @@ extension TabViewController: WKScriptMessageHandler {
             // We can't be sure about leaking cookies before iOS 13 so don't allow logins to be saved
             return
         }
-        
+                
         guard let domain = domain else { return }
         if isDebugBuild {
             view.showBottomToast("Login detected for \(domain) via \(source)")
@@ -786,6 +801,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         os_log("webpageLoading started", log: generalLog, type: .debug)
+        isLoginFormDetected = false
         self.httpsForced = httpsForced
         delegate?.showBars()
         
@@ -853,7 +869,7 @@ extension TabViewController: WKNavigationDelegate {
         
         if let loginDetection = self.loginDetection {
             let domain = webView.url?.host
-            let dataStore =  webView.configuration.websiteDataStore
+            let dataStore = webView.configuration.websiteDataStore
             loginDetection.webViewDidFinishNavigation(withCookies: dataStore, completion: { [weak self] isPossibleLogin in
                 if isPossibleLogin {
                     self?.possibleLogin(forDomain: domain, source: "POST")
@@ -923,7 +939,8 @@ extension TabViewController: WKNavigationDelegate {
                 self?.loginDetection = nil
                 LoginDetection.webView(withURL: webView.url,
                                        andCookies: webView.configuration.websiteDataStore,
-                                       allowedAction: navigationAction) { loginDetection in
+                                       allowedAction: navigationAction,
+                                       isLoginFormDetected: self?.isLoginFormDetected ?? false) { loginDetection in
                     self?.loginDetection = loginDetection
                     decisionHandler(decision)
                 }

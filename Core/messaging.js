@@ -27,9 +27,17 @@ var duckduckgoMessaging = function() {
 		}
 	}
     
-    function possibleLogin(source) {
+    function possibleLogin(source, url) {
         try {
-            webkit.messageHandlers.possibleLogin.postMessage({ "source": source });
+            webkit.messageHandlers.possibleLogin.postMessage({ "source": source, "url": url });
+        } catch(error) {
+            // webkit might not be defined
+        }
+    }
+
+    function loginFormDetected() {
+        try {
+            webkit.messageHandlers.loginFormDetected.postMessage({});
         } catch(error) {
             // webkit might not be defined
         }
@@ -38,7 +46,8 @@ var duckduckgoMessaging = function() {
 	return {
 
 		trackerDetected: trackerDetected,
-        possibleLogin: possibleLogin
+        possibleLogin: possibleLogin,
+        loginFormDetected: loginFormDetected
 
 	}
 }()

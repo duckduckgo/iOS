@@ -46,6 +46,7 @@ class LoginDetection {
     static func webView(withURL url: URL?,
                         andCookies cookiesProvider: LoginDetectionCookiesProvider,
                         allowedAction action: LoginDetectionAction,
+                        isLoginFormDetected: Bool = false, // TODO
                         completion: @escaping (LoginDetection?) -> Void) {
                 
         guard #available(iOS 11, *) else {
@@ -53,7 +54,7 @@ class LoginDetection {
             return
         }
         
-        guard let domain = url?.host, action.method == "POST" else {
+        guard isLoginFormDetected, let domain = url?.host, action.method == "POST" else {
             completion(nil)
             return
         }

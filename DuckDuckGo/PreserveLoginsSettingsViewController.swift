@@ -28,6 +28,13 @@ protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     
+    struct Sections {
+        
+        static let domainList = 0
+        static let removeAll = 1
+        
+    }
+    
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
 
@@ -79,7 +86,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        var sections = 1 // the switch
+        var sections = 0 // the switch - disabled for now
         sections += PreserveLogins.shared.userDecision == .preserveLogins ? 1 : 0 // the domains
         sections += tableView.isEditing ? 1 : 0 // the clear all button
         return sections
@@ -87,7 +94,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1: return model.isEmpty ? 1 : model.count
+        case Sections.domainList: return max(1, model.count)
         default: return 1
         }
     }
@@ -98,10 +105,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         let cell: UITableViewCell
         switch indexPath.section {
 
-        case 0:
-            cell = createSwitchCell(forTableView: tableView, withTheme: theme)
-
-        case 1:
+        case Sections.domainList:
             if model.isEmpty {
                 cell = createNoDomainCell(forTableView: tableView, withTheme: theme)
             } else {
@@ -116,19 +120,15 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? UserText.preserveLoginsDomainListHeaderTitle : nil
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return section == 0 ? UserText.preserveLoginsSwitchFooter : nil
+        return UserText.preserveLoginsDomainListHeaderTitle
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && !model.isEmpty
+        return indexPath.section == Sections.domainList && !model.isEmpty
     }
 
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        guard !model.isEmpty, indexPath.section == 1 else { return .none }
+        guard !model.isEmpty, indexPath.section == Sections.domainList else { return .none }
         return .delete
     }
 
@@ -149,11 +149,11 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && !model.isEmpty
+        return indexPath.section == 0 && !model.isEmpty
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == 1 {
             Pixel.fire(pixel: .preserveLoginsSettingsClearAll)
             clearAll()
             tableView.deselectRow(at: indexPath, animated: true)

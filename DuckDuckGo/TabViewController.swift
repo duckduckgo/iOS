@@ -919,17 +919,8 @@ extension TabViewController: WKNavigationDelegate {
                 }
                 
                 self?.findInPage?.done()
-                            
-                self?.loginDetection = nil
-                LoginDetection.webView(withURL: webView.url,
-                                       andCookies: webView.configuration.websiteDataStore,
-                                       allowedAction: navigationAction) { loginDetection in
-                    self?.loginDetection = loginDetection
-                    decisionHandler(decision)
-                }
-            } else {
-                decisionHandler(decision)
             }
+            decisionHandler(decision)
         }
     }
     

@@ -31,45 +31,58 @@ public class PreserveLogins {
 
     }
     
-    struct Constants {
-        static let detectedDomainsKey = "com.duckduckgo.ios.PreserveLogins.userDecision.detectedDomains"
-        static let allowedDomainsKey = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
-        static let userDecisionKey = "com.duckduckgo.ios.PreserveLogins.userDecision"
-        static let userPromptedKey = "com.duckduckgo.ios.PreserveLogins.userPrompted"
+    struct Keys {
+        static let detectedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.detectedDomains"
+        static let allowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
+        static let userDecision = "com.duckduckgo.ios.PreserveLogins.userDecision"
+        static let userPrompted = "com.duckduckgo.ios.PreserveLogins.userPrompted"
+        
+        static let legacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
     }
     
     public static let shared = PreserveLogins()
     
     private(set) public var allowedDomains: [String] {
         get {
-            return userDefaults.array(forKey: Constants.allowedDomainsKey) as? [String] ?? []
+            return userDefaults.array(forKey: Keys.allowedDomains) as? [String] ?? []
         }
         
         set {
             let domains = [String](Set<String>(newValue))
-            userDefaults.set(domains, forKey: Constants.allowedDomainsKey)
+            userDefaults.set(domains, forKey: Keys.allowedDomains)
         }
     }
 
-    private(set) public var detectedDomains: [String] {
+    private(set) public var legacyAllowedDomains: [String] {
         get {
-            return userDefaults.array(forKey: Constants.detectedDomainsKey) as? [String] ?? []
+            return userDefaults.array(forKey: Keys.legacyAllowedDomains) as? [String] ?? []
         }
         
         set {
             let domains = [String](Set<String>(newValue))
-            userDefaults.set(domains, forKey: Constants.detectedDomainsKey)
+            userDefaults.set(domains, forKey: Keys.legacyAllowedDomains)
+        }
+    }
+    
+    private(set) public var detectedDomains: [String] {
+        get {
+            return userDefaults.array(forKey: Keys.detectedDomains) as? [String] ?? []
+        }
+        
+        set {
+            let domains = [String](Set<String>(newValue))
+            userDefaults.set(domains, forKey: Keys.detectedDomains)
         }
     }
 
     public var userDecision: UserDecision {
         get {
-            let decision = userDefaults.object(forKey: Constants.userDecisionKey) as? Int ?? UserDecision.default.rawValue
+            let decision = userDefaults.object(forKey: Keys.userDecision) as? Int ?? UserDecision.default.rawValue
             return UserDecision(rawValue: decision) ?? UserDecision.default
         }
         
         set {
-            userDefaults.set(newValue.rawValue, forKey: Constants.userDecisionKey)
+            userDefaults.set(newValue.rawValue, forKey: Keys.userDecision)
             if newValue == .preserveLogins {
                 allowedDomains += detectedDomains
                 detectedDomains = []
@@ -113,6 +126,10 @@ public class PreserveLogins {
     
     public func clearDetected() {
         detectedDomains = []
+    }
+    
+    public func clearLegacyAllowedDomains() {
+        legacyAllowedDomains = []
     }
 
 }

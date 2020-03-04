@@ -252,7 +252,9 @@ public struct UserText {
     public static let preserveLoginsDomainListHeaderTitle = NSLocalizedString("preserveLogins.domain.list.title", comment: "Preserve logins domain list title")
     public static let preserveLoginsSwitchFooter = NSLocalizedString("preserveLogins.switch.footer", comment: "Preserve logins switch footer")
     public static let preserveLoginsSignOut = NSLocalizedString("preserveLogins.sign.out", comment: "Preserve logins clear all prompt")
-
+    public static let preserveLoginsMenuTitle = NSLocalizedString("preserveLogins.menu.title", comment: "Preserve logins menu title")
+    public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", comment: "Preserve toast message")
+    
     public static let homeTabSearchOnly = NSLocalizedString("homeTab.searchOnly", comment: "Home tab search only")
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", comment: "Home tab title")

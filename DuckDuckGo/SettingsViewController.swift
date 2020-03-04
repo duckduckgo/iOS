@@ -184,24 +184,11 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureRememberLogins() {
-        
         if #available(iOS 13, *) {
-            rememberLoginsCell.isHidden = false
-            
-            switch PreserveLogins.shared.userDecision {
-                
-            case .preserveLogins:
-                rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOn
-                
-            case .forgetAll, .unknown:
-                rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOff
-                
-            }
-            
+            rememberLoginsAccessoryText.text = ""
         } else {
             rememberLoginsCell.isHidden = true
-        }
-        
+        }        
     }
 
     private func configureVersionText() {

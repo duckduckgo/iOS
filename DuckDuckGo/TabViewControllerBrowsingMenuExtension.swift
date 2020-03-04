@@ -43,6 +43,10 @@ extension TabViewController {
                 alert.addAction(action)
             }
 
+            if let action = buildKeepSignInAction(forLink: link) {
+                alert.addAction(action)
+            }
+
             alert.addAction(title: UserText.actionShare) { [weak self] in
                 guard let self = self else { return }
                 self.onShareAction(forLink: link, printFormatter: self.webView.viewPrintFormatter())
@@ -66,6 +70,15 @@ extension TabViewController {
         }
         alert.addAction(title: UserText.actionCancel, style: .cancel)
         return alert
+    }
+    
+    private func buildKeepSignInAction(forLink link: Link) -> UIAlertAction? {
+        guard let domain = link.url.host else { return nil }
+        guard !PreserveLogins.shared.isAllowed(cookieDomain: domain) else { return nil }
+        return UIAlertAction(title: UserText.preserveLoginsMenuTitle, style: .default) { [weak self] _ in
+            PreserveLogins.shared.add(domain: domain)
+            self?.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
+        }
     }
     
     private func onNewTabAction() {

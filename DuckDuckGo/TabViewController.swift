@@ -661,7 +661,11 @@ extension TabViewController: WKScriptMessageHandler {
             view.showBottomToast("Login detected for \(domain) via \(source)")
         }
         
-        PreserveLogins.shared.add(domain: domain)
+        if PreserveLogins.shared.userDecision == .preserveLogins {
+            PreserveLogins.shared.addToAllowed(domain: domain)
+        } else {
+            PreserveLogins.shared.addToDetected(domain: domain)
+        }
     }
     
     private func handleFindInPage(message: WKScriptMessage) {

@@ -99,12 +99,12 @@ public class PreserveLogins {
         self.userDefaults = userDefaults
     }
     
-    public func add(domain: String) {
-        if userDecision == .preserveLogins {
-            allowedDomains += [domain]
-        } else {
-            detectedDomains += [domain]
-        }
+    public func addToAllowed(domain: String) {
+        allowedDomains += [domain]
+    }
+
+    public func addToDetected(domain: String) {
+        detectedDomains += [domain]
     }
 
     public func isAllowed(cookieDomain: String) -> Bool {

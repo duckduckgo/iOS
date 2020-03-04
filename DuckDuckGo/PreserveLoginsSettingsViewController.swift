@@ -86,10 +86,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        var sections = 0 // the switch - disabled for now
-        sections += PreserveLogins.shared.userDecision == .preserveLogins ? 1 : 0 // the domains
-        sections += tableView.isEditing ? 1 : 0 // the clear all button
-        return sections
+        return tableView.isEditing ? 2 : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

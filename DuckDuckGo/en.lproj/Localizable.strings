@@ -299,8 +299,8 @@
 "preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
 "preserveLogins.domain.list.title" = "Signed In Websites";
 "preserveLogins.sign.out" = "Sign Out";
-"preserveLogins.menu.title" = "Stay Signed In";
-"preserveLogins.toast" = "Keeping sign in for '%@'.  Remove in settings.";
+"preserveLogins.menu.title" = "Keep Me Signed In";
+"preserveLogins.toast" = "Sign in saved for '%@'.  Remove in settings.";
 
 "homeTab.searchOnly" = "Search in a new tab";
 "homeTab.searchAndFavorites" = "Search and favorites in a new tab";

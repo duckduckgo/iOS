@@ -73,10 +73,10 @@ extension TabViewController {
     }
     
     private func buildKeepSignInAction(forLink link: Link) -> UIAlertAction? {
-        guard let domain = link.url.host else { return nil }
+        guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
         guard !PreserveLogins.shared.isAllowed(cookieDomain: domain) else { return nil }
         return UIAlertAction(title: UserText.preserveLoginsMenuTitle, style: .default) { [weak self] _ in
-            PreserveLogins.shared.add(domain: domain)
+            PreserveLogins.shared.addToAllowed(domain: domain)
             self?.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
         }
     }

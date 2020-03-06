@@ -315,6 +315,16 @@ class TabViewController: UIViewController {
         updateSiteRating()
     }
     
+    func fireproofWebsite(domain: String) {
+        
+        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self) {
+            Pixel.fire(pixel: .browsingMenuFireproof)
+            PreserveLogins.shared.addToAllowed(domain: domain)
+            self.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
+        }
+        
+    }
+    
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
@@ -661,7 +671,11 @@ extension TabViewController: WKScriptMessageHandler {
             view.showBottomToast("Login detected for \(domain) via \(source)")
         }
         
-        PreserveLogins.shared.add(domain: domain)
+        if PreserveLogins.shared.userDecision == .preserveLogins {
+            PreserveLogins.shared.addToAllowed(domain: domain)
+        } else {
+            PreserveLogins.shared.addToDetected(domain: domain)
+        }
     }
     
     private func handleFindInPage(message: WKScriptMessage) {
@@ -919,17 +933,8 @@ extension TabViewController: WKNavigationDelegate {
                 }
                 
                 self?.findInPage?.done()
-                            
-                self?.loginDetection = nil
-                LoginDetection.webView(withURL: webView.url,
-                                       andCookies: webView.configuration.websiteDataStore,
-                                       allowedAction: navigationAction) { loginDetection in
-                    self?.loginDetection = loginDetection
-                    decisionHandler(decision)
-                }
-            } else {
-                decisionHandler(decision)
             }
+            decisionHandler(decision)
         }
     }
     

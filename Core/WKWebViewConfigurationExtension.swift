@@ -124,7 +124,6 @@ private struct Loader {
         loadMainFrameOnlyScripts()
 
         loadMessagingScripts()
-        loadLoginScript()
         
         if injectContentBlockingScripts {
             loadContentBlockingScripts()

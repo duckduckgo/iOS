@@ -318,6 +318,7 @@ class TabViewController: UIViewController {
     func fireproofWebsite(domain: String) {
         
         PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self) {
+            Pixel.fire(pixel: .browsingMenuFireproof)
             PreserveLogins.shared.addToAllowed(domain: domain)
             self.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
         }

@@ -28,11 +28,8 @@ protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     
-    struct Sections {
-        
-        static let domainList = 0
-        static let removeAll = 1
-        
+    enum Section: Int {
+        case domainList
     }
     
     @IBOutlet var doneButton: UIBarButtonItem!
@@ -90,19 +87,16 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case Sections.domainList: return max(1, model.count)
-        default: return 1
-        }
+        return Section(rawValue: section) == Section.domainList ? max(1, model.count) : 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let theme = ThemeManager.shared.currentTheme
         let cell: UITableViewCell
-        switch indexPath.section {
+        switch Section(rawValue: indexPath.section) {
 
-        case Sections.domainList:
+        case .some(Section.domainList):
             if model.isEmpty {
                 cell = createNoDomainCell(forTableView: tableView, withTheme: theme)
             } else {
@@ -117,15 +111,15 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == Sections.domainList ? UserText.preserveLoginsDomainListHeaderTitle : nil
+        return Section(rawValue: section) == Section.domainList ? UserText.preserveLoginsDomainListHeaderTitle : nil
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.domainList && !model.isEmpty
+        return indexPath.isInSection(section: Section.domainList) && !model.isEmpty
     }
 
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        guard !model.isEmpty, indexPath.section == Sections.domainList else { return .none }
+        guard !model.isEmpty, indexPath.isInSection(section: .domainList) else { return .none }
         return .delete
     }
 
@@ -257,4 +251,12 @@ class PreserveLoginDomainCell: UITableViewCell {
     @IBOutlet weak var faviconImage: UIImageView!
     @IBOutlet weak var label: UILabel!
 
+}
+
+fileprivate extension IndexPath {
+    
+    func isInSection(section: PreserveLoginsSettingsViewController.Section) -> Bool {
+        return self.section == section.rawValue
+    }
+    
 }

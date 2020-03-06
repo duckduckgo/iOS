@@ -112,15 +112,14 @@ class HomeViewController: UIViewController {
         delegate?.showSettings(self)
     }
     
-    func launchPrivacyReport() {
-        delegate?.showPrivacyReport(self)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Pixel.fire(pixel: .homeScreenShown)
-        installHomeScreenTips()
+        if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
+            Pixel.fire(pixel: .homeScreenShown)
+            installHomeScreenTips()
+        }
+        
         viewHasAppeared = true
     }
     
@@ -177,6 +176,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         delegate?.home(self, didRequestUrl: link.url)
     }
+
 }
 
 extension HomeViewController: Themable {

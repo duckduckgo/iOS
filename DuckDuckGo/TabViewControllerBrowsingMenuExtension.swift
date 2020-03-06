@@ -43,6 +43,10 @@ extension TabViewController {
                 alert.addAction(action)
             }
 
+            if let action = buildKeepSignInAction(forLink: link) {
+                alert.addAction(action)
+            }
+
             alert.addAction(title: UserText.actionShare) { [weak self] in
                 guard let self = self else { return }
                 self.onShareAction(forLink: link, printFormatter: self.webView.viewPrintFormatter())
@@ -68,6 +72,15 @@ extension TabViewController {
         return alert
     }
     
+    private func buildKeepSignInAction(forLink link: Link) -> UIAlertAction? {
+        guard #available(iOS 13, *) else { return nil }
+        guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
+        guard !PreserveLogins.shared.isAllowed(cookieDomain: domain) else { return nil }
+        return UIAlertAction(title: UserText.preserveLoginsMenuTitle, style: .default) { [weak self] _ in
+            self?.fireproofWebsite(domain: domain)
+        }
+    }
+    
     private func onNewTabAction() {
         Pixel.fire(pixel: .browsingMenuNewTab)
         delegate?.tabDidRequestNewTab(self)
@@ -91,8 +104,8 @@ extension TabViewController {
         }
     }
     
-    private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
-        guard AppDependencyProvider.shared.appSettings.homePage == .centerSearchAndFavorites else { return nil }
+    private func buildSaveFavoriteAction(forLink link: Link, homePageSettings: HomePageSettings = DefaultHomePageSettings()) -> UIAlertAction? {
+        guard homePageSettings.favorites else { return nil }
         
         let bookmarksManager = BookmarksManager()
         guard !bookmarksManager.contains(url: link.url) else { return nil }

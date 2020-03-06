@@ -26,10 +26,10 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         static let itemSpacing: CGFloat = 10
     }
     
-    private let withOffset: Bool
+    private let fixed: Bool
     
-    init(withOffset: Bool) {
-        self.withOffset = withOffset
+    init(fixed: Bool) {
+        self.fixed = fixed
     }
     
     weak var controller: HomeViewController?
@@ -42,16 +42,18 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.searchHeaderTransition = 1.0
         controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
-        controller.collectionView.isScrollEnabled = false
+        controller.collectionView.isScrollEnabled = !fixed
         controller.settingsButton.isHidden = true
     }
     
     func openedAsNewTab() {
-        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
+        if KeyboardSettings().onNewTab {
+            launchNewSearch()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return fixed ? 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -62,13 +64,9 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         var constant: CGFloat
         if collectionView.traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)) {
-            constant = -25
-        } else {
             constant = 0
-        }
-        
-        if withOffset {
-            constant -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing) / 2
+        } else {
+            constant = -34
         }
         
         cell.verticalConstraint.constant = constant
@@ -79,12 +77,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var size = collectionView.frame.size
-        
-        if withOffset {
-            size.height -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing)
-        }
-        return size
+        return collectionView.frame.size
     }
   
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

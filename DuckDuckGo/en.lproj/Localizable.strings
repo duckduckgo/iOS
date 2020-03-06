@@ -185,16 +185,15 @@
 "theme.name.light" = "Light";
 "theme.name.dark" = "Dark";
 
-"theme.acc.default" = "Default";
+"theme.acc.default" = "System";
 "theme.acc.light" = "Light";
 "theme.acc.dark" = "Dark";
 
 "autoclear.on" = "On";
 "autoclear.off" = "Off";
 
-"homepage.simple" = "Simple";
-"homepage.centerSearch" = "Centered Search";
-"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+"homepage.navigationBar" = "Top";
+"homepage.centerSearch" = "Center";
 
 "privacy.protection.site.grade" = "Privacy grade %@";
 
@@ -298,8 +297,11 @@
 "preserveLogins.accessory.on" = "On";
 "preserveLogins.accessory.off" = "Off";
 "preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
-"preserveLogins.domain.list.title" = "Signed In Websites";
-"preserveLogins.sign.out" = "Sign Out";
+"preserveLogins.domain.list.title" = "Websites";
+"preserveLogins.sign.out" = "Remove All";
+"preserveLogins.menu.title" = "Fireproof Website";
+"preserveLogins.toast" = "'%@' is now fireproof!  Visit Settings to remove.";
+"preserveLogins.fireproof.message" = "Website data will be saved when using the Fire Button or Auto Clear.";
 
 "homeTab.searchOnly" = "Search in a new tab";
 "homeTab.searchAndFavorites" = "Search and favorites in a new tab";

@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
+    private var showKeyboardIfSettingOn = true
 
     // MARK: lifecycle
 
@@ -58,7 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
         }
-        
+
+        migrateHomePageSettings()
+
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         
@@ -76,9 +79,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             autoClear = AutoClear(worker: main)
             autoClear?.applicationDidLaunch()
         }
-
+        
+        clearLegacyAllowedDomainCookies()
+    
         appIsLaunching = true
         return true
+    }
+    
+    private func clearLegacyAllowedDomainCookies() {
+        let domains = PreserveLogins.shared.legacyAllowedDomains
+        guard !domains.isEmpty else { return }
+        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
+            os_log("Removed cookies for %d legacy allowed domains", domains.count)
+            PreserveLogins.shared.clearLegacyAllowedDomains()
+        })
+    }
+
+    private func migrateHomePageSettings(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+        homePageSettings.migrate(from: AppDependencyProvider.shared.appSettings)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -92,6 +110,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if appIsLaunching {
             appIsLaunching = false
             onApplicationLaunch(application)
+        }
+        
+        if KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn {
+            self.mainViewController?.enterSearch()
+            showKeyboardIfSettingOn = false
         }
     }
     
@@ -114,6 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         autoClear?.applicationWillMoveToForeground()
+        showKeyboardIfSettingOn = true
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -131,9 +155,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         os_log("App launched with url %s", log: lifecycleLog, type: .debug, url.absoluteString)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
+        showKeyboardIfSettingOn = false
         
         if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.launchNewSearch()
+            mainViewController?.newTab()
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)

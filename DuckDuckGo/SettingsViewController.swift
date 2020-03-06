@@ -75,17 +75,9 @@ class SettingsViewController: UITableViewController {
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureHomePageCellAccessory()
-        migrateFavoritesIfNeeded()
         configureIconViews()
     }
-    
-    private func migrateFavoritesIfNeeded() {
-        // This ensures the user does not loose access to their favorites if they change the home page setting
-        if appSettings.homePage != .centerSearchAndFavorites {
-            BookmarksManager().migrateFavoritesToBookmarks()
-        }
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? PreserveLoginsSettingsViewController {
             controller.delegate = preserveLoginsSettingsDelegate
@@ -108,11 +100,16 @@ class SettingsViewController: UITableViewController {
         }
         
         if let controller = segue.destination as? HomePageSettingsViewController {
-            Pixel.fire(pixel: .settingsHomePageShown)
+            Pixel.fire(pixel: .settingsNewTabShown)
             controller.delegate = homePageSettingsDelegate
             return
         }
-        
+
+        if segue.destination is KeyboardSettingsViewController {
+            Pixel.fire(pixel: .settingsKeyboardShown)
+            return
+        }
+
         if segue.destination is WhitelistViewController {
             Pixel.fire(pixel: .settingsManageWhitelist)
             return
@@ -122,7 +119,7 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
             return
         }
-        
+                
         if let navController = segue.destination as? UINavigationController, navController.topViewController is FeedbackViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet
@@ -172,42 +169,26 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    private func configureHomePageCellAccessory() {
+    private func configureHomePageCellAccessory(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
 
-        switch appSettings.homePage {
-            
-        case .simple:
-            homePageAccessoryText.text = UserText.homePageSimple
-            
-        case .centerSearch:
+        switch homePageSettings.layout {
+
+        case .centered:
             homePageAccessoryText.text = UserText.homePageCenterSearch
 
-        case .centerSearchAndFavorites:
-            homePageAccessoryText.text = UserText.homePageCenterSearchAndFavorites
+        case .navigationBar:
+            homePageAccessoryText.text = UserText.homePageNavigationBar
 
         }
         
     }
     
     private func configureRememberLogins() {
-        
         if #available(iOS 13, *) {
-            rememberLoginsCell.isHidden = false
-            
-            switch PreserveLogins.shared.userDecision {
-                
-            case .preserveLogins:
-                rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOn
-                
-            case .forgetAll, .unknown:
-                rememberLoginsAccessoryText.text = UserText.preserveLoginsAccessoryOff
-                
-            }
-            
+            rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
         } else {
             rememberLoginsCell.isHidden = true
-        }
-        
+        }        
     }
 
     private func configureVersionText() {

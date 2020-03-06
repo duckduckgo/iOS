@@ -44,7 +44,7 @@ class SettingsViewControllerTests: XCTestCase {
             settingsController.viewWillAppear(true)
             XCTAssertEqual(settingsController.autoClearAccessoryText.text, "Off")
         } else {
-            assertionFailure("Could not load Setting View Controller")
+            XCTFail("Could not load Setting View Controller")
         }
         
         appSettigns.autoClearAction = .clearData
@@ -55,30 +55,30 @@ class SettingsViewControllerTests: XCTestCase {
             settingsController.viewWillAppear(true)
             XCTAssertEqual(settingsController.autoClearAccessoryText.text, "On")
         } else {
-            assertionFailure("Could not load Setting View Controller")
+            XCTFail("Could not load Setting View Controller")
         }
     }
 
     func testWhenOpeningSettingsThenThemeAccessoryIsSetBasedOnAppSettings() {
         
-        let testAccessoryLabel: (String) -> Void = { expected in
+        let assertAccessoryLabel: (String) -> Void = { expected in
             if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
                 let settingsController = navController.topViewController as? SettingsViewController {
                 settingsController.loadViewIfNeeded()
-                XCTAssert(settingsController.themeAccessoryText.text == expected)
+                XCTAssertEqual(settingsController.themeAccessoryText.text, expected)
             } else {
-                assertionFailure("Could not load Setting View Controller")
+                XCTFail("Could not load Setting View Controller")
             }
         }
         
-        let appSettigns = AppUserDefaults()
-        appSettigns.currentThemeName = .dark
-        testAccessoryLabel("Dark")
+        let settings = AppUserDefaults()
+        settings.currentThemeName = .dark
+        assertAccessoryLabel("Dark")
         
-        appSettigns.currentThemeName = .light
-        testAccessoryLabel("Light")
+        settings.currentThemeName = .light
+        assertAccessoryLabel("Light")
         
-        appSettigns.currentThemeName = .systemDefault
-        testAccessoryLabel("Default")
+        settings.currentThemeName = .systemDefault
+        assertAccessoryLabel("System")
     }
 }

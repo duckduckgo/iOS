@@ -1056,12 +1056,6 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         
-        if PreserveLogins.shared.userDecision != .preserveLogins {
-            PreserveLogins.shared.clearAll()
-        } else {
-            PreserveLogins.shared.clearDetected()
-        }
-        
         ServerTrustCache.shared.clear()
         KingfisherManager.shared.cache.clearDiskCache()
 

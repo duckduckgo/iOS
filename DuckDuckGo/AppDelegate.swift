@@ -79,9 +79,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             autoClear = AutoClear(worker: main)
             autoClear?.applicationDidLaunch()
         }
-
+        
+        clearLegacyAllowedDomainCookies()
+    
         appIsLaunching = true
         return true
+    }
+    
+    private func clearLegacyAllowedDomainCookies() {
+        let domains = PreserveLogins.shared.legacyAllowedDomains
+        guard !domains.isEmpty else { return }
+        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
+            os_log("Removed cookies for %d legacy allowed domains", domains.count)
+            PreserveLogins.shared.clearLegacyAllowedDomains()
+        })
     }
 
     private func migrateHomePageSettings(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {

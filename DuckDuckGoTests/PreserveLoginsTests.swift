@@ -32,7 +32,7 @@ class PreserveLoginsTests: XCTestCase {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "www.boardgamegeek.com")
+        logins.addToAllowed(domain: "www.boardgamegeek.com")
         XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
 
     }
@@ -41,7 +41,7 @@ class PreserveLoginsTests: XCTestCase {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "boardgamegeek.com")
+        logins.addToAllowed(domain: "boardgamegeek.com")
         XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
 
     }
@@ -50,7 +50,7 @@ class PreserveLoginsTests: XCTestCase {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "boardgamegeek.com")
+        logins.addToAllowed(domain: "boardgamegeek.com")
         XCTAssertTrue(logins.isAllowed(cookieDomain: "boardgamegeek.com"))
 
     }
@@ -59,7 +59,7 @@ class PreserveLoginsTests: XCTestCase {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.allowedDomains)
         XCTAssertTrue(logins.detectedDomains.isEmpty)
         
@@ -71,7 +71,7 @@ class PreserveLoginsTests: XCTestCase {
     func testWhenUserEnablesPreserveLoginsThenDetectedDomainsAreMovedToAllowedDomains() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.add(domain: "www.example.com")
+        logins.addToDetected(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.detectedDomains)
         XCTAssertTrue(logins.allowedDomains.isEmpty)
 
@@ -85,13 +85,13 @@ class PreserveLoginsTests: XCTestCase {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         logins.clearAll()
         XCTAssertTrue(logins.detectedDomains.isEmpty)
         XCTAssertTrue(logins.allowedDomains.isEmpty)
         
         logins.userDecision = .forgetAll
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         logins.clearAll()
         XCTAssertTrue(logins.detectedDomains.isEmpty)
         XCTAssertTrue(logins.allowedDomains.isEmpty)
@@ -101,28 +101,28 @@ class PreserveLoginsTests: XCTestCase {
     func testWhenClearDetectedIsCalledThenDetectedDomainsAreCleared() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.add(domain: "www.example.com")
+        logins.addToDetected(domain: "www.example.com")
         logins.clearDetected()
         XCTAssertTrue(logins.allowedDomains.isEmpty)
         XCTAssertTrue(logins.detectedDomains.isEmpty)
 
     }
 
-    func testWhenDuplicateDomainWhenPreserveLoginsIsSelectedAddedThenUniqueDomainsPersistedToAllowedDomains() {
+    func testWhenDuplicateDomainAddedToAllowedThenNotAddedAgain() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "www.example.com")
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.allowedDomains)
 
     }
 
-    func testWhenDuplicateDomainWhenPreserveLoginsIsNotSelectedAddedThenUniqueDomainsPersistedToDetectedDomains() {
+    func testWhenDuplicateDomainAddedToDetectedThenNotAddedAgain() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.add(domain: "www.example.com")
-        logins.add(domain: "www.example.com")
+        logins.addToDetected(domain: "www.example.com")
+        logins.addToDetected(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.detectedDomains)
 
     }
@@ -131,19 +131,19 @@ class PreserveLoginsTests: XCTestCase {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
         
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         logins.userDecision = .preserveLogins
         XCTAssertFalse(logins.allowedDomains.isEmpty)
         
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         logins.userDecision = .forgetAll
         XCTAssertTrue(logins.allowedDomains.isEmpty)
 
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         logins.userDecision = .preserveLogins
         XCTAssertFalse(logins.allowedDomains.isEmpty)
 
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         logins.userDecision = .unknown
         XCTAssertTrue(logins.allowedDomains.isEmpty)
 
@@ -165,20 +165,20 @@ class PreserveLoginsTests: XCTestCase {
         
     }
 
-    func testWhenDomainAddedWhenNotPreservingLoginsThenItIsPersistedToDetectedDomains() {
+    func testWhenDomainAddedToDetectedThenPersisted() {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.add(domain: "www.example.com")
+        logins.addToDetected(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.detectedDomains)
         XCTAssertEqual(["www.example.com"], PreserveLogins(userDefaults: userDefaults).detectedDomains)
     
     }
 
-    func testWhenDomainAddedWhenPreservingLoginsThenItIsPersistedToAllowedDomains() {
+    func testWhenDomainAddedToAllowedThenPersisted() {
         
         let logins = PreserveLogins(userDefaults: userDefaults)
         logins.userDecision = .preserveLogins
-        logins.add(domain: "www.example.com")
+        logins.addToAllowed(domain: "www.example.com")
         XCTAssertEqual(["www.example.com"], logins.allowedDomains)
         XCTAssertEqual(["www.example.com"], PreserveLogins(userDefaults: userDefaults).allowedDomains)
     

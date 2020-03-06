@@ -230,8 +230,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Keep Me Signed In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
-                                                    <rect key="frame" x="20" y="14" width="134.33333333333334" height="16"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
+                                                    <rect key="frame" x="20" y="14" width="134.66666666666666" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1336,7 +1336,7 @@ upgraded by Privacy Protection.</string>
             </objects>
             <point key="canvasLocation" x="4942" y="930"/>
         </scene>
-        <!--Keep Me Signed In-->
+        <!--Fireproof Websites-->
         <scene sceneID="Kfp-VW-T6P">
             <objects>
                 <tableViewController id="Jzw-Jd-J97" customClass="PreserveLoginsSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -1447,7 +1447,7 @@ upgraded by Privacy Protection.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Sign Out of All Websites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UZx-52-aer">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Remove All Fireproof Websites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UZx-52-aer">
                                             <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1465,7 +1465,7 @@ upgraded by Privacy Protection.</string>
                             <outlet property="delegate" destination="Jzw-Jd-J97" id="7MY-Jt-0Of"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Keep Me Signed In" id="xUX-nF-HOl">
+                    <navigationItem key="navigationItem" title="Fireproof Websites" id="xUX-nF-HOl">
                         <rightBarButtonItems>
                             <barButtonItem style="done" systemItem="done" id="6j1-I1-H7J">
                                 <connections>

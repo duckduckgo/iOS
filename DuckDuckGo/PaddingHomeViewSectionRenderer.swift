@@ -65,7 +65,7 @@ class PaddingHomeViewSectionRenderer: HomeViewSectionRenderer {
 
         let maxFavoritesPerRow = isPad ? 5 : 4
         let itemsPerRow = collectionView.frame.width > 320 ? maxFavoritesPerRow : 3
-        let rows = CGFloat((bookmarksManager.favoritesCount / itemsPerRow) + 1)
+        let rows = ceil(CGFloat(bookmarksManager.favoritesCount) / CGFloat(itemsPerRow))
         let spaceUsedByCells = (rows * cellHeight)
         let spaceUsedByLineSpacing = (rows - 2) * 10
         let spaceUsedByFavorites = spaceUsedByCells + spaceUsedByLineSpacing

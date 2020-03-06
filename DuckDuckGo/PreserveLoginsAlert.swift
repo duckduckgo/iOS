@@ -22,6 +22,17 @@ import Core
 
 class PreserveLoginsAlert {
     
+    static func showConfirmFireproofWebsite(usingController controller: UIViewController, completion: @escaping() -> Void) {
+        let prompt = UIAlertController(title: nil,
+                                       message: UserText.preserverLoginsFireproofWebsiteMessage,
+                                       preferredStyle: isPad ? .alert : .actionSheet)
+        prompt.addAction(title: UserText.preserveLoginsMenuTitle, style: .default) {
+            completion()
+        }
+        prompt.addAction(title: UserText.actionCancel, style: .cancel)
+        controller.present(prompt, animated: true)
+    }
+    
     static func showInitialPromptIfNeeded(usingController controller: UIViewController, completion: @escaping () -> Void) {
         guard #available(iOS 13, *) else {
             completion()

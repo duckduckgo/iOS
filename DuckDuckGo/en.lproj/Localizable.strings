@@ -298,9 +298,10 @@
 "preserveLogins.accessory.off" = "Off";
 "preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
 "preserveLogins.domain.list.title" = "Websites";
-"preserveLogins.sign.out" = "Remove Data";
-"preserveLogins.menu.title" = "Keep Website Data";
-"preserveLogins.toast" = "Website data for '%@' will be saved.  Remove in settings.";
+"preserveLogins.sign.out" = "Remove All";
+"preserveLogins.menu.title" = "Fireproof Website";
+"preserveLogins.toast" = "'%@' is now fireproof!  Remove in settings.";
+"preserveLogins.fireproof.message" = "Website data will be saved when using the fire button or auto clear.";
 
 "homeTab.searchOnly" = "Search in a new tab";
 "homeTab.searchAndFavorites" = "Search and favorites in a new tab";

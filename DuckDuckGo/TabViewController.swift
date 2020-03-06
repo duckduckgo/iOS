@@ -315,6 +315,15 @@ class TabViewController: UIViewController {
         updateSiteRating()
     }
     
+    func fireproofWebsite(domain: String) {
+        
+        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self) {
+            PreserveLogins.shared.addToAllowed(domain: domain)
+            self.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
+        }
+        
+    }
+    
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false

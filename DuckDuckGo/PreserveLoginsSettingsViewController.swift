@@ -117,7 +117,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return UserText.preserveLoginsDomainListHeaderTitle
+        return section == Sections.domainList ? UserText.preserveLoginsDomainListHeaderTitle : nil
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

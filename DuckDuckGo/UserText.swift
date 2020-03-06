@@ -254,6 +254,7 @@ public struct UserText {
     public static let preserveLoginsSignOut = NSLocalizedString("preserveLogins.sign.out", comment: "Preserve logins clear all prompt")
     public static let preserveLoginsMenuTitle = NSLocalizedString("preserveLogins.menu.title", comment: "Preserve logins menu title")
     public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", comment: "Preserve toast message")
+    public static let preserverLoginsFireproofWebsiteMessage = NSLocalizedString("preserveLogins.fireproof.message", comment: "Fireproof website message")
     
     public static let homeTabSearchOnly = NSLocalizedString("homeTab.searchOnly", comment: "Home tab search only")
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")

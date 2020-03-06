@@ -185,7 +185,7 @@ class SettingsViewController: UITableViewController {
     
     private func configureRememberLogins() {
         if #available(iOS 13, *) {
-            rememberLoginsAccessoryText.text = ""
+            rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
         } else {
             rememberLoginsCell.isHidden = true
         }        

@@ -25,13 +25,39 @@ class WhitelistViewController: UITableViewController {
     @IBOutlet var infoText: UILabel!
     @IBOutlet var backButton: UIButton!
     
+    @IBOutlet var flexibleSpace: UIBarButtonItem!
+    @IBOutlet var doneButton: UIBarButtonItem!
+    @IBOutlet var editButton: UIBarButtonItem!
+    
     let whitelistManager = WhitelistManager()
+    
     var showBackButton = false
+    var enforceLightTheme = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         applyTheme(ThemeManager.shared.currentTheme)
+        
+        navigationController?.setToolbarHidden(false, animated: false)
+        refreshToolbarItems(animated: false)
+        
         configureBackButton()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.setToolbarHidden(true, animated: false)
+    }
+    
+    private func refreshToolbarItems(animated: Bool) {
+        if tableView.isEditing {
+            setToolbarItems([flexibleSpace, doneButton], animated: animated)
+        } else {
+            setToolbarItems([flexibleSpace, editButton], animated: animated)
+        }
+        
+        editButton.isEnabled = whitelistManager.count > 0
     }
     
     private func configureBackButton() {
@@ -61,6 +87,18 @@ class WhitelistViewController: UITableViewController {
 
         if let domain = whitelistManager.domain(at: indexPath.row) {
             whitelistManager.remove(domain: domain)
+            
+            if whitelistManager.count == 0 {
+                if tableView.isEditing {
+                    // According to documentation it is inivalid to call it synchronously here.
+                    DispatchQueue.main.async {
+                        self.endEditing()
+                    }
+                } else {
+                    refreshToolbarItems(animated: true)
+                }
+            }
+            
             tableView.reloadData()
         }
     }
@@ -93,6 +131,19 @@ class WhitelistViewController: UITableViewController {
     @IBAction func onBackPressed() {
         navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func startEditing() {
+        tableView.isEditing = true
+        tableView.reloadData()
+        refreshToolbarItems(animated: true)
+    }
+    
+    @IBAction func endEditing() {
+        tableView.isEditing = false
+        tableView.reloadData()
+        
+        refreshToolbarItems(animated: true)
+    }
 
     // MARK: private
 
@@ -101,6 +152,7 @@ class WhitelistViewController: UITableViewController {
         guard let domain = domain(from: field) else { return }
         whitelistManager.add(domain: domain)
         tableView.reloadData()
+        refreshToolbarItems(animated: true)
     }
 
     private func domain(from field: UITextField) -> String? {
@@ -117,7 +169,7 @@ class WhitelistViewController: UITableViewController {
             cell = createNoWhitelistedSitesCell(forRowAt: indexPath)
         }
         
-        let theme = ThemeManager.shared.currentTheme
+        let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
@@ -129,7 +181,7 @@ class WhitelistViewController: UITableViewController {
             fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'NoWhitelistCell' identifier as ")
         }
         
-        let theme = ThemeManager.shared.currentTheme
+        let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
         noWhitelistedSitesCell.label.textColor = theme.tableCellTextColor
         
         return noWhitelistedSitesCell
@@ -142,7 +194,7 @@ class WhitelistViewController: UITableViewController {
         
         whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
         
-        let theme = ThemeManager.shared.currentTheme
+        let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
         whitelistItemCell.domainLabel.textColor = theme.tableCellTextColor
         
         return whitelistItemCell
@@ -168,11 +220,17 @@ class WhitelistItemCell: UITableViewCell {
 extension WhitelistViewController: Themable {
     
     func decorate(with theme: Theme) {
+        let theme = enforceLightTheme ? LightTheme() : theme
+        
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor
         
         infoText.textColor = theme.tableHeaderTextColor
         
         tableView.reloadData()
+        
+        navigationController?.toolbar.barTintColor = theme.barBackgroundColor
+        navigationController?.toolbar.backgroundColor = theme.barBackgroundColor
+        navigationController?.toolbar.tintColor = theme.navigationBarTintColor
     }
 }

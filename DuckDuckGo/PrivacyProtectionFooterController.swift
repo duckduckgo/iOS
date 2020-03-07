@@ -72,6 +72,7 @@ class PrivacyProtectionFooterController: UIViewController {
     }
     
     private func prepareforSegue(to whitelistController: WhitelistViewController) {
+        whitelistController.enforceLightTheme = true
         if isPad {
             whitelistController.showBackButton = true
         }

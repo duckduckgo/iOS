@@ -1165,7 +1165,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
             <objects>
                 <tableViewController storyboardIdentifier="Whitelist" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UEu-y1-KbY" customClass="WhitelistViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wBV-2d-nqZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1266,6 +1266,19 @@ upgraded by Privacy Protection.</string>
                             <outlet property="delegate" destination="UEu-y1-KbY" id="Al3-TG-UN0"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="NX0-qa-O8d"/>
+                        <barButtonItem systemItem="done" id="I92-fZ-gIP">
+                            <connections>
+                                <action selector="endEditing" destination="UEu-y1-KbY" id="fi9-mm-8ZR"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="edit" id="o1a-ie-C4I">
+                            <connections>
+                                <action selector="startEditing" destination="UEu-y1-KbY" id="Xth-q4-n32"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Whitelist" id="OHV-qC-tL9">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="CxT-QK-iVn">
                             <connections>
@@ -1273,8 +1286,12 @@ upgraded by Privacy Protection.</string>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="backButton" destination="SWM-CB-n4U" id="vIB-TK-wlR"/>
+                        <outlet property="doneButton" destination="I92-fZ-gIP" id="0Hs-2v-Z7L"/>
+                        <outlet property="editButton" destination="o1a-ie-C4I" id="dmI-yW-01A"/>
+                        <outlet property="flexibleSpace" destination="NX0-qa-O8d" id="ZGd-Da-6sR"/>
                         <outlet property="infoText" destination="zvh-2e-Wmz" id="qi7-fU-1h8"/>
                     </connections>
                 </tableViewController>

@@ -1268,12 +1268,12 @@ upgraded by Privacy Protection.</string>
                     </tableView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="NX0-qa-O8d"/>
-                        <barButtonItem systemItem="done" id="I92-fZ-gIP">
+                        <barButtonItem style="done" systemItem="done" id="I92-fZ-gIP">
                             <connections>
                                 <action selector="endEditing" destination="UEu-y1-KbY" id="fi9-mm-8ZR"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem systemItem="edit" id="o1a-ie-C4I">
+                        <barButtonItem style="done" systemItem="edit" id="o1a-ie-C4I">
                             <connections>
                                 <action selector="startEditing" destination="UEu-y1-KbY" id="Xth-q4-n32"/>
                             </connections>

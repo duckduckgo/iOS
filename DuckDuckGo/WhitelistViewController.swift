@@ -29,6 +29,9 @@ class WhitelistViewController: UITableViewController {
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
     
+    private var hiddenNavBarItem: UIBarButtonItem?
+    private var hiddenNavBarItems: [UIBarButtonItem]?
+    
     let whitelistManager = WhitelistManager()
     
     var showBackButton = false
@@ -136,6 +139,9 @@ class WhitelistViewController: UITableViewController {
         tableView.isEditing = true
         tableView.reloadData()
         refreshToolbarItems(animated: true)
+        
+        hiddenNavBarItems = navigationItem.rightBarButtonItems
+        navigationItem.setRightBarButtonItems(nil, animated: true)
     }
     
     @IBAction func endEditing() {
@@ -143,6 +149,8 @@ class WhitelistViewController: UITableViewController {
         tableView.reloadData()
         
         refreshToolbarItems(animated: true)
+        
+        navigationItem.setRightBarButtonItems(hiddenNavBarItems, animated: true)
     }
 
     // MARK: private

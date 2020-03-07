@@ -38,10 +38,18 @@ class PrivacyProtectionFooterController: UIViewController {
     @IBAction func toggleProtection() {
         guard let domain = domain else { return }
         let whitelisted = !privacyProtectionSwitch.isOn
+        
+        let window = UIApplication.shared.keyWindow
+        window?.hideAllToasts()
+        
         if whitelisted {
             contentBlockerConfiguration.addToWhitelist(domain: domain)
+            
+            window?.showBottomToast("\(domain) added to whitelist", duration: 1)
         } else {
             contentBlockerConfiguration.removeFromWhitelist(domain: domain)
+            
+            window?.showBottomToast("\(domain) removed from whitelist", duration: 1)
         }
         update()
         Pixel.fire(pixel: whitelisted ? .privacyDashboardWhitelistAdd : .privacyDashboardWhitelistRemove)

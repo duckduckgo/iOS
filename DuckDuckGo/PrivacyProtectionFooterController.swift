@@ -69,6 +69,12 @@ class PrivacyProtectionFooterController: UIViewController {
             Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
             return
         }
+        
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is SubmitBrokenSiteViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+        }
     }
     
     private func prepareforSegue(to whitelistController: WhitelistViewController) {

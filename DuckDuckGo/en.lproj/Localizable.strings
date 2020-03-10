@@ -123,6 +123,16 @@
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
+"brokensite.category.images" = "Images didn't load";
+"brokensite.category.paywall" = "The site asked me to disable";
+"brokensite.category.comments" = "Comments didn't load";
+"brokensite.category.videos" = "Video didn't play";
+"brokensite.category.links" = "Links or buttons don't work";
+"brokensite.category.content" = "Content is missing";
+"brokensite.category.login" = "I can't login";
+"brokensite.category.unsupported" = "The browser is incompatible";
+"brokensite.category.other" = "Something else";
+
 "privacy.report.trackersBlocked" = "Trackers Blocked";
 "privacy.report.sitesEncrypted" = "Sites Encrypted";
 "privacy.report.date" = "Since %@";

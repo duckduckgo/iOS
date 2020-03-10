@@ -214,6 +214,12 @@ class MainViewController: UIViewController {
             return
         }
         
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is SubmitBrokenSiteViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+        }
+        
         if let navigationController = segue.destination as? UINavigationController,
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self

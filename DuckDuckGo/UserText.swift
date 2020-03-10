@@ -135,6 +135,17 @@ public struct UserText {
 
     public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
     
+    static let brokenSiteCategoryImages = NSLocalizedString("brokensite.category.images", comment: "Broken Site Category")
+    static let brokenSiteCategoryPaywall = NSLocalizedString("brokensite.category.paywall", comment: "Broken Site Category")
+    static let brokenSiteCategoryComments = NSLocalizedString("brokensite.category.comments", comment: "Broken Site Category")
+    static let brokenSiteCategoryVideos = NSLocalizedString("brokensite.category.videos", comment: "Broken Site Category")
+    static let brokenSiteCategoryLinks = NSLocalizedString("brokensite.category.links", comment: "Broken Site Category")
+    static let brokenSiteCategoryContent = NSLocalizedString("brokensite.category.content", comment: "Broken Site Category")
+    static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", comment: "Broken Site Category")
+    static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", comment: "Broken Site Category")
+    static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", comment: "Broken Site Category")
+
+    
     public static let privacyReportTrackersBlocked = NSLocalizedString("privacy.report.trackersBlocked", comment: "Trackers Blocked")
     
     public static let privacyReportSitesEncrypted = NSLocalizedString("privacy.report.sitesEncrypted", comment: "Sites Encrypted")

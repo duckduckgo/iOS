@@ -757,6 +757,16 @@ extension TabViewController: WKScriptMessageHandler {
         return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
     }
     
+    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
+        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
+        
+        return BrokenSiteInfo(url: url?.path ?? "",
+                              httpsUpgrade: httpsForced,
+                              blockedTrackerDomains: blockedTrackerDomains,
+                              isDesktop: tabModel.isDesktop,
+                              tdsETag: TrackerDataManager.shared.etag)
+    }
+    
 }
 
 extension TabViewController: WKNavigationDelegate {

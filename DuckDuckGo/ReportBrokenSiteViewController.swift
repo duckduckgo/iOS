@@ -1,5 +1,5 @@
 //
-//  SubmitBrokenSiteViewController.swift
+//  ReportBrokenSiteViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import UIKit
 
-class SubmitBrokenSiteViewController: UIViewController {
+class ReportBrokenSiteViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
     
@@ -53,7 +53,7 @@ class SubmitBrokenSiteViewController: UIViewController {
     }
 }
 
-extension SubmitBrokenSiteViewController: UITableViewDataSource {
+extension ReportBrokenSiteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
@@ -85,7 +85,7 @@ extension SubmitBrokenSiteViewController: UITableViewDataSource {
     }
 }
 
-extension SubmitBrokenSiteViewController: UITableViewDelegate {
+extension ReportBrokenSiteViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCategory = indexPath.row
@@ -93,7 +93,7 @@ extension SubmitBrokenSiteViewController: UITableViewDelegate {
     }
 }
 
-extension SubmitBrokenSiteViewController: Themable {
+extension ReportBrokenSiteViewController: Themable {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)

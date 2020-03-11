@@ -32,13 +32,14 @@ public class TrackerDataManager {
     public static let shared = TrackerDataManager()
     
     private(set) public var trackerData: TrackerData!
+    private(set) public var etag: String?
     
     init() {
-        reload()
+        reload(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet))
     }
     
     @discardableResult
-    public func reload() -> DataSet {
+    public func reload(etag: String?) -> DataSet {
         
         let dataSet: DataSet
         let data: Data
@@ -46,9 +47,11 @@ public class TrackerDataManager {
         if let loadedData = FileStore().loadAsData(forConfiguration: .trackerDataSet) {
             data = loadedData
             dataSet = .downloaded
+            self.etag = etag
         } else {
             data = Self.loadEmbeddedAsData()
             dataSet = .embedded
+            self.etag = nil
         }
         
         do {
@@ -58,6 +61,7 @@ public class TrackerDataManager {
             // This should NEVER fail
             let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
             self.trackerData = trackerData!
+            self.etag = nil
             Pixel.fire(pixel: .trackerDataParseFailed, error: error)
             return .embeddedFallback
         }

@@ -214,10 +214,12 @@ class MainViewController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController, navController.topViewController is SubmitBrokenSiteViewController {
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is ReportBrokenSiteViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet
             }
+            
+            // url: currentTab?.url?.absoluteString
         }
         
         if let navigationController = segue.destination as? UINavigationController,

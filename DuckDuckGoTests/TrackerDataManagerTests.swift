@@ -28,7 +28,7 @@ class TrackerDataManagerTests: XCTestCase {
     }
     
     func testWhenReloadCalledInitiallyThenDataSetIsEmbedded() {
-        XCTAssertEqual(TrackerDataManager.shared.reload(), .embedded)
+        XCTAssertEqual(TrackerDataManager.shared.reload(etag: nil), .embedded)
     }
 
     func testFindTrackerByUrl() {
@@ -100,7 +100,9 @@ class TrackerDataManagerTests: XCTestCase {
         """
 
         XCTAssertTrue(FileStore().persist(update.data(using: .utf8), forConfiguration: .trackerDataSet))
-        XCTAssertEqual(TrackerDataManager.shared.reload(), .downloaded)
+        XCTAssertEqual(TrackerDataManager.shared.etag, nil)
+        XCTAssertEqual(TrackerDataManager.shared.reload(etag: "new etag"), .downloaded)
+        XCTAssertEqual(TrackerDataManager.shared.etag, "new etag")
         XCTAssertNil(TrackerDataManager.shared.findEntity(byName: "Google LLC"))
         XCTAssertNotNil(TrackerDataManager.shared.findEntity(byName: "Not Real"))
 

@@ -308,8 +308,9 @@
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
 		9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */; };
 		986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */; };
-		986C7FA92417ADE700A3557D /* SubmitBrokenSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA82417ADE700A3557D /* SubmitBrokenSiteViewController.swift */; };
+		986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */; };
 		986C7FAB2417AE7400A3557D /* BrokenSiteCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FAA2417AE7400A3557D /* BrokenSiteCategoryCell.swift */; };
+		98728E822417E3300033960E /* BrokenSiteReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98728E812417E3300033960E /* BrokenSiteReporting.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
 		9875E00722316B8400B1373F /* Instruments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9875E00622316B8400B1373F /* Instruments.swift */; };
 		987613F622D53DBA00C54BFD /* FavoritesHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987613F422D53DBA00C54BFD /* FavoritesHeaderCell.swift */; };
@@ -949,8 +950,9 @@
 		9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesOverlay.swift; sourceTree = "<group>"; };
 		9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteHomeCell.xib; sourceTree = "<group>"; };
 		986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteCategories.swift; sourceTree = "<group>"; };
-		986C7FA82417ADE700A3557D /* SubmitBrokenSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitBrokenSiteViewController.swift; sourceTree = "<group>"; };
+		986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBrokenSiteViewController.swift; sourceTree = "<group>"; };
 		986C7FAA2417AE7400A3557D /* BrokenSiteCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteCategoryCell.swift; sourceTree = "<group>"; };
+		98728E812417E3300033960E /* BrokenSiteReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteReporting.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
 		9875E00622316B8400B1373F /* Instruments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruments.swift; sourceTree = "<group>"; };
 		987613F422D53DBA00C54BFD /* FavoritesHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesHeaderCell.swift; sourceTree = "<group>"; };
@@ -1476,7 +1478,8 @@
 				980891A42237D4F500313A70 /* FeedbackNavigator.swift */,
 				980891A62237D5D800313A70 /* FeedbackPresenter.swift */,
 				986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */,
-				986C7FA82417ADE700A3557D /* SubmitBrokenSiteViewController.swift */,
+				986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */,
+				98728E812417E3300033960E /* BrokenSiteReporting.swift */,
 				986C7FAA2417AE7400A3557D /* BrokenSiteCategoryCell.swift */,
 			);
 			name = UI;
@@ -3687,7 +3690,7 @@
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
-				986C7FA92417ADE700A3557D /* SubmitBrokenSiteViewController.swift in Sources */,
+				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
 				851B129C22243178004781BC /* BrowsingTips.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */,
@@ -3809,6 +3812,7 @@
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
+				98728E822417E3300033960E /* BrokenSiteReporting.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,
 				AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,

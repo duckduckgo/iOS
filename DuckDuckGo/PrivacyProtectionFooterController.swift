@@ -70,7 +70,7 @@ class PrivacyProtectionFooterController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController, navController.topViewController is SubmitBrokenSiteViewController {
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is ReportBrokenSiteViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet
             }

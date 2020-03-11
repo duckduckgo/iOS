@@ -51,10 +51,10 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="160"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReportIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QbI-di-eSr">
-                                                        <rect key="frame" x="143" y="26" width="64" height="64"/>
+                                                        <rect key="frame" x="159" y="26" width="32" height="32"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a Broken Site" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cum-ec-gq1">
-                                                        <rect key="frame" x="16" y="101" width="318" height="24.666666666666671"/>
+                                                        <rect key="frame" x="16" y="69" width="318" height="24.666666666666671"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                                         </accessibility>
@@ -63,7 +63,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Broken site reporting is completely anonymous and helps us to improve the app!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82c-Hv-K8w">
-                                                        <rect key="frame" x="25" y="136.66666666666669" width="300" height="32.666666666666657"/>
+                                                        <rect key="frame" x="25" y="104.66666666666666" width="300" height="32.666666666666657"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                                         </accessibility>
@@ -919,7 +919,7 @@
         <!--Report Broken Site-->
         <scene sceneID="F6V-Ex-sf0">
             <objects>
-                <viewController id="8h9-Oy-9xi" customClass="SubmitBrokenSiteViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8h9-Oy-9xi" customClass="ReportBrokenSiteViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z30-di-tew">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -928,7 +928,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="lo0-tD-41u">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BrokenSites" translatesAutoresizingMaskIntoConstraints="NO" id="RNo-8b-yyt">
@@ -938,10 +938,16 @@
                                                 <constraint firstAttribute="height" constant="128" id="cvH-Ij-l22"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submitting an anonymous broken site report helps us debug these issues and improve the extension." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s11-T2-I4J">
-                                            <rect key="frame" x="41.333333333333343" y="143" width="331.33333333333326" height="52"/>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s11-T2-I4J">
+                                            <rect key="frame" x="41.333333333333343" y="143" width="331.33333333333326" height="72"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Submitting an anonymous broken site report helps us debug these issues and improve the extension.">
+                                                    <attributes>
+                                                        <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -957,7 +963,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BrokenSiteCategoryCell" id="kvT-nI-fx0" customClass="BrokenSiteCategoryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="255.33333206176758" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="275.33333206176758" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kvT-nI-fx0" id="0ZR-M1-85Q">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>

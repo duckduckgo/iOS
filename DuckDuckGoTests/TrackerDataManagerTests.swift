@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import CommonCrypto
 @testable import Core
 
 class TrackerDataManagerTests: XCTestCase {
@@ -100,7 +101,7 @@ class TrackerDataManagerTests: XCTestCase {
         """
 
         XCTAssertTrue(FileStore().persist(update.data(using: .utf8), forConfiguration: .trackerDataSet))
-        XCTAssertEqual(TrackerDataManager.shared.etag, nil)
+        XCTAssertEqual(TrackerDataManager.shared.etag, TrackerDataManager.Constants.embeddedDataSetETag)
         XCTAssertEqual(TrackerDataManager.shared.reload(etag: "new etag"), .downloaded)
         XCTAssertEqual(TrackerDataManager.shared.etag, "new etag")
         XCTAssertNil(TrackerDataManager.shared.findEntity(byName: "Google LLC"))
@@ -108,4 +109,69 @@ class TrackerDataManagerTests: XCTestCase {
 
     }
     // swiftlint:enable function_body_length
+        
+    func testWhenEmbeddedDataIsUpdatedThenUpdateSHAAndEtag() {
+        
+        let hash = calculateHash(for: TrackerDataManager.embeddedUrl)
+        XCTAssertEqual(hash, TrackerDataManager.Constants.embeddedDatsSetSHA, "Error: please update SHA and ETag when changing embedded TDS")
+    }
+    
+    private func calculateHash(for fileURL: URL) -> String {
+        if let data = sha256(url: fileURL) {
+            return data.base64EncodedString()
+        }
+        
+        XCTFail("Could not calculate TDS hash")
+        return ""
+    }
+    
+    func sha256(url: URL) -> Data? {
+        do {
+            let bufferSize = 1024 * 1024
+            // Open file for reading:
+            let file = try FileHandle(forReadingFrom: url)
+            defer {
+                file.closeFile()
+            }
+
+            // Create and initialize SHA256 context:
+            var context = CC_SHA256_CTX()
+            CC_SHA256_Init(&context)
+
+            // Read up to `bufferSize` bytes, until EOF is reached, and update SHA256 context:
+            while autoreleasepool(invoking: {
+                // Read up to `bufferSize` bytes
+                let data = file.readData(ofLength: bufferSize)
+                if data.count > 0 {
+                    _ = data.withUnsafeBytes { bytesFromBuffer -> Int32 in
+                        guard let rawBytes = bytesFromBuffer.bindMemory(to: UInt8.self).baseAddress else {
+                            return Int32(kCCMemoryFailure)
+                        }
+                        
+                        return CC_SHA256_Update(&context, rawBytes, numericCast(data.count))
+                    }
+                    // Continue
+                    return true
+                } else {
+                    // End of file
+                    return false
+                }
+            }) { }
+
+            // Compute the SHA256 digest:
+            var digestData = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
+            _ = digestData.withUnsafeMutableBytes { bytesFromDigest -> Int32 in
+              guard let rawBytes = bytesFromDigest.bindMemory(to: UInt8.self).baseAddress else {
+                return Int32(kCCMemoryFailure)
+              }
+
+              return CC_SHA256_Final(rawBytes, &context)
+            }
+
+            return digestData
+        } catch {
+            print(error)
+            return nil
+        }
+    }
 }

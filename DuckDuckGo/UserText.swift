@@ -135,6 +135,8 @@ public struct UserText {
 
     public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
     
+    static let brokenSiteSectionTitle = NSLocalizedString("brokensite.sectionTitle", comment: "Broken Site Section Title")
+    
     static let brokenSiteCategoryImages = NSLocalizedString("brokensite.category.images", comment: "Broken Site Category")
     static let brokenSiteCategoryPaywall = NSLocalizedString("brokensite.category.paywall", comment: "Broken Site Category")
     static let brokenSiteCategoryComments = NSLocalizedString("brokensite.category.comments", comment: "Broken Site Category")

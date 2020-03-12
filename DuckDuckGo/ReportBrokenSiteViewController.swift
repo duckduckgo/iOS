@@ -88,7 +88,7 @@ extension ReportBrokenSiteViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "DESCRIBE WHAT HAPPENED"
+        return UserText.brokenSiteSectionTitle
     }
 }
 

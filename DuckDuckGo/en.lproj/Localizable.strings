@@ -123,6 +123,8 @@
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
+"brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
+
 "brokensite.category.images" = "Images didn't load";
 "brokensite.category.paywall" = "The site asked me to disable";
 "brokensite.category.comments" = "Comments didn't load";

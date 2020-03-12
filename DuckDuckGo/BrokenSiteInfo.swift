@@ -58,7 +58,7 @@ public struct BrokenSiteInfo {
                           Keys.category: category,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",
-                          Keys.tds: tdsETag ?? "",
+                          Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
                           Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
                           Keys.surrogates: installedSurrogates.joined(separator: ","),
                           Keys.atb: StatisticsUserDefaults().atb ?? "",

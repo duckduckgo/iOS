@@ -208,18 +208,14 @@ class MainViewController: UIViewController {
             tabSwitcherController = controller
             return
         }
-
-        if let controller = segue.destination as? SiteFeedbackViewController {
-            controller.prepareForSegue(url: currentTab?.url?.absoluteString)
-            return
-        }
         
-        if let navController = segue.destination as? UINavigationController, navController.topViewController is ReportBrokenSiteViewController {
+        if let navController = segue.destination as? UINavigationController,
+            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet
             }
             
-            // url: currentTab?.url?.absoluteString
+            brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         }
         
         if let navigationController = segue.destination as? UINavigationController,

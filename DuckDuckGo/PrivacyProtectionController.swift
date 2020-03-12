@@ -26,6 +26,7 @@ protocol PrivacyProtectionDelegate: class {
 
     func reload(scripts: Bool)
 
+    func getCurrentWebsiteInfo() -> BrokenSiteInfo
 }
 
 class PrivacyProtectionController: ThemableNavigationController {

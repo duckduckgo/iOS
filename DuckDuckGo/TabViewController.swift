@@ -620,6 +620,7 @@ extension TabViewController: WKScriptMessageHandler {
         static let blocked = "blocked"
         static let networkName = "networkName"
         static let url = "url"
+        static let isSurrogate = "isSurrogate"
     }
 
     private struct MessageHandlerNames {
@@ -730,6 +731,10 @@ extension TabViewController: WKScriptMessageHandler {
             os_log("mismatching domain %s vs %s", log: generalLog, type: .debug, self.url?.absoluteString ?? "nil", siteRating.domain ?? "nil")
             return
         }
+        
+        if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
+            siteRating.surrogateInstalled(host)
+        }
 
         let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
         
@@ -763,6 +768,7 @@ extension TabViewController: WKScriptMessageHandler {
         return BrokenSiteInfo(url: url?.path ?? "",
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
+                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: TrackerDataManager.shared.etag)
     }

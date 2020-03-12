@@ -28,6 +28,8 @@ class ReportBrokenSiteViewController: UIViewController {
     
     @IBOutlet var submitButton: UIBarButtonItem!
     
+    public var brokenSiteInfo: BrokenSiteInfo?
+    
     private var selectedCategory: Int? {
         didSet {
             submitButton.isEnabled = true
@@ -48,6 +50,11 @@ class ReportBrokenSiteViewController: UIViewController {
     }
 
     @IBAction func onSubmitPressed(sender: Any) {
+        guard let selectedCategory = selectedCategory else {
+            fatalError("Category should be selected!")
+        }
+        
+        brokenSiteInfo?.send(with: categories[selectedCategory].rawValue)
         view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
         dismiss(animated: true)
     }

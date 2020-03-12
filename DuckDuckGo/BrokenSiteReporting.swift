@@ -28,44 +28,44 @@ public struct BrokenSiteInfo {
         static let upgradedHttps = "upgradedHttps"
         static let tds = "tds"
         static let blockedTrackers = "blockedTrackers"
-//        static let surrogates = "surrogates"
-//        static let extensionVersion = "extensionVersion"
-//        static let appVersion = "appVersion"
+        static let surrogates = "surrogates"
         static let atb = "atb"
         static let os = "os"
         static let manufacturer = "manufacturer"
         static let model = "model"
-//        static let wvVersion = "wvVersion"
         static let siteType = "siteType"
     }
     
     private let url: String
     private let httpsUpgrade: Bool
     private let blockedTrackerDomains: [String]
+    private let installedSurrogates: [String]
     private let isDesktop: Bool
     private let tdsETag: String?
     
-    public init(url: String, httpsUpgrade: Bool, blockedTrackerDomains: [String], isDesktop: Bool, tdsETag: String?) {
+    public init(url: String, httpsUpgrade: Bool, blockedTrackerDomains: [String], installedSurrogates: [String], isDesktop: Bool, tdsETag: String?) {
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
+        self.installedSurrogates = installedSurrogates
         self.isDesktop = isDesktop
         self.tdsETag = tdsETag
     }
     
-    func send() {
+    func send(with category: String) {
            
         let parameters = [Keys.url: url,
-                          Keys.category: "",
+                          Keys.category: category,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",
                           Keys.tds: tdsETag ?? "",
                           Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
+                          Keys.surrogates: installedSurrogates.joined(separator: ","),
                           Keys.atb: StatisticsUserDefaults().atb ?? "",
                           Keys.os: UIDevice.current.systemVersion,
                           Keys.manufacturer: "Apple",
                           Keys.model: UIDevice.current.deviceType.displayName]
         
-        
+        Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }
 }

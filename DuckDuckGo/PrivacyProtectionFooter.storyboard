@@ -88,7 +88,7 @@
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                         </variation>
                                         <connections>
-                                            <segue destination="rsp-7E-d8b" kind="presentation" modalPresentationStyle="fullScreen" id="z6w-4N-Fdn"/>
+                                            <segue destination="rsp-7E-d8b" kind="presentation" modalPresentationStyle="automatic" id="z6w-4N-Fdn"/>
                                         </connections>
                                     </button>
                                 </subviews>

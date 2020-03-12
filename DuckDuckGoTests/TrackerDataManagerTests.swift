@@ -125,6 +125,8 @@ class TrackerDataManagerTests: XCTestCase {
         return ""
     }
     
+    // Source:
+    // https://stackoverflow.com/questions/42934154/how-can-i-hash-a-file-on-ios-using-swift-3/49878022#49878022
     func sha256(url: URL) -> Data? {
         do {
             let bufferSize = 1024 * 1024

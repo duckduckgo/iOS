@@ -36,7 +36,7 @@ class PreserveLoginsTests: XCTestCase {
         XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
 
     }
-
+    
     func testWhenDomainMatchesWildcardThenIsAllowed() {
 
         let logins = PreserveLogins(userDefaults: userDefaults)

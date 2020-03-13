@@ -1,4 +1,4 @@
-(function() {
+c
  
     window.addEventListener("DOMContentLoaded", function(event) {
 
@@ -42,5 +42,5 @@
     } catch(error) {
         // no-op
     }
-
+ 
 }) ()

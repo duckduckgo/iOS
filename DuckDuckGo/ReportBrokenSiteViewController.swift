@@ -36,7 +36,13 @@ class ReportBrokenSiteViewController: UIViewController {
         }
     }
     
-    private let categories = BrokenSite.Category.allCases.shuffled()
+    private let categories: [BrokenSite.Category] = {
+        var categories = BrokenSite.Category.allCases
+        categories = categories.filter { $0 != .other }
+        categories = categories.shuffled()
+        categories.append(.other)
+        return categories
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()

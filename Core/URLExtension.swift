@@ -50,7 +50,7 @@ extension URL {
     
     public func toEncodedString() -> String? {
         // Based on https://tools.ietf.org/html/rfc3986#page-13
-        var characterSet = NSCharacterSet.urlQueryAllowed
+        var characterSet = NSCharacterSet.alphanumerics
         characterSet.insert(".")
         characterSet.insert("-")
         characterSet.insert("~")

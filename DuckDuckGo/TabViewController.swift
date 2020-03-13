@@ -765,7 +765,7 @@ extension TabViewController: WKScriptMessageHandler {
     public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
         let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
         
-        return BrokenSiteInfo(url: url?.absoluteString   ?? "",
+        return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],

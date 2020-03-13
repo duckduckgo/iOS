@@ -36,14 +36,14 @@ public struct BrokenSiteInfo {
         static let siteType = "siteType"
     }
     
-    private let url: String
+    private let url: URL?
     private let httpsUpgrade: Bool
     private let blockedTrackerDomains: [String]
     private let installedSurrogates: [String]
     private let isDesktop: Bool
     private let tdsETag: String?
     
-    public init(url: String, httpsUpgrade: Bool, blockedTrackerDomains: [String], installedSurrogates: [String], isDesktop: Bool, tdsETag: String?) {
+    public init(url: URL?, httpsUpgrade: Bool, blockedTrackerDomains: [String], installedSurrogates: [String], isDesktop: Bool, tdsETag: String?) {
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
@@ -54,7 +54,7 @@ public struct BrokenSiteInfo {
     
     func send(with category: String) {
            
-        let parameters = [Keys.url: url,
+        let parameters = [Keys.url: url?.toEncodedString() ?? "",
                           Keys.category: category,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",

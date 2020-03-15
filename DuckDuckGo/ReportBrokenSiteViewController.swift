@@ -73,12 +73,12 @@ extension ReportBrokenSiteViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrokenSiteCategoryCell") as? BrokenSiteCategoryCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrokenSiteCategoryCell") else {
             fatalError("Failed to dequeue cell")
         }
         
         let theme = ThemeManager.shared.currentTheme
-        cell.label.textColor = theme.tableCellTextColor
+        cell.textLabel?.textColor = theme.tableCellTextColor
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.tintColor = theme.buttonTintColor
         
@@ -88,7 +88,7 @@ extension ReportBrokenSiteViewController: UITableViewDataSource {
             cell.accessoryType = .none
         }
         
-        cell.label.text = categories[indexPath.row].categoryText
+        cell.textLabel?.text = categories[indexPath.row].categoryText
         
         return cell
     }

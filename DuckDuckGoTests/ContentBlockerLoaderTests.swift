@@ -174,7 +174,7 @@ class MockStorageCache: StorageCacheUpdating {
     
     var shouldFail = false
     
-    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
+    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
         processedUpdates[configuration] = data
         return !shouldFail
     }

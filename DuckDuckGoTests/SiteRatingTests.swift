@@ -110,6 +110,7 @@ class SiteRatingTests: XCTestCase {
         let testee = SiteRating(url: Url.https)
         XCTAssertEqual(testee.totalTrackersDetected, 0)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
+        XCTAssertEqual(testee.installedSurrogates.count, 0)
     }
 
     func testWhenUniqueTrackersAreBlockedThenBlockedCountsIncremented() {
@@ -118,6 +119,7 @@ class SiteRatingTests: XCTestCase {
         testee.trackerDetected(TrackerMock.differentTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 0)
         XCTAssertEqual(testee.totalTrackersBlocked, 2)
+        XCTAssertEqual(testee.installedSurrogates.count, 0)
     }
 
     func testWhenRepeatTrackersAreBlockedThenUniqueCountsOnlyIncrementOnce() {
@@ -126,6 +128,7 @@ class SiteRatingTests: XCTestCase {
         testee.trackerDetected(TrackerMock.blockedTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 0)
         XCTAssertEqual(testee.totalTrackersBlocked, 1)
+        XCTAssertEqual(testee.installedSurrogates.count, 0)
     }
 
     func testWhenRepeatTrackersAreDetectedThenUniqueCountsOnlyIncrementOnce() {
@@ -134,6 +137,15 @@ class SiteRatingTests: XCTestCase {
         testee.trackerDetected(TrackerMock.unblockedTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 1)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
+        XCTAssertEqual(testee.installedSurrogates.count, 0)
+    }
+    
+    func testWhenSurrogateIsInstalledThenItIsStored() {
+        let testee = SiteRating(url: Url.https)
+        testee.surrogateInstalled("hostname")
+        XCTAssertEqual(testee.totalTrackersDetected, 0)
+        XCTAssertEqual(testee.totalTrackersBlocked, 0)
+        XCTAssertEqual(testee.installedSurrogates.count, 1)
     }
 
     func testWhenUrlDoeNotHaveTosThenPrivacyPracticesSummaryIsUnknown() {

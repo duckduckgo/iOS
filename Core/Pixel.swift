@@ -186,6 +186,8 @@ public enum PixelName: String {
     case notificationOptOut = "m_nd"
     
     case brokenSiteReported = "m_bsr"
+    
+    case brokenSiteReport = "epbf"
 
     case preserveLoginsUserDecisionPreserve = "m_pl_p"
     case preserveLoginsUserDecisionForget = "m_pl_f"

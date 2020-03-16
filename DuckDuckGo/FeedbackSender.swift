@@ -29,8 +29,7 @@ protocol FeedbackComponent {
 }
 
 protocol FeedbackSender {
-    func submitBrokenSite(url: String, message: String)
-    
+
     func submitPositiveSentiment(message: String)
     func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model)
     
@@ -40,11 +39,6 @@ protocol FeedbackSender {
 
 struct FeedbackSubmitter: FeedbackSender {
 
-    private enum Reason: String {
-        case general = "general"
-        case brokenSite = "broken_site"
-    }
-    
     private enum Rating: String {
         case positive
         case negative
@@ -58,26 +52,21 @@ struct FeedbackSubmitter: FeedbackSender {
         self.versionProvider = versionProvider
     }
 
-    public func submitBrokenSite(url: String, message: String) {
-        submitFeedback(reason: .brokenSite, rating: nil, url: url, comment: message)
-    }
-
     public func submitPositiveSentiment(message: String) {
-        submitFeedback(reason: .general, rating: .positive, url: nil, comment: message)
+        submitFeedback(rating: .positive, url: nil, comment: message)
     }
     
     public func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {
-        submitFeedback(reason: .general, rating: .negative, url: url, comment: message, model: model)
+        submitFeedback(rating: .negative, url: url, comment: message, model: model)
     }
 
-    private func submitFeedback(reason: Reason,
-                                rating: Rating?,
+    private func submitFeedback(rating: Rating?,
                                 url: String?,
                                 comment: String,
                                 model: Feedback.Model? = nil) {
 
         let parameters = [
-            "reason": reason.rawValue,
+            "reason": "general",
             "rating": rating?.rawValue ?? "",
             "url": url ?? "",
             "comment": comment,

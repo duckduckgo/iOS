@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3n-LI-9p5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3n-LI-9p5">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -88,7 +88,7 @@
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                         </variation>
                                         <connections>
-                                            <segue destination="rsp-7E-d8b" kind="presentation" id="z6w-4N-Fdn"/>
+                                            <segue destination="rsp-7E-d8b" kind="presentation" modalPresentationStyle="automatic" id="z6w-4N-Fdn"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -357,7 +357,9 @@ many trackers we've blocked.</string>
         <!--Feedback-->
         <scene sceneID="da9-Kh-5Q7">
             <objects>
-                <viewControllerPlaceholder storyboardName="Feedback" id="rsp-7E-d8b" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Feedback" id="rsp-7E-d8b" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="QaB-dx-2jb"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Sv-Zl-3F1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3468" y="183"/>

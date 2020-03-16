@@ -160,7 +160,6 @@ public struct UserText {
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     
     public static let homeRowOnboardingHeader = NSLocalizedString("home.row.onboarding.header", comment:  "Home Row onboarding Header")
-    public static let homeRowOnboardingAppIconHeader = NSLocalizedString("home.row.onboarding.iconHeader", comment:  "Home Row onboarding Header for ApIcon experiment")
     
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     

@@ -45,11 +45,7 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
     
     private func loadInitialContent() {
-        if variantManager.isSupported(feature: .appIconOnboarding) {
-            controllerNames = ["onboardingSummary", "onboardingAppIcon", "onboardingHomeRow"]
-        } else {
-            controllerNames = ["onboardingSummary", "onboardingHomeRow"]
-        }
+        controllerNames = ["onboardingSummary", "onboardingHomeRow"]
         
         guard let name = controllerNames.first,
             let controller = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController else {

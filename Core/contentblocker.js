@@ -142,7 +142,7 @@ _utf8_encode : function (string) {
 
     // Buffer
     class Buffer {
-        
+
         static from(string, type) {
             return new Buffer(string);
         }
@@ -401,7 +401,7 @@ _utf8_encode : function (string) {
             return {action, reason}
         }
         }
-        
+
         if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
             module.exports = Trackers
         else
@@ -415,12 +415,12 @@ _utf8_encode : function (string) {
     ${surrogates}
     `
     // surrogates
-        
+
     // tracker data set
     let trackerData = ${trackerData}
     // tracker data set
 
-    // overrides    
+    // overrides
     Trackers.prototype.findTrackerOwner = function(domain) {
         var parts = domain.split(".")
         while (parts.length > 1) {
@@ -440,7 +440,7 @@ _utf8_encode : function (string) {
     });
 
     // update algorithm with the data it needs
-    trackers.setLists([{ 
+    trackers.setLists([{
             name: "tds",
             data: trackerData
         },
@@ -450,22 +450,22 @@ _utf8_encode : function (string) {
         }
     ]);
 
-	let topLevelUrl = getTopLevelURL();
+    let topLevelUrl = getTopLevelURL();
 
     let whitelisted = `
         ${whitelist}
     `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
 
-	// private 
-	function getTopLevelURL() {
-		try {
-			// FROM: https://stackoverflow.com/a/7739035/73479
-			// FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
-			return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
-		} catch(error) {
-			return new URL(location.href)
-		}
-	}
+    // private
+    function getTopLevelURL() {
+        try {
+            // FROM: https://stackoverflow.com/a/7739035/73479
+            // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+            return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
+        } catch(error) {
+            return new URL(location.href)
+        }
+    }
 
     // private
     function loadSurrogate(surrogatePattern) {
@@ -479,41 +479,42 @@ _utf8_encode : function (string) {
         }
     }
 
-	// public
-	function shouldBlock(trackerUrl, type) {
+    // public
+    function shouldBlock(trackerUrl, type) {
         let startTime = performance.now()
-        
+
         let result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
-        	type: type
+            type: type
         }, null);
 
-		if (result == null) {
+        if (result == null) {
             duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
-			return false;
-		}
+            return false;
+        }
 
-		var blocked = false;
+        var blocked = false;
         if (whitelisted) {
             blocked = false;
             result.reason = "whitelisted";
         } else if (result.action === 'block') {
-			blocked = true;
-		} else if (result.matchedRule && result.matchedRule.surrogate) {
-			blocked = true;
-		}
+            blocked = true;
+        } else if (result.matchedRule && result.matchedRule.surrogate) {
+            blocked = true;
+        }
 
         duckduckgoMessaging.trackerDetected({
-	        url: trackerUrl,
-	        blocked: blocked,
-	        reason: result.reason,
+            url: trackerUrl,
+            blocked: blocked,
+            reason: result.reason,
+            isSurrogate: result.matchedRule.surrogate != null
         })
-        
+
         if (blocked) {
 
             if (result.matchedRule && result.matchedRule.surrogate) {
-            	loadSurrogate(result.matchedRule.surrogate)
+                loadSurrogate(result.matchedRule.surrogate)
             }
 
             duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
@@ -526,15 +527,15 @@ _utf8_encode : function (string) {
                                                    time: performance.now() - startTime})
         }
 
-		return blocked;
-	}
+        return blocked;
+    }
 
-	// Init 
-	(function() {
-		duckduckgoDebugMessaging.log("content blocking initialised")
-	})()
+    // Init
+    (function() {
+        duckduckgoDebugMessaging.log("content blocking initialised")
+    })()
 
-	return { 
-		shouldBlock: shouldBlock
-	}
+    return {
+        shouldBlock: shouldBlock
+    }
 }()

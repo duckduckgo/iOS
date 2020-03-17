@@ -56,7 +56,7 @@ public class ContentBlockerLoader {
     func applyUpdate(to cache: StorageCacheUpdating) {
         
         for (config, info) in newData {
-            if cache.update(config, with: info), let etag = etags[config] {
+            if cache.update(config, with: info, etag: etags[config]), let etag = etags[config] {
                 etagStorage.set(etag: etag, for: config)
             } else {
                 os_log("Failed to apply update to %d", log: generalLog, type: .debug, self.newData.count)

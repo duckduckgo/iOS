@@ -318,6 +318,16 @@ class TabViewController: UIViewController {
         updateSiteRating()
     }
     
+    func fireproofWebsite(domain: String) {
+        
+        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self) {
+            Pixel.fire(pixel: .browsingMenuFireproof)
+            PreserveLogins.shared.addToAllowed(domain: domain)
+            self.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
+        }
+        
+    }
+    
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
@@ -614,6 +624,7 @@ extension TabViewController: WKScriptMessageHandler {
         static let blocked = "blocked"
         static let networkName = "networkName"
         static let url = "url"
+        static let isSurrogate = "isSurrogate"
     }
 
     private struct MessageHandlerNames {
@@ -676,7 +687,11 @@ extension TabViewController: WKScriptMessageHandler {
             view.showBottomToast("Login detected for \(domain) via \(source)")
         }
         
-        PreserveLogins.shared.add(domain: domain)
+        if PreserveLogins.shared.userDecision == .preserveLogins {
+            PreserveLogins.shared.addToAllowed(domain: domain)
+        } else {
+            PreserveLogins.shared.addToDetected(domain: domain)
+        }
     }
     
     private func handleFindInPage(message: WKScriptMessage) {
@@ -731,6 +746,10 @@ extension TabViewController: WKScriptMessageHandler {
             os_log("mismatching domain %s vs %s", log: generalLog, type: .debug, self.url?.absoluteString ?? "nil", siteRating.domain ?? "nil")
             return
         }
+        
+        if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
+            siteRating.surrogateInstalled(host)
+        }
 
         let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
         
@@ -756,6 +775,17 @@ extension TabViewController: WKScriptMessageHandler {
         let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
         let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
         return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+    }
+    
+    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
+        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
+        
+        return BrokenSiteInfo(url: url,
+                              httpsUpgrade: httpsForced,
+                              blockedTrackerDomains: blockedTrackerDomains,
+                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
+                              isDesktop: tabModel.isDesktop,
+                              tdsETag: TrackerDataManager.shared.etag)
     }
     
 }
@@ -935,18 +965,8 @@ extension TabViewController: WKNavigationDelegate {
                 }
                 
                 self?.findInPage?.done()
-                            
-                self?.loginDetection = nil
-                LoginDetection.webView(withURL: webView.url,
-                                       andCookies: webView.configuration.websiteDataStore,
-                                       allowedAction: navigationAction,
-                                       isLoginFormDetected: self?.isLoginFormDetected ?? false) { loginDetection in
-                    self?.loginDetection = loginDetection
-                    decisionHandler(decision)
-                }
-            } else {
-                decisionHandler(decision)
             }
+            decisionHandler(decision)
         }
     }
     

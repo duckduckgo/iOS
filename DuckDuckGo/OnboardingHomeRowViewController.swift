@@ -40,17 +40,7 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     }
     
     override var header: String {
-        if DefaultVariantManager().isSupported(feature: .appIconOnboarding) {
-            return UserText.homeRowOnboardingAppIconHeader
-        }
         return UserText.homeRowOnboardingHeader
-    }
-    
-    override var subtitle: String? {
-        if DefaultVariantManager().isSupported(feature: .appIconOnboarding) {
-            return nil
-        }
-        return super.subtitle
     }
     
     override var continueButtonTitle: String {

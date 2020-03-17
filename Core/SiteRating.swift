@@ -49,6 +49,7 @@ public class SiteRating {
     public var finishedLoading = false
     public private (set) var trackersDetected = Set<DetectedTracker>()
     public private (set) var trackersBlocked = Set<DetectedTracker>()
+    public private (set) var installedSurrogates = Set<String>()
     
     private let grade = Grade()
     private let cache = GradeCache.shared
@@ -128,6 +129,10 @@ public class SiteRating {
             trackersDetected.insert(tracker)
             grade.addEntityNotBlocked(named: entity?.displayName ?? "", withPrevalence: entity?.prevalence ?? 0)
         }
+    }
+    
+    public func surrogateInstalled(_ surrogateHost: String) {
+        installedSurrogates.insert(surrogateHost)
     }
 
     public var totalTrackersDetected: Int {

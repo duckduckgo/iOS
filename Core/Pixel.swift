@@ -123,6 +123,7 @@ public enum PixelName: String {
     case browsingMenuWhitelistAdd = "mb_wla"
     case browsingMenuWhitelistRemove = "mb_wlr"
     case browsingMenuReportBrokenSite = "mb_rb"
+    case browsingMenuFireproof = "mb_f"
     
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
@@ -185,6 +186,8 @@ public enum PixelName: String {
     case notificationOptOut = "m_nd"
     
     case brokenSiteReported = "m_bsr"
+    
+    case brokenSiteReport = "epbf"
 
     case preserveLoginsUserDecisionPreserve = "m_pl_p"
     case preserveLoginsUserDecisionForget = "m_pl_f"

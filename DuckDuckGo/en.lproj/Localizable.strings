@@ -123,6 +123,18 @@
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
+"brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
+
+"brokensite.category.images" = "Images didn't load";
+"brokensite.category.paywall" = "The site asked me to disable";
+"brokensite.category.comments" = "Comments didn't load";
+"brokensite.category.videos" = "Video didn't play";
+"brokensite.category.links" = "Links or buttons don't work";
+"brokensite.category.content" = "Content is missing";
+"brokensite.category.login" = "I can't login";
+"brokensite.category.unsupported" = "The browser is incompatible";
+"brokensite.category.other" = "Something else";
+
 "privacy.report.trackersBlocked" = "Trackers Blocked";
 "privacy.report.sitesEncrypted" = "Sites Encrypted";
 "privacy.report.date" = "Since %@";
@@ -133,7 +145,6 @@
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
 "home.row.onboarding.header" = "Add DuckDuckGo to your home screen!";
-"home.row.onboarding.iconHeader" = "Excellent. Now place the app on your home screen.";
 
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
@@ -297,8 +308,11 @@
 "preserveLogins.accessory.on" = "On";
 "preserveLogins.accessory.off" = "Off";
 "preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
-"preserveLogins.domain.list.title" = "Signed In Websites";
-"preserveLogins.sign.out" = "Sign Out";
+"preserveLogins.domain.list.title" = "Websites";
+"preserveLogins.sign.out" = "Remove All";
+"preserveLogins.menu.title" = "Fireproof Website";
+"preserveLogins.toast" = "'%@' is now fireproof!  Visit Settings to remove.";
+"preserveLogins.fireproof.message" = "Website data will be saved when using the Fire Button or Auto Clear.";
 
 "homeTab.searchOnly" = "Search in a new tab";
 "homeTab.searchAndFavorites" = "Search and favorites in a new tab";

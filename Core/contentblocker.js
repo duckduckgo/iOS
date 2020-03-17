@@ -508,7 +508,7 @@ _utf8_encode : function (string) {
             url: trackerUrl,
             blocked: blocked,
             reason: result.reason,
-            isSurrogate: result.matchedRule.surrogate != null
+            isSurrogate: result.matchedRule && result.matchedRule.surrogate
         })
 
         if (blocked) {

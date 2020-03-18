@@ -47,16 +47,6 @@ extension URL {
         components.host = components.host?.dropPrefix(prefix: "mobile.")
         return (try? components.asURL()) ?? self
     }
-    
-    public func toEncodedString() -> String? {
-        // Based on https://tools.ietf.org/html/rfc3986#page-13
-        var characterSet = NSCharacterSet.alphanumerics
-        characterSet.insert(".")
-        characterSet.insert("-")
-        characterSet.insert("~")
-        characterSet.insert("_")
-        return absoluteString.addingPercentEncoding(withAllowedCharacters: characterSet)
-    }
 
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }

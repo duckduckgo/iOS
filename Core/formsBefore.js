@@ -1,8 +1,16 @@
 
-(function() {
+document.addEventListener('DOMContentLoaded', (event) => {
+                          
+  var forms = document.getElementsByTagName("form")
+  var formCount = forms ? forms.length : 0
+  duckduckgoDebugMessaging.log("*** " + formCount + " forms found when DOMContentLoaded")
 
-    var forms = document.getElementsByTagName("form")
-    var formCount = forms ? forms.length : 0
-    duckduckgoDebugMessaging.log("*** " + formCount + " forms found before document")
+  function findForms() {
+     var forms = document.getElementsByTagName("form")
+     var formCount = forms ? forms.length : 0
+     duckduckgoDebugMessaging.log("*** " + formCount + " forms found after DOMContentLoaded")
+   }
+  
+     setTimeout(findForms, 3000);
 
-}) ()
+})

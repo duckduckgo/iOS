@@ -129,8 +129,7 @@ private struct Loader {
             loadContentBlockingScripts()
         }
         
-        javascriptLoader.load(.formsBefore, into: userContentController, forMainFrameOnly: true, injectionTime: .atDocumentStart)
-        javascriptLoader.load(.formsAfter, into: userContentController, forMainFrameOnly: true, injectionTime: .atDocumentEnd)
+        javascriptLoader.load(.formsBefore, into: userContentController, forMainFrameOnly: false, injectionTime: .atDocumentStart)
 
         Instruments.shared.endTimedEvent(for: spid)
     }

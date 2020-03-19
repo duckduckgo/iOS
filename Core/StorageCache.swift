@@ -21,7 +21,7 @@ import Foundation
 
 protocol StorageCacheUpdating {
     
-    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool
+    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool
 }
 
 public class StorageCache: StorageCacheUpdating {
@@ -45,7 +45,7 @@ public class StorageCache: StorageCacheUpdating {
         self.termsOfServiceStore = termsOfServiceStore
     }
     
-    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
+    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
         switch configuration {
         case .httpsWhitelist:
             guard let whitelist = data as? [String] else { return false }
@@ -65,7 +65,7 @@ public class StorageCache: StorageCacheUpdating {
             
         case .trackerDataSet:
             if fileStore.persist(data as? Data, forConfiguration: configuration) {
-                if TrackerDataManager.shared.reload() != .downloaded {
+                if TrackerDataManager.shared.reload(etag: etag) != .downloaded {
                     Pixel.fire(pixel: .trackerDataReloadFailed)
                     return false
                 }

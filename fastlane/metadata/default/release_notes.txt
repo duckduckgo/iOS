@@ -1,2 +1,1 @@
-• Want to stay signed-in or preserve data for websites you trust? You can now Fireproof them! This will prevent the Fire Button and Auto Clear from deleting all data associated with that site. From any site, tap the menu icon and then tap "Fireproof Website."
-• You can now configure how a new tab looks and how the keyboard behaves.  Check that out in settings.
+• We've improved the experience when reporting a broken site.

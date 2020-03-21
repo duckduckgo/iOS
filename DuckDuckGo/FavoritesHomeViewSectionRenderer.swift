@@ -150,10 +150,16 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         cell.updateFor(link: link)
 
         // can't use captured index path because deleting items can change it
-        cell.onDelete = { [weak self] in
+        cell.onDelete = { [weak self, weak collectionView, weak cell] in
+            guard let collectionView = collectionView else { return }
+            guard let cell = cell else { return }
+            
             self?.deleteFavorite(cell, collectionView)
         }
-        cell.onEdit = { [weak self] in
+        cell.onEdit = { [weak self, weak collectionView, weak cell] in
+            guard let collectionView = collectionView else { return }
+            guard let cell = cell else { return }
+            
             self?.editFavorite(cell, collectionView)
         }
         return cell
@@ -175,7 +181,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let alert = EditBookmarkAlert.buildAlert(
             title: UserText.alertSaveFavorite,
             bookmark: bookmarksManager.favorite(atIndex: indexPath.row),
-            saveCompletion: { [weak self] newLink in
+            saveCompletion: { [weak self, weak collectionView] newLink in
+                guard let collectionView = collectionView else { return }
                 self?.updateFavorite(at: indexPath, in: collectionView, with: newLink)
             })
         controller?.present(alert, animated: true, completion: nil)

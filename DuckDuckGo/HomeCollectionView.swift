@@ -61,6 +61,10 @@ class HomeCollectionView: UICollectionView {
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     
+    deinit {
+        UIMenuController.shared.setMenuVisible(false, animated: true)
+    }
+    
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller, theme: theme)

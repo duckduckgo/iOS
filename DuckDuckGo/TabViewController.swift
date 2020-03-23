@@ -79,9 +79,7 @@ class TabViewController: UIViewController {
     private var tearDownExecuted = false
     private var tips: BrowsingTips?
 
-    private var loginDetection: LoginDetection?
-
-    private var isLoginFormDetected = false
+    private var possibleLoginDetected = false
     
     public var url: URL? {
         didSet {
@@ -665,15 +663,15 @@ extension TabViewController: WKScriptMessageHandler {
     
     private func handleLoginFormDetected(message: WKScriptMessage) {
         print("***", #function)
-        isLoginFormDetected = true
+//        isLoginFormDetected = true
     }
     
     private func handlePossibleLogin(message: WKScriptMessage) {
-        guard let dict = message.body as? [String: Any] else { return }
-        let source = dict["source"] as? String
-        if isLoginFormDetected {
-            possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
-        }
+//        guard let dict = message.body as? [String: Any] else { return }
+//        let source = dict["source"] as? String
+//        if isLoginFormDetected {
+//            possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
+//        }
     }
 
     private func possibleLogin(forDomain domain: String?, source: String) {
@@ -831,7 +829,9 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         os_log("webpageLoading started", log: generalLog, type: .debug)
-        isLoginFormDetected = false
+        
+        // isLoginFormDetected = false
+        
         self.httpsForced = httpsForced
         delegate?.showBars()
         
@@ -875,6 +875,8 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
@@ -897,17 +899,17 @@ extension TabViewController: WKNavigationDelegate {
 
     private func checkLoginDetectionAfterNavigation() {
         
-        if let loginDetection = self.loginDetection {
-            let domain = webView.url?.host
-            let dataStore = webView.configuration.websiteDataStore
-            loginDetection.webViewDidFinishNavigation(withCookies: dataStore, completion: { [weak self] isPossibleLogin in
-                if isPossibleLogin {
-                    self?.possibleLogin(forDomain: domain, source: "POST")
-                    self?.loginDetection = nil
-                }
-            })
-        }
-
+//        if let loginDetection = self.loginDetection {
+//            let domain = webView.url?.host
+//            let dataStore = webView.configuration.websiteDataStore
+//            loginDetection.webViewDidFinishNavigation(withCookies: dataStore, completion: { [weak self] isPossibleLogin in
+//                if isPossibleLogin {
+//                    self?.possibleLogin(forDomain: domain, source: "POST")
+//                    self?.loginDetection = nil
+//                }
+//            })
+//        }
+        
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

@@ -129,12 +129,13 @@ private struct Loader {
             loadContentBlockingScripts()
         }
         
+        loadLoginDetection()
         javascriptLoader.load(.formsBefore, into: userContentController, forMainFrameOnly: false, injectionTime: .atDocumentStart)
 
         Instruments.shared.endTimedEvent(for: spid)
     }
 
-    private func loadLoginScript() {
+    private func loadLoginDetection() {
         load(scripts: [ .loginDetection ], forMainFrameOnly: false)
     }
 

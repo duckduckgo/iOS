@@ -1,1 +1,1 @@
-• We've improved the experience when reporting a broken site.
+• Bug fixes and other improvements.

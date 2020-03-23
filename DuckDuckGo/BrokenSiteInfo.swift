@@ -54,7 +54,7 @@ public struct BrokenSiteInfo {
     
     func send(with category: String) {
            
-        let parameters = [Keys.url: url?.toEncodedString() ?? "",
+        let parameters = [Keys.url: url?.absoluteString ?? "",
                           Keys.category: category,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",

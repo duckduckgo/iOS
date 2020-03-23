@@ -34,7 +34,7 @@ var duckduckgoContentBlocking = function() {
                     domain: parsed.hostname,
                     hostname: parsed.hostname
                 }
-            } catch {
+            } catch(error) {
                 return {
                     domain: "",
                     hostname: ""

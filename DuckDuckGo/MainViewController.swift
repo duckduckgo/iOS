@@ -543,6 +543,15 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height
+
+        if #available(iOS 11.0, *) {
+            //no-op
+        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
+            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
+            // adjust frame to toolbar height change
+            tabSwitcherButton.layoutSubviews()
+            gestureBookmarksButton.layoutSubviews()
+        }
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {

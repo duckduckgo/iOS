@@ -16,8 +16,9 @@
 
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs.item(i);
-            if (input.type == "password") {
+            if (input.type == "password" && !(input.offsetWidth === 0 && input.offsetHeight === 0)) {
                 logger.log("*** found password in form " + form);
+                duckduckgoMessaging.loginFormDetected();
                 return true;
             }
         }
@@ -74,7 +75,7 @@
             }
 
             for (var i = 0; i < forms.length; i++) {
-                if (checkIsLoginForm(forms[0])) {
+                if (checkIsLoginForm(forms[i])) {
                     return;
                 }
             }

@@ -26,15 +26,7 @@ var duckduckgoMessaging = function() {
 			// webkit might not be defined
 		}
 	}
-    
-    function possibleLogin(source, url) {
-        try {
-            webkit.messageHandlers.possibleLogin.postMessage({ "source": source, "url": url });
-        } catch(error) {
-            // webkit might not be defined
-        }
-    }
-
+ 
     function loginFormDetected() {
         try {
             webkit.messageHandlers.loginFormDetected.postMessage({});
@@ -46,7 +38,6 @@ var duckduckgoMessaging = function() {
 	return {
 
 		trackerDetected: trackerDetected,
-        possibleLogin: possibleLogin,
         loginFormDetected: loginFormDetected
 
 	}

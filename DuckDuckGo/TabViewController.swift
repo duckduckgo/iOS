@@ -79,7 +79,7 @@ class TabViewController: UIViewController {
     private var tearDownExecuted = false
     private var tips: BrowsingTips?
 
-    private var possibleLoginDetected = false
+    private var detectedLoginURL: URL?
     
     public var url: URL? {
         didSet {
@@ -223,7 +223,6 @@ class TabViewController: UIViewController {
     private func addMessageHandlers() {
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
-        controller.add(self, name: MessageHandlerNames.possibleLogin)
         controller.add(self, name: MessageHandlerNames.loginFormDetected)
         controller.add(self, name: MessageHandlerNames.signpost)
         controller.add(self, name: MessageHandlerNames.log)
@@ -593,7 +592,6 @@ class TabViewController: UIViewController {
     private func removeMessageHandlers() {
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
-        controller.removeScriptMessageHandler(forName: MessageHandlerNames.possibleLogin)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.loginFormDetected)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
@@ -626,7 +624,6 @@ extension TabViewController: WKScriptMessageHandler {
     }
 
     private struct MessageHandlerNames {
-        static let possibleLogin = "possibleLogin"
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
         static let log = "log"
@@ -644,9 +641,6 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
-        case MessageHandlerNames.possibleLogin:
-            handlePossibleLogin(message: message)
-
         case MessageHandlerNames.loginFormDetected:
             handleLoginFormDetected(message: message)
 
@@ -663,17 +657,9 @@ extension TabViewController: WKScriptMessageHandler {
     
     private func handleLoginFormDetected(message: WKScriptMessage) {
         print("***", #function)
-//        isLoginFormDetected = true
+        detectedLoginURL = webView.url
     }
     
-    private func handlePossibleLogin(message: WKScriptMessage) {
-//        guard let dict = message.body as? [String: Any] else { return }
-//        let source = dict["source"] as? String
-//        if isLoginFormDetected {
-//            possibleLogin(forDomain: webView.url?.host, source: source ?? "JS")
-//        }
-    }
-
     private func possibleLogin(forDomain domain: String?, source: String) {
         guard #available(iOS 13, *) else {
             // We can't be sure about leaking cookies before iOS 13 so don't allow logins to be saved
@@ -875,8 +861,6 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
-        
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
@@ -898,17 +882,15 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func checkLoginDetectionAfterNavigation() {
+        defer {
+            detectedLoginURL = nil
+        }
         
-//        if let loginDetection = self.loginDetection {
-//            let domain = webView.url?.host
-//            let dataStore = webView.configuration.websiteDataStore
-//            loginDetection.webViewDidFinishNavigation(withCookies: dataStore, completion: { [weak self] isPossibleLogin in
-//                if isPossibleLogin {
-//                    self?.possibleLogin(forDomain: domain, source: "POST")
-//                    self?.loginDetection = nil
-//                }
-//            })
-//        }
+        guard let url = detectedLoginURL else { return }
+
+        if self.url?.host != url.host || self.url?.path != url.path {
+            view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>"))
+        }
         
     }
     

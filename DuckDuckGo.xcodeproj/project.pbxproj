@@ -76,8 +76,6 @@
 		85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
 		850559C923C61B5D0055C0D5 /* loginDetection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* loginDetection.js */; };
-		850559CB23C775410055C0D5 /* LoginDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CA23C775410055C0D5 /* LoginDetection.swift */; };
-		850559CE23C8E27C0055C0D5 /* LoginDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */; };
 		850559D023CF647C0055C0D5 /* PreserveLogins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CF23CF647C0055C0D5 /* PreserveLogins.swift */; };
 		850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */; };
 		85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */; };
@@ -710,8 +708,6 @@
 		85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoader.swift; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
 		850559C823C61B5D0055C0D5 /* loginDetection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = loginDetection.js; sourceTree = "<group>"; };
-		850559CA23C775410055C0D5 /* LoginDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetection.swift; sourceTree = "<group>"; };
-		850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetectionTests.swift; sourceTree = "<group>"; };
 		850559CF23CF647C0055C0D5 /* PreserveLogins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLogins.swift; sourceTree = "<group>"; };
 		850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCacheManagerTests.swift; sourceTree = "<group>"; };
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
@@ -2299,7 +2295,6 @@
 				F13B4BD21F1822C700814661 /* Tab.swift */,
 				F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */,
 				F13B4BBF1F180D8A00814661 /* TabsModel.swift */,
-				850559CA23C775410055C0D5 /* LoginDetection.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2326,7 +2321,6 @@
 				F13B4BFA1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift */,
 				F189AED61F18F6DE001EBAE1 /* TabTests.swift */,
 				8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */,
-				850559CC23C8E2450055C0D5 /* LoginDetectionTests.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -3793,7 +3787,6 @@
 				85449F0123FEAF3000512AAF /* UserDefaultsExtension.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
-				850559CB23C775410055C0D5 /* LoginDetection.swift in Sources */,
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
@@ -3847,7 +3840,6 @@
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
 				8521FDF1238DD82700A44CC3 /* TrackerDataManagerTests.swift in Sources */,
-				850559CE23C8E27C0055C0D5 /* LoginDetectionTests.swift in Sources */,
 				83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
 				85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */,

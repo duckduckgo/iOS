@@ -83,6 +83,7 @@ struct StubHomePageSettings: HomePageSettings {
 
     var layout: HomePageLayout
     var favorites: Bool
+    var showCovidInfo: Bool = true
     
     func migrate(from appSettigs: AppSettings) {
         // no-op

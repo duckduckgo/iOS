@@ -102,6 +102,14 @@ class HomeViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    func remove(_ renderer: ExtraContentHomeSectionRenderer) {
+        if let section = collectionView.renderers.remove(renderer: renderer) {
+            collectionView.performBatchUpdates({
+                collectionView.deleteSections(IndexSet(integer: section))
+            }, completion: nil)
+        }
+    }
+    
     func omniBarCancelPressed() {
         collectionView.omniBarCancelPressed()
     }

@@ -64,6 +64,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         overflowOffset = controller.enableContentUnderflow()
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
+        
+        controller.logo.isHidden = true
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

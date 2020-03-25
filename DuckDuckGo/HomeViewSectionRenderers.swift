@@ -19,7 +19,7 @@
 
 import UIKit
 
-protocol HomeViewSectionRenderer {
+protocol HomeViewSectionRenderer: AnyObject {
 
     // MARK: required
 
@@ -168,6 +168,15 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func install(renderer: HomeViewSectionRenderer) {
         renderer.install(into: controller)
         renderers.append(renderer)
+    }
+    
+    func remove(renderer: HomeViewSectionRenderer) -> Int? {
+//        renderer.install(into: controller)
+        guard let index = (renderers.firstIndex { $0 === renderer }) else {
+            return nil
+        }
+        renderers.remove(at: index)
+        return index
     }
     
     func rendererFor(section: Int) -> HomeViewSectionRenderer {

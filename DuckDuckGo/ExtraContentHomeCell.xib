@@ -26,7 +26,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tv-eN-Cep">
-                        <rect key="frame" x="14" y="16.5" width="279" height="19"/>
+                        <rect key="frame" x="14" y="16.5" width="274" height="19"/>
                         <attributedString key="attributedText">
                             <fragment content="Get official COVID-19 info and tips.">
                                 <attributes>
@@ -38,19 +38,22 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T10-EJ-GZV">
-                        <rect key="frame" x="288" y="10" width="32" height="32"/>
+                        <rect key="frame" x="283" y="10" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="VFf-on-eL8"/>
                             <constraint firstAttribute="width" constant="32" id="xDi-Ns-Xqy"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <state key="normal" image="Remove"/>
+                        <connections>
+                            <action selector="onDismiss:" destination="gTV-IL-0wX" eventType="touchUpInside" id="MTd-EC-SU5"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="T10-EJ-GZV" firstAttribute="leading" secondItem="7tv-eN-Cep" secondAttribute="trailing" constant="-5" id="07z-Pw-UbJ"/>
-                <constraint firstAttribute="trailing" secondItem="T10-EJ-GZV" secondAttribute="trailing" id="2Gp-2I-mxd"/>
+                <constraint firstAttribute="trailing" secondItem="T10-EJ-GZV" secondAttribute="trailing" constant="5" id="2Gp-2I-mxd"/>
                 <constraint firstAttribute="top" secondItem="7lo-Iq-3Bk" secondAttribute="top" id="BBF-ks-fIj"/>
                 <constraint firstItem="7lo-Iq-3Bk" firstAttribute="bottom" secondItem="gTV-IL-0wX" secondAttribute="bottom" constant="-2" id="Bog-bL-BGZ"/>
                 <constraint firstItem="7tv-eN-Cep" firstAttribute="centerY" secondItem="7lo-Iq-3Bk" secondAttribute="centerY" id="Grw-0y-lcd"/>

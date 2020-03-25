@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
     
@@ -37,6 +38,13 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
         }
         
         cell.decorate(with: ThemeManager.shared.currentTheme)
+        
+        cell.onDismiss = { [weak self] _ in
+            guard let strongSelf = self else { return }
+            DefaultHomePageSettings().showCovidInfo = false
+            strongSelf.controller?.remove(strongSelf)
+        }
+        
         return cell
     }
 
@@ -47,6 +55,14 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
         let preferredWidth = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
         let width: CGFloat = min(preferredWidth, CenteredSearchHomeCell.Constants.searchWidth)
         return CGSize(width: width, height: 66)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        controller?.load(url: AppUrls().searchUrl(text: "covid 19"))
     }
     
     func collectionView(_ collectionView: UICollectionView,

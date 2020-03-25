@@ -27,7 +27,7 @@ class HomeCollectionView: UICollectionView {
     
     private weak var controller: HomeViewController!
     
-    private var renderers: HomeViewSectionRenderers!
+    private(set) var renderers: HomeViewSectionRenderers!
     
     private lazy var collectionViewReorderingGesture =
         UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))

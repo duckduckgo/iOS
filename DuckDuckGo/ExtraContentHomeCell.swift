@@ -13,6 +13,8 @@ class ExtraContentHomeCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var roundedBackground: UIView!
     @IBOutlet weak var dismissButton: UIButton!
+    
+    var onDismiss: ((ExtraContentHomeCell) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +30,9 @@ class ExtraContentHomeCell: UICollectionViewCell {
         view.layer.masksToBounds = false
     }
 
+    @IBAction func onDismiss(_ sender: UIButton) {
+        onDismiss?(self)
+    }
 }
 
 extension ExtraContentHomeCell: Themable {

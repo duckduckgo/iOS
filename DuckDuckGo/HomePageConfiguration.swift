@@ -46,18 +46,14 @@ class HomePageConfiguration {
         var components = [Component]()
         switch settings.layout {
         case .navigationBar:
-            if fixed {
-                components.append(.extraContent)
-                components.append(.navigationBarSearch(fixed: fixed))
-            } else {
-                components.append(.navigationBarSearch(fixed: fixed))
-                components.append(.extraContent)
-            }
-
+            components.append(.navigationBarSearch(fixed: fixed))
         case .centered:
             components.append(.centeredSearch(fixed: fixed))
-            components.append(.extraContent)
         }
+        
+        //if settings.showCovidInfo {
+            components.append(.extraContent)
+        //}
 
         if settings.favorites {
             components.append(.favorites)

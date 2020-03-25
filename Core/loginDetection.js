@@ -6,6 +6,10 @@
 
     logger.log("*** installing loginDetection.js - IN");
 
+    function inputVisible(input) {
+        return !(input.offsetWidth === 0 && input.offsetHeight === 0) && !input.ariaHidden && !input.hidden;   
+    }
+
     function checkIsLoginForm(form) {
         logger.log("*** checking form " + form);
 
@@ -16,7 +20,7 @@
 
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs.item(i);
-            if (input.type == "password" && !(input.offsetWidth === 0 && input.offsetHeight === 0)) {
+            if (input.type == "password" && inputVisible(input)) {
                 logger.log("*** found password in form " + form);
                 duckduckgoMessaging.loginFormDetected();
                 return true;
@@ -36,7 +40,7 @@
     window.addEventListener("DOMContentLoaded", function(event) {
                             
             // Wait before handling submit handlers because sometimes forms are created by JS after the DOM has loaded
-            setTimeout(1000, () => {
+            setTimeout(() => {
 
                 var forms = document.getElementsByTagName("form")
                 if (!forms) {
@@ -49,7 +53,7 @@
                     logger.log("*** adding form handler " + i);
                 }
 
-            });
+            }, 1000);
                             
     });
 

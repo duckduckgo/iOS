@@ -85,6 +85,7 @@ class TabViewController: UIViewController {
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
+            checkLoginDetectionAfterNavigation()
         }
     }
     
@@ -865,6 +866,7 @@ extension TabViewController: WKNavigationDelegate {
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
+        detectedLoginURL = nil
     }
     
     private func onWebpageDidFinishLoading() {
@@ -882,14 +884,20 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func checkLoginDetectionAfterNavigation() {
-        defer {
-            detectedLoginURL = nil
+        
+        guard let url = detectedLoginURL else {
+            print("*** NO SIGN IN: no form detected")
+            return
+        }
+
+        guard !webView.isLoading else {
+            print("*** NO SIGN IN: webview is not loading")
+            return
         }
         
-        guard let url = detectedLoginURL else { return }
-
         if self.url?.host != url.host || self.url?.path != url.path {
             view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>"))
+            detectedLoginURL = nil
         }
         
     }

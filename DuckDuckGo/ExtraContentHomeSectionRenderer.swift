@@ -54,7 +54,7 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
 
         let preferredWidth = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
         let width: CGFloat = min(preferredWidth, CenteredSearchHomeCell.Constants.searchWidth)
-        return CGSize(width: width, height: 66)
+        return CGSize(width: width, height: 56)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

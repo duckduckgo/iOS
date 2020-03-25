@@ -36,6 +36,8 @@ protocol HomeViewSectionRenderer: AnyObject {
     
     func install(into controller: HomeViewController)
     
+    func remove(from controller: HomeViewController)
+    
     func omniBarCancelPressed()
     
     func openedAsNewTab()
@@ -84,6 +86,8 @@ protocol HomeViewSectionRenderer: AnyObject {
 extension HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) { }
+    
+    func remove(from controller: HomeViewController) { }
     
     func omniBarCancelPressed() { }
     
@@ -171,7 +175,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     }
     
     func remove(renderer: HomeViewSectionRenderer) -> Int? {
-//        renderer.install(into: controller)
+        renderer.remove(from: controller)
         guard let index = (renderers.firstIndex { $0 === renderer }) else {
             return nil
         }

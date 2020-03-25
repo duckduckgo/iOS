@@ -39,6 +39,15 @@ class HomeCollectionView: UICollectionView {
         return renderer.centeredSearch
     }
     
+    private var topIndexPath: IndexPath? {
+        for section in 0..<renderers.numberOfSections(in: self) {
+            if numberOfItems(inSection: section) > 0 {
+                return IndexPath(row: 0, section: section)
+            }
+        }
+        return nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -147,7 +156,10 @@ class HomeCollectionView: UICollectionView {
     }
     
     func viewDidTransition(to size: CGSize) {
-        controller.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        
+        if let topIndexPath = topIndexPath {
+            controller.collectionView.scrollToItem(at: topIndexPath, at: .top, animated: false)
+        }
         controller.collectionView.reloadData()
     }
     

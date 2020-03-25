@@ -51,9 +51,9 @@ class HomePageConfiguration {
             components.append(.centeredSearch(fixed: fixed))
         }
         
-        if settings.showCovidInfo {
+//        if settings.showCovidInfo {
             components.append(.extraContent)
-        }
+//        }
 
         if settings.favorites {
             components.append(.favorites)

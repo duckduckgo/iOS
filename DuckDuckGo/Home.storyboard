@@ -63,7 +63,7 @@
                                         </view>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="72" y="0.0" width="342" height="287"/>
+                                        <rect key="frame" x="60" y="0.0" width="342" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="287"/>
@@ -139,30 +139,6 @@
                                             <outlet property="searchBackgroundTrailingConstraint" destination="niW-Cm-waP" id="fMr-Et-hcZ"/>
                                             <outlet property="searchLoupe" destination="Cfx-pb-o8i" id="796-zE-CwE"/>
                                             <outlet property="searchLoupeLeadingConstraint" destination="zGY-Ek-4ip" id="RUp-zT-xMm"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="297" width="210" height="298"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="210" height="298"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="6KE-x7-bYQ">
-                                                    <rect key="frame" x="25" y="50" width="160" height="128"/>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerY" secondItem="YGf-2W-c2w" secondAttribute="centerY" priority="750" constant="-35" id="ItI-WJ-kn8"/>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YGf-2W-c2w" secondAttribute="top" constant="20" id="O23-kd-uH8"/>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerX" secondItem="YGf-2W-c2w" secondAttribute="centerX" id="oGn-KV-u2p"/>
-                                        </constraints>
-                                        <size key="customSize" width="210" height="298"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="6KE-x7-bYQ" id="wys-xe-PcN"/>
-                                            <outlet property="verticalConstraint" destination="ItI-WJ-kn8" id="JBS-qJ-N3V"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

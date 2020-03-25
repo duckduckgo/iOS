@@ -46,10 +46,8 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "favorite")
         register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "PrivacyHomeCell")
-        
-        register(UINib(nibName: "FavoritesHeaderCell", bundle: nil),
-                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                 withReuseIdentifier: FavoritesHeaderCell.reuseIdentifier)
+        register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
+                 forCellWithReuseIdentifier: "extraContent")
         
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -76,6 +74,9 @@ class HomeCollectionView: UICollectionView {
                 
             case .centeredSearch(let fixed):
                 renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
+                
+            case .extraContent:
+                renderers.install(renderer: ExtraContentHomeSectionRenderer())
                 
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())

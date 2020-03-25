@@ -88,13 +88,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int) -> CGSize? {
-        
-        return CGSize(width: 1, height: controller?.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0)
-    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY: CGFloat = Constants.scrollUpAdjustment

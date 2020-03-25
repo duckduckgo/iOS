@@ -37,7 +37,7 @@
                                 <constraints>
                                     <constraint firstItem="ztc-nL-no3" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="0dq-XR-B9k"/>
                                     <constraint firstItem="ztc-nL-no3" firstAttribute="centerY" secondItem="b31-Kn-3OJ" secondAttribute="centerY" constant="-35" id="8xt-Sj-Dfb">
-                                        <variation key="heightClass=compact" constant="0.0"/>
+                                        <variation key="heightClass=compact" constant="10"/>
                                     </constraint>
                                 </constraints>
                             </view>

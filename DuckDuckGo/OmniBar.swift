@@ -83,7 +83,7 @@ class OmniBar: UIView {
     }
     
     var textFieldBottomSpacing: CGFloat {
-        return bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)
+        return (bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)) / 2.0
     }
     
     @objc func textDidChange() {

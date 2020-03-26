@@ -22,6 +22,8 @@ import Core
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var logo: UIImageView!
+    
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
@@ -98,6 +100,14 @@ class HomeViewController: UIViewController {
 
     func refresh() {
         collectionView.reloadData()
+    }
+    
+    func remove(_ renderer: ExtraContentHomeSectionRenderer) {
+        if let section = collectionView.renderers.remove(renderer: renderer) {
+            collectionView.performBatchUpdates({
+                collectionView.deleteSections(IndexSet(integer: section))
+            }, completion: nil)
+        }
     }
     
     func omniBarCancelPressed() {
@@ -184,6 +194,13 @@ extension HomeViewController: Themable {
     func decorate(with theme: Theme) {
         collectionView.decorate(with: theme)
         view.backgroundColor = theme.backgroundColor
-        settingsButton.tintColor = theme.barTintColor        
+        settingsButton.tintColor = theme.barTintColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            logo.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            logo.image = UIImage(named: "LogoLightText")
+        }
     }
 }

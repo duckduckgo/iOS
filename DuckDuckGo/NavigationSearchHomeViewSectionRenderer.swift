@@ -21,11 +21,6 @@ import UIKit
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
-    struct Constants {
-        static let privacyCellMaxWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
-        static let itemSpacing: CGFloat = 10
-    }
-    
     private let fixed: Bool
     
     init(fixed: Bool) {
@@ -44,6 +39,8 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = !fixed
         controller.settingsButton.isHidden = true
+        
+        controller.logo.isHidden = !fixed
     }
     
     func openedAsNewTab() {
@@ -53,25 +50,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fixed ? 1 : 0
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
-            as? NavigationSearchHomeCell else {
-                fatalError("cell is not a NavigationSearchHomeCell")
-        }
-        
-        var constant: CGFloat
-        if collectionView.traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)) {
-            constant = 0
-        } else {
-            constant = -34
-        }
-        
-        cell.verticalConstraint.constant = constant
-        
-        return cell
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "space", for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -79,15 +62,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
     }
-  
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        controller?.chromeDelegate?.omniBar.resignFirstResponder()
-    }
-    
+
     func launchNewSearch() {
         controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }

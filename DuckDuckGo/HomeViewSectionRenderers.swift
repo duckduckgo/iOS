@@ -19,7 +19,7 @@
 
 import UIKit
 
-protocol HomeViewSectionRenderer {
+protocol HomeViewSectionRenderer: AnyObject {
 
     // MARK: required
 
@@ -36,6 +36,8 @@ protocol HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController)
     
+    func remove(from controller: HomeViewController)
+    
     func omniBarCancelPressed()
     
     func openedAsNewTab()
@@ -43,6 +45,8 @@ protocol HomeViewSectionRenderer {
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]?
     
     func launchNewSearch()
+    
+    func supportsReordering() -> Bool
     
     func collectionView(_ collectionView: UICollectionView,
                         canMoveItemAt indexPath: IndexPath) -> Bool
@@ -85,6 +89,8 @@ extension HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) { }
     
+    func remove(from controller: HomeViewController) { }
+    
     func omniBarCancelPressed() { }
     
     func openedAsNewTab() { }
@@ -94,6 +100,8 @@ extension HomeViewSectionRenderer {
     }
     
     func launchNewSearch() { }
+    
+    func supportsReordering() -> Bool { return false }
     
     func collectionView(_ collectionView: UICollectionView,
                         canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -168,6 +176,15 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func install(renderer: HomeViewSectionRenderer) {
         renderer.install(into: controller)
         renderers.append(renderer)
+    }
+    
+    func remove(renderer: HomeViewSectionRenderer) -> Int? {
+        renderer.remove(from: controller)
+        guard let index = (renderers.firstIndex { $0 === renderer }) else {
+            return nil
+        }
+        renderers.remove(at: index)
+        return index
     }
     
     func rendererFor(section: Int) -> HomeViewSectionRenderer {

@@ -124,6 +124,8 @@ class MockHomePageSettings: HomePageSettings {
         }
     }
     
+    var showCovidInfo: Bool = true
+    
     func migrate(from appSettings: AppSettings) {
         // no-op
     }

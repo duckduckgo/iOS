@@ -657,7 +657,7 @@ extension TabViewController: WKScriptMessageHandler {
     }
     
     private func handleLoginFormDetected(message: WKScriptMessage) {
-        print("***", #function)
+        print("***", #function, webView.url as Any)
         detectedLoginURL = webView.url
     }
     
@@ -891,7 +891,7 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         guard !webView.isLoading else {
-            print("*** NO SIGN IN: webview is not loading")
+            print("*** NO SIGN IN: webview is loading")
             return
         }
         

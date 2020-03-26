@@ -35,36 +35,39 @@
         checkIsLoginForm(event.target)
     }
 
+    function scanForForms() {
+        logger.log("*** Scanning for forms");
+
+        var forms = document.getElementsByTagName("form")
+        if (!forms || forms.length == 0) {
+            logger.log("*** No forms found");
+            return
+        }
+
+        for (var i = 0; i < forms.length; i++) {
+            var form = forms[i];
+            form.addEventListener("submit", submitHandler);
+            logger.log("*** adding form handler " + i);
+        }
+
+    }
+
     // *** Add listeners
 
-    window.addEventListener("DOMContentLoaded", function(event) {
-                            
-            // Wait before handling submit handlers because sometimes forms are created by JS after the DOM has loaded
-            setTimeout(() => {
-
-                var forms = document.getElementsByTagName("form")
-                if (!forms) {
-                    return
-                }
-
-                for (var i = 0; i < forms.length; i++) {
-                    var form = forms[i];
-                    form.addEventListener("submit", submitHandler);
-                    logger.log("*** adding form handler " + i);
-                }
-
-            }, 1000);
-                            
+    window.addEventListener("DOMContentLoaded", function(event) {                            
+        // Wait before handling submit handlers because sometimes forms are created by JS after the DOM has loaded
+        setTimeout(scanForForms, 1000);                            
     });
 
     window.addEventListener("submit", submitHandler);
+    window.addEventListener("beforeunload", scanForForms);
 
     try {
         const observer = new PerformanceObserver((list, observer) => {                                                
             const entries = list.getEntries().filter((entry) => { 
                 var found = entry.initiatorType == "xmlhttprequest" && entry.name.split("?")[0].match(/login|sign-in/);
                 if (found) {
-                    logger.log("*** observed login XHR " + entry.name.split("?")[0]);
+                    logger.log("*** XHR: observed login - " + entry.name.split("?")[0]);
                 }
                 return found;
             });
@@ -73,16 +76,9 @@
                 return;
             } 
 
-            var forms = document.getElementsByTagName("form")
-            if (!forms) {
-                return
-            }
-
-            for (var i = 0; i < forms.length; i++) {
-                if (checkIsLoginForm(forms[i])) {
-                    return;
-                }
-            }
+            logger.log("*** XHR: checking forms - IN");
+            scanForForms();
+            logger.log("*** XHR: checking forms - OUT");
 
         });
         observer.observe({entryTypes: ["resource"]});        

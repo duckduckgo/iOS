@@ -64,6 +64,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         overflowOffset = controller.enableContentUnderflow()
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
+        
+        controller.logo.isHidden = true
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -87,13 +89,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
             let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int) -> CGSize? {
-        
-        return CGSize(width: 1, height: controller?.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

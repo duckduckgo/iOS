@@ -28,6 +28,7 @@ class HomePageConfigurationTests: XCTestCase {
 
         let layout: HomePageLayout
         let favorites: Bool
+        let covid: Bool
         let links: [Link]
         let expected: [HomePageConfiguration.Component]
 
@@ -38,31 +39,50 @@ class HomePageConfigurationTests: XCTestCase {
         let url = URL(string: "http://www.example.com")!
 
         let tests = [
-            Test(layout: .centered, favorites: false, links: [],
+            Test(layout: .centered, favorites: false, covid: false, links: [],
                  expected: [ .centeredSearch(fixed: true) ]),
 
-            Test(layout: .centered, favorites: true, links: [],
+            Test(layout: .centered, favorites: true, covid: false, links: [],
                  expected: [ .centeredSearch(fixed: true), .favorites, .padding ]),
 
-            Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)],
+            Test(layout: .centered, favorites: true, covid: false, links: [Link(title: nil, url: url)],
                  expected: [ .centeredSearch(fixed: false), .favorites, .padding ]),
 
-            Test(layout: .navigationBar, favorites: false, links: [],
+            Test(layout: .navigationBar, favorites: false, covid: false, links: [],
                  expected: [ .navigationBarSearch(fixed: true) ]),
 
-            Test(layout: .navigationBar, favorites: true, links: [],
+            Test(layout: .navigationBar, favorites: true, covid: false, links: [],
                  expected: [ .navigationBarSearch(fixed: true), .favorites ]),
 
-            Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .navigationBarSearch(fixed: false), .favorites ])
+            Test(layout: .navigationBar, favorites: true, covid: false, links: [Link(title: nil, url: url)],
+                 expected: [ .navigationBarSearch(fixed: false), .favorites ]),
+            
+            Test(layout: .centered, favorites: false, covid: true, links: [],
+                 expected: [ .centeredSearch(fixed: true), .extraContent ]),
+
+            Test(layout: .centered, favorites: true, covid: true, links: [],
+                 expected: [ .centeredSearch(fixed: true), .extraContent, .favorites, .padding ]),
+
+            Test(layout: .centered, favorites: true, covid: true, links: [Link(title: nil, url: url)],
+                 expected: [ .centeredSearch(fixed: false), .extraContent, .favorites, .padding ]),
+
+            Test(layout: .navigationBar, favorites: false, covid: true, links: [],
+                 expected: [ .navigationBarSearch(fixed: true), .extraContent ]),
+
+            Test(layout: .navigationBar, favorites: true, covid: true, links: [],
+                 expected: [ .navigationBarSearch(fixed: true), .extraContent, .favorites ]),
+
+            Test(layout: .navigationBar, favorites: true, covid: true, links: [Link(title: nil, url: url)],
+                 expected: [ .navigationBarSearch(fixed: false), .extraContent, .favorites ])
 
         ]
 
         for test in tests {
 
-            let settings = StubHomePageSettings(layout: test.layout, favorites: test.favorites)
+            let settings = StubHomePageSettings(layout: test.layout, favorites: test.favorites, showCovidInfo: test.covid)
             let store = MockBookmarkStore()
             store.favorites = test.links
+
             let manager = BookmarksManager(dataStore: store)
 
             let config = HomePageConfiguration(settings: settings)
@@ -83,6 +103,7 @@ struct StubHomePageSettings: HomePageSettings {
 
     var layout: HomePageLayout
     var favorites: Bool
+    var showCovidInfo: Bool
     
     func migrate(from appSettigs: AppSettings) {
         // no-op

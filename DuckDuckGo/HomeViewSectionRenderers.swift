@@ -46,6 +46,8 @@ protocol HomeViewSectionRenderer: AnyObject {
     
     func launchNewSearch()
     
+    func supportsReordering() -> Bool
+    
     func collectionView(_ collectionView: UICollectionView,
                         canMoveItemAt indexPath: IndexPath) -> Bool
     
@@ -98,6 +100,8 @@ extension HomeViewSectionRenderer {
     }
     
     func launchNewSearch() { }
+    
+    func supportsReordering() -> Bool { return false }
     
     func collectionView(_ collectionView: UICollectionView,
                         canMoveItemAt indexPath: IndexPath) -> Bool {

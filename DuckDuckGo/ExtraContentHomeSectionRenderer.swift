@@ -89,6 +89,7 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        UISelectionFeedbackGenerator().selectionChanged()
         controller?.load(url: AppUrls().searchUrl(text: "covid 19"))
     }
     

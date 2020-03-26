@@ -99,6 +99,7 @@ class HomeCollectionView: UICollectionView {
         
         dataSource = renderers
         delegate = renderers
+        collectionViewReorderingGesture.delegate = self
         addGestureRecognizer(collectionViewReorderingGesture)
     }
     
@@ -172,4 +173,14 @@ extension HomeCollectionView: Themable {
         reloadData()
     }
     
+}
+
+extension HomeCollectionView: UIGestureRecognizerDelegate {
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let indexPath = indexPathForItem(at: gestureRecognizer.location(in: self)) {
+            return renderers.rendererFor(section: indexPath.section).supportsReordering()
+        }
+        return false
+    }
 }

@@ -23,6 +23,7 @@ class ExtraContentHomeCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var roundedBackground: UIView!
+    @IBOutlet weak var highlightMask: UIView!
     @IBOutlet weak var dismissButton: UIButton!
     
     var onDismiss: ((ExtraContentHomeCell) -> Void)?
@@ -31,6 +32,12 @@ class ExtraContentHomeCell: UICollectionViewCell {
         super.awakeFromNib()
         
         ExtraContentHomeCell.applyDropshadow(to: roundedBackground!)
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            highlightMask.isHidden = !isHighlighted
+        }
     }
     
     class func applyDropshadow(to view: UIView) {

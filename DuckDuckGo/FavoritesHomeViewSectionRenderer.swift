@@ -182,6 +182,10 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return CGSize(width: Constants.horizontalMargin + cellWidth, height: cellHeight)
     }
     
+    func supportsReordering() -> Bool {
+        return true
+    }
+    
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         guard allowsEditing else {
             return false

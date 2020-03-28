@@ -1,4 +1,4 @@
-
+/*
 document.addEventListener('DOMContentLoaded', (event) => {
                           
   var forms = document.getElementsByTagName("form")
@@ -14,3 +14,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
      setTimeout(findForms, 3000);
 
 })
+*/

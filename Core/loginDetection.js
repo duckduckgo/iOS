@@ -38,7 +38,7 @@
     function scanForForms() {
         logger.log("*** Scanning for forms");
 
-        var forms = document.getElementsByTagName("form")
+        var forms = document.forms;
         if (!forms || forms.length == 0) {
             logger.log("*** No forms found");
             return
@@ -46,6 +46,7 @@
 
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
+            form.removeEventListener("submit", submitHandler);
             form.addEventListener("submit", submitHandler);
             logger.log("*** adding form handler " + i);
         }
@@ -59,8 +60,10 @@
         setTimeout(scanForForms, 1000);                            
     });
 
-    window.addEventListener("submit", submitHandler);
+    window.addEventListener("click", scanForForms);
     window.addEventListener("beforeunload", scanForForms);
+
+    window.addEventListener("submit", submitHandler);
 
     try {
         const observer = new PerformanceObserver((list, observer) => {                                                
@@ -77,7 +80,18 @@
             } 
 
             logger.log("*** XHR: checking forms - IN");
-            scanForForms();
+            var forms = document.forms;
+            if (!forms || forms.length == 0) {
+                logger.log("*** XHR: No forms found");
+                return;
+            }
+
+            for (var i = 0; i < forms.length; i++) {
+                if (checkIsLoginForm(forms[i])) {
+                    logger.log("*** XHR: found login form");
+                    break;
+                }
+            }
             logger.log("*** XHR: checking forms - OUT");
 
         });

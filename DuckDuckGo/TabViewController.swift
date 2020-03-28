@@ -890,13 +890,8 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        guard !webView.isLoading else {
-            print("*** NO SIGN IN: webview is loading")
-            return
-        }
-        
         if self.url?.host != url.host || self.url?.path != url.path {
-            view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>"))
+            view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>") + " from " + (self.url?.host ?? "<unknown>"))
             detectedLoginURL = nil
         }
         
@@ -949,6 +944,11 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        print("*** ",
+              #function,
+              navigationAction.request.httpMethod ?? "<unknown method>",
+              navigationAction.request.url?.absoluteString ?? "<unknown url>")
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision != .cancel {

@@ -88,8 +88,12 @@ class FindInPageView: UIView {
             return
         }
         counterLabel.isHidden = true
+        
+        guard let findInpage = findInPage,
+            findInpage.search(forText: text) else {
+                return
+        }
         activityView.startAnimating()
-        findInPage?.search(forText: text)
     }
     
 }

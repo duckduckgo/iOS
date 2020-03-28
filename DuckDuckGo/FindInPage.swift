@@ -54,10 +54,12 @@ class FindInPage: NSObject {
         webView.evaluateJavaScript("window.__firefox__.findPrevious()")
     }
 
-    func search(forText text: String) {
-        guard text != searchTerm else { return }
+    func search(forText text: String) -> Bool {
+        guard text != searchTerm else { return false }
         searchTerm = text
         webView.evaluateJavaScript("window.__firefox__.find('\(text)')")
+        
+        return true
     }
 
     func update(currentResult: Int?, totalResults: Int?) {

@@ -51,12 +51,14 @@ class FindInPageView: UIView {
         return inputText.resignFirstResponder()
     }
     
-    func update(with findInPage: FindInPage?) {
+    func update(with findInPage: FindInPage?, updateTextField: Bool) {
         activityView.stopAnimating()
         
         self.findInPage = findInPage
         isHidden = findInPage == nil
-        inputText?.text = findInPage?.searchTerm
+        if updateTextField {
+            inputText?.text = findInPage?.searchTerm
+        }
         counterLabel.isHidden = findInPage?.total ?? 0 == 0
 
         let current = findInPage?.current ?? 0
@@ -88,8 +90,12 @@ class FindInPageView: UIView {
             return
         }
         counterLabel.isHidden = true
+        
+        guard let findInpage = findInPage,
+            findInpage.search(forText: text) else {
+                return
+        }
         activityView.startAnimating()
-        findInPage?.search(forText: text)
     }
     
 }

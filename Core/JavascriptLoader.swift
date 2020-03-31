@@ -31,7 +31,6 @@ public class JavascriptLoader {
         case debugMessagingDisabled = "debug-messaging-disabled"
         case detection
         case loginDetection
-        case formsBefore
     }
 
     class func path(for jsFile: String) -> String {

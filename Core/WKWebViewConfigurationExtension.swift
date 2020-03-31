@@ -130,7 +130,6 @@ private struct Loader {
         }
         
         loadLoginDetection()
-        javascriptLoader.load(.formsBefore, into: userContentController, forMainFrameOnly: false, injectionTime: .atDocumentStart)
 
         Instruments.shared.endTimedEvent(for: spid)
     }

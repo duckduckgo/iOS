@@ -237,7 +237,6 @@
 		85C9E5F821B4232A00460EBC /* HomePageConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C9E5F721B4232A00460EBC /* HomePageConfigurationTests.swift */; };
 		85CC936E203C402C00690089 /* SpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC936D203C402C00690089 /* SpeedTests.swift */; };
 		85CC9376203C42A500690089 /* speed_test_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 85CC9375203C42A500690089 /* speed_test_sites.json */; };
-		85D3B249241AA78C00F8FCC9 /* formsBefore.js in Resources */ = {isa = PBXBuildFile; fileRef = 85D3B248241AA78C00F8FCC9 /* formsBefore.js */; };
 		85E00179225E0D4E00877BF6 /* OnboardingSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E00178225E0D4E00877BF6 /* OnboardingSummaryViewController.swift */; };
 		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
 		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
@@ -873,7 +872,6 @@
 		85CC936F203C402C00690089 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85CC9375203C42A500690089 /* speed_test_sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = speed_test_sites.json; sourceTree = "<group>"; };
 		85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NetworkLeaderboard 2.xcdatamodel"; sourceTree = "<group>"; };
-		85D3B248241AA78C00F8FCC9 /* formsBefore.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = formsBefore.js; sourceTree = "<group>"; };
 		85E00178225E0D4E00877BF6 /* OnboardingSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryViewController.swift; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
 		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
@@ -1354,7 +1352,6 @@
 				9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */,
 				85325A8C2024BB7C003EB195 /* detection.js */,
 				850559C823C61B5D0055C0D5 /* loginDetection.js */,
-				85D3B248241AA78C00F8FCC9 /* formsBefore.js */,
 			);
 			name = contentblocking;
 			sourceTree = "<group>";
@@ -3414,7 +3411,6 @@
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
 				8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */,
-				85D3B249241AA78C00F8FCC9 /* formsBefore.js in Resources */,
 				85F1C3C81F7A4C7500161346 /* messaging.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

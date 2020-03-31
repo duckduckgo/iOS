@@ -219,6 +219,8 @@
 		85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA79901F6FF75000F59015 /* ContentBlockerStoreConstants.swift */; };
 		85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */; };
 		85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */; };
+		85BDC30E24334D130053DB07 /* UserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC30D24334D130053DB07 /* UserScript.swift */; };
+		85BDC310243359040053DB07 /* FindInPageScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC30F243359040053DB07 /* FindInPageScript.swift */; };
 		85C11E3E20904B8400BFFEB4 /* VariantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E3D20904B8400BFFEB4 /* VariantManager.swift */; };
 		85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */; };
 		85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */; };
@@ -851,6 +853,8 @@
 		85BA79941F71B37100F59015 /* tlds.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = tlds.js; sourceTree = "<group>"; };
 		85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionEncryptionDetailController.swift; sourceTree = "<group>"; };
 		85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionInfoDisplaying.swift; sourceTree = "<group>"; };
+		85BDC30D24334D130053DB07 /* UserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScript.swift; sourceTree = "<group>"; };
+		85BDC30F243359040053DB07 /* FindInPageScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageScript.swift; sourceTree = "<group>"; };
 		85C11E3D20904B8400BFFEB4 /* VariantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManager.swift; sourceTree = "<group>"; };
 		85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManagerTests.swift; sourceTree = "<group>"; };
 		85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminder.swift; sourceTree = "<group>"; };
@@ -1898,8 +1902,9 @@
 			isa = PBXGroup;
 			children = (
 				85F2FFFF2215C17B006BB258 /* FindInPage.swift */,
-				85F200032216F5D8006BB258 /* FindInPageView.swift */,
 				8517D98A221783A0006A8DD0 /* FindInPage.xcassets */,
+				85BDC30F243359040053DB07 /* FindInPageScript.swift */,
+				85F200032216F5D8006BB258 /* FindInPageView.swift */,
 			);
 			name = FindInPage;
 			sourceTree = "<group>";
@@ -2393,6 +2398,7 @@
 				83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */,
 				988F3DCE237D5C0F00AEE34C /* ExternalSchemeHandler.swift */,
 				850559CF23CF647C0055C0D5 /* PreserveLogins.swift */,
+				85BDC30D24334D130053DB07 /* UserScript.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3648,6 +3654,7 @@
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				85E00179225E0D4E00877BF6 /* OnboardingSummaryViewController.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
+				85BDC310243359040053DB07 /* FindInPageScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,
@@ -4009,6 +4016,7 @@
 				85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,
 				F1134EC61F40E3B400B73467 /* AppVersion.swift in Sources */,
+				85BDC30E24334D130053DB07 /* UserScript.swift in Sources */,
 				1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */,
 				988F3DCF237D5C0F00AEE34C /* ExternalSchemeHandler.swift in Sources */,
 				9875E00722316B8400B1373F /* Instruments.swift in Sources */,

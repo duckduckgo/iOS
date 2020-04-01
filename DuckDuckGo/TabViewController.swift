@@ -139,6 +139,7 @@ class TabViewController: UIViewController {
     
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageScript()
+    private var debugScript = DebugUserScript()
     private var userScripts: [UserScript] = []
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
@@ -157,17 +158,8 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        userScripts = [
-            findInPageScript
-        ]
-        
-        if #available(iOS 13, *) {
-            // no-op
-        } else {
-            userScripts.append(documentScript)
-        }
-        
+
+        initUserScripts()
         applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
@@ -182,6 +174,21 @@ class TabViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeBrowsingTips()
+    }
+    
+    func initUserScripts() {
+        debugScript.instrumentation = instrumentation
+        
+        userScripts = [
+            debugScript,
+            findInPageScript
+        ]
+        
+        if #available(iOS 13, *) {
+            // no-op
+        } else {
+            userScripts.append(documentScript)
+        }
     }
     
     func updateTabModel() {
@@ -252,8 +259,6 @@ class TabViewController: UIViewController {
         
 //        controller.add(self, name: MessageHandlerNames.trackerDetected)
 //        controller.add(self, name: MessageHandlerNames.loginFormDetected)
-//        controller.add(self, name: MessageHandlerNames.signpost)
-//        controller.add(self, name: MessageHandlerNames.log)
 //        controller.add(self, name: MessageHandlerNames.findInPageHandler)
     }
 
@@ -604,19 +609,11 @@ class TabViewController: UIViewController {
 
     func dismiss() {
         progressWorker.progressBar = nil
-        //        chromeDelegate = nil
-        //        webView.scrollView.delegate = nil
         willMove(toParent: nil)
         removeFromParent()
         view.removeFromSuperview()
     }
     
-//    private func tearDown() {
-//        removeObservers()
-//        webView.removeFromSuperview()
-//        removeMessageHandlers()
-//    }
-
     private func removeMessageHandlers() {
         let controller = webView.configuration.userContentController
         userScripts.forEach { script in
@@ -627,8 +624,6 @@ class TabViewController: UIViewController {
         
 //        controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
 //        controller.removeScriptMessageHandler(forName: MessageHandlerNames.loginFormDetected)
-//        controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
-//        controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
     }
     
     private func removeObservers() {
@@ -660,8 +655,6 @@ extension TabViewController: WKScriptMessageHandler {
 
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
-        static let signpost = "signpostMessage"
-        static let log = "log"
         static let loginFormDetected = "loginFormDetected"
     }
     
@@ -669,17 +662,11 @@ extension TabViewController: WKScriptMessageHandler {
 
         switch message.name {
 
-        case MessageHandlerNames.signpost:
-            handleSignpost(message: message)
-            
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
         case MessageHandlerNames.loginFormDetected:
             handleLoginFormDetected(message: message)
-
-        case MessageHandlerNames.log:
-            handleLog(message: message)
 
         default:
             assertionFailure("Unhandled message: \(message.name)")
@@ -707,39 +694,6 @@ extension TabViewController: WKScriptMessageHandler {
         } else {
             PreserveLogins.shared.addToDetected(domain: domain)
         }
-    }
-
-    private func handleLog(message: WKScriptMessage) {
-        os_log("%s", log: generalLog, type: .debug, String(describing: message.body))
-    }
-    
-    private func handleSignpost(message: WKScriptMessage) {
-        guard let dict = message.body as? [String: Any],
-        let event = dict["event"] as? String else { return }
-        
-        if event == "Request Allowed" {
-            if let elapsedTimeInMs = dict["time"] as? Double,
-                let url = dict["url"] as? String {
-                instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
-            }
-        } else if event == "Tracker Allowed" {
-            if let elapsedTimeInMs = dict["time"] as? Double,
-                let url = dict["url"] as? String,
-                let reason = dict["reason"] as? String? {
-                instrumentation.tracker(url: url, allowedIn: elapsedTimeInMs, reason: reason)
-            }
-        } else if event == "Tracker Blocked" {
-            if let elapsedTimeInMs = dict["time"] as? Double,
-                let url = dict["url"] as? String {
-                instrumentation.tracker(url: url, blockedIn: elapsedTimeInMs)
-            }
-        } else if event == "Generic" {
-            if let name = dict["name"] as? String,
-                let elapsedTimeInMs = dict["time"] as? Double {
-                instrumentation.jsEvent(name: name, executedIn: elapsedTimeInMs)
-            }
-        }
-
     }
 
     private func handleTrackerDetected(message: WKScriptMessage) {

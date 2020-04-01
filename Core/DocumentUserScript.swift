@@ -55,4 +55,8 @@ public class DocumentUserScript: NSObject, UserScript {
         return url
     }
 
+    deinit {
+        print("*** deinit DOCS")
+    }
+    
 }

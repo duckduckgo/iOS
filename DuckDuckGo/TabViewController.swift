@@ -137,6 +137,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageScript()
     private var userScripts: [UserScript] = []
 
@@ -160,6 +161,12 @@ class TabViewController: UIViewController {
         userScripts = [
             findInPageScript
         ]
+        
+        if #available(iOS 13, *) {
+            // no-op
+        } else {
+            userScripts.append(documentScript)
+        }
         
         applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
@@ -207,6 +214,7 @@ class TabViewController: UIViewController {
         } else {
             attachLongPressHandler(webView: webView)
             webView.allowsLinkPreview = false
+            documentScript.webView = webView
         }
         
         webView.allowsBackForwardNavigationGestures = true
@@ -235,9 +243,6 @@ class TabViewController: UIViewController {
     private func addMessageHandlers() {
         let controller = webView.configuration.userContentController
         userScripts.forEach { script in
-            controller.addUserScript(WKUserScript(source: script.source,
-                                                  injectionTime: script.injectionTime,
-                                                  forMainFrameOnly: script.forMainFrameOnly))
             
             script.messageNames.forEach { messageName in
                 controller.add(script, name: messageName)
@@ -408,7 +413,7 @@ class TabViewController: UIViewController {
         let y = Int(sender.location(in: webView).y)
         let offsetY = y
         
-        webView.getUrlAtPoint(x: x, y: offsetY) { [weak self] (url) in
+        documentScript.getUrlAtPoint(x: x, y: offsetY) { [weak self] (url) in
             guard let url = url else { return }
             let point = Point(x: x, y: y)
             self?.launchLongPressMenu(atPoint: point, forUrl: url)
@@ -429,7 +434,11 @@ class TabViewController: UIViewController {
     
     private func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(storageCache: storageCache, contentBlockingEnabled: !isDuckDuckGoUrl())
+        userScripts.forEach { script in
+            webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
+                                                                                   injectionTime: script.injectionTime,
+                                                                                   forMainFrameOnly: script.forMainFrameOnly))
+        }
     }
     
     private func isDuckDuckGoUrl() -> Bool {
@@ -590,7 +599,7 @@ class TabViewController: UIViewController {
         alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
             self.openExternally(url: url)
         }))
-        show(alert, sender: self)   
+        show(alert, sender: self)
     }
 
     func dismiss() {
@@ -620,7 +629,6 @@ class TabViewController: UIViewController {
 //        controller.removeScriptMessageHandler(forName: MessageHandlerNames.loginFormDetected)
 //        controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
 //        controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
-//        controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
     }
     
     private func removeObservers() {
@@ -654,7 +662,6 @@ extension TabViewController: WKScriptMessageHandler {
         static let trackerDetected = "trackerDetectedMessage"
         static let signpost = "signpostMessage"
         static let log = "log"
-        static let findInPageHandler = "findInPageHandler"
         static let loginFormDetected = "loginFormDetected"
     }
     
@@ -1109,7 +1116,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
         if gestureRecognizer == longPressGestureRecognizer {
             let x = Int(gestureRecognizer.location(in: webView).x)
             let y = Int(gestureRecognizer.location(in: webView).y)
-            let url = webView.getUrlAtPointSynchronously(x: x, y: y)
+            let url = documentScript.getUrlAtPointSynchronously(x: x, y: y)
             return url != nil
         }
         return false

@@ -79,14 +79,16 @@ extension WKWebViewConfiguration {
         }
     }
 
+    /*
     public func loadScripts(storageCache: StorageCache, contentBlockingEnabled: Bool) {
         Loader(contentController: userContentController,
                storageCache: storageCache,
                injectContentBlockingScripts: contentBlockingEnabled).load()
     }
-
+    */
 }
 
+/*
 private struct Loader {
 
     struct CacheNames {
@@ -176,3 +178,4 @@ private struct Loader {
     }
 
 }
+*/

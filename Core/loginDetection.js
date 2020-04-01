@@ -6,6 +6,15 @@
 
     logger.log("*** installing loginDetection.js - IN");
 
+    
+   function loginFormDetected() {
+       try {
+           webkit.messageHandlers.loginFormDetected.postMessage({});
+       } catch(error) {
+           // webkit might not be defined
+       }
+   }
+
     function inputVisible(input) {
         return !(input.offsetWidth === 0 && input.offsetHeight === 0) && !input.ariaHidden && !input.hidden;   
     }
@@ -22,7 +31,7 @@
             var input = inputs.item(i);
             if (input.type == "password" && inputVisible(input)) {
                 logger.log("*** found password in form " + form);
-                duckduckgoMessaging.loginFormDetected();
+                loginFormDetected();
                 return true;
             }
         }

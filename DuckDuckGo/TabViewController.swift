@@ -137,6 +137,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageScript()
     private var debugScript = DebugUserScript()
@@ -178,10 +179,13 @@ class TabViewController: UIViewController {
     
     func initUserScripts() {
         debugScript.instrumentation = instrumentation
+        contentBlockerScript.storageCache = storageCache
+        contentBlockerScript.delegate = self
         
         userScripts = [
             debugScript,
-            findInPageScript
+            findInPageScript,
+            contentBlockerScript
         ]
         
         if #available(iOS 13, *) {
@@ -257,9 +261,7 @@ class TabViewController: UIViewController {
             
         }
         
-//        controller.add(self, name: MessageHandlerNames.trackerDetected)
 //        controller.add(self, name: MessageHandlerNames.loginFormDetected)
-//        controller.add(self, name: MessageHandlerNames.findInPageHandler)
     }
 
     private func addObservers() {
@@ -644,26 +646,14 @@ class TabViewController: UIViewController {
 }   
 
 extension TabViewController: WKScriptMessageHandler {
-    
-    struct TrackerDetectedKey {
-        static let protectionId = "protectionId"
-        static let blocked = "blocked"
-        static let networkName = "networkName"
-        static let url = "url"
-        static let isSurrogate = "isSurrogate"
-    }
 
     private struct MessageHandlerNames {
-        static let trackerDetected = "trackerDetectedMessage"
         static let loginFormDetected = "loginFormDetected"
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
         switch message.name {
-
-        case MessageHandlerNames.trackerDetected:
-            handleTrackerDetected(message: message)
 
         case MessageHandlerNames.loginFormDetected:
             handleLoginFormDetected(message: message)
@@ -694,49 +684,6 @@ extension TabViewController: WKScriptMessageHandler {
         } else {
             PreserveLogins.shared.addToDetected(domain: domain)
         }
-    }
-
-    private func handleTrackerDetected(message: WKScriptMessage) {
-        os_log("%s %s", log: generalLog, type: .debug, MessageHandlerNames.trackerDetected, String(describing: message.body))
-
-        guard let siteRating = siteRating else { return }
-        guard let dict = message.body as? [String: Any] else { return }
-        guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
-        guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
-        
-        guard siteRating.isFor(self.url) else {
-            os_log("mismatching domain %s vs %s", log: generalLog, type: .debug, self.url?.absoluteString ?? "nil", siteRating.domain ?? "nil")
-            return
-        }
-        
-        if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
-            siteRating.surrogateInstalled(host)
-        }
-
-        let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
-        
-        siteRating.trackerDetected(tracker)
-        onSiteRatingChanged()
-        
-        if !pageHasTrackers {
-            NetworkLeaderboard.shared.incrementPagesWithTrackers()
-            pageHasTrackers = true
-        }
-  
-        if let networkName = tracker.knownTracker?.owner?.name {
-            if !trackerNetworksDetectedOnPage.contains(networkName) {
-                trackerNetworksDetectedOnPage.insert(networkName)
-                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
-            }
-            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
-        }
-
-    }
-
-    private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
-        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
-        let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
-        return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
     }
     
     public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
@@ -1121,6 +1068,37 @@ extension TabViewController: UIGestureRecognizerDelegate {
     // Prevents rare accidental display of preview previous to iOS 12
     func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
         return false
+    }
+    
+}
+
+extension TabViewController: ContentBlockerUserScriptDelegate {
+    
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerUserScript) -> Bool {
+        return siteRating?.isFor(self.url) ?? false
+    }
+    
+    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker) {
+        siteRating?.trackerDetected(tracker)
+        onSiteRatingChanged()
+
+        if !pageHasTrackers {
+            NetworkLeaderboard.shared.incrementPagesWithTrackers()
+            pageHasTrackers = true
+        }
+
+        if let networkName = tracker.knownTracker?.owner?.name {
+            if !trackerNetworksDetectedOnPage.contains(networkName) {
+                trackerNetworksDetectedOnPage.insert(networkName)
+                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
+            }
+            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
+        }
+    }
+    
+    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
+        siteRating?.surrogateInstalled(host)
+        contentBlockerUserScript(script, detectedTracker: tracker)
     }
     
 }

@@ -19,10 +19,10 @@ public protocol UserScript: WKScriptMessageHandler {
 }
 
 extension UserScript {
-    
+        
     public func loadJS(_ jsFile: String, withReplacements replacements: [String: String] = [:]) -> String {
         
-        let bundle = Bundle(for: JavascriptLoader.self)
+        let bundle = Bundle.core
         let path = bundle.path(forResource: jsFile, ofType: "js")!
         
         guard var js = try? String(contentsOfFile: path) else {

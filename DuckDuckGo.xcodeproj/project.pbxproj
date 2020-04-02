@@ -75,7 +75,7 @@
 		850365F323DE087800D0F787 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850365F223DE087800D0F787 /* UIImageExtension.swift */; };
 		85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
-		850559C923C61B5D0055C0D5 /* loginDetection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* loginDetection.js */; };
+		850559C923C61B5D0055C0D5 /* login-form-detection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* login-form-detection.js */; };
 		850559D023CF647C0055C0D5 /* PreserveLogins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CF23CF647C0055C0D5 /* PreserveLogins.swift */; };
 		850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */; };
 		85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */; };
@@ -223,6 +223,7 @@
 		85BDC31224339E080053DB07 /* DocumentUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC31124339E080053DB07 /* DocumentUserScript.swift */; };
 		85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC3132434D8F80053DB07 /* DebugUserScript.swift */; };
 		85BDC3172434E55D0053DB07 /* ContentBlockerUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC3162434E55D0053DB07 /* ContentBlockerUserScript.swift */; };
+		85BDC3192436161C0053DB07 /* LoginFormDetectionUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC3182436161C0053DB07 /* LoginFormDetectionUserScript.swift */; };
 		85C11E3E20904B8400BFFEB4 /* VariantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E3D20904B8400BFFEB4 /* VariantManager.swift */; };
 		85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */; };
 		85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */; };
@@ -707,7 +708,7 @@
 		850365F223DE087800D0F787 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoader.swift; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
-		850559C823C61B5D0055C0D5 /* loginDetection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = loginDetection.js; sourceTree = "<group>"; };
+		850559C823C61B5D0055C0D5 /* login-form-detection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "login-form-detection.js"; sourceTree = "<group>"; };
 		850559CF23CF647C0055C0D5 /* PreserveLogins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLogins.swift; sourceTree = "<group>"; };
 		850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCacheManagerTests.swift; sourceTree = "<group>"; };
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
@@ -852,6 +853,7 @@
 		85BDC31124339E080053DB07 /* DocumentUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentUserScript.swift; sourceTree = "<group>"; };
 		85BDC3132434D8F80053DB07 /* DebugUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUserScript.swift; sourceTree = "<group>"; };
 		85BDC3162434E55D0053DB07 /* ContentBlockerUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerUserScript.swift; sourceTree = "<group>"; };
+		85BDC3182436161C0053DB07 /* LoginFormDetectionUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormDetectionUserScript.swift; sourceTree = "<group>"; };
 		85C11E3D20904B8400BFFEB4 /* VariantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManager.swift; sourceTree = "<group>"; };
 		85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManagerTests.swift; sourceTree = "<group>"; };
 		85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminder.swift; sourceTree = "<group>"; };
@@ -1347,7 +1349,7 @@
 				85047B891F69692C002A95D8 /* contentblocker.js */,
 				987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */,
 				9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */,
-				850559C823C61B5D0055C0D5 /* loginDetection.js */,
+				850559C823C61B5D0055C0D5 /* login-form-detection.js */,
 			);
 			name = contentblocking;
 			sourceTree = "<group>";
@@ -2396,6 +2398,7 @@
 				85BDC30D24334D130053DB07 /* UserScript.swift */,
 				85BDC31124339E080053DB07 /* DocumentUserScript.swift */,
 				85BDC3132434D8F80053DB07 /* DebugUserScript.swift */,
+				85BDC3182436161C0053DB07 /* LoginFormDetectionUserScript.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3407,7 +3410,7 @@
 				987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
-				850559C923C61B5D0055C0D5 /* loginDetection.js in Resources */,
+				850559C923C61B5D0055C0D5 /* login-form-detection.js in Resources */,
 				856D57C5206568BE000170B5 /* tlds.json in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
@@ -3965,6 +3968,7 @@
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* FileStore.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
+				85BDC3192436161C0053DB07 /* LoginFormDetectionUserScript.swift in Sources */,
 				8328AAB9212A3DF200293140 /* BloomFilterWrapper.mm in Sources */,
 				98982B3422F8D8E400578AC9 /* Debounce.swift in Sources */,
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,

@@ -137,11 +137,14 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageScript()
     private var debugScript = DebugUserScript()
-    private var userScripts: [UserScript] = []
+    
+    private var generalScripts: [UserScript] = []
+    private var ddgScripts: [UserScript] = []
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -181,17 +184,24 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
+        loginFormDetectionScript.delegate = self
         
-        userScripts = [
+        generalScripts = [
             debugScript,
             findInPageScript,
             contentBlockerScript
         ]
         
+        ddgScripts = [
+            debugScript,
+            findInPageScript
+        ]
+        
         if #available(iOS 13, *) {
-            // no-op
+            generalScripts.append(loginFormDetectionScript)
         } else {
-            userScripts.append(documentScript)
+            generalScripts.append(documentScript)
+            ddgScripts.append(documentScript)
         }
     }
     
@@ -253,15 +263,13 @@ class TabViewController: UIViewController {
 
     private func addMessageHandlers() {
         let controller = webView.configuration.userContentController
-        userScripts.forEach { script in
+        generalScripts.forEach { script in
             
             script.messageNames.forEach { messageName in
                 controller.add(script, name: messageName)
             }
             
         }
-        
-//        controller.add(self, name: MessageHandlerNames.loginFormDetected)
     }
 
     private func addObservers() {
@@ -441,7 +449,15 @@ class TabViewController: UIViewController {
     
     private func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        userScripts.forEach { script in
+        
+        let scripts: [UserScript]
+        if let url = url, appUrls.isDuckDuckGo(url: url) {
+            scripts = ddgScripts
+        } else {
+            scripts = generalScripts
+        }
+        
+        scripts.forEach { script in
             webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
@@ -618,14 +634,11 @@ class TabViewController: UIViewController {
     
     private func removeMessageHandlers() {
         let controller = webView.configuration.userContentController
-        userScripts.forEach { script in
+        generalScripts.forEach { script in
             script.messageNames.forEach { messageName in
                 controller.removeScriptMessageHandler(forName: messageName)
             }
         }
-        
-//        controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
-//        controller.removeScriptMessageHandler(forName: MessageHandlerNames.loginFormDetected)
     }
     
     private func removeObservers() {
@@ -636,36 +649,16 @@ class TabViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
     }
-    
-    deinit {
-        print("*** deinit TVC")
-        removeMessageHandlers()
-        removeObservers()
-    }
-    
-}   
-
-extension TabViewController: WKScriptMessageHandler {
-
-    private struct MessageHandlerNames {
-        static let loginFormDetected = "loginFormDetected"
-    }
-    
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
-        switch message.name {
-
-        case MessageHandlerNames.loginFormDetected:
-            handleLoginFormDetected(message: message)
-
-        default:
-            assertionFailure("Unhandled message: \(message.name)")
-        }
-    }
-    
-    private func handleLoginFormDetected(message: WKScriptMessage) {
-        print("***", #function, webView.url as Any)
-        detectedLoginURL = webView.url
+        
+    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
+        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
+        
+        return BrokenSiteInfo(url: url,
+                              httpsUpgrade: httpsForced,
+                              blockedTrackerDomains: blockedTrackerDomains,
+                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
+                              isDesktop: tabModel.isDesktop,
+                              tdsETag: TrackerDataManager.shared.etag)
     }
     
     private func possibleLogin(forDomain domain: String?, source: String) {
@@ -685,16 +678,19 @@ extension TabViewController: WKScriptMessageHandler {
             PreserveLogins.shared.addToDetected(domain: domain)
         }
     }
+
+    deinit {
+        print("*** deinit TVC")
+        removeMessageHandlers()
+        removeObservers()
+    }
     
-    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
-        
-        return BrokenSiteInfo(url: url,
-                              httpsUpgrade: httpsForced,
-                              blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
-                              isDesktop: tabModel.isDesktop,
-                              tdsETag: TrackerDataManager.shared.etag)
+}   
+
+extension TabViewController: LoginFormDetectionDelegate {
+    
+    func loginFormDetectionUserScriptDetectedLoginForm(_ script: LoginFormDetectionUserScript) {
+        detectedLoginURL = webView.url
     }
     
 }

@@ -630,7 +630,7 @@ class MainViewController: UIViewController {
     
     func updateFindInPage() {
         currentTab?.findInPage?.delegate = self
-        findInPageView.update(with: currentTab?.findInPage)
+        findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
     }
         
 }
@@ -638,7 +638,7 @@ class MainViewController: UIViewController {
 extension MainViewController: FindInPageDelegate {
     
     func updated(findInPage: FindInPage) {
-        findInPageView.update(with: findInPage)
+        findInPageView.update(with: findInPage, updateTextField: false)
     }
 
 }
@@ -1002,11 +1002,7 @@ extension MainViewController: BookmarksDelegate {
     }
     
     func bookmarksUpdated() {
-        if bookmarkStore.favorites.isEmpty {
-            homePageChanged()
-        } else {
-            homeController?.refresh()
-        }
+        homePageChanged()
     }
 }
 

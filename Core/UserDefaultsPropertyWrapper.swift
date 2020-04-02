@@ -33,6 +33,7 @@ public struct UserDefaultsWrapper<T> {
         case keyboardOnNewTab = "com.duckduckgo.ios.keyboard.newtab"
         case keyboardOnAppLaunch = "com.duckduckgo.ios.keyboard.applaunch"
 
+        case covidInfo = "com.duckduckgo.ios.home.covidInfo"
     }
 
     private let key: Key

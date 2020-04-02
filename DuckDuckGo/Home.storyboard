@@ -25,6 +25,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b31-Kn-3OJ" userLabel="Logo Container">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="ztc-nL-no3">
+                                        <rect key="frame" x="127" y="310" width="160" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ztc-nL-no3" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="0dq-XR-B9k"/>
+                                    <constraint firstItem="ztc-nL-no3" firstAttribute="centerY" secondItem="b31-Kn-3OJ" secondAttribute="centerY" constant="-35" id="8xt-Sj-Dfb">
+                                        <variation key="heightClass=compact" constant="0.0"/>
+                                    </constraint>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H74-G9-0WZ" customClass="HomeCollectionView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="5" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,7 +63,7 @@
                                         </view>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="72" y="0.0" width="342" height="287"/>
+                                        <rect key="frame" x="60" y="0.0" width="342" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="287"/>
@@ -125,30 +141,6 @@
                                             <outlet property="searchLoupeLeadingConstraint" destination="zGY-Ek-4ip" id="RUp-zT-xMm"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="297" width="210" height="298"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="210" height="298"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="6KE-x7-bYQ">
-                                                    <rect key="frame" x="25" y="50" width="160" height="128"/>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerY" secondItem="YGf-2W-c2w" secondAttribute="centerY" priority="750" constant="-35" id="ItI-WJ-kn8"/>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YGf-2W-c2w" secondAttribute="top" constant="20" id="O23-kd-uH8"/>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerX" secondItem="YGf-2W-c2w" secondAttribute="centerX" id="oGn-KV-u2p"/>
-                                        </constraints>
-                                        <size key="customSize" width="210" height="298"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="6KE-x7-bYQ" id="wys-xe-PcN"/>
-                                            <outlet property="verticalConstraint" destination="ItI-WJ-kn8" id="JBS-qJ-N3V"/>
-                                        </connections>
-                                    </collectionViewCell>
                                 </cells>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -188,10 +180,14 @@
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="5" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
+                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="b31-Kn-3OJ" secondAttribute="trailing" id="Zcr-tm-QF3"/>
                             <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="9" id="h6x-yo-1bE"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
+                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="b31-Kn-3OJ" secondAttribute="bottom" id="mhm-85-HDg"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="vdx-nG-nrB"/>
+                            <constraint firstItem="b31-Kn-3OJ" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" id="z4q-vU-ugp"/>
+                            <constraint firstItem="b31-Kn-3OJ" firstAttribute="leading" secondItem="ijV-Vn-w9w" secondAttribute="leading" id="z9j-lf-sI6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ijV-Vn-w9w"/>
                         <variation key="heightClass=compact">
@@ -206,6 +202,7 @@
                         <outlet property="collectionView" destination="H74-G9-0WZ" id="fSh-3T-0TA"/>
                         <outlet property="ctaContainer" destination="5Rf-oV-2W5" id="KSc-be-02P"/>
                         <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
+                        <outlet property="logo" destination="ztc-nL-no3" id="Qa7-Ec-ESN"/>
                         <outlet property="settingsButton" destination="kcN-YB-mZi" id="iyr-9W-6gY"/>
                     </connections>
                 </viewController>

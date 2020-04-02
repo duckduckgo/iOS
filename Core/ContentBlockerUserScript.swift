@@ -90,8 +90,4 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
         return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
     }
-
-    deinit {
-        print("*** deinit CBS")
-    }
 }

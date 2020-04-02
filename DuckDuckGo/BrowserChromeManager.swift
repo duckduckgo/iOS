@@ -140,10 +140,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     func reset() {
         animator.revealBars(animated: true)
     }
-    
-    deinit {
-        print("*** deinit BCM")
-    }
 }
 
 private class BarsAnimator {

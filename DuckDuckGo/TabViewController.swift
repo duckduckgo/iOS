@@ -680,11 +680,9 @@ class TabViewController: UIViewController {
     }
 
     deinit {
-        print("*** deinit TVC")
         removeMessageHandlers()
         removeObservers()
-    }
-    
+    }    
 }   
 
 extension TabViewController: LoginFormDetectionDelegate {

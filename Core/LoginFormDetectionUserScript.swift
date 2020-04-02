@@ -42,9 +42,4 @@ public class LoginFormDetectionUserScript: NSObject, UserScript {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         delegate?.loginFormDetectionUserScriptDetectedLoginForm(self)
     }
-    
-    deinit {
-        print("*** deinit LFD")
-    }
-    
 }

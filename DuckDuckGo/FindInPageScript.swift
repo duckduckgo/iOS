@@ -39,10 +39,5 @@ public class FindInPageScript: NSObject, UserScript {
         let currentResult = dict["currentResult"] as? Int
         let totalResults = dict["totalResults"] as? Int
         findInPage?.update(currentResult: currentResult, totalResults: totalResults)
-    }
-    
-    deinit {
-        print("*** deinit FIPS")
-    }
-    
+    } 
 }

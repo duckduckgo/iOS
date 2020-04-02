@@ -84,11 +84,5 @@ public class DebugUserScript: NSObject, UserScript {
                 instrumentation?.jsEvent(name: name, executedIn: elapsedTimeInMs)
             }
         }
-
     }
-
-    deinit {
-        print("*** deinit DBGS")
-    }
-    
 }

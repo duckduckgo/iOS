@@ -102,6 +102,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
         
+        if privacyStore.authenticationEnabled {
+            beginAuthentication()
+        } else {
+            removeOverlay()
+        }
+
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             Pixel.fire(pixel: .appLaunch)
@@ -130,18 +136,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if privacyStore.authenticationEnabled {
-            beginAuthentication()
-        } else {
-            removeOverlay()
-        }
-        
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         displayOverlay()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
         autoClear?.applicationDidEnterBackground()
     }
 

@@ -102,6 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
         
+        if !(overlayWindow?.rootViewController is AuthenticationViewController) {
+            removeOverlay()
+        }
+        
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             Pixel.fire(pixel: .appLaunch)
@@ -118,24 +122,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func applicationWillResignActive(_ application: UIApplication) {
+        displayBlankSnapshotWindow()
+    }
+    
     private func onApplicationLaunch(_ application: UIApplication) {
-       
-        if privacyStore.authenticationEnabled {
-            displayAuthenticationWindow()
-            beginAuthentication()
-        }
-        
+        beginAuthentication()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if privacyStore.authenticationEnabled {
-            beginAuthentication()
-        } else {
-            removeOverlay()
-        }
-        
+        beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true
     }
@@ -204,7 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func displayBlankSnapshotWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
-        guard autoClear?.isClearingEnabled ?? false else { return }
+        guard autoClear?.isClearingEnabled ?? false || privacyStore.authenticationEnabled else { return }
         
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
@@ -214,10 +212,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func beginAuthentication() {
+        
+        guard privacyStore.authenticationEnabled else { return }
+
+        removeOverlay()
+        displayAuthenticationWindow()
+        
         guard let controller = overlayWindow?.rootViewController as? AuthenticationViewController else {
             removeOverlay()
             return
         }
+        
         controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
         }

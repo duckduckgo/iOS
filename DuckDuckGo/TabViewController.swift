@@ -140,7 +140,7 @@ class TabViewController: UIViewController {
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
-    private var findInPageScript = FindInPageScript()
+    private var findInPageScript = FindInPageUserScript()
     private var debugScript = DebugUserScript()
     
     private var generalScripts: [UserScript] = []

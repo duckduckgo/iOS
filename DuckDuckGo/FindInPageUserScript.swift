@@ -1,5 +1,5 @@
 //
-//  FindInPageScript.swift
+//  FindInPageUserScript.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import Core
 import WebKit
 
-public class FindInPageScript: NSObject, UserScript {
+public class FindInPageUserScript: NSObject, UserScript {
 
     public lazy var source: String = {
         return loadJS("findinpage")

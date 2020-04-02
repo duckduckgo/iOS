@@ -218,7 +218,7 @@
 		85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */; };
 		85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */; };
 		85BDC30E24334D130053DB07 /* UserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC30D24334D130053DB07 /* UserScript.swift */; };
-		85BDC310243359040053DB07 /* FindInPageScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC30F243359040053DB07 /* FindInPageScript.swift */; };
+		85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC30F243359040053DB07 /* FindInPageUserScript.swift */; };
 		85BDC31224339E080053DB07 /* DocumentUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC31124339E080053DB07 /* DocumentUserScript.swift */; };
 		85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC3132434D8F80053DB07 /* DebugUserScript.swift */; };
 		85BDC3172434E55D0053DB07 /* ContentBlockerUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BDC3162434E55D0053DB07 /* ContentBlockerUserScript.swift */; };
@@ -848,7 +848,7 @@
 		85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionEncryptionDetailController.swift; sourceTree = "<group>"; };
 		85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionInfoDisplaying.swift; sourceTree = "<group>"; };
 		85BDC30D24334D130053DB07 /* UserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScript.swift; sourceTree = "<group>"; };
-		85BDC30F243359040053DB07 /* FindInPageScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageScript.swift; sourceTree = "<group>"; };
+		85BDC30F243359040053DB07 /* FindInPageUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageUserScript.swift; sourceTree = "<group>"; };
 		85BDC31124339E080053DB07 /* DocumentUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentUserScript.swift; sourceTree = "<group>"; };
 		85BDC3132434D8F80053DB07 /* DebugUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUserScript.swift; sourceTree = "<group>"; };
 		85BDC3162434E55D0053DB07 /* ContentBlockerUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerUserScript.swift; sourceTree = "<group>"; };
@@ -1902,7 +1902,7 @@
 			children = (
 				85F2FFFF2215C17B006BB258 /* FindInPage.swift */,
 				8517D98A221783A0006A8DD0 /* FindInPage.xcassets */,
-				85BDC30F243359040053DB07 /* FindInPageScript.swift */,
+				85BDC30F243359040053DB07 /* FindInPageUserScript.swift */,
 				85F200032216F5D8006BB258 /* FindInPageView.swift */,
 			);
 			name = FindInPage;
@@ -3652,7 +3652,7 @@
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				85E00179225E0D4E00877BF6 /* OnboardingSummaryViewController.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
-				85BDC310243359040053DB07 /* FindInPageScript.swift in Sources */,
+				85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,

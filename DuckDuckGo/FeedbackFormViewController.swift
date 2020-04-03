@@ -194,6 +194,10 @@ class FeedbackFormViewController: UIViewController {
     }
     
     @objc private func keyboardDidShow(notification: NSNotification) {
+        guard let isLocalUserInfoKey = notification.userInfo?[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber,
+            isLocalUserInfoKey == true else {
+                return
+        }
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardSize = keyboardFrame.size
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
@@ -250,6 +254,11 @@ class FeedbackFormViewController: UIViewController {
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
+        guard let isLocalUserInfoKey = notification.userInfo?[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber,
+            isLocalUserInfoKey == true else {
+                return
+        }
+        
         let contentInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets

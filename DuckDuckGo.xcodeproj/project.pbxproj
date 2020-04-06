@@ -823,7 +823,6 @@
 		857D1DC8223A9E7D00833940 /* MockAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppSettings.swift; sourceTree = "<group>"; };
 		857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotFoundCachingImageDownloader.swift; path = DuckDuckGoTests/NotFoundCachingImageDownloader.swift; sourceTree = SOURCE_ROOT; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
-		859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagiciOS.framework; path = Carthage/Build/iOS/SimulatorStatusMagiciOS.framework; sourceTree = "<group>"; };
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsTests.swift; sourceTree = "<group>"; };
@@ -2614,7 +2613,6 @@
 				85371D252121BA2800920548 /* Lottie.framework */,
 				8328AABA212ADAD100293140 /* CommonCrypto.framework */,
 				85F21DB721107F46002631A6 /* Swifter.framework */,
-				859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */,
 				F17843E41F361AC900390DCD /* OHHTTPStubs.framework */,
 				F1C81A731F33873800241DE6 /* Alamofire.framework */,
 				F17BA4391F1CD99800460FFA /* Device.framework */,

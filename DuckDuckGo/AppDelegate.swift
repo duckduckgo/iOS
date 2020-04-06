@@ -116,10 +116,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
-        if KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn {
-            self.mainViewController?.enterSearch()
-            showKeyboardIfSettingOn = false
+        if !privacyStore.authenticationEnabled {
+            showKeyboard()
         }
+    }
+
+    private func showKeyboard() {
+        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
+        self.mainViewController?.enterSearch()
+        showKeyboardIfSettingOn = false
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -139,7 +144,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        displayOverlay()
         autoClear?.applicationDidEnterBackground()
     }
 
@@ -183,14 +187,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
     }
     
-    private func displayOverlay() {
-        if privacyStore.authenticationEnabled {
-            displayAuthenticationWindow()
-        } else {
-            displayBlankSnapshotWindow()
-        }
-    }
-
     private func displayAuthenticationWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
         overlayWindow = UIWindow(frame: frame)
@@ -225,6 +221,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
+            self?.showKeyboard()
         }
     }
 

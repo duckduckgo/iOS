@@ -117,11 +117,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if !privacyStore.authenticationEnabled {
-            showKeyboard()
+            showKeyboardOnLaunch()
         }
     }
 
-    private func showKeyboard() {
+    private func showKeyboardOnLaunch() {
         guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
         self.mainViewController?.enterSearch()
         showKeyboardIfSettingOn = false
@@ -221,7 +221,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
-            self?.showKeyboard()
+            self?.showKeyboardOnLaunch()
         }
     }
 

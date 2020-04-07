@@ -102,6 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
         
+        if !(overlayWindow?.rootViewController is AuthenticationViewController) {
+            removeOverlay()
+        }
+        
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             Pixel.fire(pixel: .appLaunch)
@@ -112,36 +116,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
-        if KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn {
-            self.mainViewController?.enterSearch()
-            showKeyboardIfSettingOn = false
+        if !privacyStore.authenticationEnabled {
+            showKeyboardOnLaunch()
         }
+    }
+
+    private func showKeyboardOnLaunch() {
+        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
+        self.mainViewController?.enterSearch()
+        showKeyboardIfSettingOn = false
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        displayBlankSnapshotWindow()
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-       
-        if privacyStore.authenticationEnabled {
-            displayAuthenticationWindow()
-            beginAuthentication()
-        }
-        
+        beginAuthentication()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if privacyStore.authenticationEnabled {
-            beginAuthentication()
-        } else {
-            removeOverlay()
-        }
-        
+        beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        displayOverlay()
         autoClear?.applicationDidEnterBackground()
     }
 
@@ -165,6 +167,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {
+            if !privacyStore.authenticationEnabled {
+                removeOverlay()
+            }
             mainViewController?.onQuickFirePressed()
         }
         return true
@@ -185,14 +190,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
     }
     
-    private func displayOverlay() {
-        if privacyStore.authenticationEnabled {
-            displayAuthenticationWindow()
-        } else {
-            displayBlankSnapshotWindow()
-        }
-    }
-
     private func displayAuthenticationWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
         overlayWindow = UIWindow(frame: frame)
@@ -204,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func displayBlankSnapshotWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
-        guard autoClear?.isClearingEnabled ?? false else { return }
+        guard autoClear?.isClearingEnabled ?? false || privacyStore.authenticationEnabled else { return }
         
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
@@ -214,12 +211,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func beginAuthentication() {
+        
+        guard privacyStore.authenticationEnabled else { return }
+
+        removeOverlay()
+        displayAuthenticationWindow()
+        
         guard let controller = overlayWindow?.rootViewController as? AuthenticationViewController else {
             removeOverlay()
             return
         }
+        
         controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
+            self?.showKeyboardOnLaunch()
         }
     }
 

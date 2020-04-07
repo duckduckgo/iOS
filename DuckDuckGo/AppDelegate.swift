@@ -167,6 +167,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {
+            if !privacyStore.authenticationEnabled {
+                removeOverlay()
+            }
             mainViewController?.onQuickFirePressed()
         }
         return true

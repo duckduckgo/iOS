@@ -33,29 +33,22 @@ class PreserveLoginsAlert {
         controller.present(prompt, animated: true)
     }
     
-    static func showInitialPromptIfNeeded(usingController controller: UIViewController, completion: @escaping () -> Void) {
+    // TOOD update text
+    static func showFireproofWebsitePrompt(usingController controller: UIViewController, completion: @escaping () -> Void) {
         guard #available(iOS 13, *) else {
             completion()
             return
         }
-        
-        let logins = PreserveLogins.shared
-        guard logins.userDecision == .unknown, !logins.detectedDomains.isEmpty else {
-            completion()
-            return
-        }
-
+ 
         let dateShown = Date()
         let prompt = UIAlertController(title: UserText.preserveLoginsTitle,
                                        message: UserText.preserveLoginsMessage,
                                        preferredStyle: .alert)
         prompt.addAction(title: UserText.preserveLoginsRemember) {
-            PreserveLogins.shared.userDecision = .preserveLogins
             TimedPixel(.preserveLoginsUserDecisionPreserve, date: dateShown).fire()
             completion()
         }
         prompt.addAction(title: UserText.preserveLoginsForget) {
-            PreserveLogins.shared.userDecision = .forgetAll
             TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
             completion()
         }

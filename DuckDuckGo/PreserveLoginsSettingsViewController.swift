@@ -46,24 +46,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        switch PreserveLogins.shared.userDecision {
-            
-        case .forgetAll:
-            Pixel.fire(pixel: .preserveLoginsSettingsWhileForgetting)
-            
-        case .preserveLogins:
-            Pixel.fire(pixel: .preserveLoginsSettingsWhilePreserving)
-
-        case .unknown:
-            Pixel.fire(pixel: .preserveLoginsSettingsNewUser)
-
-        }
-        
-    }
-    
     @IBAction func startEditing() {
         Pixel.fire(pixel: .preserveLoginsSettingsEdit)
         
@@ -157,7 +139,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
-        cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
+        // TODO cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
         cell.toggle.isEnabled = !tableView.isEditing
         cell.controller = self
         cell.decorate(with: theme)
@@ -192,7 +174,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         guard !model.isEmpty else { return }
         
         PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
-            PreserveLogins.shared.userDecision = .preserveLogins
             self?.refreshModel()
         }, confirmed: { [weak self] in
             WebCacheManager.shared.removeCookies(forDomains: self?.model ?? []) { }
@@ -234,7 +215,7 @@ class PreserveLoginsSwitchCell: UITableViewCell {
 
     @IBAction func onToggle() {
         Pixel.fire(pixel: toggle.isOn ? .preserveLoginsSettingsSwitchOn : .preserveLoginsSettingsSwitchOff)
-        PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
+        // TODO PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
         controller.tableView.reloadData()
         if !toggle.isOn {
             controller.clearAll()

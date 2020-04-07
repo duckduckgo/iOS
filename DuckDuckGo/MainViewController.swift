@@ -301,24 +301,19 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedBrowsing, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+        Pixel.fire(pixel: .forgetAllPressedBrowsing)
 
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            guard let self = self else { return }
-            PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
-                self?.forgetAllWithAnimation {}
-            }
+            self?.forgetAllWithAnimation {}
         })
         self.present(controller: alert, fromView: self.toolbar)
     }
     
     func onQuickFirePressed() {
-        PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
-            self.forgetAllWithAnimation {}
-            self.dismiss(animated: true)
-            if KeyboardSettings().onAppLaunch {
-                self.enterSearch()
-            }
+        self.forgetAllWithAnimation {}
+        self.dismiss(animated: true)
+        if KeyboardSettings().onAppLaunch {
+            self.enterSearch()
         }
     }
 
@@ -1076,7 +1071,7 @@ extension MainViewController: AutoClearWorker {
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
-        Pixel.fire(pixel: .forgetAllExecuted, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+        Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()

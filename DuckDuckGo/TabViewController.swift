@@ -661,24 +661,6 @@ class TabViewController: UIViewController {
                               tdsETag: TrackerDataManager.shared.etag)
     }
     
-    private func possibleLogin(forDomain domain: String?, source: String) {
-        guard #available(iOS 13, *) else {
-            // We can't be sure about leaking cookies before iOS 13 so don't allow logins to be saved
-            return
-        }
-                
-        guard let domain = domain else { return }
-        if isDebugBuild {
-            view.showBottomToast("Login detected for \(domain) via \(source)")
-        }
-        
-        if PreserveLogins.shared.userDecision == .preserveLogins {
-            PreserveLogins.shared.addToAllowed(domain: domain)
-        } else {
-            PreserveLogins.shared.addToDetected(domain: domain)
-        }
-    }
-
     deinit {
         removeMessageHandlers()
         removeObservers()

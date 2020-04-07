@@ -22,173 +22,21 @@ import XCTest
 
 class PreserveLoginsTests: XCTestCase {
     
-    let userDefaults = UserDefaults(suiteName: "test")!
-    
     override func setUp() {
-        userDefaults.removePersistentDomain(forName: "test")
+        UserDefaultsWrapper<Any>.clearAll()
     }
 
-    func testWhenDomainWithSubdomainMatchesWildcardThenIsAllowed() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "www.boardgamegeek.com")
-        XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
-
-    }
-    
-    func testWhenDomainMatchesWildcardThenIsAllowed() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "boardgamegeek.com")
-        XCTAssertTrue(logins.isAllowed(cookieDomain: ".boardgamegeek.com"))
-
-    }
-
-    func testWhenDomainMatchesThenIsAllowed() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "boardgamegeek.com")
-        XCTAssertTrue(logins.isAllowed(cookieDomain: "boardgamegeek.com"))
-
-    }
-    
-    func testWhenUserDisablesPreserveLoginsThenAllowedDomainsAreMovedToDetectedDomains() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
-        XCTAssertTrue(logins.detectedDomains.isEmpty)
-        
-        logins.userDecision = .forgetAll
-        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-    }
-
-    func testWhenUserEnablesPreserveLoginsThenDetectedDomainsAreMovedToAllowedDomains() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.addToDetected(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-
-        logins.userDecision = .preserveLogins
-        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
-        XCTAssertTrue(logins.detectedDomains.isEmpty)
-        
-    }
-    
-    func testWhenClearAllIsCalledThenAllowDomainsAreCleared() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "www.example.com")
-        logins.clearAll()
-        XCTAssertTrue(logins.detectedDomains.isEmpty)
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-        
-        logins.userDecision = .forgetAll
-        logins.addToAllowed(domain: "www.example.com")
-        logins.clearAll()
-        XCTAssertTrue(logins.detectedDomains.isEmpty)
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-        
-    }
-    
-    func testWhenClearDetectedIsCalledThenDetectedDomainsAreCleared() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.addToDetected(domain: "www.example.com")
-        logins.clearDetected()
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-        XCTAssertTrue(logins.detectedDomains.isEmpty)
-
-    }
-
-    func testWhenDuplicateDomainAddedToAllowedThenNotAddedAgain() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "www.example.com")
-        logins.addToAllowed(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
-
-    }
-
-    func testWhenDuplicateDomainAddedToDetectedThenNotAddedAgain() {
-
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.addToDetected(domain: "www.example.com")
-        logins.addToDetected(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
-
-    }
-    
-    func testWhenUserDecisionIsChangedToOtherThanPreserveLoginsThenDomainsAreCleared() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        
-        logins.addToAllowed(domain: "www.example.com")
-        logins.userDecision = .preserveLogins
-        XCTAssertFalse(logins.allowedDomains.isEmpty)
-        
-        logins.addToAllowed(domain: "www.example.com")
-        logins.userDecision = .forgetAll
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-
-        logins.addToAllowed(domain: "www.example.com")
-        logins.userDecision = .preserveLogins
-        XCTAssertFalse(logins.allowedDomains.isEmpty)
-
-        logins.addToAllowed(domain: "www.example.com")
-        logins.userDecision = .unknown
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
-
-    }
-
-    func testWhenUserDecisionIsChangedThenItIsPersisted() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .unknown
-        XCTAssertEqual(logins.userDecision, .unknown)
-        XCTAssertEqual(PreserveLogins(userDefaults: userDefaults).userDecision, .unknown)
-        
-    }
-
-    func testWhenNewThenDefaultIsUnkonwn() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        XCTAssertEqual(logins.userDecision, .unknown)
-        
-    }
-
-    func testWhenDomainAddedToDetectedThenPersisted() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.addToDetected(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.detectedDomains)
-        XCTAssertEqual(["www.example.com"], PreserveLogins(userDefaults: userDefaults).detectedDomains)
-    
-    }
-
-    func testWhenDomainAddedToAllowedThenPersisted() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
-        logins.userDecision = .preserveLogins
-        logins.addToAllowed(domain: "www.example.com")
-        XCTAssertEqual(["www.example.com"], logins.allowedDomains)
-        XCTAssertEqual(["www.example.com"], PreserveLogins(userDefaults: userDefaults).allowedDomains)
-    
+    func testWhenLegacyAllowedDomainsThenMigratedAndCleared() {
+        UserDefaults.standard.set(["domain1.com"], forKey: UserDefaultsWrapper<Any>.Key.preserveLoginsLegacyAllowedDomains.rawValue)
+        let logins = PreserveLogins()
+        XCTAssertEqual(["domain1.com"], logins.legacyAllowedDomains)
+        logins.clearLegacyAllowedDomains()
+        XCTAssertNil(UserDefaults.standard.object(forKey: UserDefaultsWrapper<Any>.Key.preserveLoginsLegacyAllowedDomains.rawValue))
     }
     
     func testWhenNewThenAllowedDomainsIsEmpty() {
-        
-        let logins = PreserveLogins(userDefaults: userDefaults)
+        let logins = PreserveLogins()
         XCTAssertTrue(logins.allowedDomains.isEmpty)
-        
     }
-    
+
 }

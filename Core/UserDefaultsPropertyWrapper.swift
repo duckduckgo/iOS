@@ -26,7 +26,7 @@ import Foundation
 @propertyWrapper
 public struct UserDefaultsWrapper<T> {
 
-    public enum Key: String {
+    public enum Key: String, CaseIterable {
 
         case layout = "com.duckduckgo.ios.home.layout"
         case favorites = "com.duckduckgo.ios.home.favorites"
@@ -34,6 +34,9 @@ public struct UserDefaultsWrapper<T> {
         case keyboardOnAppLaunch = "com.duckduckgo.ios.keyboard.applaunch"
 
         case covidInfo = "com.duckduckgo.ios.home.covidInfo"
+        
+        case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
+        case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
     }
 
     private let key: Key

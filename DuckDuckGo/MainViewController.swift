@@ -1082,6 +1082,10 @@ extension MainViewController: AutoClearWorker {
             self.forgetTabs()
             completion()
             Instruments.shared.endTimedEvent(for: spid)
+
+            if KeyboardSettings().onNewTab {
+                self.enterSearch()
+            }
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)

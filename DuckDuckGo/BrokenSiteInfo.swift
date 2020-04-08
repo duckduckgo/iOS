@@ -76,7 +76,7 @@ public struct BrokenSiteInfo {
         components?.queryItems = []
         components?.path = ""
         
-        guard let nomalizedUrl = try? components?.asURL() else { return "" }
+        guard let nomalizedUrl = components?.url else { return "" }
         return nomalizedUrl.absoluteString
     }
     

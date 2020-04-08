@@ -29,7 +29,6 @@ protocol OmniBarState {
     var showClear: Bool { get }
     var showRefresh: Bool { get }
     var showMenu: Bool { get }
-    var showBookmarks: Bool { get }
     var showSettings: Bool { get }
     var name: String { get }
     var onEditingStoppedState: OmniBarState { get }
@@ -48,7 +47,6 @@ struct HomeEmptyEditingState: OmniBarState {
     let showClear = false
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -68,7 +66,6 @@ struct HomeTextEditingState: OmniBarState {
     let showClear = true
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -88,7 +85,6 @@ struct HomeNonEditingState: OmniBarState {
     let showClear = false
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = true
     let showCancel: Bool = false
     var name: String { return Type.name(self) }
@@ -108,7 +104,6 @@ struct BrowsingEmptyEditingState: OmniBarState {
     let showClear = false
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -128,7 +123,6 @@ struct BrowsingTextEditingState: OmniBarState {
     let showClear = true
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -148,7 +142,6 @@ struct BrowsingNonEditingState: OmniBarState {
     let showClear = false
     let showRefresh = true
     let showMenu = true
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = false
     var name: String { return Type.name(self) }

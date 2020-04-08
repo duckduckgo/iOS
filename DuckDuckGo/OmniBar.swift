@@ -135,7 +135,6 @@ class OmniBar: UIView {
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
-        setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)

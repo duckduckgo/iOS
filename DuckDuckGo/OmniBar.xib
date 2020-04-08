@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,7 +67,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="60" y="0.0" width="63" height="40"/>
+                                            <rect key="frame" x="60" y="0.0" width="93" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -90,7 +90,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                            <rect key="frame" x="123" y="0.0" width="30" height="40"/>
+                                            <rect key="frame" x="153" y="0.0" width="30" height="40"/>
                                             <accessibility key="accessibilityConfiguration" label="Clear Text"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
@@ -101,7 +101,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-QY-LVl">
-                                            <rect key="frame" x="153" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="183" y="8" width="30" height="24"/>
                                             <accessibility key="accessibilityConfiguration" label="Refresh Page"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="PHR-dd-ThY"/>
@@ -111,24 +111,12 @@
                                                 <action selector="onRefreshPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="4Dg-IX-SdK"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                            <rect key="frame" x="183" y="8" width="30" height="24"/>
-                                            <accessibility key="accessibilityConfiguration" label="Bookmarks"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
-                                            </constraints>
-                                            <state key="normal" image="Bookmarks"/>
-                                            <connections>
-                                                <action selector="onBookmarksButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="oO0-yB-X3n"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="tlF-fr-tSl" secondAttribute="bottom" id="3T8-mh-2FW"/>
                                         <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="50f-uc-k20"/>
-                                        <constraint firstItem="arc-SR-Ric" firstAttribute="bottom" secondItem="u6L-hZ-ptn" secondAttribute="bottom" id="G8j-P5-Nw2"/>
                                         <constraint firstAttribute="bottom" secondItem="Dt8-We-5tV" secondAttribute="bottom" id="HAt-7Z-AXS"/>
                                         <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="LIn-wf-t1c"/>
                                         <constraint firstItem="Dt8-We-5tV" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="Rfy-VW-i8P"/>
@@ -211,7 +199,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="RdS-eI-aOp"/>
             <connections>
-                <outlet property="bookmarksButton" destination="arc-SR-Ric" id="S4A-dB-wqa"/>
                 <outlet property="cancelButton" destination="IHT-9R-ERy" id="XVf-QQ-jSa"/>
                 <outlet property="clearButton" destination="Dt8-We-5tV" id="6d0-LL-4OJ"/>
                 <outlet property="editingBackground" destination="Atk-JN-lv8" id="E2d-Lx-OrN"/>
@@ -241,7 +228,6 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="Bookmarks" width="24" height="24"/>
         <image name="ClearText" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>

@@ -66,29 +66,41 @@
                                                 <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="rMk-3Z-VLM"/>
                                             </connections>
                                         </view>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFn-NW-xLz">
                                             <rect key="frame" x="60" y="0.0" width="93" height="40"/>
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <accessibility key="accessibilityConfiguration" identifier="searchEntry">
-                                                <accessibilityTraits key="traits" searchField="YES"/>
-                                                <bool key="isElement" value="YES"/>
-                                            </accessibility>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="webSearch" smartQuotesType="no"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
-                                                    <real key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="topInset">
-                                                    <real key="value" value="1"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
-                                                <outletCollection property="gestureRecognizers" destination="xpX-Ub-pSL" appends="YES" id="LVj-rh-iOO"/>
-                                            </connections>
-                                        </textField>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="40"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="searchEntry">
+                                                        <accessibilityTraits key="traits" searchField="YES"/>
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="webSearch" smartQuotesType="no"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
+                                                        <outletCollection property="gestureRecognizers" destination="xpX-Ub-pSL" appends="YES" id="LVj-rh-iOO"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="BRK-V7-Bya"/>
+                                                <constraint firstAttribute="trailing" secondItem="fqM-N4-jNd" secondAttribute="trailing" id="J6s-9W-GFk"/>
+                                                <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="RFn-NW-xLz" secondAttribute="top" id="oBf-nb-Ogc"/>
+                                                <constraint firstItem="fqM-N4-jNd" firstAttribute="leading" secondItem="RFn-NW-xLz" secondAttribute="leading" id="qYt-SH-h0n"/>
+                                            </constraints>
+                                        </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
                                             <rect key="frame" x="153" y="0.0" width="30" height="40"/>
                                             <accessibility key="accessibilityConfiguration" label="Clear Text"/>
@@ -116,10 +128,10 @@
                                     <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="tlF-fr-tSl" secondAttribute="bottom" id="3T8-mh-2FW"/>
-                                        <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="50f-uc-k20"/>
                                         <constraint firstAttribute="bottom" secondItem="Dt8-We-5tV" secondAttribute="bottom" id="HAt-7Z-AXS"/>
-                                        <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="LIn-wf-t1c"/>
                                         <constraint firstItem="Dt8-We-5tV" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="Rfy-VW-i8P"/>
+                                        <constraint firstItem="RFn-NW-xLz" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="axq-id-pNy"/>
+                                        <constraint firstAttribute="bottom" secondItem="RFn-NW-xLz" secondAttribute="bottom" id="bci-F3-TRR"/>
                                         <constraint firstItem="tlF-fr-tSl" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="nzU-KE-Dld"/>
                                     </constraints>
                                 </stackView>

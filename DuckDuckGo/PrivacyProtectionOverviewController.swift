@@ -178,7 +178,7 @@ class ProtectionUpgradedView: UIView {
 
 private class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
     
-    var navigationController: UINavigationController
+    unowned var navigationController: UINavigationController
     
     init(controller: UINavigationController) {
         self.navigationController = controller

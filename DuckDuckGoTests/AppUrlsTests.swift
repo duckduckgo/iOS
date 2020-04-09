@@ -63,7 +63,7 @@ class AppUrlsTests: XCTestCase {
     func testWhenFaviconUrlForDomainRequestedThenCorrectDomainIsCreated() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         let faviconURL = testee.faviconUrl(forDomain: "example.com")
-        XCTAssertEqual("https://duckduckgo.com/ip3/example.com.ico", faviconURL?.absoluteString)
+        XCTAssertEqual("https://external-content.duckduckgo.com/ip3/example.com.ico", faviconURL?.absoluteString)
     }
 
     func testBaseUrlDoesNotHaveSubDomain() {

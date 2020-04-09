@@ -19,17 +19,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="ojX-nM-dyN" customClass="OmniBar" customModule="DuckDuckGo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+            <rect key="frame" x="0.0" y="0.0" width="510" height="52"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4UQ-VY-O3E">
-                    <rect key="frame" x="7" y="6" width="361" height="40"/>
+                    <rect key="frame" x="7" y="6" width="496" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
-                            <rect key="frame" x="0.0" y="0.0" width="225" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="360" height="40"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Atk-JN-lv8" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="225" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="40"/>
                                     <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
@@ -45,7 +45,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                                    <rect key="frame" x="6" y="0.0" width="213" height="40"/>
+                                    <rect key="frame" x="6" y="0.0" width="348" height="40"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
                                             <rect key="frame" x="0.0" y="8" width="30" height="24"/>
@@ -66,11 +66,11 @@
                                                 <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="rMk-3Z-VLM"/>
                                             </connections>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFn-NW-xLz">
-                                            <rect key="frame" x="60" y="0.0" width="93" height="40"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFn-NW-xLz" userLabel="URL Container">
+                                            <rect key="frame" x="60" y="0.0" width="228" height="40"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="40"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="228" height="40"/>
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                         <accessibilityTraits key="traits" searchField="YES"/>
@@ -92,17 +92,62 @@
                                                         <outletCollection property="gestureRecognizers" destination="xpX-Ub-pSL" appends="YES" id="LVj-rh-iOO"/>
                                                     </connections>
                                                 </textField>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Wx-bq-gbR" customClass="TrackersStackView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="228" height="40"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Afe-Si-Pl8">
+                                                            <rect key="frame" x="0.0" y="0.0" width="66" height="40"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon facebook" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
+                                                            <rect key="frame" x="66" y="0.0" width="32" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="32" id="bIP-ra-VYG"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
+                                                            <rect key="frame" x="98" y="0.0" width="32" height="40"/>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon yahoo!" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
+                                                            <rect key="frame" x="130" y="0.0" width="32" height="40"/>
+                                                        </imageView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmt-T7-4i2">
+                                                            <rect key="frame" x="162" y="0.0" width="66" height="40"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="0eq-5H-Wed" secondAttribute="bottom" id="5FC-Np-7yW"/>
+                                                        <constraint firstAttribute="bottom" secondItem="oPd-Lo-c9m" secondAttribute="bottom" id="FtP-VZ-Et6"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Zez-ih-Wyc" secondAttribute="bottom" id="U8f-ZL-eeV"/>
+                                                        <constraint firstItem="oPd-Lo-c9m" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="cVu-CX-e5b"/>
+                                                        <constraint firstItem="0eq-5H-Wed" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="dRV-sO-DVl"/>
+                                                        <constraint firstItem="Mmt-T7-4i2" firstAttribute="width" secondItem="Afe-Si-Pl8" secondAttribute="width" id="l8z-vN-41Y"/>
+                                                        <constraint firstItem="Zez-ih-Wyc" firstAttribute="width" secondItem="oPd-Lo-c9m" secondAttribute="width" id="qvZ-fn-qt0"/>
+                                                        <constraint firstItem="0eq-5H-Wed" firstAttribute="width" secondItem="Zez-ih-Wyc" secondAttribute="width" id="vb9-xQ-CdG"/>
+                                                        <constraint firstItem="Zez-ih-Wyc" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="ynb-JV-RDf"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="firstIcon" destination="oPd-Lo-c9m" id="QRf-Vy-VY1"/>
+                                                        <outlet property="secondIcon" destination="Zez-ih-Wyc" id="61x-vV-oXH"/>
+                                                        <outlet property="thirdIcon" destination="0eq-5H-Wed" id="j7X-gv-jn9"/>
+                                                    </connections>
+                                                </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="BRK-V7-Bya"/>
+                                                <constraint firstItem="6Wx-bq-gbR" firstAttribute="top" secondItem="RFn-NW-xLz" secondAttribute="top" id="EMG-ct-l5T"/>
                                                 <constraint firstAttribute="trailing" secondItem="fqM-N4-jNd" secondAttribute="trailing" id="J6s-9W-GFk"/>
+                                                <constraint firstAttribute="bottom" secondItem="6Wx-bq-gbR" secondAttribute="bottom" id="OYs-f6-uio"/>
+                                                <constraint firstItem="6Wx-bq-gbR" firstAttribute="leading" secondItem="RFn-NW-xLz" secondAttribute="leading" id="is3-bE-PeF"/>
                                                 <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="RFn-NW-xLz" secondAttribute="top" id="oBf-nb-Ogc"/>
                                                 <constraint firstItem="fqM-N4-jNd" firstAttribute="leading" secondItem="RFn-NW-xLz" secondAttribute="leading" id="qYt-SH-h0n"/>
+                                                <constraint firstAttribute="trailing" secondItem="6Wx-bq-gbR" secondAttribute="trailing" id="rGM-hV-tSX"/>
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                            <rect key="frame" x="153" y="0.0" width="30" height="40"/>
+                                            <rect key="frame" x="288" y="0.0" width="30" height="40"/>
                                             <accessibility key="accessibilityConfiguration" label="Clear Text"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
@@ -113,7 +158,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-QY-LVl">
-                                            <rect key="frame" x="183" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="318" y="8" width="30" height="24"/>
                                             <accessibility key="accessibilityConfiguration" label="Refresh Page"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="PHR-dd-ThY"/>
@@ -150,7 +195,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
-                            <rect key="frame" x="229" y="0.0" width="30" height="40"/>
+                            <rect key="frame" x="364" y="0.0" width="30" height="40"/>
                             <accessibility key="accessibilityConfiguration" label="Settings"/>
                             <constraints>
                                 <constraint firstAttribute="width" priority="900" constant="30" id="LgT-YY-fGl"/>
@@ -161,7 +206,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
-                            <rect key="frame" x="263" y="0.0" width="30" height="40"/>
+                            <rect key="frame" x="398" y="0.0" width="30" height="40"/>
                             <accessibility key="accessibilityConfiguration" label="Browsing Menu"/>
                             <constraints>
                                 <constraint firstAttribute="width" priority="900" constant="30" id="JrJ-da-Qn3"/>
@@ -172,7 +217,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-9R-ERy">
-                            <rect key="frame" x="297" y="0.0" width="64" height="40"/>
+                            <rect key="frame" x="432" y="0.0" width="64" height="40"/>
                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
                             <state key="normal" title="Cancel">
@@ -188,7 +233,7 @@
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-j4-fpl">
-                    <rect key="frame" x="0.0" y="52" width="375" height="1"/>
+                    <rect key="frame" x="0.0" y="52" width="510" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -224,8 +269,9 @@
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
+                <outlet property="trackersStackView" destination="6Wx-bq-gbR" id="lLR-t5-KTd"/>
             </connections>
-            <point key="canvasLocation" x="-284" y="-72"/>
+            <point key="canvasLocation" x="-392" y="-72.863568215892059"/>
         </view>
         <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
             <connections>
@@ -242,6 +288,9 @@
     <resources>
         <image name="ClearText" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
+        <image name="PP Network Icon facebook" width="24" height="24"/>
+        <image name="PP Network Icon google" width="24" height="24"/>
+        <image name="PP Network Icon yahoo!" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
         <image name="Settings" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>

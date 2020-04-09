@@ -867,6 +867,9 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
+        
+        chromeDelegate?.omniBar?.showTrackers()
+        
         siteRating?.finishedLoading = true
         updateSiteRating()
         tabModel.link = link

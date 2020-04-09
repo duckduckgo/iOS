@@ -30,6 +30,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var trackersStackView: TrackersStackView!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
@@ -54,6 +55,9 @@ class OmniBar: UIView {
         configureTextField()
         configureSeparator()
         configureEditingMenu()
+        
+        self.trackersStackView.alpha = 0
+        trackersStackView.isHidden = true
         refreshState(state)
     }
     
@@ -120,6 +124,30 @@ class OmniBar: UIView {
 
     @IBAction func textFieldTapped() {
         textField.becomeFirstResponder()
+    }
+    
+    public func showTrackers() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.trackersStackView.isHidden = false
+            self.trackersStackView.alpha = 1
+            self.textField.alpha = 0
+        }, completion: { _ in
+            
+            self.trackersStackView.firstIcon.crossOutImage()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.hideTrackers()
+            }
+        })
+    }
+    
+    public func hideTrackers() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.trackersStackView.alpha = 0
+            self.textField.alpha = 1
+        }, completion: { _ in
+            self.trackersStackView.isHidden = true
+        })
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

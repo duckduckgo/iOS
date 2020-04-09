@@ -53,8 +53,8 @@ public struct BrokenSiteInfo {
     }
     
     func send(with category: String) {
-           
-        let parameters = [Keys.url: url?.absoluteString ?? "",
+        
+        let parameters = [Keys.url: normalize(url),
                           Keys.category: category,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",
@@ -68,4 +68,15 @@ public struct BrokenSiteInfo {
         
         Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }
+    
+    private func normalize(_ url: URL?) -> String {
+        guard let url = url else { return "" }
+        
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        components?.queryItems = []
+        
+        guard let nomalizedUrl = components?.url else { return "" }
+        return nomalizedUrl.absoluteString
+    }
+    
 }

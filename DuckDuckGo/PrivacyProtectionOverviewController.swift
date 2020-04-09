@@ -178,14 +178,14 @@ class ProtectionUpgradedView: UIView {
 
 private class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
     
-    unowned var navigationController: UINavigationController
+    weak var navigationController: UINavigationController?
     
     init(controller: UINavigationController) {
         self.navigationController = controller
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return navigationController.viewControllers.count > 1
+        return navigationController?.viewControllers.count ?? 0 > 1
     }
     
     // This is necessary because without it, subviews of your top controller can

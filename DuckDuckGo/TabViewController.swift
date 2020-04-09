@@ -791,7 +791,9 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if self.url?.host != url.host || self.url?.path != url.path {
-            view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>") + " from " + (self.url?.host ?? "<unknown>"))
+            PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: self) {
+                self.view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>") + " from " + (self.url?.host ?? "<unknown>"))
+            }
             detectedLoginURL = nil
         }
         

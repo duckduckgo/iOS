@@ -40,16 +40,20 @@ class PreserveLoginsAlert {
             return
         }
  
-        let dateShown = Date()
+        // let dateShown = Date()
         let prompt = UIAlertController(title: UserText.preserveLoginsTitle,
                                        message: UserText.preserveLoginsMessage,
-                                       preferredStyle: .alert)
+                                       preferredStyle: .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsRemember) {
-            TimedPixel(.preserveLoginsUserDecisionPreserve, date: dateShown).fire()
+            // TODO TimedPixel(.preserveLoginsUserDecisionPreserve, date: dateShown).fire()
             completion()
         }
         prompt.addAction(title: UserText.preserveLoginsForget) {
-            TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
+            // TODO TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
+            completion()
+        }
+        prompt.addAction(title: UserText.preserveLoginsForget) {
+            // TODO TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
             completion()
         }
         controller.present(prompt, animated: true)

@@ -28,6 +28,7 @@ public struct AppUrls {
         }
         
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+        static let externalContentBase = "https://external-content.duckduckgo.com"
         static let staticBase = "https://staticcdn.duckduckgo.com"
         
         static let autocomplete = "\(base)/ac/"
@@ -39,7 +40,7 @@ public struct AppUrls {
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
-        static let faviconService = "\(base)/ip3/%@.ico"
+        static let faviconService = "\(externalContentBase)/ip3/%@.ico"
  
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"

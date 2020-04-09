@@ -14,4 +14,24 @@ class TrackersStackView: UIStackView {
     @IBOutlet var secondIcon: UIImageView!
     @IBOutlet var thirdIcon: UIImageView!
     
+    var crossOutBackgroundColor: UIColor = .clear
+    
+    func animateTrackers() {
+        
+        let visibleIcons = [firstIcon, secondIcon, thirdIcon]
+
+        visibleIcons.forEach { imageView in
+            imageView?.animateCrossOut(foregroundColor: self.tintColor!,
+                                       backgroundColor: self.crossOutBackgroundColor)
+        }
+    }
+    
+    func resetTrackers() {
+        
+        let visibleIcons = [firstIcon, secondIcon, thirdIcon]
+
+        visibleIcons.forEach { imageView in
+            imageView?.resetCrossOut()
+        }
+    }
 }

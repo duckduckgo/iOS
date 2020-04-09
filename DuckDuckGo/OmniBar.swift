@@ -133,9 +133,11 @@ class OmniBar: UIView {
             self.textField.alpha = 0
         }, completion: { _ in
             
-            self.trackersStackView.firstIcon.crossOutImage()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.85) {
+                self.trackersStackView.animateTrackers()
+            }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.hideTrackers()
             }
         })
@@ -147,6 +149,7 @@ class OmniBar: UIView {
             self.textField.alpha = 1
         }, completion: { _ in
             self.trackersStackView.isHidden = true
+            self.trackersStackView.resetTrackers()
         })
     }
 
@@ -338,6 +341,9 @@ extension OmniBar: Themable {
 
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
         searchStackContainer?.tintColor = theme.barTintColor
+        
+        trackersStackView.tintColor = theme.searchBarTextColor
+        trackersStackView.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
         if let url = textField.text?.punycodedUrl {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

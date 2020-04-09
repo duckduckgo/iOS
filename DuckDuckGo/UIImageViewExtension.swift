@@ -10,37 +10,48 @@ import UIKit
 
 extension UIImageView {
     
-    func crossOutImage() {
-        let offset: CGFloat = 5.0
+    func animateCrossOut(foregroundColor: UIColor,
+                         backgroundColor: UIColor) {
+        let offset: CGFloat = 6.0
         let contentRect = CGRect(x: offset,
                                  y: (bounds.height - bounds.width) / 2 + offset,
                                  width: bounds.width - 2 * offset,
                                  height: bounds.width - 2 * offset)
         
         let backgroundShape = makeLineLayer(diagonalIn: contentRect)
-        backgroundShape.strokeColor = UIColor.white.cgColor
+        backgroundShape.strokeColor = backgroundColor.cgColor
         backgroundShape.lineCap = .round
-        backgroundShape.lineWidth = 6
+        backgroundShape.lineWidth = 4
         backgroundShape.isOpaque = false
+        backgroundShape.name = "crossOutBackground"
         layer.addSublayer(backgroundShape)
         
-        let topShape = makeLineLayer(diagonalIn: contentRect)
-        topShape.strokeColor = UIColor.black.cgColor
-        topShape.lineCap = .round
-        topShape.lineWidth = 2
-        topShape.isOpaque = false
-        layer.addSublayer(topShape)
+        let foregroundShape = makeLineLayer(diagonalIn: contentRect)
+        foregroundShape.strokeColor = foregroundColor.cgColor
+        foregroundShape.lineCap = .round
+        foregroundShape.lineWidth = 2
+        foregroundShape.isOpaque = false
+        foregroundShape.name = "crossOutForeground"
+        layer.addSublayer(foregroundShape)
         
         animateScaling(layer: backgroundShape)
-        animateScaling(layer: topShape)
+        animateScaling(layer: foregroundShape)
+    }
+    
+    func resetCrossOut() {
+        let animationLayers = layer.sublayers?.filter { $0.name == "crossOutBackground" || $0.name == "crossOutForeground" }
+        animationLayers?.forEach {
+            $0.removeAllAnimations()
+            $0.removeFromSuperlayer()
+        }
     }
     
     private func animateScaling(layer: CAShapeLayer) {
         let anim = CABasicAnimation(keyPath: "transform.scale.x")
-        anim.duration = 0.3
+        anim.duration = 0.25
         anim.timingFunction = CAMediaTimingFunction(name: .linear)
         anim.isRemovedOnCompletion = true
-        anim.fromValue = 0.1
+        anim.fromValue = 0
         anim.toValue = 1
         layer.add(anim, forKey: "scaleAnimation")
     }
@@ -50,15 +61,13 @@ extension UIImageView {
         let diagonalLength = sqrt(content.size.width * content.size.width + content.size.height * content.size.height)
         
         let shapeLayer = CAShapeLayer()
-        shapeLayer.frame = CGRect(x: 0, y: 0,
-                                  width: bounds.width, height: bounds.height)
+        shapeLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
         
         let path = CGMutablePath()
-        
         let startX = (bounds.width - diagonalLength) / 2
         path.move(to: CGPoint(x: startX,
                               y: bounds.midY))
-        path.addLine(to: CGPoint(x: diagonalLength - startX,
+        path.addLine(to: CGPoint(x: diagonalLength + startX,
                                  y: bounds.midY))
         shapeLayer.path = path
         

@@ -21,7 +21,7 @@ extension UIImageView {
         let backgroundShape = makeLineLayer(diagonalIn: contentRect)
         backgroundShape.strokeColor = backgroundColor.cgColor
         backgroundShape.lineCap = .round
-        backgroundShape.lineWidth = 4
+        backgroundShape.lineWidth = 6
         backgroundShape.isOpaque = false
         backgroundShape.name = "crossOutBackground"
         layer.addSublayer(backgroundShape)
@@ -48,8 +48,8 @@ extension UIImageView {
     
     private func animateScaling(layer: CAShapeLayer) {
         let anim = CABasicAnimation(keyPath: "transform.scale.x")
-        anim.duration = 0.25
-        anim.timingFunction = CAMediaTimingFunction(name: .linear)
+        anim.duration = 0.2
+        anim.timingFunction = CAMediaTimingFunction(name: .easeOut)
         anim.isRemovedOnCompletion = true
         anim.fromValue = 0
         anim.toValue = 1

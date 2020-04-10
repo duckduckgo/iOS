@@ -127,26 +127,28 @@ class OmniBar: UIView {
     }
     
     public func showTrackers() {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.trackersStackView.isHidden = false
             self.trackersStackView.alpha = 1
             self.textField.alpha = 0
+            self.siteRatingView.alpha = 0
         }, completion: { _ in
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.85) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 self.trackersStackView.animateTrackers()
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.4) {
                 self.hideTrackers()
             }
         })
     }
     
     public func hideTrackers() {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.trackersStackView.alpha = 0
             self.textField.alpha = 1
+            self.siteRatingView.alpha = 1
         }, completion: { _ in
             self.trackersStackView.isHidden = true
             self.trackersStackView.resetTrackers()

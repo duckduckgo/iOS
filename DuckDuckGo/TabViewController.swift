@@ -869,7 +869,9 @@ extension TabViewController: WKNavigationDelegate {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            self.chromeDelegate?.omniBar?.showTrackers()
+            guard let siteRating = self.siteRating else { return }
+            
+            self.chromeDelegate?.omniBar?.showTrackers(trackers: Array(siteRating.trackersBlocked))
         }
         
         siteRating?.finishedLoading = true

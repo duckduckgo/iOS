@@ -92,27 +92,27 @@
                                                         <outletCollection property="gestureRecognizers" destination="xpX-Ub-pSL" appends="YES" id="LVj-rh-iOO"/>
                                                     </connections>
                                                 </textField>
-                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Wx-bq-gbR" customClass="TrackersStackView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6Wx-bq-gbR" customClass="TrackersStackView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="228" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Afe-Si-Pl8">
-                                                            <rect key="frame" x="0.0" y="0.0" width="66" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="69" height="40"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon facebook" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
-                                                            <rect key="frame" x="66" y="0.0" width="32" height="40"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
+                                                            <rect key="frame" x="75" y="0.0" width="22" height="40"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="32" id="bIP-ra-VYG"/>
+                                                                <constraint firstAttribute="width" constant="22" id="bIP-ra-VYG"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
-                                                            <rect key="frame" x="98" y="0.0" width="32" height="40"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon yahoo!" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
+                                                            <rect key="frame" x="103" y="0.0" width="22" height="40"/>
                                                         </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon more" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
-                                                            <rect key="frame" x="130" y="0.0" width="32" height="40"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon more" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
+                                                            <rect key="frame" x="131" y="0.0" width="22" height="40"/>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmt-T7-4i2">
-                                                            <rect key="frame" x="162" y="0.0" width="66" height="40"/>
+                                                            <rect key="frame" x="159" y="0.0" width="69" height="40"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
@@ -288,9 +288,9 @@
     <resources>
         <image name="ClearText" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
-        <image name="PP Network Icon facebook" width="24" height="24"/>
         <image name="PP Network Icon google" width="24" height="24"/>
         <image name="PP Network Icon more" width="22" height="22"/>
+        <image name="PP Network Icon yahoo!" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
         <image name="Settings" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>

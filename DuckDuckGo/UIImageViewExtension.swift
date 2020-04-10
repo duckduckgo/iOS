@@ -12,7 +12,7 @@ extension UIImageView {
     
     func animateCrossOut(foregroundColor: UIColor,
                          backgroundColor: UIColor) {
-        let offset: CGFloat = 6.0
+        let offset: CGFloat = 1.0
         let contentRect = CGRect(x: offset,
                                  y: (bounds.height - bounds.width) / 2 + offset,
                                  width: bounds.width - 2 * offset,

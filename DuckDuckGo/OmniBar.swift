@@ -46,7 +46,7 @@ class OmniBar: UIView {
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
-    private var trackersAnimator = TrackersAnimator()
+    private(set) var trackersAnimator = TrackersAnimator()
     
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
@@ -131,32 +131,7 @@ class OmniBar: UIView {
     public func showTrackers(trackers: [DetectedTracker]) {
         guard trackersAnimator.configure(trackersStackView, toDisplay: trackers) else { return }
         
-        UIView.animate(withDuration: 0.2, animations: {
-            self.trackersStackView.isHidden = false
-            self.trackersStackView.alpha = 1
-            self.textField.alpha = 0
-            self.siteRatingView.alpha = 0
-        }, completion: { _ in
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                self.trackersStackView.animateTrackers()
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.4) {
-                self.hideTrackers()
-            }
-        })
-    }
-    
-    public func hideTrackers() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.trackersStackView.alpha = 0
-            self.textField.alpha = 1
-            self.siteRatingView.alpha = 1
-        }, completion: { _ in
-            self.trackersStackView.isHidden = true
-            self.trackersStackView.resetTrackers()
-        })
+        trackersAnimator.startAnimating(in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

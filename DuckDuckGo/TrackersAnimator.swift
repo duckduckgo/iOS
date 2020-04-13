@@ -22,23 +22,27 @@ import Core
 
 class TrackersAnimator {
     
+    var nextAnimation: DispatchWorkItem?
+    
     func configure(_ trackersStackView: TrackersStackView,
                    toDisplay trackers: [DetectedTracker]) -> Bool {
         
         let entities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
             return (l.prevalence ?? 0) > (r.prevalence ?? 0)
-        }
+        }.filter { $0.displayName != nil }
         
-        var iconImages = entities.compactMap { entity -> UIImage? in
-            guard let name = entity.displayName else { return nil }
-            return PrivacyProtectionIconSource.iconImage(for: name)
-        }
+        guard !entities.isEmpty else { return false }
         
-        guard !iconImages.isEmpty else { return false }
-        
-        if iconImages.count > 3 {
-            iconImages = Array(iconImages.prefix(2))
+        var iconImages: [UIImage]
+        if entities.count > 3 {
+            iconImages = entities.prefix(2).compactMap { entity -> UIImage? in
+                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!)
+            }
             iconImages.append(UIImage(named: "PP Network Icon more")!)
+        } else {
+            iconImages = entities.prefix(3).compactMap { entity -> UIImage? in
+                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!)
+            }
         }
         
         let imageViews = [trackersStackView.firstIcon,
@@ -58,12 +62,41 @@ class TrackersAnimator {
         return true
     }
     
-    func startAnimating(_ omniBar: OmniBar) {
-        
+    func startAnimating(in omniBar: OmniBar) {
+        UIView.animate(withDuration: 0.2, animations: {
+            omniBar.trackersStackView.isHidden = false
+            omniBar.trackersStackView.alpha = 1
+            omniBar.textField.alpha = 0
+            omniBar.siteRatingView.alpha = 0
+        }, completion: { _ in
+            
+            let animateWorkItem = DispatchWorkItem(block: {
+                omniBar.trackersStackView.animateTrackers()
+                
+                let hideWorkItem = DispatchWorkItem {
+                    self.stopAnimating(in: omniBar)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.4, execute: hideWorkItem)
+                self.nextAnimation = hideWorkItem
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: animateWorkItem)
+            self.nextAnimation = animateWorkItem
+        })
     }
     
-    func stopAnimating(_ omniBar: OmniBar) {
+    func stopAnimating(in omniBar: OmniBar) {
+        nextAnimation?.cancel()
+        nextAnimation = nil
         
+        UIView.animate(withDuration: 0.2, animations: {
+            omniBar.trackersStackView.alpha = 0
+            omniBar.textField.alpha = 1
+            omniBar.siteRatingView.alpha = 1
+        }, completion: { _ in
+            omniBar.trackersStackView.isHidden = true
+            omniBar.trackersStackView.resetTrackers()
+        })
     }
     
 }

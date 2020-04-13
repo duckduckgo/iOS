@@ -284,6 +284,7 @@
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820EAF422613CD30089094D /* WebProgressWorker.swift */; };
 		9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */; };
+		982846052444ECC3009B19EA /* TrackersAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */; };
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		983054442302E4F40017BED0 /* OnboardingNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */; };
@@ -923,6 +924,7 @@
 		9820A5D522B1C0B20024E37C /* DDG Trace.tracetemplate */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "DDG Trace.tracetemplate"; sourceTree = "<group>"; };
 		9820EAF422613CD30089094D /* WebProgressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProgressWorker.swift; sourceTree = "<group>"; };
 		9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
+		982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimatorTests.swift; sourceTree = "<group>"; };
 		982C87C32255559A00919035 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
@@ -2755,6 +2757,7 @@
 			children = (
 				F1D477C81F2139410031ED49 /* OmniBarStateTests.swift */,
 				85F20005221702F7006BB258 /* OmniBarTests.swift */,
+				982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -3887,6 +3890,7 @@
 				983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
 				85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */,
+				982846052444ECC3009B19EA /* TrackersAnimatorTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,
 				989DF82922C628F80077AA55 /* ContentBlockerLoaderTests.swift in Sources */,
 				F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */,

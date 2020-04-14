@@ -24,6 +24,11 @@ class TrackersAnimator {
     
     var nextAnimation: DispatchWorkItem?
     
+    struct Constants {
+        static let iconWidth: CGFloat = 22
+        static let iconHeight: CGFloat = 22
+    }
+    
     func configure(_ trackersStackView: TrackersStackView,
                    toDisplay trackers: [DetectedTracker]) -> Bool {
         
@@ -34,14 +39,15 @@ class TrackersAnimator {
         guard !entities.isEmpty else { return false }
         
         var iconImages: [UIImage]
+        let iconSize = CGSize(width: Constants.iconWidth, height: Constants.iconHeight)
         if entities.count > 3 {
             iconImages = entities.prefix(2).compactMap { entity -> UIImage? in
-                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!)
+                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!, iconSize: iconSize)
             }
             iconImages.append(UIImage(named: "PP Network Icon more")!)
         } else {
             iconImages = entities.prefix(3).compactMap { entity -> UIImage? in
-                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!)
+                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!, iconSize: iconSize)
             }
         }
         
@@ -76,7 +82,7 @@ class TrackersAnimator {
                 let hideWorkItem = DispatchWorkItem {
                     self.stopAnimating(in: omniBar)
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.6, execute: hideWorkItem)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: hideWorkItem)
                 self.nextAnimation = hideWorkItem
             })
             

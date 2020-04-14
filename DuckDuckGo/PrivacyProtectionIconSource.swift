@@ -21,17 +21,12 @@ import UIKit
 
 class PrivacyProtectionIconSource {
     
-    struct Constants {
-        static let iconWidth: CGFloat = 22
-        static let iconHeight: CGFloat = 22
-    }
-    
-    static func iconImage(for networkName: String) -> UIImage? {
+    static func iconImage(for networkName: String, iconSize: CGSize) -> UIImage? {
         if let image = UIImage(named: "PP Network Icon \(networkName.lowercased())") {
             return image
         }
         
-        let imageRect = CGRect(x: 0, y: 0, width: Constants.iconWidth, height: Constants.iconHeight)
+        let imageRect = CGRect(x: 0, y: 0, width: iconSize.width, height: iconSize.height)
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)
         let icon = renderer.image { imageContext in
@@ -48,7 +43,7 @@ class PrivacyProtectionIconSource {
             context.fillEllipse(in: imageRect)
             
             let label = UILabel(frame: imageRect)
-            label.font = UIFont.semiBoldAppFont(ofSize: 17)
+            label.font = UIFont.boldAppFont(ofSize: 17)
             label.textColor = UIColor.black
             label.textAlignment = .center
             label.text = networkSymbol

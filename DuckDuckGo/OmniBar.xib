@@ -129,10 +129,10 @@
                                                         <constraint firstItem="Zez-ih-Wyc" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="ynb-JV-RDf"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="firstIcon" destination="oPd-Lo-c9m" id="QRf-Vy-VY1"/>
-                                                        <outlet property="secondIcon" destination="Zez-ih-Wyc" id="61x-vV-oXH"/>
-                                                        <outlet property="thirdIcon" destination="0eq-5H-Wed" id="j7X-gv-jn9"/>
                                                         <outletCollection property="gestureRecognizers" destination="MSw-q7-KzB" appends="YES" id="Qic-89-t1b"/>
+                                                        <outletCollection property="trackerIcons" destination="oPd-Lo-c9m" collectionClass="NSMutableArray" id="7BN-7K-zL2"/>
+                                                        <outletCollection property="trackerIcons" destination="Zez-ih-Wyc" collectionClass="NSMutableArray" id="VEu-V9-T2E"/>
+                                                        <outletCollection property="trackerIcons" destination="0eq-5H-Wed" collectionClass="NSMutableArray" id="9Xo-FQ-kLm"/>
                                                     </connections>
                                                 </stackView>
                                             </subviews>

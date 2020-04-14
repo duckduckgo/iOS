@@ -57,9 +57,7 @@ class OmniBar: UIView {
         configureTextField()
         configureSeparator()
         configureEditingMenu()
-        
-        self.trackersStackView.alpha = 0
-        trackersStackView.isHidden = true
+        trackersAnimator.setup(self)
         refreshState(state)
     }
     
@@ -128,7 +126,7 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
-    public func showTrackers(trackers: [DetectedTracker]) {
+    public func showTrackers(_ trackers: [DetectedTracker]) {
         guard trackersAnimator.configure(trackersStackView, toDisplay: trackers),
             state.allowsTrackersAnimation else { return }
         

@@ -340,7 +340,6 @@
 		98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D9217B37200011A0D4 /* LightTheme.swift */; };
 		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
-		98FA4BB1243F5F9F00894CD8 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB0243F5F9F00894CD8 /* UIImageViewExtension.swift */; };
 		98FA4BB3243F630700894CD8 /* TrackersStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB2243F630700894CD8 /* TrackersStackView.swift */; };
 		98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */; };
 		98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */; };
@@ -982,7 +981,6 @@
 		98F3A1D9217B37200011A0D4 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
 		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
-		98FA4BB0243F5F9F00894CD8 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		98FA4BB2243F630700894CD8 /* TrackersStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersStackView.swift; sourceTree = "<group>"; };
 		98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimator.swift; sourceTree = "<group>"; };
 		98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionIconSource.swift; sourceTree = "<group>"; };
@@ -2685,7 +2683,6 @@
 				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
 				F114C55C1E6717800018F95F /* OmniBar.xib */,
 				F114C55A1E66EB020018F95F /* NibLoading.swift */,
-				98FA4BB0243F5F9F00894CD8 /* UIImageViewExtension.swift */,
 				98FA4BB2243F630700894CD8 /* TrackersStackView.swift */,
 				98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */,
 			);
@@ -3701,7 +3698,6 @@
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
-				98FA4BB1243F5F9F00894CD8 /* UIImageViewExtension.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				98FA4BB3243F630700894CD8 /* TrackersStackView.swift in Sources */,
 				98E6F6E7242A198700E7ED9D /* ExtraContentHomeCell.swift in Sources */,

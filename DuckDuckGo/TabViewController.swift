@@ -876,7 +876,7 @@ extension TabViewController: WKNavigationDelegate {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
             
-            self.chromeDelegate?.omniBar?.showTrackers(trackers: Array(siteRating.trackersBlocked))
+            self.chromeDelegate?.omniBar?.showTrackers(Array(siteRating.trackersBlocked))
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7,

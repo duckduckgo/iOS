@@ -27,6 +27,16 @@ class TrackersAnimator {
     struct Constants {
         static let iconWidth: CGFloat = 22
         static let iconHeight: CGFloat = 22
+        
+        static let hideRevealAnimatonTime: TimeInterval = 0.2
+        static let delayBeforeCrossOut: TimeInterval = 0.8
+        static let crossOutDuration: TimeInterval = 0.2
+        static let delayAfterCrossOut: TimeInterval = 1.5
+    }
+    
+    func setup(_ omniBar: OmniBar) {
+        omniBar.trackersStackView.alpha = 0
+        omniBar.trackersStackView.isHidden = true
     }
     
     func configure(_ trackersStackView: TrackersStackView,
@@ -38,9 +48,11 @@ class TrackersAnimator {
         
         guard !entities.isEmpty else { return false }
         
+        let imageViews: [UIImageView]! = trackersStackView.trackerIcons
+        
         var iconImages: [UIImage]
         let iconSize = CGSize(width: Constants.iconWidth, height: Constants.iconHeight)
-        if entities.count > 3 {
+        if entities.count > imageViews.count {
             iconImages = entities.prefix(2).compactMap { entity -> UIImage? in
                 return PrivacyProtectionIconSource.iconImage(for: entity.displayName!, iconSize: iconSize)
             }
@@ -51,43 +63,41 @@ class TrackersAnimator {
             }
         }
         
-        let imageViews = [trackersStackView.firstIcon,
-                          trackersStackView.secondIcon,
-                          trackersStackView.thirdIcon]
-        
         for imageView in imageViews {
             guard !iconImages.isEmpty else {
-                imageView?.isHidden = true
+                imageView.isHidden = true
                 continue
             }
             let iconImage = iconImages.removeFirst()
-            imageView?.isHidden = false
-            imageView?.image = iconImage
+            imageView.isHidden = false
+            imageView.image = iconImage
         }
         
         return true
     }
     
     func startAnimating(in omniBar: OmniBar) {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
             omniBar.trackersStackView.isHidden = false
             omniBar.trackersStackView.alpha = 1
             omniBar.textField.alpha = 0
             omniBar.siteRatingView.alpha = 0
         }, completion: { _ in
             
-            let animateWorkItem = DispatchWorkItem(block: {
-                omniBar.trackersStackView.animateTrackers()
+            let animateCrossOut = DispatchWorkItem(block: {
+                omniBar.trackersStackView.crossOutTrackerIcons(duration: Constants.crossOutDuration)
                 
-                let hideWorkItem = DispatchWorkItem {
+                let hideTrackers = DispatchWorkItem {
                     self.stopAnimating(in: omniBar)
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: hideWorkItem)
-                self.nextAnimation = hideWorkItem
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.delayAfterCrossOut,
+                                              execute: hideTrackers)
+                self.nextAnimation = hideTrackers
             })
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: animateWorkItem)
-            self.nextAnimation = animateWorkItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.delayBeforeCrossOut,
+                                          execute: animateCrossOut)
+            self.nextAnimation = animateCrossOut
         })
     }
     
@@ -95,13 +105,13 @@ class TrackersAnimator {
         nextAnimation?.cancel()
         nextAnimation = nil
         
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
             omniBar.trackersStackView.alpha = 0
             omniBar.textField.alpha = 1
             omniBar.siteRatingView.alpha = 1
         }, completion: { _ in
             omniBar.trackersStackView.isHidden = true
-            omniBar.trackersStackView.resetTrackers()
+            omniBar.trackersStackView.resetTrackerIcons()
         })
     }
     

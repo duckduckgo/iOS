@@ -57,9 +57,9 @@ class TrackersAnimatorTests: XCTestCase {
         XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
                                                           toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.firstIcon.isHidden)
-        XCTAssert(omniBar.trackersStackView.secondIcon.isHidden)
-        XCTAssert(omniBar.trackersStackView.thirdIcon.isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
+        XCTAssert(omniBar.trackersStackView.trackerIcons[1].isHidden)
+        XCTAssert(omniBar.trackersStackView.trackerIcons[2].isHidden)
     }
 
     func testWhenTwoTrackerNetworksWereFoundThenThereAreTwoItemsPresented() {
@@ -78,9 +78,9 @@ class TrackersAnimatorTests: XCTestCase {
         XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
                                                           toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.firstIcon.isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.secondIcon.isHidden)
-        XCTAssert(omniBar.trackersStackView.thirdIcon.isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[1].isHidden)
+        XCTAssert(omniBar.trackersStackView.trackerIcons[2].isHidden)
     }
     
     func testWhenThreeTrackerNetworksWereFoundThenThereAreThreeItemsPresented() {
@@ -104,9 +104,9 @@ class TrackersAnimatorTests: XCTestCase {
         XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
                                                      toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.firstIcon.isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.secondIcon.isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.thirdIcon.isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[1].isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[2].isHidden)
     }
     
     func testWhenMoreThanThreeTrackerNetworksWereFoundThenThereAreThreeItemsPresented() {
@@ -134,8 +134,8 @@ class TrackersAnimatorTests: XCTestCase {
         XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
                                                      toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.firstIcon.isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.secondIcon.isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.thirdIcon.isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[1].isHidden)
+        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[2].isHidden)
     }
 }

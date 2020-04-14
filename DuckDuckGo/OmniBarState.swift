@@ -22,6 +22,7 @@ import Core
 
 protocol OmniBarState {
     var clearTextOnStart: Bool { get }
+    var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
     var showCancel: Bool { get }
     var showSiteRating: Bool { get }
@@ -41,6 +42,7 @@ protocol OmniBarState {
 
 struct HomeEmptyEditingState: OmniBarState {
     var clearTextOnStart = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
@@ -60,6 +62,7 @@ struct HomeEmptyEditingState: OmniBarState {
 
 struct HomeTextEditingState: OmniBarState {
     var clearTextOnStart = false
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
@@ -79,6 +82,7 @@ struct HomeTextEditingState: OmniBarState {
 
 struct HomeNonEditingState: OmniBarState {
     var clearTextOnStart = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = true
@@ -98,6 +102,7 @@ struct HomeNonEditingState: OmniBarState {
 
 struct BrowsingEmptyEditingState: OmniBarState {
     var clearTextOnStart = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
@@ -117,6 +122,7 @@ struct BrowsingEmptyEditingState: OmniBarState {
 
 struct BrowsingTextEditingState: OmniBarState {
     var clearTextOnStart = false
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
@@ -136,6 +142,7 @@ struct BrowsingTextEditingState: OmniBarState {
 
 struct BrowsingNonEditingState: OmniBarState {
     var clearTextOnStart = false
+    var allowsTrackersAnimation = true
     var showSearchLoupe = false
     let showSiteRating = true
     let showBackground = true

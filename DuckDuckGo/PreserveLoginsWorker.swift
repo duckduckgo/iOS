@@ -35,14 +35,20 @@ struct PreserveLoginsWorker {
     }
     
     private func promptToFireproof(_ domain: String) {
-        PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller) {
+        PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller, onConfirmHandler: {
             self.addDomain(domain)
-        }
+        }, onCancelHandler: {
+            self.promptToDisable()
+        })
     }
     
     private func addDomain(_ domain: String) {
         PreserveLogins.shared.addToAllowed(domain: domain)
         PreserveLoginsAlert.showFireproofToast(usingController: controller, forDomain: domain)
+    }
+    
+    private func promptToDisable() {
+        PreserveLoginsAlert.showDisableLoginDetectionPrompt(usingController: controller)
     }
     
 }

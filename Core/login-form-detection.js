@@ -4,7 +4,7 @@
 
     const logger = duckduckgoDebugMessaging; // switch to console if helpful
 
-    logger.log("*** installing loginDetection.js - IN");
+    logger.log("installing loginDetection.js - IN");
 
     
    function loginFormDetected() {
@@ -20,7 +20,7 @@
     }
 
     function checkIsLoginForm(form) {
-        logger.log("*** checking form " + form);
+        logger.log("checking form " + form);
 
         var inputs = form.getElementsByTagName("input");
         if (!inputs) {
@@ -30,13 +30,13 @@
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs.item(i);
             if (input.type == "password" && inputVisible(input)) {
-                logger.log("*** found password in form " + form);
+                logger.log("found password in form " + form);
                 loginFormDetected();
                 return true;
             }
         }
 
-        logger.log("*** no password field in form " + form);
+        logger.log("no password field in form " + form);
         return false;
     }
 
@@ -45,11 +45,11 @@
     }
 
     function scanForForms() {
-        logger.log("*** Scanning for forms");
+        logger.log("Scanning for forms");
 
         var forms = document.forms;
         if (!forms || forms.length == 0) {
-            logger.log("*** No forms found");
+            logger.log("No forms found");
             return
         }
 
@@ -57,7 +57,7 @@
             var form = forms[i];
             form.removeEventListener("submit", submitHandler);
             form.addEventListener("submit", submitHandler);
-            logger.log("*** adding form handler " + i);
+            logger.log("adding form handler " + i);
         }
 
     }
@@ -79,7 +79,7 @@
             const entries = list.getEntries().filter((entry) => { 
                 var found = entry.initiatorType == "xmlhttprequest" && entry.name.split("?")[0].match(/login|sign-in/);
                 if (found) {
-                    logger.log("*** XHR: observed login - " + entry.name.split("?")[0]);
+                    logger.log("XHR: observed login - " + entry.name.split("?")[0]);
                 }
                 return found;
             });
@@ -88,20 +88,20 @@
                 return;
             } 
 
-            logger.log("*** XHR: checking forms - IN");
+            logger.log("XHR: checking forms - IN");
             var forms = document.forms;
             if (!forms || forms.length == 0) {
-                logger.log("*** XHR: No forms found");
+                logger.log("XHR: No forms found");
                 return;
             }
 
             for (var i = 0; i < forms.length; i++) {
                 if (checkIsLoginForm(forms[i])) {
-                    logger.log("*** XHR: found login form");
+                    logger.log("XHR: found login form");
                     break;
                 }
             }
-            logger.log("*** XHR: checking forms - OUT");
+            logger.log("XHR: checking forms - OUT");
 
         });
         observer.observe({entryTypes: ["resource"]});        
@@ -109,6 +109,6 @@
         // no-op
     }
 
-    logger.log("*** installing loginDetection.js - OUT");
+    logger.log("installing loginDetection.js - OUT");
  
 }) ()

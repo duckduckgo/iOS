@@ -22,11 +22,20 @@ import Core
 
 class PreserveLoginsAlert {
 
+    static func showDisableLoginDetectionPrompt(usingController controller: UIViewController) {
+        let prompt = UIAlertController(title: "Disable Sign In Detection?",
+                                       message: "You can change this in settings",
+                                       preferredStyle: isPad ? .alert : .actionSheet)
+        prompt.addAction(title: "Yes", style: .default)
+        prompt.addAction(title: "No", style: .cancel)
+        controller.present(prompt, animated: true)
+    }
+    
     static func showFireproofToast(usingController controller: UIViewController, forDomain domain: String) {
         controller.view.showBottomToast("'\(domain)' has been fireproofed")
     }
     
-    static func showConfirmFireproofWebsite(usingController controller: UIViewController, onConfirmHandler: @escaping() -> Void) {
+    static func showConfirmFireproofWebsite(usingController controller: UIViewController, onConfirmHandler: @escaping () -> Void) {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserverLoginsFireproofWebsiteMessage,
                                        preferredStyle: isPad ? .alert : .actionSheet)
@@ -37,14 +46,18 @@ class PreserveLoginsAlert {
         controller.present(prompt, animated: true)
     }
     
-    static func showFireproofWebsitePrompt(usingController controller: UIViewController, onConfirmHandler: @escaping () -> Void) {
+    static func showFireproofWebsitePrompt(usingController controller: UIViewController,
+                                           onConfirmHandler: @escaping () -> Void,
+                                           onCancelHandler: @escaping () -> Void) {
         let prompt = UIAlertController(title: "Title",
                                        message: "Message",
                                        preferredStyle: isPad ? .alert : .actionSheet)
         prompt.addAction(title: "Fireproof this Website") {
             onConfirmHandler()
         }
-        prompt.addAction(title: "Not now")
+        prompt.addAction(title: "Not now") {
+            onCancelHandler()
+        }
         controller.present(prompt, animated: true)
     }
     

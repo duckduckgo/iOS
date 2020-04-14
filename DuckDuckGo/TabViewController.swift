@@ -182,10 +182,6 @@ class TabViewController: UIViewController {
     }
     
     func initUserScripts() {
-        debugScript.instrumentation = instrumentation
-        contentBlockerScript.storageCache = storageCache
-        contentBlockerScript.delegate = self
-        loginFormDetectionScript.delegate = self
         
         generalScripts = [
             debugScript,
@@ -199,11 +195,18 @@ class TabViewController: UIViewController {
         ]
         
         if #available(iOS 13, *) {
-            generalScripts.append(loginFormDetectionScript)
+            if PreserveLogins.shared.loginDetectionEnabled {
+                loginFormDetectionScript.delegate = self
+                generalScripts.append(loginFormDetectionScript)
+            }
         } else {
             generalScripts.append(documentScript)
             ddgScripts.append(documentScript)
         }
+        
+        debugScript.instrumentation = instrumentation
+        contentBlockerScript.storageCache = storageCache
+        contentBlockerScript.delegate = self
     }
     
     func updateTabModel() {
@@ -835,12 +838,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        print("*** ",
-              #function,
-              navigationAction.request.httpMethod ?? "<unknown method>",
-              navigationAction.request.url?.absoluteString ?? "<unknown url>")
-        
+                
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision != .cancel {
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {

@@ -83,12 +83,12 @@ class TabViewController: UIViewController {
     private var tips: BrowsingTips?
 
     private var detectedLoginURL: URL?
-    
+    private var preserveLoginsWorker: PreserveLoginsWorker?
+
     public var url: URL? {
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
-            checkLoginDetectionAfterNavigation()
         }
     }
     
@@ -162,7 +162,8 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initUserScripts()
         applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
@@ -782,21 +783,9 @@ extension TabViewController: WKNavigationDelegate {
     private func detectedNewNavigation() {
         Pixel.fire(pixel: .navigationDetected)
     }
-
+    
     private func checkLoginDetectionAfterNavigation() {
-        
-        guard let url = detectedLoginURL else {
-            print("*** NO SIGN IN: no form detected")
-            return
-        }
-
-        if self.url?.host != url.host || self.url?.path != url.path {
-            PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: self) {
-                self.view.showBottomToast("You just logged in to " + (url.host ?? "<unknown>") + " from " + (self.url?.host ?? "<unknown>"))
-            }
-            detectedLoginURL = nil
-        }
-        
+        preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL, currentURL: url)
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

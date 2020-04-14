@@ -21,6 +21,10 @@ import Foundation
 import Core
 
 class PreserveLoginsAlert {
+
+    static func showFireproofToast(usingController controller: UIViewController, forDomain domain: String) {
+        controller.view.showBottomToast("'\(domain)' has been fireproofed")
+    }
     
     static func showConfirmFireproofWebsite(usingController controller: UIViewController, onConfirmHandler: @escaping() -> Void) {
         let prompt = UIAlertController(title: nil,
@@ -33,29 +37,14 @@ class PreserveLoginsAlert {
         controller.present(prompt, animated: true)
     }
     
-    // TOOD update text
-    static func showFireproofWebsitePrompt(usingController controller: UIViewController, completion: @escaping () -> Void) {
-        guard #available(iOS 13, *) else {
-            completion()
-            return
+    static func showFireproofWebsitePrompt(usingController controller: UIViewController, onConfirmHandler: @escaping () -> Void) {
+        let prompt = UIAlertController(title: "Title",
+                                       message: "Message",
+                                       preferredStyle: isPad ? .alert : .actionSheet)
+        prompt.addAction(title: "Fireproof this Website") {
+            onConfirmHandler()
         }
- 
-        // let dateShown = Date()
-        let prompt = UIAlertController(title: UserText.preserveLoginsTitle,
-                                       message: UserText.preserveLoginsMessage,
-                                       preferredStyle: .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsRemember) {
-            // TODO TimedPixel(.preserveLoginsUserDecisionPreserve, date: dateShown).fire()
-            completion()
-        }
-        prompt.addAction(title: UserText.preserveLoginsForget) {
-            // TODO TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
-            completion()
-        }
-        prompt.addAction(title: UserText.preserveLoginsForget) {
-            // TODO TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
-            completion()
-        }
+        prompt.addAction(title: "Not now")
         controller.present(prompt, animated: true)
     }
     

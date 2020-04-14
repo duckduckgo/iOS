@@ -36,7 +36,9 @@ public struct UserDefaultsWrapper<T> {
         case covidInfo = "com.duckduckgo.ios.home.covidInfo"
         
         case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
+        case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
         case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
+
     }
 
     private let key: Key

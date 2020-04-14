@@ -35,6 +35,9 @@ public class PreserveLogins {
 
     @UserDefaultsWrapper(key: .preserveLoginsLegacyAllowedDomains, defaultValue: [])
     private(set) public var legacyAllowedDomains: [String]
+    
+    @UserDefaultsWrapper(key: .preserveLoginsDetectionEnabled, defaultValue: true)
+    public var loginDetectionEnabled: Bool
 
     init() {
         UserDefaults.standard.removeObject(forKey: Keys.legacyUserDecision)

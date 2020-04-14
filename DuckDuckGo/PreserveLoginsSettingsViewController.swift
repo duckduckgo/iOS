@@ -29,6 +29,7 @@ protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
 class PreserveLoginsSettingsViewController: UITableViewController {
     
     enum Section: Int {
+        case toggle
         case domainList
     }
     
@@ -65,7 +66,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return tableView.isEditing ? 2 : 1
+        return tableView.isEditing ? 3 : 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,7 +79,10 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         let cell: UITableViewCell
         switch Section(rawValue: indexPath.section) {
 
-        case .some(Section.domainList):
+        case .some(.toggle):
+            cell = createSwitchCell(forTableView: tableView, withTheme: theme)
+
+        case .some(.domainList):
             if model.isEmpty {
                 cell = createNoDomainCell(forTableView: tableView, withTheme: theme)
             } else {
@@ -139,7 +143,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
-        // TODO cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
+        cell.toggle.isOn = PreserveLogins.shared.loginDetectionEnabled
         cell.toggle.isEnabled = !tableView.isEditing
         cell.controller = self
         cell.decorate(with: theme)
@@ -215,10 +219,10 @@ class PreserveLoginsSwitchCell: UITableViewCell {
 
     @IBAction func onToggle() {
         Pixel.fire(pixel: toggle.isOn ? .preserveLoginsSettingsSwitchOn : .preserveLoginsSettingsSwitchOff)
-        // TODO PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
+        PreserveLogins.shared.loginDetectionEnabled = toggle.isOn
         controller.tableView.reloadData()
         if !toggle.isOn {
-            controller.clearAll()
+            controller.clearAll() 
         } else {
             controller.refreshModel()
             controller.endEditing()

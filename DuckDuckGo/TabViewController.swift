@@ -80,6 +80,7 @@ class TabViewController: UIViewController {
     private var tips: BrowsingTips?
 
     private var loginDetection: LoginDetection?
+    private var trackersInfoWorkItem: DispatchWorkItem?
     
     public var url: URL? {
         didSet {
@@ -572,6 +573,8 @@ class TabViewController: UIViewController {
 
     func dismiss() {
         progressWorker.progressBar = nil
+        trackersInfoWorkItem?.cancel()
+        trackersInfoWorkItem = nil
         chromeDelegate = nil
         webView.scrollView.delegate = nil
         willMove(toParent: nil)
@@ -852,6 +855,8 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
+        trackersInfoWorkItem?.cancel()
+        trackersInfoWorkItem = nil
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
@@ -868,11 +873,14 @@ extension TabViewController: WKNavigationDelegate {
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
             
             self.chromeDelegate?.omniBar?.showTrackers(trackers: Array(siteRating.trackersBlocked))
         }
+        trackersInfoWorkItem = trackersWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7,
+                                      execute: trackersWorkItem)
         
         siteRating?.finishedLoading = true
         updateSiteRating()

@@ -116,6 +116,7 @@
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="0eq-5H-Wed" secondAttribute="bottom" id="5FC-Np-7yW"/>
                                                         <constraint firstAttribute="bottom" secondItem="oPd-Lo-c9m" secondAttribute="bottom" id="FtP-VZ-Et6"/>
@@ -131,6 +132,7 @@
                                                         <outlet property="firstIcon" destination="oPd-Lo-c9m" id="QRf-Vy-VY1"/>
                                                         <outlet property="secondIcon" destination="Zez-ih-Wyc" id="61x-vV-oXH"/>
                                                         <outlet property="thirdIcon" destination="0eq-5H-Wed" id="j7X-gv-jn9"/>
+                                                        <outletCollection property="gestureRecognizers" destination="MSw-q7-KzB" appends="YES" id="Qic-89-t1b"/>
                                                     </connections>
                                                 </stackView>
                                             </subviews>
@@ -282,6 +284,11 @@
             <connections>
                 <action selector="textFieldTapped" destination="ojX-nM-dyN" id="rWo-vd-pnL"/>
                 <outlet property="delegate" destination="ojX-nM-dyN" id="DQk-Hy-3f6"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="MSw-q7-KzB">
+            <connections>
+                <action selector="onTrackersViewPressed:" destination="ojX-nM-dyN" id="mIe-Fc-XzO"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

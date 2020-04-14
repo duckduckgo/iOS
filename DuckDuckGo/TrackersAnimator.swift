@@ -76,7 +76,7 @@ class TrackersAnimator {
                 let hideWorkItem = DispatchWorkItem {
                     self.stopAnimating(in: omniBar)
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.4, execute: hideWorkItem)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.6, execute: hideWorkItem)
                 self.nextAnimation = hideWorkItem
             })
             

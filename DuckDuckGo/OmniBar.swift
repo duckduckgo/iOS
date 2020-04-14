@@ -135,6 +135,8 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
+        trackersAnimator.stopAnimating(in: self)
+        
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
@@ -269,8 +271,9 @@ class OmniBar: UIView {
         omniDelegate?.onMenuPressed()
     }
 
-    @IBAction func onBookmarksButtonPressed(_ sender: Any) {
-        omniDelegate?.onBookmarksPressed()
+    @IBAction func onTrackersViewPressed(_ sender: Any) {
+        trackersAnimator.stopAnimating(in: self)
+        textField.becomeFirstResponder()
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
@@ -282,6 +285,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
+        trackersAnimator.stopAnimating(in: self)
         omniDelegate?.onRefreshPressed()
     }
 }

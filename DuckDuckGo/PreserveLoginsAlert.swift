@@ -49,11 +49,14 @@ class PreserveLoginsAlert {
     static func showFireproofWebsitePrompt(usingController controller: UIViewController,
                                            onConfirmHandler: @escaping () -> Void,
                                            onCancelHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: "Title",
-                                       message: "Message",
+        let prompt = UIAlertController(title: "Stay signed in to websites?",
+                                       message: "The Fire Button can protect this website's cookies for convenience (by default, we destroy them).",
                                        preferredStyle: isPad ? .alert : .actionSheet)
-        prompt.addAction(title: "Fireproof this Website") {
+        prompt.addAction(title: "Yes - This website only") {
             onConfirmHandler()
+        }
+        prompt.addAction(title: "Yes - All websites") {
+            onCancelHandler()
         }
         prompt.addAction(title: "Not now") {
             onCancelHandler()

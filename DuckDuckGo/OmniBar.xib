@@ -102,14 +102,20 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
                                                             <rect key="frame" x="75" y="0.0" width="22" height="40"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="22" id="bIP-ra-VYG"/>
+                                                                <constraint firstAttribute="width" priority="999" constant="22" id="bIP-ra-VYG"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon yahoo!" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
                                                             <rect key="frame" x="103" y="0.0" width="22" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" priority="999" constant="22" id="Apc-Zx-Y0T"/>
+                                                            </constraints>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon more" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
                                                             <rect key="frame" x="131" y="0.0" width="22" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" priority="999" constant="22" id="tni-MT-xSK"/>
+                                                            </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmt-T7-4i2">
                                                             <rect key="frame" x="159" y="0.0" width="69" height="40"/>
@@ -118,15 +124,13 @@
                                                     </subviews>
                                                     <gestureRecognizers/>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="0eq-5H-Wed" secondAttribute="bottom" id="5FC-Np-7yW"/>
-                                                        <constraint firstAttribute="bottom" secondItem="oPd-Lo-c9m" secondAttribute="bottom" id="FtP-VZ-Et6"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Zez-ih-Wyc" secondAttribute="bottom" id="U8f-ZL-eeV"/>
-                                                        <constraint firstItem="oPd-Lo-c9m" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="cVu-CX-e5b"/>
-                                                        <constraint firstItem="0eq-5H-Wed" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="dRV-sO-DVl"/>
+                                                        <constraint firstAttribute="bottom" secondItem="0eq-5H-Wed" secondAttribute="bottom" priority="750" id="5FC-Np-7yW"/>
+                                                        <constraint firstAttribute="bottom" secondItem="oPd-Lo-c9m" secondAttribute="bottom" priority="750" id="FtP-VZ-Et6"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Zez-ih-Wyc" secondAttribute="bottom" priority="750" id="U8f-ZL-eeV"/>
+                                                        <constraint firstItem="oPd-Lo-c9m" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" priority="750" id="cVu-CX-e5b"/>
+                                                        <constraint firstItem="0eq-5H-Wed" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" priority="750" id="dRV-sO-DVl"/>
                                                         <constraint firstItem="Mmt-T7-4i2" firstAttribute="width" secondItem="Afe-Si-Pl8" secondAttribute="width" id="l8z-vN-41Y"/>
-                                                        <constraint firstItem="Zez-ih-Wyc" firstAttribute="width" secondItem="oPd-Lo-c9m" secondAttribute="width" id="qvZ-fn-qt0"/>
-                                                        <constraint firstItem="0eq-5H-Wed" firstAttribute="width" secondItem="Zez-ih-Wyc" secondAttribute="width" id="vb9-xQ-CdG"/>
-                                                        <constraint firstItem="Zez-ih-Wyc" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" id="ynb-JV-RDf"/>
+                                                        <constraint firstItem="Zez-ih-Wyc" firstAttribute="top" secondItem="6Wx-bq-gbR" secondAttribute="top" priority="750" id="ynb-JV-RDf"/>
                                                     </constraints>
                                                     <connections>
                                                         <outletCollection property="gestureRecognizers" destination="MSw-q7-KzB" appends="YES" id="Qic-89-t1b"/>

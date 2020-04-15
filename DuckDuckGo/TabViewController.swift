@@ -30,6 +30,8 @@ class TabViewController: UIViewController {
 
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
+        
+        static let trackerNetworksAnimationDelay: TimeInterval = 0.7
     }
 
     private struct UserAgent {
@@ -573,8 +575,7 @@ class TabViewController: UIViewController {
 
     func dismiss() {
         progressWorker.progressBar = nil
-        trackersInfoWorkItem?.cancel()
-        trackersInfoWorkItem = nil
+        cancelTrackerNetworksAnimation()
         chromeDelegate = nil
         webView.scrollView.delegate = nil
         willMove(toParent: nil)
@@ -855,8 +856,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
-        trackersInfoWorkItem?.cancel()
-        trackersInfoWorkItem = nil
+        cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
@@ -873,21 +873,29 @@ extension TabViewController: WKNavigationDelegate {
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
         
+        siteRating?.finishedLoading = true
+        updateSiteRating()
+        scheduleTrackerNetworksAnimation()
+        tabModel.link = link
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        delegate?.tabLoadingStateDidChange(tab: self)
+        tips?.onFinishedLoading(url: url, error: isError)
+    }
+    
+    private func scheduleTrackerNetworksAnimation() {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
             
             self.chromeDelegate?.omniBar?.showTrackers(Array(siteRating.trackersBlocked))
         }
         trackersInfoWorkItem = trackersWorkItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7,
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
                                       execute: trackersWorkItem)
-        
-        siteRating?.finishedLoading = true
-        updateSiteRating()
-        tabModel.link = link
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        delegate?.tabLoadingStateDidChange(tab: self)
-        tips?.onFinishedLoading(url: url, error: isError)
+    }
+    
+    private func cancelTrackerNetworksAnimation() {
+        trackersInfoWorkItem?.cancel()
+        trackersInfoWorkItem = nil
     }
     
     private func detectedNewNavigation() {

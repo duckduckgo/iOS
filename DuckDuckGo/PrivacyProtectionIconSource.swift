@@ -33,8 +33,9 @@ class PrivacyProtectionIconSource {
             let context = imageContext.cgContext
             
             let networkSymbol: String
+            let networkName = networkName.uppercased().dropPrefix(prefix: "THE ")
             if let firstCharacter = networkName.first {
-                networkSymbol = String(firstCharacter).uppercased()
+                networkSymbol = String(firstCharacter)
             } else {
                 networkSymbol = "?"
             }

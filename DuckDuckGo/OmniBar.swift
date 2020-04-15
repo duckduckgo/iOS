@@ -326,7 +326,7 @@ extension OmniBar: Themable {
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
         searchStackContainer?.tintColor = theme.barTintColor
         
-        trackersStackView.tintColor = theme.searchBarTextColor
+        trackersStackView.tintColor = theme.barTintColor
         trackersStackView.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
         if let url = textField.text?.punycodedUrl {

@@ -284,6 +284,7 @@
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820EAF422613CD30089094D /* WebProgressWorker.swift */; };
 		9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */; };
+		982846052444ECC3009B19EA /* TrackersAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */; };
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		983054442302E4F40017BED0 /* OnboardingNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983054432302E4F40017BED0 /* OnboardingNotificationsViewController.swift */; };
@@ -339,6 +340,9 @@
 		98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D9217B37200011A0D4 /* LightTheme.swift */; };
 		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
+		98FA4BB3243F630700894CD8 /* TrackersStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB2243F630700894CD8 /* TrackersStackView.swift */; };
+		98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */; };
+		98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */; };
 		98FD3E2823A3010C005ABD42 /* ios12-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
@@ -919,6 +923,7 @@
 		9820A5D522B1C0B20024E37C /* DDG Trace.tracetemplate */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "DDG Trace.tracetemplate"; sourceTree = "<group>"; };
 		9820EAF422613CD30089094D /* WebProgressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProgressWorker.swift; sourceTree = "<group>"; };
 		9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
+		982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimatorTests.swift; sourceTree = "<group>"; };
 		982C87C32255559A00919035 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
@@ -976,6 +981,9 @@
 		98F3A1D9217B37200011A0D4 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
 		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
+		98FA4BB2243F630700894CD8 /* TrackersStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersStackView.swift; sourceTree = "<group>"; };
+		98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimator.swift; sourceTree = "<group>"; };
+		98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionIconSource.swift; sourceTree = "<group>"; };
 		98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios12-home-row.mp4"; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
@@ -1703,6 +1711,7 @@
 				8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */,
 				85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */,
 				85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */,
+				98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2674,6 +2683,8 @@
 				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
 				F114C55C1E6717800018F95F /* OmniBar.xib */,
 				F114C55A1E66EB020018F95F /* NibLoading.swift */,
+				98FA4BB2243F630700894CD8 /* TrackersStackView.swift */,
+				98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -2743,6 +2754,7 @@
 			children = (
 				F1D477C81F2139410031ED49 /* OmniBarStateTests.swift */,
 				85F20005221702F7006BB258 /* OmniBarTests.swift */,
+				982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -3687,6 +3699,7 @@
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
+				98FA4BB3243F630700894CD8 /* TrackersStackView.swift in Sources */,
 				98E6F6E7242A198700E7ED9D /* ExtraContentHomeCell.swift in Sources */,
 				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
@@ -3699,6 +3712,7 @@
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
 				98999D5922FDA41500CBBE1B /* BasicAuthenticationAlert.swift in Sources */,
+				98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
@@ -3757,6 +3771,7 @@
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,
+				98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */,
 				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,
 				988F3DD3237DE8D900AEE34C /* ForgetDataAlert.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
@@ -3871,6 +3886,7 @@
 				983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
 				85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */,
+				982846052444ECC3009B19EA /* TrackersAnimatorTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,
 				989DF82922C628F80077AA55 /* ContentBlockerLoaderTests.swift in Sources */,
 				F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */,

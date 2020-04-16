@@ -41,7 +41,7 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
         
         cell.onDismiss = { [weak self] _ in
             guard let strongSelf = self else { return }
-            DefaultHomePageSettings().showCovidInfo = false
+            // Update settings here if there are some
             strongSelf.controller?.remove(strongSelf)
         }
         

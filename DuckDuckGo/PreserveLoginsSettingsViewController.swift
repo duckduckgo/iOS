@@ -20,12 +20,6 @@
 import UIKit
 import Core
 
-protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
-
-    func forgetAllRequested(completion: @escaping () -> Void)
-
-}
-
 class PreserveLoginsSettingsViewController: UITableViewController {
     
     enum Section: Int {
@@ -35,8 +29,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
-
-    weak var delegate: PreserveLoginsSettingsDelegate?
 
     var model = [String]()
     
@@ -97,7 +89,26 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Section(rawValue: section) == Section.domainList ? UserText.preserveLoginsDomainListHeaderTitle : nil
+        switch Section(rawValue: section) {
+        case .some(.toggle):
+            return UserText.preserveLoginsSwitchTitle
+            
+        case .some(.domainList):
+            return UserText.preserveLoginsListTitle
+        
+        default:
+            return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch Section(rawValue: section) {
+        case .some(.domainList):
+            return UserText.preserveLoginsListFooter
+        
+        default:
+            return nil
+        }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -220,13 +231,6 @@ class PreserveLoginsSwitchCell: UITableViewCell {
     @IBAction func onToggle() {
         Pixel.fire(pixel: toggle.isOn ? .preserveLoginsSettingsSwitchOn : .preserveLoginsSettingsSwitchOff)
         PreserveLogins.shared.loginDetectionEnabled = toggle.isOn
-        controller.tableView.reloadData()
-        if !toggle.isOn {
-            controller.clearAll() 
-        } else {
-            controller.refreshModel()
-            controller.endEditing()
-        }
     }
 
 }

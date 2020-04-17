@@ -21,6 +21,10 @@ import Foundation
 
 public class PreserveLogins {
     
+    public struct Notifications {
+        public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")
+    }
+        
     struct Keys {
         static let legacyDetectedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.detectedDomains"
         static let legacyUserDecision = "com.duckduckgo.ios.PreserveLogins.userDecision"
@@ -36,8 +40,12 @@ public class PreserveLogins {
     @UserDefaultsWrapper(key: .preserveLoginsLegacyAllowedDomains, defaultValue: [])
     private(set) public var legacyAllowedDomains: [String]
     
-    @UserDefaultsWrapper(key: .preserveLoginsDetectionEnabled, defaultValue: true)
-    public var loginDetectionEnabled: Bool
+    @UserDefaultsWrapper(key: .preserveLoginsDetectionEnabled, defaultValue: false)
+    public var loginDetectionEnabled: Bool {
+        didSet {
+            NotificationCenter.default.post(name: Notifications.loginDetectionStateChanged, object: nil)
+        }
+    }
 
     init() {
         UserDefaults.standard.removeObject(forKey: Keys.legacyUserDecision)

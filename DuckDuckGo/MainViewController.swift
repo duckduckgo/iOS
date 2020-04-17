@@ -221,7 +221,6 @@ class MainViewController: UIViewController {
         if let navigationController = segue.destination as? UINavigationController,
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self
-            controller.preserveLoginsSettingsDelegate = self
             return
         }
 
@@ -1124,14 +1123,6 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
-}
-
-extension MainViewController: PreserveLoginsSettingsDelegate {
-
-    func forgetAllRequested(completion: @escaping () -> Void) {
-        forgetAllWithAnimation(completion: completion)
-    }
-
 }
 
 extension MainViewController: OnboardingDelegate {

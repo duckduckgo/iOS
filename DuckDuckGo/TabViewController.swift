@@ -168,6 +168,7 @@ class TabViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
+        addLoginDetectionStateObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -363,13 +364,7 @@ class TabViewController: UIViewController {
     }
     
     func fireproofWebsite(domain: String) {
-        
-        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self) {
-            Pixel.fire(pixel: .browsingMenuFireproof)
-            PreserveLogins.shared.addToAllowed(domain: domain)
-            self.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain))
-        }
-        
+        preserveLoginsWorker?.handleUserFireproofing(forDomain: domain)        
     }
     
     private func checkForReloadOnError() {
@@ -453,6 +448,7 @@ class TabViewController: UIViewController {
     
     private func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
+        initUserScripts()
         
         let scripts: [UserScript]
         if let url = url, appUrls.isDuckDuckGo(url: url) {
@@ -494,6 +490,13 @@ class TabViewController: UIViewController {
         }
     }
     
+    private func addLoginDetectionStateObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onLoginDetectionStateChanged),
+                                               name: PreserveLogins.Notifications.loginDetectionStateChanged,
+                                               object: nil)
+    }
+    
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onContentBlockerConfigurationChanged),
@@ -506,6 +509,10 @@ class TabViewController: UIViewController {
                                                selector: #selector(onStorageCacheChange),
                                                name: StorageCacheProvider.didUpdateStorageCacheNotification,
                                                object: nil)
+    }
+    
+    @objc func onLoginDetectionStateChanged() {
+        reload(scripts: true)
     }
     
     @objc func onContentBlockerConfigurationChanged() {

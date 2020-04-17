@@ -22,7 +22,7 @@ import Core
 
 struct PreserveLoginsWorker {
     
-    unowned var controller: UIViewController
+    weak var controller: UIViewController?
     
     func handleLoginDetection(detectedURL: URL?, currentURL: URL?) {
         guard let detectedURL = detectedURL, let currentURL = currentURL else { return }
@@ -30,25 +30,29 @@ struct PreserveLoginsWorker {
         promptToFireproof(domain)
     }
     
+    func handleUserFireproofing(forDomain domain: String) {
+        guard let controller = controller else { return }
+        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: controller, forDomain: domain) {
+            Pixel.fire(pixel: .browsingMenuFireproof)
+            self.addDomain(domain)
+        }
+    }
+    
     private func domainOrPathDidChange(_ detectedURL: URL, _ currentURL: URL) -> Bool {
         return currentURL.host != detectedURL.host || currentURL.path != detectedURL.path
     }
     
     private func promptToFireproof(_ domain: String) {
-        PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller, onConfirmHandler: {
+        guard let controller = controller else { return }
+        PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller, forDomain: domain) {
             self.addDomain(domain)
-        }, onCancelHandler: {
-            self.promptToDisable()
-        })
+        }
     }
     
     private func addDomain(_ domain: String) {
+        guard let controller = controller else { return }
         PreserveLogins.shared.addToAllowed(domain: domain)
         PreserveLoginsAlert.showFireproofToast(usingController: controller, forDomain: domain)
-    }
-    
-    private func promptToDisable() {
-        PreserveLoginsAlert.showDisableLoginDetectionPrompt(usingController: controller)
     }
     
 }

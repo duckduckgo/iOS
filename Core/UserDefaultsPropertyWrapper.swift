@@ -32,13 +32,12 @@ public struct UserDefaultsWrapper<T> {
         case favorites = "com.duckduckgo.ios.home.favorites"
         case keyboardOnNewTab = "com.duckduckgo.ios.keyboard.newtab"
         case keyboardOnAppLaunch = "com.duckduckgo.ios.keyboard.applaunch"
-
-        case covidInfo = "com.duckduckgo.ios.home.covidInfo"
         
         case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
         case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
         case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
 
+        case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
     }
 
     private let key: Key

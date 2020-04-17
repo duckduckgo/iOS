@@ -1078,7 +1078,9 @@ extension MainViewController: AutoClearWorker {
             Instruments.shared.endTimedEvent(for: spid)
 
             if KeyboardSettings().onNewTab {
-                self.enterSearch()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.enterSearch()
+                }
             }
         }
         let window = UIApplication.shared.keyWindow

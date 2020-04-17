@@ -22,6 +22,7 @@ import Core
 
 protocol OmniBarState {
     var clearTextOnStart: Bool { get }
+    var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
     var showCancel: Bool { get }
     var showSiteRating: Bool { get }
@@ -29,7 +30,6 @@ protocol OmniBarState {
     var showClear: Bool { get }
     var showRefresh: Bool { get }
     var showMenu: Bool { get }
-    var showBookmarks: Bool { get }
     var showSettings: Bool { get }
     var name: String { get }
     var onEditingStoppedState: OmniBarState { get }
@@ -42,13 +42,13 @@ protocol OmniBarState {
 
 struct HomeEmptyEditingState: OmniBarState {
     var clearTextOnStart = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
     let showClear = false
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -62,13 +62,13 @@ struct HomeEmptyEditingState: OmniBarState {
 
 struct HomeTextEditingState: OmniBarState {
     var clearTextOnStart = false
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
     let showClear = true
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -82,13 +82,13 @@ struct HomeTextEditingState: OmniBarState {
 
 struct HomeNonEditingState: OmniBarState {
     var clearTextOnStart = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = true
     let showClear = false
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = true
     let showCancel: Bool = false
     var name: String { return Type.name(self) }
@@ -102,13 +102,13 @@ struct HomeNonEditingState: OmniBarState {
 
 struct BrowsingEmptyEditingState: OmniBarState {
     var clearTextOnStart = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
     let showClear = false
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -122,13 +122,13 @@ struct BrowsingEmptyEditingState: OmniBarState {
 
 struct BrowsingTextEditingState: OmniBarState {
     var clearTextOnStart = false
+    var allowsTrackersAnimation = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false
     let showClear = true
     let showRefresh = false
     let showMenu = false
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -142,13 +142,13 @@ struct BrowsingTextEditingState: OmniBarState {
 
 struct BrowsingNonEditingState: OmniBarState {
     var clearTextOnStart = false
+    var allowsTrackersAnimation = true
     var showSearchLoupe = false
     let showSiteRating = true
     let showBackground = true
     let showClear = false
     let showRefresh = true
     let showMenu = true
-    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = false
     var name: String { return Type.name(self) }

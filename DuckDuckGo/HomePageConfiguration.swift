@@ -50,11 +50,9 @@ class HomePageConfiguration {
         case .centered:
             components.append(.centeredSearch(fixed: fixed))
         }
-        
-        if settings.showCovidInfo {
-            components.append(.extraContent)
-        }
 
+        // Add extra content renderer here if needed
+        
         if settings.favorites {
             components.append(.favorites)
             if settings.layout == .centered {

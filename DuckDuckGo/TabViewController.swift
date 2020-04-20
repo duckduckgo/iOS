@@ -142,7 +142,7 @@ class TabViewController: UIViewController {
     }
     
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
-    private var contentBlockerScript = ContentBlockerUserScript()
+    private var contentBlockerScript = TrackerBlockingUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var debugScript = DebugUserScript()
@@ -1062,13 +1062,13 @@ extension TabViewController: UIGestureRecognizerDelegate {
     
 }
 
-extension TabViewController: ContentBlockerUserScriptDelegate {
+extension TabViewController: TrackerBlockingUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerUserScript) -> Bool {
+    func trackerBlockingUserScriptShouldProcessTrackers(_ script: TrackerBlockingUserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker) {
+    func trackerBlockingUserScript(_ script: TrackerBlockingUserScript, detectedTracker tracker: DetectedTracker) {
         siteRating?.trackerDetected(tracker)
         onSiteRatingChanged()
 
@@ -1086,9 +1086,9 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
         }
     }
     
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
+    func trackerBlockingUserScript(_ script: TrackerBlockingUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
         siteRating?.surrogateInstalled(host)
-        contentBlockerUserScript(script, detectedTracker: tracker)
+        trackerBlockingUserScript(script, detectedTracker: tracker)
     }
     
 }

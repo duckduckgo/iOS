@@ -20,15 +20,15 @@
 import WebKit
 import os
 
-public protocol ContentBlockerUserScriptDelegate: NSObjectProtocol {
+public protocol TrackerBlockingUserScriptDelegate: NSObjectProtocol {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerUserScript) -> Bool
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String)
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker)
+    func trackerBlockingUserScriptShouldProcessTrackers(_ script: TrackerBlockingUserScript) -> Bool
+    func trackerBlockingUserScript(_ script: TrackerBlockingUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String)
+    func trackerBlockingUserScript(_ script: TrackerBlockingUserScript, detectedTracker tracker: DetectedTracker)
 
 }
 
-public class ContentBlockerUserScript: NSObject, UserScript {
+public class TrackerBlockingUserScript: NSObject, UserScript {
     
     struct TrackerDetectedKey {
         static let protectionId = "protectionId"
@@ -62,13 +62,13 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     public var messageNames: [String] = [ "trackerDetectedMessage" ]
     
     public weak var storageCache: StorageCache?
-    public weak var delegate: ContentBlockerUserScriptDelegate?
+    public weak var delegate: TrackerBlockingUserScriptDelegate?
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         os_log("trackerDetected %s", log: generalLog, type: .debug, String(describing: message.body))
 
         guard let delegate = delegate else { return }
-        guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
+        guard delegate.trackerBlockingUserScriptShouldProcessTrackers(self) else { return }
         
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
@@ -79,9 +79,9 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         os_log("tracker %s %s", log: generalLog, type: .debug, tracker.blocked ? "BLOCKED" : "ignored", tracker.domain ?? "")
 
         if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
-            delegate.contentBlockerUserScript(self, detectedTracker: tracker, withSurrogate: host)
+            delegate.trackerBlockingUserScript(self, detectedTracker: tracker, withSurrogate: host)
         } else {
-            delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+            delegate.trackerBlockingUserScript(self, detectedTracker: tracker)
         }
     }
             

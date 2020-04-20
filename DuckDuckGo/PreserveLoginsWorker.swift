@@ -24,10 +24,11 @@ struct PreserveLoginsWorker {
     
     weak var controller: UIViewController?
     
-    func handleLoginDetection(detectedURL: URL?, currentURL: URL?) {
-        guard let detectedURL = detectedURL, let currentURL = currentURL else { return }
-        guard let domain = detectedURL.host, domainOrPathDidChange(detectedURL, currentURL) else { return }
+    func handleLoginDetection(detectedURL: URL?, currentURL: URL?) -> Bool {
+        guard let detectedURL = detectedURL, let currentURL = currentURL else { return false }
+        guard let domain = detectedURL.host, domainOrPathDidChange(detectedURL, currentURL) else { return false }
         promptToFireproof(domain)
+        return true
     }
     
     func handleUserFireproofing(forDomain domain: String) {

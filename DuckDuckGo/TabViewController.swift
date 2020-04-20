@@ -778,6 +778,8 @@ extension TabViewController: WKNavigationDelegate {
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
+        
+        // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
     }
     
@@ -814,7 +816,9 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func checkLoginDetectionAfterNavigation() {
-        preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL, currentURL: url)
+        if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL, currentURL: url) ?? false {
+            detectedLoginURL = nil
+        }
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

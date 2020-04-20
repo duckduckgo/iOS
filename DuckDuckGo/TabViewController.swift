@@ -728,8 +728,6 @@ extension TabViewController: WKNavigationDelegate {
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         os_log("webpageLoading started", log: generalLog, type: .debug)
         
-        // isLoginFormDetected = false
-        
         self.httpsForced = httpsForced
         delegate?.showBars()
         

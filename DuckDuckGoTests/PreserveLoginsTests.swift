@@ -25,6 +25,13 @@ class PreserveLoginsTests: XCTestCase {
     override func setUp() {
         UserDefaultsWrapper<Any>.clearAll()
     }
+    
+    func testWhenAllowedDomainsContainsFireproofedDomainThenReturnsTrue() {
+        let logins = PreserveLogins()
+        XCTAssertFalse(logins.isAllowed(fireproofDomain: "example.com"))
+        logins.addToAllowed(domain: "example.com")
+        XCTAssertTrue(logins.isAllowed(fireproofDomain: "example.com"))
+    }
 
     func testWhenLegacyAllowedDomainsThenMigratedAndCleared() {
         UserDefaults.standard.set(["domain1.com"], forKey: UserDefaultsWrapper<Any>.Key.preserveLoginsLegacyAllowedDomains.rawValue)

@@ -27,6 +27,7 @@ struct PreserveLoginsWorker {
     func handleLoginDetection(detectedURL: URL?, currentURL: URL?) -> Bool {
         guard let detectedURL = detectedURL, let currentURL = currentURL else { return false }
         guard let domain = detectedURL.host, domainOrPathDidChange(detectedURL, currentURL) else { return false }
+        guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return false }
         promptToFireproof(domain)
         return true
     }

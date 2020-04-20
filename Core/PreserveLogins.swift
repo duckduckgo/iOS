@@ -77,5 +77,9 @@ public class PreserveLogins {
         // This doesn't get cleared in init because it might need to be migrated
         UserDefaults.standard.removeObject(forKey: Keys.legacyAllowedDomains)
     }
+    
+    public func isAllowed(fireproofDomain domain: String) -> Bool {
+        return allowedDomains.contains(domain)
+    }
 
 }

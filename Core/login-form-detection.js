@@ -65,7 +65,7 @@
     // *** Add listeners
 
     window.addEventListener("DOMContentLoaded", function(event) {                            
-        // Wait before handling submit handlers because sometimes forms are created by JS after the DOM has loaded
+        // Wait before adding submit handlers because sometimes forms are created by JS after the DOM has loaded
         setTimeout(scanForForms, 1000);                            
     });
 

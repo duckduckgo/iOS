@@ -113,6 +113,7 @@
 		851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B22226D062004781BC /* BrowsingTipsTests.swift */; };
 		851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */; };
 		851B12CE2236CAB2004781BC /* HomePageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */; };
+		851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -169,7 +170,6 @@
 		85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */; };
 		85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */; };
 		85449EFF23FDA97000512AAF /* HomePageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFE23FDA96F00512AAF /* HomePageSettings.swift */; };
-		85449F0123FEAF3000512AAF /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */; };
 		854757B124088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854757B024088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift */; };
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
@@ -3802,7 +3802,6 @@
 				8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */,
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
-				85449F0123FEAF3000512AAF /* UserDefaultsExtension.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,
@@ -3879,6 +3878,7 @@
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
+				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,

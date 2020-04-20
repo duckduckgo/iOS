@@ -255,10 +255,7 @@ class TabViewController: UIViewController {
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
 
-        removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
-        addMessageHandlers()
-
-        reloadScripts()
+        reloadUserScripts()
         updateUserAgent()
         
         instrumentation.didPrepareWebView()
@@ -267,17 +264,6 @@ class TabViewController: UIViewController {
             consumeCookiesThenLoadRequest(request)
         } else if let request = request {
             load(urlRequest: request)
-        }
-    }
-
-    private func addMessageHandlers() {
-        let controller = webView.configuration.userContentController
-        generalScripts.forEach { script in
-            
-            script.messageNames.forEach { messageName in
-                controller.add(script, name: messageName)
-            }
-            
         }
     }
 
@@ -396,7 +382,7 @@ class TabViewController: UIViewController {
     
     public func reload(scripts: Bool) {
         if scripts {
-            reloadScripts()
+            reloadUserScripts()
         }
         updateUserAgent()
         webView.reload()
@@ -450,8 +436,10 @@ class TabViewController: UIViewController {
         webView.isHidden = false
     }
     
-    private func reloadScripts() {
+    private func reloadUserScripts() {
+        removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
+        
         initUserScripts()
         
         let scripts: [UserScript]
@@ -465,7 +453,13 @@ class TabViewController: UIViewController {
             webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
+            
+            script.messageNames.forEach { messageName in
+                webView.configuration.userContentController.add(script, name: messageName)
+            }
+
         }
+
     }
     
     private func isDuckDuckGoUrl() -> Bool {

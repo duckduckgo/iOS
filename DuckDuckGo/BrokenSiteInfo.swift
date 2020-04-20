@@ -73,7 +73,7 @@ public struct BrokenSiteInfo {
         guard let url = url else { return "" }
         
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        components?.queryItems = []
+        components?.queryItems = nil
         
         guard let nomalizedUrl = components?.url else { return "" }
         return nomalizedUrl.absoluteString

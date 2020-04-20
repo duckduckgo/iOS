@@ -25,6 +25,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     enum Section: Int {
         case toggle
         case domainList
+        case removeAll
     }
     
     @IBOutlet var doneButton: UIBarButtonItem!
@@ -141,7 +142,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == Section.removeAll.rawValue {
             Pixel.fire(pixel: .preserveLoginsSettingsClearAll)
             clearAll()
             tableView.deselectRow(at: indexPath, animated: true)
@@ -199,7 +200,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     func refreshModel() {
-        model = PreserveLogins.shared.allowedDomains.sorted()
+        model = PreserveLogins.shared.allowedDomains.map({ $0.dropPrefix(prefix: "www.") }).sorted()
         tableView.reloadData()
     }
 }

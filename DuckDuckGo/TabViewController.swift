@@ -93,6 +93,7 @@ class TabViewController: UIViewController {
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
+            checkLoginDetectionAfterNavigation()
         }
     }
     

@@ -142,7 +142,7 @@ struct BrowsingTextEditingState: OmniBarState {
 
 struct BrowsingNonEditingState: OmniBarState {
     var clearTextOnStart = false
-    var allowsTrackersAnimation = true
+    var allowsTrackersAnimation = false
     var showSearchLoupe = false
     let showSiteRating = true
     let showBackground = true

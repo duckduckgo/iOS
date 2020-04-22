@@ -20,22 +20,18 @@
 import UIKit
 import Core
 
-protocol PreserveLoginsSettingsDelegate: NSObjectProtocol {
-
-    func forgetAllRequested(completion: @escaping () -> Void)
-
-}
-
 class PreserveLoginsSettingsViewController: UITableViewController {
     
     enum Section: Int {
+        case toggle
         case domainList
+        case removeAll
     }
+    
+    let wwwPrefix = "www."
     
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
-
-    weak var delegate: PreserveLoginsSettingsDelegate?
 
     var model = [String]()
     
@@ -44,24 +40,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         refreshModel()
         navigationItem.rightBarButtonItems = model.isEmpty ? [] : [ editButton ]
         applyTheme(ThemeManager.shared.currentTheme)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        switch PreserveLogins.shared.userDecision {
-            
-        case .forgetAll:
-            Pixel.fire(pixel: .preserveLoginsSettingsWhileForgetting)
-            
-        case .preserveLogins:
-            Pixel.fire(pixel: .preserveLoginsSettingsWhilePreserving)
-
-        case .unknown:
-            Pixel.fire(pixel: .preserveLoginsSettingsNewUser)
-
-        }
-        
     }
     
     @IBAction func startEditing() {
@@ -83,7 +61,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return tableView.isEditing ? 2 : 1
+        return tableView.isEditing ? 3 : 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -96,7 +74,10 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         let cell: UITableViewCell
         switch Section(rawValue: indexPath.section) {
 
-        case .some(Section.domainList):
+        case .some(.toggle):
+            cell = createSwitchCell(forTableView: tableView, withTheme: theme)
+
+        case .some(.domainList):
             if model.isEmpty {
                 cell = createNoDomainCell(forTableView: tableView, withTheme: theme)
             } else {
@@ -111,7 +92,26 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Section(rawValue: section) == Section.domainList ? UserText.preserveLoginsDomainListHeaderTitle : nil
+        switch Section(rawValue: section) {
+        case .some(.toggle):
+            return UserText.preserveLoginsSwitchTitle
+            
+        case .some(.domainList):
+            return UserText.preserveLoginsListTitle
+        
+        default:
+            return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch Section(rawValue: section) {
+        case .some(.domainList):
+            return UserText.preserveLoginsListFooter
+        
+        default:
+            return nil
+        }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -144,7 +144,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == Section.removeAll.rawValue {
             Pixel.fire(pixel: .preserveLoginsSettingsClearAll)
             clearAll()
             tableView.deselectRow(at: indexPath, animated: true)
@@ -157,7 +157,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
-        cell.toggle.isOn = PreserveLogins.shared.userDecision == .preserveLogins
+        cell.toggle.isOn = PreserveLogins.shared.loginDetectionEnabled
         cell.toggle.isEnabled = !tableView.isEditing
         cell.controller = self
         cell.decorate(with: theme)
@@ -170,7 +170,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.faviconImage?.loadFavicon(forDomain: model[index])
-        cell.label?.text = model[index]
+        cell.label?.text = model[index].dropPrefix(prefix: wwwPrefix)
         cell.decorate(with: theme)
         return cell
     }
@@ -192,7 +192,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         guard !model.isEmpty else { return }
         
         PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
-            PreserveLogins.shared.userDecision = .preserveLogins
             self?.refreshModel()
         }, confirmed: { [weak self] in
             WebCacheManager.shared.removeCookies(forDomains: self?.model ?? []) { }
@@ -203,7 +202,9 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     func refreshModel() {
-        model = PreserveLogins.shared.allowedDomains.sorted()
+        model = PreserveLogins.shared.allowedDomains.sorted(by: { (lhs, rhs) -> Bool in
+            return lhs.dropPrefix(prefix: wwwPrefix) < rhs.dropPrefix(prefix: wwwPrefix)
+        })
         tableView.reloadData()
     }
 }
@@ -234,14 +235,7 @@ class PreserveLoginsSwitchCell: UITableViewCell {
 
     @IBAction func onToggle() {
         Pixel.fire(pixel: toggle.isOn ? .preserveLoginsSettingsSwitchOn : .preserveLoginsSettingsSwitchOff)
-        PreserveLogins.shared.userDecision = toggle.isOn ? .preserveLogins : .forgetAll
-        controller.tableView.reloadData()
-        if !toggle.isOn {
-            controller.clearAll()
-        } else {
-            controller.refreshModel()
-            controller.endEditing()
-        }
+        PreserveLogins.shared.loginDetectionEnabled = toggle.isOn
     }
 
 }

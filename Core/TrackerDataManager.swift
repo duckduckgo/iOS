@@ -109,7 +109,7 @@ public class TrackerDataManager {
     }
     
     static var embeddedUrl: URL {
-        return Bundle(for: Self.self).url(forResource: "trackerData", withExtension: "json")!
+        return Bundle.core.url(forResource: "trackerData", withExtension: "json")!
     }
 
     static func loadEmbeddedAsData() -> Data {

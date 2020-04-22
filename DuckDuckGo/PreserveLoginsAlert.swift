@@ -21,52 +21,44 @@ import Foundation
 import Core
 
 class PreserveLoginsAlert {
+  
+    static let wwwPrefix = "www."
     
-    static func showConfirmFireproofWebsite(usingController controller: UIViewController, onConfirmHandler: @escaping() -> Void) {
+    static func showFireproofToast(usingController controller: UIViewController, forDomain domain: String) {
+        controller.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain.dropPrefix(prefix: wwwPrefix)))
+    }
+    
+    static func showConfirmFireproofWebsite(usingController controller: UIViewController,
+                                            forDomain domain: String,
+                                            onConfirmHandler: @escaping () -> Void) {
         let prompt = UIAlertController(title: nil,
-                                       message: UserText.preserverLoginsFireproofWebsiteMessage,
+                                       message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
                                        preferredStyle: isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsMenuTitle, style: .default) {
+        prompt.addAction(title: UserText.preserveLoginsFireproofConfirm, style: .default) {
             onConfirmHandler()
         }
         prompt.addAction(title: UserText.actionCancel, style: .cancel)
         controller.present(prompt, animated: true)
     }
     
-    static func showInitialPromptIfNeeded(usingController controller: UIViewController, completion: @escaping () -> Void) {
-        guard #available(iOS 13, *) else {
-            completion()
-            return
+    static func showFireproofWebsitePrompt(usingController controller: UIViewController,
+                                           forDomain domain: String,
+                                           onConfirmHandler: @escaping () -> Void) {
+        let prompt = UIAlertController(title: nil,
+                                       message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+                                       preferredStyle: isPad ? .alert : .actionSheet)
+        prompt.addAction(title: UserText.preserveLoginsFireproofConfirm) {
+            onConfirmHandler()
         }
-        
-        let logins = PreserveLogins.shared
-        guard logins.userDecision == .unknown, !logins.detectedDomains.isEmpty else {
-            completion()
-            return
-        }
-
-        let dateShown = Date()
-        let prompt = UIAlertController(title: UserText.preserveLoginsTitle,
-                                       message: UserText.preserveLoginsMessage,
-                                       preferredStyle: .alert)
-        prompt.addAction(title: UserText.preserveLoginsRemember) {
-            PreserveLogins.shared.userDecision = .preserveLogins
-            TimedPixel(.preserveLoginsUserDecisionPreserve, date: dateShown).fire()
-            completion()
-        }
-        prompt.addAction(title: UserText.preserveLoginsForget) {
-            PreserveLogins.shared.userDecision = .forgetAll
-            TimedPixel(.preserveLoginsUserDecisionForget, date: dateShown).fire()
-            completion()
-        }
+        prompt.addAction(title: UserText.preserveLoginsFireproofDefer, style: .cancel)
         controller.present(prompt, animated: true)
     }
     
     static func showClearAllAlert(usingController controller: UIViewController, cancelled: @escaping () -> Void, confirmed: @escaping () -> Void) {
         
         if isPad {
-            let alert = UIAlertController(title: UserText.preserveLoginsSignOut, message: nil, preferredStyle: .alert)
-            alert.addAction(title: "OK", style: .destructive) {
+            let alert = UIAlertController(title: UserText.preserveLoginsRemoveAll, message: nil, preferredStyle: .alert)
+            alert.addAction(title: UserText.preserveLoginsRemoveAllOk, style: .destructive) {
                 confirmed()
             }
             alert.addAction(title: UserText.actionCancel, style: .cancel) {
@@ -75,7 +67,7 @@ class PreserveLoginsAlert {
             controller.present(alert, animated: true)
         } else {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(title: UserText.preserveLoginsSignOut, style: .destructive) {
+            alert.addAction(title: UserText.preserveLoginsRemoveAll, style: .destructive) {
                 confirmed()
             }
             alert.addAction(title: UserText.actionCancel, style: .cancel) {

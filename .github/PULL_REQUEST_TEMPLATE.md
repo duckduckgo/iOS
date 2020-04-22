@@ -13,6 +13,20 @@ CC:
 1.
 1.
 
+**Device Testing**:
+
+* [ ] iPhone SE
+* [ ] iPhone 8
+* [ ] iPhone X
+* [ ] iPad
+
+**OS Testing**:
+
+* [ ] iOS 10
+* [ ] iOS 11
+* [ ] iOS 12
+* [ ] iOS 13
+
 
 ---
 ###### Internal references:

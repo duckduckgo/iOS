@@ -22,6 +22,33 @@ import XCTest
 
 class WebCacheManagerTests: XCTestCase {
     
+    func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() {
+        let logins = MockPreservedLogins(domains: [
+            "mobile.twitter.com"
+        ])
+
+        let dataStore = MockDataStore()
+        dataStore.cookieStore = MockHTTPCookieStore(cookies: [
+            .make(domain: "twitter.com"),
+            .make(domain: ".twitter.com"),
+            .make(domain: "mobile.twitter.com"),
+            .make(domain: "fake.mobile.twitter.com"),
+            .make(domain: ".fake.mobile.twitter.com")
+        ])
+
+        let cookieStorage = MockCookieStorage()
+        
+        let expect = expectation(description: #function)
+        WebCacheManager.shared.clear(dataStore: dataStore, appCookieStorage: cookieStorage, logins: logins) {
+            expect.fulfill()
+        }
+        wait(for: [expect], timeout: 5.0)
+        
+        XCTAssertEqual(cookieStorage.cookies.count, 2)
+        XCTAssertEqual(cookieStorage.cookies[0].domain, ".twitter.com")
+        XCTAssertEqual(cookieStorage.cookies[1].domain, "mobile.twitter.com")
+    }
+    
     func testWhenRemovingCookieForDomainThenItIsRemovedFromCookieStorage() {
 
         let dataStore = MockDataStore()

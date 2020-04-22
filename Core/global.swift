@@ -34,3 +34,14 @@ struct Global {
         return groupIdPrefix
     }()
 }
+
+/// Allows Bundle.for() calls to be made without comprising encapsulation
+public class CoreModule { }
+
+extension Bundle {
+    
+    public static var core: Bundle {
+        return Bundle(for: CoreModule.self)
+    }
+    
+}

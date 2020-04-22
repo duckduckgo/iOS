@@ -21,90 +21,40 @@ import Foundation
 
 public class PreserveLogins {
     
-    public enum UserDecision: Int {
-
-        static let `default` = UserDecision.unknown
-        
-        case forgetAll = 0
-        case preserveLogins
-        case unknown
-
+    public struct Notifications {
+        public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")
     }
-    
-    struct Keys {
-        static let detectedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.detectedDomains"
-        static let allowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
-        static let userDecision = "com.duckduckgo.ios.PreserveLogins.userDecision"
-        static let userPrompted = "com.duckduckgo.ios.PreserveLogins.userPrompted"
         
-        static let legacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
+    struct Keys {
+        static let legacyDetectedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.detectedDomains"
+        static let legacyUserDecision = "com.duckduckgo.ios.PreserveLogins.userDecision"
+        static let legacyUserPrompted = "com.duckduckgo.ios.PreserveLogins.userPrompted"
+        static let legacyAllowedDomains = UserDefaultsWrapper<Any>.Key.preserveLoginsLegacyAllowedDomains.rawValue
     }
     
     public static let shared = PreserveLogins()
     
-    private(set) public var allowedDomains: [String] {
-        get {
-            return userDefaults.array(forKey: Keys.allowedDomains) as? [String] ?? []
-        }
-        
-        set {
-            let domains = [String](Set<String>(newValue))
-            userDefaults.set(domains, forKey: Keys.allowedDomains)
-        }
-    }
+    @UserDefaultsWrapper(key: .preserveLoginsAllowedDomains, defaultValue: [])
+    private(set) public var allowedDomains: [String]
 
-    private(set) public var legacyAllowedDomains: [String] {
-        get {
-            return userDefaults.array(forKey: Keys.legacyAllowedDomains) as? [String] ?? []
-        }
-        
-        set {
-            let domains = [String](Set<String>(newValue))
-            userDefaults.set(domains, forKey: Keys.legacyAllowedDomains)
-        }
-    }
+    @UserDefaultsWrapper(key: .preserveLoginsLegacyAllowedDomains, defaultValue: [])
+    private(set) public var legacyAllowedDomains: [String]
     
-    private(set) public var detectedDomains: [String] {
-        get {
-            return userDefaults.array(forKey: Keys.detectedDomains) as? [String] ?? []
-        }
-        
-        set {
-            let domains = [String](Set<String>(newValue))
-            userDefaults.set(domains, forKey: Keys.detectedDomains)
+    @UserDefaultsWrapper(key: .preserveLoginsDetectionEnabled, defaultValue: false)
+    public var loginDetectionEnabled: Bool {
+        didSet {
+            NotificationCenter.default.post(name: Notifications.loginDetectionStateChanged, object: nil)
         }
     }
 
-    public var userDecision: UserDecision {
-        get {
-            let decision = userDefaults.object(forKey: Keys.userDecision) as? Int ?? UserDecision.default.rawValue
-            return UserDecision(rawValue: decision) ?? UserDecision.default
-        }
-        
-        set {
-            userDefaults.set(newValue.rawValue, forKey: Keys.userDecision)
-            if newValue == .preserveLogins {
-                allowedDomains += detectedDomains
-                detectedDomains = []
-            } else {
-                detectedDomains = allowedDomains
-                allowedDomains = []
-            }
-        }
-    }
-    
-    private var userDefaults: UserDefaults
-
-    init(userDefaults: UserDefaults = UserDefaults.standard) {
-        self.userDefaults = userDefaults
+    init() {
+        UserDefaults.standard.removeObject(forKey: Keys.legacyUserDecision)
+        UserDefaults.standard.removeObject(forKey: Keys.legacyUserPrompted)
+        UserDefaults.standard.removeObject(forKey: Keys.legacyDetectedDomains)
     }
     
     public func addToAllowed(domain: String) {
         allowedDomains += [domain]
-    }
-
-    public func addToDetected(domain: String) {
-        detectedDomains += [domain]
     }
 
     public func isAllowed(cookieDomain: String) -> Bool {
@@ -120,37 +70,16 @@ public class PreserveLogins {
     }
 
     public func clearAll() {
-        detectedDomains = []
         allowedDomains = []
     }
     
-    public func clearDetected() {
-        detectedDomains = []
+    public func clearLegacyAllowedDomains() {
+        // This doesn't get cleared in init because it might need to be migrated
+        UserDefaults.standard.removeObject(forKey: Keys.legacyAllowedDomains)
     }
     
-    public func clearLegacyAllowedDomains() {
-        legacyAllowedDomains = []
-    }
-
-}
-
-extension PreserveLogins {
-
-    public var forgetAllPixelParameters: [String: String] {
-
-        let value: String
-        switch userDecision {
-        case .forgetAll:
-            value = "f"
-        case .preserveLogins:
-            value = "p"
-        case .unknown:
-            value = "u"
-        }
-
-        return [
-            "pls": value
-        ]
+    public func isAllowed(fireproofDomain domain: String) -> Bool {
+        return allowedDomains.contains(domain)
     }
 
 }

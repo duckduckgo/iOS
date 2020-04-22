@@ -76,7 +76,7 @@ extension TabViewController {
         guard #available(iOS 13, *) else { return nil }
         guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
         guard !PreserveLogins.shared.isAllowed(cookieDomain: domain) else { return nil }
-        return UIAlertAction(title: UserText.preserveLoginsMenuTitle, style: .default) { [weak self] _ in
+        return UIAlertAction(title: UserText.preserveLoginsFireproofConfirm, style: .default) { [weak self] _ in
             self?.fireproofWebsite(domain: domain)
         }
     }

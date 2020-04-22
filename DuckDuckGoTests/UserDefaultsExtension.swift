@@ -18,6 +18,7 @@
 //
 
 import Foundation
+@testable import Core
 
 extension UserDefaults {
 
@@ -27,4 +28,14 @@ extension UserDefaults {
         }
     }
 
+}
+
+extension UserDefaultsWrapper {
+    
+    public static func clearAll() {
+        Key.allCases.forEach { key in
+            UserDefaults.standard.removeObject(forKey: key.rawValue)
+        }
+    }
+    
 }

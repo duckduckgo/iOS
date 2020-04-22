@@ -19,6 +19,14 @@
 
 var duckduckgoContentBlocking = function() {
 
+   function trackerDetected(data) {
+       try {
+           webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
+       } catch(error) {
+           // webkit might not be defined
+       }
+   }
+
     // tld.js
     var tldjs = {
 
@@ -504,7 +512,7 @@ _utf8_encode : function (string) {
             blocked = true;
         }
 
-        duckduckgoMessaging.trackerDetected({
+        trackerDetected({
             url: trackerUrl,
             blocked: blocked,
             reason: result.reason,
@@ -532,6 +540,78 @@ _utf8_encode : function (string) {
 
     // Init
     (function() {
+        
+        duckduckgoDebugMessaging.log("installing beforeload detection")
+        document.addEventListener("beforeload", function(event) {
+
+            if (event.target.nodeName == "LINK") {
+                type = event.target.rel
+            } else if (event.target.nodeName == "IMG") {
+                type = "image"
+            } else if (event.target.nodeName == "IFRAME") {
+                type = "subdocument"
+            } else {
+                type = event.target.nodeName
+            }
+
+            duckduckgoDebugMessaging.log("checking " + event.url + " (" + type + ")");
+            if (shouldBlock(event.url, type)) {
+                duckduckgoDebugMessaging.log("blocking beforeload")
+                event.preventDefault()
+                event.stopPropagation()
+            } else {
+                duckduckgoDebugMessaging.log("don't block " + event.url);
+                return
+            }
+        }, true)
+
+
+        try {
+            duckduckgoDebugMessaging.log("installing image src detection")
+
+            var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
+            delete Image.prototype.src;
+            Object.defineProperty(Image.prototype, 'src', {
+                get: function() {
+                    return originalImageSrc.get.call(this)
+                },
+                set: function(value) {
+
+                    var instance = this
+                    if (shouldBlock(value, "image")) {
+                        duckduckgoDebugMessaging.log("blocking image src: " + value)
+                    } else {
+                        originalImageSrc.set.call(instance, value);
+                        duckduckgoDebugMessaging.log("allowing image src: " + value)
+                    }
+                    
+                }
+            })
+
+        } catch(error) {
+            duckduckgoDebugMessaging.log("failed to install image src detection")
+        }
+
+        try {
+            duckduckgoDebugMessaging.log("installing xhr detection")
+
+            var xhr = XMLHttpRequest.prototype
+            var originalOpen = xhr.open
+
+            xhr.open = function() {
+                var args = arguments
+                var url = arguments[1]
+                if (shouldBlock(url, "xmlhttprequest")) {
+                    args[1] = "about:blank"
+                }
+                duckduckgoDebugMessaging.log("sending xhr " + url + " to " + args[1])
+                return originalOpen.apply(this, args);
+            }
+
+        } catch(error) {
+            duckduckgoDebugMessaging.log("failed to install xhr detection")
+        }
+        
         duckduckgoDebugMessaging.log("content blocking initialised")
     })()
 

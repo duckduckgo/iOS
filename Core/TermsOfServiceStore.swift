@@ -36,7 +36,7 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
 
     public init() {
         let parser = TermsOfServiceListParser()
-        let bundle = Bundle(for: EmbeddedTermsOfServiceStore.self)
+        let bundle = Bundle.core
         let fileLoader = FileLoader()
         guard let data = try? fileLoader.load(fileName: Constants.fileName, fromBundle: bundle) else {
             fatalError("Unable to load \(Constants.fileName) from bundle \(bundle)")

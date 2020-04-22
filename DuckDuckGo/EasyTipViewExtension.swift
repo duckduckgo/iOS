@@ -61,6 +61,7 @@ extension EasyTipView {
             self.dismiss()
             completion()
             NotificationCenter.default.removeObserver(token!)
+            token = nil // break reference cycle
         }
     }
     

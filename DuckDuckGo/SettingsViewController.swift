@@ -44,7 +44,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var accessoryLabels: [UILabel]!
     
     weak var homePageSettingsDelegate: HomePageSettingsDelegate?
-    weak var preserveLoginsSettingsDelegate: PreserveLoginsSettingsDelegate?
 
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
@@ -79,11 +78,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? PreserveLoginsSettingsViewController {
-            controller.delegate = preserveLoginsSettingsDelegate
-            return
-        }
-
         if segue.destination is AutoClearSettingsViewController {
             Pixel.fire(pixel: .autoClearSettingsShown)
             return

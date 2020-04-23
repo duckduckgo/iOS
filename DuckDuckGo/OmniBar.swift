@@ -29,8 +29,8 @@ class OmniBar: UIView {
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
+    @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var trackersStackView: TrackersStackView!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
@@ -127,8 +127,8 @@ class OmniBar: UIView {
     }
     
     public func showTrackers(_ trackers: [DetectedTracker]) {
-        guard trackersAnimator.configure(trackersStackView, toDisplay: trackers),
-            state.allowsTrackersAnimation else { return }
+//        guard trackersAnimator.configure(trackersStackView, toDisplay: trackers),
+//            state.allowsTrackersAnimation else { return }
         
         trackersAnimator.startAnimating(in: self)
     }
@@ -324,10 +324,10 @@ extension OmniBar: Themable {
         editingBackground?.borderColor = theme.searchBarBackgroundColor
 
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
-        searchStackContainer?.tintColor = theme.barTintColor
+        siteRatingContainer.tintColor = theme.barTintColor
+        siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
-        trackersStackView.tintColor = theme.barTintColor
-        trackersStackView.crossOutBackgroundColor = theme.searchBarBackgroundColor
+        searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text?.punycodedUrl {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

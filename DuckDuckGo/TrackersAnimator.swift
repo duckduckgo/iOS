@@ -35,8 +35,8 @@ class TrackersAnimator {
     }
     
     func setup(_ omniBar: OmniBar) {
-        omniBar.trackersStackView.alpha = 0
-        omniBar.trackersStackView.isHidden = true
+        omniBar.siteRatingContainer.widthEqualToSiteRating.isActive = true
+        omniBar.siteRatingContainer.widthToAccommodateTrackerIcons.isActive = false
     }
     
     func configure(_ trackersStackView: TrackersStackView,
@@ -78,14 +78,15 @@ class TrackersAnimator {
     
     func startAnimating(in omniBar: OmniBar) {
         UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
-            omniBar.trackersStackView.isHidden = false
-            omniBar.trackersStackView.alpha = 1
+//            omniBar.trackersStackView.isHidden = false
+//            omniBar.trackersStackView.alpha = 1
+            omniBar.siteRatingContainer.widthEqualToSiteRating.isActive = false
+            omniBar.siteRatingContainer.widthToAccommodateTrackerIcons.isActive = true
             omniBar.textField.alpha = 0
-            omniBar.siteRatingView.alpha = 0
         }, completion: { _ in
             
             let animateCrossOut = DispatchWorkItem(block: {
-                omniBar.trackersStackView.crossOutTrackerIcons(duration: Constants.crossOutDuration)
+                omniBar.siteRatingContainer.crossOutTrackerIcons(duration: Constants.crossOutDuration)
                 
                 let hideTrackers = DispatchWorkItem {
                     self.stopAnimating(in: omniBar)
@@ -106,12 +107,12 @@ class TrackersAnimator {
         nextAnimation = nil
         
         UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
-            omniBar.trackersStackView.alpha = 0
+            omniBar.siteRatingContainer.widthEqualToSiteRating.isActive = true
+            omniBar.siteRatingContainer.widthToAccommodateTrackerIcons.isActive = false
             omniBar.textField.alpha = 1
-            omniBar.siteRatingView.alpha = 1
         }, completion: { _ in
-            omniBar.trackersStackView.isHidden = true
-            omniBar.trackersStackView.resetTrackerIcons()
+//            omniBar.trackersStackView.isHidden = true
+            omniBar.siteRatingContainer.resetTrackerIcons()
         })
     }
     

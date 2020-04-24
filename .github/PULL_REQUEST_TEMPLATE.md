@@ -13,6 +13,17 @@ CC:
 1.
 1.
 
+<!--
+Do not delete these, they are reminders to test against different device configurations.  
+
+Before submitting a PR, please ensure you have tested a reasonable combination of the following.  Using a simulator where a physical device is unavailable is acceptable.
+-->
+
+**Orientation Testing**:
+
+* [ ] Portrait
+* [ ] Landscape
+
 **Device Testing**:
 
 * [ ] iPhone SE
@@ -32,3 +43,4 @@ CC:
 ###### Internal references:
 [Software Engineering Expectations](https://app.asana.com/0/59792373528535/199064865822552)
 [Technical Design Template](https://app.asana.com/0/59792373528535/184709971311943)
+

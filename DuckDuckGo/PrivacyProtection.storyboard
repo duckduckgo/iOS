@@ -408,7 +408,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-Ab-2VI">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-Ab-2VI">
                                             <rect key="frame" x="20" y="20" width="30" height="22"/>
                                             <accessibility key="accessibilityConfiguration" identifier="backButton"/>
                                             <constraints>
@@ -706,7 +706,7 @@
                                                 <constraint firstAttribute="height" constant="75" id="xN7-nQ-eyz"/>
                                             </constraints>
                                         </view>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ict-Tf-vBn">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ict-Tf-vBn">
                                             <rect key="frame" x="20" y="20" width="30" height="22"/>
                                             <accessibility key="accessibilityConfiguration" identifier="backButton"/>
                                             <constraints>
@@ -1005,7 +1005,7 @@
                                                 <constraint firstItem="hx0-Fc-Kk1" firstAttribute="centerX" secondItem="qwM-eP-cbc" secondAttribute="centerX" id="yyL-fN-okf"/>
                                             </constraints>
                                         </view>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0O-GE-gIK">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0O-GE-gIK">
                                             <rect key="frame" x="20" y="20" width="30" height="22"/>
                                             <accessibility key="accessibilityConfiguration" identifier="backButton"/>
                                             <constraints>
@@ -1222,7 +1222,7 @@
                                                 <constraint firstItem="JrS-AS-COd" firstAttribute="centerY" secondItem="V7a-BI-Cm8" secondAttribute="centerY" id="szE-gj-hqc"/>
                                             </constraints>
                                         </view>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqk-Al-R2h">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqk-Al-R2h">
                                             <rect key="frame" x="20" y="20" width="30" height="22"/>
                                             <accessibility key="accessibilityConfiguration" identifier="backButton"/>
                                             <constraints>
@@ -1463,7 +1463,7 @@
                                                         <segue destination="8eA-o1-lUc" kind="embed" id="lZI-wu-ujD"/>
                                                     </connections>
                                                 </containerView>
-                                                <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0FD-as-X0W">
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0FD-as-X0W">
                                                     <rect key="frame" x="20" y="90.666666666666671" width="30" height="22"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="backButton"/>
                                                     <constraints>

@@ -23,6 +23,12 @@ import UIKit
 import Core
 
 public class SiteRatingView: UIView {
+    
+    enum Mode {
+        case hidden
+        case base
+        case enhanced
+    }
 
     static let gradeImages: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Indicator Grade A"),
@@ -37,6 +43,7 @@ public class SiteRatingView: UIView {
     @IBOutlet weak var circleIndicator: UIImageView!
 
     private var siteRating: SiteRating?
+    var mode: Mode = .hidden
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,9 +64,19 @@ public class SiteRatingView: UIView {
 
         guard let storageCache = storageCache else { return }
         guard let siteRating = siteRating else { return }
-
+        
         let grades = siteRating.scores
-        let grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+        let grade: Grade.Score
+        switch mode {
+        case .hidden:
+            circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ", iconSize: circleIndicator.bounds.size)
+            return
+        case .base:
+            grade = grades.site
+        case .enhanced:
+            grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+        }
+
         circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
         circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
     }

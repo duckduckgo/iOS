@@ -33,24 +33,14 @@ class SiteRatingContainerView: UIView {
     @IBOutlet var siteRatingView: SiteRatingView!
     @IBOutlet var trackerIcons: [UIImageView]!
     
-    @IBOutlet var widthEqualToSiteRating: NSLayoutConstraint!
-    @IBOutlet var widthToAccommodateTrackerIcons: NSLayoutConstraint!
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//
-//        var startX = siteRatingView.frame.origin.x + siteRatingView.frame.size.width
-//        
-//        for view in trackerIcons {
-//            view.frame.origin.x = startX
-//            startX += view.frame.size.width + Constants.iconSpacing
-//        }
-//    }
-    
     var crossOutBackgroundColor: UIColor = .clear
     
+    override var intrinsicContentSize: CGSize {
+        return siteRatingView.bounds.size
+    }
+    
     func crossOutTrackerIcons(duration: TimeInterval) {
-        trackerIcons.forEach { imageView in
+        trackerIcons.prefix(2).forEach { imageView in
             animateCrossOut(for: imageView, duration: duration)
         }
     }

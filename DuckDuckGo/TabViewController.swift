@@ -475,7 +475,7 @@ class TabViewController: UIViewController {
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
+            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
                 controller.popoverPresentationController?.sourceView = siteRatingView
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
@@ -737,6 +737,9 @@ extension TabViewController: WKNavigationDelegate {
         } else {
             resetSiteRating()
         }
+        
+        
+        chromeDelegate?.omniBar.siteRatingContainer.siteRatingView.mode = .hidden
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)

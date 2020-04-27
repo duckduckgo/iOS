@@ -1,5 +1,5 @@
 //
-//  TrackersStackView.swift
+//  SearchFieldContainerView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,16 +19,19 @@
 
 import UIKit
 
-class TrackersStackView: UIStackView {
+class SearchFieldContainerView: UIView {
     
-    struct Constants {
-        static let crossOutOffset: CGFloat = 1.0
-        
-        static let crossOutBackgroundLayerKey = "crossOutBackground"
-        static let crossOutForegroundLayerKey = "crossOutForeground"
+    @IBOutlet var privacyViewWidth: NSLayoutConstraint!
+    @IBOutlet var textFieldOffset: NSLayoutConstraint!
+    
+    
+    func hideSiteRatingView() {
+        privacyViewWidth.constant = 0
+        textFieldOffset.constant = 0
     }
     
-    @IBOutlet var trackerIcons: [UIImageView]!
-    
-
+    func revealSiteRatingView() {
+        privacyViewWidth.constant = 150
+        textFieldOffset.constant = 30
+    }
 }

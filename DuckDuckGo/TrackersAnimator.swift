@@ -35,33 +35,36 @@ class TrackersAnimator {
     }
     
     func setup(_ omniBar: OmniBar) {
-        omniBar.siteRatingContainer.widthEqualToSiteRating.isActive = true
-        omniBar.siteRatingContainer.widthToAccommodateTrackerIcons.isActive = false
+        
     }
     
-    func configure(_ trackersStackView: TrackersStackView,
+    func configure(_ omniBar: OmniBar,
                    toDisplay trackers: [DetectedTracker]) -> Bool {
         
         let entities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
             return (l.prevalence ?? 0) > (r.prevalence ?? 0)
         }.filter { $0.displayName != nil }
         
-        guard !entities.isEmpty else { return false }
+//        guard !entities.isEmpty else { return false }
         
-        let imageViews: [UIImageView]! = trackersStackView.trackerIcons
+        let imageViews: [UIImageView]! = omniBar.siteRatingContainer.trackerIcons
         
         var iconImages: [UIImage]
         let iconSize = CGSize(width: Constants.iconWidth, height: Constants.iconHeight)
         if entities.count > imageViews.count {
-            iconImages = entities.prefix(2).compactMap { entity -> UIImage? in
-                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!, iconSize: iconSize)
+            iconImages = entities.prefix(3).compactMap { entity -> UIImage? in
+                return PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
             }
-            iconImages.append(UIImage(named: "PP Network Icon more")!)
+//            iconImages.append(PrivacyProtectionIconSource.iconImage(withString: "+4", iconSize: iconSize))
         } else {
             iconImages = entities.prefix(3).compactMap { entity -> UIImage? in
-                return PrivacyProtectionIconSource.iconImage(for: entity.displayName!, iconSize: iconSize)
+                return PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
             }
         }
+        
+//        iconImages = [PrivacyProtectionIconSource.iconImage(withString: "+2", iconSize: iconSize),
+//                      PrivacyProtectionIconSource.iconImage(withString: "+9", iconSize: iconSize),
+//                      PrivacyProtectionIconSource.iconImage(withString: "+10", iconSize: iconSize)]
         
         for imageView in imageViews {
             guard !iconImages.isEmpty else {
@@ -77,19 +80,34 @@ class TrackersAnimator {
     }
     
     func startAnimating(in omniBar: OmniBar) {
-        UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
-//            omniBar.trackersStackView.isHidden = false
-//            omniBar.trackersStackView.alpha = 1
-            omniBar.siteRatingContainer.widthEqualToSiteRating.isActive = false
-            omniBar.siteRatingContainer.widthToAccommodateTrackerIcons.isActive = true
-            omniBar.textField.alpha = 0
-        }, completion: { _ in
+
+        guard let container = omniBar.siteRatingContainer else { return }
+        
+        UIView.animateKeyframes(withDuration: Constants.hideRevealAnimatonTime, delay: 0, options: [], animations: {
             
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0) {
+                for icon in container.trackerIcons {
+                    icon.center.x = container.siteRatingView.center.x
+                    icon.alpha = 1
+                }
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
+                
+                omniBar.textField.alpha = 0
+    
+                var offset = container.siteRatingView.frame.origin.x + container.siteRatingView.frame.size.width + 1
+                for icon in omniBar.siteRatingContainer.trackerIcons {
+                    icon.frame.origin.x = offset
+                    offset += 5 + icon.frame.size.width
+                }
+            }
+        }, completion: { _ in
             let animateCrossOut = DispatchWorkItem(block: {
                 omniBar.siteRatingContainer.crossOutTrackerIcons(duration: Constants.crossOutDuration)
                 
                 let hideTrackers = DispatchWorkItem {
-                    self.stopAnimating(in: omniBar)
+                    self.collapseIcons(in: omniBar)
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + Constants.delayAfterCrossOut,
                                               execute: hideTrackers)
@@ -100,6 +118,34 @@ class TrackersAnimator {
                                           execute: animateCrossOut)
             self.nextAnimation = animateCrossOut
         })
+        
+    }
+    
+    func collapseIcons(in omniBar: OmniBar) {
+        nextAnimation?.cancel()
+        nextAnimation = nil
+        
+        UIView.transition(with: omniBar.siteRatingView,
+                          duration: Constants.hideRevealAnimatonTime,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            omniBar.siteRatingView.mode = .enhanced
+                            omniBar.siteRatingView.refresh(with: AppDependencyProvider.shared.storageCache.current)
+        },
+                          completion: nil)
+        
+        UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
+            guard let container = omniBar.siteRatingContainer else { return }
+            for icon in container.trackerIcons {
+                icon.center.x = container.siteRatingView.center.x
+                icon.alpha = 0
+            }
+            omniBar.textField.alpha = 1
+        }, completion: { _ in
+            omniBar.siteRatingContainer.resetTrackerIcons()
+        })
+        
+        
     }
     
     func stopAnimating(in omniBar: OmniBar) {
@@ -107,11 +153,9 @@ class TrackersAnimator {
         nextAnimation = nil
         
         UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
-            omniBar.siteRatingContainer.widthEqualToSiteRating.isActive = true
-            omniBar.siteRatingContainer.widthToAccommodateTrackerIcons.isActive = false
+            omniBar.textField.isHidden = false
             omniBar.textField.alpha = 1
         }, completion: { _ in
-//            omniBar.trackersStackView.isHidden = true
             omniBar.siteRatingContainer.resetTrackerIcons()
         })
     }

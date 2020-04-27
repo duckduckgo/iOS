@@ -28,7 +28,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchLoupe: UIView!
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
-    @IBOutlet weak var siteRatingView: SiteRatingView!
+    @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
     @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
@@ -50,6 +50,10 @@ class OmniBar: UIView {
     
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
+    }
+    
+    var siteRatingView: SiteRatingView {
+        return siteRatingContainer.siteRatingView
     }
 
     override func awakeFromNib() {
@@ -127,8 +131,7 @@ class OmniBar: UIView {
     }
     
     public func showTrackers(_ trackers: [DetectedTracker]) {
-//        guard trackersAnimator.configure(trackersStackView, toDisplay: trackers),
-//            state.allowsTrackersAnimation else { return }
+        guard trackersAnimator.configure(self, toDisplay: trackers) else { return }
         
         trackersAnimator.startAnimating(in: self)
     }
@@ -143,9 +146,14 @@ class OmniBar: UIView {
             }
             state = newState
         }
+        
+        if state.showSiteRating {
+            searchFieldContainer.revealSiteRatingView()
+        } else {
+            searchFieldContainer.hideSiteRatingView()
+        }
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
-        setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(settingsButton, hidden: !state.showSettings)

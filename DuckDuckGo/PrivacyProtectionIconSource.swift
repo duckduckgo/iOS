@@ -21,24 +21,28 @@ import UIKit
 
 class PrivacyProtectionIconSource {
     
-    static func iconImage(for networkName: String, iconSize: CGSize) -> UIImage? {
+    static func iconImage(forNetworkName networkName: String, iconSize: CGSize) -> UIImage? {
         if let image = UIImage(named: "PP Network Icon \(networkName.lowercased())") {
             return image
         }
+        
+        let networkSymbol: String
+        let networkName = networkName.uppercased().dropPrefix(prefix: "THE ")
+        if let firstCharacter = networkName.first {
+            networkSymbol = String(firstCharacter)
+        } else {
+            networkSymbol = "?"
+        }
+        return iconImage(withString: networkSymbol, iconSize: iconSize)
+    }
+    
+    static func iconImage(withString string: String, iconSize: CGSize) -> UIImage {
         
         let imageRect = CGRect(x: 0, y: 0, width: iconSize.width, height: iconSize.height)
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)
         let icon = renderer.image { imageContext in
             let context = imageContext.cgContext
-            
-            let networkSymbol: String
-            let networkName = networkName.uppercased().dropPrefix(prefix: "THE ")
-            if let firstCharacter = networkName.first {
-                networkSymbol = String(firstCharacter)
-            } else {
-                networkSymbol = "?"
-            }
             
             context.setFillColor(UIColor.white.cgColor)
             context.fillEllipse(in: imageRect)
@@ -47,7 +51,7 @@ class PrivacyProtectionIconSource {
             label.font = UIFont.boldAppFont(ofSize: 17)
             label.textColor = UIColor.black
             label.textAlignment = .center
-            label.text = networkSymbol
+            label.text = string
             label.sizeToFit()
             
             context.translateBy(x: (imageRect.width - label.bounds.width) / 2,

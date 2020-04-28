@@ -35,28 +35,39 @@ class SiteRatingContainerView: UIView {
     
     var crossOutBackgroundColor: UIColor = .clear
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        for icon in trackerIcons {
+            icon.alpha = 0
+        }
+    }
+    
     override var intrinsicContentSize: CGSize {
         return siteRatingView.bounds.size
     }
     
     func crossOutTrackerIcons(duration: TimeInterval) {
-        trackerIcons.prefix(2).forEach { imageView in
-            animateCrossOut(for: imageView, duration: duration)
+        
+        let contentRect = trackerIcons.first!.bounds
+        trackerIcons.forEach { imageView in
+            animateCrossOut(for: imageView, duration: duration, in: contentRect)
         }
     }
     
     func resetTrackerIcons() {
         trackerIcons.forEach { imageView in
             resetCrossOut(for: imageView)
+            imageView.alpha = 0
         }
     }
     
-    private func animateCrossOut(for imageView: UIImageView, duration: TimeInterval) {
+    private func animateCrossOut(for imageView: UIImageView, duration: TimeInterval, in rect: CGRect) {
         
         let contentRect = CGRect(x: Constants.crossOutOffset,
-                                 y: (imageView.bounds.height - imageView.bounds.width) / 2 + Constants.crossOutOffset,
-                                 width: imageView.bounds.width - 2 * Constants.crossOutOffset,
-                                 height: imageView.bounds.width - 2 * Constants.crossOutOffset)
+                                 y: (rect.height - rect.width) / 2 + Constants.crossOutOffset,
+                                 width: rect.width - 2 * Constants.crossOutOffset,
+                                 height: rect.width - 2 * Constants.crossOutOffset)
         
         let backgroundShape = makeLineLayer(bounds: imageView.bounds, diagonalIn: contentRect)
         backgroundShape.strokeColor = crossOutBackgroundColor.cgColor
@@ -103,14 +114,14 @@ class SiteRatingContainerView: UIView {
         let diagonalLength = sqrt(content.size.width * content.size.width + content.size.height * content.size.height)
         
         let shapeLayer = CAShapeLayer()
-        shapeLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        shapeLayer.frame = CGRect(x: content.origin.x, y: content.origin.y, width: content.width, height: content.height)
         
         let path = CGMutablePath()
-        let startX = (bounds.width - diagonalLength) / 2
+        let startX = (content.width - diagonalLength) / 2
         path.move(to: CGPoint(x: startX,
-                              y: bounds.midY))
+                              y: shapeLayer.bounds.midY))
         path.addLine(to: CGPoint(x: diagonalLength + startX,
-                                 y: bounds.midY))
+                                 y: shapeLayer.bounds.midY))
         shapeLayer.path = path
         
         let radians = CGFloat(45 * Double.pi / 180)

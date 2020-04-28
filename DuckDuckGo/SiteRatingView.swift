@@ -25,9 +25,8 @@ import Core
 public class SiteRatingView: UIView {
     
     enum Mode {
-        case hidden
-        case base
-        case enhanced
+        case empty
+        case ready
     }
 
     static let gradeImages: [Grade.Grading: UIImage] = [
@@ -43,7 +42,7 @@ public class SiteRatingView: UIView {
     @IBOutlet weak var circleIndicator: UIImageView!
 
     private var siteRating: SiteRating?
-    var mode: Mode = .hidden
+    var mode: Mode = .empty
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -52,6 +51,15 @@ public class SiteRatingView: UIView {
         }
         self.addSubview(view)
         view.frame = self.bounds
+        
+        circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ",
+                                                                      iconSize: circleIndicator.bounds.size)
+    }
+    
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ",
+        iconSize: circleIndicator.bounds.size)
     }
 
     public func update(siteRating: SiteRating?, with storageCache: StorageCache?) {
@@ -68,12 +76,10 @@ public class SiteRatingView: UIView {
         let grades = siteRating.scores
         let grade: Grade.Score
         switch mode {
-        case .hidden:
+        case .empty:
             circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ", iconSize: circleIndicator.bounds.size)
             return
-        case .base:
-            grade = grades.site
-        case .enhanced:
+        case .ready:
             grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
         }
 

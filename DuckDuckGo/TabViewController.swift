@@ -738,8 +738,8 @@ extension TabViewController: WKNavigationDelegate {
             resetSiteRating()
         }
         
-        
-        chromeDelegate?.omniBar.siteRatingContainer.siteRatingView.mode = .hidden
+        chromeDelegate?.omniBar.siteRatingContainer.siteRatingView.mode = .empty
+        chromeDelegate?.omniBar.trackersAnimator.startLoadingAnimation(in: chromeDelegate!.omniBar)
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)

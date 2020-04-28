@@ -131,20 +131,19 @@ class OmniBar: UIView {
     }
     
     public func showTrackers(_ trackers: [DetectedTracker]) {
-        guard trackersAnimator.configure(self, toDisplay: trackers) else { return }
+        guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else { return }
         
         trackersAnimator.startAnimating(in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
-        trackersAnimator.stopAnimating(in: self)
-        
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
                 clear()
             }
             state = newState
+            trackersAnimator.stopAnimating(in: self)
         }
         
         if state.showSiteRating {

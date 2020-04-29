@@ -51,39 +51,36 @@ public class SiteRatingView: UIView {
         }
         self.addSubview(view)
         view.frame = self.bounds
-        
-        circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ",
-                                                                      iconSize: circleIndicator.bounds.size)
-    }
-    
-    public override func awakeFromNib() {
-        super.awakeFromNib()
-        circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ",
-        iconSize: circleIndicator.bounds.size)
     }
 
     public func update(siteRating: SiteRating?, with storageCache: StorageCache?) {
         self.siteRating = siteRating
         refresh(with: storageCache)
     }
+    
+    private func resetSiteRatingImage() {
+        circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ",
+        
+                                                                      iconSize: circleIndicator.bounds.size)
+    }
 
     public func refresh(with storageCache: StorageCache?) {
-        circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
-
-        guard let storageCache = storageCache else { return }
-        guard let siteRating = siteRating else { return }
+        guard let storageCache = storageCache,
+            let siteRating = siteRating else {
+            resetSiteRatingImage()
+            return
+        }
         
         let grades = siteRating.scores
         let grade: Grade.Score
         switch mode {
         case .empty:
             circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ", iconSize: circleIndicator.bounds.size)
-            return
         case .ready:
             grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+            
+            circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
+            circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
         }
-
-        circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
-        circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
     }
 }

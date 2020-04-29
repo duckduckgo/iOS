@@ -131,7 +131,10 @@ class OmniBar: UIView {
     }
     
     public func showTrackers(_ trackers: [DetectedTracker]) {
-        guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else { return }
+        guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else {
+            trackersAnimator.stopAnimating(in: self)
+            return
+        }
         
         trackersAnimator.startAnimating(in: self)
     }

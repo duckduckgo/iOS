@@ -42,30 +42,38 @@ class TrackersAnimator {
     func configure(_ omniBar: OmniBar,
                    toDisplay trackers: [DetectedTracker]) -> Bool {
         
-        let entities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
+        let blockedEntities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
             return (l.prevalence ?? 0) > (r.prevalence ?? 0)
         }.filter { $0.displayName != nil }
         
-//        guard !entities.isEmpty else { return false }
+        guard !blockedEntities.isEmpty else { return false }
         
         let imageViews: [UIImageView]! = omniBar.siteRatingContainer.trackerIcons
         
         var iconImages: [UIImage]
         let iconSize = CGSize(width: Constants.iconWidth, height: Constants.iconHeight)
-        if entities.count > imageViews.count {
-            iconImages = entities.prefix(2).compactMap { entity -> UIImage? in
+        
+        let showMoreIcon = blockedEntities.count > imageViews.count
+        
+        if blockedEntities.count > imageViews.count {
+            iconImages = blockedEntities.prefix(2).compactMap { entity -> UIImage? in
                 let img = PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
-                return PrivacyProtectionIconSource.stackedIconImage(withBaseImage: img!, foregroundColor: omniBar.siteRatingContainer.tintColor!, borderColor: omniBar.siteRatingContainer.crossOutBackgroundColor, borderWidth: 2)
+                return PrivacyProtectionIconSource.stackedIconImage(withBaseImage: img!,
+                                                                    foregroundColor: omniBar.siteRatingContainer.tintColor!,
+                                                                    borderColor: omniBar.siteRatingContainer.crossOutBackgroundColor,
+                                                                    borderWidth: 2)
             }
             
-            if let baseIcon = PrivacyProtectionIconSource.iconImage(forNetworkName: entities[2].displayName!, iconSize: iconSize) {
+            if let baseIcon = PrivacyProtectionIconSource.iconImage(forNetworkName: blockedEntities[2].displayName!, iconSize: iconSize) {
                 iconImages.append(PrivacyProtectionIconSource.moreIconImage(withBaseImage: baseIcon))
             }
-            
-//            iconImages.append(PrivacyProtectionIconSource.iconImage(withString: "+5", iconSize: iconSize))
         } else {
-            iconImages = entities.prefix(3).compactMap { entity -> UIImage? in
-                return PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
+            iconImages = blockedEntities.prefix(3).compactMap { entity -> UIImage? in
+                let img = PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
+                return PrivacyProtectionIconSource.stackedIconImage(withBaseImage: img!,
+                                                                    foregroundColor: omniBar.siteRatingContainer.tintColor!,
+                                                                    borderColor: omniBar.siteRatingContainer.crossOutBackgroundColor,
+                                                                    borderWidth: 2)
             }
         }
         
@@ -83,41 +91,35 @@ class TrackersAnimator {
     }
     
     func startLoadingAnimation(in omniBar: OmniBar) {
-        return
-        let view = omniBar.siteRatingView
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.frame = view.bounds
-        
-        let path = CGMutablePath()
-        path.addEllipse(in: CGRect(x: view.bounds.midX - 3, y: view.bounds.midY - 3, width: 6, height: 6))
-        shapeLayer.path = path
-
-        shapeLayer.strokeColor = UIColor.lightGreyish.cgColor
-        shapeLayer.strokeColor = UIColor.lightGreyish.cgColor
-        shapeLayer.lineWidth = 6
-        shapeLayer.isOpaque = false
         
         let animation = CAKeyframeAnimation()
         animation.keyPath = "transform.scale"
-        animation.values = [1, 0.7, 1, 0.7, 1]
+        animation.values = [1, 0.9, 1, 0.9, 1]
         animation.keyTimes = [0, 0.25, 0.5, 0.75, 1]
         
-        animation.duration = 2
+        animation.duration = 3
         animation.repeatCount = .greatestFiniteMagnitude
-
-        shapeLayer.name = "a"
-        omniBar.siteRatingView.layer.addSublayer(shapeLayer)
-        shapeLayer.add(animation, forKey: "scale")
+        omniBar.siteRatingView.layer.add(animation, forKey: "scale")
+    }
+    
+    func stopLoadingAnimation(in omniBar: OmniBar) {
+        omniBar.siteRatingView.layer.removeAnimation(forKey: "scale")
+    }
+    
+    func showSiteRating(in omniBar: OmniBar) {
+        UIView.transition(with: omniBar.siteRatingView,
+                          duration: Constants.hideRevealAnimatonTime,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            omniBar.siteRatingView.mode = .ready
+                            omniBar.siteRatingView.refresh(with: AppDependencyProvider.shared.storageCache.current)
+        })
     }
     
     func startAnimating(in omniBar: OmniBar) {
-        print("---> START ANIM")
         guard let container = omniBar.siteRatingContainer else { return }
         
-        if let l = omniBar.siteRatingView.layer.sublayers?.first(where: { layer in return layer.name == "a"}) {
-            l.removeAllAnimations()
-            l.removeFromSuperlayer()
-        }
+        stopLoadingAnimation(in: omniBar)
         
         UIView.animateKeyframes(withDuration: Constants.hideRevealAnimatonTime, delay: 0, options: [], animations: {
             
@@ -159,18 +161,10 @@ class TrackersAnimator {
     }
     
     func collapseIcons(in omniBar: OmniBar) {
-        print("---> COLLAPSE")
         nextAnimation?.cancel()
         nextAnimation = nil
         
-        UIView.transition(with: omniBar.siteRatingView,
-                          duration: Constants.hideRevealAnimatonTime,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            omniBar.siteRatingView.mode = .ready
-                            omniBar.siteRatingView.refresh(with: AppDependencyProvider.shared.storageCache.current)
-        },
-                          completion: nil)
+        showSiteRating(in: omniBar)
         
         UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
             guard let container = omniBar.siteRatingContainer else { return }
@@ -186,9 +180,11 @@ class TrackersAnimator {
     }
     
     func stopAnimating(in omniBar: OmniBar) {
-        print("---> STOP ANIM")
         nextAnimation?.cancel()
         nextAnimation = nil
+        
+        stopLoadingAnimation(in: omniBar)
+        showSiteRating(in: omniBar)
         
         UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
             omniBar.textField.alpha = 1

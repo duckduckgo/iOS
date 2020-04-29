@@ -738,9 +738,6 @@ extension TabViewController: WKNavigationDelegate {
             resetSiteRating()
         }
         
-        chromeDelegate?.omniBar.siteRatingContainer.siteRatingView.mode = .empty
-        chromeDelegate?.omniBar.trackersAnimator.startLoadingAnimation(in: chromeDelegate!.omniBar)
-        
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -771,6 +768,10 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
+        
+        chromeDelegate?.omniBar.siteRatingContainer.siteRatingView.mode = .empty
+        chromeDelegate?.omniBar.trackersAnimator.startLoadingAnimation(in: chromeDelegate!.omniBar)
+        
         detectedNewNavigation()
     }
     

@@ -129,13 +129,21 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
-    public func showTrackers(_ trackers: [DetectedTracker]) {
+    public func startLoadingAnimation() {
+        trackersAnimator.startLoadingAnimation(in: self)
+    }
+    
+    public func startTrackersAnimation(_ trackers: [DetectedTracker]) {
         guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else {
             trackersAnimator.cancelAnimations(in: self)
             return
         }
         
         trackersAnimator.startAnimating(in: self)
+    }
+    
+    public func cancelAllAnimations() {
+        trackersAnimator.cancelAnimations(in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

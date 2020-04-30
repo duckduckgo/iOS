@@ -24,8 +24,8 @@ import Core
 
 public class SiteRatingView: UIView {
     
-    enum Mode {
-        case empty
+    enum DisplayMode {
+        case loading
         case ready
     }
 
@@ -42,7 +42,7 @@ public class SiteRatingView: UIView {
     @IBOutlet weak var circleIndicator: UIImageView!
 
     private var siteRating: SiteRating?
-    var mode: Mode = .empty
+    var mode: DisplayMode = .loading
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -74,7 +74,7 @@ public class SiteRatingView: UIView {
         let grades = siteRating.scores
         let grade: Grade.Score
         switch mode {
-        case .empty:
+        case .loading:
             circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
                                                                                   iconSize: circleIndicator.bounds.size)
         case .ready:

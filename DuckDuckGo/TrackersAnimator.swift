@@ -84,7 +84,6 @@ class TrackersAnimator {
     }
     
     func startLoadingAnimation(in omniBar: OmniBar) {
-        
         let animation = CAKeyframeAnimation()
         animation.keyPath = "transform.scale"
         animation.values = [1, 0.9, 1, 0.9, 1]
@@ -92,6 +91,8 @@ class TrackersAnimator {
         
         animation.duration = 3
         animation.repeatCount = .greatestFiniteMagnitude
+        
+        omniBar.siteRatingView.mode = .loading
         omniBar.siteRatingView.layer.add(animation, forKey: "scale")
     }
     

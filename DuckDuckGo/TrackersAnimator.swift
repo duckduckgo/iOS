@@ -153,7 +153,7 @@ class TrackersAnimator {
         
     }
     
-    func collapseIcons(in omniBar: OmniBar) {
+    private func collapseIcons(in omniBar: OmniBar) {
         nextAnimation?.cancel()
         nextAnimation = nil
         
@@ -172,7 +172,7 @@ class TrackersAnimator {
         
     }
     
-    func stopAnimating(in omniBar: OmniBar) {
+    func cancelAnimations(in omniBar: OmniBar) {
         nextAnimation?.cancel()
         nextAnimation = nil
         

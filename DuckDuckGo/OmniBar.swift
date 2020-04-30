@@ -131,7 +131,7 @@ class OmniBar: UIView {
     
     public func showTrackers(_ trackers: [DetectedTracker]) {
         guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else {
-            trackersAnimator.stopAnimating(in: self)
+            trackersAnimator.cancelAnimations(in: self)
             return
         }
         
@@ -145,7 +145,7 @@ class OmniBar: UIView {
                 clear()
             }
             state = newState
-            trackersAnimator.stopAnimating(in: self)
+            trackersAnimator.cancelAnimations(in: self)
         }
         
         if state.showSiteRating {
@@ -280,7 +280,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onTrackersViewPressed(_ sender: Any) {
-        trackersAnimator.stopAnimating(in: self)
+        trackersAnimator.cancelAnimations(in: self)
         textField.becomeFirstResponder()
     }
 
@@ -293,7 +293,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
-        trackersAnimator.stopAnimating(in: self)
+        trackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }
 }

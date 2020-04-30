@@ -22,10 +22,11 @@ import UIKit
 class PrivacyProtectionIconSource {
     
     struct Constants {
-        static let moreButtonMargin: CGFloat = 2
+        static let buttonBorderWidth: CGFloat = 2
     }
     
-    static func iconImage(forNetworkName networkName: String, iconSize: CGSize) -> UIImage? {
+    /// Load or generate tracker network logo for given tracker network name.
+    static func iconImageTemplate(forNetworkName networkName: String, iconSize: CGSize) -> UIImage {
         if let image = UIImage(named: "PP Network Icon \(networkName.lowercased())") {
             if image.size != iconSize {
                 let renderer = UIGraphicsImageRenderer(size: iconSize)
@@ -49,10 +50,15 @@ class PrivacyProtectionIconSource {
         } else {
             networkSymbol = "?"
         }
-        return iconImage(withString: networkSymbol, iconSize: iconSize)
+        
+        return iconImageTemplate(withString: networkSymbol, iconSize: iconSize)
     }
     
-    static func iconImage(withString string: String, iconSize: CGSize) -> UIImage {
+    /// Create icon template image: circle with text of zero opaciy inside.
+    ///
+    /// Notes:
+    ///    - Text is not scaled, typically you'd use it to present one or two characters.
+    static func iconImageTemplate(withString string: String, iconSize: CGSize) -> UIImage {
         
         let imageRect = CGRect(x: 0, y: 0, width: iconSize.width, height: iconSize.height)
 
@@ -80,13 +86,16 @@ class PrivacyProtectionIconSource {
         return icon.withRenderingMode(.alwaysTemplate)
     }
     
-    // Stacked icon includes a border
-    static func stackedIconImage(withBaseImage baseImage: UIImage,
+    /// Based on iconImage create image that has a border around it.
+    /// Result can be used to create stack of images that overlap each other.
+    static func stackedIconImage(withIconImage iconImage: UIImage,
                                  foregroundColor: UIColor,
-                                 borderColor: UIColor,
-                                 borderWidth: CGFloat) -> UIImage {
+                                 borderColor: UIColor) -> UIImage {
         
-        let imageRect = CGRect(x: 0, y: 0, width: baseImage.size.width + borderWidth * 2, height: baseImage.size.height + borderWidth * 2)
+        let imageRect = CGRect(x: 0,
+                               y: 0,
+                               width: iconImage.size.width + Constants.buttonBorderWidth * 2,
+                               height: iconImage.size.height + Constants.buttonBorderWidth * 2)
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)
         let icon = renderer.image { imageContext in
@@ -95,36 +104,36 @@ class PrivacyProtectionIconSource {
             context.fillEllipse(in: imageRect)
             
             context.setFillColor(foregroundColor.cgColor)
-            let contentFrame = CGRect(origin: CGPoint(x: borderWidth, y: borderWidth),
-                                      size: baseImage.size)
-            baseImage.draw(in: contentFrame)
+            let contentFrame = CGRect(origin: CGPoint(x: Constants.buttonBorderWidth,
+                                                      y: Constants.buttonBorderWidth),
+                                      size: iconImage.size)
+            iconImage.draw(in: contentFrame)
         }
         
         return icon
     }
     
-    static func moreIconImage(withBaseImage baseImage: UIImage) -> UIImage {
+    /// Based on iconImage create image template that represents "more image".
+    static func moreIconImageTemplate(withIconImage iconImage: UIImage) -> UIImage {
     
-        let imageRect = CGRect(x: 0, y: 0, width: baseImage.size.width * 2, height: baseImage.size.height)
+        let imageRect = CGRect(x: 0, y: 0, width: iconImage.size.width * 2, height: iconImage.size.height)
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)
         let icon = renderer.image { imageContext in
             let context = imageContext.cgContext
             context.setFillColor(UIColor.white.cgColor)
             
-            let offsetPositions: [CGFloat] = [baseImage.size.width * 0.3,
-                                              baseImage.size.width * 0.2,
-                                              baseImage.size.width * 0.1].map { floor($0) }
+            let offsetPositions: [CGFloat] = [iconImage.size.width * 0.3,
+                                              iconImage.size.width * 0.2].map { floor($0) }
             
             let lastOffset = offsetPositions.reduce(CGFloat(), +)
             
-            var movingRect = CGRect(origin: CGPoint(x: lastOffset, y: 0), size: baseImage.size)
-            var movingBorderRect = CGRect(origin: CGPoint(x: lastOffset - Constants.moreButtonMargin, y: -Constants.moreButtonMargin),
-                                          size: CGSize(width: baseImage.size.width + Constants.moreButtonMargin * 2,
-                                                       height: baseImage.size.height + Constants.moreButtonMargin * 2))
+            var movingRect = CGRect(origin: CGPoint(x: lastOffset, y: 0), size: iconImage.size)
+            var movingBorderRect = CGRect(origin: CGPoint(x: lastOffset - Constants.buttonBorderWidth,
+                                                          y: -Constants.buttonBorderWidth),
+                                          size: CGSize(width: iconImage.size.width + Constants.buttonBorderWidth * 2,
+                                                       height: iconImage.size.height + Constants.buttonBorderWidth * 2))
             for offset in offsetPositions.reversed() {
-                print("-> \(movingRect)")
-                
                 context.setBlendMode(.destinationOut)
                 context.fillEllipse(in: movingBorderRect)
                 
@@ -139,7 +148,7 @@ class PrivacyProtectionIconSource {
             context.fillEllipse(in: movingBorderRect)
             
             movingRect.origin.x = 0
-            baseImage.draw(in: movingRect)
+            iconImage.draw(in: movingRect)
         }
         
         return icon.withRenderingMode(.alwaysTemplate)

@@ -35,10 +35,6 @@ class TrackersAnimator {
         static let delayAfterCrossOut: TimeInterval = 1.5
     }
     
-    func setup(_ omniBar: OmniBar) {
-        
-    }
-    
     func configure(_ omniBar: OmniBar,
                    toDisplay trackers: [DetectedTracker]) -> Bool {
         
@@ -47,34 +43,31 @@ class TrackersAnimator {
         }.filter { $0.displayName != nil }
         
         guard !blockedEntities.isEmpty else { return false }
-        
+
         let imageViews: [UIImageView]! = omniBar.siteRatingContainer.trackerIcons
         
-        var iconImages: [UIImage]
+        let iconSource = PrivacyProtectionIconSource.self
         let iconSize = CGSize(width: Constants.iconWidth, height: Constants.iconHeight)
+        let shouldShowMoreIcon = blockedEntities.count > imageViews.count
         
-        let showMoreIcon = blockedEntities.count > imageViews.count
-        
-        if blockedEntities.count > imageViews.count {
-            iconImages = blockedEntities.prefix(2).compactMap { entity -> UIImage? in
-                let img = PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
-                return PrivacyProtectionIconSource.stackedIconImage(withBaseImage: img!,
-                                                                    foregroundColor: omniBar.siteRatingContainer.tintColor!,
-                                                                    borderColor: omniBar.siteRatingContainer.crossOutBackgroundColor,
-                                                                    borderWidth: 2)
+        var iconImages = [UIImage]()
+        for (index, entity) in blockedEntities.enumerated() {
+            guard index != imageViews.endIndex else {
+                break
             }
             
-            if let baseIcon = PrivacyProtectionIconSource.iconImage(forNetworkName: blockedEntities[2].displayName!, iconSize: iconSize) {
-                iconImages.append(PrivacyProtectionIconSource.moreIconImage(withBaseImage: baseIcon))
+            let iconTemplate = iconSource.iconImageTemplate(forNetworkName: entity.displayName!,
+                                                 iconSize: iconSize)
+            let iconToDisplay: UIImage
+            if index == imageViews.endIndex - 1 && shouldShowMoreIcon {
+                iconToDisplay = iconSource.moreIconImageTemplate(withIconImage: iconTemplate)
+            } else {
+                iconToDisplay = iconSource.stackedIconImage(withIconImage: iconTemplate,
+                                                            foregroundColor: omniBar.siteRatingContainer.tintColor!,
+                                                            borderColor: omniBar.siteRatingContainer.crossOutBackgroundColor)
             }
-        } else {
-            iconImages = blockedEntities.prefix(3).compactMap { entity -> UIImage? in
-                let img = PrivacyProtectionIconSource.iconImage(forNetworkName: entity.displayName!, iconSize: iconSize)
-                return PrivacyProtectionIconSource.stackedIconImage(withBaseImage: img!,
-                                                                    foregroundColor: omniBar.siteRatingContainer.tintColor!,
-                                                                    borderColor: omniBar.siteRatingContainer.crossOutBackgroundColor,
-                                                                    borderWidth: 2)
-            }
+            
+            iconImages.append(iconToDisplay)
         }
         
         for imageView in imageViews {

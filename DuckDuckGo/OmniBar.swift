@@ -61,7 +61,6 @@ class OmniBar: UIView {
         configureTextField()
         configureSeparator()
         configureEditingMenu()
-        trackersAnimator.setup(self)
         refreshState(state)
     }
     

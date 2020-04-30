@@ -59,9 +59,9 @@ public class SiteRatingView: UIView {
     }
     
     private func resetSiteRatingImage() {
-        circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ",
-        
-                                                                      iconSize: circleIndicator.bounds.size)
+        circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
+                                                                              
+                                                                              iconSize: circleIndicator.bounds.size)
     }
 
     public func refresh(with storageCache: StorageCache?) {
@@ -75,7 +75,8 @@ public class SiteRatingView: UIView {
         let grade: Grade.Score
         switch mode {
         case .empty:
-            circleIndicator.image = PrivacyProtectionIconSource.iconImage(withString: " ", iconSize: circleIndicator.bounds.size)
+            circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
+                                                                                  iconSize: circleIndicator.bounds.size)
         case .ready:
             grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
             

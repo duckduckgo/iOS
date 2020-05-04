@@ -38,6 +38,10 @@ Before submitting a PR, please ensure you have tested a reasonable combination o
 * [ ] iOS 12
 * [ ] iOS 13
 
+**Theme Testing**:
+
+* [ ] Light theme
+* [ ] Dark theme
 
 ---
 ###### Internal references:

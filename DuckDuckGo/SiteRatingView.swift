@@ -60,7 +60,6 @@ public class SiteRatingView: UIView {
     
     private func resetSiteRatingImage() {
         circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
-                                                                              
                                                                               iconSize: circleIndicator.bounds.size)
     }
 

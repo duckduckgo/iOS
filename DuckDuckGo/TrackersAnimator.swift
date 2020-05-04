@@ -101,6 +101,8 @@ class TrackersAnimator {
     }
     
     func showSiteRating(in omniBar: OmniBar) {
+        guard omniBar.siteRatingView.mode != .ready else { return }
+        
         UIView.transition(with: omniBar.siteRatingView,
                           duration: Constants.hideRevealAnimatonTime,
                           options: .transitionCrossDissolve,
@@ -118,22 +120,26 @@ class TrackersAnimator {
         UIView.animateKeyframes(withDuration: Constants.hideRevealAnimatonTime, delay: 0, options: [], animations: {
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0) {
-                let gradeIconX = container.siteRatingView.frame.origin.x + container.siteRatingView.circleIndicator.frame.origin.x
+                for constraint in container.trackerIconConstraints {
+                    constraint.constant = container.siteRatingIconOffset
+                }
                 for icon in container.trackerIcons {
-                    icon.frame.origin.x = gradeIconX
                     icon.alpha = 1
                 }
+                omniBar.siteRatingContainer.layoutIfNeeded()
             }
 
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
                 
                 omniBar.textField.alpha = 0
-    
+                
+                let iconWidth = container.trackerIcons.first?.frame.width ?? 0
                 var offset = container.siteRatingView.frame.origin.x + container.siteRatingView.frame.size.width + 1
-                for icon in omniBar.siteRatingContainer.trackerIcons {
-                    icon.frame.origin.x = offset
-                    offset += Constants.iconSpacing + 26
+                for constraint in container.trackerIconConstraints {
+                    constraint.constant = offset
+                    offset += Constants.iconSpacing + iconWidth
                 }
+                omniBar.siteRatingContainer.layoutIfNeeded()
             }
         }, completion: { _ in
             let animateCrossOut = DispatchWorkItem(block: {
@@ -162,11 +168,16 @@ class TrackersAnimator {
         
         UIView.animate(withDuration: Constants.hideRevealAnimatonTime, animations: {
             guard let container = omniBar.siteRatingContainer else { return }
+
+            for constraint in container.trackerIconConstraints {
+                constraint.constant = container.siteRatingIconOffset
+            }
             for icon in container.trackerIcons {
-                icon.center.x = container.siteRatingView.center.x
                 icon.alpha = 0
             }
             omniBar.textField.alpha = 1
+            
+            container.layoutIfNeeded()
         }, completion: { _ in
             omniBar.siteRatingContainer.resetTrackerIcons()
         })

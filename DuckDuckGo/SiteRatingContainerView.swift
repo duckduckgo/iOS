@@ -31,6 +31,7 @@ class SiteRatingContainerView: UIView {
     }
     
     @IBOutlet var siteRatingView: SiteRatingView!
+    @IBOutlet var trackerIconConstraints: [NSLayoutConstraint]!
     @IBOutlet var trackerIcons: [UIImageView]!
     
     var crossOutBackgroundColor: UIColor = .clear
@@ -47,6 +48,10 @@ class SiteRatingContainerView: UIView {
         return siteRatingView.bounds.size
     }
     
+    var siteRatingIconOffset: CGFloat {
+        return siteRatingView.frame.origin.x + siteRatingView.circleIndicator.frame.origin.x
+    }
+    
     func crossOutTrackerIcons(duration: TimeInterval) {
         
         let contentRect = trackerIcons.first!.bounds
@@ -59,6 +64,10 @@ class SiteRatingContainerView: UIView {
         trackerIcons.forEach { imageView in
             resetCrossOut(for: imageView)
             imageView.alpha = 0
+        }
+        
+        trackerIconConstraints.forEach { constraint in
+            constraint.constant = siteRatingView.circleIndicator.frame.origin.x
         }
     }
     

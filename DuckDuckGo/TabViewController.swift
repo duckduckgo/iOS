@@ -332,7 +332,7 @@ class TabViewController: UIViewController {
             hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
             
         case #keyPath(WKWebView.url):
-            self.url = self.webView.url
+            webViewUrlHasChanged()
             
         case #keyPath(WKWebView.canGoBack):
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -346,6 +346,11 @@ class TabViewController: UIViewController {
         default:
             os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
         }
+    }
+    
+    func webViewUrlHasChanged() {
+        guard let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost else { return }
+        url = webView.url
     }
     
     func hasOnlySecureContentChanged(hasOnlySecureContent: Bool) {

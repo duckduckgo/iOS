@@ -24,7 +24,7 @@ class SiteRatingContainerView: UIView {
     struct Constants {
         static let iconSpacing: CGFloat = 10
         
-        static let crossOutOffset: CGFloat = 2.0
+        static let crossOutOffset: CGFloat = 3.5
         
         static let crossOutBackgroundLayerKey = "crossOutBackground"
         static let crossOutForegroundLayerKey = "crossOutForeground"

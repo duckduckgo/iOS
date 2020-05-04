@@ -123,8 +123,8 @@ class PrivacyProtectionIconSource {
             let context = imageContext.cgContext
             context.setFillColor(UIColor.white.cgColor)
             
-            let offsetPositions: [CGFloat] = [iconImage.size.width * 0.3,
-                                              iconImage.size.width * 0.2].map { floor($0) }
+            // Position of "stack" elements, add/remove elements to tweak how many are visible.
+            let offsetPositions: [CGFloat] = [iconImage.size.width * 0.3].map { floor($0) }
             
             let lastOffset = offsetPositions.reduce(CGFloat(), +)
             

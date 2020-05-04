@@ -33,6 +33,8 @@ class TrackersAnimator {
         static let delayBeforeCrossOut: TimeInterval = 0.8
         static let crossOutDuration: TimeInterval = 0.2
         static let delayAfterCrossOut: TimeInterval = 1.5
+        
+        static let gradeLoadingAnimationKey = "gradeLoadingAnimation"
     }
     
     func configure(_ omniBar: OmniBar,
@@ -93,11 +95,11 @@ class TrackersAnimator {
         animation.repeatCount = .greatestFiniteMagnitude
         
         omniBar.siteRatingView.mode = .loading
-        omniBar.siteRatingView.layer.add(animation, forKey: "scale")
+        omniBar.siteRatingView.layer.add(animation, forKey: Constants.gradeLoadingAnimationKey)
     }
     
     func stopLoadingAnimation(in omniBar: OmniBar) {
-        omniBar.siteRatingView.layer.removeAnimation(forKey: "scale")
+        omniBar.siteRatingView.layer.removeAnimation(forKey: Constants.gradeLoadingAnimationKey)
     }
     
     func showSiteRating(in omniBar: OmniBar) {

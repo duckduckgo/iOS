@@ -208,16 +208,19 @@ class MainViewController: UIViewController {
             tabSwitcherController = controller
             return
         }
-
-        if let controller = segue.destination as? SiteFeedbackViewController {
-            controller.prepareForSegue(url: currentTab?.url?.absoluteString)
-            return
+        
+        if let navController = segue.destination as? UINavigationController,
+            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+            
+            brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         }
         
         if let navigationController = segue.destination as? UINavigationController,
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self
-            controller.preserveLoginsSettingsDelegate = self
             return
         }
 
@@ -297,24 +300,19 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedBrowsing, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+        Pixel.fire(pixel: .forgetAllPressedBrowsing)
 
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            guard let self = self else { return }
-            PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
-                self?.forgetAllWithAnimation {}
-            }
+            self?.forgetAllWithAnimation {}
         })
         self.present(controller: alert, fromView: self.toolbar)
     }
     
     func onQuickFirePressed() {
-        PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) {
-            self.forgetAllWithAnimation {}
-            self.dismiss(animated: true)
-            if KeyboardSettings().onAppLaunch {
-                self.enterSearch()
-            }
+        self.forgetAllWithAnimation {}
+        self.dismiss(animated: true)
+        if KeyboardSettings().onAppLaunch {
+            self.enterSearch()
         }
     }
 
@@ -539,6 +537,15 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height
+
+        if #available(iOS 11.0, *) {
+            //no-op
+        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
+            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
+            // adjust frame to toolbar height change
+            tabSwitcherButton.layoutSubviews()
+            gestureBookmarksButton.layoutSubviews()
+        }
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -617,7 +624,7 @@ class MainViewController: UIViewController {
     
     func updateFindInPage() {
         currentTab?.findInPage?.delegate = self
-        findInPageView.update(with: currentTab?.findInPage)
+        findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
     }
         
 }
@@ -625,7 +632,7 @@ class MainViewController: UIViewController {
 extension MainViewController: FindInPageDelegate {
     
     func updated(findInPage: FindInPage) {
-        findInPageView.update(with: findInPage)
+        findInPageView.update(with: findInPage, updateTextField: false)
     }
 
 }
@@ -989,11 +996,7 @@ extension MainViewController: BookmarksDelegate {
     }
     
     func bookmarksUpdated() {
-        if bookmarkStore.favorites.isEmpty {
-            homePageChanged()
-        } else {
-            homeController?.refresh()
-        }
+        homePageChanged()
     }
 }
 
@@ -1067,12 +1070,18 @@ extension MainViewController: AutoClearWorker {
     
     fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
-        Pixel.fire(pixel: .forgetAllExecuted, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+        Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()
             completion()
             Instruments.shared.endTimedEvent(for: spid)
+
+            if KeyboardSettings().onNewTab {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.enterSearch()
+                }
+            }
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
@@ -1116,14 +1125,6 @@ extension MainViewController: HomePageSettingsDelegate {
         attachHomeScreen()
     }
     
-}
-
-extension MainViewController: PreserveLoginsSettingsDelegate {
-
-    func forgetAllRequested(completion: @escaping () -> Void) {
-        forgetAllWithAnimation(completion: completion)
-    }
-
 }
 
 extension MainViewController: OnboardingDelegate {

@@ -31,7 +31,7 @@ protocol HomePageSettings {
     var layout: HomePageLayout { get set }
  
     var favorites: Bool { get set }
-
+    
     func migrate(from appSettings: AppSettings)
     
 }
@@ -53,6 +53,10 @@ class DefaultHomePageSettings: HomePageSettings {
 
     @UserDefaultsWrapper(key: .favorites, defaultValue: true)
     var favorites: Bool
+        
+    init() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.legacyCovidInfo.rawValue)
+    }
 
     func migrate(from appSettings: AppSettings) {
         guard let homePage = appSettings.homePage else { return }

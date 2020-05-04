@@ -33,6 +33,7 @@ class HomePageConfiguration {
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
         case centeredSearch(fixed: Bool)
+        case extraContent
         case favorites
         case padding
     }
@@ -46,11 +47,12 @@ class HomePageConfiguration {
         switch settings.layout {
         case .navigationBar:
             components.append(.navigationBarSearch(fixed: fixed))
-
         case .centered:
             components.append(.centeredSearch(fixed: fixed))
         }
 
+        // Add extra content renderer here if needed
+        
         if settings.favorites {
             components.append(.favorites)
             if settings.layout == .centered {

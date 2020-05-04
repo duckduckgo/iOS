@@ -1,2 +1,2 @@
-• Want to stay signed-in or preserve data for websites you trust? You can now Fireproof them! This will prevent the Fire Button and Auto Clear from deleting all data associated with that site. From any site, tap the menu icon and then tap "Fireproof Website."
-• You can now configure how a new tab looks and how the keyboard behaves.  Check that out in settings.
+• Now the app can prompt you to Fireproof a site when you sign in. Enable this in Settings > Fireproof Websites.
+• Bug fixes and other improvements.

@@ -73,9 +73,18 @@ class PrivacyProtectionFooterController: UIViewController {
             prepareforSegue(to: whitelistController)
             return
         }
-        if segue.destination is SiteFeedbackViewController {
+        
+        if let navController = segue.destination as? UINavigationController,
+            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
             Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
-            return
+            
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+            
+            if let privacyProtectionScreen = parent?.parent as? PrivacyProtectionController {
+                brokenSiteScreen.brokenSiteInfo = privacyProtectionScreen.privacyProtectionDelegate?.getCurrentWebsiteInfo()
+            }
         }
     }
     

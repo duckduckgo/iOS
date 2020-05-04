@@ -135,6 +135,19 @@ public struct UserText {
 
     public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
     
+    static let brokenSiteSectionTitle = NSLocalizedString("brokensite.sectionTitle", comment: "Broken Site Section Title")
+    
+    static let brokenSiteCategoryImages = NSLocalizedString("brokensite.category.images", comment: "Broken Site Category")
+    static let brokenSiteCategoryPaywall = NSLocalizedString("brokensite.category.paywall", comment: "Broken Site Category")
+    static let brokenSiteCategoryComments = NSLocalizedString("brokensite.category.comments", comment: "Broken Site Category")
+    static let brokenSiteCategoryVideos = NSLocalizedString("brokensite.category.videos", comment: "Broken Site Category")
+    static let brokenSiteCategoryLinks = NSLocalizedString("brokensite.category.links", comment: "Broken Site Category")
+    static let brokenSiteCategoryContent = NSLocalizedString("brokensite.category.content", comment: "Broken Site Category")
+    static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", comment: "Broken Site Category")
+    static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", comment: "Broken Site Category")
+    static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", comment: "Broken Site Category")
+
+    
     public static let privacyReportTrackersBlocked = NSLocalizedString("privacy.report.trackersBlocked", comment: "Trackers Blocked")
     
     public static let privacyReportSitesEncrypted = NSLocalizedString("privacy.report.sitesEncrypted", comment: "Sites Encrypted")
@@ -147,7 +160,6 @@ public struct UserText {
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     
     public static let homeRowOnboardingHeader = NSLocalizedString("home.row.onboarding.header", comment:  "Home Row onboarding Header")
-    public static let homeRowOnboardingAppIconHeader = NSLocalizedString("home.row.onboarding.iconHeader", comment:  "Home Row onboarding Header for ApIcon experiment")
     
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     
@@ -243,19 +255,20 @@ public struct UserText {
     public static let onboardingNotificationsAccept = NSLocalizedString("onboardingNotificationsAccept", comment: "Turn on Notifications")
     public static let onboardingNotificationsDeny = NSLocalizedString("onboardingNotificationsDeny", comment: "Not now")
     
-    public static let preserveLoginsTitle = NSLocalizedString("preserveLogins.title", comment: "Preserve logins title")
-    public static let preserveLoginsMessage = NSLocalizedString("preserveLogins.message", comment: "Preserve logins message")
-    public static let preserveLoginsRemember = NSLocalizedString("preserveLogins.remember", comment: "Preserve logins remember")
-    public static let preserveLoginsForget = NSLocalizedString("preserveLogins.forget", comment: "Preserve logins forget")
-    public static let preserveLoginsAccessoryOn = NSLocalizedString("preserveLogins.accessory.on", comment: "Preserve logins accessory on")
-    public static let preserveLoginsAccessoryOff = NSLocalizedString("preserveLogins.accessory.off", comment: "Preserve logins accessory off")
-    public static let preserveLoginsDomainListHeaderTitle = NSLocalizedString("preserveLogins.domain.list.title", comment: "Preserve logins domain list title")
-    public static let preserveLoginsSwitchFooter = NSLocalizedString("preserveLogins.switch.footer", comment: "Preserve logins switch footer")
-    public static let preserveLoginsSignOut = NSLocalizedString("preserveLogins.sign.out", comment: "Preserve logins clear all prompt")
-    public static let preserveLoginsMenuTitle = NSLocalizedString("preserveLogins.menu.title", comment: "Preserve logins menu title")
-    public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", comment: "Preserve toast message")
-    public static let preserverLoginsFireproofWebsiteMessage = NSLocalizedString("preserveLogins.fireproof.message", comment: "Fireproof website message")
-    
+    public static let preserveLoginsSwitchTitle = NSLocalizedString("preserveLogins.switch.title", comment: "Ask to Fireproof Websites")
+
+    public static let preserveLoginsListTitle = NSLocalizedString("preserveLogins.domain.list.title", comment: "Websites")
+    public static let preserveLoginsListFooter = NSLocalizedString("preserveLogins.domain.list.footer", comment: "Websites rely on cookies ...")
+    public static let preserveLoginsRemoveAll = NSLocalizedString("preserveLogins.remove.all", comment: "Remove All")
+    public static let preserveLoginsRemoveAllOk = NSLocalizedString("preserveLogins.remove.all.ok", comment: "OK")
+
+    public static let preserveLoginsFireproofAsk = NSLocalizedString("preserveLogins.fireproof.message", comment: "Would you like to Fireproof %@?")
+    public static let preserveLoginsFireproofConfirm = NSLocalizedString("preserveLogins.menu.confirm", comment: "Fireproof Website")
+    public static let preserveLoginsFireproofCancel = NSLocalizedString("preserveLogins.menu.cancel", comment: "Cancel")
+    public static let preserveLoginsFireproofDefer = NSLocalizedString("preserveLogins.menu.defer", comment: "Not Now")
+
+    public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", comment: "%@ is now Fireproof! Visit settings to remove.")
+
     public static let homeTabSearchOnly = NSLocalizedString("homeTab.searchOnly", comment: "Home tab search only")
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", comment: "Home tab title")

@@ -54,6 +54,24 @@ class HomePageConfigurationTests: XCTestCase {
                  expected: [ .navigationBarSearch(fixed: true), .favorites ]),
 
             Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)],
+                 expected: [ .navigationBarSearch(fixed: false), .favorites ]),
+            
+            Test(layout: .centered, favorites: false, links: [],
+                 expected: [ .centeredSearch(fixed: true) ]),
+
+            Test(layout: .centered, favorites: true, links: [],
+                 expected: [ .centeredSearch(fixed: true), .favorites, .padding ]),
+
+            Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)],
+                 expected: [ .centeredSearch(fixed: false), .favorites, .padding ]),
+
+            Test(layout: .navigationBar, favorites: false, links: [],
+                 expected: [ .navigationBarSearch(fixed: true) ]),
+
+            Test(layout: .navigationBar, favorites: true, links: [],
+                 expected: [ .navigationBarSearch(fixed: true), .favorites ]),
+
+            Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)],
                  expected: [ .navigationBarSearch(fixed: false), .favorites ])
 
         ]
@@ -63,6 +81,7 @@ class HomePageConfigurationTests: XCTestCase {
             let settings = StubHomePageSettings(layout: test.layout, favorites: test.favorites)
             let store = MockBookmarkStore()
             store.favorites = test.links
+
             let manager = BookmarksManager(dataStore: store)
 
             let config = HomePageConfiguration(settings: settings)

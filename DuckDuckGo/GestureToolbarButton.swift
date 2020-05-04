@@ -66,6 +66,19 @@ class GestureToolbarButton: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        if #available(iOS 11.0, *) {
+            //no-op
+        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
+            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
+            // adjust frame to toolbar height change
+            var newFrame = frame
+            newFrame.size.height = superview?.bounds.height ?? 0
+            newFrame.origin.y = 0
+            frame = newFrame
+        }
+        
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
         iconImageView.center = center
     }
 

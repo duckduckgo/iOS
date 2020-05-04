@@ -30,6 +30,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var trackersStackView: TrackersStackView!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
@@ -45,6 +46,8 @@ class OmniBar: UIView {
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
+    private(set) var trackersAnimator = TrackersAnimator()
+    
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
     }
@@ -54,6 +57,7 @@ class OmniBar: UIView {
         configureTextField()
         configureSeparator()
         configureEditingMenu()
+        trackersAnimator.setup(self)
         refreshState(state)
     }
     
@@ -83,7 +87,7 @@ class OmniBar: UIView {
     }
     
     var textFieldBottomSpacing: CGFloat {
-        return bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)
+        return (bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)) / 2.0
     }
     
     @objc func textDidChange() {
@@ -121,8 +125,17 @@ class OmniBar: UIView {
     @IBAction func textFieldTapped() {
         textField.becomeFirstResponder()
     }
+    
+    public func showTrackers(_ trackers: [DetectedTracker]) {
+        guard trackersAnimator.configure(trackersStackView, toDisplay: trackers),
+            state.allowsTrackersAnimation else { return }
+        
+        trackersAnimator.startAnimating(in: self)
+    }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
+        trackersAnimator.stopAnimating(in: self)
+        
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
@@ -135,7 +148,6 @@ class OmniBar: UIView {
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
-        setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
@@ -258,8 +270,9 @@ class OmniBar: UIView {
         omniDelegate?.onMenuPressed()
     }
 
-    @IBAction func onBookmarksButtonPressed(_ sender: Any) {
-        omniDelegate?.onBookmarksPressed()
+    @IBAction func onTrackersViewPressed(_ sender: Any) {
+        trackersAnimator.stopAnimating(in: self)
+        textField.becomeFirstResponder()
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
@@ -271,6 +284,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
+        trackersAnimator.stopAnimating(in: self)
         omniDelegate?.onRefreshPressed()
     }
 }
@@ -311,6 +325,9 @@ extension OmniBar: Themable {
 
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
         searchStackContainer?.tintColor = theme.barTintColor
+        
+        trackersStackView.tintColor = theme.barTintColor
+        trackersStackView.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
         if let url = textField.text?.punycodedUrl {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

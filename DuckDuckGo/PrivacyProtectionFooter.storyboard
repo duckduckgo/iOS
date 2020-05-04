@@ -88,7 +88,7 @@
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                         </variation>
                                         <connections>
-                                            <segue destination="rsp-7E-d8b" kind="presentation" modalPresentationStyle="fullScreen" id="z6w-4N-Fdn"/>
+                                            <segue destination="rsp-7E-d8b" kind="presentation" modalPresentationStyle="automatic" id="z6w-4N-Fdn"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -357,7 +357,9 @@ many trackers we've blocked.</string>
         <!--Feedback-->
         <scene sceneID="da9-Kh-5Q7">
             <objects>
-                <viewControllerPlaceholder storyboardName="Feedback" id="rsp-7E-d8b" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Feedback" id="rsp-7E-d8b" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="QaB-dx-2jb"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Sv-Zl-3F1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3468" y="183"/>

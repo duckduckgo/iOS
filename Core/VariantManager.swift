@@ -24,8 +24,6 @@ public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
-    
-    case appIconOnboarding
 }
 
 public struct Variant {
@@ -34,12 +32,9 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // SERP testing
-        Variant(name: "sc", weight: doNotAllocate, features: []),
+        Variant(name: "sc", weight: 1, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: doNotAllocate, features: []),
-
-        Variant(name: "mq", weight: 1, features: []),
-        Variant(name: "mr", weight: 1, features: [.appIconOnboarding])
+        Variant(name: "se", weight: 1, features: [])
     ]
     
     public let name: String

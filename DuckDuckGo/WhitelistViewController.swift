@@ -237,8 +237,8 @@ extension WhitelistViewController: Themable {
         
         tableView.reloadData()
         
-        navigationController?.toolbar.barTintColor = theme.barBackgroundColor
-        navigationController?.toolbar.backgroundColor = theme.barBackgroundColor
-        navigationController?.toolbar.tintColor = theme.navigationBarTintColor
+        navigationController?.toolbar.barTintColor = navigationController?.navigationBar.barTintColor
+        navigationController?.toolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
+        navigationController?.toolbar.tintColor = navigationController?.navigationBar.tintColor
     }
 }

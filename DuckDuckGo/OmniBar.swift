@@ -28,9 +28,9 @@ class OmniBar: UIView {
     @IBOutlet weak var searchLoupe: UIView!
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
-    @IBOutlet weak var siteRatingView: SiteRatingView!
+    @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
+    @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var trackersStackView: TrackersStackView!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
@@ -51,13 +51,16 @@ class OmniBar: UIView {
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
     }
+    
+    var siteRatingView: SiteRatingView {
+        return siteRatingContainer.siteRatingView
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         configureTextField()
         configureSeparator()
         configureEditingMenu()
-        trackersAnimator.setup(self)
         refreshState(state)
     }
     
@@ -126,26 +129,40 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
-    public func showTrackers(_ trackers: [DetectedTracker]) {
-        guard trackersAnimator.configure(trackersStackView, toDisplay: trackers),
-            state.allowsTrackersAnimation else { return }
+    public func startLoadingAnimation() {
+        trackersAnimator.startLoadingAnimation(in: self)
+    }
+    
+    public func startTrackersAnimation(_ trackers: [DetectedTracker]) {
+        guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else {
+            trackersAnimator.cancelAnimations(in: self)
+            return
+        }
         
         trackersAnimator.startAnimating(in: self)
     }
+    
+    public func cancelAllAnimations() {
+        trackersAnimator.cancelAnimations(in: self)
+    }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
-        trackersAnimator.stopAnimating(in: self)
-        
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
                 clear()
             }
             state = newState
+            trackersAnimator.cancelAnimations(in: self)
+        }
+        
+        if state.showSiteRating {
+            searchFieldContainer.revealSiteRatingView()
+        } else {
+            searchFieldContainer.hideSiteRatingView()
         }
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
-        setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(settingsButton, hidden: !state.showSettings)
@@ -271,7 +288,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onTrackersViewPressed(_ sender: Any) {
-        trackersAnimator.stopAnimating(in: self)
+        trackersAnimator.cancelAnimations(in: self)
         textField.becomeFirstResponder()
     }
 
@@ -284,7 +301,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
-        trackersAnimator.stopAnimating(in: self)
+        trackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }
 }
@@ -324,10 +341,10 @@ extension OmniBar: Themable {
         editingBackground?.borderColor = theme.searchBarBackgroundColor
 
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
-        searchStackContainer?.tintColor = theme.barTintColor
+        siteRatingContainer.tintColor = theme.barTintColor
+        siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
-        trackersStackView.tintColor = theme.barTintColor
-        trackersStackView.crossOutBackgroundColor = theme.searchBarBackgroundColor
+        searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text?.punycodedUrl {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

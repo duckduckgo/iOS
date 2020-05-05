@@ -39,7 +39,7 @@ class TrackersAnimatorTests: XCTestCase {
     }
     
     func testWhenNoTrackersWereFoundThenThereIsNoConfigNeeded() {
-        XCTAssertFalse(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
+        XCTAssertFalse(omniBar.trackersAnimator.configure(omniBar,
                                                           toDisplay: []))
     }
     
@@ -54,12 +54,12 @@ class TrackersAnimatorTests: XCTestCase {
                                         entity: entity,
                                         blocked: true)]
         
-        XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
-                                                          toDisplay: trackers))
+        XCTAssert(omniBar.trackersAnimator.configure(omniBar,
+                                                     toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
-        XCTAssert(omniBar.trackersStackView.trackerIcons[1].isHidden)
-        XCTAssert(omniBar.trackersStackView.trackerIcons[2].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
+        XCTAssert(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
+        XCTAssert(omniBar.siteRatingContainer.trackerIcons[2].isHidden)
     }
 
     func testWhenTwoTrackerNetworksWereFoundThenThereAreTwoItemsPresented() {
@@ -75,12 +75,12 @@ class TrackersAnimatorTests: XCTestCase {
                                         entity: entity2,
                                         blocked: true)]
         
-        XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
-                                                          toDisplay: trackers))
+        XCTAssert(omniBar.trackersAnimator.configure(omniBar,
+                                                     toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[1].isHidden)
-        XCTAssert(omniBar.trackersStackView.trackerIcons[2].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
+        XCTAssert(omniBar.siteRatingContainer.trackerIcons[2].isHidden)
     }
     
     func testWhenThreeTrackerNetworksWereFoundThenThereAreThreeItemsPresented() {
@@ -101,12 +101,12 @@ class TrackersAnimatorTests: XCTestCase {
                                         entity: entity3,
                                         blocked: true)]
         
-        XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
+        XCTAssert(omniBar.trackersAnimator.configure(omniBar,
                                                      toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[1].isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[2].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[2].isHidden)
     }
     
     func testWhenMoreThanThreeTrackerNetworksWereFoundThenThereAreThreeItemsPresented() {
@@ -131,11 +131,11 @@ class TrackersAnimatorTests: XCTestCase {
                                         entity: entity4,
                                         blocked: true)]
         
-        XCTAssert(omniBar.trackersAnimator.configure(omniBar.trackersStackView,
+        XCTAssert(omniBar.trackersAnimator.configure(omniBar,
                                                      toDisplay: trackers))
         
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[0].isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[1].isHidden)
-        XCTAssertFalse(omniBar.trackersStackView.trackerIcons[2].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
+        XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[2].isHidden)
     }
 }

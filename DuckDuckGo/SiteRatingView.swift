@@ -23,6 +23,11 @@ import UIKit
 import Core
 
 public class SiteRatingView: UIView {
+    
+    enum DisplayMode {
+        case loading
+        case ready
+    }
 
     static let gradeImages: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Indicator Grade A"),
@@ -37,6 +42,7 @@ public class SiteRatingView: UIView {
     @IBOutlet weak var circleIndicator: UIImageView!
 
     private var siteRating: SiteRating?
+    var mode: DisplayMode = .loading
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -51,16 +57,30 @@ public class SiteRatingView: UIView {
         self.siteRating = siteRating
         refresh(with: storageCache)
     }
+    
+    private func resetSiteRatingImage() {
+        circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
+                                                                              iconSize: circleIndicator.bounds.size)
+    }
 
     public func refresh(with storageCache: StorageCache?) {
-        circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
-
-        guard let storageCache = storageCache else { return }
-        guard let siteRating = siteRating else { return }
-
+        guard let storageCache = storageCache,
+            let siteRating = siteRating else {
+            resetSiteRatingImage()
+            return
+        }
+        
         let grades = siteRating.scores
-        let grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
-        circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
-        circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+        let grade: Grade.Score
+        switch mode {
+        case .loading:
+            circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
+                                                                                  iconSize: circleIndicator.bounds.size)
+        case .ready:
+            grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+            
+            circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
+            circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+        }
     }
 }

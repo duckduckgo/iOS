@@ -41,6 +41,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
     private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
@@ -52,6 +53,7 @@ class PrivacyProtectionPracticesController: UIViewController {
         Pixel.fire(pixel: .privacyDashboardPrivacyPractices)
         
         initTable()
+        initBackButton()
         update()
     }
 
@@ -97,6 +99,9 @@ class PrivacyProtectionPracticesController: UIViewController {
         tableView.delegate = self
     }
 
+    private func initBackButton() {
+        backButton.isHidden = !isPad
+    }
 }
 
 extension PrivacyProtectionPracticesController: UITableViewDataSource {

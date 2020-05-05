@@ -332,7 +332,7 @@ class TabViewController: UIViewController {
             hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
             
         case #keyPath(WKWebView.url):
-            self.url = self.webView.url
+            webViewUrlHasChanged()
             
         case #keyPath(WKWebView.canGoBack):
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -345,6 +345,14 @@ class TabViewController: UIViewController {
 
         default:
             os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
+        }
+    }
+    
+    func webViewUrlHasChanged() {
+        if url == nil {
+            url = webView.url
+        } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
+            url = webView.url
         }
     }
     
@@ -475,7 +483,7 @@ class TabViewController: UIViewController {
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
+            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
                 controller.popoverPresentationController?.sourceView = siteRatingView
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
@@ -637,6 +645,7 @@ class TabViewController: UIViewController {
 
     func dismiss() {
         progressWorker.progressBar = nil
+        chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()
         willMove(toParent: nil)
         removeFromParent()
@@ -768,6 +777,8 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
+        chromeDelegate?.omniBar.startLoadingAnimation()
+        
         detectedNewNavigation()
     }
     
@@ -797,7 +808,7 @@ extension TabViewController: WKNavigationDelegate {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
             
-            self.chromeDelegate?.omniBar?.showTrackers(Array(siteRating.trackersBlocked))
+            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked))
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,

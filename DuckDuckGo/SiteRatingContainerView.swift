@@ -1,5 +1,5 @@
 //
-//  TrackersStackView.swift
+//  SiteRatingContainerView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,37 +19,64 @@
 
 import UIKit
 
-class TrackersStackView: UIStackView {
+class SiteRatingContainerView: UIView {
     
     struct Constants {
-        static let crossOutOffset: CGFloat = 1.0
+        static let iconSpacing: CGFloat = 10
+        
+        static let crossOutOffset: CGFloat = 3.5
         
         static let crossOutBackgroundLayerKey = "crossOutBackground"
         static let crossOutForegroundLayerKey = "crossOutForeground"
     }
     
+    @IBOutlet var siteRatingView: SiteRatingView!
+    @IBOutlet var trackerIconConstraints: [NSLayoutConstraint]!
     @IBOutlet var trackerIcons: [UIImageView]!
     
     var crossOutBackgroundColor: UIColor = .clear
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        for icon in trackerIcons {
+            icon.alpha = 0
+        }
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return siteRatingView.bounds.size
+    }
+    
+    var siteRatingIconOffset: CGFloat {
+        return siteRatingView.frame.origin.x + siteRatingView.circleIndicator.frame.origin.x
+    }
+    
     func crossOutTrackerIcons(duration: TimeInterval) {
+        
+        let contentRect = trackerIcons.first!.bounds
         trackerIcons.forEach { imageView in
-            animateCrossOut(for: imageView, duration: duration)
+            animateCrossOut(for: imageView, duration: duration, in: contentRect)
         }
     }
     
     func resetTrackerIcons() {
         trackerIcons.forEach { imageView in
             resetCrossOut(for: imageView)
+            imageView.alpha = 0
+        }
+        
+        trackerIconConstraints.forEach { constraint in
+            constraint.constant = siteRatingView.circleIndicator.frame.origin.x
         }
     }
     
-    private func animateCrossOut(for imageView: UIImageView, duration: TimeInterval) {
+    private func animateCrossOut(for imageView: UIImageView, duration: TimeInterval, in rect: CGRect) {
         
         let contentRect = CGRect(x: Constants.crossOutOffset,
-                                 y: (imageView.bounds.height - imageView.bounds.width) / 2 + Constants.crossOutOffset,
-                                 width: imageView.bounds.width - 2 * Constants.crossOutOffset,
-                                 height: imageView.bounds.width - 2 * Constants.crossOutOffset)
+                                 y: (rect.height - rect.width) / 2 + Constants.crossOutOffset,
+                                 width: rect.width - 2 * Constants.crossOutOffset,
+                                 height: rect.width - 2 * Constants.crossOutOffset)
         
         let backgroundShape = makeLineLayer(bounds: imageView.bounds, diagonalIn: contentRect)
         backgroundShape.strokeColor = crossOutBackgroundColor.cgColor
@@ -96,14 +123,14 @@ class TrackersStackView: UIStackView {
         let diagonalLength = sqrt(content.size.width * content.size.width + content.size.height * content.size.height)
         
         let shapeLayer = CAShapeLayer()
-        shapeLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        shapeLayer.frame = CGRect(x: content.origin.x, y: content.origin.y, width: content.width, height: content.height)
         
         let path = CGMutablePath()
-        let startX = (bounds.width - diagonalLength) / 2
+        let startX = (content.width - diagonalLength) / 2
         path.move(to: CGPoint(x: startX,
-                              y: bounds.midY))
+                              y: shapeLayer.bounds.midY))
         path.addLine(to: CGPoint(x: diagonalLength + startX,
-                                 y: bounds.midY))
+                                 y: shapeLayer.bounds.midY))
         shapeLayer.path = path
         
         let radians = CGFloat(45 * Double.pi / 180)

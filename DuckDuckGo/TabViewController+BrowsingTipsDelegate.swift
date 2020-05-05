@@ -27,7 +27,7 @@ extension TabViewController: BrowsingTipsDelegate {
             guard let self = self,
                 !self.omniBarTextFieldHasFocus,
                 let omniBar = self.chromeDelegate?.omniBar,
-                let grade = omniBar.siteRatingView,
+                let grade = omniBar.siteRatingContainer.siteRatingView,
                 let superView = self.parent?.view else {
                 didShow(false)
                 return

@@ -218,11 +218,8 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
 
     func update(withSection section: PrivacyProtectionTrackerNetworksController.Section) {
         nameLabel.text = section.name
-        if let image = PrivacyProtectionIconSource.iconImage(for: section.name.lowercased(), iconSize: CGSize(width: 24, height: 24)) {
-            iconImage.image = image
-        } else {
-            iconImage.image = nil
-        }
+        iconImage.image = PrivacyProtectionIconSource.iconImageTemplate(forNetworkName: section.name.lowercased(),
+                                                                        iconSize: CGSize(width: 24, height: 24))
     }
 
 }

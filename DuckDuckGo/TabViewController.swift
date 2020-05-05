@@ -475,7 +475,7 @@ class TabViewController: UIViewController {
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
+            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
                 controller.popoverPresentationController?.sourceView = siteRatingView
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
@@ -637,6 +637,7 @@ class TabViewController: UIViewController {
 
     func dismiss() {
         progressWorker.progressBar = nil
+        chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()
         willMove(toParent: nil)
         removeFromParent()
@@ -768,6 +769,8 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
+        chromeDelegate?.omniBar.startLoadingAnimation()
+        
         detectedNewNavigation()
     }
     
@@ -797,7 +800,7 @@ extension TabViewController: WKNavigationDelegate {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
             
-            self.chromeDelegate?.omniBar?.showTrackers(Array(siteRating.trackersBlocked))
+            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked))
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,

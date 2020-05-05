@@ -28,6 +28,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
 
     @IBOutlet weak var inlineResetContainer: UIView!
     @IBOutlet weak var hoveringResetContainer: UIView!
@@ -51,6 +52,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         initHeroIcon()
         initResetButton()
         initDrama()
+        initBackButton()
         update()
 
     }
@@ -101,6 +103,10 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
             self?.drama = false
             self?.tableView.reloadData()
         }
+    }
+
+    private func initBackButton() {
+        backButton.isHidden = !isPad
     }
 
     private func initMessageLabel() {

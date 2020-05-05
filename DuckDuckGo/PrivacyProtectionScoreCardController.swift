@@ -29,6 +29,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var privacyGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var enhancedGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var isMajorNetworkCell: PrivacyProtectionScoreCardCell!
+    @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
     private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
@@ -37,7 +38,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     override func viewDidLoad() {
         
         Pixel.fire(pixel: .privacyDashboardScorecard)
-        
+        initBackButton()
         update()
     }
 
@@ -57,6 +58,10 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
+    private func initBackButton() {
+        backButton.isHidden = !isPad
     }
 
     private func update() {

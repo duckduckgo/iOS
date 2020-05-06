@@ -10,39 +10,23 @@ import UIKit
 import MobileCoreServices
 
 class ActionViewController: UIViewController {
-    private var canLaunchBrowser: Bool = false
-    private var url: URL?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         for item in extensionContext?.inputItems as? [NSExtensionItem] ?? [] {
             for provider in item.attachments ?? [] {
                 if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                     provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { url, _ in
                         guard let url = url as? URL else { return }
-                        if self.canLaunchBrowser {
-                            DispatchQueue.main.async {
-                                self.launchBrowser(withUrl: url)
-                                self.done()
-                            }
-                        } else {
-                            self.url = url
+                        DispatchQueue.main.async {
+                            self.launchBrowser(withUrl: url)
+                            self.done()
                         }
                     })
                     break
                 }
             }
-        }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.canLaunchBrowser = true
-        if let url = self.url {
-            launchBrowser(withUrl: url)
-            done()
         }
     }
 

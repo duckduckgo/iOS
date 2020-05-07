@@ -22,7 +22,8 @@ import Core
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     
-    enum Section: Int {
+    enum Section: Int, CaseIterable {
+        case info
         case toggle
         case domainList
         case removeAll
@@ -61,11 +62,24 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return tableView.isEditing ? 3 : 2
+        return tableView.isEditing ? Section.allCases.count : Section.allCases.count - 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Section(rawValue: section) == Section.domainList ? max(1, model.count) : 1
+        switch Section(rawValue: section) {
+        case .domainList:
+            return max(1, model.count)
+            
+        case .toggle:
+            return 1
+                    
+        case .removeAll:
+            return tableView.isEditing ? 1 : 0
+            
+        default:
+            return 0
+        
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,10 +88,10 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         let cell: UITableViewCell
         switch Section(rawValue: indexPath.section) {
 
-        case .some(.toggle):
+        case .toggle:
             cell = createSwitchCell(forTableView: tableView, withTheme: theme)
 
-        case .some(.domainList):
+        case .domainList:
             if model.isEmpty {
                 cell = createNoDomainCell(forTableView: tableView, withTheme: theme)
             } else {
@@ -106,7 +120,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch Section(rawValue: section) {
-        case .some(.domainList):
+        case .some(.info):
             return UserText.preserveLoginsListFooter
         
         default:
@@ -158,7 +172,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
         cell.toggle.isOn = PreserveLogins.shared.loginDetectionEnabled
-        cell.toggle.isEnabled = !tableView.isEditing
         cell.controller = self
         cell.decorate(with: theme)
         return cell

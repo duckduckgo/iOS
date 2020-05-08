@@ -250,14 +250,18 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let tab = tabsModel.get(tabAt: indexPath.row)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
         }
         cell.delegate = self
 
         cell.isDeleting = false
-        cell.update(withTab: tab)
+        
+        if indexPath.row < tabsModel.count {
+            let tab = tabsModel.get(tabAt: indexPath.row)
+            cell.update(withTab: tab)
+        }
+        
         return cell
     }
 

@@ -55,14 +55,20 @@ class AtbIntegrationTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
         continueAfterFailure = false
         
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
             "BASE_PIXEL_URL": "http://localhost:8080",
-            "VARIANT": Variant.defaultVariants[0].name // just has to match an existing variant to prevent one being allocated and written to storage
+            "VARIANT": Variant.defaultVariants[0].name, // just has to match an existing variant to prevent one being allocated and written to storage
+            "atb-testing": "true"
         ]
-        
+
+        app.launch()
+        skipOnboarding()
+        clearTabsAndData()
+
         addRequestHandlers()
         
         do {
@@ -70,10 +76,9 @@ class AtbIntegrationTests: XCTestCase {
         } catch {
             fatalError("Could not start server")
         }
-        
-        Springboard.deleteMyApp()
-        app.launch()
-        skipOnboarding()
+
+        // now finally ready for initial states
+        backgroundRelaunch()
     }
     
     override func tearDown() {
@@ -82,7 +87,7 @@ class AtbIntegrationTests: XCTestCase {
         statisticsRequests.removeAll()
         searchRequests.removeAll()
     }
-    
+        
     func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
         assertSearchRequestCount(count: 0)
         assertStatisticsRequestCount(count: 3)
@@ -158,36 +163,37 @@ class AtbIntegrationTests: XCTestCase {
         }
     }
     
-    func assertStatisticsRequestCount(count: Int) {
-        XCTAssertEqual(count, statisticsRequests.count)
+    func assertStatisticsRequestCount(count: Int, file: StaticString = #file, line: UInt = #line) {
+        XCTAssertEqual(count, statisticsRequests.count, file: file, line: line)
     }
     
-    func assertExti() {
+    func assertExti(file: StaticString = #file, line: UInt = #line) {
         let request = statisticsRequests.removeFirst()
-        XCTAssertEqual(StatisticsRequestType.exti, request.type)
-        XCTAssertEqual(Constants.initialAtb, request.httpRequest.queryParam(Constants.atbParam))
+        XCTAssertEqual(StatisticsRequestType.exti, request.type, file: file, line: line)
+        XCTAssertEqual(Constants.initialAtb, request.httpRequest.queryParam(Constants.atbParam), file: file, line: line)
     }
     
-    func assertAtb(expectedAtb: String? = nil, expectedSetAtb: String? = nil, expectedType: String? = nil) {
+    func assertAtb(expectedAtb: String? = nil, expectedSetAtb: String? = nil, expectedType: String? = nil,
+                   file: StaticString = #file, line: UInt = #line) {
         let request = statisticsRequests.removeFirst()
-        XCTAssertEqual(StatisticsRequestType.atb, request.type)
+        XCTAssertEqual(StatisticsRequestType.atb, request.type, file: file, line: line)
         
         let httpRequest = request.httpRequest
-        XCTAssertEqual(expectedAtb, httpRequest.queryParam(Constants.atbParam))
-        XCTAssertEqual(expectedSetAtb, httpRequest.queryParam(Constants.setAtbParam))
-        XCTAssertEqual(expectedType, httpRequest.queryParam(Constants.activityType))
-        XCTAssertEqual("1", httpRequest.queryParam(Constants.devmode))
+        XCTAssertEqual(expectedAtb, httpRequest.queryParam(Constants.atbParam), file: file, line: line)
+        XCTAssertEqual(expectedSetAtb, httpRequest.queryParam(Constants.setAtbParam), file: file, line: line)
+        XCTAssertEqual(expectedType, httpRequest.queryParam(Constants.activityType), file: file, line: line)
+        XCTAssertEqual("1", httpRequest.queryParam(Constants.devmode), file: file, line: line)
     }
     
-    func assertSearchRequestCount(count: Int) {
-        XCTAssertEqual(count, searchRequests.count)
+    func assertSearchRequestCount(count: Int, file: StaticString = #file, line: UInt = #line) {
+        XCTAssertEqual(count, searchRequests.count, file: file, line: line)
     }
     
-    func assertSearch(text: String, atb: String) {
+    func assertSearch(text: String, atb: String, file: StaticString = #file, line: UInt = #line) {
         let request = searchRequests.removeFirst()
 
-        XCTAssertEqual(text, request.queryParam("q"))
-        XCTAssertEqual(atb, request.queryParam(Constants.atbParam))
+        XCTAssertEqual(text, request.queryParam("q"), file: file, line: line)
+        XCTAssertEqual(atb, request.queryParam(Constants.atbParam), file: file, line: line)
     }
     
     private func search(forText text: String) {
@@ -240,12 +246,21 @@ class AtbIntegrationTests: XCTestCase {
     
     private func waitForButtonThenTap(_ named: String) {
         let button = app.buttons[named]
-        guard button.waitForExistence(timeout: Constants.defaultTimeout) else {
-            fatalError("Could not find button named \(named)")
+//        guard button.waitForExistence(timeout: Constants.defaultTimeout) else {
+//            // fatalError("Could not find button named \(named)")
+//            return
+//        }
+        if button.exists {
+            button.tap()
         }
-        button.tap()
     }
     
+    private func clearTabsAndData() {
+        app.toolbars["Toolbar"]/*@START_MENU_TOKEN@*/.buttons["Fire"]/*[[".buttons[\"Erase Tabs and Data\"]",".buttons[\"Fire\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.sheets.scrollViews.otherElements.buttons["Close Tabs and Clear Data"].tap()
+        app/*@START_MENU_TOKEN@*/.staticTexts["Cancel"]/*[[".buttons[\"Cancel\"].staticTexts[\"Cancel\"]",".staticTexts[\"Cancel\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+    }
+
 }
 
 fileprivate extension HttpRequest {

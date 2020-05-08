@@ -43,6 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+                
+        if ProcessInfo.processInfo.environment.contains(where: { $0.key == "atb-testing" }) {
+            if mainViewController?.tabManager != nil {
+                mainViewController?.forgetTabs()
+            }
+            StatisticsLoader.shared.clear()
+        }
         
         testing = ProcessInfo().arguments.contains("testing")
         if testing {

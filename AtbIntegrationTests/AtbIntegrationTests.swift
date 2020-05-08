@@ -254,7 +254,11 @@ class AtbIntegrationTests: XCTestCase {
     private func clearTabsAndData() {
         app.toolbars["Toolbar"].buttons["Fire"].tap()
         app.sheets.scrollViews.otherElements.buttons["Close Tabs and Clear Data"].tap()
-        app.staticTexts["Cancel"].tap()
+        
+        let cancel = app.staticTexts["Cancel"]
+        if cancel.exists {
+            cancel.tap()
+        }
     }
 
 }

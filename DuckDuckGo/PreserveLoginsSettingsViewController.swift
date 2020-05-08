@@ -41,6 +41,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         refreshModel()
         navigationItem.rightBarButtonItems = model.isEmpty ? [] : [ editButton ]
         applyTheme(ThemeManager.shared.currentTheme)
+        tableView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
     }
     
     @IBAction func startEditing() {

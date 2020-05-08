@@ -240,25 +240,21 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        waitForButtonThenTap("Continue")
-        waitForButtonThenTap("Start Browsing")
+        tapButtonIfExists("Continue")
+        tapButtonIfExists("Start Browsing")
     }
     
-    private func waitForButtonThenTap(_ named: String) {
+    private func tapButtonIfExists(_ named: String) {
         let button = app.buttons[named]
-//        guard button.waitForExistence(timeout: Constants.defaultTimeout) else {
-//            // fatalError("Could not find button named \(named)")
-//            return
-//        }
         if button.exists {
             button.tap()
         }
     }
     
     private func clearTabsAndData() {
-        app.toolbars["Toolbar"]/*@START_MENU_TOKEN@*/.buttons["Fire"]/*[[".buttons[\"Erase Tabs and Data\"]",".buttons[\"Fire\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.toolbars["Toolbar"].buttons["Fire"].tap()
         app.sheets.scrollViews.otherElements.buttons["Close Tabs and Clear Data"].tap()
-        app/*@START_MENU_TOKEN@*/.staticTexts["Cancel"]/*[[".buttons[\"Cancel\"].staticTexts[\"Cancel\"]",".staticTexts[\"Cancel\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.staticTexts["Cancel"].tap()
     }
 
 }

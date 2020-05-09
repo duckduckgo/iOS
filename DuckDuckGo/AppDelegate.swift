@@ -44,11 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                 
-        if ProcessInfo.processInfo.environment.contains(where: { $0.key == "atb-testing" }) {
-            if mainViewController?.tabManager != nil {
-                mainViewController?.forgetTabs()
-            }
-            StatisticsLoader.shared.clear()
+        if runningAtbTests() {
+            closeAllTabsAndResetStatisticsData()
         }
         
         testing = ProcessInfo().arguments.contains("testing")
@@ -92,7 +89,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appIsLaunching = true
         return true
     }
-    
+
+    private func closeAllTabsAndResetStatisticsData() {
+        if mainViewController?.tabManager != nil {
+            mainViewController?.forgetTabs()
+        }
+        StatisticsLoader.shared.clear()
+    }
+
+    private func runningAtbTests() -> Bool {
+        return ProcessInfo.processInfo.environment.contains(where: { $0.key == "atb-testing" })
+    }
+
     private func clearLegacyAllowedDomainCookies() {
         let domains = PreserveLogins.shared.legacyAllowedDomains
         guard !domains.isEmpty else { return }

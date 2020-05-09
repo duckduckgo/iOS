@@ -242,6 +242,7 @@
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
 		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
+		85C91CA224671F4C00A11132 /* AppDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */; };
 		85C9E5F521B422D300460EBC /* BookmarksManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C9E5F421B422D300460EBC /* BookmarksManagerTests.swift */; };
 		85C9E5F821B4232A00460EBC /* HomePageConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C9E5F721B4232A00460EBC /* HomePageConfigurationTests.swift */; };
 		85CC936E203C402C00690089 /* SpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC936D203C402C00690089 /* SpeedTests.swift */; };
@@ -4009,6 +4010,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */,
+				85C91CA224671F4C00A11132 /* AppDeepLinks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

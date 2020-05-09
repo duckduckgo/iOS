@@ -31,7 +31,8 @@ class ActionViewController: UIViewController {
     }
 
     func launchBrowser(withUrl url: URL) {
-        let path = "ddgQuickLink://\(url.absoluteString)"
+
+        let path = "\(AppDeepLinks.quickLink)\(url.absoluteString)"
         guard let url = URL(string: path) else { return }
         var responder = self as UIResponder?
         let selectorOpenURL = sel_registerName("openURL:")

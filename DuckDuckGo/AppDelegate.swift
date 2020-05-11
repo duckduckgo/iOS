@@ -85,10 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    private func runningAtbTests() -> Bool {
-        return ProcessInfo.processInfo.environment.contains(where: { $0.key == "atb-testing" })
-    }
-
     private func clearLegacyAllowedDomainCookies() {
         let domains = PreserveLogins.shared.legacyAllowedDomains
         guard !domains.isEmpty else { return }

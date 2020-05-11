@@ -35,12 +35,6 @@ public class StatisticsLoader {
         self.appUrls = AppUrls(statisticsStore: statisticsStore)
     }
     
-    public func clear() {
-        statisticsStore.atb = nil
-        statisticsStore.appRetentionAtb = nil
-        statisticsStore.searchRetentionAtb = nil
-    }
-    
     public func load(completion: @escaping Completion = {}) {
         if statisticsStore.hasInstallStatistics {
             completion()

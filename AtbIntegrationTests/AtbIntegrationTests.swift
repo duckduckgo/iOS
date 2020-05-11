@@ -55,20 +55,14 @@ class AtbIntegrationTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
         continueAfterFailure = false
         
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
             "BASE_PIXEL_URL": "http://localhost:8080",
-            "VARIANT": Variant.defaultVariants[0].name, // just has to match an existing variant to prevent one being allocated and written to storage
-            "atb-testing": "true"
+            "VARIANT": Variant.defaultVariants[0].name // just has to match an existing variant to prevent one being allocated and written to storage
         ]
-
-        app.launch()
-        skipOnboarding()
-        clearTabsAndData()
-
+        
         addRequestHandlers()
         
         do {
@@ -76,9 +70,10 @@ class AtbIntegrationTests: XCTestCase {
         } catch {
             fatalError("Could not start server")
         }
-
-        // now finally ready for initial states
-        backgroundRelaunch()
+        
+        Springboard.deleteMyApp()
+        app.launch()
+        skipOnboarding()
     }
     
     override func tearDown() {
@@ -87,8 +82,25 @@ class AtbIntegrationTests: XCTestCase {
         statisticsRequests.removeAll()
         searchRequests.removeAll()
     }
+    
+    func test() throws {
+        try assertWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved()
+        clearRequests()
         
-    func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
+        assertWhenAppLaunchedAgainThenAppAtbIsUpdated()
+        clearRequests()
+        
+        assertWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+        clearRequests()
+        
+        try assertWhenSearchPerformedThenAtbIsAddedToRequest()
+        clearRequests()
+
+        assertWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest()
+        clearRequests()
+    }
+    
+    func assertWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
         assertSearchRequestCount(count: 0)
         assertStatisticsRequestCount(count: 3)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
@@ -96,20 +108,14 @@ class AtbIntegrationTests: XCTestCase {
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
     }
     
-    func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
+    func assertWhenSearchPerformedThenAtbIsAddedToRequest() throws {
         search(forText: "oranges")
 
         assertSearchRequestCount(count: 1)
         assertSearch(text: "oranges", atb: Constants.initialAtb)
-
-        assertStatisticsRequestCount(count: 4)
-        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
-        assertExti()
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
 
-    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
+    func assertWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
         atbToSet = Constants.searchRetentionAtb
 
         search(forText: "lemons")
@@ -119,40 +125,33 @@ class AtbIntegrationTests: XCTestCase {
         assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertSearch(text: "pears", atb: Constants.initialAtb)
 
-        assertStatisticsRequestCount(count: 5)
-        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
-        assertExti()
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertStatisticsRequestCount(count: 2)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
     }
     
-    func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
+    func assertWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         search(forText: "http://localhost:8080?q=beagles")
         
         assertSearchRequestCount(count: 1)
         assertSearch(text: "beagles", atb: Constants.initialAtb)
-
-        assertStatisticsRequestCount(count: 4)
-        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
-        assertExti()
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
     
-    func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
+    func assertWhenAppLaunchedAgainThenAppAtbIsUpdated() {
         atbToSet = Constants.appRetentionAtb
         
         backgroundRelaunch() // this launch gets new atb
         backgroundRelaunch() // this launch sends it
 
         assertSearchRequestCount(count: 0)
-        assertStatisticsRequestCount(count: 5)
-        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
-        assertExti()
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertStatisticsRequestCount(count: 2)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, expectedType: "app_use")
+    }
+    
+    func clearRequests() {
+        statisticsRequests.removeAll()
+        searchRequests.removeAll()
     }
     
     func backgroundRelaunch() {
@@ -240,27 +239,18 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        tapButtonIfExists("Continue")
-        tapButtonIfExists("Start Browsing")
+        waitForButtonThenTap("Continue")
+        waitForButtonThenTap("Start Browsing")
     }
     
-    private func tapButtonIfExists(_ named: String) {
+    private func waitForButtonThenTap(_ named: String) {
         let button = app.buttons[named]
-        if button.exists {
-            button.tap()
+        guard button.waitForExistence(timeout: Constants.defaultTimeout) else {
+            fatalError("Could not find button named \(named)")
         }
+        button.tap()
     }
     
-    private func clearTabsAndData() {
-        app.toolbars["Toolbar"].buttons["Fire"].tap()
-        app.sheets.scrollViews.otherElements.buttons["Close Tabs and Clear Data"].tap()
-        
-        let cancel = app.staticTexts["Cancel"]
-        if cancel.exists {
-            cancel.tap()
-        }
-    }
-
 }
 
 fileprivate extension HttpRequest {

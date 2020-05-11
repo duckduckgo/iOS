@@ -43,11 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                
-        if runningAtbTests() {
-            closeAllTabsAndResetStatisticsData()
-        }
-        
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             Database.shared.loadStore { _ in }
@@ -88,13 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         appIsLaunching = true
         return true
-    }
-
-    private func closeAllTabsAndResetStatisticsData() {
-        if mainViewController?.tabManager != nil {
-            mainViewController?.forgetTabs()
-        }
-        StatisticsLoader.shared.clear()
     }
 
     private func runningAtbTests() -> Bool {

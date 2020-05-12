@@ -224,7 +224,11 @@ class TabViewController: UIViewController {
     }
     
     func installBrowsingTips() {
-        tips = BrowsingTips(delegate: self)
+        if DaxOnboarding().isActive {
+            // TODO
+        } else {
+            tips = BrowsingTips(delegate: self)
+        }
     }
     
     func removeBrowsingTips() {
@@ -801,6 +805,8 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
+        
+        // TODO
         tips?.onFinishedLoading(url: url, error: isError)
     }
     

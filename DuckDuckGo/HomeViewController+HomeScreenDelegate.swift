@@ -103,9 +103,5 @@ extension HomeViewController: HomeScreenTipsDelegate {
         }
 
     }
- 
-    func installHomeScreenTips() {
-        HomeScreenTips(delegate: self)?.trigger()
-    }
     
 }

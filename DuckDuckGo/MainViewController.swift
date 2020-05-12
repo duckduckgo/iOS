@@ -113,7 +113,27 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         startOnboardingFlowIfNotSeenBefore()
+        
+    }
+    
+    func startOnboardingFlowIfNotSeenBefore() {
+        
+        let settings = DefaultTutorialSettings()
+        guard !settings.hasSeenOnboarding else { return }
+
+        let onboardingFlow: String
+        if DaxOnboarding().isActive {
+            onboardingFlow = isPad ? "DaxOnboarding-iPad" : "DaxOnboarding"
+        } else {
+            // Only show tips if the user is a new one, ie they've not seen onboarding yet
+            DefaultContextualTipsStorage().isEnabled = true
+            onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
+        }
+
+        performSegue(withIdentifier: onboardingFlow, sender: self)
+        homeController?.prepareForPresentation()
     }
     
     private func registerForKeyboardNotifications() {

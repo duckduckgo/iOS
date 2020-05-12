@@ -132,7 +132,15 @@ class HomeViewController: UIViewController {
         
         viewHasAppeared = true
     }
-    
+        
+    func installHomeScreenTips() {
+        if DaxOnboarding().isActive {
+            // TODO
+        } else {
+            HomeScreenTips(delegate: self)?.trigger()
+        }
+    }
+
     func prepareForPresentation() {
         installHomeScreenTips()
     }

@@ -135,7 +135,7 @@ class HomeViewController: UIViewController {
         
     func installHomeScreenTips() {
         if DaxOnboarding().isActive {
-            // TODO
+            // HERE
         } else {
             HomeScreenTips(delegate: self)?.trigger()
         }

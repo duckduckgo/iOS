@@ -201,7 +201,8 @@
 		858650D12469BCDE00C36F8A /* DaxOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D02469BCDE00C36F8A /* DaxOnboarding.swift */; };
 		858650D32469BFAD00C36F8A /* DaxOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */; };
 		858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */; };
-		858650D7246AB54A00C36F8A /* DaxOnboarding-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858650D6246AB54900C36F8A /* DaxOnboarding-iPad.storyboard */; };
+		858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */; };
+		858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858650DA246B111900C36F8A /* DaxOnboarding.xcassets */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */; };
@@ -852,7 +853,8 @@
 		858650D02469BCDE00C36F8A /* DaxOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboarding.swift; sourceTree = "<group>"; };
 		858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingTests.swift; sourceTree = "<group>"; };
 		858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DaxOnboarding.storyboard; sourceTree = "<group>"; };
-		858650D6246AB54900C36F8A /* DaxOnboarding-iPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "DaxOnboarding-iPad.storyboard"; sourceTree = "<group>"; };
+		858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingViewController.swift; sourceTree = "<group>"; };
+		858650DA246B111900C36F8A /* DaxOnboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DaxOnboarding.xcassets; sourceTree = "<group>"; };
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsTests.swift; sourceTree = "<group>"; };
@@ -1821,7 +1823,8 @@
 			children = (
 				858650D02469BCDE00C36F8A /* DaxOnboarding.swift */,
 				858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */,
-				858650D6246AB54900C36F8A /* DaxOnboarding-iPad.storyboard */,
+				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
+				858650DA246B111900C36F8A /* DaxOnboarding.xcassets */,
 			);
 			name = DaxOnboarding;
 			sourceTree = "<group>";
@@ -3436,8 +3439,8 @@
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
-				858650D7246AB54A00C36F8A /* DaxOnboarding-iPad.storyboard in Resources */,
 				858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */,
+				858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
 				AA4D6AF623DF0312007E8790 /* AppIconRed60x60@3x.png in Resources */,
@@ -3862,6 +3865,7 @@
 				8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
+				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,

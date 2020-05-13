@@ -125,7 +125,7 @@ class MainViewController: UIViewController {
 
         let onboardingFlow: String
         if DaxOnboarding().isActive {
-            onboardingFlow = isPad ? "DaxOnboarding-iPad" : "DaxOnboarding"
+            onboardingFlow = "DaxOnboarding"
         } else {
             // Only show tips if the user is a new one, ie they've not seen onboarding yet
             DefaultContextualTipsStorage().isEnabled = true

@@ -109,19 +109,6 @@ DuckDuckGo!</string>
                                     <constraint firstAttribute="width" secondItem="UzU-6y-Vfa" secondAttribute="height" multiplier="1:1" id="x9W-fX-bsI"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh6-ce-Ivv" userLabel="Pointer">
-                                <rect key="frame" x="56.5" y="77" width="10" height="10"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="10" id="54C-Dg-mBH"/>
-                                    <constraint firstAttribute="width" constant="10" id="Y2a-Be-jH1"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="TextArea">
                                 <rect key="frame" x="10" y="82" width="310" height="120"/>
                                 <subviews>
@@ -150,6 +137,19 @@ DuckDuckGo!</string>
                                     <outletCollection property="gestureRecognizers" destination="1gA-Oe-qi9" appends="YES" id="2hE-O7-Jy6"/>
                                 </connections>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh6-ce-Ivv" userLabel="Pointer">
+                                <rect key="frame" x="56.5" y="77" width="10" height="10"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="54C-Dg-mBH"/>
+                                    <constraint firstAttribute="width" constant="10" id="Y2a-Be-jH1"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
                                 <rect key="frame" x="10" y="219" width="310" height="44"/>
                                 <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -165,6 +165,9 @@ DuckDuckGo!</string>
                                         <integer key="value" value="22"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onButtonTap" destination="UUS-R7-a2i" eventType="touchUpInside" id="Xba-0Q-sCw"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -205,34 +208,7 @@ DuckDuckGo!</string>
             </objects>
             <point key="canvasLocation" x="1319" y="42"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Q0z-pw-tOE">
-            <objects>
-                <viewController id="gWx-Ox-vvu" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="k13-ii-B2H">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dm8-pD-WMG">
-                                <rect key="frame" x="16" y="20" width="288" height="435"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="UUS-R7-a2i" kind="embed" id="tcu-h7-gak"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="5X9-Nl-WCT"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RVy-eg-5tn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2344.8000000000002" y="-564.53201970443354"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Z8u-vf-YsD"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>
         <image name="Lighthouse" width="360" height="724"/>

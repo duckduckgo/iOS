@@ -1821,10 +1821,10 @@
 		858650CF2469BCC100C36F8A /* DaxOnboarding */ = {
 			isa = PBXGroup;
 			children = (
-				858650D02469BCDE00C36F8A /* DaxOnboarding.swift */,
 				858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */,
-				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
+				858650D02469BCDE00C36F8A /* DaxOnboarding.swift */,
 				858650DA246B111900C36F8A /* DaxOnboarding.xcassets */,
+				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
 			);
 			name = DaxOnboarding;
 			sourceTree = "<group>";

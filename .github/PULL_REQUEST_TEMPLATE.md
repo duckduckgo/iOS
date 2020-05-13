@@ -14,9 +14,9 @@ CC:
 1.
 
 <!--
-Do not delete these, they are reminders to test against different device configurations.  
+Before submitting a PR, please ensure you have tested a reasonable combination of the following.  Using a simulator where a physical device is unavailable is acceptable. 
 
-Before submitting a PR, please ensure you have tested a reasonable combination of the following.  Using a simulator where a physical device is unavailable is acceptable.
+Please delete configurations you *know* do not need explicit testing.
 -->
 
 **Orientation Testing**:

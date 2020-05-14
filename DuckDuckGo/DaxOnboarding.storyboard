@@ -67,7 +67,7 @@ DuckDuckGo!</string>
                             <constraint firstItem="g9R-nE-CaL" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" id="6P4-or-DGh"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="g9R-nE-CaL" secondAttribute="bottom" id="9rF-2A-gHl"/>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="E2L-jn-kYz"/>
-                            <constraint firstItem="qNL-CF-WGF" firstAttribute="width" secondItem="77H-Rq-H5D" secondAttribute="width" priority="750" constant="10" id="GBz-88-5Qg"/>
+                            <constraint firstItem="qNL-CF-WGF" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" priority="750" constant="10" id="GBz-88-5Qg"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="77H-Rq-H5D" secondAttribute="bottom" id="LIR-FB-5jL"/>
                             <constraint firstItem="67b-it-r0B" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="Ork-4W-eRy"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="g9R-nE-CaL" secondAttribute="trailing" id="UE2-tp-9O5"/>

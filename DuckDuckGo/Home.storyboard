@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -171,16 +171,29 @@
                                     <action selector="launchSettings" destination="LJ1-RN-ckE" eventType="primaryActionTriggered" id="ywh-FM-XNP"/>
                                 </connections>
                             </button>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ms-eB-DjL">
+                                <rect key="frame" x="20" y="88" width="375" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="79Y-G9-tO1"/>
+                                    <constraint firstAttribute="height" constant="250" id="E7k-RF-RsZ"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Ad2-7l-5O5" kind="embed" id="Df7-k4-eQe"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="3ms-eB-DjL" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" priority="750" constant="10" id="12Q-iD-RrD"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="height" secondItem="klK-ZJ-wmA" secondAttribute="height" id="1lu-2N-IOp"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="ijV-Vn-w9w" secondAttribute="width" id="BjB-Gh-zsj"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="5" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="b31-Kn-3OJ" secondAttribute="trailing" id="Zcr-tm-QF3"/>
+                            <constraint firstItem="3ms-eB-DjL" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="eW6-mG-0bM"/>
+                            <constraint firstItem="3ms-eB-DjL" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="44" id="gcJ-UD-uID"/>
                             <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="9" id="h6x-yo-1bE"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
@@ -202,6 +215,8 @@
                         <outlet property="collectionView" destination="H74-G9-0WZ" id="fSh-3T-0TA"/>
                         <outlet property="ctaContainer" destination="5Rf-oV-2W5" id="KSc-be-02P"/>
                         <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
+                        <outlet property="daxDialogContainer" destination="3ms-eB-DjL" id="ZC4-JT-yTi"/>
+                        <outlet property="daxDialogContainerHeight" destination="E7k-RF-RsZ" id="oGk-WJ-UXB"/>
                         <outlet property="logo" destination="ztc-nL-no3" id="Qa7-Ec-ESN"/>
                         <outlet property="settingsButton" destination="kcN-YB-mZi" id="iyr-9W-6gY"/>
                     </connections>
@@ -214,6 +229,14 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1181.1594202898552" y="-332.14285714285711"/>
+        </scene>
+        <!--DaxDialog-->
+        <scene sceneID="xFc-t0-w19">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DaxOnboarding" referencedIdentifier="DaxDialog" id="Ad2-7l-5O5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="khO-vx-1XM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1888" y="-332"/>
         </scene>
     </scenes>
     <resources>

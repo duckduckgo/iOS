@@ -47,6 +47,7 @@ class DaxDialogViewController: UIViewController {
         applyPointerRotation()
         textArea.displayDropShadow()
         button.displayDropShadow()
+        button.isHidden = true
     }
     
     func applyPointerRotation() {

@@ -30,6 +30,11 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var collectionView: HomeCollectionView!
     @IBOutlet weak var settingsButton: UIButton!
     
+    @IBOutlet weak var daxDialogContainer: UIView!
+    @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
+    weak var daxDialogViewController: DaxDialogViewController?
+    var daxDialogSpecToShow: DaxOnboarding.HomeScreenSpec?
+    
     var statusBarBackground: UIView? {
         return (parent as? MainViewController)?.statusBarBackground
     }
@@ -135,14 +140,34 @@ class HomeViewController: UIViewController {
         
     func installHomeScreenTips() {
         if DaxOnboarding().isActive {
-            // HERE
+            daxDialogSpecToShow = DaxOnboarding().nextHomeScreenMessage()
+            showNextDaxDialog()
         } else {
             HomeScreenTips(delegate: self)?.trigger()
         }
     }
+    
+    func showNextDaxDialog() {
+        guard let spec = daxDialogSpecToShow else { return }
+        collectionView.isHidden = true
+        logo.isHidden = true
+        daxDialogContainer.isHidden = false
+        daxDialogContainerHeight.constant = spec.height
+        daxDialogViewController?.message = spec.message
+        daxDialogViewController?.start()
+    }
 
     func prepareForPresentation() {
         installHomeScreenTips()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.destination is DaxDialogViewController {
+            self.daxDialogViewController = segue.destination as? DaxDialogViewController
+        }
+        
     }
 
     @IBAction func hideKeyboard() {

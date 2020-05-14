@@ -166,7 +166,7 @@ class HomeViewController: UIViewController {
         
     }
 
-    func prepareForPresentation() {
+    func onboardingCompleted() {
         installHomeScreenTips()
     }
     

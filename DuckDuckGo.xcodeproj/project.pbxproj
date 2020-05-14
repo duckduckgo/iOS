@@ -135,6 +135,7 @@
 		8521FDF3238DF4BB00A44CC3 /* KnownTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDF2238DF4BB00A44CC3 /* KnownTrackerTests.swift */; };
 		8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */; };
 		8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC95246D620B00E59D45 /* String+Markdown.swift */; };
+		8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */; };
 		85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D222151221C00A0CE28 /* PrivacyPractices.swift */; };
 		85267D2521513FC700A0CE28 /* EntityMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2421513FC700A0CE28 /* EntityMapping.swift */; };
 		85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */; };
@@ -788,6 +789,7 @@
 		8521FDF2238DF4BB00A44CC3 /* KnownTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownTrackerTests.swift; sourceTree = "<group>"; };
 		8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogViewController.swift; sourceTree = "<group>"; };
 		8524CC95246D620B00E59D45 /* String+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Markdown.swift"; sourceTree = "<group>"; };
+		8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenDaxDialogViewController.swift; sourceTree = "<group>"; };
 		85267D222151221C00A0CE28 /* PrivacyPractices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPractices.swift; sourceTree = "<group>"; };
 		85267D2421513FC700A0CE28 /* EntityMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMapping.swift; sourceTree = "<group>"; };
 		85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMappingTests.swift; sourceTree = "<group>"; };
@@ -1830,6 +1832,7 @@
 				858650DA246B111900C36F8A /* DaxOnboarding.xcassets */,
 				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
 				8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */,
+				8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */,
 			);
 			name = DaxOnboarding;
 			sourceTree = "<group>";
@@ -3928,6 +3931,7 @@
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
+				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 				984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */,
 				85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */,

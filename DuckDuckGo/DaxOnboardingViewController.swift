@@ -23,6 +23,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var welcomeMessage: UIView!
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxIcon: UIView!
+    @IBOutlet weak var button: UIButton!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return isPad ? super.supportedInterfaceOrientations : [ .portrait ]
@@ -72,29 +73,30 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         }, completion: { _ in
             self.showDaxDialog {
                 snapshot.removeFromSuperview()
-                self.daxDialog?.onTapCta = self.onTapLetsGo
                 self.daxDialog?.start()
             }
         })
         
     }
     
-    func onTapLetsGo() {
+    @IBAction func onTapButton() {
         delegate?.onboardingCompleted(controller: self)
     }
     
     func showDaxDialog(completion: @escaping () -> Void) {
         let message = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think."
-        let cta = "Let's Do It!"
         
         daxDialogContainer.alpha = 0.0
         daxDialogContainer.isHidden = false
         
+        button.alpha = 0.0
+        button.isHidden = false
+        
         daxDialog?.message = message
-        daxDialog?.cta = cta
         
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.daxDialogContainer.alpha = 1.0
+            self.button.alpha = 1.0
         }, completion: { _ in
             completion()
         })

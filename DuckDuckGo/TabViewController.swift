@@ -224,9 +224,7 @@ class TabViewController: UIViewController {
     }
     
     func installBrowsingTips() {
-        if DaxOnboarding().isActive {
-            // HERE
-        } else {
+        if !DaxOnboarding().isActive {
             tips = BrowsingTips(delegate: self)
         }
     }
@@ -499,6 +497,11 @@ class TabViewController: UIViewController {
             controller.siteRating = siteRating
             controller.errorText = isError ? errorText : nil
         }
+        
+        if let controller = segue.destination as? FullscreenDaxDialogViewController {
+            controller.spec = sender as? DaxOnboarding.BrowsingSpec
+        }
+        
     }
     
     private func addLoginDetectionStateObserver() {
@@ -805,9 +808,15 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
-        
-        // HERE
+     
+        showDaxDialogIfNeeded()
         tips?.onFinishedLoading(url: url, error: isError)
+    }
+    
+    private func showDaxDialogIfNeeded() {
+        if let spec = DaxOnboarding().nextBrowsingMessage() {
+            performSegue(withIdentifier: "DaxDialog", sender: spec)
+        }
     }
     
     private func scheduleTrackerNetworksAnimation() {

@@ -136,7 +136,6 @@ class MainViewController: UIViewController {
         }
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
-        homeController?.prepareForPresentation()
     }
     
     private func registerForKeyboardNotifications() {
@@ -1156,7 +1155,7 @@ extension MainViewController: OnboardingDelegate {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
-        homeController?.prepareForPresentation()
+        homeController?.onboardingCompleted()
     }
     
     func markOnboardingSeen() {

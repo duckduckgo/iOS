@@ -84,7 +84,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     }
     
     func showDaxDialog(completion: @escaping () -> Void) {
-        let message = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think."
+        let message = "*The Internet* can be kinda creepy.\n\nNot to *worry*! Searching and browsing\nprivately is easier than you think."
         let cta = "Let's Do It!"
         
         daxDialogContainer.alpha = 0.0

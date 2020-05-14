@@ -38,13 +38,7 @@ class DaxDialogViewController: UIViewController {
     private var position: Int = 0
     private var chars = [Character]()
     
-    private lazy var paragraphStyle: NSParagraphStyle = {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.17
-        return paragraphStyle
-    }()
-    
-    private var atEnd: Bool {
+    private func atEnd(_ position: Int) -> Bool {
         return position >= chars.count
     }
     
@@ -65,9 +59,13 @@ class DaxDialogViewController: UIViewController {
         showNextChar()
     }
     
-    @IBAction func onTapText() {
+    func finish() {
         position = chars.count
         updateMessage()
+    }
+    
+    @IBAction func onTapText() {
+        finish()
     }
     
     @IBAction func onButtonTap() {
@@ -75,10 +73,10 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func showNextChar() {
-        guard !atEnd else { return }
+        guard !atEnd(position) else { return }
         
         position += 1
-        while !atEnd && self.chars[position].isWhitespace {
+        while !atEnd(position) && (chars[position].isWhitespace || chars[position].isMarkdownIndicator) {
             position += 1
         }
         updateMessage()
@@ -87,10 +85,10 @@ class DaxDialogViewController: UIViewController {
             self.showNextChar()
         }
     }
-
-    private func updateMessage() {
-        let message = String(chars[0 ..< position])
-        label.attributedText = NSMutableAttributedString(string: message, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-    }
     
+    private func updateMessage() {
+        guard let message = message else { return }
+        label.attributedText = String(Array(message)[0 ..< position]).attributedStringFromMarkdown()
+    }
+     
 }

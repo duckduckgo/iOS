@@ -13,9 +13,9 @@ class DaxOnboarding {
     
     struct HomeScreenSpec {
         
-        static let visitSiteDialog = HomeScreenSpec(height: 300, message: "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll\nalso upgrade the security of your connection\nif possible. 🔒")
+        static let visitSiteDialog = HomeScreenSpec(height: 305, message: "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒")
         
-        static let youveGotThisDialog = HomeScreenSpec(height: 280, message: "You’ve got this!\n\nRemember: every time you browse with me a\ncreepy ad loses its wings. 👍")
+        static let youveGotThisDialog = HomeScreenSpec(height: 280, message: "You’ve got this!\n\nRemember: every time you browse with me a creepy ad loses its wings. 👍")
         
         let height: CGFloat
         let message: String

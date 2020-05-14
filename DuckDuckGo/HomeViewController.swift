@@ -152,9 +152,18 @@ class HomeViewController: UIViewController {
         collectionView.isHidden = true
         logo.isHidden = true
         daxDialogContainer.isHidden = false
+        daxDialogContainer.alpha = 0.0
         daxDialogContainerHeight.constant = spec.height
         daxDialogViewController?.message = spec.message
-        daxDialogViewController?.start()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.daxDialogContainer.alpha = 1.0
+            }, completion: { _ in
+                self.daxDialogViewController?.start()
+            })
+        }
+        
     }
 
     func prepareForPresentation() {

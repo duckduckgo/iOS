@@ -51,7 +51,7 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNL-CF-WGF">
-                                <rect key="frame" x="-5" y="60" width="330" height="280"/>
+                                <rect key="frame" x="0.0" y="60" width="320" height="280"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="280" id="8wI-2U-C5o"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="x9B-xN-xqH"/>
@@ -67,7 +67,7 @@ DuckDuckGo!</string>
                             <constraint firstItem="g9R-nE-CaL" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" id="6P4-or-DGh"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="g9R-nE-CaL" secondAttribute="bottom" id="9rF-2A-gHl"/>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="E2L-jn-kYz"/>
-                            <constraint firstItem="qNL-CF-WGF" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" priority="750" constant="10" id="GBz-88-5Qg"/>
+                            <constraint firstItem="qNL-CF-WGF" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" priority="750" id="GBz-88-5Qg"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="77H-Rq-H5D" secondAttribute="bottom" id="LIR-FB-5jL"/>
                             <constraint firstItem="67b-it-r0B" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="Ork-4W-eRy"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="g9R-nE-CaL" secondAttribute="trailing" id="UE2-tp-9O5"/>
@@ -96,7 +96,7 @@ DuckDuckGo!</string>
             <objects>
                 <viewController storyboardIdentifier="DaxDialog" id="UUS-R7-a2i" customClass="DaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="im0-JF-Sin">
-                        <rect key="frame" x="0.0" y="0.0" width="330" height="280"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UzU-6y-Vfa">
@@ -107,10 +107,10 @@ DuckDuckGo!</string>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="TextArea">
-                                <rect key="frame" x="10" y="82" width="310" height="120"/>
+                                <rect key="frame" x="10" y="82" width="300" height="120"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
-                                        <rect key="frame" x="16" y="10" width="278" height="22"/>
+                                        <rect key="frame" x="16" y="10" width="268" height="22"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Label">
                                                 <attributes>
@@ -155,7 +155,7 @@ DuckDuckGo!</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
-                                <rect key="frame" x="10" y="219" width="310" height="44"/>
+                                <rect key="frame" x="10" y="219" width="300" height="44"/>
                                 <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Gta-qP-xcx"/>

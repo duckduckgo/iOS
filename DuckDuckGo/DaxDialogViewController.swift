@@ -26,9 +26,8 @@ class DaxDialogViewController: UIViewController {
     var cta: String? {
         didSet {
             if let title = cta {
+                button.isHidden = false
                 button.setTitle(title, for: .normal)
-            } else {
-                button.isHidden = true
             }
         }
     }
@@ -89,7 +88,7 @@ class DaxDialogViewController: UIViewController {
     
     private func updateMessage() {
         guard let message = message else { return }
-        label.attributedText = String(Array(message)[0 ..< position]).attributedStringFromMarkdown()
+        label.attributedText = String(Array(message)[0 ..< position]).attributedStringFromMarkdown(fontSize: isSmall ? 15 : 16)
     }
      
 }

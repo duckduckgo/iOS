@@ -8,16 +8,24 @@
 
 import UIKit
 
+protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
+
+    func hideDaxDialogs(controller: FullscreenDaxDialogViewController)
+
+}
+
 class FullscreenDaxDialogViewController: UIViewController {
 
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     
     weak var daxDialogViewController: DaxDialogViewController?
+    weak var delegate: FullscreenDaxDialogDelegate?
 
     var spec: DaxOnboarding.BrowsingSpec?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         daxDialogViewController?.cta = spec?.cta
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta
@@ -35,9 +43,31 @@ class FullscreenDaxDialogViewController: UIViewController {
             daxDialogViewController = segue.destination as? DaxDialogViewController
         }
     }
+
+    @IBAction func onTapHide() {
+        dismiss(animated: true)
+        delegate?.hideDaxDialogs(controller: self)
+    }
     
     private func dismissCta() {
         dismiss(animated: true)
     }
     
+}
+
+extension TabViewController: FullscreenDaxDialogDelegate {
+
+    func hideDaxDialogs(controller: FullscreenDaxDialogViewController) {
+
+        let controller = UIAlertController(title: "Hide remaining tips?",
+                                           message: "There are only a few, and we tried to make them informative.",
+                                           preferredStyle: isPad ? .alert : .actionSheet)
+
+        controller.addAction(title: "Hide tips forever", style: .default) {
+            DaxOnboarding().isDismissed = true
+        }
+        controller.addAction(title: "Cancel", style: .cancel)
+        present(controller, animated: true)
+    }
+
 }

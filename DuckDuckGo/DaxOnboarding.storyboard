@@ -246,21 +246,35 @@ DuckDuckGo!</string>
                                 <rect key="frame" x="0.0" y="354" width="375" height="400"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="V8D-Hc-dLK"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="eK0-5h-FDJ"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="UUS-R7-a2i" kind="embed" id="WM8-Xy-pab"/>
                                 </connections>
                             </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgy-75-OvJ">
+                                <rect key="frame" x="243" y="380" width="108" height="29"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Disable Tips..."/>
+                                <connections>
+                                    <action selector="onTapHide" destination="yGQ-WA-daz" eventType="touchUpInside" id="5j1-af-Neq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="leading" secondItem="Ica-YY-s5f" secondAttribute="leading" id="0TY-9i-a7Z"/>
+                            <constraint firstItem="XmT-SX-w7H" firstAttribute="top" secondItem="hgy-75-OvJ" secondAttribute="bottom" constant="-55" id="5j5-Kf-X9W"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="EYf-zh-Pqq"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="RsO-pv-xjm"/>
-                            <constraint firstItem="XmT-SX-w7H" firstAttribute="width" secondItem="Ica-YY-s5f" secondAttribute="width" id="b3Y-VV-mAW"/>
+                            <constraint firstItem="hgy-75-OvJ" firstAttribute="trailing" secondItem="7G3-x9-wwM" secondAttribute="trailing" constant="-24" id="azD-JN-kS9"/>
+                            <constraint firstItem="XmT-SX-w7H" firstAttribute="width" secondItem="yHc-FK-kfn" secondAttribute="width" priority="750" id="b3Y-VV-mAW"/>
                             <constraint firstAttribute="bottom" secondItem="7G3-x9-wwM" secondAttribute="bottom" id="f4h-cU-qpe"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="trailing" secondItem="Ica-YY-s5f" secondAttribute="trailing" id="szK-zk-axH"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="24" id="ur2-53-anE"/>
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="24" id="ur2-53-anE">
+                                <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                            </constraint>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yHc-FK-kfn"/>
                     </view>

@@ -37,6 +37,11 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         return true
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        button.displayDropShadow()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

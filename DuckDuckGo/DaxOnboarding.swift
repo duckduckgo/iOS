@@ -39,6 +39,8 @@ class DaxOnboarding {
         return variantManager.isSupported(feature: .daxOnboarding)
     }
 
+    var isDismissed = false
+
     init(variantManager: VariantManager = DefaultVariantManager()) {
         self.variantManager = variantManager
     }

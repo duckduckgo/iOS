@@ -500,6 +500,7 @@ class TabViewController: UIViewController {
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
             controller.spec = sender as? DaxOnboarding.BrowsingSpec
+            controller.delegate = self
         }
         
     }

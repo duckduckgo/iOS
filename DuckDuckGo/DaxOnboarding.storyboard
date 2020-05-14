@@ -11,9 +11,6 @@
         <array key="proximanova-bold.otf">
             <string>ProximaNova-Bold</string>
         </array>
-        <array key="proximanova-regular.otf">
-            <string>ProximaNova-Regular</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Dax Onboarding View Controller-->
@@ -112,10 +109,17 @@ DuckDuckGo!</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="TextArea">
                                 <rect key="frame" x="10" y="82" width="310" height="120"/>
                                 <subviews>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
-                                        <rect key="frame" x="16" y="24" width="278" height="16"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                        <nil key="textColor"/>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
+                                        <rect key="frame" x="16" y="10" width="278" height="22"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Label">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3500000000000001" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="1gA-Oe-qi9" appends="YES" id="ae7-zE-ZqN"/>
@@ -125,7 +129,7 @@ DuckDuckGo!</string>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="UDm-rv-vek" firstAttribute="width" secondItem="Ix6-dq-RAh" secondAttribute="width" constant="-32" id="BYH-hh-Ejl"/>
-                                    <constraint firstItem="UDm-rv-vek" firstAttribute="top" secondItem="Ix6-dq-RAh" secondAttribute="top" constant="24" id="Gmu-7B-dTI"/>
+                                    <constraint firstItem="UDm-rv-vek" firstAttribute="top" secondItem="Ix6-dq-RAh" secondAttribute="top" constant="10" id="Gmu-7B-dTI"/>
                                     <constraint firstItem="UDm-rv-vek" firstAttribute="centerX" secondItem="Ix6-dq-RAh" secondAttribute="centerX" id="mn5-HR-7RV"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>

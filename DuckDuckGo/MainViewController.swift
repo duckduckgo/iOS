@@ -121,7 +121,10 @@ class MainViewController: UIViewController {
     func startOnboardingFlowIfNotSeenBefore() {
         
         let settings = DefaultTutorialSettings()
-        guard !settings.hasSeenOnboarding else { return }
+        let showOnboarding = !settings.hasSeenOnboarding ||
+            // allow oboarding to forced via environment variable - see scheme
+            ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
+        guard showOnboarding else { return }
 
         let onboardingFlow: String
         if DaxOnboarding().isActive {

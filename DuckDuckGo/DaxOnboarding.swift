@@ -27,12 +27,17 @@ class DaxOnboarding {
 
         // swiftlint:disable line_length
         static let firstTimeSerp = BrowsingSpec(height: 250, message: "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌", cta: "Phew!")
-        static let firstTimeWithTrackers = BrowsingSpec(height: 340, message: "*Google, Amazon* and *3 others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let firstTimeWithTrackers = BrowsingSpec(height: 340, message: "*%0@, %1@* and *%2d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        
         // swiftlint:enable line_length
 
         let height: CGFloat
         let message: String
         let cta: String
+        
+        func format(args: CVarArg...) -> BrowsingSpec {
+            return BrowsingSpec(height: height, message: String(format: message, arguments: args), cta: cta)
+        }
         
     }
     
@@ -48,8 +53,8 @@ class DaxOnboarding {
         self.variantManager = variantManager
     }
     
-    func nextBrowsingMessage() -> BrowsingSpec? {
-        return .firstTimeWithTrackers
+    func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
+        return BrowsingSpec.firstTimeWithTrackers.format(args: "Google", "Amazon", 12)
     }
     
     /// Get the next home screen message.

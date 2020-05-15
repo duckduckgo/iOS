@@ -171,6 +171,10 @@
 		85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */; };
 		85449EFF23FDA97000512AAF /* HomePageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFE23FDA96F00512AAF /* HomePageSettings.swift */; };
 		854757B124088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854757B024088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift */; };
+		85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */; };
+		85482D902462DCD100EDEDD1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */; };
+		85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 85482D882462DCD100EDEDD1 /* OpenAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		85482D992462F1C600EDEDD1 /* ActionIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */; };
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
 		855D914F206563A000C4B448 /* TLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914E206563A000C4B448 /* TLD.swift */; };
@@ -238,6 +242,7 @@
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
 		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
+		85C91CA224671F4C00A11132 /* AppDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */; };
 		85C9E5F521B422D300460EBC /* BookmarksManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C9E5F421B422D300460EBC /* BookmarksManagerTests.swift */; };
 		85C9E5F821B4232A00460EBC /* HomePageConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C9E5F721B4232A00460EBC /* HomePageConfigurationTests.swift */; };
 		85CC936E203C402C00690089 /* SpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC936D203C402C00690089 /* SpeedTests.swift */; };
@@ -569,6 +574,13 @@
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
 		};
+		85482D922462DCD100EDEDD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 85482D872462DCD100EDEDD1;
+			remoteInfo = OpenAction;
+		};
 		85CC9370203C402C00690089 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -599,6 +611,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */,
 				83491192217F491200610F35 /* BookmarksTodayExtension.appex in Embed App Extensions */,
 				8370943A2142C4C200A58838 /* QuickActionsTodayExtension.appex in Embed App Extensions */,
 				8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */,
@@ -804,6 +817,11 @@
 		85449EFE23FDA96F00512AAF /* HomePageSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSettings.swift; sourceTree = "<group>"; };
 		85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		854757B024088EFE00C47837 /* PaddingHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
+		85482D882462DCD100EDEDD1 /* OpenAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		85482D8F2462DCD100EDEDD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		85482D912462DCD100EDEDD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ActionIcons.xcassets; sourceTree = "<group>"; };
 		85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios13-home-row.mp4"; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* CompositeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTransition.swift; sourceTree = "<group>"; };
 		855D914E206563A000C4B448 /* TLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLD.swift; sourceTree = "<group>"; };
@@ -1239,6 +1257,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		85482D852462DCD100EDEDD1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85CC9368203C402C00690089 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1531,6 +1556,7 @@
 				85CC936C203C402C00690089 /* SpeedTests */,
 				8512BCB420612E500085E862 /* UITests */,
 				85F21DAE210F5E32002631A6 /* AtbIntegrationTests */,
+				85482D892462DCD100EDEDD1 /* OpenAction */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
 				83ED3B8D1FA8E63700B47556 /* README.md */,
@@ -1554,6 +1580,7 @@
 				8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */,
 				83491187217F491200610F35 /* BookmarksTodayExtension.appex */,
 				98A54A8122AFCB2C00E541F4 /* Instruments.instrdst */,
+				85482D882462DCD100EDEDD1 /* OpenAction.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1768,6 +1795,17 @@
 				85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		85482D892462DCD100EDEDD1 /* OpenAction */ = {
+			isa = PBXGroup;
+			children = (
+				85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */,
+				85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */,
+				85482D912462DCD100EDEDD1 /* Info.plist */,
+				85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */,
+			);
+			path = OpenAction;
 			sourceTree = "<group>";
 		};
 		8595BF491FE847EB00F692EC /* ios-js-support */ = {
@@ -2970,6 +3008,7 @@
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				837094392142C4C200A58838 /* PBXTargetDependency */,
 				83491191217F491200610F35 /* PBXTargetDependency */,
+				85482D932462DCD100EDEDD1 /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
 			productName = DuckDuckGo;
@@ -3012,6 +3051,23 @@
 			productName = UITests;
 			productReference = 8512BCB320612E500085E862 /* UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		85482D872462DCD100EDEDD1 /* OpenAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 85482D972462DCD100EDEDD1 /* Build configuration list for PBXNativeTarget "OpenAction" */;
+			buildPhases = (
+				85482D842462DCD100EDEDD1 /* Sources */,
+				85482D852462DCD100EDEDD1 /* Frameworks */,
+				85482D862462DCD100EDEDD1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenAction;
+			productName = OpenAction;
+			productReference = 85482D882462DCD100EDEDD1 /* OpenAction.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		85CC936A203C402C00690089 /* SpeedTests */ = {
 			isa = PBXNativeTarget;
@@ -3089,7 +3145,7 @@
 		84E3418A1E2F7EFB00BDBA6F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = DuckDuckGo;
 				TargetAttributes = {
@@ -3163,6 +3219,11 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
+					85482D872462DCD100EDEDD1 = {
+						CreatedOnToolsVersion = 11.4.1;
+						DevelopmentTeam = HKE973VLUW;
+						ProvisioningStyle = Automatic;
+					};
 					85CC936A203C402C00690089 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = HKE973VLUW;
@@ -3228,6 +3289,7 @@
 				83DBCA771F7BBB5000DFD170 /* TopSitesReport */,
 				8512BCB220612E500085E862 /* UITests */,
 				98A54A8022AFCB2C00E541F4 /* Instruments */,
+				85482D872462DCD100EDEDD1 /* OpenAction */,
 			);
 		};
 /* End PBXProject section */
@@ -3397,6 +3459,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85482D862462DCD100EDEDD1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85482D902462DCD100EDEDD1 /* MainInterface.storyboard in Resources */,
+				85482D992462F1C600EDEDD1 /* ActionIcons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3934,6 +4005,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		85482D842462DCD100EDEDD1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */,
+				85C91CA224671F4C00A11132 /* AppDeepLinks.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85CC9367203C402C00690089 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4090,6 +4170,11 @@
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 8512BCB820612E500085E862 /* PBXContainerItemProxy */;
 		};
+		85482D932462DCD100EDEDD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 85482D872462DCD100EDEDD1 /* OpenAction */;
+			targetProxy = 85482D922462DCD100EDEDD1 /* PBXContainerItemProxy */;
+		};
 		85CC9371203C402C00690089 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
@@ -4167,6 +4252,14 @@
 				84E3419F1E2F7EFB00BDBA6F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				85482D8F2462DCD100EDEDD1 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		F176699D1E40BC86003D3222 /* Settings.storyboard */ = {
@@ -4657,6 +4750,55 @@
 			};
 			name = Release;
 		};
+		85482D952462DCD100EDEDD1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ActionIcons;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenAction/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).OpenAction";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		85482D962462DCD100EDEDD1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ActionIcons;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OpenAction/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).OpenAction";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		85CC9373203C402C00690089 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4911,6 +5053,15 @@
 			buildConfigurations = (
 				8512BCBB20612E500085E862 /* Debug */,
 				8512BCBC20612E500085E862 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		85482D972462DCD100EDEDD1 /* Build configuration list for PBXNativeTarget "OpenAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85482D952462DCD100EDEDD1 /* Debug */,
+				85482D962462DCD100EDEDD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

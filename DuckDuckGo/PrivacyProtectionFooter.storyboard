@@ -113,7 +113,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jR-2G-yON" customClass="TrackerNetworkLeaderboardView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="112" width="320" height="152"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLL-zs-goU">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLL-zs-goU">
                                         <rect key="frame" x="0.0" y="32" width="320" height="88"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rO0-0v-ngG">
@@ -254,7 +254,7 @@
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="MFi-fD-lyi"/>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frY-3a-m4a">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frY-3a-m4a">
                                         <rect key="frame" x="0.0" y="16" width="320" height="120"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Leaderboard No Stats" translatesAutoresizingMaskIntoConstraints="NO" id="gPE-Br-bJP">

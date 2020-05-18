@@ -189,11 +189,6 @@ public enum PixelName: String {
     
     case brokenSiteReport = "epbf"
 
-    case preserveLoginsUserDecisionPreserve = "m_pl_p"
-    case preserveLoginsUserDecisionForget = "m_pl_f"
-    case preserveLoginsSettingsWhilePreserving = "m_pl_s_p"
-    case preserveLoginsSettingsWhileForgetting = "m_pl_s_f"
-    case preserveLoginsSettingsNewUser = "m_pl_s_u"
     case preserveLoginsSettingsSwitchOn = "m_pl_s_on"
     case preserveLoginsSettingsSwitchOff = "m_pl_s_off"
     case preserveLoginsSettingsEdit = "m_pl_s_c_e"

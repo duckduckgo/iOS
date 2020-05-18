@@ -2,7 +2,11 @@
   "images" : [
     {
       "filename" : "Lighthouse.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "lighthouse-large.pdf",
+      "idiom" : "ipad"
     }
   ],
   "info" : {

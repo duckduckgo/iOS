@@ -37,6 +37,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
 
     private weak var siteRating: SiteRating!
 
@@ -50,6 +51,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         initTableView()
         initHttpsStatus()
         initDomain()
+        initBackButton()
         beginCertificateInfoExtraction()
 
     }
@@ -65,6 +67,10 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func initDomain() {
         domainLabel.text = siteRating.domain
+    }
+
+    private func initBackButton() {
+        backButton.isHidden = !isPad
     }
 
     private func initHttpsStatus() {

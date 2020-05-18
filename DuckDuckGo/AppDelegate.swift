@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             Database.shared.loadStore { _ in }
@@ -85,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appIsLaunching = true
         return true
     }
-    
+
     private func clearLegacyAllowedDomainCookies() {
         let domains = PreserveLogins.shared.legacyAllowedDomains
         guard !domains.isEmpty else { return }

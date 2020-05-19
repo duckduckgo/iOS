@@ -127,7 +127,8 @@ class MainViewController: UIViewController {
         guard showOnboarding else { return }
 
         let onboardingFlow: String
-        if DaxOnboarding().isActive {
+        let variantManager = DefaultVariantManager()
+        if variantManager.isSupported(feature: .daxOnboarding) {
             onboardingFlow = "DaxOnboarding"
         } else {
             // Only show tips if the user is a new one, ie they've not seen onboarding yet

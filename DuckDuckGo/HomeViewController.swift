@@ -139,7 +139,8 @@ class HomeViewController: UIViewController {
     }
         
     func installHomeScreenTips() {
-        if DaxOnboarding().isActive {
+        let variantManager = DefaultVariantManager()
+        if variantManager.isSupported(feature: .daxOnboarding) {
             daxDialogSpecToShow = DaxOnboarding().nextHomeScreenMessage()
             showNextDaxDialog()
         } else {

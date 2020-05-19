@@ -64,7 +64,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
         controller.addAction(title: "Hide tips forever", style: .default) {
-            DaxOnboarding().isDismissed = true
+            DaxOnboarding().dismiss()
         }
         controller.addAction(title: "Cancel", style: .cancel)
         present(controller, animated: true)

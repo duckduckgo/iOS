@@ -38,7 +38,11 @@ public class TrackerDataManager {
     
     private(set) public var trackerData: TrackerData!
     private(set) public var etag: String?
-    
+
+    init(trackerData: TrackerData) {
+        self.trackerData = trackerData
+    }
+
     init() {
         reload(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet))
     }

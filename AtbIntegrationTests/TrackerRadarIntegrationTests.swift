@@ -30,7 +30,7 @@ class TrackerRadarIntegrationTests: XCTestCase {
         let trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
         let dataManager = TrackerDataManager(trackerData: trackerData)
 
-        dataManager.assertIsMajorTracker(domain: "google.com")
+        dataManager.assertIsMajorTracker(domain: "jungle.com")
         dataManager.assertIsMajorTracker(domain: "facebook.com")
         dataManager.assertEntityAndDomainLookups()
         dataManager.assertEntitiesHaveNames()

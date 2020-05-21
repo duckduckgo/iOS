@@ -60,7 +60,8 @@ class AtbIntegrationTests: XCTestCase {
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
             "BASE_PIXEL_URL": "http://localhost:8080",
-            "VARIANT": Variant.defaultVariants[0].name // just has to match an existing variant to prevent one being allocated and written to storage
+            // usually just has to match an existing variant to prevent one being allocated and written to storage but we're changing oboarding
+            "VARIANT": "ma"
         ]
         
         addRequestHandlers()

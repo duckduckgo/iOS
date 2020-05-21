@@ -33,10 +33,11 @@ class DaxOnboardingTests: XCTestCase {
         static let amazon = URL(string: "https://www.amazon.com")!
 
     }
-    
+
+    var onboarding = DaxOnboarding(settings: InMemoryDaxOnboardingSettings())
+
     override func setUp() {
         super.setUp()
-        UserDefaults.clearStandard()
     }
 
     func test() {
@@ -55,7 +56,7 @@ class DaxOnboardingTests: XCTestCase {
 
         testCases.forEach { testCase in
             
-            let onboarding = DaxOnboarding()
+            let onboarding = DaxOnboarding(settings: InMemoryDaxOnboardingSettings())
             let siteRating = SiteRating(url: URLs.example)
             
             testCase.urls.forEach { url in
@@ -80,71 +81,60 @@ class DaxOnboardingTests: XCTestCase {
     }
 
     func testWhenSecondTimeOnSiteThatIsOwnedByFacebookThenShowNothing() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.ownedByFacebook)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnSiteThatIsOwnedByFacebookThenShowOwnedByMajorTrackingMessage() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.ownedByFacebook)
         XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteOwnedByMajorTracker.format(args: "instagram.com", "Facebook", 42.0),
                        onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenSecondTimeOnSiteThatIsMajorTrackerThenShowNothing() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.facebook)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnFacebookThenShowMajorTrackingMessage() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.facebook)
         XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteIsMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnGoogleThenShowMajorTrackingMessage() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.google)
         XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteIsMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenSecondTimeOnPageWithNoTrackersThenTrackersThenShowNothing() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.example)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnPageWithNoTrackersThenTrackersThenShowNoTrackersMessage() {
-        let onboarding = DaxOnboarding()
         let siteRating = SiteRating(url: URLs.example)
         XCTAssertEqual(DaxOnboarding.BrowsingSpec.withoutTrackers, onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
     
     func testWhenSecondTimeOnSearchPageThenShowNothing() {
-        let onboarding = DaxOnboarding()
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
     }
     
     func testWhenFirstTimeOnSearchPageThenShowSearchPageMessage() {
-        let onboarding = DaxOnboarding()
         XCTAssertEqual(DaxOnboarding.BrowsingSpec.afterSearch, onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
     }
 
     func testWhenDimissedThenShowNothing() {
-        let onboarding = DaxOnboarding()
         onboarding.dismiss()
         XCTAssertNil(onboarding.nextHomeScreenMessage())
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
     }
     
     func testWhenThirdTimeOnHomeScreenAndAtLeastOneBrowsingDialogSeenThenShowNothing() {
-        let onboarding = DaxOnboarding()
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
         XCTAssertEqual(DaxOnboarding.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
@@ -152,20 +142,17 @@ class DaxOnboardingTests: XCTestCase {
     }
 
     func testWhenSecondTimeOnHomeScreenAndAtLeastOneBrowsingDialogSeenThenShowSubsequentDialog() {
-        let onboarding = DaxOnboarding()
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
         XCTAssertEqual(DaxOnboarding.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
     }
 
     func testWhenSecondTimeOnHomeScreenAndNoOtherDialgosSeenThenShowNothing() {
-        let onboarding = DaxOnboarding()
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
         XCTAssertNil(onboarding.nextHomeScreenMessage())
     }
 
     func testWhenFirstTimeOnHomeScreenThenShowFirstDialog() {
-        let onboarding = DaxOnboarding()
         XCTAssertEqual(DaxOnboarding.HomeScreenSpec.initial, onboarding.nextHomeScreenMessage())
     }
     

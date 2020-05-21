@@ -810,8 +810,11 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
      
-        showDaxDialogIfNeeded()
         tips?.onFinishedLoading(url: url, error: isError)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.showDaxDialogIfNeeded()
+        }
     }
     
     private func showDaxDialogIfNeeded() {

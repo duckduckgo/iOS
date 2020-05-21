@@ -247,6 +247,7 @@
 		85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271DE1FD044D7007216B4 /* HTTPSUpgradeStore.swift */; };
 		85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E31FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift */; };
 		85C271E61FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */; };
+		85C297042476C1FD0063A335 /* DaxOnboardingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C297032476C1FD0063A335 /* DaxOnboardingSettings.swift */; };
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
 		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
@@ -902,6 +903,7 @@
 		85C271DE1FD044D7007216B4 /* HTTPSUpgradeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeStore.swift; sourceTree = "<group>"; };
 		85C271E31FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeParserTests.swift; sourceTree = "<group>"; };
 		85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradePersistenceTests.swift; sourceTree = "<group>"; };
+		85C297032476C1FD0063A335 /* DaxOnboardingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingSettings.swift; sourceTree = "<group>"; };
 		85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionOverviewController.swift; sourceTree = "<group>"; };
 		85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedTermsOfServiceStoreTests.swift; sourceTree = "<group>"; };
 		85C7438F2154E981005CF998 /* GradeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCache.swift; sourceTree = "<group>"; };
@@ -1833,6 +1835,7 @@
 				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
 				8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */,
 				8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */,
+				85C297032476C1FD0063A335 /* DaxOnboardingSettings.swift */,
 			);
 			name = DaxOnboarding;
 			sourceTree = "<group>";
@@ -3797,6 +3800,7 @@
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
+				85C297042476C1FD0063A335 /* DaxOnboardingSettings.swift in Sources */,
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,

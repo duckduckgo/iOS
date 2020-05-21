@@ -63,33 +63,28 @@ class DaxOnboarding {
         
     }
     
-    private var appUrls = AppUrls()
-
-    private var isDismissed = false
+    private let appUrls = AppUrls()
+    private var settings: DaxOnboardingSettings
     
-    private var homeScreenMessagesSeen = 0
-    
-    private var browsingAfterSearchShown = false
-    private var browsingWithTrackersShown = false
-    private var browsingWithoutTrackersShown = false
-    private var browsingMajorTrackingSiteShown = false
-    private var browsingOwnedByMajorTrackingSiteShown = false
+    init(settings: DaxOnboardingSettings = DefaultDaxOnboardingSettings()) {
+        self.settings = settings
+    }
     
     private var browsingMessageSeen: Bool {
-        return browsingAfterSearchShown
-            || browsingWithTrackersShown
-            || browsingWithoutTrackersShown
-            || browsingMajorTrackingSiteShown
-            || browsingOwnedByMajorTrackingSiteShown
+        return settings.browsingAfterSearchShown
+            || settings.browsingWithTrackersShown
+            || settings.browsingWithoutTrackersShown
+            || settings.browsingMajorTrackingSiteShown
+            || settings.browsingOwnedByMajorTrackingSiteShown
     }
     
     func dismiss() {
-        self.isDismissed = true
+        settings.isDismissed = true
     }
     
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
         guard let host = siteRating.domain else { return nil }
-        guard !isDismissed else { return nil }
+        guard !settings.isDismissed else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
@@ -118,16 +113,16 @@ class DaxOnboarding {
     ///
     /// Returns a tuple containing the height of the dialog and the message or nil if there's nothing left to show or the flow has been disabled
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-        guard !isDismissed else { return nil }
-        guard homeScreenMessagesSeen < 2 else { return nil }
+        guard !settings.isDismissed else { return nil }
+        guard settings.homeScreenMessagesSeen < 2 else { return nil }
         
-        if homeScreenMessagesSeen == 0 {
-            homeScreenMessagesSeen += 1
+        if settings.homeScreenMessagesSeen == 0 {
+            settings.homeScreenMessagesSeen += 1
             return .initial
         }
         
         if browsingMessageSeen {
-            homeScreenMessagesSeen += 1
+            settings.homeScreenMessagesSeen += 1
             return .subsequent
         }
         
@@ -135,36 +130,36 @@ class DaxOnboarding {
     }
     
     private func noTrackersMessage() -> DaxOnboarding.BrowsingSpec? {
-        if !browsingWithoutTrackersShown {
-            browsingWithoutTrackersShown = true
+        if !settings.browsingWithoutTrackersShown {
+            settings.browsingWithoutTrackersShown = true
             return BrowsingSpec.withoutTrackers
         }
         return nil
     }
 
     func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxOnboarding.BrowsingSpec? {
-        guard !browsingOwnedByMajorTrackingSiteShown else { return nil }
-        browsingOwnedByMajorTrackingSiteShown = true
+        guard !settings.browsingOwnedByMajorTrackingSiteShown else { return nil }
+        settings.browsingOwnedByMajorTrackingSiteShown = true
         return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."),
                                                            majorTrackerEntity.displayName ?? "",
                                                            majorTrackerEntity.prevalence ?? 0.0)
     }
     
     private func majorTrackerMessage() -> DaxOnboarding.BrowsingSpec? {
-        guard !browsingMajorTrackingSiteShown else { return nil }
-        browsingMajorTrackingSiteShown = true
+        guard !settings.browsingMajorTrackingSiteShown else { return nil }
+        settings.browsingMajorTrackingSiteShown = true
         return BrowsingSpec.siteIsMajorTracker
     }
     
     private func searchMessage() -> BrowsingSpec? {
-        guard !browsingAfterSearchShown else { return nil }
-        browsingAfterSearchShown = true
+        guard !settings.browsingAfterSearchShown else { return nil }
+        settings.browsingAfterSearchShown = true
         return BrowsingSpec.afterSearch
     }
     
     private func trackersBlockedMessage(_ trackersBlocked: (major: [Entity], other: [Entity])) -> BrowsingSpec? {
-        guard !browsingWithTrackersShown else { return nil }
-        browsingWithTrackersShown = true
+        guard !settings.browsingWithTrackersShown else { return nil }
+        settings.browsingWithTrackersShown = true
 
         switch trackersBlocked {
             

@@ -27,8 +27,10 @@ class DaxOnboardingTests: XCTestCase {
         
         static let example = URL(string: "https://www.example.com")!
         static let ddg = URL(string: "https://duckduckgo.com?q=test")!
-        static let majorTracker = URL(string: "https://www.facebook.com")!
-        static let ownedByMajorTracker = URL(string: "https://www.instagram.com")!
+        static let facebook = URL(string: "https://www.facebook.com")!
+        static let google = URL(string: "https://www.google.com")!
+        static let ownedByFacebook = URL(string: "https://www.instagram.com")!
+        static let amazon = URL(string: "https://www.amazon.com")!
 
     }
     
@@ -36,23 +38,76 @@ class DaxOnboardingTests: XCTestCase {
         super.setUp()
         UserDefaults.clearStandard()
     }
-    
-    func testWhenFirstTimeOnSiteThatIsOwnedByTrackerThenShowOwnedByMajorTrackingMessage() {
-        let onboarding = DaxOnboarding()
-        let siteRating = SiteRating(url: URLs.ownedByMajorTracker)
-        XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteOwnedByMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
+
+    func test() {
+
+        // swiftlint:disable line_length
+        let testCases = [
+            (urls: [ URLs.google ], expected: DaxOnboarding.BrowsingSpec.withOneMajorTracker.format(args: "Google"), line: #line),
+            (urls: [ URLs.google, URLs.amazon ], expected: DaxOnboarding.BrowsingSpec.withOneMajorTrackerAndOthers.format(args: "Google", 1), line: #line),
+            
+            // The order of trackers shouldn't matter, google should be first due to higher prevalence
+            (urls: [ URLs.facebook, URLs.google ], expected: DaxOnboarding.BrowsingSpec.withTwoMajorTrackers.format(args: "Google", "Facebook"), line: #line),
+            
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxOnboarding.BrowsingSpec.withTwoMajorTrackerAndOthers.format(args: "Google", "Facebook", 1), line: #line),
+        ]
+        // swiftlint:enable line_length
+
+        testCases.forEach { testCase in
+            
+            let onboarding = DaxOnboarding()
+            let siteRating = SiteRating(url: URLs.example)
+            
+            testCase.urls.forEach { url in
+                
+                let entity = TrackerDataManager.shared.findEntity(forHost: url.host!)
+                let knownTracker = TrackerDataManager.shared.findTracker(forUrl: url.absoluteString)
+                let tracker = DetectedTracker(url: url.absoluteString,
+                                              knownTracker: knownTracker,
+                                              entity: entity,
+                                              blocked: true)
+                
+                siteRating.trackerDetected(tracker)
+            }
+            
+            // Assert the expected case
+            XCTAssertEqual(testCase.expected, onboarding.nextBrowsingMessage(siteRating: siteRating), file: #file, line: UInt(testCase.line))
+            
+            // Also assert the we don't see the message on subsequent calls
+            XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating), file: #file, line: UInt(testCase.line))
+        }
+        
     }
 
-    func testWhenSecondTimeOnSiteThatIsMajorTrackerThenShowMajorTrackingMessage() {
+    func testWhenSecondTimeOnSiteThatIsOwnedByFacebookThenShowNothing() {
         let onboarding = DaxOnboarding()
-        let siteRating = SiteRating(url: URLs.majorTracker)
+        let siteRating = SiteRating(url: URLs.ownedByFacebook)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
-    func testWhenFirstTimeOnSiteThatIsMajorTrackerThenShowMajorTrackingMessage() {
+    func testWhenFirstTimeOnSiteThatIsOwnedByFacebookThenShowOwnedByMajorTrackingMessage() {
         let onboarding = DaxOnboarding()
-        let siteRating = SiteRating(url: URLs.majorTracker)
+        let siteRating = SiteRating(url: URLs.ownedByFacebook)
+        XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteOwnedByMajorTracker.format(args: "instagram.com", "Facebook", 42.0), onboarding.nextBrowsingMessage(siteRating: siteRating))
+    }
+
+    func testWhenSecondTimeOnSiteThatIsMajorTrackerThenShowNothing() {
+        let onboarding = DaxOnboarding()
+        let siteRating = SiteRating(url: URLs.facebook)
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
+        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
+    }
+
+    func testWhenFirstTimeOnFacebookThenShowMajorTrackingMessage() {
+        let onboarding = DaxOnboarding()
+        let siteRating = SiteRating(url: URLs.facebook)
+        XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteIsMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
+    }
+
+    func testWhenFirstTimeOnGoogleThenShowMajorTrackingMessage() {
+        let onboarding = DaxOnboarding()
+        let siteRating = SiteRating(url: URLs.google)
         XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteIsMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 

@@ -92,44 +92,23 @@ class DaxOnboarding {
         guard !isDismissed else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
-            if !browsingAfterSearchShown {
-                browsingAfterSearchShown = true
-                return BrowsingSpec.afterSearch
-            }
-            return nil
+            return searchMessage()
         }
         
         if isMajorTracker(host) {
-            if !browsingMajorTrackingSiteShown {
-                browsingMajorTrackingSiteShown = true
-                return BrowsingSpec.siteIsMajorTracker
-            }
-            return nil
+            return majorTrackerMessage()
         }
         
-        if let majorTrackerEntity = majorTrackerOwnerOf(host) {
-            if !browsingOwnedByMajorTrackingSiteShown {
-                browsingOwnedByMajorTrackingSiteShown = true
-                return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."), majorTrackerEntity.displayName ?? "", majorTrackerEntity.prevalence ?? 0.0)
-            }
-            return nil
+        if let owner = majorTrackerOwnerOf(host) {
+            return majorTrackerOwnerMessage(host, owner)
         }
         
         if siteRating.trackersBlocked.isEmpty {
-            if !browsingWithoutTrackersShown {
-                browsingWithoutTrackersShown = true
-                return BrowsingSpec.withoutTrackers
-            }
-            return nil
+            return noTrackersMessage()
         }
         
         if let trackersBlocked = trackersBlocked(siteRating) {
-            if !browsingWithTrackersShown {
-                browsingWithTrackersShown = true
-                return trackersBlockedMessage(trackersBlocked)
-            }
-            
-            return nil
+            return trackersBlockedMessage(trackersBlocked)
         }
         
         return nil
@@ -155,8 +134,38 @@ class DaxOnboarding {
         return nil
     }
     
+    private func noTrackersMessage() -> DaxOnboarding.BrowsingSpec? {
+        if !browsingWithoutTrackersShown {
+            browsingWithoutTrackersShown = true
+            return BrowsingSpec.withoutTrackers
+        }
+        return nil
+    }
+
+    func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxOnboarding.BrowsingSpec? {
+        guard !browsingOwnedByMajorTrackingSiteShown else { return nil }
+        browsingOwnedByMajorTrackingSiteShown = true
+        return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."),
+                                                           majorTrackerEntity.displayName ?? "",
+                                                           majorTrackerEntity.prevalence ?? 0.0)
+    }
+    
+    private func majorTrackerMessage() -> DaxOnboarding.BrowsingSpec? {
+        guard !browsingMajorTrackingSiteShown else { return nil }
+        browsingMajorTrackingSiteShown = true
+        return BrowsingSpec.siteIsMajorTracker
+    }
+    
+    private func searchMessage() -> BrowsingSpec? {
+        guard !browsingAfterSearchShown else { return nil }
+        browsingAfterSearchShown = true
+        return BrowsingSpec.afterSearch
+    }
+    
     private func trackersBlockedMessage(_ trackersBlocked: (major: [Entity], other: [Entity])) -> BrowsingSpec? {
-        
+        guard !browsingWithTrackersShown else { return nil }
+        browsingWithTrackersShown = true
+
         switch trackersBlocked {
             
         case let x where x.major.count == 1 && x.other.count == 0:

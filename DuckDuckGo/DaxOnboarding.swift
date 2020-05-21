@@ -126,23 +126,7 @@ class DaxOnboarding {
         if let trackersBlocked = trackersBlocked(siteRating) {
             if !browsingWithTrackersShown {
                 browsingWithTrackersShown = true
-                
-                switch trackersBlocked {
-                    
-                case let x where x.major.count == 1 && x.other.count == 0:
-                    return BrowsingSpec.withOneMajorTracker.format(args: x.major[0].displayName ?? "")
-
-                case let x where x.major.count == 1 && x.other.count > 0:
-                    return BrowsingSpec.withOneMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.other.count)
-
-                case let x where x.major.count == 2 && x.other.count == 0:
-                    return BrowsingSpec.withTwoMajorTrackers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "")
-
-                case let x where x.major.count == 2 && x.other.count > 0:
-                    return BrowsingSpec.withTwoMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "", x.other.count)
-
-                default: break
-                }
+                return trackersBlockedMessage(trackersBlocked)
             }
             
             return nil
@@ -169,6 +153,27 @@ class DaxOnboarding {
         }
         
         return nil
+    }
+    
+    private func trackersBlockedMessage(_ trackersBlocked: (major: [Entity], other: [Entity])) -> BrowsingSpec? {
+        
+        switch trackersBlocked {
+            
+        case let x where x.major.count == 1 && x.other.count == 0:
+            return BrowsingSpec.withOneMajorTracker.format(args: x.major[0].displayName ?? "")
+
+        case let x where x.major.count == 1 && x.other.count > 0:
+            return BrowsingSpec.withOneMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.other.count)
+
+        case let x where x.major.count == 2 && x.other.count == 0:
+            return BrowsingSpec.withTwoMajorTrackers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "")
+
+        case let x where x.major.count == 2 && x.other.count > 0:
+            return BrowsingSpec.withTwoMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "", x.other.count)
+
+        default: return nil
+        }
+
     }
  
     private func trackersBlocked(_ siteRating: SiteRating) -> (major: [Entity], other: [Entity])? {

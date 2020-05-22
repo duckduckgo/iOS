@@ -11,18 +11,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "85F21DAC210F5E32002631A6"
-               BuildableName = "AtbIntegrationTests.xctest"
-               BlueprintName = "AtbIntegrationTests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -32,8 +20,18 @@
             ReferencedContainer = "container:DuckDuckGo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "85F21DAC210F5E32002631A6"
+               BuildableName = "IntegrationTests.xctest"
+               BlueprintName = "IntegrationTests"
+               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -55,8 +53,6 @@
             ReferencedContainer = "container:DuckDuckGo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

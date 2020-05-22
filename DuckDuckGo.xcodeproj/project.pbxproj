@@ -857,7 +857,7 @@
 		85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgissuercert.der; sourceTree = "<group>"; };
 		85F200032216F5D8006BB258 /* FindInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageView.swift; sourceTree = "<group>"; };
 		85F20005221702F7006BB258 /* OmniBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarTests.swift; sourceTree = "<group>"; };
-		85F21DAD210F5E32002631A6 /* AtbIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtbIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		85F21DAD210F5E32002631A6 /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F21DAF210F5E32002631A6 /* AtbIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbIntegrationTests.swift; sourceTree = "<group>"; };
 		85F21DB1210F5E32002631A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85F21DB721107F46002631A6 /* Swifter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swifter.framework; path = Carthage/Build/iOS/Swifter.framework; sourceTree = "<group>"; };
@@ -1443,7 +1443,7 @@
 				8328AAB0212A3D4F00293140 /* Third-Party */,
 				98A54A8222AFCB2C00E541F4 /* Instruments */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
-				85F21DAE210F5E32002631A6 /* AtbIntegrationTests */,
+				85F21DAE210F5E32002631A6 /* IntegrationTests */,
 				85482D892462DCD100EDEDD1 /* OpenAction */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
@@ -1460,7 +1460,7 @@
 				84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */,
 				F143C2E41E4A4CD400CFDE3A /* Core.framework */,
 				8390446C20BDCE10006461CD /* ShareExtension.appex */,
-				85F21DAD210F5E32002631A6 /* AtbIntegrationTests.xctest */,
+				85F21DAD210F5E32002631A6 /* IntegrationTests.xctest */,
 				8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */,
 				83491187217F491200610F35 /* BookmarksTodayExtension.appex */,
 				98A54A8122AFCB2C00E541F4 /* Instruments.instrdst */,
@@ -1794,7 +1794,7 @@
 			name = PrivacyProtection;
 			sourceTree = "<group>";
 		};
-		85F21DAE210F5E32002631A6 /* AtbIntegrationTests */ = {
+		85F21DAE210F5E32002631A6 /* IntegrationTests */ = {
 			isa = PBXGroup;
 			children = (
 				85F21DAF210F5E32002631A6 /* AtbIntegrationTests.swift */,
@@ -1803,7 +1803,7 @@
 				8551912624746EDC0010FDD0 /* SnapshotHelper.swift */,
 				85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */,
 			);
-			path = AtbIntegrationTests;
+			path = IntegrationTests;
 			sourceTree = "<group>";
 		};
 		85F2FFFE2215C163006BB258 /* FindInPage */ = {
@@ -2876,9 +2876,9 @@
 			productReference = 85482D882462DCD100EDEDD1 /* OpenAction.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		85F21DAC210F5E32002631A6 /* AtbIntegrationTests */ = {
+		85F21DAC210F5E32002631A6 /* IntegrationTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 85F21DB6210F5E32002631A6 /* Build configuration list for PBXNativeTarget "AtbIntegrationTests" */;
+			buildConfigurationList = 85F21DB6210F5E32002631A6 /* Build configuration list for PBXNativeTarget "IntegrationTests" */;
 			buildPhases = (
 				85F21DA9210F5E32002631A6 /* Sources */,
 				85F21DAA210F5E32002631A6 /* Frameworks */,
@@ -2890,9 +2890,9 @@
 			dependencies = (
 				85F21DB3210F5E32002631A6 /* PBXTargetDependency */,
 			);
-			name = AtbIntegrationTests;
+			name = IntegrationTests;
 			productName = AtbIntegrationTests;
-			productReference = 85F21DAD210F5E32002631A6 /* AtbIntegrationTests.xctest */;
+			productReference = 85F21DAD210F5E32002631A6 /* IntegrationTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		98A54A8022AFCB2C00E541F4 /* Instruments */ = {
@@ -3044,7 +3044,7 @@
 				8370942E2142C4C200A58838 /* QuickActionsTodayExtension */,
 				F143C2E31E4A4CD400CFDE3A /* Core */,
 				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
-				85F21DAC210F5E32002631A6 /* AtbIntegrationTests */,
+				85F21DAC210F5E32002631A6 /* IntegrationTests */,
 				98A54A8022AFCB2C00E541F4 /* Instruments */,
 				85482D872462DCD100EDEDD1 /* OpenAction */,
 			);
@@ -4383,10 +4383,10 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = AtbIntegrationTests/Info.plist;
+				INFOPLIST_FILE = IntegrationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.AtbIntegrationTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4408,10 +4408,10 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = AtbIntegrationTests/Info.plist;
+				INFOPLIST_FILE = IntegrationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.AtbIntegrationTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4567,7 +4567,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		85F21DB6210F5E32002631A6 /* Build configuration list for PBXNativeTarget "AtbIntegrationTests" */ = {
+		85F21DB6210F5E32002631A6 /* Build configuration list for PBXNativeTarget "IntegrationTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				85F21DB4210F5E32002631A6 /* Debug */,

@@ -136,6 +136,8 @@ class WhitelistViewController: UITableViewController {
     }
     
     @IBAction func startEditing() {
+        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
+        tableView.isEditing = false
         tableView.isEditing = true
         tableView.reloadData()
         refreshToolbarItems(animated: true)

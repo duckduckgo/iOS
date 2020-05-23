@@ -901,11 +901,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
-                UIApplication.shared.open(url, options: [:], completionHandler: { success in
-                    if !success {
-                        self.view.showBottomToast(UserText.failedToOpenExternally)
-                    }
-                })
+                openExternally(url: url)
             }
             completion(.cancel)
         }

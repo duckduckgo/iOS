@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os.log
 
 public class ContentBlockerLoader {
     
@@ -47,8 +48,7 @@ public class ContentBlockerLoader {
         for _ in 0 ..< numberOfRequests {
             semaphore.wait()
         }
-        
-        Logger.log(items: "ContentBlockerLoader", "completed", self.newData.count)
+        os_log("ContentBlockerLoader completed %d", log: generalLog, type: .debug, self.newData.count)
         
         return !newData.isEmpty
     }
@@ -56,10 +56,10 @@ public class ContentBlockerLoader {
     func applyUpdate(to cache: StorageCacheUpdating) {
         
         for (config, info) in newData {
-            if cache.update(config, with: info), let etag = etags[config] {
+            if cache.update(config, with: info, etag: etags[config]), let etag = etags[config] {
                 etagStorage.set(etag: etag, for: config)
             } else {
-                Logger.log(text: "Failed to apply update to \(config.rawValue)")
+                os_log("Failed to apply update to %d", log: generalLog, type: .debug, self.newData.count)
             }
         }
     }
@@ -107,7 +107,7 @@ public class ContentBlockerLoader {
             }
             
             if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification(), storedSpecification == specification {
-                Logger.log(text: "Bloom filter already downloaded")
+                os_log("Bloom filter already downloaded", log: generalLog, type: .debug)
                 semaphore.signal()
                 return
             }

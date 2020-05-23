@@ -24,53 +24,46 @@ class HomePageConfiguration {
     
     enum ConfigName: Int {
 
-        func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
-            let includePrivacySection = variantManger.isSupported(feature: .privacyOnHomeScreen)
-            
-            switch self {
-            case .simple:
-                if includePrivacySection {
-                    return [ .privacyProtection, .navigationBarSearch(withOffset: true) ]
-                }
-                return [ .navigationBarSearch(withOffset: false) ]
-                
-            case .centerSearch:
-                if includePrivacySection {
-                    return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
-                }
-                return [ .centeredSearch(fixed: true), .empty ]
-                
-            case .centerSearchAndFavorites:
-                if includePrivacySection {
-                    return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ]
-                }
-                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ]
-            }
-            
-        }
-        
         case simple
         case centerSearch
         case centerSearchAndFavorites
-        
+
     }
     
     enum Component: Equatable {
-        case privacyProtection
-        case navigationBarSearch(withOffset: Bool)
+        case navigationBarSearch(fixed: Bool)
         case centeredSearch(fixed: Bool)
-        case favorites(withHeader: Bool)
-        case padding(withOffset: Bool)
-        case empty
+        case extraContent
+        case favorites
+        case padding
     }
     
-    let settings: AppSettings
+    let settings: HomePageSettings
     
-    func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
-        return settings.homePage.components(withVariantManger: variantManger)
+    func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
+        let fixed = !settings.favorites || bookmarksManager.favoritesCount == 0
+
+        var components = [Component]()
+        switch settings.layout {
+        case .navigationBar:
+            components.append(.navigationBarSearch(fixed: fixed))
+        case .centered:
+            components.append(.centeredSearch(fixed: fixed))
+        }
+
+        // Add extra content renderer here if needed
+        
+        if settings.favorites {
+            components.append(.favorites)
+            if settings.layout == .centered {
+                components.append(.padding)
+            }
+        }
+
+        return components
     }
     
-    init(settings: AppSettings = AppUserDefaults()) {
+    init(settings: HomePageSettings = DefaultHomePageSettings()) {
         self.settings = settings
     }
     

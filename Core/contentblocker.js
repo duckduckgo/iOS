@@ -19,6 +19,14 @@
 
 var duckduckgoContentBlocking = function() {
 
+   function trackerDetected(data) {
+       try {
+           webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
+       } catch(error) {
+           // webkit might not be defined
+       }
+   }
+
     // tld.js
     var tldjs = {
 
@@ -34,7 +42,7 @@ var duckduckgoContentBlocking = function() {
                     domain: parsed.hostname,
                     hostname: parsed.hostname
                 }
-            } catch {
+            } catch(error) {
                 return {
                     domain: "",
                     hostname: ""
@@ -64,8 +72,85 @@ var duckduckgoContentBlocking = function() {
     };
     // util.js
 
+    // Base64
+/**
+*
+*  Base64 encode / decode
+*  http://www.webtoolkit.info/
+*
+**/
+var Base64 = {
+
+// private property
+_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+// public method for encoding
+encode : function (input) {
+    var output = "";
+    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+    var i = 0;
+
+    input = Base64._utf8_encode(input);
+
+    while (i < input.length) {
+
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+
+        enc1 = chr1 >> 2;
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        enc4 = chr3 & 63;
+
+        if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+            enc4 = 64;
+        }
+
+        output = output +
+        this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
+        this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+
+    }
+
+    return output;
+},
+
+// private method for UTF-8 encoding
+_utf8_encode : function (string) {
+    string = string.replace(/\r\n/g,"\n");
+    var utftext = "";
+
+    for (var n = 0; n < string.length; n++) {
+
+        var c = string.charCodeAt(n);
+
+        if (c < 128) {
+            utftext += String.fromCharCode(c);
+        }
+        else if((c > 127) && (c < 2048)) {
+            utftext += String.fromCharCode((c >> 6) | 192);
+            utftext += String.fromCharCode((c & 63) | 128);
+        }
+        else {
+            utftext += String.fromCharCode((c >> 12) | 224);
+            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+            utftext += String.fromCharCode((c & 63) | 128);
+        }
+
+    }
+
+    return utftext;
+},
+
+}
+// Base64
+
     // Buffer
     class Buffer {
+
         static from(string, type) {
             return new Buffer(string);
         }
@@ -75,10 +160,7 @@ var duckduckgoContentBlocking = function() {
         }
 
         toString(type) {
-            let string = this.string;
-            var aUTF16CodeUnits = new Uint16Array(string.length);
-            Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = string.charCodeAt(idx); });
-            return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+            return Base64.encode(this.string)
         }
     }
     // Buffer
@@ -327,7 +409,7 @@ var duckduckgoContentBlocking = function() {
             return {action, reason}
         }
         }
-        
+
         if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
             module.exports = Trackers
         else
@@ -341,12 +423,12 @@ var duckduckgoContentBlocking = function() {
     ${surrogates}
     `
     // surrogates
-        
+
     // tracker data set
     let trackerData = ${trackerData}
     // tracker data set
 
-    // overrides    
+    // overrides
     Trackers.prototype.findTrackerOwner = function(domain) {
         var parts = domain.split(".")
         while (parts.length > 1) {
@@ -366,7 +448,7 @@ var duckduckgoContentBlocking = function() {
     });
 
     // update algorithm with the data it needs
-    trackers.setLists([{ 
+    trackers.setLists([{
             name: "tds",
             data: trackerData
         },
@@ -376,22 +458,22 @@ var duckduckgoContentBlocking = function() {
         }
     ]);
 
-	let topLevelUrl = getTopLevelURL();
+    let topLevelUrl = getTopLevelURL();
 
     let whitelisted = `
         ${whitelist}
     `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
 
-	// private 
-	function getTopLevelURL() {
-		try {
-			// FROM: https://stackoverflow.com/a/7739035/73479
-			// FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
-			return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
-		} catch(error) {
-			return new URL(location.href)
-		}
-	}
+    // private
+    function getTopLevelURL() {
+        try {
+            // FROM: https://stackoverflow.com/a/7739035/73479
+            // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+            return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
+        } catch(error) {
+            return new URL(location.href)
+        }
+    }
 
     // private
     function loadSurrogate(surrogatePattern) {
@@ -399,46 +481,48 @@ var duckduckgoContentBlocking = function() {
         s.type = "application/javascript"
         s.async = true
         s.src = trackers.surrogateList[surrogatePattern]
-        if (sp = document.getElementsByTagName("script")[0]) {
-            sp.parentNode.insertBefore(s, sp)
+        var scripts = document.getElementsByTagName("script")
+        if (scripts && scripts.length > 0) {
+            scripts[0].parentNode.insertBefore(s, scripts[0])
         }
     }
 
-	// public
-	function shouldBlock(trackerUrl, type) {
+    // public
+    function shouldBlock(trackerUrl, type) {
         let startTime = performance.now()
-        
+
         let result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
-        	type: type
+            type: type
         }, null);
 
-		if (result == null) {
+        if (result == null) {
             duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
-			return false;
-		}
+            return false;
+        }
 
-		var blocked = false;
+        var blocked = false;
         if (whitelisted) {
             blocked = false;
             result.reason = "whitelisted";
         } else if (result.action === 'block') {
-			blocked = true;
-		} else if (result.matchedRule && result.matchedRule.surrogate) {
-			blocked = true;
-		}
+            blocked = true;
+        } else if (result.matchedRule && result.matchedRule.surrogate) {
+            blocked = true;
+        }
 
-        duckduckgoMessaging.trackerDetected({
-	        url: trackerUrl,
-	        blocked: blocked,
-	        reason: result.reason,
+        trackerDetected({
+            url: trackerUrl,
+            blocked: blocked,
+            reason: result.reason,
+            isSurrogate: result.matchedRule && result.matchedRule.surrogate
         })
-        
+
         if (blocked) {
 
             if (result.matchedRule && result.matchedRule.surrogate) {
-            	loadSurrogate(result.matchedRule.surrogate)
+                loadSurrogate(result.matchedRule.surrogate)
             }
 
             duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
@@ -451,15 +535,87 @@ var duckduckgoContentBlocking = function() {
                                                    time: performance.now() - startTime})
         }
 
-		return blocked;
-	}
+        return blocked;
+    }
 
-	// Init 
-	(function() {
-		duckduckgoDebugMessaging.log("content blocking initialised")
-	})()
+    // Init
+    (function() {
+        
+        duckduckgoDebugMessaging.log("installing beforeload detection")
+        document.addEventListener("beforeload", function(event) {
 
-	return { 
-		shouldBlock: shouldBlock
-	}
+            if (event.target.nodeName == "LINK") {
+                type = event.target.rel
+            } else if (event.target.nodeName == "IMG") {
+                type = "image"
+            } else if (event.target.nodeName == "IFRAME") {
+                type = "subdocument"
+            } else {
+                type = event.target.nodeName
+            }
+
+            duckduckgoDebugMessaging.log("checking " + event.url + " (" + type + ")");
+            if (shouldBlock(event.url, type)) {
+                duckduckgoDebugMessaging.log("blocking beforeload")
+                event.preventDefault()
+                event.stopPropagation()
+            } else {
+                duckduckgoDebugMessaging.log("don't block " + event.url);
+                return
+            }
+        }, true)
+
+
+        try {
+            duckduckgoDebugMessaging.log("installing image src detection")
+
+            var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
+            delete Image.prototype.src;
+            Object.defineProperty(Image.prototype, 'src', {
+                get: function() {
+                    return originalImageSrc.get.call(this)
+                },
+                set: function(value) {
+
+                    var instance = this
+                    if (shouldBlock(value, "image")) {
+                        duckduckgoDebugMessaging.log("blocking image src: " + value)
+                    } else {
+                        originalImageSrc.set.call(instance, value);
+                        duckduckgoDebugMessaging.log("allowing image src: " + value)
+                    }
+                    
+                }
+            })
+
+        } catch(error) {
+            duckduckgoDebugMessaging.log("failed to install image src detection")
+        }
+
+        try {
+            duckduckgoDebugMessaging.log("installing xhr detection")
+
+            var xhr = XMLHttpRequest.prototype
+            var originalOpen = xhr.open
+
+            xhr.open = function() {
+                var args = arguments
+                var url = arguments[1]
+                if (shouldBlock(url, "xmlhttprequest")) {
+                    args[1] = "about:blank"
+                }
+                duckduckgoDebugMessaging.log("sending xhr " + url + " to " + args[1])
+                return originalOpen.apply(this, args);
+            }
+
+        } catch(error) {
+            duckduckgoDebugMessaging.log("failed to install xhr detection")
+        }
+        
+        duckduckgoDebugMessaging.log("content blocking initialised")
+    })()
+
+    return {
+        shouldBlock: shouldBlock
+    }
 }()

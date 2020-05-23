@@ -29,7 +29,7 @@ protocol GestureToolbarButtonDelegate: NSObjectProtocol {
 class GestureToolbarButton: UIView {
     
     struct Constants {
-        static let minLongPressDuration = 0.8
+        static let minLongPressDuration = 0.4
         static let maxTouchDeviationPoints = 20.0
         static let animationDuration = 0.3
     }
@@ -44,7 +44,7 @@ class GestureToolbarButton: UIView {
     
     weak var delegate: GestureToolbarButtonDelegate?
 
-    let iconImageView = UIImageView(frame: CGRect(x: 2.5, y: 10, width: ToolbarButton.ImageWidth, height: ToolbarButton.ImageHeight))
+    let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: ToolbarButton.ImageWidth, height: ToolbarButton.ImageHeight))
     
     var image: UIImage? {
         didSet {
@@ -54,7 +54,7 @@ class GestureToolbarButton: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         addSubview(iconImageView)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressHandler(_:)))
@@ -63,7 +63,25 @@ class GestureToolbarButton: UIView {
         addGestureRecognizer(longPressRecognizer)
 
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if #available(iOS 11.0, *) {
+            //no-op
+        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
+            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
+            // adjust frame to toolbar height change
+            var newFrame = frame
+            newFrame.size.height = superview?.bounds.height ?? 0
+            newFrame.origin.y = 0
+            frame = newFrame
+        }
+        
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        iconImageView.center = center
+    }
+
     @objc func longPressHandler(_ sender: UIGestureRecognizer) {
         
         if sender.state == .began {

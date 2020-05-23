@@ -13,8 +13,38 @@ CC:
 1.
 1.
 
+<!--
+Before submitting a PR, please ensure you have tested the combinations you expect the reviewer to test, then delete configurations you *know* do not need explicit testing.
+
+Using a simulator where a physical device is unavailable is acceptable. 
+-->
+
+**Orientation Testing**:
+
+* [ ] Portrait
+* [ ] Landscape
+
+**Device Testing**:
+
+* [ ] iPhone SE (1st Gen)
+* [ ] iPhone 8
+* [ ] iPhone X
+* [ ] iPad
+
+**OS Testing**:
+
+* [ ] iOS 10
+* [ ] iOS 11
+* [ ] iOS 12
+* [ ] iOS 13
+
+**Theme Testing**:
+
+* [ ] Light theme
+* [ ] Dark theme
 
 ---
 ###### Internal references:
 [Software Engineering Expectations](https://app.asana.com/0/59792373528535/199064865822552)
 [Technical Design Template](https://app.asana.com/0/59792373528535/184709971311943)
+

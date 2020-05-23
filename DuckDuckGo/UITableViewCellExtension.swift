@@ -27,4 +27,12 @@ extension UITableViewCell {
         view.backgroundColor = color
         selectedBackgroundView = view
     }
+    
+    func decorate(with theme: Theme) {
+        backgroundColor = theme.tableCellBackgroundColor
+        textLabel?.textColor = theme.tableCellTextColor
+        tintColor = theme.buttonTintColor
+        setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+    }
+    
 }

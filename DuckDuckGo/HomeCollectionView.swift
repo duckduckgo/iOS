@@ -27,7 +27,7 @@ class HomeCollectionView: UICollectionView {
     
     private weak var controller: HomeViewController!
     
-    private var renderers: HomeViewSectionRenderers!
+    private(set) var renderers: HomeViewSectionRenderers!
     
     private lazy var collectionViewReorderingGesture =
         UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
@@ -39,6 +39,15 @@ class HomeCollectionView: UICollectionView {
         return renderer.centeredSearch
     }
     
+    private var topIndexPath: IndexPath? {
+        for section in 0..<renderers.numberOfSections(in: self) {
+            if numberOfItems(inSection: section) > 0 {
+                return IndexPath(row: 0, section: section)
+            }
+        }
+        return nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -46,10 +55,8 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "favorite")
         register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "PrivacyHomeCell")
-        
-        register(UINib(nibName: "FavoritesHeaderCell", bundle: nil),
-                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                 withReuseIdentifier: FavoritesHeaderCell.reuseIdentifier)
+        register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
+                 forCellWithReuseIdentifier: "extraContent")
         
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -61,34 +68,38 @@ class HomeCollectionView: UICollectionView {
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     
+    deinit {
+        UIMenuController.shared.setMenuVisible(false, animated: true)
+    }
+    
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller, theme: theme)
         
         homePageConfiguration.components().forEach { component in
             switch component {
-            case .navigationBarSearch(let withOffset):
-                renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(withOffset: withOffset))
+            case .navigationBarSearch(let fixed):
+                renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .centeredSearch(let fixed):
                 renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
                 
-            case .favorites(let withHeader):
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer(headerEnabled: withHeader))
+            case .extraContent:
+                renderers.install(renderer: ExtraContentHomeSectionRenderer())
                 
-            case .privacyProtection:
-                renderers.install(renderer: PrivacyProtectionHomeViewSectionRenderer())
-                
-            case .padding(let withOffset):
-                renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer(withOffset: withOffset))
-                
-            case .empty:
-                renderers.install(renderer: EmptySectionRenderer())
+            case .favorites:
+                renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+
+            case .padding:
+                renderers.install(renderer: PaddingHomeViewSectionRenderer())
+
             }
+
         }
         
         dataSource = renderers
         delegate = renderers
+        collectionViewReorderingGesture.delegate = self
         addGestureRecognizer(collectionViewReorderingGesture)
     }
     
@@ -146,7 +157,10 @@ class HomeCollectionView: UICollectionView {
     }
     
     func viewDidTransition(to size: CGSize) {
-        controller.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        
+        if let topIndexPath = topIndexPath {
+            controller.collectionView.scrollToItem(at: topIndexPath, at: .top, animated: false)
+        }
         controller.collectionView.reloadData()
     }
     
@@ -159,4 +173,16 @@ extension HomeCollectionView: Themable {
         reloadData()
     }
     
+}
+
+extension HomeCollectionView: UIGestureRecognizerDelegate {
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == collectionViewReorderingGesture,
+            let indexPath = indexPathForItem(at: gestureRecognizer.location(in: self)) {
+            print("-    \(renderers.rendererFor(section: indexPath.section).supportsReordering())")
+            return renderers.rendererFor(section: indexPath.section).supportsReordering()
+        }
+        return super.gestureRecognizerShouldBegin(gestureRecognizer)
+    }
 }

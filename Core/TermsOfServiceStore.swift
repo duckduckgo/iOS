@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os.log
 
 public protocol TermsOfServiceStore {
 
@@ -35,7 +36,7 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
 
     public init() {
         let parser = TermsOfServiceListParser()
-        let bundle = Bundle(for: EmbeddedTermsOfServiceStore.self)
+        let bundle = Bundle.core
         let fileLoader = FileLoader()
         guard let data = try? fileLoader.load(fileName: Constants.fileName, fromBundle: bundle) else {
             fatalError("Unable to load \(Constants.fileName) from bundle \(bundle)")
@@ -44,7 +45,7 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
             let terms = try parser.convert(fromJsonData: data)
             self.terms = terms
         } catch {
-            Logger.log(items: error)
+            os_log("%s", log: lifecycleLog, type: .debug, error.localizedDescription)
             fatalError("Unable to decode tosdr json")
         }
     }

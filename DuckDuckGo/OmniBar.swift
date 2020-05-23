@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import os.log
 
 extension OmniBar: NibLoading {}
 
@@ -27,7 +28,8 @@ class OmniBar: UIView {
     @IBOutlet weak var searchLoupe: UIView!
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
-    @IBOutlet weak var siteRatingView: SiteRatingView!
+    @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
+    @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
@@ -44,8 +46,14 @@ class OmniBar: UIView {
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
+    private(set) var trackersAnimator = TrackersAnimator()
+    
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
+    }
+    
+    var siteRatingView: SiteRatingView {
+        return siteRatingContainer.siteRatingView
     }
 
     override func awakeFromNib() {
@@ -82,7 +90,7 @@ class OmniBar: UIView {
     }
     
     var textFieldBottomSpacing: CGFloat {
-        return bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)
+        return (bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)) / 2.0
     }
     
     @objc func textDidChange() {
@@ -120,21 +128,43 @@ class OmniBar: UIView {
     @IBAction func textFieldTapped() {
         textField.becomeFirstResponder()
     }
+    
+    public func startLoadingAnimation() {
+        trackersAnimator.startLoadingAnimation(in: self)
+    }
+    
+    public func startTrackersAnimation(_ trackers: [DetectedTracker]) {
+        guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else {
+            trackersAnimator.cancelAnimations(in: self)
+            return
+        }
+        
+        trackersAnimator.startAnimating(in: self)
+    }
+    
+    public func cancelAllAnimations() {
+        trackersAnimator.cancelAnimations(in: self)
+    }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
-            Logger.log(text: "OmniBar entering \(newState.name) from \(state.name)")
+            os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
                 clear()
             }
             state = newState
+            trackersAnimator.cancelAnimations(in: self)
+        }
+        
+        if state.showSiteRating {
+            searchFieldContainer.revealSiteRatingView()
+        } else {
+            searchFieldContainer.hideSiteRatingView()
         }
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
-        setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
-        setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
@@ -257,8 +287,9 @@ class OmniBar: UIView {
         omniDelegate?.onMenuPressed()
     }
 
-    @IBAction func onBookmarksButtonPressed(_ sender: Any) {
-        omniDelegate?.onBookmarksPressed()
+    @IBAction func onTrackersViewPressed(_ sender: Any) {
+        trackersAnimator.cancelAnimations(in: self)
+        textField.becomeFirstResponder()
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
@@ -270,6 +301,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
+        trackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }
 }
@@ -309,6 +341,9 @@ extension OmniBar: Themable {
         editingBackground?.borderColor = theme.searchBarBackgroundColor
 
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
+        siteRatingContainer.tintColor = theme.barTintColor
+        siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
+        
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text?.punycodedUrl {

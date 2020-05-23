@@ -25,19 +25,16 @@ var duckduckgoDocument = function () {
         while (element && !element.href) {
             element = element.parentNode
         }
-        return getHrefFromElement(element)
-    };
-    
-    getHrefFromElement = function(element) {
+        
         if (element) {
-            return element.href
+            return element.href;
         }
-        return null
+        
+        return null;
     };
     
     return {
-        getHrefFromPoint: getHrefFromPoint,
-        getHrefFromElement: getHrefFromElement
+        getHrefFromPoint: getHrefFromPoint
     };
     
 }();

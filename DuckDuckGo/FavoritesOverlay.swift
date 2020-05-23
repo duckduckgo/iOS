@@ -29,6 +29,7 @@ class FavoritesOverlay: UIViewController {
     
     struct Constants {
         static let margin: CGFloat = 28
+        static let footerPadding: CGFloat = 50
     }
     
     private var collectionView: UICollectionView!
@@ -98,12 +99,19 @@ extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
         Pixel.fire(pixel: .overlayFavoriteLaunched)
         delegate?.favoritesOverlay(self, didSelect: link)
     }
+    
 }
 
 extension FavoritesOverlay: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         renderer.collectionView(collectionView, didSelectItemAt: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: 1, height: Constants.footerPadding)
     }
     
 }

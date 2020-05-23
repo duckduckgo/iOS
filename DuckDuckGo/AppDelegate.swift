@@ -21,6 +21,7 @@ import UIKit
 import Core
 import EasyTipView
 import UserNotifications
+import os.log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,11 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
+    private var showKeyboardIfSettingOn = true
 
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             Database.shared.loadStore { _ in }
@@ -57,7 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
         }
-        
+
+        migrateHomePageSettings()
+
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         
@@ -67,24 +70,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             
-            // Force the prompt for new users only, and only if they are on iOS 13 or better
-            if #available(iOS 13, *) {
-                PreserveLogins.shared.userDecision = .unknown
-                PreserveLogins.shared.prompted = true
-            }
+            // Remove users with devices that does not support App Icon switching
+            return AppIconManager.shared.isAppIconChangeSupported
         }
 
         if let main = mainViewController {
             autoClear = AutoClear(worker: main)
             autoClear?.applicationDidLaunch()
         }
-
+        
+        clearLegacyAllowedDomainCookies()
+    
         appIsLaunching = true
         return true
     }
 
+    private func clearLegacyAllowedDomainCookies() {
+        let domains = PreserveLogins.shared.legacyAllowedDomains
+        guard !domains.isEmpty else { return }
+        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
+            os_log("Removed cookies for %d legacy allowed domains", domains.count)
+            PreserveLogins.shared.clearLegacyAllowedDomains()
+        })
+    }
+
+    private func migrateHomePageSettings(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+        homePageSettings.migrate(from: AppDependencyProvider.shared.appSettings)
+    }
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
+        
+        if !(overlayWindow?.rootViewController is AuthenticationViewController) {
+            removeOverlay()
+        }
         
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
@@ -95,31 +114,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
+        
+        if !privacyStore.authenticationEnabled {
+            showKeyboardOnLaunch()
+        }
+    }
+
+    private func showKeyboardOnLaunch() {
+        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
+        self.mainViewController?.enterSearch()
+        showKeyboardIfSettingOn = false
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        displayBlankSnapshotWindow()
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-       
-        if privacyStore.authenticationEnabled {
-            displayAuthenticationWindow()
-            beginAuthentication()
-        }
-        
+        beginAuthentication()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if privacyStore.authenticationEnabled {
-            beginAuthentication()
-        } else {
-            removeOverlay()
-        }
-        
+        beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
+        showKeyboardIfSettingOn = true
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        displayOverlay()
         autoClear?.applicationDidEnterBackground()
     }
 
@@ -130,18 +153,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        Logger.log(text: "App launched with url \(url.absoluteString)")
+        os_log("App launched with url %s", log: lifecycleLog, type: .debug, url.absoluteString)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
+        showKeyboardIfSettingOn = false
         
         if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.launchNewSearch()
+            mainViewController?.newTab()
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {
+            if !privacyStore.authenticationEnabled {
+                removeOverlay()
+            }
             mainViewController?.onQuickFirePressed()
         }
         return true
@@ -149,7 +176,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        Logger.log(items: #function)
+        os_log(#function, log: lifecycleLog, type: .debug)
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
             completionHandler(newData ? .newData : .noData)
@@ -162,14 +189,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
     }
     
-    private func displayOverlay() {
-        if privacyStore.authenticationEnabled {
-            displayAuthenticationWindow()
-        } else {
-            displayBlankSnapshotWindow()
-        }
-    }
-
     private func displayAuthenticationWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
         overlayWindow = UIWindow(frame: frame)
@@ -181,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func displayBlankSnapshotWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
-        guard autoClear?.isClearingEnabled ?? false else { return }
+        guard autoClear?.isClearingEnabled ?? false || privacyStore.authenticationEnabled else { return }
         
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
@@ -191,12 +210,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func beginAuthentication() {
+        
+        guard privacyStore.authenticationEnabled else { return }
+
+        removeOverlay()
+        displayAuthenticationWindow()
+        
         guard let controller = overlayWindow?.rootViewController as? AuthenticationViewController else {
             removeOverlay()
             return
         }
+        
         controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
+            self?.showKeyboardOnLaunch()
         }
     }
 
@@ -206,7 +233,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
+        os_log("Handling shortcut item: %s", log: generalLog, type: .debug, shortcutItem.type)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {

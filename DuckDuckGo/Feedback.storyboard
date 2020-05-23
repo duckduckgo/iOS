@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LPY-wu-U34">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h22-TC-N6i">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,9 +21,8 @@
             <objects>
                 <navigationController storyboardIdentifier="Feedback" id="c32-S5-kCk" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="L1M-3G-dJe">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="xnZ-YI-mV7" kind="relationship" relationship="rootViewController" id="x7r-7D-Pt4"/>
@@ -35,241 +32,12 @@
             </objects>
             <point key="canvasLocation" x="-1541" y="924"/>
         </scene>
-        <!--Site Feedback View Controller-->
-        <scene sceneID="EKL-c4-qRh">
-            <objects>
-                <viewController id="LPY-wu-U34" customClass="SiteFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uxf-LL-2nG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndo-C8-MVE">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                                <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t35-hd-tUe">
-                                        <rect key="frame" x="32" y="118" width="350" height="480"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjr-ca-FDA">
-                                                <rect key="frame" x="0.0" y="0.0" width="350" height="160"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReportIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QbI-di-eSr">
-                                                        <rect key="frame" x="159" y="26" width="32" height="32"/>
-                                                    </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a Broken Site" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cum-ec-gq1">
-                                                        <rect key="frame" x="16" y="69" width="318" height="21"/>
-                                                        <accessibility key="accessibilityConfiguration">
-                                                            <accessibilityTraits key="traits" staticText="YES" header="YES"/>
-                                                        </accessibility>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="21"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Broken site reporting is completely anonymous and helps us to improve the app!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82c-Hv-K8w">
-                                                        <rect key="frame" x="25" y="101" width="300" height="28"/>
-                                                        <accessibility key="accessibilityConfiguration">
-                                                            <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
-                                                        </accessibility>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="cum-ec-gq1" secondAttribute="trailing" constant="16" id="4yN-zu-shf"/>
-                                                    <constraint firstItem="cum-ec-gq1" firstAttribute="leading" secondItem="qjr-ca-FDA" secondAttribute="leading" constant="16" id="GT5-SR-Z3W"/>
-                                                    <constraint firstAttribute="trailing" secondItem="82c-Hv-K8w" secondAttribute="trailing" constant="25" id="GyC-jo-0Ma"/>
-                                                    <constraint firstAttribute="height" constant="160" id="MPo-BM-aCC"/>
-                                                    <constraint firstItem="82c-Hv-K8w" firstAttribute="leading" secondItem="qjr-ca-FDA" secondAttribute="leading" constant="25" id="NMW-MP-phT"/>
-                                                    <constraint firstItem="cum-ec-gq1" firstAttribute="centerX" secondItem="qjr-ca-FDA" secondAttribute="centerX" id="a76-aY-sNe"/>
-                                                    <constraint firstItem="82c-Hv-K8w" firstAttribute="top" secondItem="cum-ec-gq1" secondAttribute="bottom" constant="11" id="bPJ-sU-C0q"/>
-                                                    <constraint firstItem="82c-Hv-K8w" firstAttribute="centerX" secondItem="qjr-ca-FDA" secondAttribute="centerX" id="eZv-fQ-MC8"/>
-                                                    <constraint firstItem="QbI-di-eSr" firstAttribute="centerX" secondItem="qjr-ca-FDA" secondAttribute="centerX" id="fDJ-Xd-vGT"/>
-                                                    <constraint firstItem="cum-ec-gq1" firstAttribute="top" secondItem="QbI-di-eSr" secondAttribute="bottom" constant="11" id="lJ8-b7-RF6"/>
-                                                    <constraint firstItem="QbI-di-eSr" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="top" constant="26" id="oJP-Mf-fGM"/>
-                                                </constraints>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EJ2-Ly-fTI">
-                                                <rect key="frame" x="320" y="8" width="22" height="22"/>
-                                                <accessibility key="accessibilityConfiguration" label="Close Feedback"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="22" id="O16-xP-zeY"/>
-                                                    <constraint firstAttribute="width" constant="22" id="bct-7J-v7I"/>
-                                                </constraints>
-                                                <color key="tintColor" red="0.69411764710000001" green="0.83529411760000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" image="Remove"/>
-                                                <connections>
-                                                    <action selector="onClosePressed:" destination="LPY-wu-U34" eventType="touchUpInside" id="0bE-Gi-rKL"/>
-                                                </connections>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Domain of Broken Site:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSK-zf-19O">
-                                                <rect key="frame" x="16" y="188" width="154.33333333333334" height="15"/>
-                                                <gestureRecognizers/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
-                                                <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="i8G-nq-ZGt"/>
-                                                </connections>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which website is broken?" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Vcg-ur-bnB" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="223" width="318" height="38"/>
-                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="SeZ-x1-0n2"/>
-                                                </constraints>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="url"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="4"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="onUrlChanged:" destination="LPY-wu-U34" eventType="editingChanged" id="nIN-cR-tO7"/>
-                                                    <outlet property="delegate" destination="LPY-wu-U34" id="lPX-aH-uBZ"/>
-                                                </connections>
-                                            </textField>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FyA-HP-yKI">
-                                                <rect key="frame" x="16" y="267" width="318" height="127"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <accessibility key="accessibilityConfiguration" hint="Your feedback."/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="4"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <outlet property="delegate" destination="LPY-wu-U34" id="ibT-lp-ZzS"/>
-                                                </connections>
-                                            </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3D-p0-uDK">
-                                                <rect key="frame" x="23" y="275" width="305" height="19"/>
-                                                <accessibility key="accessibilityConfiguration">
-                                                    <bool key="isElement" value="NO"/>
-                                                </accessibility>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Which content or functionality is breaking?">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3500000000000001" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pu-MH-Czk">
-                                                <rect key="frame" x="16" y="414" width="318" height="38"/>
-                                                <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="ino-ju-H1v"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                <state key="normal" title="Submit Report">
-                                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="onSubmitPressed:" destination="LPY-wu-U34" eventType="touchUpInside" id="TEF-Np-M96"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="0pu-MH-Czk" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" constant="-32" id="2DB-gj-g10"/>
-                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="top" constant="8" id="50d-oo-uzz"/>
-                                            <constraint firstItem="gSK-zf-19O" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="bottom" constant="28" id="BUn-DY-9lw"/>
-                                            <constraint firstItem="qjr-ca-FDA" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" id="G20-hv-7eo"/>
-                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="leading" secondItem="FyA-HP-yKI" secondAttribute="leading" constant="7" id="KnY-0D-ihu"/>
-                                            <constraint firstItem="EJ2-Ly-fTI" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" constant="8" id="Kze-aw-ydI"/>
-                                            <constraint firstItem="0pu-MH-Czk" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="bottom" constant="20" id="OkU-db-W1M"/>
-                                            <constraint firstItem="qjr-ca-FDA" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" id="P1e-8F-oXp"/>
-                                            <constraint firstItem="gSK-zf-19O" firstAttribute="leading" secondItem="t35-hd-tUe" secondAttribute="leading" constant="16" id="S7j-AT-a2g"/>
-                                            <constraint firstItem="Vcg-ur-bnB" firstAttribute="top" secondItem="gSK-zf-19O" secondAttribute="bottom" constant="20" id="Vnq-G8-b8c"/>
-                                            <constraint firstItem="Vcg-ur-bnB" firstAttribute="leading" secondItem="t35-hd-tUe" secondAttribute="leading" constant="16" id="XbC-mO-cee"/>
-                                            <constraint firstItem="FyA-HP-yKI" firstAttribute="leading" secondItem="t35-hd-tUe" secondAttribute="leading" constant="16" id="adr-uR-Oop"/>
-                                            <constraint firstItem="FyA-HP-yKI" firstAttribute="trailing" secondItem="m3D-p0-uDK" secondAttribute="trailing" constant="6" id="ehv-hr-RIR"/>
-                                            <constraint firstItem="0pu-MH-Czk" firstAttribute="centerX" secondItem="t35-hd-tUe" secondAttribute="centerX" id="kdf-OJ-hFP"/>
-                                            <constraint firstAttribute="trailing" secondItem="FyA-HP-yKI" secondAttribute="trailing" constant="16" id="l4l-IF-9IX"/>
-                                            <constraint firstAttribute="height" constant="480" id="l6q-bo-l5s"/>
-                                            <constraint firstAttribute="bottom" secondItem="0pu-MH-Czk" secondAttribute="bottom" constant="28" id="ok1-pw-Mhe"/>
-                                            <constraint firstAttribute="trailing" secondItem="EJ2-Ly-fTI" secondAttribute="trailing" constant="8" id="t2T-gp-jLK"/>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="uTc-Na-4f3">
-                                                <variation key="widthClass=regular" constant="500"/>
-                                            </constraint>
-                                            <constraint firstItem="qjr-ca-FDA" firstAttribute="centerX" secondItem="t35-hd-tUe" secondAttribute="centerX" id="vXP-J4-AGI"/>
-                                            <constraint firstAttribute="trailing" secondItem="Vcg-ur-bnB" secondAttribute="trailing" constant="16" id="wdz-Hx-3S7"/>
-                                            <constraint firstItem="FyA-HP-yKI" firstAttribute="top" secondItem="Vcg-ur-bnB" secondAttribute="bottom" constant="6" id="wsx-eB-DIE"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="t35-hd-tUe" firstAttribute="top" secondItem="Ndo-C8-MVE" secondAttribute="top" priority="700" constant="30" id="DYU-rw-auG"/>
-                                    <constraint firstItem="t35-hd-tUe" firstAttribute="width" secondItem="Ndo-C8-MVE" secondAttribute="width" priority="900" constant="-32" id="H59-pl-abY"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="t35-hd-tUe" secondAttribute="bottom" constant="30" id="MKB-dk-2vU"/>
-                                    <constraint firstAttribute="trailing" secondItem="t35-hd-tUe" secondAttribute="trailing" priority="900" id="Rqc-3L-okv"/>
-                                    <constraint firstItem="t35-hd-tUe" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ndo-C8-MVE" secondAttribute="top" constant="30" id="b9k-uU-EXI"/>
-                                    <constraint firstItem="t35-hd-tUe" firstAttribute="centerY" secondItem="Ndo-C8-MVE" secondAttribute="centerY" priority="900" id="gOp-li-9L5"/>
-                                    <constraint firstItem="t35-hd-tUe" firstAttribute="leading" secondItem="Ndo-C8-MVE" secondAttribute="leading" priority="900" id="iia-Ur-6sr"/>
-                                    <constraint firstAttribute="bottom" secondItem="t35-hd-tUe" secondAttribute="bottom" priority="700" constant="30" id="rax-7v-3QP"/>
-                                    <constraint firstItem="t35-hd-tUe" firstAttribute="centerX" secondItem="Ndo-C8-MVE" secondAttribute="centerX" id="zVf-8g-1N6"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="Ndo-C8-MVE" firstAttribute="top" secondItem="WPd-Ki-cRC" secondAttribute="top" id="94w-OT-0fY"/>
-                            <constraint firstItem="Ndo-C8-MVE" firstAttribute="leading" secondItem="WPd-Ki-cRC" secondAttribute="leading" id="DQP-yi-6ZQ"/>
-                            <constraint firstItem="WPd-Ki-cRC" firstAttribute="trailing" secondItem="Ndo-C8-MVE" secondAttribute="trailing" id="Pgu-p4-7NZ"/>
-                            <constraint firstItem="Ndo-C8-MVE" firstAttribute="bottom" secondItem="WPd-Ki-cRC" secondAttribute="bottom" id="mbD-zO-11z"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="WPd-Ki-cRC"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="MvJ-Jw-F7N"/>
-                        </connections>
-                    </view>
-                    <connections>
-                        <outlet property="domainDescriptionLabel" destination="gSK-zf-19O" id="2cg-mf-bq0"/>
-                        <outlet property="messagePlaceholderText" destination="m3D-p0-uDK" id="zKD-xw-gV8"/>
-                        <outlet property="messageTextView" destination="FyA-HP-yKI" id="WGo-9I-MdR"/>
-                        <outlet property="scrollView" destination="Ndo-C8-MVE" id="sob-ne-g5o"/>
-                        <outlet property="submitButton" destination="0pu-MH-Czk" id="0p0-SZ-oaj"/>
-                        <outlet property="subtitleLabel" destination="82c-Hv-K8w" id="MRo-E1-FVC"/>
-                        <outlet property="titleLabel" destination="cum-ec-gq1" id="e0n-SV-1fb"/>
-                        <outlet property="urlTextField" destination="Vcg-ur-bnB" id="A6n-hb-7f2"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="F4B-7R-fiU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="mo1-It-jF6">
-                    <connections>
-                        <action selector="onTapped:" destination="LPY-wu-U34" id="rMu-9o-LWp"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="-659" y="1690"/>
-        </scene>
         <!--Send Feedback-->
         <scene sceneID="dQB-jL-THB">
             <objects>
                 <viewController id="xnZ-YI-mV7" customClass="FeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C2C-S7-btw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yS1-TL-7Xx">
@@ -334,7 +102,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sir-qo-Tef">
-                                <rect key="frame" x="71" y="633" width="272.33333333333331" height="14"/>
+                                <rect key="frame" x="71" y="653" width="272.33333333333331" height="14"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Your anonymous feedback is important to us">
                                         <attributes>
@@ -385,14 +153,14 @@
             <objects>
                 <viewController title="Send Feedback" id="rAY-cv-mjl" userLabel="Positive Feedback" customClass="PositiveFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zgc-vi-YZO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJu-FY-Z3R">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3c-oE-fAk" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VKd-6G-N6H" userLabel="Header Container">
                                                 <rect key="frame" x="66.666666666666686" y="10" width="281" height="190"/>
@@ -450,7 +218,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Elk-FL-6tl" userLabel="Buttons Container">
-                                                <rect key="frame" x="37" y="420" width="340" height="172"/>
+                                                <rect key="frame" x="37" y="440" width="340" height="172"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APU-da-5BY">
                                                         <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
@@ -580,7 +348,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="FeedbackPicker" title="Send Feedback" id="lY6-5c-iu4" userLabel="Feedback Picker" customClass="FeedbackPickerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="r0Q-7K-kUf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="h6D-eT-YCX">
@@ -643,14 +411,14 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="Vp9-Jz-mUC" rowHeight="44" style="IBUITableViewCellStyleDefault" id="has-ek-M3V">
-                                <rect key="frame" x="0.0" y="225.33333333333334" width="414" height="44.000000000000028"/>
+                                <rect key="frame" x="0.0" y="225.33333206176758" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="has-ek-M3V" id="ZVE-Ej-2Dt">
-                                    <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vp9-Jz-mUC">
-                                            <rect key="frame" x="20" y="0.0" width="356" height="43.666666666666664"/>
+                                            <rect key="frame" x="20" y="0.0" width="355" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Title">
@@ -695,14 +463,14 @@
             <objects>
                 <viewController storyboardIdentifier="FeedbackForm" title="Send Feedback" id="Rvx-dM-etJ" userLabel="Feedback Form" customClass="FeedbackFormViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5c0-e6-FcW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oa0-vA-RI7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eZ-cg-8pJ" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8P-lM-IF2" userLabel="Header Container">
                                                 <rect key="frame" x="59.333333333333343" y="10" width="295.33333333333326" height="190"/>
@@ -824,7 +592,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="38" id="bhe-AJ-LtA"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="url"/>
                                                 <userDefinedRuntimeAttributes>
@@ -904,10 +671,131 @@
             </objects>
             <point key="canvasLocation" x="1361" y="924"/>
         </scene>
+        <!--Themable Navigation Controller-->
+        <scene sceneID="4Cd-5O-E32">
+            <objects>
+                <navigationController id="h22-TC-N6i" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="7vH-Qe-IZl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8h9-Oy-9xi" kind="relationship" relationship="rootViewController" id="fId-6e-Jea"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i6L-q4-FDc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1384" y="1690"/>
+        </scene>
+        <!--Report Broken Site-->
+        <scene sceneID="F6V-Ex-sf0">
+            <objects>
+                <viewController id="8h9-Oy-9xi" customClass="ReportBrokenSiteViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z30-di-tew">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Yqf-Ab-ePF">
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="lo0-tD-41u">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BrokenSites" translatesAutoresizingMaskIntoConstraints="NO" id="RNo-8b-yyt">
+                                            <rect key="frame" x="143" y="10" width="128" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="128" id="Tt9-NS-Q1e"/>
+                                                <constraint firstAttribute="height" constant="128" id="cvH-Ij-l22"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s11-T2-I4J">
+                                            <rect key="frame" x="41.333333333333343" y="143" width="331.33333333333326" height="72"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Submitting an anonymous broken site report helps us debug these issues and improve the extension.">
+                                                    <attributes>
+                                                        <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="s11-T2-I4J" secondAttribute="bottom" constant="5" id="6gq-Dk-d0z"/>
+                                        <constraint firstItem="RNo-8b-yyt" firstAttribute="top" secondItem="lo0-tD-41u" secondAttribute="top" constant="10" id="9mH-Ou-zPW"/>
+                                        <constraint firstItem="RNo-8b-yyt" firstAttribute="centerX" secondItem="lo0-tD-41u" secondAttribute="centerX" id="cek-JA-rlB"/>
+                                        <constraint firstItem="s11-T2-I4J" firstAttribute="width" secondItem="lo0-tD-41u" secondAttribute="width" multiplier="0.8" id="fLB-fh-8Ys"/>
+                                        <constraint firstItem="s11-T2-I4J" firstAttribute="top" secondItem="RNo-8b-yyt" secondAttribute="bottom" constant="5" id="qki-cb-3ha"/>
+                                        <constraint firstItem="s11-T2-I4J" firstAttribute="centerX" secondItem="RNo-8b-yyt" secondAttribute="centerX" id="wqR-Sa-5NL"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BrokenSiteCategoryCell" textLabel="Wx3-Vb-ItS" style="IBUITableViewCellStyleDefault" id="kvT-nI-fx0" customClass="BrokenSiteCategoryCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="275.33333206176758" width="414" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kvT-nI-fx0" id="0ZR-M1-85Q">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Broken Site Reason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wx3-Vb-ItS">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="8h9-Oy-9xi" id="qoV-fs-sAe"/>
+                                    <outlet property="delegate" destination="8h9-Oy-9xi" id="mPZ-Il-f0g"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Up8-9v-hR9" firstAttribute="trailing" secondItem="Yqf-Ab-ePF" secondAttribute="trailing" id="LdG-Iy-0ah"/>
+                            <constraint firstItem="Yqf-Ab-ePF" firstAttribute="top" secondItem="Up8-9v-hR9" secondAttribute="top" id="YG0-W5-4Sz"/>
+                            <constraint firstItem="Up8-9v-hR9" firstAttribute="bottom" secondItem="Yqf-Ab-ePF" secondAttribute="bottom" id="lJR-MC-T9G"/>
+                            <constraint firstItem="Yqf-Ab-ePF" firstAttribute="leading" secondItem="Up8-9v-hR9" secondAttribute="leading" id="xKq-BP-0S3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Up8-9v-hR9"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Report Broken Site" id="WjT-HM-yim">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="cZl-qB-kSL">
+                            <connections>
+                                <action selector="onClosePressedWithSender:" destination="8h9-Oy-9xi" id="F2e-uB-ZF8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" style="done" id="jr6-Al-4fr">
+                            <connections>
+                                <action selector="onSubmitPressedWithSender:" destination="8h9-Oy-9xi" id="Sz5-pn-C7u"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="headerLabel" destination="s11-T2-I4J" id="iI3-oF-Bza"/>
+                        <outlet property="headerView" destination="lo0-tD-41u" id="57K-EC-6mG"/>
+                        <outlet property="submitButton" destination="jr6-Al-4fr" id="FFZ-kf-otb"/>
+                        <outlet property="tableView" destination="Yqf-Ab-ePF" id="IRK-Le-pGC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8yo-EF-AhR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-659" y="1690"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="Remove" width="24" height="24"/>
-        <image name="ReportIcon" width="32" height="32"/>
+        <image name="BrokenSites" width="120" height="120"/>
         <image name="happyFace" width="48" height="48"/>
         <image name="sadFace" width="48" height="48"/>
     </resources>

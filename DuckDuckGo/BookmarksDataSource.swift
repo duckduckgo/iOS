@@ -25,16 +25,27 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
 
     var isEmpty: Bool {
-        return bookmarksManager.bookmarksCount == 0
+        return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
     }
 
     func link(at indexPath: IndexPath) -> Link? {
-        return bookmarksManager.bookmark(atIndex: indexPath.row)
+        if indexPath.section == 0 {
+            return bookmarksManager.favorite(atIndex: indexPath.row)
+        } else {
+            return bookmarksManager.bookmark(atIndex: indexPath.row)
+        }
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? UserText.sectionTitleFavorites : UserText.sectionTitleBookmarks
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isEmpty { return 1 }
-        return bookmarksManager.bookmarksCount
+        return max(1, section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,11 +53,12 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         if link(at: indexPath) != nil {
             return createBookmarkCell(tableView, forIndexPath: indexPath)
         } else {
-            return createEmptyCell(tableView)
+            return createEmptyCell(tableView, forIndexPath: indexPath)
         }
+
     }
 
-    private func createEmptyCell(_ tableView: UITableView) -> UITableViewCell {
+    private func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
             fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
         }
@@ -55,7 +67,9 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.label.textColor = theme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
+    
+        cell.label.text = indexPath.section == 0 ? UserText.emptyFavorites : UserText.emptyBookmarks
+
         return cell
     }
 
@@ -64,8 +78,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
 
-        guard let link = link(at: indexPath) else { return cell }
-        cell.update(withLink: link)
+        cell.link = link(at: indexPath)
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
@@ -76,7 +89,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return !isEmpty
+        return link(at: indexPath) != nil
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -84,19 +97,54 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            Pixel.fire(pixel: .bookmarkRemoved)
+        guard editingStyle == .delete else { return }
+        var reload = false
+        
+        Pixel.fire(pixel: .bookmarkRemoved)
+        
+        if indexPath.section == 0 {
+            bookmarksManager.deleteFavorite(at: indexPath.row)
+            reload = bookmarksManager.favoritesCount == 0
+        } else {
             bookmarksManager.deleteBookmark(at: indexPath.row)
+            reload = bookmarksManager.bookmarksCount == 0
         }
-        tableView.reloadData()
+        
+        if reload {
+            // because we're replacing this cell with a place holder that says "no whatever yet"
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        
+        var reload = false
+        if sourceIndexPath.section == 0 && destinationIndexPath.section == 0 {
+            bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
+            bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
+            reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.bookmarksCount == 1
+        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
+            bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
+            bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
+            reload = bookmarksManager.bookmarksCount == 0 || bookmarksManager.favoritesCount == 1
+        }
+
+        if reload {
+            tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, updateBookmark updatedBookmark: Link, at indexPath: IndexPath) {
-        bookmarksManager.updateBookmark(at: indexPath.row, with: updatedBookmark)
+        if indexPath.section == 0 {
+            bookmarksManager.updateFavorite(at: indexPath.row, with: updatedBookmark)
+        } else {
+            bookmarksManager.updateBookmark(at: indexPath.row, with: updatedBookmark)
+        }
+        
         tableView.reloadData()
     }
     

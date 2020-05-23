@@ -19,15 +19,18 @@
 
 import Foundation
 import Alamofire
+import os.log
 
 public enum PixelName: String {
     
     case appLaunch = "ml"
+    case navigationDetected = "m_n"
 
     case forgetAllPressedBrowsing = "mf_bp"
     case forgetAllPressedTabSwitching = "mf_tp"
     case forgetAllExecuted = "mf"
-    
+    case forgetAllDataCleared = "mf_dc"
+
     case privacyDashboardOpened = "mp"
     case privacyDashboardScorecard = "mp_c"
     case privacyDashboardEncryption = "mp_e"
@@ -82,10 +85,18 @@ public enum PixelName: String {
     case settingsAppIconChangedPurple = "ms_aic_purple"
     case settingsAppIconChangedBlack = "ms_aic_black"
 
-    case settingsHomePageShown = "ms_hp"
-    case settingsHomePageSimple = "ms_hp_s"
-    case settingsHomePageCenterSearch = "ms_hp_c"
-    case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
+    case settingsNewTabShown = "ms_nt"
+    case settingsNewTabDefaultSelected = "ms_nt_d"
+    case settingsNewTabCenteredSelected = "ms_nt_c"
+    case settingsNewTabFavoritesOn = "ms_nt_f_on"
+    case settingsNewTabFavoritesOff = "ms_nt_f_off"
+
+    case settingsKeyboardShown = "ms_ks"
+    case settingsKeyboardNewTabOn = "ms_ks_nt_on"
+    case settingsKeyboardNewTabOff = "ms_ks_nt_off"
+    case settingsKeyboardAppLaunchOn = "ms_ks_al_on"
+    case settingsKeyboardAppLaunchOff = "ms_ks_pl_off"
+    
     case settingsManageWhitelist = "ms_mw"
     case settingsLinkPreviewsOff = "ms_lp_f"
     case settingsLinkPreviewsOn = "ms_lp_n"
@@ -112,6 +123,7 @@ public enum PixelName: String {
     case browsingMenuWhitelistAdd = "mb_wla"
     case browsingMenuWhitelistRemove = "mb_wlr"
     case browsingMenuReportBrokenSite = "mb_rb"
+    case browsingMenuFireproof = "mb_f"
     
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
@@ -130,11 +142,6 @@ public enum PixelName: String {
     case homeScreenAddFavoriteCancel = "mh_af_c"
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
-    case homeScreenPrivacyStatsTapped = "mh_ps"
-    
-    case homeRowCTAShowMeTapped = "m_ha"
-    case homeRowCTANoThanksTapped = "m_hb"
-    case homeRowCTAGotItTapped = "m_hg"
     
     case homeRowCTAReminderTapped = "m_hc"
     case homeRowCTAReminderDismissed = "m_hd"
@@ -179,6 +186,8 @@ public enum PixelName: String {
     case notificationOptOut = "m_nd"
     
     case brokenSiteReported = "m_bsr"
+    
+    case brokenSiteReport = "epbf"
 
     case preserveLoginsUserDecisionPreserve = "m_pl_p"
     case preserveLoginsUserDecisionForget = "m_pl_f"
@@ -191,7 +200,7 @@ public enum PixelName: String {
     case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
     case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
     case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
-    
+
     // debug pixels:
     
     case dbMigrationError = "m_d_dbme"
@@ -210,6 +219,7 @@ public enum PixelName: String {
     case fileStoreWriteFailed = "m_d_fswf"
     
     case webKitDidTerminate = "m_d_wkt"
+    case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"
@@ -229,7 +239,8 @@ public struct PixelParameters {
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
     static let underlyingErrorDesc = "ud"
-    
+
+    public static let tabCount = "tc"
 }
 
 public struct PixelValues {
@@ -266,7 +277,7 @@ public class Pixel {
             .addParams(newParams)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
-            Logger.log(items: "Pixel fired \(pixel.rawValue)")
+            os_log("Pixel fired %s", log: generalLog, type: .debug, pixel.rawValue)
             onComplete(response.error)
         }
     }
@@ -304,9 +315,11 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date()) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String?] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
-        Pixel.fire(pixel: pixel, withAdditionalParameters: [PixelParameters.duration: duration])
+        var newParams = params
+        newParams[PixelParameters.duration] = duration
+        Pixel.fire(pixel: pixel, withAdditionalParameters: newParams)
     }
     
 }

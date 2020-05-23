@@ -87,6 +87,7 @@ extension MainViewController {
         if let controller = homeController {
             controller.launchNewSearch()
         } else {
+            showBars()
             omniBar.becomeFirstResponder()
         }
     }
@@ -141,9 +142,6 @@ extension MainViewController {
         
         guard let tab = currentTab else { return }
         closeTab(tab.tabModel)
-        if tabManager.count == 0 {
-            launchNewSearch()
-        }
     }
     
     @objc func keyboardNextTab() {

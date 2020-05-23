@@ -123,6 +123,18 @@
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
+"brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
+
+"brokensite.category.images" = "Images didn't load";
+"brokensite.category.paywall" = "The site asked me to disable";
+"brokensite.category.comments" = "Comments didn't load";
+"brokensite.category.videos" = "Video didn't play";
+"brokensite.category.links" = "Links or buttons don't work";
+"brokensite.category.content" = "Content is missing";
+"brokensite.category.login" = "I can't login";
+"brokensite.category.unsupported" = "The browser is incompatible";
+"brokensite.category.other" = "Something else";
+
 "privacy.report.trackersBlocked" = "Trackers Blocked";
 "privacy.report.sitesEncrypted" = "Sites Encrypted";
 "privacy.report.date" = "Since %@";
@@ -184,16 +196,15 @@
 "theme.name.light" = "Light";
 "theme.name.dark" = "Dark";
 
-"theme.acc.default" = "Default";
+"theme.acc.default" = "System";
 "theme.acc.light" = "Light";
 "theme.acc.dark" = "Dark";
 
 "autoclear.on" = "On";
 "autoclear.off" = "Off";
 
-"homepage.simple" = "Simple";
-"homepage.centerSearch" = "Centered Search";
-"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+"homepage.navigationBar" = "Top";
+"homepage.centerSearch" = "Center";
 
 "privacy.protection.site.grade" = "Privacy grade %@";
 
@@ -286,15 +297,24 @@
 "onboardingContinue" = "Continue";
 "onboardingSkip" = "Skip";
 "onboardingStartBrowsing" = "Start Browsing";
+"onboardingSetAppIcon" = "Set App Icon";
 "onboardingNotificationsAccept" = "Turn on Notifications";
 "onboardingNotificationsDeny" = "Not now";
 
-"preserveLogins.title" = "Stay Signed In To Websites?";
-"preserveLogins.message" = "Data needed to keep you signed in will be saved each time you clear your data. You can change this later in settings.";
-"preserveLogins.remember" = "Yes";
-"preserveLogins.forget" = "No, Clear Everything";
-"preserveLogins.accessory.on" = "On";
-"preserveLogins.accessory.off" = "Off";
-"preserveLogins.switch.footer" = "Allows you to stay signed in to websites when you clear your data";
-"preserveLogins.domain.list.title" = "Signed In Websites";
-"preserveLogins.sign.out" = "Sign Out";
+"preserveLogins.switch.title" = "Ask to Fireproof Websites";
+
+"preserveLogins.domain.list.title" = "Websites";
+"preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won't be erased and you'll stay signed in, even after using the Fire Button.";
+"preserveLogins.remove.all" = "Remove All";
+"preserveLogins.remove.all.ok" = "OK";
+    
+"preserveLogins.fireproof.message" = "Would you like to Fireproof %@?";
+"preserveLogins.menu.confirm" = "Fireproof Website";
+"preserveLogins.menu.cancel" = "Cancel";
+"preserveLogins.menu.defer" = "Not Now";
+
+"preserveLogins.toast" = "%@ is now Fireproof! Visit settings to remove.";
+
+"homeTab.searchOnly" = "Search in a new tab";
+"homeTab.searchAndFavorites" = "Search and favorites in a new tab";
+"homeTab.title" = "Home";

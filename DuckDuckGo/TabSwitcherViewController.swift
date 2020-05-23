@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import WebKit
+import os.log
 
 class TabSwitcherViewController: UIViewController {
 
@@ -106,7 +107,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func scrollToInitialTab() {
-        guard let index = tabsModel.currentIndex else { return }
+        let index = tabsModel.currentIndex
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
@@ -121,7 +122,7 @@ class TabSwitcherViewController: UIViewController {
             view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
-            Logger.log(text: "Failed to save \(failedToSaveCount) tabs")
+            os_log("Failed to save %d tabs", log: generalLog, type: .debug, failedToSaveCount)
             view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
         }
     }
@@ -132,8 +133,8 @@ class TabSwitcherViewController: UIViewController {
         var newBookmarksCount: Int = 0
         var existingBookmarksCount: Int = 0
         
-        for aTab in tabs {
-            if let link = aTab.link {
+        tabs.forEach { tab in
+            if let link = tab.link {
                 if bookmarksManager.contains(url: link.url) {
                     existingBookmarksCount += 1
                 } else {
@@ -141,9 +142,10 @@ class TabSwitcherViewController: UIViewController {
                     newBookmarksCount += 1
                 }
             } else {
-                Logger.log(text: "no valid link found for tab \(aTab)")
+                os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
             }
         }
+        
         return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
     }
     
@@ -192,13 +194,10 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedTabSwitching, withAdditionalParameters: PreserveLogins.shared.forgetAllPixelParameters)
+        Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            guard let self = self else { return }
-            PreserveLoginsAlert.showInitialPromptIfNeeded(usingController: self) { [weak self] in
-                self?.forgetAll()
-            }
+            self?.forgetAll()
         })
         self.present(controller: alert, fromView: self.toolbar)
         
@@ -217,17 +216,21 @@ extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
         guard let index = tabsModel.indexOf(tab: tab) else { return }
+        let isLastTab = tabsModel.count == 1
         delegate.tabSwitcher(self, didRemoveTab: tab)
         currentSelection = tabsModel.currentIndex
         refreshTitle()
         
-        collectionView.performBatchUpdates({
-            self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
-        }, completion: { _ in
-            guard let current = self.currentSelection else { return }
-            self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
-        })
-        
+        if isLastTab {
+            collectionView.reloadData()
+        } else {
+            collectionView.performBatchUpdates({
+                self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+            }, completion: { _ in
+                guard let current = self.currentSelection else { return }
+                self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
+            })
+        }
     }
     
     func isCurrent(tab: Tab) -> Bool {
@@ -247,14 +250,18 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let tab = tabsModel.get(tabAt: indexPath.row)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
         }
         cell.delegate = self
 
         cell.isDeleting = false
-        cell.update(withTab: tab)
+        
+        if indexPath.row < tabsModel.count {
+            let tab = tabsModel.get(tabAt: indexPath.row)
+            cell.update(withTab: tab)
+        }
+        
         return cell
     }
 

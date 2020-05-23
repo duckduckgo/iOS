@@ -22,54 +22,60 @@ import Core
 
 protocol HomePageSettingsDelegate: NSObjectProtocol {
     
-    func homePageChanged(to config: HomePageConfiguration.ConfigName)
+    func homePageChanged()
     
 }
 
 class HomePageSettingsViewController: UITableViewController {
     
     @IBOutlet var labels: [UILabel]!
+    @IBOutlet weak var favoritesToggle: UISwitch!
 
     weak var delegate: HomePageSettingsDelegate?
-    
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+
+    var settings = DefaultHomePageSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        favoritesToggle.isOn = settings.favorites
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    @IBAction func toggleFavorites() {
+        settings.favorites = favoritesToggle.isOn
+        Pixel.fire(pixel: favoritesToggle.isOn ? .settingsNewTabFavoritesOn : .settingsNewTabFavoritesOff)
+        delegate?.homePageChanged()
     }
  
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
         let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        cell.decorate(with: theme)
         
-        // Checkmark color
-        cell.tintColor = theme.buttonTintColor
-        
-        cell.accessoryType = indexPath.row == appSettings.homePage.rawValue ? .checkmark : .none
+        guard indexPath.section == 0 else { return }
+
+        let layoutSetting = indexPath.row == 0 ? HomePageLayout.navigationBar : .centered
+        cell.accessoryType = settings.layout == layoutSetting ? .checkmark : .none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard appSettings.homePage.rawValue != indexPath.row else { return }
-        let config = HomePageConfiguration.ConfigName(rawValue: indexPath.row)!
-        
-        switch config {
-        case .simple:
-            Pixel.fire(pixel: .settingsHomePageSimple)
+        guard indexPath.section == 0 else { return }
 
-        case .centerSearch:
-            Pixel.fire(pixel: .settingsHomePageCenterSearch)
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        settings.layout = indexPath.row == 0 ? .navigationBar : .centered
+
+        switch settings.layout {
+        case .centered:
+            Pixel.fire(pixel: .settingsNewTabCenteredSelected)
             
-        case .centerSearchAndFavorites:
-            Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
+        case .navigationBar:
+            Pixel.fire(pixel: .settingsNewTabDefaultSelected)
         }
         
-        appSettings.homePage = config
-        delegate?.homePageChanged(to: config)
+        delegate?.homePageChanged()
+
         tableView.reloadData()
     }
     
@@ -82,7 +88,9 @@ extension HomePageSettingsViewController: Themable {
         for label in labels {
             label.textColor = theme.tableCellTextColor
         }
-        
+
+        favoritesToggle.onTintColor = theme.buttonTintColor
+
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         

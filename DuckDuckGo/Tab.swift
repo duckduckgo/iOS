@@ -56,7 +56,7 @@ public class Tab: NSObject, NSCoding {
         }
     }
 
-    init(link: Link?, viewed: Bool = true, desktop: Bool = false) {
+    public init(link: Link? = nil, viewed: Bool = true, desktop: Bool = isPad) {
         self.link = link
         self.viewed = viewed
         self.isDesktop = desktop
@@ -72,6 +72,7 @@ public class Tab: NSObject, NSCoding {
     public func encode(with coder: NSCoder) {
         coder.encode(link, forKey: NSCodingKeys.link)
         coder.encode(viewed, forKey: NSCodingKeys.viewed)
+        coder.encode(isDesktop, forKey: NSCodingKeys.desktop)
     }
 
     public override func isEqual(_ other: Any?) -> Bool {

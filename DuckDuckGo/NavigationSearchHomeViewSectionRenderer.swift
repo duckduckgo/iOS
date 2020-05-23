@@ -21,15 +21,10 @@ import UIKit
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
-    struct Constants {
-        static let privacyCellMaxWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
-        static let itemSpacing: CGFloat = 10
-    }
+    private let fixed: Bool
     
-    private let withOffset: Bool
-    
-    init(withOffset: Bool) {
-        self.withOffset = withOffset
+    init(fixed: Bool) {
+        self.fixed = fixed
     }
     
     weak var controller: HomeViewController?
@@ -42,59 +37,32 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.searchHeaderTransition = 1.0
         controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
-        controller.collectionView.isScrollEnabled = false
+        controller.collectionView.isScrollEnabled = !fixed
         controller.settingsButton.isHidden = true
+        
+        controller.logo.isHidden = !fixed
     }
     
     func openedAsNewTab() {
-        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
+        if KeyboardSettings().onNewTab {
+            launchNewSearch()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
-            as? NavigationSearchHomeCell else {
-                fatalError("cell is not a NavigationSearchHomeCell")
-        }
-        
-        var constant: CGFloat
-        if collectionView.traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)) {
-            constant = -25
-        } else {
-            constant = 0
-        }
-        
-        if withOffset {
-            constant -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing) / 2
-        }
-        
-        cell.verticalConstraint.constant = constant
-        
-        return cell
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "space", for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var size = collectionView.frame.size
-        
-        if withOffset {
-            size.height -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing)
-        }
-        return size
+        return collectionView.frame.size
     }
-  
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        controller?.chromeDelegate?.omniBar.resignFirstResponder()
-    }
-    
+
     func launchNewSearch() {
         controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }

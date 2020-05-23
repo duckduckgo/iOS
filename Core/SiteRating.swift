@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os.log
 
 public class SiteRating {
 
@@ -48,6 +49,7 @@ public class SiteRating {
     public var finishedLoading = false
     public private (set) var trackersDetected = Set<DetectedTracker>()
     public private (set) var trackersBlocked = Set<DetectedTracker>()
+    public private (set) var installedSurrogates = Set<String>()
     
     private let grade = Grade()
     private let cache = GradeCache.shared
@@ -58,7 +60,7 @@ public class SiteRating {
                 entityMapping: EntityMapping,
                 privacyPractices: PrivacyPractices) {
 
-        Logger.log(text: "new SiteRating(url: \(url), httpsForced: \(httpsForced))")
+        os_log("new SiteRating(url: %s, httpsForced: %s)", log: lifecycleLog, type: .debug, url.absoluteString, String(describing: httpsForced))
 
         if let host = url.host, let entity = entityMapping.findEntity(forHost: host) {
             self.grade.setParentEntity(named: entity.displayName ?? "", withPrevalence: entity.prevalence ?? 0)
@@ -127,6 +129,10 @@ public class SiteRating {
             trackersDetected.insert(tracker)
             grade.addEntityNotBlocked(named: entity?.displayName ?? "", withPrevalence: entity?.prevalence ?? 0)
         }
+    }
+    
+    public func surrogateInstalled(_ surrogateHost: String) {
+        installedSurrogates.insert(surrogateHost)
     }
 
     public var totalTrackersDetected: Int {

@@ -139,7 +139,7 @@ class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func update(withTab tab: Tab) {
+    func update(withTab tab: Tab, homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
@@ -163,8 +163,16 @@ class TabViewCell: UICollectionViewCell {
         
         unread.isHidden = tab.viewed
 
-        link.text = tab.link?.url.absoluteString ?? ""
-        configureFavicon(forDomain: tab.link?.url.host)
+        if tab.link == nil {
+            let linkText = homePageSettings.favorites ? UserText.homeTabSearchAndFavorites : UserText.homeTabSearchOnly
+            title.text = UserText.homeTabTitle
+            link.text = linkText
+            favicon.image = UIImage(named: "Logo")
+        } else {
+            removeButton.isHidden = false
+            link.text = tab.link?.url.absoluteString ?? ""
+            configureFavicon(forDomain: tab.link?.url.host)
+        }
     }
 
     private func removeTabObserver() {

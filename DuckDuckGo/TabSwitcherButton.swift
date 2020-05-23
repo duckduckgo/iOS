@@ -87,7 +87,26 @@ class TabSwitcherButton: UIView {
         
         configureAnimationView()
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if #available(iOS 11.0, *) {
+            //no-op
+        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
+            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
+            // adjust frame to toolbar height change
+            var newFrame = frame
+            newFrame.size.height = superview?.bounds.height ?? 0
+            newFrame.origin.y = 0
+            frame = newFrame
+        }
+        
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        anim.center = center
+        label.center = center
+    }
+
     private func configureAnimationView() {
         anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         anim.layer.masksToBounds = false
@@ -121,6 +140,7 @@ class TabSwitcherButton: UIView {
         tint(alpha: Constants.tintAlpha)
         workItem?.cancel()
         let workItem = DispatchWorkItem {
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
             self.delegate?.launchNewTab(self)
             self.workItem = nil
         }

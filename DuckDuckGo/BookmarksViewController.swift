@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import os.log
 
 class BookmarksViewController: UITableViewController {
 
@@ -29,7 +30,7 @@ class BookmarksViewController: UITableViewController {
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        return appSettings.homePage == .centerSearchAndFavorites ? BookmarksAndFavoritesDataSource() : BookmarksDataSource()
+        return BookmarksDataSource()
     }()
     
     override func viewDidLoad() {
@@ -136,7 +137,7 @@ class BookmarksViewController: UITableViewController {
             let url = appUrls.removeATBAndSource(fromUrl: link.url)
             presentShareSheet(withItems: [ url, link ], fromView: self.view)
         } else {
-            Logger.log(text: "Invalid share link found")
+            os_log("Invalid share link found", log: generalLog, type: .debug)
         }
     }
 

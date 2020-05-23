@@ -18,16 +18,12 @@
 //
 
 import Foundation
+import os.log
 
 public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
-    
-    case onboardingCTA
-    case alertCTA
-    
-    case privacyOnHomeScreen
 }
 
 public struct Variant {
@@ -36,15 +32,9 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // SERP testing
-        Variant(name: "sc", weight: doNotAllocate, features: []),
+        Variant(name: "sc", weight: 1, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: doNotAllocate, features: []),
-        
-        Variant(name: "mg", weight: 1, features: []),
-        Variant(name: "mt", weight: 1, features: [.onboardingCTA]),
-        Variant(name: "my", weight: 1, features: [.alertCTA]),
-        
-        Variant(name: "mp", weight: doNotAllocate, features: [ .privacyOnHomeScreen ])
+        Variant(name: "se", weight: 1, features: [])
     ]
     
     public let name: String
@@ -62,7 +52,7 @@ public protocol VariantRNG {
 public protocol VariantManager {
     
     var currentVariant: Variant? { get }
-    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void)
+    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Bool)
     func isSupported(feature: FeatureName) -> Bool
     
 }
@@ -93,24 +83,26 @@ public class DefaultVariantManager: VariantManager {
         return currentVariant?.features.contains(feature) ?? false
     }
     
-    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
+    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Bool) {
         guard !storage.hasInstallStatistics else {
-            Logger.log(text: "no new variant needed for existing user")
+            os_log("no new variant needed for existing user", log: generalLog, type: .debug)
             return
         }
         
         if let variant = currentVariant {
-            Logger.log(text: "already assigned variant: \(variant)")
+            os_log("already assigned variant: %s", log: generalLog, type: .debug, String(describing: variant))
             return
         }
         
         guard let variant = selectVariant() else {
-            Logger.log(text: "Failed to assign variant")
+            os_log("Failed to assign variant", log: generalLog, type: .debug)
             return
         }
         
         storage.variant = variant.name
-        newInstallCompletion(self)
+        if !newInstallCompletion(self) {
+            storage.variant = nil
+        }
     }
     
     private func selectVariant() -> Variant? {

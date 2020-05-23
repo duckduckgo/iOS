@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -624,6 +624,7 @@
                         <viewLayoutGuide key="safeArea" id="WMb-j1-aK5"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="KSV-Ab-2VI" id="Svj-nh-i0A"/>
                         <outlet property="domainLabel" destination="F5w-e3-JfY" id="Kex-XA-LPL"/>
                         <outlet property="encryptedLabel" destination="dZC-7f-pp3" id="EUt-Lm-BrG"/>
                         <outlet property="iconImage" destination="8ma-gb-nuk" id="cFw-wO-y2m"/>
@@ -906,6 +907,7 @@
                         <viewLayoutGuide key="safeArea" id="s83-RN-jpp"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="Ict-Tf-vBn" id="1oK-Rb-SXK"/>
                         <outlet property="heroIconImage" destination="HGe-jW-qhx" id="fHi-CA-OCI"/>
                         <outlet property="hoveringResetContainer" destination="nFB-0r-HZW" id="hZ6-ca-wPv"/>
                         <outlet property="hoveringView" destination="zKA-e0-nkA" id="GE0-aa-qKX"/>
@@ -1054,12 +1056,12 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Network" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8A-I1-h5l">
                                                     <rect key="frame" x="19" y="22" width="341" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Connection Bad" translatesAutoresizingMaskIntoConstraints="NO" id="yTJ-9l-QhI">
                                                     <rect key="frame" x="368" y="17" width="26" height="26"/>
-                                                    <color key="tintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="26" id="0N0-Wl-6jv"/>
                                                         <constraint firstAttribute="height" constant="26" id="vsY-e5-R47"/>
@@ -1128,6 +1130,7 @@
                         <viewLayoutGuide key="safeArea" id="Nn0-tl-oIk"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="m0O-GE-gIK" id="QkH-d9-oc2"/>
                         <outlet property="domainLabel" destination="7nh-8f-M2e" id="SKd-Ck-a0Y"/>
                         <outlet property="iconImage" destination="q0F-D6-aaO" id="DKn-oW-8NY"/>
                         <outlet property="messageLabel" destination="VYv-1m-cZo" id="DTq-1R-9To"/>
@@ -1402,6 +1405,7 @@
                         <viewLayoutGuide key="safeArea" id="RU8-yV-5bJ"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="zqk-Al-R2h" id="5bX-Cg-6VV"/>
                         <outlet property="domainLabel" destination="0SO-8y-5QH" id="kup-a3-DH3"/>
                         <outlet property="iconImage" destination="9WR-Wf-9ad" id="nLQ-bJ-bkT"/>
                         <outlet property="messageLabel" destination="JrS-AS-COd" id="Qfr-uW-sls"/>
@@ -1773,6 +1777,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="backButton" destination="0FD-as-X0W" id="BuL-4s-Awz"/>
                         <outlet property="connectionCell" destination="Bfa-LO-5TA" id="oph-LH-7xv"/>
                         <outlet property="enhancedGradeCell" destination="8L0-Nl-oii" id="GN3-LR-nQl"/>
                         <outlet property="isMajorNetworkCell" destination="YWf-b0-9Jx" id="sHo-Ui-l1Y"/>

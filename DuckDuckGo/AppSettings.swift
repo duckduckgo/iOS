@@ -17,14 +17,14 @@
 //  limitations under the License.
 //
 
-protocol AppSettings {
+protocol AppSettings: AnyObject {
     var autocomplete: Bool { get set }
     var currentThemeName: ThemeName { get set }
     
     var autoClearAction: AutoClearSettingsModel.Action { get set }
     var autoClearTiming: AutoClearSettingsModel.Timing { get set }
 
-    var homePage: HomePageConfiguration.ConfigName { get set }
+    var homePage: HomePageConfiguration.ConfigName? { get set }
 
     var longPressPreviews: Bool { get set }
 

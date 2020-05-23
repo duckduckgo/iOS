@@ -40,6 +40,7 @@ public class SchemeHandler {
         case file
         case data
         case blob
+        case about
     }
     
     private enum WhitelistedScheme: String {

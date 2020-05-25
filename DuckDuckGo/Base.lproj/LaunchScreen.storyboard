@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9SF-AN-ir1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9SF-AN-ir1">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,11 +7,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="proximanova-semibold.otf">
-            <string>ProximaNova-Semibold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="aAv-83-n9a">
@@ -21,44 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashBackground" translatesAutoresizingMaskIntoConstraints="NO" id="aMf-gd-I31">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="EId-hf-6HL">
+                                <rect key="frame" x="164" y="410" width="86" height="86"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zgn-aq-jbY">
-                                <rect key="frame" x="0.0" y="96" width="414" height="722"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
-                                <rect key="frame" x="127" y="358" width="160" height="128"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchText" translatesAutoresizingMaskIntoConstraints="NO" id="CCq-t1-1xH">
+                                <rect key="frame" x="100" y="508" width="214" height="55"/>
                             </imageView>
-                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HI1-QT-P6R">
-                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
-                                <items/>
-                            </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3B-AR-Iiy">
-                                <rect key="frame" x="141" y="499" width="132" height="16"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="highlightedColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Zgn-aq-jbY" firstAttribute="leading" secondItem="Uoe-RS-vTk" secondAttribute="leading" id="2a0-k5-Ajk"/>
-                            <constraint firstItem="UHM-6q-8Cp" firstAttribute="centerX" secondItem="Zgn-aq-jbY" secondAttribute="centerX" id="4c7-Mw-F3m"/>
-                            <constraint firstItem="q3B-AR-Iiy" firstAttribute="top" secondItem="UHM-6q-8Cp" secondAttribute="bottom" constant="13" id="BMH-ed-gnv"/>
-                            <constraint firstItem="aMf-gd-I31" firstAttribute="leading" secondItem="Uoe-RS-vTk" secondAttribute="leading" id="E1H-In-C6u"/>
-                            <constraint firstItem="Uoe-RS-vTk" firstAttribute="bottom" secondItem="aMf-gd-I31" secondAttribute="bottom" id="Gh5-bn-TMf"/>
-                            <constraint firstItem="q3B-AR-Iiy" firstAttribute="centerX" secondItem="Uoe-RS-vTk" secondAttribute="centerX" id="HyR-dz-Kyg"/>
-                            <constraint firstItem="Zgn-aq-jbY" firstAttribute="trailing" secondItem="Uoe-RS-vTk" secondAttribute="trailing" id="LaY-th-Teg"/>
-                            <constraint firstItem="HI1-QT-P6R" firstAttribute="trailing" secondItem="Uoe-RS-vTk" secondAttribute="trailing" id="M32-V0-dSC"/>
-                            <constraint firstItem="HI1-QT-P6R" firstAttribute="bottom" secondItem="Uoe-RS-vTk" secondAttribute="bottom" id="Xsi-g0-K9o"/>
-                            <constraint firstItem="aMf-gd-I31" firstAttribute="top" secondItem="5uF-ws-lnA" secondAttribute="top" id="dj2-XE-fel"/>
-                            <constraint firstItem="HI1-QT-P6R" firstAttribute="top" secondItem="Zgn-aq-jbY" secondAttribute="bottom" id="eQf-9h-9SA"/>
-                            <constraint firstItem="UHM-6q-8Cp" firstAttribute="centerY" secondItem="Zgn-aq-jbY" secondAttribute="centerY" constant="-35" id="h60-LO-WGS"/>
-                            <constraint firstItem="Uoe-RS-vTk" firstAttribute="trailing" secondItem="aMf-gd-I31" secondAttribute="trailing" id="km6-01-948"/>
-                            <constraint firstItem="HI1-QT-P6R" firstAttribute="leading" secondItem="Uoe-RS-vTk" secondAttribute="leading" id="qz4-wb-2Dq"/>
-                            <constraint firstItem="Uoe-RS-vTk" firstAttribute="top" secondItem="Zgn-aq-jbY" secondAttribute="top" constant="-52" id="roR-8N-Tia"/>
+                            <constraint firstItem="EId-hf-6HL" firstAttribute="centerY" secondItem="Uoe-RS-vTk" secondAttribute="centerY" id="2eT-hd-ztO"/>
+                            <constraint firstItem="EId-hf-6HL" firstAttribute="centerX" secondItem="Uoe-RS-vTk" secondAttribute="centerX" id="LT2-MA-pri"/>
+                            <constraint firstItem="CCq-t1-1xH" firstAttribute="centerX" secondItem="Uoe-RS-vTk" secondAttribute="centerX" id="WU2-Q5-bmd"/>
+                            <constraint firstItem="CCq-t1-1xH" firstAttribute="top" secondItem="EId-hf-6HL" secondAttribute="bottom" constant="12" id="po9-4d-mcd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uoe-RS-vTk"/>
                     </view>
@@ -66,11 +36,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B93-FK-MyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="394.39999999999998" y="429.53523238380814"/>
+            <point key="canvasLocation" x="394.20289855072468" y="429.24107142857139"/>
         </scene>
     </scenes>
     <resources>
-        <image name="LogoDarkText" width="160" height="128"/>
-        <image name="SplashBackground" width="375" height="667"/>
+        <image name="DaxIcon" width="86" height="86"/>
+        <image name="LaunchText" width="214" height="55"/>
     </resources>
 </document>

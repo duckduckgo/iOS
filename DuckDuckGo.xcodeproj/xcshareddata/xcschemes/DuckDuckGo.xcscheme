@@ -107,13 +107,13 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "VARIANT"
-            value = "ma"
-            isEnabled = "YES">
+            value = "mb"
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "ONBOARDING"
             value = "true"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

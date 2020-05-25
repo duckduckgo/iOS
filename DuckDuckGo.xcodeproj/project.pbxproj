@@ -248,6 +248,7 @@
 		85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E31FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift */; };
 		85C271E61FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */; };
 		85C297042476C1FD0063A335 /* DaxOnboardingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C297032476C1FD0063A335 /* DaxOnboardingSettings.swift */; };
+		85C29708247BDD060063A335 /* DaxDialogBrowserSpecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C29706247BDCFF0063A335 /* DaxDialogBrowserSpecTests.swift */; };
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
 		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
@@ -904,6 +905,7 @@
 		85C271E31FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeParserTests.swift; sourceTree = "<group>"; };
 		85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradePersistenceTests.swift; sourceTree = "<group>"; };
 		85C297032476C1FD0063A335 /* DaxOnboardingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingSettings.swift; sourceTree = "<group>"; };
+		85C29706247BDCFF0063A335 /* DaxDialogBrowserSpecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogBrowserSpecTests.swift; sourceTree = "<group>"; };
 		85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionOverviewController.swift; sourceTree = "<group>"; };
 		85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedTermsOfServiceStoreTests.swift; sourceTree = "<group>"; };
 		85C7438F2154E981005CF998 /* GradeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCache.swift; sourceTree = "<group>"; };
@@ -1910,6 +1912,15 @@
 			name = HomeRow;
 			sourceTree = "<group>";
 		};
+		85C29705247BDCE60063A335 /* Dax */ = {
+			isa = PBXGroup;
+			children = (
+				858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */,
+				85C29706247BDCFF0063A335 /* DaxDialogBrowserSpecTests.swift */,
+			);
+			name = Dax;
+			sourceTree = "<group>";
+		};
 		85C9E5F321B422AD00460EBC /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2306,9 +2317,9 @@
 		F12790DD1EBBDDF3001D3AEC /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				85C29705247BDCE60063A335 /* Dax */,
 				851B12AD2226B18A004781BC /* Contextual */,
 				85C11E4D2090893900BFFEB4 /* HomeRow */,
-				858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */,
 			);
 			name = Tutorials;
 			sourceTree = "<group>";
@@ -3959,6 +3970,7 @@
 				8570656E1F6AAE270044DCB1 /* DetectedTrackerTests.swift in Sources */,
 				85267D2D215286C500A0CE28 /* PrivacyPracticesTests.swift in Sources */,
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
+				85C29708247BDD060063A335 /* DaxDialogBrowserSpecTests.swift in Sources */,
 				8519FDEA23FED2E700CFF73A /* HomePageSettingsTests.swift in Sources */,
 				851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */,
 				85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */,

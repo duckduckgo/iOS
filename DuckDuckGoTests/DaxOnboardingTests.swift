@@ -40,7 +40,7 @@ class DaxOnboardingTests: XCTestCase {
         super.setUp()
     }
 
-    func test() {
+    func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
 
         // swiftlint:disable line_length
         let testCases = [

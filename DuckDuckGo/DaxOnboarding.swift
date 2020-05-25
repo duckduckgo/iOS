@@ -39,17 +39,17 @@ class DaxOnboarding {
         
         static let withoutTrackers = BrowsingSpec(height: 340, message: "As you tap and scroll, I'll block pesky trackers.\nGo head - keep browsing!", cta: "Got It")
         
-        static let siteIsMajorTracker = BrowsingSpec(height: 340, message: "Heads up! %0@ is a major tracking network.\nTheir trackers lurk on about %1d% of top sites 😱 but don't worry!<br>I'll block %0@ from seeing your activity on those sites.", cta: "Got It")
+        static let siteIsMajorTracker = BrowsingSpec(height: 340, message: "Heads up! %1$@ is a major tracking network.\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don't worry!<br>I'll block %1$@ from seeing your activity on those sites.", cta: "Got It")
         
         static let siteOwnedByMajorTracker = BrowsingSpec(height: 340, message: "Heads up! %1$@ is owned by %2$@.<br>%2$@'s trackers lurk on about %3$.0lf%% of top websites 😱 but don't worry!<br>I'll block %2$@ from seeing your activity on those sites.", cta: "Got It")
         
-        static let withOneMajorTracker = BrowsingSpec(height: 340, message: "*%0@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withOneMajorTracker = BrowsingSpec(height: 340, message: "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
 
-        static let withOneMajorTrackerAndOthers = BrowsingSpec(height: 340, message: "*%0@* and *%1d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withOneMajorTrackerAndOthers = BrowsingSpec(height: 340, message: "*%1$@* and *%2$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
         
-        static let withTwoMajorTrackers = BrowsingSpec(height: 340, message: "*%0@ and %1@* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withTwoMajorTrackers = BrowsingSpec(height: 340, message: "*%1$@ and %2$@* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
         
-        static let withTwoMajorTrackerAndOthers = BrowsingSpec(height: 340, message: "*%0@, %1@* and *%2d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withTwoMajorTrackerAndOthers = BrowsingSpec(height: 340, message: "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
 
         // swiftlint:enable line_length
 

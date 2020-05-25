@@ -46,7 +46,7 @@ class DaxDialogBrowserSpecTests: XCTestCase {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
         let count = 6
-        let message = DaxOnboarding.BrowsingSpec.withTwoMajorTrackerAndOthers.format(args: majorTracker1, majorTracker2, count).message
+        let message = DaxOnboarding.BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: majorTracker1, majorTracker2, count).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
         XCTAssertTrue(message.contains("\(count)"))

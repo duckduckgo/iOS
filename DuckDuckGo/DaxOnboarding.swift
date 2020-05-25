@@ -60,7 +60,7 @@ class DaxOnboarding {
                                                        message: UserText.daxDialogBrowsingTwoMajorTrackers,
                                                        cta: UserText.daxDialogBrowsingTwoMajorTrackers)
         
-        static let withTwoMajorTrackerAndOthers = BrowsingSpec(height: 340,
+        static let withTwoMajorTrackersAndOthers = BrowsingSpec(height: 340,
                                                                message: UserText.daxDialogBrowsingTwoMajorTrackersWithOthers,
                                                                cta: UserText.daxDialogBrowsingTwoMajorTrackersWithOthersCTA)
 
@@ -184,7 +184,7 @@ class DaxOnboarding {
             return BrowsingSpec.withTwoMajorTrackers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "")
 
         case let x where x.major.count == 2 && x.other.count > 0:
-            return BrowsingSpec.withTwoMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "", x.other.count)
+            return BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "", x.other.count)
 
         default: return nil
         }

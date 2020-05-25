@@ -50,7 +50,7 @@ class DaxOnboardingTests: XCTestCase {
             // The order of trackers shouldn't matter, google should be first due to higher prevalence
             (urls: [ URLs.facebook, URLs.google ], expected: DaxOnboarding.BrowsingSpec.withTwoMajorTrackers.format(args: "Google", "Facebook"), line: #line),
             
-            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxOnboarding.BrowsingSpec.withTwoMajorTrackerAndOthers.format(args: "Google", "Facebook", 1), line: #line)
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxOnboarding.BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: "Google", "Facebook", 1), line: #line)
         ]
         // swiftlint:enable line_length
 

@@ -794,6 +794,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func showDaxDialogIfNeeded() {
+        guard DefaultVariantManager().isSupported(feature: .daxOnboarding) else { return }
         guard let siteRating = self.siteRating else { return }
         if let spec = DaxOnboarding().nextBrowsingMessage(siteRating: siteRating) {
             performSegue(withIdentifier: "DaxDialog", sender: spec)

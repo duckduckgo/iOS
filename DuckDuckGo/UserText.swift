@@ -275,4 +275,30 @@ public struct UserText {
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", comment: "Home tab title")
 
+    public static let daxDialogHomeInitial = "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒"
+    public static let daxDialogHomeSubsequent = "You’ve got this!\n\nRemember: every time you browse with me a creepy ad loses its wings. 👍"
+
+    public static let daxDialogBrowsingAfterSearch = "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌"
+    public static let daxDialogBrowsingAfterSearchCTA = "Phew!"
+
+    public static let daxDialogBrowsingWithoutTrackers = "As you tap and scroll, I'll block pesky trackers.\nGo head - keep browsing!"
+    public static let daxDialogBrowsingWithoutTrackersCTA = "Got It"
+
+    public static let daxDialogBrowsingSiteIsMajorTracker = "Heads up! %1$@ is a major tracking network.\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don't worry!<br>I'll block %1$@ from seeing your activity on those sites."
+    public static let daxDialogBrowsingSiteIsMajorTrackerCTA = "Got It"
+
+    public static let daxDialogBrowsingSiteOwnedByMajorTracker = "Heads up! %1$@ is owned by %2$@.\n%2$@'s trackers lurk on about %3$.0lf%% of top websites 😱 but don't worry!\nI'll block %2$@ from seeing your activity on those sites."
+    public static let daxDialogBrowsingSiteOwnedByMajorTrackerCTA = "Got It"
+
+    public static let daxDialogBrowsingOneMajorTracker = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site."
+    public static let daxDialogBrowsingOneMajorTrackerCTA = "High Five!"
+
+    public static let daxDialogBrowsingOneMajorTrackerWithOthers = "*%1$@* and *%2$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site."
+    public static let daxDialogBrowsingOneMajorTrackerWithOthersCTA = "High Five!"
+
+    public static let daxDialogBrowsingTwoMajorTrackers = "*%1$@ and %2$@* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site."
+    public static let daxDialogBrowsingTwoMajorTrackersCTA = "High Five!"
+
+    public static let daxDialogBrowsingTwoMajorTrackersWithOthers = "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site."
+    public static let daxDialogBrowsingTwoMajorTrackersWithOthersCTA = "High Five!"
 }

@@ -21,11 +21,9 @@ class DaxOnboarding {
     }
     
     struct HomeScreenSpec: Equatable {
-        // swiftlint:disable line_length
-        static let initial = HomeScreenSpec(height: 235, message: "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒")
-        
-        static let subsequent = HomeScreenSpec(height: 210, message: "You’ve got this!\n\nRemember: every time you browse with me a creepy ad loses its wings. 👍")
-        // swiftlint:enable line_length
+
+        static let initial = HomeScreenSpec(height: 235, message: UserText.daxDialogHomeInitial)
+        static let subsequent = HomeScreenSpec(height: 210, message: UserText.daxDialogHomeSubsequent)
 
         let height: CGFloat
         let message: String
@@ -34,24 +32,37 @@ class DaxOnboarding {
     
     struct BrowsingSpec: Equatable {
 
-        // swiftlint:disable line_length
-        static let afterSearch = BrowsingSpec(height: 250, message: "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌", cta: "Phew!")
+        static let afterSearch = BrowsingSpec(height: 250,
+                                              message: UserText.daxDialogBrowsingAfterSearch,
+                                              cta: UserText.daxDialogBrowsingAfterSearchCTA)
         
-        static let withoutTrackers = BrowsingSpec(height: 340, message: "As you tap and scroll, I'll block pesky trackers.\nGo head - keep browsing!", cta: "Got It")
+        static let withoutTrackers = BrowsingSpec(height: 340,
+                                                  message: UserText.daxDialogBrowsingWithoutTrackers,
+                                                  cta: UserText.daxDialogBrowsingWithoutTrackersCTA)
         
-        static let siteIsMajorTracker = BrowsingSpec(height: 340, message: "Heads up! %1$@ is a major tracking network.\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don't worry!<br>I'll block %1$@ from seeing your activity on those sites.", cta: "Got It")
+        static let siteIsMajorTracker = BrowsingSpec(height: 340,
+                                                     message: UserText.daxDialogBrowsingSiteIsMajorTracker,
+                                                     cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA)
         
-        static let siteOwnedByMajorTracker = BrowsingSpec(height: 340, message: "Heads up! %1$@ is owned by %2$@.<br>%2$@'s trackers lurk on about %3$.0lf%% of top websites 😱 but don't worry!<br>I'll block %2$@ from seeing your activity on those sites.", cta: "Got It")
+        static let siteOwnedByMajorTracker = BrowsingSpec(height: 340,
+                                                          message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
+                                                          cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA)
         
-        static let withOneMajorTracker = BrowsingSpec(height: 340, message: "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withOneMajorTracker = BrowsingSpec(height: 340,
+                                                      message: UserText.daxDialogBrowsingOneMajorTracker,
+                                                      cta: UserText.daxDialogBrowsingOneMajorTrackerCTA)
 
-        static let withOneMajorTrackerAndOthers = BrowsingSpec(height: 340, message: "*%1$@* and *%2$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withOneMajorTrackerAndOthers = BrowsingSpec(height: 340,
+                                                               message: UserText.daxDialogBrowsingOneMajorTrackerWithOthers,
+                                                               cta: UserText.daxDialogBrowsingOneMajorTrackerWithOthersCTA)
         
-        static let withTwoMajorTrackers = BrowsingSpec(height: 340, message: "*%1$@ and %2$@* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
+        static let withTwoMajorTrackers = BrowsingSpec(height: 340,
+                                                       message: UserText.daxDialogBrowsingTwoMajorTrackers,
+                                                       cta: UserText.daxDialogBrowsingTwoMajorTrackers)
         
-        static let withTwoMajorTrackerAndOthers = BrowsingSpec(height: 340, message: "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", cta: "High Five!")
-
-        // swiftlint:enable line_length
+        static let withTwoMajorTrackerAndOthers = BrowsingSpec(height: 340,
+                                                               message: UserText.daxDialogBrowsingTwoMajorTrackersWithOthers,
+                                                               cta: UserText.daxDialogBrowsingTwoMajorTrackersWithOthersCTA)
 
         let height: CGFloat
         let message: String

@@ -88,7 +88,7 @@ class DaxOnboardingTests: XCTestCase {
 
     func testWhenFirstTimeOnSiteThatIsOwnedByFacebookThenShowOwnedByMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.ownedByFacebook)
-        XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteOwnedByMajorTracker.format(args: "instagram.com", "Facebook", 42.0),
+        XCTAssertEqual(DaxOnboarding.BrowsingSpec.siteOwnedByMajorTracker.format(args: "instagram.com", "Facebook", 39.0),
                        onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 

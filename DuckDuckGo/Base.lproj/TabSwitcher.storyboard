@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,28 +49,28 @@
                                 <rect key="frame" x="0.0" y="53" width="414" height="639"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="bWt-k2-BEm">
-                                    <size key="itemSize" width="327" height="70"/>
+                                    <size key="itemSize" width="327" height="180"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="Mdh-yg-dRH" customClass="TabViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="43.666666666666664" y="10" width="327" height="70"/>
+                                        <rect key="frame" x="43.666666666666664" y="10" width="327" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="327" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puo-AS-QV7" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="10" y="0.0" width="307" height="70"/>
+                                                    <rect key="frame" x="10" y="0.0" width="307" height="180"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G2C-qh-g3T">
-                                                            <rect key="frame" x="259" y="13" width="44" height="44"/>
+                                                            <rect key="frame" x="269" y="0.0" width="38" height="38"/>
                                                             <accessibility key="accessibilityConfiguration" label="Close Tab"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="44" id="J5n-rB-XtL"/>
-                                                                <constraint firstAttribute="width" constant="44" id="qo9-0B-8Av"/>
+                                                                <constraint firstAttribute="height" constant="38" id="J5n-rB-XtL"/>
+                                                                <constraint firstAttribute="width" constant="38" id="qo9-0B-8Av"/>
                                                             </constraints>
                                                             <state key="normal" image="Remove"/>
                                                             <connections>
@@ -78,7 +78,7 @@
                                                             </connections>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TabUnread" translatesAutoresizingMaskIntoConstraints="NO" id="Gyy-py-IOg">
-                                                            <rect key="frame" x="6" y="6" width="10" height="10"/>
+                                                            <rect key="frame" x="4" y="4" width="10" height="10"/>
                                                             <accessibility key="accessibilityConfiguration" label="Tab Unread">
                                                                 <bool key="isElement" value="NO"/>
                                                             </accessibility>
@@ -88,31 +88,25 @@
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="ucs-Dd-y53">
-                                                            <rect key="frame" x="14" y="26.666666666666671" width="17" height="17"/>
+                                                            <rect key="frame" x="12" y="12" width="14" height="14"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="17" id="o3R-ca-LhP"/>
-                                                                <constraint firstAttribute="height" constant="17" id="whJ-MI-Xsy"/>
+                                                                <constraint firstAttribute="width" constant="14" id="o3R-ca-LhP"/>
+                                                                <constraint firstAttribute="height" constant="14" id="whJ-MI-Xsy"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GE-Nf-lKM">
-                                                            <rect key="frame" x="45" y="18" width="214" height="16"/>
+                                                            <rect key="frame" x="38" y="13" width="231" height="13"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" button="YES" staticText="YES"/>
                                                                 <bool key="isElement" value="YES"/>
                                                             </accessibility>
-                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="13"/>
                                                             <color key="textColor" red="0.086260028180000003" green="0.086282856759999998" blue="0.086258567869999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caT-pD-5fn">
-                                                            <rect key="frame" x="45" y="41" width="214" height="14"/>
-                                                            <accessibility key="accessibilityConfiguration">
-                                                                <bool key="isElement" value="NO"/>
-                                                            </accessibility>
-                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
-                                                            <color key="textColor" red="0.63914442059999999" green="0.63925665620000005" blue="0.63913732769999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="iu2-rk-hOZ">
+                                                            <rect key="frame" x="0.0" y="38" width="307" height="142"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -121,18 +115,19 @@
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
                                                     <constraints>
-                                                        <constraint firstItem="Gyy-py-IOg" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="6" id="38b-Pk-GhR"/>
-                                                        <constraint firstItem="caT-pD-5fn" firstAttribute="leading" secondItem="ucs-Dd-y53" secondAttribute="trailing" constant="14" id="61O-AN-wHS"/>
-                                                        <constraint firstItem="ucs-Dd-y53" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="14" id="9TI-0l-IbA"/>
-                                                        <constraint firstItem="G2C-qh-g3T" firstAttribute="centerY" secondItem="puo-AS-QV7" secondAttribute="centerY" id="DN9-1r-kk9"/>
+                                                        <constraint firstItem="Gyy-py-IOg" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="4" id="38b-Pk-GhR"/>
+                                                        <constraint firstItem="ucs-Dd-y53" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="12" id="3IY-uM-gPd"/>
+                                                        <constraint firstItem="ucs-Dd-y53" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="12" id="9TI-0l-IbA"/>
                                                         <constraint firstItem="G2C-qh-g3T" firstAttribute="leading" secondItem="1GE-Nf-lKM" secondAttribute="trailing" id="It8-W3-QMz"/>
-                                                        <constraint firstItem="1GE-Nf-lKM" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="18" id="JfL-bR-9EK"/>
-                                                        <constraint firstAttribute="trailing" secondItem="G2C-qh-g3T" secondAttribute="trailing" constant="4" id="ZhN-JG-uru"/>
-                                                        <constraint firstItem="1GE-Nf-lKM" firstAttribute="leading" secondItem="ucs-Dd-y53" secondAttribute="trailing" constant="14" id="ggq-Lj-06V"/>
-                                                        <constraint firstItem="Gyy-py-IOg" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="6" id="hoD-zl-JZw"/>
-                                                        <constraint firstItem="G2C-qh-g3T" firstAttribute="leading" secondItem="caT-pD-5fn" secondAttribute="trailing" id="p5H-9Y-pIA"/>
-                                                        <constraint firstAttribute="bottom" secondItem="caT-pD-5fn" secondAttribute="bottom" constant="15" id="sfT-bm-ts1"/>
-                                                        <constraint firstItem="ucs-Dd-y53" firstAttribute="centerY" secondItem="puo-AS-QV7" secondAttribute="centerY" id="xC2-WA-3wb"/>
+                                                        <constraint firstItem="1GE-Nf-lKM" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="13" id="JfL-bR-9EK"/>
+                                                        <constraint firstItem="iu2-rk-hOZ" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" id="Lay-Q3-CNq"/>
+                                                        <constraint firstItem="G2C-qh-g3T" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" id="Xgy-LU-aab"/>
+                                                        <constraint firstAttribute="trailing" secondItem="G2C-qh-g3T" secondAttribute="trailing" id="ZhN-JG-uru"/>
+                                                        <constraint firstAttribute="bottom" secondItem="iu2-rk-hOZ" secondAttribute="bottom" id="cy0-WU-jR7"/>
+                                                        <constraint firstItem="1GE-Nf-lKM" firstAttribute="leading" secondItem="ucs-Dd-y53" secondAttribute="trailing" constant="12" id="ggq-Lj-06V"/>
+                                                        <constraint firstAttribute="trailing" secondItem="iu2-rk-hOZ" secondAttribute="trailing" id="hDl-N2-yKQ"/>
+                                                        <constraint firstItem="Gyy-py-IOg" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="4" id="hoD-zl-JZw"/>
+                                                        <constraint firstItem="iu2-rk-hOZ" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="38" id="vkb-Yq-CNN"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -159,7 +154,6 @@
                                         <connections>
                                             <outlet property="background" destination="puo-AS-QV7" id="DYO-r7-lm0"/>
                                             <outlet property="favicon" destination="ucs-Dd-y53" id="5MN-9p-Rmy"/>
-                                            <outlet property="link" destination="caT-pD-5fn" id="zuL-Sh-gBP"/>
                                             <outlet property="removeButton" destination="G2C-qh-g3T" id="b0U-a4-JPU"/>
                                             <outlet property="title" destination="1GE-Nf-lKM" id="UpH-Y5-3en"/>
                                             <outlet property="unread" destination="Gyy-py-IOg" id="9Ow-2Z-BPg"/>
@@ -167,7 +161,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Footer" id="nEk-BZ-E8i" customClass="TabsFooter" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="90" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="200" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-EZ-1qW">
@@ -307,6 +301,7 @@
         <image name="AddBookmarks" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
+        <image name="Logo" width="119" height="119"/>
         <image name="NewTab" width="24" height="24"/>
         <image name="Remove" width="24" height="24"/>
         <image name="Settings" width="24" height="24"/>

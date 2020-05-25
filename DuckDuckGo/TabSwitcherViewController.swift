@@ -40,8 +40,6 @@ class TabSwitcherViewController: UIViewController {
     weak var homePageSettingsDelegate: HomePageSettingsDelegate?
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
-
-    fileprivate var hasSeenFooter = false
     
     override var canBecomeFirstResponder: Bool { return true }
     
@@ -312,7 +310,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 70)
+        return CGSize(width: 200, height: 180)
     }
     
 }

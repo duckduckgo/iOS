@@ -56,7 +56,6 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
 
@@ -164,13 +163,10 @@ class TabViewCell: UICollectionViewCell {
         unread.isHidden = tab.viewed
 
         if tab.link == nil {
-            let linkText = homePageSettings.favorites ? UserText.homeTabSearchAndFavorites : UserText.homeTabSearchOnly
             title.text = UserText.homeTabTitle
-            link.text = linkText
             favicon.image = UIImage(named: "Logo")
         } else {
             removeButton.isHidden = false
-            link.text = tab.link?.url.absoluteString ?? ""
             configureFavicon(forDomain: tab.link?.url.host)
         }
     }

@@ -63,6 +63,8 @@
 
 "alert.title.add.to.whitelist" = "Add to Whitelist";
 "alert.title.add.to.whitelist.placeholder" = "www.example.com";
+"toast.added.to.whitelist" = "%@ added to whitelist";
+"toast.removed.from.whitelist" = "%@ removed from whitelist";
 
 "auth.alert.title" = "Authentication required";
 "auth.alert.message.encrypted" = "Log in to %@. Your login information will be sent securely.";

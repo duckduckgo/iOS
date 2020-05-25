@@ -71,6 +71,8 @@ public struct UserText {
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
+    public static let toastAddedToWhitelist = NSLocalizedString("toast.added.to.whitelist", comment: "Added to Whitelist")
+    public static let toastRemovedFromWhitelist = NSLocalizedString("toast.removed.from.whitelist", comment: "Removed from Whitelist")
     
     public static let authAlertTitle = NSLocalizedString("auth.alert.title", comment: "Authentication Alert Title")
     public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", comment: "Authentication Alert Encrypted Connection Message")

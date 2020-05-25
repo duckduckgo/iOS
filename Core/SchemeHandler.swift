@@ -1,5 +1,5 @@
 //
-//  ExternalSchemeHandler.swift
+//  SchemeHandler.swift
 //  Core
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-public class ExternalSchemeHandler {
+public class SchemeHandler {
     
     public enum Action: Equatable {
         case open
@@ -28,8 +28,19 @@ public class ExternalSchemeHandler {
     }
     
     public enum SchemeType {
+        case navigational
         case external(Action)
-        case other
+        case unknown
+    }
+    
+    private enum NavigationalScheme: String {
+        case http
+        case https
+        case ftp
+        case file
+        case data
+        case blob
+        case about
     }
     
     private enum WhitelistedScheme: String {
@@ -51,32 +62,37 @@ public class ExternalSchemeHandler {
     }
     
     public static func schemeType(for url: URL) -> SchemeType {
-        guard let schemeString = url.scheme else { return .other }
+        guard let schemeString = url.scheme else { return .unknown }
         
         guard BlacklistedScheme(rawValue: schemeString) == nil else {
             return .external(.cancel)
         }
         
-        if let scheme = WhitelistedScheme(rawValue: schemeString) {
-            
-            if scheme == .sms || scheme == .mailto {
-                return .external(.askForConfirmation)
-            }
-            
-            return .external(.open)
+        guard NavigationalScheme(rawValue: schemeString) == nil else {
+            return .navigational
         }
         
-        return .other
+        if let scheme = WhitelistedScheme(rawValue: schemeString) {
+            
+            switch scheme {
+            case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss:
+                return .external(.askForConfirmation)
+            default:
+                return .external(.open)
+            }
+        }
+        
+        return .unknown
     }
     
 }
 
-extension ExternalSchemeHandler.SchemeType: Equatable {
+extension SchemeHandler.SchemeType: Equatable {
     
-    static public func == (lhs: ExternalSchemeHandler.SchemeType,
-                           rhs: ExternalSchemeHandler.SchemeType) -> Bool {
+    static public func == (lhs: SchemeHandler.SchemeType,
+                           rhs: SchemeHandler.SchemeType) -> Bool {
         switch (lhs, rhs) {
-        case (.other, .other):
+        case (.unknown, .unknown):
             return true
         case (.external(let la), .external(let ra)):
             return la == ra

@@ -24,43 +24,43 @@ class ExternalUrlSchemeTests: XCTestCase {
 
     func testThatEmailIsSupported() {
         let url = URL(string: "mailto://someurl")!
-        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
-                       ExternalSchemeHandler.SchemeType.external(.askForConfirmation))
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+                       SchemeHandler.SchemeType.external(.askForConfirmation))
     }
 
     func testThatSmsIsSupported() {
         let url = URL(string: "sms://someurl")!
-        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
-        ExternalSchemeHandler.SchemeType.external(.askForConfirmation))
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+        SchemeHandler.SchemeType.external(.askForConfirmation))
     }
 
     func testThatMapsAreSupported() {
         let url = URL(string: "maps://someurl")!
-        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
-                       ExternalSchemeHandler.SchemeType.external(.open))
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+                       SchemeHandler.SchemeType.external(.open))
     }
 
     func testThatCallsAreSupported() {
         let url = URL(string: "tel://someurl")!
-        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
-                       ExternalSchemeHandler.SchemeType.external(.open))
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+                       SchemeHandler.SchemeType.external(.open))
     }
 
     func testThatUrlsWithNoSchemeAreNotSupported() {
         let url = URL(string: "telzzz")!
-        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
-                       ExternalSchemeHandler.SchemeType.other)
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+                       SchemeHandler.SchemeType.unknown)
     }
 
     func testThatUnknownSchemesAreNotSupported() {
         let url = URL(string: "other://")!
-        XCTAssertEqual(ExternalSchemeHandler.schemeType(for: url),
-                       ExternalSchemeHandler.SchemeType.other)
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+                       SchemeHandler.SchemeType.unknown)
     }
     
     func testThatAboutSchemesAreAllowed() {
         let url = URL(string: "about:blank")!
-        XCTAssertNotEqual(ExternalSchemeHandler.schemeType(for: url),
-                       ExternalSchemeHandler.SchemeType.external(.cancel))
+        XCTAssertNotEqual(SchemeHandler.schemeType(for: url),
+                          SchemeHandler.SchemeType.navigational)
     }
 }

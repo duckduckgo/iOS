@@ -1,2 +1,2 @@
-• Now, when you visit a site, you'll see which trackers are blocked in the URL bar.
+• We added an "Open in DuckDuckGo" action to the share sheet so when you're in another app it's easier to view the page privately in DuckDuckGo instead.
 • Other bug fixes and improvements.

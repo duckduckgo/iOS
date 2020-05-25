@@ -14,9 +14,9 @@ CC:
 1.
 
 <!--
-Do not delete these, they are reminders to test against different device configurations.  
+Before submitting a PR, please ensure you have tested the combinations you expect the reviewer to test, then delete configurations you *know* do not need explicit testing.
 
-Before submitting a PR, please ensure you have tested a reasonable combination of the following.  Using a simulator where a physical device is unavailable is acceptable.
+Using a simulator where a physical device is unavailable is acceptable. 
 -->
 
 **Orientation Testing**:
@@ -26,7 +26,7 @@ Before submitting a PR, please ensure you have tested a reasonable combination o
 
 **Device Testing**:
 
-* [ ] iPhone SE
+* [ ] iPhone SE (1st Gen)
 * [ ] iPhone 8
 * [ ] iPhone X
 * [ ] iPad

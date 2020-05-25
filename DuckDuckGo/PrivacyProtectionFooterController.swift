@@ -33,6 +33,7 @@ class PrivacyProtectionFooterController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         leaderboard.didLoad()
+        leaderboard.update()
     }
     
     @IBAction func toggleProtection() {
@@ -43,7 +44,6 @@ class PrivacyProtectionFooterController: UIViewController {
         } else {
             contentBlockerConfiguration.removeFromWhitelist(domain: domain)
         }
-        update()
         Pixel.fire(pixel: whitelisted ? .privacyDashboardWhitelistAdd : .privacyDashboardWhitelistRemove)
     }
 

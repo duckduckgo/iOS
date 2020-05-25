@@ -39,10 +39,18 @@ class PrivacyProtectionFooterController: UIViewController {
     @IBAction func toggleProtection() {
         guard let domain = domain else { return }
         let whitelisted = !privacyProtectionSwitch.isOn
+        
+        let window = UIApplication.shared.keyWindow
+        window?.hideAllToasts()
+        
         if whitelisted {
             contentBlockerConfiguration.addToWhitelist(domain: domain)
+            
+            window?.showBottomToast(UserText.toastAddedToWhitelist.format(arguments: domain), duration: 1)
         } else {
             contentBlockerConfiguration.removeFromWhitelist(domain: domain)
+            
+            window?.showBottomToast(UserText.toastRemovedFromWhitelist.format(arguments: domain), duration: 1)
         }
         Pixel.fire(pixel: whitelisted ? .privacyDashboardWhitelistAdd : .privacyDashboardWhitelistRemove)
     }
@@ -81,6 +89,7 @@ class PrivacyProtectionFooterController: UIViewController {
     }
     
     private func prepareforSegue(to whitelistController: WhitelistViewController) {
+        whitelistController.enforceLightTheme = true
         if isPad {
             whitelistController.showBackButton = true
         }

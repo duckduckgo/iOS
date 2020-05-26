@@ -110,11 +110,11 @@ extension CenteredSearchHomeCell: Themable {
         
         promptText.textColor = theme.searchBarTextPlaceholderColor
         
-        switch theme.currentImageSet {
-        case .light:
-            imageView.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            imageView.image = UIImage(named: "LogoLightText")
-        }
+//        switch theme.currentImageSet {
+//        case .light:
+//            imageView.image = UIImage(named: "LogoDarkText")
+//        case .dark:
+//            imageView.image = UIImage(named: "LogoLightText")
+//        }
     }
 }

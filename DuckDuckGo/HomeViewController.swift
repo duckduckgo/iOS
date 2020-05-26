@@ -239,11 +239,11 @@ extension HomeViewController: Themable {
         view.backgroundColor = theme.backgroundColor
         settingsButton.tintColor = theme.barTintColor
         
-        switch theme.currentImageSet {
-        case .light:
-            logo.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            logo.image = UIImage(named: "LogoLightText")
-        }
+//        switch theme.currentImageSet {
+//        case .light:
+//            logo.image = UIImage(named: "LogoDarkText")
+//        case .dark:
+//            logo.image = UIImage(named: "LogoLightText")
+//        }
     }
 }

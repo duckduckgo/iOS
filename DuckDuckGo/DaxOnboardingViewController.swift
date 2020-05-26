@@ -23,7 +23,9 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var welcomeMessage: UIView!
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxIcon: UIView!
+    @IBOutlet weak var onboardingIcon: UIView!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var backgroundView: UIView!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return isPad ? super.supportedInterfaceOrientations : [ .portrait ]
@@ -40,13 +42,14 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func viewDidLoad() {
         super.viewDidLoad()
         button.displayDropShadow()
+        daxIcon.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
-            self.transitionToDaxDialog()
+            self.transitionFromOnboarding()
         }
         
     }
@@ -59,7 +62,22 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         }
         
     }
-    
+
+    func transitionFromOnboarding() {
+
+        UIView.animate(withDuration: 0.3, animations: {
+            self.onboardingIcon.frame = self.daxIcon.frame
+            self.backgroundView.alpha = 0.0
+        }, completion: { _ in
+            self.daxIcon.isHidden = false
+            self.onboardingIcon.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.transitionToDaxDialog()
+            }
+        })
+
+    }
+
     func transitionToDaxDialog() {
 
         let snapshot = self.daxIcon.snapshotView(afterScreenUpdates: false)!
@@ -72,6 +90,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
             if let frame = self.daxDialog?.icon.frame,
                 let localFrame = self.daxDialog?.icon.superview!.convert(frame, to: self.view) {
+                self.daxIcon.frame = localFrame
                 snapshot.frame = localFrame
             }
 

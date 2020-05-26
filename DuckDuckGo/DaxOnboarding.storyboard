@@ -87,6 +87,13 @@ DuckDuckGo!</string>
                                 <rect key="frame" x="0.0" y="861" width="414" height="35"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.61176470589999998" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XSv-kV-jRp">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
+                                <rect key="frame" x="164" y="410" width="86" height="86"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -98,27 +105,35 @@ DuckDuckGo!</string>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="E2L-jn-kYz"/>
                             <constraint firstAttribute="bottom" secondItem="f5N-oh-abb" secondAttribute="bottom" id="EPe-hs-aQ3"/>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" priority="750" id="GBz-88-5Qg"/>
+                            <constraint firstItem="XSv-kV-jRp" firstAttribute="top" secondItem="IfD-pB-0T8" secondAttribute="top" id="Gh3-6z-c32"/>
+                            <constraint firstItem="XSv-kV-jRp" firstAttribute="leading" secondItem="IfD-pB-0T8" secondAttribute="leading" id="I97-j8-TKA"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="77H-Rq-H5D" secondAttribute="bottom" constant="-1" id="LIR-FB-5jL"/>
                             <constraint firstItem="67b-it-r0B" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="Ork-4W-eRy"/>
                             <constraint firstItem="oAv-Zt-uIt" firstAttribute="centerX" secondItem="77H-Rq-H5D" secondAttribute="centerX" id="R3K-24-e0a"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="g9R-nE-CaL" secondAttribute="trailing" id="UE2-tp-9O5"/>
                             <constraint firstItem="Lvy-9G-3gr" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="VW5-GA-Yuv"/>
+                            <constraint firstAttribute="trailing" secondItem="XSv-kV-jRp" secondAttribute="trailing" id="WaQ-wg-M47"/>
                             <constraint firstItem="77H-Rq-H5D" firstAttribute="top" secondItem="IfD-pB-0T8" secondAttribute="top" id="Y6T-vo-ZZZ"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="top" secondItem="77H-Rq-H5D" secondAttribute="bottom" constant="-2" id="YCB-Hg-cND"/>
                             <constraint firstItem="67b-it-r0B" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="80" id="YJ2-ng-4PO"/>
                             <constraint firstItem="77H-Rq-H5D" firstAttribute="trailing" secondItem="IfD-pB-0T8" secondAttribute="trailing" constant="2" id="efA-8U-YSX"/>
+                            <constraint firstAttribute="bottom" secondItem="XSv-kV-jRp" secondAttribute="bottom" id="gMg-sx-vAN"/>
                             <constraint firstItem="oAv-Zt-uIt" firstAttribute="width" secondItem="qNL-CF-WGF" secondAttribute="width" constant="-20" id="gQZ-NR-uqe"/>
                             <constraint firstItem="g9R-nE-CaL" firstAttribute="leading" secondItem="ASL-d6-ybT" secondAttribute="leading" id="l74-9M-Qbf"/>
                             <constraint firstItem="Lvy-9G-3gr" firstAttribute="top" secondItem="67b-it-r0B" secondAttribute="bottom" constant="16" id="lQh-Ei-FZo"/>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="60" id="mFu-EV-af4"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="ss2-jr-gcc"/>
+                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="ASL-d6-ybT" secondAttribute="centerY" id="sxT-iD-NZp"/>
+                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="wOb-am-IrD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ASL-d6-ybT"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundView" destination="XSv-kV-jRp" id="hrm-wQ-uxP"/>
                         <outlet property="button" destination="oAv-Zt-uIt" id="2F4-UO-qfi"/>
                         <outlet property="daxDialogContainer" destination="qNL-CF-WGF" id="pMx-eZ-d4a"/>
                         <outlet property="daxIcon" destination="67b-it-r0B" id="1g0-kH-R7G"/>
+                        <outlet property="onboardingIcon" destination="DD1-q3-GlA" id="SPQ-F0-fac"/>
                         <outlet property="welcomeMessage" destination="Lvy-9G-3gr" id="LF7-0T-sN4"/>
                     </connections>
                 </viewController>
@@ -131,7 +146,7 @@ DuckDuckGo!</string>
             <objects>
                 <viewController storyboardIdentifier="DaxDialog" id="UUS-R7-a2i" customClass="DaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="im0-JF-Sin">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UzU-6y-Vfa">
@@ -142,7 +157,7 @@ DuckDuckGo!</string>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="Background">
-                                <rect key="frame" x="10" y="82" width="355" height="318"/>
+                                <rect key="frame" x="10" y="82" width="355" height="108"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
                                         <rect key="frame" x="16" y="10" width="323" height="22"/>
@@ -161,7 +176,7 @@ DuckDuckGo!</string>
                                         </connections>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
-                                        <rect key="frame" x="16" y="250" width="323" height="44"/>
+                                        <rect key="frame" x="16" y="40" width="323" height="44"/>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Gta-qP-xcx"/>
@@ -299,7 +314,7 @@ DuckDuckGo!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="WM8-Xy-pab"/>
+        <segue reference="Z8u-vf-YsD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>

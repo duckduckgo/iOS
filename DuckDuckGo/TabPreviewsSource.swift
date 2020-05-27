@@ -21,13 +21,56 @@ import UIKit
 
 class TabPreviewsSource {
     
+    private var cache = [String: UIImage]()
     
-    
-    func update(preview: UIImage, forTab: Tab) {
-        
+    func update(preview: UIImage, forTab tab: Tab) {
+        cache[tab.uid] = preview
+        store(preview: preview, forTab: tab)
     }
     
-    func preview(for: Tab) {
+    func preview(for tab: Tab) -> UIImage? {
+        if let preview = cache[tab.uid] {
+            return preview
+        }
         
+        guard let preview = loadPreview(forTab: tab) else {
+            return nil
+        }
+        
+        cache[tab.uid] = preview
+        return preview
+    }
+    
+    private func previewLocation(for tab: Tab) -> URL? {
+        guard var cachesDirURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
+        cachesDirURL.appendPathComponent("Previews", isDirectory: true)
+        
+        do {
+        try FileManager.default.createDirectory(at: cachesDirURL, withIntermediateDirectories: false, attributes: nil)
+        } catch {
+            print(error)
+        }
+        print("--> caches: \(cachesDirURL)")
+        cachesDirURL.appendPathComponent("\(tab.uid).png")
+        return cachesDirURL
+    }
+    
+    private func store(preview: UIImage, forTab tab: Tab) {
+        guard let url = previewLocation(for: tab),
+            let data = preview.pngData() else { return }
+        
+        do {
+//            let file = FileHandle(forWritingTo: url)
+            try data.write(to: url)
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func loadPreview(forTab tab: Tab) -> UIImage? {
+        guard let url = previewLocation(for: tab),
+            let data = try? Data(contentsOf: url) else { return nil }
+        
+        return UIImage(data: data)
     }
 }

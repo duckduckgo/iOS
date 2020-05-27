@@ -77,6 +77,7 @@ class MainViewController: UIViewController {
     private lazy var appUrls: AppUrls = AppUrls()
 
     var tabManager: TabManager!
+    private let previewsSource = TabPreviewsSource()
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     fileprivate lazy var homePageSettings: HomePageSettings = DefaultHomePageSettings()
@@ -205,6 +206,7 @@ class MainViewController: UIViewController {
             controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
+            controller.previewsSource = previewsSource
             tabSwitcherController = controller
             return
         }
@@ -867,6 +869,10 @@ extension MainViewController: TabDelegate {
             refreshControls()
         }
         tabManager?.save()
+    }
+    
+    func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
+        previewsSource.update(preview: preview, forTab: tab.tabModel)
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

@@ -40,6 +40,7 @@ class TabSwitcherViewController: UIViewController {
     weak var homePageSettingsDelegate: HomePageSettingsDelegate?
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
+    weak var previewsSource: TabPreviewsSource!
     
     override var canBecomeFirstResponder: Bool { return true }
     
@@ -257,7 +258,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         
         if indexPath.row < tabsModel.count {
             let tab = tabsModel.get(tabAt: indexPath.row)
-            cell.update(withTab: tab)
+            cell.update(withTab: tab, preview: previewsSource.preview(for: tab))
         }
         
         return cell

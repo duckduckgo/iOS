@@ -79,6 +79,7 @@ public class Tab: NSObject, NSCoding {
     }
 
     public func encode(with coder: NSCoder) {
+        coder.encode(uid, forKey: NSCodingKeys.uid)
         coder.encode(link, forKey: NSCodingKeys.link)
         coder.encode(viewed, forKey: NSCodingKeys.viewed)
         coder.encode(isDesktop, forKey: NSCodingKeys.desktop)

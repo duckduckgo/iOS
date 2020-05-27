@@ -58,6 +58,8 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
+    @IBOutlet weak var preview: UIImageView!
+    @IBOutlet weak var previewHeight: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -138,7 +140,7 @@ class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func update(withTab tab: Tab, homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+    func update(withTab tab: Tab, preview: UIImage?, homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
@@ -161,6 +163,11 @@ class TabViewCell: UICollectionViewCell {
         }
         
         unread.isHidden = tab.viewed
+        
+        if let img = preview {
+            self.previewHeight.constant = 180 * (img.size.height / img.size.width)
+            self.preview.image = img
+        }
 
         if tab.link == nil {
             title.text = UserText.homeTabTitle
@@ -198,7 +205,7 @@ class TabViewCell: UICollectionViewCell {
 extension TabViewCell: TabObserver {
     
     func didChange(tab: Tab) {
-        update(withTab: tab)
+//        update(withTab: tab) FIXME
     }
     
 }

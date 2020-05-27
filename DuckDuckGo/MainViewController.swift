@@ -246,7 +246,13 @@ class MainViewController: UIViewController {
             tabsModel = TabsModel()
             tabsModel.save()
         } else {
-            tabsModel = TabsModel.get() ?? TabsModel()
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel()
+            }
         }
         tabManager = TabManager(model: tabsModel, delegate: self)
     }

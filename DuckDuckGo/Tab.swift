@@ -32,12 +32,15 @@ public class Tab: NSObject, NSCoding {
     }
     
     struct NSCodingKeys {
+        static let uid = "uid"
         static let link = "link"
         static let viewed = "viewed"
         static let desktop = "desktop"
     }
 
     private var observersHolder = [WeaklyHeldTabObserver]()
+    
+    let uid: String
     
     var isDesktop: Bool = false {
         didSet {
@@ -50,23 +53,29 @@ public class Tab: NSObject, NSCoding {
             notifyObservers()
         }
     }
+    
     var viewed: Bool = true {
         didSet {
             notifyObservers()
         }
     }
 
-    public init(link: Link? = nil, viewed: Bool = true, desktop: Bool = isPad) {
+    public init(uid: String? = nil,
+                link: Link? = nil,
+                viewed: Bool = true,
+                desktop: Bool = isPad) {
+        self.uid = uid ?? UUID().uuidString
         self.link = link
         self.viewed = viewed
         self.isDesktop = desktop
     }
 
     public convenience required init?(coder decoder: NSCoder) {
+        let uid = decoder.decodeObject(forKey: NSCodingKeys.uid) as? String
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
         let viewed = decoder.containsValue(forKey: NSCodingKeys.viewed) ? decoder.decodeBool(forKey: NSCodingKeys.viewed) : true
         let desktop = decoder.containsValue(forKey: NSCodingKeys.desktop) ? decoder.decodeBool(forKey: NSCodingKeys.desktop) : false
-        self.init(link: link, viewed: viewed, desktop: desktop)
+        self.init(uid: uid, link: link, viewed: viewed, desktop: desktop)
     }
 
     public func encode(with coder: NSCoder) {

@@ -65,7 +65,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
         
-        controller.logo.isHidden = true
+        controller.logoContainer.isHidden = true
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

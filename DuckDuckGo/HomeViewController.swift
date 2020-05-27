@@ -22,8 +22,10 @@ import Core
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var logoContainer: UIView!
     @IBOutlet weak var logo: UIImageView!
-    
+    @IBOutlet weak var logoText: UIImageView!
+
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
@@ -151,7 +153,7 @@ class HomeViewController: UIViewController {
     func showNextDaxDialog() {
         guard let spec = daxDialogSpecToShow else { return }
         collectionView.isHidden = true
-        logo.isHidden = true
+        logoContainer.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
         daxDialogContainerHeight.constant = spec.height
@@ -238,12 +240,6 @@ extension HomeViewController: Themable {
         collectionView.decorate(with: theme)
         view.backgroundColor = theme.backgroundColor
         settingsButton.tintColor = theme.barTintColor
-        
-//        switch theme.currentImageSet {
-//        case .light:
-//            logo.image = UIImage(named: "LogoDarkText")
-//        case .dark:
-//            logo.image = UIImage(named: "LogoLightText")
-//        }
+        logoText.tintColor = theme.ddgTextTintColor
     }
 }

@@ -24,6 +24,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxIcon: UIView!
     @IBOutlet weak var onboardingIcon: UIView!
+    @IBOutlet weak var transitionalIcon: UIView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var backgroundView: UIView!
     
@@ -65,15 +66,32 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
     func transitionFromOnboarding() {
 
+        let snapshot = self.onboardingIcon.snapshotView(afterScreenUpdates: false)!
+        snapshot.frame = self.onboardingIcon.frame
+        view.addSubview(snapshot)
+        self.onboardingIcon.isHidden = true
+
+        self.daxIcon.alpha = 0.0
         UIView.animate(withDuration: 0.3, animations: {
-            self.onboardingIcon.frame = self.daxIcon.frame
+            snapshot.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
+            snapshot.center = CGPoint(x: self.daxIcon.center.x, y: self.daxIcon.center.y - 2)
             self.backgroundView.alpha = 0.0
         }, completion: { _ in
             self.daxIcon.isHidden = false
-            self.onboardingIcon.isHidden = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.transitionToDaxDialog()
-            }
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                snapshot.alpha = 0.0
+                self.daxIcon.alpha = 1.0
+            }, completion: { _ in
+
+                self.onboardingIcon.isHidden = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                    snapshot.removeFromSuperview()
+                    self.transitionToDaxDialog()
+                }
+
+            })
+            
         })
 
     }

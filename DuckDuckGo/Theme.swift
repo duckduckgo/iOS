@@ -97,4 +97,6 @@ protocol Theme {
     var activityStyle: UIActivityIndicatorView.Style { get }
     
     var destructiveColor: UIColor { get }
+    
+    var ddgTextTintColor: UIColor { get }
 }

@@ -28,23 +28,29 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b31-Kn-3OJ" userLabel="Logo Container">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ztc-nL-no3">
-                                        <rect key="frame" x="164" y="312" width="86" height="86"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchText" translatesAutoresizingMaskIntoConstraints="NO" id="znl-Uc-zaT">
-                                        <rect key="frame" x="100" y="410" width="214" height="55"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bON-2v-XcX">
+                                        <rect key="frame" x="126" y="232.66666666666669" width="162" height="129"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="ztc-nL-no3">
+                                                <rect key="frame" x="33" y="0.0" width="96" height="96"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="ztc-nL-no3" secondAttribute="height" multiplier="1:1" id="Tsp-fy-O1M"/>
+                                                    <constraint firstAttribute="width" constant="96" id="ggK-UU-XSK"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextDuckDuckGo" translatesAutoresizingMaskIntoConstraints="NO" id="MoC-yJ-9bp">
+                                                <rect key="frame" x="0.0" y="108" width="162" height="21"/>
+                                                <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </imageView>
+                                        </subviews>
+                                        <variation key="heightClass=compact" axis="horizontal"/>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="ztc-nL-no3" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="0dq-XR-B9k"/>
-                                    <constraint firstItem="znl-Uc-zaT" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="7JV-CW-RvW"/>
-                                    <constraint firstItem="ztc-nL-no3" firstAttribute="centerY" secondItem="b31-Kn-3OJ" secondAttribute="centerY" constant="-54" id="8xt-Sj-Dfb">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="-55"/>
-                                    </constraint>
-                                    <constraint firstItem="znl-Uc-zaT" firstAttribute="top" secondItem="ztc-nL-no3" secondAttribute="bottom" constant="12" id="pq5-T0-1Bs"/>
+                                    <constraint firstItem="bON-2v-XcX" firstAttribute="centerY" secondItem="b31-Kn-3OJ" secondAttribute="centerY" constant="-112" id="lnp-0E-HtU"/>
+                                    <constraint firstItem="bON-2v-XcX" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="pxc-UB-H9C"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H74-G9-0WZ" customClass="HomeCollectionView" customModule="DuckDuckGo" customModuleProvider="target">
@@ -75,9 +81,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="287"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="39W-ag-iVs">
-                                                    <rect key="frame" x="91" y="73" width="160" height="128"/>
-                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eQ8-iA-i1e">
+                                                    <rect key="frame" x="90" y="78" width="162" height="129"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="39W-ag-iVs">
+                                                            <rect key="frame" x="33" y="0.0" width="96" height="96"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="39W-ag-iVs" secondAttribute="height" multiplier="1:1" id="MW8-0y-OoB"/>
+                                                                <constraint firstAttribute="width" constant="96" id="brf-yL-qjK"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextDuckDuckGo" translatesAutoresizingMaskIntoConstraints="NO" id="0q0-nN-Ola">
+                                                            <rect key="frame" x="0.0" y="108" width="162" height="21"/>
+                                                            <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <variation key="heightClass=compact" axis="horizontal"/>
+                                                </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jf-KE-oXj" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="239" width="342" height="48"/>
                                                     <subviews>
@@ -90,7 +110,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
-                                                            <rect key="frame" x="50" y="14.666666666666659" width="171" height="18.666666666666671"/>
+                                                            <rect key="frame" x="50" y="16" width="171" height="16"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <bool key="isElement" value="NO"/>
                                                             </accessibility>
@@ -128,16 +148,17 @@
                                         </view>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="top" secondItem="39W-ag-iVs" secondAttribute="bottom" constant="38" id="2Gq-HT-ORy"/>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="leading" secondItem="3i0-li-iSv" secondAttribute="leading" id="2Ia-p2-6HX"/>
                                             <constraint firstAttribute="bottom" secondItem="7Jf-KE-oXj" secondAttribute="bottom" id="bHQ-i4-np1"/>
-                                            <constraint firstItem="39W-ag-iVs" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="dUX-Ve-6mD"/>
+                                            <constraint firstItem="eQ8-iA-i1e" firstAttribute="centerX" secondItem="3i0-li-iSv" secondAttribute="centerX" id="em6-ew-E3V"/>
                                             <constraint firstItem="3i0-li-iSv" firstAttribute="trailing" secondItem="7Jf-KE-oXj" secondAttribute="trailing" id="niW-Cm-waP"/>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="top" secondItem="eQ8-iA-i1e" secondAttribute="bottom" constant="32" id="pw7-Bg-mC2"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="3i0-li-iSv"/>
                                         <size key="customSize" width="342" height="287"/>
                                         <connections>
                                             <outlet property="imageView" destination="39W-ag-iVs" id="ob1-89-hb0"/>
+                                            <outlet property="logoText" destination="0q0-nN-Ola" id="t17-of-CNw"/>
                                             <outlet property="promptText" destination="73D-OT-n1K" id="Cf8-Rg-Vw7"/>
                                             <outlet property="searchBackground" destination="7Jf-KE-oXj" id="Fnx-fD-UoA"/>
                                             <outlet property="searchBackgroundHeightConstraint" destination="lfy-OM-K4Q" id="MaW-TK-NzF"/>
@@ -226,6 +247,8 @@
                         <outlet property="daxDialogContainer" destination="3ms-eB-DjL" id="ZC4-JT-yTi"/>
                         <outlet property="daxDialogContainerHeight" destination="E7k-RF-RsZ" id="oGk-WJ-UXB"/>
                         <outlet property="logo" destination="ztc-nL-no3" id="Qa7-Ec-ESN"/>
+                        <outlet property="logoContainer" destination="b31-Kn-3OJ" id="B8v-C6-FUu"/>
+                        <outlet property="logoText" destination="MoC-yJ-9bp" id="z2p-Xx-D8a"/>
                         <outlet property="settingsButton" destination="kcN-YB-mZi" id="iyr-9W-6gY"/>
                     </connections>
                 </viewController>
@@ -248,10 +271,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="DaxIcon" width="86" height="86"/>
-        <image name="LaunchText" width="214" height="55"/>
-        <image name="LogoLightText" width="160" height="128"/>
+        <image name="Logo" width="128" height="128"/>
         <image name="Settings" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>
+        <image name="TextDuckDuckGo" width="162" height="21"/>
     </resources>
 </document>

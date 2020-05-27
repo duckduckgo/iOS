@@ -91,8 +91,15 @@ DuckDuckGo!</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
-                                <rect key="frame" x="164" y="360" width="86" height="86"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
+                                <rect key="frame" x="159" y="282" width="96" height="96"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="96" id="oo7-26-ciN"/>
+                                    <constraint firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1:1" id="pjk-YG-kx9"/>
+                                </constraints>
+                            </imageView>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
+                                <rect key="frame" x="149.5" y="275.5" width="115" height="115"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -101,6 +108,7 @@ DuckDuckGo!</string>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" id="2dC-da-5Wd"/>
                             <constraint firstItem="g9R-nE-CaL" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" id="6P4-or-DGh"/>
                             <constraint firstItem="oAv-Zt-uIt" firstAttribute="top" secondItem="qNL-CF-WGF" secondAttribute="bottom" constant="24" id="6va-2A-zGX"/>
+                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="width" multiplier="1.2" id="8oB-k3-bYE"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="g9R-nE-CaL" secondAttribute="bottom" id="9rF-2A-gHl"/>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="E2L-jn-kYz"/>
                             <constraint firstAttribute="bottom" secondItem="f5N-oh-abb" secondAttribute="bottom" id="EPe-hs-aQ3"/>
@@ -108,6 +116,7 @@ DuckDuckGo!</string>
                             <constraint firstItem="XSv-kV-jRp" firstAttribute="top" secondItem="IfD-pB-0T8" secondAttribute="top" id="Gh3-6z-c32"/>
                             <constraint firstItem="XSv-kV-jRp" firstAttribute="leading" secondItem="IfD-pB-0T8" secondAttribute="leading" id="I97-j8-TKA"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="77H-Rq-H5D" secondAttribute="bottom" constant="-1" id="LIR-FB-5jL"/>
+                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="height" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1.2" id="N5e-hd-FUn"/>
                             <constraint firstItem="67b-it-r0B" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="Ork-4W-eRy"/>
                             <constraint firstItem="oAv-Zt-uIt" firstAttribute="centerX" secondItem="77H-Rq-H5D" secondAttribute="centerX" id="R3K-24-e0a"/>
                             <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="g9R-nE-CaL" secondAttribute="trailing" id="UE2-tp-9O5"/>
@@ -123,9 +132,11 @@ DuckDuckGo!</string>
                             <constraint firstItem="Lvy-9G-3gr" firstAttribute="top" secondItem="67b-it-r0B" secondAttribute="bottom" constant="16" id="lQh-Ei-FZo"/>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="60" id="mFu-EV-af4"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="ss2-jr-gcc"/>
-                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="ASL-d6-ybT" secondAttribute="centerY" constant="-50" id="sxT-iD-NZp">
-                                <variation key="heightClass=regular-widthClass=regular" constant="-54"/>
+                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerX" secondItem="DD1-q3-GlA" secondAttribute="centerX" id="svY-An-J11"/>
+                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="ASL-d6-ybT" secondAttribute="centerY" constant="-123" id="sxT-iD-NZp">
+                                <variation key="heightClass=regular-widthClass=regular" constant="-123"/>
                             </constraint>
+                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerY" secondItem="DD1-q3-GlA" secondAttribute="centerY" constant="3" id="uJC-CM-mkB"/>
                             <constraint firstItem="DD1-q3-GlA" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="wOb-am-IrD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ASL-d6-ybT"/>
@@ -141,7 +152,7 @@ DuckDuckGo!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ank-Fd-gq5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122.40000000000001" y="158.86699507389164"/>
+            <point key="canvasLocation" x="121.73913043478262" y="158.70535714285714"/>
         </scene>
         <!--Dax Dialog View Controller-->
         <scene sceneID="fPO-6e-MDt">
@@ -321,5 +332,6 @@ DuckDuckGo!</string>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>
         <image name="Lighthouse" width="360" height="724"/>
+        <image name="Logo" width="128" height="128"/>
     </resources>
 </document>

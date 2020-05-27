@@ -113,7 +113,7 @@
          <EnvironmentVariable
             key = "ONBOARDING"
             value = "true"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

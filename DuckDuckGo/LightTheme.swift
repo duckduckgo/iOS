@@ -97,4 +97,6 @@ struct LightTheme: Theme {
     
     var destructiveColor: UIColor = UIColor.destructive
     
+    var ddgTextTintColor: UIColor = UIColor.nearlyBlackLight
+    
 }

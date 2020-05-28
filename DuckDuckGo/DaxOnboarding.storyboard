@@ -92,10 +92,10 @@ DuckDuckGo!</string>
                                 <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
-                                <rect key="frame" x="149.5" y="275.5" width="115" height="115"/>
+                                <rect key="frame" x="149.5" y="369.5" width="115" height="115"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
-                                <rect key="frame" x="159" y="282" width="96" height="96"/>
+                                <rect key="frame" x="159" y="376" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="oo7-26-ciN"/>
                                     <constraint firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1:1" id="pjk-YG-kx9"/>
@@ -133,8 +133,8 @@ DuckDuckGo!</string>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="60" id="mFu-EV-af4"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="ss2-jr-gcc"/>
                             <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerX" secondItem="DD1-q3-GlA" secondAttribute="centerX" id="svY-An-J11"/>
-                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="ASL-d6-ybT" secondAttribute="centerY" constant="-123" id="sxT-iD-NZp">
-                                <variation key="heightClass=regular-widthClass=regular" constant="-123"/>
+                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="ASL-d6-ybT" secondAttribute="centerY" constant="-29" id="sxT-iD-NZp">
+                                <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerY" secondItem="DD1-q3-GlA" secondAttribute="centerY" constant="3" id="uJC-CM-mkB"/>
                             <constraint firstItem="DD1-q3-GlA" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="wOb-am-IrD"/>

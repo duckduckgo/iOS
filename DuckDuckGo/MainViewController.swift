@@ -103,6 +103,7 @@ class MainViewController: UIViewController {
         attachOmniBar()
         configureTabManager()
         loadInitialView()
+        previewsSource.prepare()
         addLaunchTabNotificationObserver()
 
         findInPageView.delegate = self
@@ -415,8 +416,7 @@ class MainViewController: UIViewController {
 
     }
 
-    fileprivate func remove(tabAt index: Int) {
-        tabManager.remove(at: index)
+    fileprivate func updateCurrentTab() {
         if let currentTab = currentTab {
             select(tab: currentTab)
         } else {
@@ -982,7 +982,9 @@ extension MainViewController: TabSwitcherDelegate {
     
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
-        remove(tabAt: index)
+        previewsSource.removePreview(forTab: tab)
+        tabManager.remove(at: index)
+        updateCurrentTab()
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
@@ -1024,7 +1026,15 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        performSegue(withIdentifier: "ShowTabs", sender: self)
+        if let currentTab = currentTab {
+            currentTab.preparePreview(completion: { image in
+                if let image = image {
+                    self.previewsSource.update(preview: image,
+                                          forTab: currentTab.tabModel)
+                }
+                self.performSegue(withIdentifier: "ShowTabs", sender: self)
+            })
+        }
     }
 
 }

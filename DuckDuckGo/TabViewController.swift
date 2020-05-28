@@ -769,22 +769,26 @@ extension TabViewController: WKNavigationDelegate {
         updatePreview()
     }
     
-    private func updatePreview() {
-        
+    func preparePreview(completion: @escaping (UIImage?) -> Void) {
         if #available(iOS 11.0, *) {
             let config = WKSnapshotConfiguration()
             config.rect = webView.bounds
             let snapshotWidth = Float(webView.bounds.width / 2)
             config.snapshotWidth = NSNumber(value: snapshotWidth)
-            webView.takeSnapshot(with: config) { image, error in
-                if let image = image {
-                    self.delegate?.tab(self, didUpdatePreview: image)
-                }
+            webView.takeSnapshot(with: config) { image, _ in
+                completion(image)
             }
         } else {
             // Fallback on earlier versions
         }
-        
+    }
+    
+    private func updatePreview() {
+        preparePreview { image in
+            if let image = image {
+                self.delegate?.tab(self, didUpdatePreview: image)
+            }
+        }
     }
     
     private func onWebpageDidFinishLoading() {

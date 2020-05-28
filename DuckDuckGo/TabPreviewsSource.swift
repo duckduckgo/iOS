@@ -23,6 +23,10 @@ class TabPreviewsSource {
     
     private var cache = [String: UIImage]()
     
+    func prepare() {
+        ensurePreviewStoreDirectoryExists()
+    }
+    
     func update(preview: UIImage, forTab tab: Tab) {
         cache[tab.uid] = preview
         store(preview: preview, forTab: tab)
@@ -41,26 +45,39 @@ class TabPreviewsSource {
         return preview
     }
     
-    private func previewLocation(for tab: Tab) -> URL? {
+    func removePreview(forTab tab: Tab) {
+        guard let url = previewLocation(for: tab) else { return }
+        
+        cache[tab.uid] = nil
+        
+        try? FileManager.default.removeItem(at: url)
+    }
+    
+    private var previewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
         cachesDirURL.appendPathComponent("Previews", isDirectory: true)
-        
-        do {
-        try FileManager.default.createDirectory(at: cachesDirURL, withIntermediateDirectories: false, attributes: nil)
-        } catch {
-            print(error)
-        }
-        print("--> caches: \(cachesDirURL)")
-        cachesDirURL.appendPathComponent("\(tab.uid).png")
         return cachesDirURL
+    }
+    
+    private func ensurePreviewStoreDirectoryExists() {
+        guard let url = previewStoreDir else { return }
+        var isDir : ObjCBool = false
+        if !FileManager.default.fileExists(atPath: url.absoluteString, isDirectory:&isDir) {
+            try? FileManager.default.createDirectory(at: url,
+                                                     withIntermediateDirectories: false,
+                                                     attributes: nil)
+        }
+    }
+    
+    private func previewLocation(for tab: Tab) -> URL? {
+        return previewStoreDir?.appendingPathComponent("\(tab.uid).png")
     }
     
     private func store(preview: UIImage, forTab tab: Tab) {
         guard let url = previewLocation(for: tab),
             let data = preview.pngData() else { return }
-        
+
         do {
-//            let file = FileHandle(forWritingTo: url)
             try data.write(to: url)
         } catch {
             print(error)

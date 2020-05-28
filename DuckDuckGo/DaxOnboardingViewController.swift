@@ -66,31 +66,38 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
     func transitionFromOnboarding() {
 
-        let snapshot = self.onboardingIcon.snapshotView(afterScreenUpdates: false)!
-        snapshot.frame = self.onboardingIcon.frame
-        view.addSubview(snapshot)
+        // using snapshots means the original views don't get messed up by their constraints when subsequent animations kick off
+        let transitionIconSS = self.transitionalIcon.snapshotView(afterScreenUpdates: false)!
+        transitionIconSS.frame = self.transitionalIcon.frame
+        view.addSubview(transitionIconSS)
+        self.transitionalIcon.isHidden = true
+
+        let onboardingIconSS = self.onboardingIcon.snapshotView(afterScreenUpdates: false)!
+        onboardingIconSS.frame = self.onboardingIcon.frame
+        view.addSubview(onboardingIconSS)
         self.onboardingIcon.isHidden = true
 
-        self.daxIcon.alpha = 0.0
         UIView.animate(withDuration: 0.3, animations: {
-            snapshot.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
-            snapshot.center = CGPoint(x: self.daxIcon.center.x, y: self.daxIcon.center.y - 2)
+            
+            // the dax dialog icon is not exactly centered with or the same size as this icon so we need to account for this in the animation
+            onboardingIconSS.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
+            onboardingIconSS.center = CGPoint(x: self.daxIcon.center.x, y: self.daxIcon.center.y - 2)
+            onboardingIconSS.alpha = 0.0
+
+            transitionIconSS.frame = self.daxIcon.frame
+            transitionIconSS.alpha = 1.0
+            
             self.backgroundView.alpha = 0.0
         }, completion: { _ in
             self.daxIcon.isHidden = false
+            onboardingIconSS.isHidden = true
+            transitionIconSS.isHidden = true
             
-            UIView.animate(withDuration: 0.3, animations: {
-                snapshot.alpha = 0.0
-                self.daxIcon.alpha = 1.0
-            }, completion: { _ in
-
-                self.onboardingIcon.isHidden = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                    snapshot.removeFromSuperview()
-                    self.transitionToDaxDialog()
-                }
-
-            })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                onboardingIconSS.removeFromSuperview()
+                transitionIconSS.removeFromSuperview()
+                self.transitionToDaxDialog()
+            }
             
         })
 
@@ -113,8 +120,15 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
             }
 
         }, completion: { _ in
-            self.showDaxDialog {
+            
+            // fade out while it's being shown again below, otherwise there's an abrupt change when the double dropshadow disappears
+            UIView.animate(withDuration: 1.0, animations: {
+                snapshot.alpha = 0.0
+            }, completion: { _ in
                 snapshot.removeFromSuperview()
+            })
+            
+            self.showDaxDialog {
                 self.daxDialog?.start()
             }
         })

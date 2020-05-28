@@ -91,15 +91,15 @@ DuckDuckGo!</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
+                                <rect key="frame" x="149.5" y="275.5" width="115" height="115"/>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
                                 <rect key="frame" x="159" y="282" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="oo7-26-ciN"/>
                                     <constraint firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1:1" id="pjk-YG-kx9"/>
                                 </constraints>
-                            </imageView>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
-                                <rect key="frame" x="149.5" y="275.5" width="115" height="115"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -147,6 +147,7 @@ DuckDuckGo!</string>
                         <outlet property="daxDialogContainer" destination="qNL-CF-WGF" id="pMx-eZ-d4a"/>
                         <outlet property="daxIcon" destination="67b-it-r0B" id="1g0-kH-R7G"/>
                         <outlet property="onboardingIcon" destination="DD1-q3-GlA" id="SPQ-F0-fac"/>
+                        <outlet property="transitionalIcon" destination="HyA-WF-Cc8" id="FYZ-wh-6Ix"/>
                         <outlet property="welcomeMessage" destination="Lvy-9G-3gr" id="LF7-0T-sN4"/>
                     </connections>
                 </viewController>

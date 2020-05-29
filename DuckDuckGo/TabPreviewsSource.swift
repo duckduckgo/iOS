@@ -53,6 +53,17 @@ class TabPreviewsSource {
         try? FileManager.default.removeItem(at: url)
     }
     
+    func removeAllPreviews() {
+        cache.removeAll()
+        guard let dirUrl = previewStoreDir else { return }
+        
+        if let previews = try? FileManager.default.contentsOfDirectory(at: dirUrl, includingPropertiesForKeys: nil) {
+            for previewUrl in previews {
+                try? FileManager.default.removeItem(at: previewUrl)
+            }
+        }
+    }
+    
     private var previewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
         cachesDirURL.appendPathComponent("Previews", isDirectory: true)
@@ -61,8 +72,7 @@ class TabPreviewsSource {
     
     private func ensurePreviewStoreDirectoryExists() {
         guard let url = previewStoreDir else { return }
-        var isDir : ObjCBool = false
-        if !FileManager.default.fileExists(atPath: url.absoluteString, isDirectory:&isDir) {
+        if !FileManager.default.fileExists(atPath: url.absoluteString, isDirectory: nil) {
             try? FileManager.default.createDirectory(at: url,
                                                      withIntermediateDirectories: false,
                                                      attributes: nil)

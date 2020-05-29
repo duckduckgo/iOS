@@ -258,7 +258,9 @@ class MainViewController: UIViewController {
                 tabsModel = TabsModel()
             }
         }
-        tabManager = TabManager(model: tabsModel, delegate: self)
+        tabManager = TabManager(model: tabsModel,
+                                previewsSource: previewsSource,
+                                delegate: self)
     }
 
     private func addLaunchTabNotificationObserver() {
@@ -983,7 +985,6 @@ extension MainViewController: TabSwitcherDelegate {
     
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
-        previewsSource.removePreview(forTab: tab)
         tabManager.remove(at: index)
         updateCurrentTab()
     }

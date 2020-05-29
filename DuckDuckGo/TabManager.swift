@@ -27,10 +27,12 @@ class TabManager {
     
     private var tabControllerCache = [TabViewController]()
 
-    private weak var delegate: TabDelegate?
+    private var previewsSource: TabPreviewsSource
+    weak var delegate: TabDelegate?
 
-    init(model: TabsModel, delegate: TabDelegate) {
+    init(model: TabsModel, previewsSource: TabPreviewsSource, delegate: TabDelegate) {
         self.model = model
+        self.previewsSource = previewsSource
         self.delegate = delegate
         let index = model.currentIndex
         let tab = model.tabs[index]
@@ -159,6 +161,7 @@ class TabManager {
 
     func remove(at index: Int) {
         let tab = model.get(tabAt: index)
+        previewsSource.removePreview(forTab: tab)
         model.remove(tab: tab)
         if let controller = controller(for: tab) {
             removeFromCache(controller)
@@ -174,6 +177,7 @@ class TabManager {
     }
 
     func removeAll() {
+        previewsSource.removeAllPreviews()
         model.clearAll()
         for controller in tabControllerCache {
             removeFromCache(controller)

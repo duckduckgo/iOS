@@ -21,7 +21,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
 
-    var spec: DaxOnboarding.BrowsingSpec?
+    var spec: DaxDialogs.BrowsingSpec?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +64,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
         controller.addAction(title: "Hide tips forever", style: .default) {
-            DaxOnboarding().dismiss()
+            DaxDialogs().dismiss()
         }
         controller.addAction(title: "Cancel", style: .cancel)
         present(controller, animated: true)

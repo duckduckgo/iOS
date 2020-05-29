@@ -1,5 +1,5 @@
 //
-//  DaxOnboarding.swift
+//  DaxDialogs.swift
 //  DuckDuckGo
 //
 //  Created by Chris Brind on 11/05/2020.
@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-class DaxOnboarding {
+class DaxDialogs {
     
     struct MajorTrackers {
         
@@ -140,7 +140,7 @@ class DaxOnboarding {
         return nil
     }
     
-    private func noTrackersMessage() -> DaxOnboarding.BrowsingSpec? {
+    private func noTrackersMessage() -> DaxDialogs.BrowsingSpec? {
         if !settings.browsingWithoutTrackersShown {
             settings.browsingWithoutTrackersShown = true
             return BrowsingSpec.withoutTrackers
@@ -148,7 +148,7 @@ class DaxOnboarding {
         return nil
     }
 
-    func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxOnboarding.BrowsingSpec? {
+    func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingOwnedByMajorTrackingSiteShown else { return nil }
         settings.browsingOwnedByMajorTrackingSiteShown = true
         return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."),
@@ -156,7 +156,7 @@ class DaxOnboarding {
                                                            majorTrackerEntity.prevalence ?? 0.0)
     }
     
-    private func majorTrackerMessage() -> DaxOnboarding.BrowsingSpec? {
+    private func majorTrackerMessage() -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         return BrowsingSpec.siteIsMajorTracker

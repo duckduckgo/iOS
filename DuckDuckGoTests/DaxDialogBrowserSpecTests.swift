@@ -26,7 +26,7 @@ class DaxDialogBrowserSpecTests: XCTestCase {
         let majorTracker1 = "TestTracker1"
         let domain = "testtracker.com"
         let percent = 34.3
-        let message = DaxOnboarding.BrowsingSpec.siteOwnedByMajorTracker.format(args: domain, majorTracker1, percent).message
+        let message = DaxDialogs.BrowsingSpec.siteOwnedByMajorTracker.format(args: domain, majorTracker1, percent).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains("34%"))
         XCTAssertTrue(message.contains(domain))
@@ -36,7 +36,7 @@ class DaxDialogBrowserSpecTests: XCTestCase {
     func testWhenSiteIsMajorTrackerIsFormattedThenContainsNameAndPercentage() {
         let majorTracker1 = "TestTracker1"
         let percent = 34.3
-        let message = DaxOnboarding.BrowsingSpec.siteIsMajorTracker.format(args: majorTracker1, percent).message
+        let message = DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: majorTracker1, percent).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains("34%"))
         XCTAssertEqual(2, message.countInstances(of: majorTracker1))
@@ -46,7 +46,7 @@ class DaxDialogBrowserSpecTests: XCTestCase {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
         let count = 6
-        let message = DaxOnboarding.BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: majorTracker1, majorTracker2, count).message
+        let message = DaxDialogs.BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: majorTracker1, majorTracker2, count).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
         XCTAssertTrue(message.contains("\(count)"))
@@ -55,7 +55,7 @@ class DaxDialogBrowserSpecTests: XCTestCase {
     func testWhenTwoMajorTrackersWithNoOtherTrackersIsFormattedThenContainsTrackerNames() {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
-        let message = DaxOnboarding.BrowsingSpec.withTwoMajorTrackers.format(args: majorTracker1, majorTracker2).message
+        let message = DaxDialogs.BrowsingSpec.withTwoMajorTrackers.format(args: majorTracker1, majorTracker2).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
     }
@@ -63,14 +63,14 @@ class DaxDialogBrowserSpecTests: XCTestCase {
     func testWhenOneMajorTrackerWithOtherTrackersIsFormattedThenContainsTrackerNamesAndCount() {
         let majorTracker = "TestTracker"
         let count = 4
-        let message = DaxOnboarding.BrowsingSpec.withOneMajorTrackerAndOthers.format(args: majorTracker, count).message
+        let message = DaxDialogs.BrowsingSpec.withOneMajorTrackerAndOthers.format(args: majorTracker, count).message
         XCTAssertTrue(message.contains(majorTracker))
         XCTAssertTrue(message.contains("\(count)"))
     }
 
     func testWhenOneMajorTrackerWithNoOtherTrackersIsFormattedThenContainsTrackerName() {
         let majorTracker = "TestTracker"
-        let message = DaxOnboarding.BrowsingSpec.withOneMajorTracker.format(args: majorTracker).message
+        let message = DaxDialogs.BrowsingSpec.withOneMajorTracker.format(args: majorTracker).message
         XCTAssertTrue(message.contains(majorTracker))
     }
     

@@ -499,7 +499,7 @@ class TabViewController: UIViewController {
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
-            controller.spec = sender as? DaxOnboarding.BrowsingSpec
+            controller.spec = sender as? DaxDialogs.BrowsingSpec
             controller.delegate = self
         }
         
@@ -796,7 +796,7 @@ extension TabViewController: WKNavigationDelegate {
     private func showDaxDialogIfNeeded() {
         guard DefaultVariantManager().isSupported(feature: .daxOnboarding) else { return }
         guard let siteRating = self.siteRating else { return }
-        if let spec = DaxOnboarding().nextBrowsingMessage(siteRating: siteRating) {
+        if let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) {
             performSegue(withIdentifier: "DaxDialog", sender: spec)
         }
     }

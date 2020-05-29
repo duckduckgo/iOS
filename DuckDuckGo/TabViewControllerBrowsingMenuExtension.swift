@@ -127,7 +127,7 @@ extension TabViewController {
     private func onToggleDesktopSiteAction(forUrl url: URL) {
         Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
         tabModel.toggleDesktopMode()
-        updateUserAgent()
+        updateContentMode()
         tabModel.isDesktop ? load(url: url.toDesktopUrl()) : reload(scripts: false)
     }
     

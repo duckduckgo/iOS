@@ -20,11 +20,7 @@
 import WebKit
 
 extension WKWebViewConfiguration {
-
-    public static var ddgNameForUserAgent: String {
-        return "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
-    }
-    
+        
     public static func persistent() -> WKWebViewConfiguration {
         return configuration(persistsData: true)
     }
@@ -46,8 +42,6 @@ extension WKWebViewConfiguration {
             configuration.installHideAtbModals()
         }
 
-        let defaultNameForUserAgent = configuration.applicationNameForUserAgent ?? ""
-        configuration.applicationNameForUserAgent = "\(defaultNameForUserAgent) \(WKWebViewConfiguration.ddgNameForUserAgent)"
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsPictureInPictureMediaPlayback = true

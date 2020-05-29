@@ -33,11 +33,6 @@ class TabViewController: UIViewController {
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
     }
-
-    private struct UserAgent {
-        static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15 " +
-                             WKWebViewConfiguration.ddgNameForUserAgent
-    }
     
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
@@ -257,7 +252,7 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
 
         reloadUserScripts()
-        updateUserAgent()
+        updateContentMode()
         
         instrumentation.didPrepareWebView()
 
@@ -304,7 +299,7 @@ class TabViewController: UIViewController {
     public func load(url: URL) {
         self.url = url
         lastError = nil
-        updateUserAgent()
+        updateContentMode()
         load(urlRequest: URLRequest(url: url))
     }
     
@@ -393,12 +388,11 @@ class TabViewController: UIViewController {
         if scripts {
             reloadUserScripts()
         }
-        updateUserAgent()
+        updateContentMode()
         webView.reload()
     }
     
-    func updateUserAgent() {
-        webView.customUserAgent = tabModel.isDesktop ? UserAgent.desktop : nil
+    func updateContentMode() {
         if #available(iOS 13, *) {
             webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
         }
@@ -925,12 +919,12 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+            UserAgentManager.shared.update(forWebView: webView, policy: allowPolicy, isDesktop: tabModel.isDesktop, url: url)
             completion(allowPolicy)
             return
         }
-        
+
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
-            
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
                 NetworkLeaderboard.shared.incrementHttpsUpgrades()
                 self?.lastUpgradedURL = upgradedUrl
@@ -939,10 +933,13 @@ extension TabViewController: WKNavigationDelegate {
                 return
             }
             
+            if let isDesktop = self?.tabModel.isDesktop, let webView = self?.webView {
+                UserAgentManager.shared.update(forWebView: webView, policy: allowPolicy, isDesktop: isDesktop, url: url)
+            }
             completion(allowPolicy)
         }
     }
-    
+
     private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {
         switch action {
         case .open:

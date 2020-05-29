@@ -25,29 +25,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b31-Kn-3OJ" userLabel="Logo Container">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="ztc-nL-no3">
-                                        <rect key="frame" x="159" y="391" width="96" height="96"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="ztc-nL-no3" secondAttribute="height" multiplier="1:1" id="Tsp-fy-O1M"/>
-                                            <constraint firstAttribute="width" constant="96" id="ggK-UU-XSK"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextDuckDuckGo" translatesAutoresizingMaskIntoConstraints="NO" id="MoC-yJ-9bp">
-                                        <rect key="frame" x="126" y="499" width="162" height="21"/>
-                                        <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="ztc-nL-no3" firstAttribute="centerY" secondItem="b31-Kn-3OJ" secondAttribute="centerY" constant="-9" id="062-j9-rLh"/>
-                                    <constraint firstItem="MoC-yJ-9bp" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="1OP-4y-AJu"/>
-                                    <constraint firstItem="MoC-yJ-9bp" firstAttribute="top" secondItem="ztc-nL-no3" secondAttribute="bottom" constant="12" id="2gL-kH-oAN"/>
-                                    <constraint firstItem="ztc-nL-no3" firstAttribute="centerX" secondItem="b31-Kn-3OJ" secondAttribute="centerX" id="Gmb-2I-8wM"/>
-                                </constraints>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H74-G9-0WZ" customClass="HomeCollectionView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="5" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -213,7 +190,6 @@
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="5" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
-                            <constraint firstAttribute="trailing" secondItem="b31-Kn-3OJ" secondAttribute="trailing" id="Zcr-tm-QF3"/>
                             <constraint firstItem="3ms-eB-DjL" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="eW6-mG-0bM"/>
                             <constraint firstItem="3ms-eB-DjL" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="44" id="gcJ-UD-uID">
                                 <variation key="heightClass=compact-widthClass=compact" constant="4"/>
@@ -221,10 +197,7 @@
                             <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="9" id="h6x-yo-1bE"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
-                            <constraint firstAttribute="bottom" secondItem="b31-Kn-3OJ" secondAttribute="bottom" id="mhm-85-HDg"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="vdx-nG-nrB"/>
-                            <constraint firstItem="b31-Kn-3OJ" firstAttribute="top" secondItem="klK-ZJ-wmA" secondAttribute="top" id="z4q-vU-ugp"/>
-                            <constraint firstItem="b31-Kn-3OJ" firstAttribute="leading" secondItem="klK-ZJ-wmA" secondAttribute="leading" id="z9j-lf-sI6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ijV-Vn-w9w"/>
                         <variation key="heightClass=compact">
@@ -241,9 +214,6 @@
                         <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
                         <outlet property="daxDialogContainer" destination="3ms-eB-DjL" id="ZC4-JT-yTi"/>
                         <outlet property="daxDialogContainerHeight" destination="E7k-RF-RsZ" id="oGk-WJ-UXB"/>
-                        <outlet property="logo" destination="ztc-nL-no3" id="Qa7-Ec-ESN"/>
-                        <outlet property="logoContainer" destination="b31-Kn-3OJ" id="B8v-C6-FUu"/>
-                        <outlet property="logoText" destination="MoC-yJ-9bp" id="z2p-Xx-D8a"/>
                         <outlet property="settingsButton" destination="kcN-YB-mZi" id="iyr-9W-6gY"/>
                     </connections>
                 </viewController>

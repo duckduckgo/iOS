@@ -70,7 +70,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             AppDelegate.shared.animateFromColdStart = false
             transitionFromColdStart()
         } else {
-            controller.logoContainer.isHidden = true
+            controller.logoContainer?.isHidden = true
         }
         
     }
@@ -79,7 +79,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         DispatchQueue.main.async {
             self.cell?.alpha = 0.0
             if let controller = self.controller?.parent,
-                let snapshot = self.controller?.logo.snapshotView(afterScreenUpdates: false),
+                let snapshot = self.controller?.logo?.snapshotView(afterScreenUpdates: false),
                 let targetFrame = self.cell?.imageView.superview?.convert(self.cell?.imageView.frame ?? .zero, to: controller.view) {
 
                 snapshot.center = controller.view.center
@@ -98,7 +98,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                 }
 
             }
-            self.controller?.logoContainer.isHidden = true
+            self.controller?.logoContainer?.isHidden = true
         }
     }
     

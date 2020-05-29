@@ -53,7 +53,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var statusBarBackground: UIView!
     @IBOutlet weak var findInPageView: FindInPageView!
     @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-    
+
+    @IBOutlet weak var logoContainer: UIView!
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logoText: UIImageView!
+
     weak var notificationView: NotificationView?
 
     var omniBar: OmniBar!
@@ -91,7 +95,7 @@ class MainViewController: UIViewController {
     var currentTab: TabViewController? {
         return tabManager?.current
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -1136,6 +1140,8 @@ extension MainViewController: Themable {
         tabManager.decorate(with: theme)
 
         findInPageView.decorate(with: theme)
+        
+        logoText.tintColor = theme.ddgTextTintColor
     }
     
 }

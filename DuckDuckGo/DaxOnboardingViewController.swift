@@ -48,18 +48,22 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        guard !view.isHidden else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
             self.transitionFromOnboarding()
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
-        if segue.destination is DaxDialogViewController {
-            self.daxDialog = segue.destination as? DaxDialogViewController
+        if let controller = segue.destination as? DaxDialogViewController {
+            self.daxDialog = controller
+        } else if let controller = segue.destination as? DaxOnboardingPadViewController {
+            controller.delegate = self
+        } else if let controller = segue.destination as? OnboardingViewController {
+            controller.delegate = self
+            controller.updateForDaxOnboarding()
         }
         
     }
@@ -71,7 +75,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         transitionIconSS.frame = self.transitionalIcon.frame
         view.addSubview(transitionIconSS)
         self.transitionalIcon.isHidden = true
-
+        
         let onboardingIconSS = self.onboardingIcon.snapshotView(afterScreenUpdates: false)!
         onboardingIconSS.frame = self.onboardingIcon.frame
         view.addSubview(onboardingIconSS)
@@ -136,7 +140,8 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     }
     
     @IBAction func onTapButton() {
-        delegate?.onboardingCompleted(controller: self)
+        let segue = isPad ? "AddToHomeRow-iPad" : "AddToHomeRow"
+        performSegue(withIdentifier: segue, sender: self)
     }
     
     func showDaxDialog(completion: @escaping () -> Void) {
@@ -156,6 +161,22 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         }, completion: { _ in
             completion()
         })
+    }
+    
+}
+
+extension DaxOnboardingViewController: OnboardingDelegate {
+    func onboardingCompleted(controller: UIViewController) {
+        self.view.isHidden = true
+        controller.dismiss(animated: true)
+        self.delegate?.onboardingCompleted(controller: self)
+    }
+}
+
+extension OnboardingViewController {
+    
+    func updateForDaxOnboarding() {
+        controllerNames = ["onboardingHomeRow"]
     }
     
 }

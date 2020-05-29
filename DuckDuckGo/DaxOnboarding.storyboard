@@ -147,6 +147,8 @@ DuckDuckGo!</string>
                         <outlet property="onboardingIcon" destination="DD1-q3-GlA" id="SPQ-F0-fac"/>
                         <outlet property="transitionalIcon" destination="HyA-WF-Cc8" id="FYZ-wh-6Ix"/>
                         <outlet property="welcomeMessage" destination="Lvy-9G-3gr" id="LF7-0T-sN4"/>
+                        <segue destination="CDH-8I-u6b" kind="presentation" identifier="AddToHomeRow" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="SBX-Oj-Pz8"/>
+                        <segue destination="V3g-Ms-vCf" kind="presentation" identifier="AddToHomeRow-iPad" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="XNL-bY-mB0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ank-Fd-gq5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -323,6 +325,53 @@ DuckDuckGo!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VkF-pV-fJc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="122" y="855"/>
+        </scene>
+        <!--Onboarding-->
+        <scene sceneID="ERR-yD-y2u">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QcI-Z6-5Ua" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Onboarding" id="CDH-8I-u6b" sceneMemberID="viewController"/>
+            </objects>
+            <point key="canvasLocation" x="2020" y="-21"/>
+        </scene>
+        <!--Dax Onboarding Pad View Controller-->
+        <scene sceneID="H80-CE-ohe">
+            <objects>
+                <viewController id="V3g-Ms-vCf" customClass="DaxOnboardingPadViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Np-n8-WVJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jk-eV-fMX">
+                                <rect key="frame" x="19.5" y="85" width="375" height="736"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="736" id="Yau-va-Ro7"/>
+                                    <constraint firstAttribute="width" constant="375" id="g5m-KJ-8Py"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="dz6-w4-asu" kind="embed" id="cV8-dk-K2T"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="4jk-eV-fMX" firstAttribute="centerY" secondItem="WZJ-Pp-XrR" secondAttribute="centerY" id="2Dz-WN-oS3"/>
+                            <constraint firstItem="4jk-eV-fMX" firstAttribute="centerX" secondItem="WZJ-Pp-XrR" secondAttribute="centerX" id="DOH-o6-zJI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WZJ-Pp-XrR"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FLI-YH-gVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2900" y="222"/>
+        </scene>
+        <!--Onboarding-->
+        <scene sceneID="0gg-Va-xn6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Onboarding" id="dz6-w4-asu" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n3Z-qy-gqt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4088" y="27"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

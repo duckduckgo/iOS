@@ -24,7 +24,7 @@ import UserNotifications
 import os.log
 
 @UIApplicationMain
-    class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"

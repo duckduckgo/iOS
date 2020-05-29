@@ -1,5 +1,5 @@
 //
-//  DissolveAnimatedTransitioning.swift
+//  FadeInOutAnimatedTransitioning.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,19 +19,28 @@
 
 import Core
 
-class DissolveAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
+class FadeInOutAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
 
     struct Constants {
         static let duration = 0.25
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromView = transitionContext.containerView
-        fromView.backgroundColor = UIColor.clear
-        fromView.alpha = 1
-
+        
+        let animatedView: UIView
+        let targetTransparency: CGFloat
+        if let toView = transitionContext.view(forKey: .to) {
+            animatedView = toView
+            toView.alpha = 0
+            transitionContext.containerView.addSubview(toView)
+            targetTransparency = 1
+        } else {
+            animatedView = transitionContext.view(forKey: .from)!
+            targetTransparency = 0
+        }
+    
         UIView.animate(withDuration: Constants.duration, animations: {
-            fromView.alpha = 0.0
+            animatedView.alpha = targetTransparency
         }, completion: { (_: Bool) in
             transitionContext.completeTransition(true)
         })

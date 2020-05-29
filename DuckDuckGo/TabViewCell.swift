@@ -54,6 +54,7 @@ class TabViewCell: UICollectionViewCell {
     var canDelete = false
 
     @IBOutlet weak var background: UIView!
+    @IBOutlet weak var shadow: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var removeButton: UIButton!
@@ -66,6 +67,22 @@ class TabViewCell: UICollectionViewCell {
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
         recognizer.delegate = self
         addGestureRecognizer(recognizer)
+        
+        setupSubviews()
+    }
+    
+    private func setupSubviews() {
+        
+        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
+        
+        shadow.backgroundColor = .clear
+        shadow.layer.shadowColor = UIColor.black.cgColor
+        shadow.layer.shadowOffset = CGSize(width: 0, height: 1)
+        shadow.layer.shadowRadius = 5.0
+        shadow.layer.shadowOpacity = 0.3
+        shadow.layer.masksToBounds = false
+        shadow.layer.shadowPath = UIBezierPath(roundedRect: shadow.layer.bounds,
+                                               cornerRadius: shadow.layer.cornerRadius).cgPath
     }
 
     var startX: CGFloat = 0
@@ -153,8 +170,6 @@ class TabViewCell: UICollectionViewCell {
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
-        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
-        background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
@@ -176,6 +191,13 @@ class TabViewCell: UICollectionViewCell {
             removeButton.isHidden = false
             configureFavicon(forDomain: tab.link?.url.host)
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        shadow.layer.shadowPath = UIBezierPath(roundedRect: shadow.layer.bounds,
+                                               cornerRadius: shadow.layer.cornerRadius).cgPath
     }
 
     private func removeTabObserver() {

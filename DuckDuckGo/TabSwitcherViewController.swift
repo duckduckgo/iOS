@@ -263,20 +263,6 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        let reuseIdentifier = TabsFooter.reuseIdentifier
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                         withReuseIdentifier: reuseIdentifier,
-                                                                         for: indexPath) as? TabsFooter else {
-            fatalError("Failed to dequeue footer \(TabsFooter.reuseIdentifier) as TabsFooter")
-        }
-        view.decorate(with: ThemeManager.shared.currentTheme)
-        return view
-    }
-
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegate {
@@ -319,9 +305,11 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 extension TabSwitcherViewController: Themable {
     
     func decorate(with theme: Theme) {
-        titleView.textColor = theme.tintOnBlurColor
-        settingsButton.tintColor = theme.tintOnBlurColor
-        bookmarkAllButton.tintColor = theme.tintOnBlurColor
+        view.backgroundColor = theme.backgroundColor
+        
+        titleView.textColor = theme.barTintColor
+        settingsButton.tintColor = theme.barTintColor
+        bookmarkAllButton.tintColor = theme.barTintColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

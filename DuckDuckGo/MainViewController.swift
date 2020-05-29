@@ -87,7 +87,8 @@ class MainViewController: UIViewController {
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
 
-    fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
+    fileprivate lazy var blurTransition = CompositeTransition(presenting: FadeInOutAnimatedTransitioning(),
+                                                              dismissing: FadeInOutAnimatedTransitioning())
 
     var currentTab: TabViewController? {
         return tabManager?.current

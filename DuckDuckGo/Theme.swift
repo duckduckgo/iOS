@@ -65,6 +65,10 @@ protocol Theme {
     var tableCellHighlightedBackgroundColor: UIColor { get }
     var tableHeaderTextColor: UIColor { get }
     
+    var tabSwitcherCellBackgroundColor: UIColor { get }
+    var tabSwitcherCellBorderColor: UIColor { get }
+    var tabSwitcherCellTextColor: UIColor { get }
+    
     var iconCellBorderColor: UIColor { get }
     
     var buttonTintColor: UIColor { get }

@@ -55,10 +55,11 @@ class TabViewCell: UICollectionViewCell {
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var shadow: UIView!
+    @IBOutlet weak var border: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var removeButton: UIButton!
-    @IBOutlet weak var unread: UIView!
+    @IBOutlet weak var unread: UIImageView!
     @IBOutlet weak var preview: UIImageView!
     @IBOutlet weak var previewHeight: NSLayoutConstraint!
 
@@ -72,8 +73,8 @@ class TabViewCell: UICollectionViewCell {
     }
     
     private func setupSubviews() {
-        
-        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
+
+        unread.tintColor = .cornflowerBlue
         
         shadow.backgroundColor = .clear
         shadow.layer.shadowColor = UIColor.black.cgColor
@@ -157,7 +158,8 @@ class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func update(withTab tab: Tab, preview: UIImage?, homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+    func update(withTab tab: Tab,
+                preview: UIImage?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
@@ -169,7 +171,9 @@ class TabViewCell: UICollectionViewCell {
         }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
-        background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+        decorate(with: ThemeManager.shared.currentTheme)
+        
+        border.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
@@ -230,6 +234,21 @@ extension TabViewCell: TabObserver {
 //        update(withTab: tab) FIXME
     }
     
+}
+
+extension TabViewCell: Themable {
+    
+    func decorate(with theme: Theme) {
+        border.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
+        
+        unread.image = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                    borderWidth: 6.0,
+                                                     foregroundColor: .cornflowerBlue,
+                                                     borderColor: theme.tabSwitcherCellBackgroundColor)
+        
+        background.backgroundColor = theme.tabSwitcherCellBackgroundColor
+        title.textColor = theme.tabSwitcherCellTextColor
+    }
 }
 
 extension TabViewCell: UIGestureRecognizerDelegate {

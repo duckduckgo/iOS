@@ -313,5 +313,7 @@ extension TabSwitcherViewController: Themable {
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
+        
+        collectionView.reloadData()
     }
 }

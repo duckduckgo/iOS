@@ -85,12 +85,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                 snapshot.center = controller.view.center
                 controller.view.addSubview(snapshot)
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    UIView.animate(withDuration: 0.5, animations: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    UIView.animate(withDuration: 0.2, animations: {
                         snapshot.center = CGPoint(x: targetFrame.midX, y: targetFrame.midY)
-
                     }, completion: { _ in
-                        UIView.animate(withDuration: 0.3, animations: {
+                        UIView.animate(withDuration: 0.2, animations: {
                             self.cell?.alpha = 1.0
                         }, completion: { _ in
                             snapshot.removeFromSuperview()

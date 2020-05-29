@@ -61,7 +61,7 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIImageView!
     @IBOutlet weak var preview: UIImageView!
-    @IBOutlet weak var previewHeight: NSLayoutConstraint!
+    weak var previewAspectRatio: NSLayoutConstraint?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -84,6 +84,17 @@ class TabViewCell: UICollectionViewCell {
         shadow.layer.masksToBounds = false
         shadow.layer.shadowPath = UIBezierPath(roundedRect: shadow.layer.bounds,
                                                cornerRadius: shadow.layer.cornerRadius).cgPath
+        
+        setupPreview(aspecRatio: 1.0)
+    }
+    
+    private func setupPreview(aspecRatio: CGFloat) {
+        if let constraint = previewAspectRatio {
+            preview.removeConstraint(constraint)
+        }
+        
+        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspecRatio)
+        previewAspectRatio?.isActive = true
     }
 
     var startX: CGFloat = 0
@@ -184,8 +195,10 @@ class TabViewCell: UICollectionViewCell {
         unread.isHidden = tab.viewed
         
         if let img = preview {
-            self.previewHeight.constant = 180 * (img.size.height / img.size.width)
+            setupPreview(aspecRatio: img.size.height / img.size.width)
             self.preview.image = img
+        } else {
+            self.preview.image = nil
         }
 
         if tab.link == nil {

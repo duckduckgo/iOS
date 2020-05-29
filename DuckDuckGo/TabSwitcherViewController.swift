@@ -49,9 +49,16 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
+        setupBackgroundView()
         currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
         becomeFirstResponder()
+    }
+    
+    func setupBackgroundView() {
+        let view = UIView(frame: collectionView.frame)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:))))
+        collectionView.backgroundView = view
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +67,10 @@ class TabSwitcherViewController: UIViewController {
         collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
         
         collectionView.reloadData()
+    }
+    
+    @objc func handleTap(gesture: UITapGestureRecognizer) {
+        dismiss()
     }
 
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -294,10 +305,18 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 
+    private func calculateNumberOfColumns(minimumColumnWidth: Int, maxColumns: Int) -> Int {
+        let screenWidth = Int(collectionView.bounds.width)
+        let numberOfColumns = Int(screenWidth / minimumColumnWidth)
+        return min(maxColumns, numberOfColumns)
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 180)
+        
+        let columns = calculateNumberOfColumns(minimumColumnWidth: 180, maxColumns: 4)
+        return CGSize(width: Int(collectionView.bounds.width) / columns, height: 180)
     }
     
 }

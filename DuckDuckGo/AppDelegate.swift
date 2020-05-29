@@ -30,10 +30,17 @@ import os.log
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
     
+    static var shared: AppDelegate {
+        // swiftlint:disable force_cast
+        return UIApplication.shared.delegate as! AppDelegate
+        // swiftlint:enable force_cast
+    }
+    
     private var testing = false
     private var appIsLaunching = false
     var overlayWindow: UIWindow?
     var window: UIWindow?
+    var animateFromColdStart = false
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
@@ -81,6 +88,7 @@ import os.log
         
         clearLegacyAllowedDomainCookies()
     
+        animateFromColdStart = true
         appIsLaunching = true
         return true
     }

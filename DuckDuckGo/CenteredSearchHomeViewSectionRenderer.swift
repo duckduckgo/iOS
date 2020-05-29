@@ -43,7 +43,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var heightRatio: CGFloat {
         return fixed ? 1.875 : 2.0
     }
-    
+        
     private var indexPath: IndexPath?
     
     private let fixed: Bool
@@ -65,9 +65,44 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
         
-        controller.logoContainer.isHidden = true
+        // only do this if cold start and keyboard on launch is off
+        if !KeyboardSettings().onAppLaunch && (isPortrait || isPad) && AppDelegate.shared.animateFromColdStart {
+            AppDelegate.shared.animateFromColdStart = false
+            transitionFromColdStart()
+        } else {
+            controller.logoContainer.isHidden = true
+        }
+        
     }
         
+    private func transitionFromColdStart() {
+        DispatchQueue.main.async {
+            self.cell?.alpha = 0.0
+            if let controller = self.controller?.parent,
+                let snapshot = self.controller?.logo.snapshotView(afterScreenUpdates: false),
+                let targetFrame = self.cell?.imageView.superview?.convert(self.cell?.imageView.frame ?? .zero, to: controller.view) {
+
+                snapshot.center = controller.view.center
+                controller.view.addSubview(snapshot)
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    UIView.animate(withDuration: 0.5, animations: {
+                        snapshot.center = CGPoint(x: targetFrame.midX, y: targetFrame.midY)
+
+                    }, completion: { _ in
+                        UIView.animate(withDuration: 0.3, animations: {
+                            self.cell?.alpha = 1.0
+                        }, completion: { _ in
+                            snapshot.removeFromSuperview()
+                        })
+                    })
+                }
+
+            }
+            self.controller?.logoContainer.isHidden = true
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         indexPath = IndexPath(row: 0, section: section)
         return 1

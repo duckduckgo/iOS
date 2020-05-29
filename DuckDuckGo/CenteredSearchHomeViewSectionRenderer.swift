@@ -66,8 +66,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         cell?.searchHeaderTransition = 0.0
         
         // only do this if cold start and keyboard on launch is off
-        if !KeyboardSettings().onAppLaunch && (isPortrait || isPad) && AppDelegate.shared.animateFromColdStart {
-            AppDelegate.shared.animateFromColdStart = false
+        if !KeyboardSettings().onAppLaunch && (isPortrait || isPad) && AppDelegate.shared.appIsLaunching {
             transitionFromColdStart()
         } else {
             controller.logoContainer?.isHidden = true

@@ -37,10 +37,9 @@ import os.log
     }
     
     private var testing = false
-    private var appIsLaunching = false
+    var appIsLaunching = false
     var overlayWindow: UIWindow?
     var window: UIWindow?
-    var animateFromColdStart = false
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
@@ -87,8 +86,7 @@ import os.log
         }
         
         clearLegacyAllowedDomainCookies()
-    
-        animateFromColdStart = true
+        
         appIsLaunching = true
         return true
     }

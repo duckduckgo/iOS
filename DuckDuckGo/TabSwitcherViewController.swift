@@ -42,6 +42,8 @@ class TabSwitcherViewController: UIViewController {
     weak var tabsModel: TabsModel!
     weak var previewsSource: TabPreviewsSource!
     
+    weak var reorderGestureRecognizer: UIGestureRecognizer?
+    
     override var canBecomeFirstResponder: Bool { return true }
     
     var currentSelection: Int?
@@ -64,7 +66,12 @@ class TabSwitcherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
+        if reorderGestureRecognizer == nil {
+            let recognizer = UILongPressGestureRecognizer(target: self,
+                                                          action: #selector(handleLongPress(gesture:)))
+            collectionView.addGestureRecognizer(recognizer)
+            reorderGestureRecognizer = recognizer
+        }
         
         collectionView.reloadData()
     }
@@ -269,7 +276,9 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         
         if indexPath.row < tabsModel.count {
             let tab = tabsModel.get(tabAt: indexPath.row)
-            cell.update(withTab: tab, preview: previewsSource.preview(for: tab))
+            cell.update(withTab: tab,
+                        preview: previewsSource.preview(for: tab),
+                        reorderRecognizer: reorderGestureRecognizer)
         }
         
         return cell

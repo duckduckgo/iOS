@@ -38,6 +38,7 @@ class TabViewCell: UICollectionViewCell {
         static let selectedAlpha: CGFloat = 1.0
         static let unselectedAlpha: CGFloat = 0.92
         static let swipeToDeleteAlpha: CGFloat = 0.5
+        static let cellShadowMargin: CGFloat = 10.0
         
     }
     
@@ -62,6 +63,7 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var unread: UIImageView!
     @IBOutlet weak var preview: UIImageView!
     weak var previewAspectRatio: NSLayoutConstraint?
+    weak var collectionReorderRecognizer: UIGestureRecognizer?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -84,6 +86,8 @@ class TabViewCell: UICollectionViewCell {
         shadow.layer.masksToBounds = false
         shadow.layer.shadowPath = UIBezierPath(roundedRect: shadow.layer.bounds,
                                                cornerRadius: shadow.layer.cornerRadius).cgPath
+        shadow.layer.shouldRasterize = true
+        shadow.layer.rasterizationScale = UIScreen.main.scale
         
         setupPreview(aspecRatio: 1.0)
     }
@@ -170,12 +174,14 @@ class TabViewCell: UICollectionViewCell {
     }
 
     func update(withTab tab: Tab,
-                preview: UIImage?) {
+                preview: UIImage?,
+                reorderRecognizer: UIGestureRecognizer?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
         tab.addObserver(self)
         self.tab = tab
+        self.collectionReorderRecognizer = reorderRecognizer
 
         if !isDeleting {
             isHidden = false
@@ -213,7 +219,12 @@ class TabViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        shadow.layer.shadowPath = UIBezierPath(roundedRect: shadow.layer.bounds,
+        // Using shadow.layer bounds here returns wrong (old) frame when rotating
+        var cellBounds = bounds
+        cellBounds.size.width -= 2 * Constants.cellShadowMargin
+        cellBounds.size.height -= 2 * Constants.cellShadowMargin
+        
+        shadow.layer.shadowPath = UIBezierPath(roundedRect: cellBounds,
                                                cornerRadius: shadow.layer.cornerRadius).cgPath
     }
 
@@ -275,6 +286,13 @@ extension TabViewCell: UIGestureRecognizerDelegate {
         guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return true }
         let velocity = pan.velocity(in: self)
         return abs(velocity.y) < abs(velocity.x)
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard otherGestureRecognizer == collectionReorderRecognizer else {
+            return false
+        }
+        return true
     }
     
 }

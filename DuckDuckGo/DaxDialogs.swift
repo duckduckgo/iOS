@@ -186,20 +186,23 @@ class DaxDialogs {
     
     private func trackersBlockedMessage(_ trackersBlocked: (major: [Entity], other: [Entity])) -> BrowsingSpec? {
         guard !settings.browsingWithTrackersShown else { return nil }
-        settings.browsingWithTrackersShown = true
 
         switch trackersBlocked {
             
         case let x where x.major.count == 1 && x.other.count == 0:
+            settings.browsingWithTrackersShown = true
             return BrowsingSpec.withOneMajorTracker.format(args: x.major[0].displayName ?? "")
 
         case let x where x.major.count == 1 && x.other.count > 0:
+            settings.browsingWithTrackersShown = true
             return BrowsingSpec.withOneMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.other.count)
 
         case let x where x.major.count == 2 && x.other.count == 0:
+            settings.browsingWithTrackersShown = true
             return BrowsingSpec.withTwoMajorTrackers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "")
 
         case let x where x.major.count == 2 && x.other.count > 0:
+            settings.browsingWithTrackersShown = true
             return BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "", x.other.count)
 
         default: return nil

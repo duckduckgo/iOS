@@ -21,7 +21,7 @@ import XCTest
 @testable import DuckDuckGo
 
 class DaxDialogsBrowsingSpecTests: XCTestCase {
-
+    
     func testWhenSiteIsOwnedByMajorTrackerIsFormattedThenContainsNamesDomainAndPercentage() {
         let majorTracker1 = "TestTracker1"
         let domain = "testtracker.com"

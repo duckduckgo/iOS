@@ -1,5 +1,5 @@
 //
-//  DaxDialogBrowserSpecTests.swift
+//  DaxDialogsBrowsingSpecTests.swift
 //  UnitTests
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import XCTest
 @testable import DuckDuckGo
 
-class DaxDialogBrowserSpecTests: XCTestCase {
+class DaxDialogsBrowsingSpecTests: XCTestCase {
 
     func testWhenSiteIsOwnedByMajorTrackerIsFormattedThenContainsNamesDomainAndPercentage() {
         let majorTracker1 = "TestTracker1"

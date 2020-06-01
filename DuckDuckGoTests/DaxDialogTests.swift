@@ -1,5 +1,5 @@
 //
-//  DaxOnboardingTests.swift
+//  DaxDialogTests.swift
 //  UnitTests
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
-class DaxOnboardingTests: XCTestCase {
+class DaxDialogTests: XCTestCase {
     
     struct URLs {
         
@@ -100,12 +100,14 @@ class DaxOnboardingTests: XCTestCase {
 
     func testWhenFirstTimeOnFacebookThenShowMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.facebook)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Facebook", 39.0),
+                       onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnGoogleThenShowMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.google)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker, onboarding.nextBrowsingMessage(siteRating: siteRating))
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Google", 92.0),
+                       onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenSecondTimeOnPageWithNoTrackersThenTrackersThenShowNothing() {

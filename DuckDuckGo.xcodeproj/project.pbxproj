@@ -198,7 +198,7 @@
 		857D1DCD22401F0200833940 /* NotFoundCachingImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D02469BCDE00C36F8A /* DaxDialogs.swift */; };
-		858650D32469BFAD00C36F8A /* DaxOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */; };
+		858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxDialogTests.swift */; };
 		858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */; };
 		858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */; };
 		858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858650DA246B111900C36F8A /* DaxOnboarding.xcassets */; };
@@ -810,7 +810,7 @@
 		857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotFoundCachingImageDownloader.swift; path = DuckDuckGoTests/NotFoundCachingImageDownloader.swift; sourceTree = SOURCE_ROOT; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
 		858650D02469BCDE00C36F8A /* DaxDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogs.swift; sourceTree = "<group>"; };
-		858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingTests.swift; sourceTree = "<group>"; };
+		858650D22469BFAD00C36F8A /* DaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogTests.swift; sourceTree = "<group>"; };
 		858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DaxOnboarding.storyboard; sourceTree = "<group>"; };
 		858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingViewController.swift; sourceTree = "<group>"; };
 		858650DA246B111900C36F8A /* DaxOnboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DaxOnboarding.xcassets; sourceTree = "<group>"; };
@@ -1795,7 +1795,7 @@
 		85C29705247BDCE60063A335 /* Dax */ = {
 			isa = PBXGroup;
 			children = (
-				858650D22469BFAD00C36F8A /* DaxOnboardingTests.swift */,
+				858650D22469BFAD00C36F8A /* DaxDialogTests.swift */,
 				85C29706247BDCFF0063A335 /* DaxDialogsBrowsingSpecTests.swift */,
 			);
 			name = Dax;
@@ -3710,7 +3710,7 @@
 				85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */,
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
-				858650D32469BFAD00C36F8A /* DaxOnboardingTests.swift in Sources */,
+				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */,
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				853C5F6321C3D667001F7A05 /* EnhancedHomePageVariantManagerTests.swift in Sources */,

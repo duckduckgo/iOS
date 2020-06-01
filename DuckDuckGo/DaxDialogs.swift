@@ -47,7 +47,7 @@ class DaxDialogs {
                                               message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA)
         
-        static let withoutTrackers = BrowsingSpec(height: 340,
+        static let withoutTrackers = BrowsingSpec(height: 260,
                                                   message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA)
         
@@ -69,7 +69,7 @@ class DaxDialogs {
         
         static let withTwoMajorTrackers = BrowsingSpec(height: 340,
                                                        message: UserText.daxDialogBrowsingTwoMajorTrackers,
-                                                       cta: UserText.daxDialogBrowsingTwoMajorTrackers)
+                                                       cta: UserText.daxDialogBrowsingTwoMajorTrackersCTA)
         
         static let withTwoMajorTrackersAndOthers = BrowsingSpec(height: 340,
                                                                message: UserText.daxDialogBrowsingTwoMajorTrackersWithOthers,
@@ -113,7 +113,7 @@ class DaxDialogs {
         }
         
         if isMajorTracker(host) {
-            return majorTrackerMessage()
+            return majorTrackerMessage(host)
         }
         
         if let owner = majorTrackerOwnerOf(host) {
@@ -161,16 +161,21 @@ class DaxDialogs {
 
     func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingOwnedByMajorTrackingSiteShown else { return nil }
+        guard let entityName = majorTrackerEntity.displayName,
+            let entityPrevalence = majorTrackerEntity.prevalence else { return nil }
         settings.browsingOwnedByMajorTrackingSiteShown = true
         return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."),
-                                                           majorTrackerEntity.displayName ?? "",
-                                                           majorTrackerEntity.prevalence ?? 0.0)
+                                                           entityName,
+                                                           entityPrevalence)
     }
     
-    private func majorTrackerMessage() -> DaxDialogs.BrowsingSpec? {
+    private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
+        guard let entity = TrackerDataManager.shared.findEntity(forHost: host),
+            let entityName = entity.displayName,
+            let entityPrevalence = entity.prevalence else { return nil }
         settings.browsingMajorTrackingSiteShown = true
-        return BrowsingSpec.siteIsMajorTracker
+        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, entityPrevalence)
     }
     
     private func searchMessage() -> BrowsingSpec? {

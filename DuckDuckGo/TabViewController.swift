@@ -779,7 +779,14 @@ extension TabViewController: WKNavigationDelegate {
                 completion(image)
             }
         } else {
-            // Fallback on earlier versions
+            DispatchQueue.main.async { [weak self] in
+                guard let webView = self?.webView else { completion(nil); return }
+                UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                completion(image)
+            }
         }
     }
     

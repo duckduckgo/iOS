@@ -1032,13 +1032,12 @@ extension MainViewController: TabSwitcherButtonDelegate {
             currentTab.preparePreview(completion: { image in
                 if let image = image {
                     self.previewsSource.update(preview: image,
-                                          forTab: currentTab.tabModel)
+                                               forTab: currentTab.tabModel)
                 }
-                self.performSegue(withIdentifier: "ShowTabs", sender: self)
             })
         }
+        performSegue(withIdentifier: "ShowTabs", sender: self)
     }
-
 }
 
 extension MainViewController: GestureToolbarButtonDelegate {

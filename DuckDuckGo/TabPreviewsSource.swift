@@ -85,13 +85,11 @@ class TabPreviewsSource {
     }
     
     private func store(preview: UIImage, forTab tab: Tab) {
-        guard let url = previewLocation(for: tab),
-            let data = preview.pngData() else { return }
-
-        do {
-            try data.write(to: url)
-        } catch {
-            print(error)
+        guard let url = previewLocation(for: tab) else { return }
+        
+        DispatchQueue.global(qos: .utility).async {
+            guard let data = preview.pngData() else { return }
+            try? data.write(to: url)
         }
     }
     

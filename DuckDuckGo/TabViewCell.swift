@@ -100,6 +100,24 @@ class TabViewCell: UICollectionViewCell {
         previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspecRatio)
         previewAspectRatio?.isActive = true
     }
+    
+    private static var darkThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                                     borderWidth: 6.0,
+                                                                                     foregroundColor: .cornflowerBlue,
+                                                                                     borderColor: DarkTheme().tabSwitcherCellBackgroundColor)
+    private static var lighThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                                     borderWidth: 6.0,
+                                                                                     foregroundColor: .cornflowerBlue,
+                                                                                     borderColor: LightTheme().tabSwitcherCellBackgroundColor)
+    
+    private static func unreadImage(for theme: Theme) -> UIImage {
+        switch theme.currentImageSet {
+        case .dark:
+            return darkThemeUnreadImage
+        case .light:
+            return lighThemeUnreadImage
+        }
+    }
 
     var startX: CGFloat = 0
     @objc func handleSwipe(recognizer: UIGestureRecognizer) {
@@ -250,11 +268,7 @@ extension TabViewCell: Themable {
     
     func decorate(with theme: Theme) {
         border.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
-        
-        unread.image = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
-                                                                    borderWidth: 6.0,
-                                                     foregroundColor: .cornflowerBlue,
-                                                     borderColor: theme.tabSwitcherCellBackgroundColor)
+        unread.image = Self.unreadImage(for: theme)
         
         background.backgroundColor = theme.tabSwitcherCellBackgroundColor
         title.textColor = theme.tabSwitcherCellTextColor

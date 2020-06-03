@@ -44,15 +44,13 @@ class DaxDialogTests: XCTestCase {
 
         // swiftlint:disable line_length
         let testCases = [
-            (urls: [ URLs.amazon ], expected: nil, line: #line),
-            
-            (urls: [ URLs.google ], expected: DaxDialogs.BrowsingSpec.withOneMajorTracker.format(args: "Google"), line: #line),
-            (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withOneMajorTrackerAndOthers.format(args: "Google", 1), line: #line),
+            (urls: [ URLs.google ], expected: DaxDialogs.BrowsingSpec.withOneTracker.format(args: "Google"), line: #line),
+            (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Amazon.com"), line: #line),
             
             // The order of trackers shouldn't matter, google should be first due to higher prevalence
-            (urls: [ URLs.facebook, URLs.google ], expected: DaxDialogs.BrowsingSpec.withTwoMajorTrackers.format(args: "Google", "Facebook"), line: #line),
+            (urls: [ URLs.facebook, URLs.google ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Facebook"), line: #line),
             
-            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: "Google", "Facebook", 1), line: #line)
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: "Google", "Facebook", 1), line: #line)
         ]
         // swiftlint:enable line_length
 
@@ -82,16 +80,6 @@ class DaxDialogTests: XCTestCase {
                                       knownTracker: knownTracker,
                                       entity: entity,
                                       blocked: true)
-    }
-    
-    func testWhenSiteHasMajorTrackerAfterSiteWithTrackersButNoMajorTrackerThenMessageShown() {
-        let siteRating1 = SiteRating(url: URLs.example)
-        siteRating1.trackerDetected(detectedTrackerFrom(URLs.amazon))
-        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating1))
-
-        let siteRating2 = SiteRating(url: URLs.example)
-        siteRating2.trackerDetected(detectedTrackerFrom(URLs.google))
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating2))
     }
 
     func testWhenSecondTimeOnSiteThatIsOwnedByFacebookThenShowNothing() {

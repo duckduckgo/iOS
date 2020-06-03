@@ -290,15 +290,12 @@ public struct UserText {
     public static let daxDialogBrowsingSiteOwnedByMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker", comment: "Heads up! %1$@ is owned by %2$@.")
     public static let daxDialogBrowsingSiteOwnedByMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker.cta", comment: "Got It")
 
-    public static let daxDialogBrowsingOneMajorTracker = NSLocalizedString("dax.onboarding.browsing.one.major.tracker", comment: "*%1$@* was trying to track you here.")
-    public static let daxDialogBrowsingOneMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.one.major.tracker.cta", comment: "High Five!")
+    public static let daxDialogBrowsingWithOneTracker = NSLocalizedString("dax.onboarding.browsing.one.tracker", comment: "*%1$@* was trying to track you here.")
+    public static let daxDialogBrowsingWithOneTrackerCTA = NSLocalizedString("dax.onboarding.browsing.one.tracker.cta", comment: "High Five!")
 
-    public static let daxDialogBrowsingOneMajorTrackerWithOthers = NSLocalizedString("dax.onboarding.browsing.one.major.tracker.with.others", comment: "*%1$@* and *%2$d others* were trying to track you here.")
-    public static let daxDialogBrowsingOneMajorTrackerWithOthersCTA = NSLocalizedString("dax.onboarding.browsing.one.major.tracker.with.others.cta", comment: "High Five!")
+    public static let daxDialogBrowsingWithTwoTrackers = NSLocalizedString("dax.onboarding.browsing.two.trackers", comment: "*%1$@ and %2$@* were trying to track you here.")
+    public static let daxDialogBrowsingWithTwoTrackersCTA = NSLocalizedString("dax.onboarding.browsing.two.trackers.cta", comment: "High Five!")
 
-    public static let daxDialogBrowsingTwoMajorTrackers = NSLocalizedString("dax.onboarding.browsing.two.major.trackers", comment: "*%1$@ and %2$@* were trying to track you here.")
-    public static let daxDialogBrowsingTwoMajorTrackersCTA = NSLocalizedString("dax.onboarding.browsing.two.major.trackers.cta", comment: "High Five!")
-
-    public static let daxDialogBrowsingTwoMajorTrackersWithOthers = NSLocalizedString("dax.onboarding.browsing.two.major.trackers.with.others", comment: "*%1$@, %2$@* and *%3$d others* were trying to track you here.")
-    public static let daxDialogBrowsingTwoMajorTrackersWithOthersCTA = NSLocalizedString("dax.onboarding.browsing.two.major.trackers.with.others.cta", comment: "High Five!")
+    public static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.browsing.multiple.trackers", comment: "*%1$@, %2$@* and *%3$d others* were trying to track you here.")
+    public static let daxDialogBrowsingWithMultipleTrackersCTA = NSLocalizedString("dax.onboarding.browsing.multiple.trackers.cta", comment: "High Five!")
 }

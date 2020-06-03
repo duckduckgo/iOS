@@ -59,21 +59,17 @@ class DaxDialogs {
                                                           message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA)
         
-        static let withOneMajorTracker = BrowsingSpec(height: 340,
-                                                      message: UserText.daxDialogBrowsingOneMajorTracker,
-                                                      cta: UserText.daxDialogBrowsingOneMajorTrackerCTA)
+        static let withOneTracker = BrowsingSpec(height: 340,
+                                                      message: UserText.daxDialogBrowsingWithOneTracker,
+                                                      cta: UserText.daxDialogBrowsingWithOneTrackerCTA)
 
-        static let withOneMajorTrackerAndOthers = BrowsingSpec(height: 340,
-                                                               message: UserText.daxDialogBrowsingOneMajorTrackerWithOthers,
-                                                               cta: UserText.daxDialogBrowsingOneMajorTrackerWithOthersCTA)
+        static let withTwoTrackers = BrowsingSpec(height: 340,
+                                                       message: UserText.daxDialogBrowsingWithTwoTrackers,
+                                                       cta: UserText.daxDialogBrowsingWithTwoTrackersCTA)
         
-        static let withTwoMajorTrackers = BrowsingSpec(height: 340,
-                                                       message: UserText.daxDialogBrowsingTwoMajorTrackers,
-                                                       cta: UserText.daxDialogBrowsingTwoMajorTrackersCTA)
-        
-        static let withTwoMajorTrackersAndOthers = BrowsingSpec(height: 340,
-                                                               message: UserText.daxDialogBrowsingTwoMajorTrackersWithOthers,
-                                                               cta: UserText.daxDialogBrowsingTwoMajorTrackersWithOthersCTA)
+        static let withMutipleTrackers = BrowsingSpec(height: 340,
+                                                               message: UserText.daxDialogBrowsingWithMultipleTrackers,
+                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA)
 
         let height: CGFloat
         let message: String
@@ -112,11 +108,11 @@ class DaxDialogs {
             return searchMessage()
         }
         
-        if isMajorTracker(host) {
+        if isFacebookOrGoogle(host) {
             return majorTrackerMessage(host)
         }
         
-        if let owner = majorTrackerOwnerOf(host) {
+        if let owner = isOwnedByFacebookOrGoogle(host) {
             return majorTrackerOwnerMessage(host, owner)
         }
         
@@ -124,8 +120,8 @@ class DaxDialogs {
             return noTrackersMessage()
         }
         
-        if let trackersBlocked = trackersBlocked(siteRating) {
-            return trackersBlockedMessage(trackersBlocked)
+        if let entities = entitiesBlocked(siteRating) {
+            return trackersBlockedMessage(entities)
         }
         
         return nil
@@ -184,59 +180,43 @@ class DaxDialogs {
         return BrowsingSpec.afterSearch
     }
     
-    private func trackersBlockedMessage(_ trackersBlocked: (major: [Entity], other: [Entity])) -> BrowsingSpec? {
+    private func trackersBlockedMessage(_ entitiesBlocked: [Entity]) -> BrowsingSpec? {
         guard !settings.browsingWithTrackersShown else { return nil }
 
-        switch trackersBlocked {
+        switch entitiesBlocked.count {
+
+        case 0:
+            return nil
             
-        case let x where x.major.count == 1 && x.other.count == 0:
+        case 1:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withOneMajorTracker.format(args: x.major[0].displayName ?? "")
-
-        case let x where x.major.count == 1 && x.other.count > 0:
+            return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0].displayName ?? "")
+            
+        case 2:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withOneMajorTrackerAndOthers.format(args: x.major[0].displayName ?? "", x.other.count)
-
-        case let x where x.major.count == 2 && x.other.count == 0:
+            return BrowsingSpec.withTwoTrackers.format(args: entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
+            
+        default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withTwoMajorTrackers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "")
-
-        case let x where x.major.count == 2 && x.other.count > 0:
-            settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withTwoMajorTrackersAndOthers.format(args: x.major[0].displayName ?? "", x.major[1].displayName ?? "", x.other.count)
-
-        default: return nil
+            return BrowsingSpec.withMutipleTrackers.format(args:
+                entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
         }
 
     }
  
-    private func trackersBlocked(_ siteRating: SiteRating) -> (major: [Entity], other: [Entity])? {
+    private func entitiesBlocked(_ siteRating: SiteRating) -> [Entity]? {
         guard !siteRating.trackersBlocked.isEmpty else { return nil }
-
-        var major = Set<Entity>()
-        var other = Set<Entity>()
-        
-        siteRating.trackersBlocked.forEach {
-            guard let entity = $0.entity else { return }
-            if entity.domains?.contains(MajorTrackers.facebookDomain) ?? false {
-                major.insert(entity)
-            } else if entity.domains?.contains(MajorTrackers.googleDomain) ?? false {
-                major.insert(entity)
-            } else {
-                other.insert(entity)
-            }
-        }
-        
-        return (Array(major).sorted(by: { $0.prevalence ?? 0.0 > $1.prevalence ?? 0.0 }), Array(other))
+        let entities = Set<Entity>(siteRating.trackersBlocked.compactMap { $0.entity })
+        return Array(entities).sorted(by: { $0.prevalence ?? 0.0 > $1.prevalence ?? 0.0 })
     }
     
-    private func isMajorTracker(_ host: String) -> Bool {
+    private func isFacebookOrGoogle(_ host: String) -> Bool {
         return [ MajorTrackers.facebookDomain, MajorTrackers.googleDomain ].contains { domain in
             return domain == host || host.hasSuffix("." + domain)
         }
     }
     
-    private func majorTrackerOwnerOf(_ host: String) -> Entity? {
+    private func isOwnedByFacebookOrGoogle(_ host: String) -> Entity? {
         guard let entity = TrackerDataManager.shared.findEntity(forHost: host) else { return nil }
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
     }

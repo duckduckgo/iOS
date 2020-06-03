@@ -346,5 +346,5 @@
 "dax.onboarding.browsing.multiple.trackers" = "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
 "dax.onboarding.browsing.multiple.trackers.cta"  = "High Five!";
 
-"dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! 😅 Searching and browsing privately is easier than you think.";
+"dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";
 }

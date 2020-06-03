@@ -54,6 +54,11 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        daxDialog?.message = UserText.daxDialogOnboardingMessage
+        let requiredHeight = daxDialog?.requiredHeight ?? 0.0
+        daxDialogContainerHeight.constant = requiredHeight
+
         button.displayDropShadow()
         daxIcon.isHidden = true
     }
@@ -71,9 +76,6 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         
         if let controller = segue.destination as? DaxDialogViewController {
             self.daxDialog = controller
-            daxDialog?.message = UserText.daxDialogOnboardingMessage
-            let requiredHeight = daxDialog?.requiredHeight ?? 0.0
-            daxDialogContainerHeight.constant = requiredHeight
         } else if let controller = segue.destination as? DaxOnboardingPadViewController {
             controller.delegate = self
         } else if let controller = segue.destination as? OnboardingViewController {

@@ -47,11 +47,12 @@ class DaxDialogViewController: UIViewController {
         guard let message = message else { return 0 }
         let attr = attributedString(from: message)
         let height = attr.requiredTextHeight(forWidth: label.frame.width)
+        let verticalSpacing = CGFloat(bottomSpacing.constant / 2)
         
         let result = height +
             topSpacing.constant +
             textArea.frame.origin.y +
-            bottomSpacing.constant +
+            verticalSpacing +
             (cta != nil ? button.frame.size.height + bottomSpacing.constant : 0)
 
         print("***", height, label.frame.width, result)
@@ -134,7 +135,7 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func attributedString(from string: String) -> NSAttributedString {
-        return string.attributedStringFromMarkdown(fontSize: isSmall ? 16 : 17)
+        return string.attributedStringFromMarkdown(fontSize: isSmall ? 16 : 18)
     }
      
 }

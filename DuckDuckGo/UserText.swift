@@ -298,4 +298,6 @@ public struct UserText {
 
     public static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.browsing.multiple.trackers", comment: "*%1$@, %2$@* and *%3$d others* were trying to track you here.")
     public static let daxDialogBrowsingWithMultipleTrackersCTA = NSLocalizedString("dax.onboarding.browsing.multiple.trackers.cta", comment: "High Five!")
+    
+    public static let daxDialogOnboardingMessage =  NSLocalizedString("dax.onboarding.message", comment: "The Internet can be kinda creepy.")
 }

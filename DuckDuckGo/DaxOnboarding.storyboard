@@ -51,9 +51,9 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNL-CF-WGF">
-                                <rect key="frame" x="19.5" y="104" width="375" height="190"/>
+                                <rect key="frame" x="19.5" y="104" width="375" height="195"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="190" id="8wI-2U-C5o"/>
+                                    <constraint firstAttribute="height" constant="195" id="8wI-2U-C5o"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="x9B-xN-xqH"/>
                                 </constraints>
                                 <connections>
@@ -61,7 +61,7 @@ DuckDuckGo!</string>
                                 </connections>
                             </containerView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAv-Zt-uIt">
-                                <rect key="frame" x="30.5" y="318" width="355" height="44"/>
+                                <rect key="frame" x="30.5" y="323" width="355" height="44"/>
                                 <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="ZX6-Se-sGe"/>
@@ -140,6 +140,7 @@ DuckDuckGo!</string>
                         <outlet property="backgroundView" destination="XSv-kV-jRp" id="hrm-wQ-uxP"/>
                         <outlet property="button" destination="oAv-Zt-uIt" id="2F4-UO-qfi"/>
                         <outlet property="daxDialogContainer" destination="qNL-CF-WGF" id="pMx-eZ-d4a"/>
+                        <outlet property="daxDialogContainerHeight" destination="8wI-2U-C5o" id="b7R-d2-40p"/>
                         <outlet property="daxIcon" destination="67b-it-r0B" id="1g0-kH-R7G"/>
                         <outlet property="onboardingIcon" destination="DD1-q3-GlA" id="SPQ-F0-fac"/>
                         <outlet property="transitionalIcon" destination="HyA-WF-Cc8" id="FYZ-wh-6Ix"/>
@@ -251,11 +252,13 @@ DuckDuckGo!</string>
                         <viewLayoutGuide key="safeArea" id="qUW-ue-c2U"/>
                     </view>
                     <connections>
+                        <outlet property="bottomSpacing" destination="1XZ-4V-bSQ" id="KVZ-qW-ch6"/>
                         <outlet property="button" destination="zJt-F9-L48" id="RMQ-DD-jZK"/>
                         <outlet property="icon" destination="UzU-6y-Vfa" id="h5u-VZ-4uc"/>
                         <outlet property="label" destination="UDm-rv-vek" id="E3z-rn-qvh"/>
                         <outlet property="pointer" destination="eh6-ce-Ivv" id="Pyj-WK-6C6"/>
                         <outlet property="textArea" destination="Ix6-dq-RAh" id="UTU-sm-jn7"/>
+                        <outlet property="topSpacing" destination="Gmu-7B-dTI" id="8mg-Zw-YAm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61G-0Y-elT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

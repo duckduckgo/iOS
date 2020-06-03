@@ -160,9 +160,9 @@ class HomeViewController: UIViewController {
         logoContainer?.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
-        daxDialogContainerHeight.constant = spec.height
         daxDialogViewController?.message = spec.message
-        
+        daxDialogContainerHeight.constant = daxDialogViewController?.requiredHeight ?? 0.0
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             UIView.animate(withDuration: 0.4, animations: {
                 self.daxDialogContainer.alpha = 1.0

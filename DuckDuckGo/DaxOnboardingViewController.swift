@@ -33,6 +33,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     
     @IBOutlet weak var welcomeMessage: UIView!
     @IBOutlet weak var daxDialogContainer: UIView!
+    @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var daxIcon: UIView!
     @IBOutlet weak var onboardingIcon: UIView!
     @IBOutlet weak var transitionalIcon: UIView!
@@ -70,6 +71,9 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         
         if let controller = segue.destination as? DaxDialogViewController {
             self.daxDialog = controller
+            daxDialog?.message = UserText.daxDialogOnboardingMessage
+            let requiredHeight = daxDialog?.requiredHeight ?? 0.0
+            daxDialogContainerHeight.constant = requiredHeight
         } else if let controller = segue.destination as? DaxOnboardingPadViewController {
             controller.delegate = self
         } else if let controller = segue.destination as? OnboardingViewController {
@@ -156,15 +160,11 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     }
     
     func showDaxDialog(completion: @escaping () -> Void) {
-        let message = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think."
-        
         daxDialogContainer.alpha = 0.0
         daxDialogContainer.isHidden = false
         
         button.alpha = 0.0
         button.isHidden = false
-        
-        daxDialog?.message = message
         
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.daxDialogContainer.alpha = 1.0

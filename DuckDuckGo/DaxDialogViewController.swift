@@ -21,6 +21,9 @@ import UIKit
 
 class DaxDialogViewController: UIViewController {
     
+    @IBOutlet weak var bottomSpacing: NSLayoutConstraint!
+    @IBOutlet weak var topSpacing: NSLayoutConstraint!
+
     @IBOutlet weak var icon: UIView!
     @IBOutlet weak var pointer: UIView!
     @IBOutlet weak var textArea: UIView!
@@ -29,21 +32,31 @@ class DaxDialogViewController: UIViewController {
     
     var message: String? {
         didSet {
-            label.text = nil
-            chars = Array(message ?? "")
+            initLabel()
         }
     }
-    
     var cta: String? {
         didSet {
-            if let title = cta {
-                button.isHidden = false
-                button.setTitle(title, for: .normal)
-            }
+            initCTA()
         }
     }
     
     var onTapCta: (() -> Void)?
+    
+    var requiredHeight: CGFloat {
+        guard let message = message else { return 0 }
+        let attr = attributedString(from: message)
+        let height = attr.requiredTextHeight(forWidth: label.frame.width)
+        
+        let result = height +
+            topSpacing.constant +
+            textArea.frame.origin.y +
+            bottomSpacing.constant +
+            (cta != nil ? button.frame.size.height + bottomSpacing.constant : 0)
+
+        print("***", height, label.frame.width, result)
+        return result
+    }
     
     private var position: Int = 0
     private var chars = [Character]()
@@ -54,15 +67,32 @@ class DaxDialogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initLabel()
+        initCTA()
+        
         applyPointerRotation()
         textArea.displayDropShadow()
         button.displayDropShadow()
-        button.isHidden = true
     }
     
-    func applyPointerRotation() {
+    private func initLabel() {
+        label?.text = nil
+        chars = Array(message ?? "")
+    }
+    
+    private func applyPointerRotation() {
         let rads = CGFloat(45 * Double.pi / 180)
         pointer.layer.transform = CATransform3DMakeRotation(rads, 0.0, 0.0, 1.0)
+    }
+    
+    private func initCTA() {
+        if let title = cta {
+            button?.isHidden = false
+            button?.setTitle(title, for: .normal)
+        } else {
+            button?.isHidden = true
+        }
     }
     
     func start() {
@@ -98,8 +128,45 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func updateMessage() {
+        print(".", terminator: "")
         guard let message = message else { return }
-        label.attributedText = String(Array(message)[0 ..< position]).attributedStringFromMarkdown(fontSize: isSmall ? 15 : 16)
+        label.attributedText = attributedString(from: String(Array(message)[0 ..< position]))
+    }
+    
+    private func attributedString(from string: String) -> NSAttributedString {
+        return string.attributedStringFromMarkdown(fontSize: isSmall ? 16 : 17)
     }
      
 }
+
+extension NSAttributedString {
+    
+    func requiredTextHeight(forWidth width: CGFloat) -> CGFloat {
+        let framesetter = CTFramesetterCreateWithAttributedString(self)
+        let emptyRange = CFRange(location: 0, length: 0)
+        
+        if #available(iOS 11.0, *) {
+            let constraints = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+            let height = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, emptyRange, nil, constraints, nil).height
+            return height
+        } else {
+            let path = CGPath(rect: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude), transform: nil)
+            let frame = CTFramesetterCreateFrame(framesetter, emptyRange, path, nil)
+            let lines = CTFrameGetLines(frame)
+            let numberOfLines = CFArrayGetCount(lines)
+            var height: CGFloat = 0
+            for index in 0..<numberOfLines {
+                let line: CTLine = unsafeBitCast(CFArrayGetValueAtIndex(lines, index), to: CTLine.self)
+                let rect = CTLineGetBoundsWithOptions(line,
+                                                      [ .includeLanguageExtents, .useOpticalBounds, .useHangingPunctuation, .useGlyphPathBounds ])
+                height += rect.height
+                let numberOfGlyphs = CTLineGetGlyphCount(line)
+                if numberOfGlyphs > 0 {
+                    height += 5
+                }
+            }
+            return height
+        }
+    }
+    
+ }

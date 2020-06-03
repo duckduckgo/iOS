@@ -79,12 +79,13 @@
                                                     <rect key="frame" x="10" y="10" width="307" height="186"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G2C-qh-g3T">
-                                                            <rect key="frame" x="269" y="0.0" width="38" height="38"/>
+                                                            <rect key="frame" x="277" y="0.0" width="30" height="38"/>
                                                             <accessibility key="accessibilityConfiguration" label="Close Tab"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="38" id="J5n-rB-XtL"/>
-                                                                <constraint firstAttribute="width" constant="38" id="qo9-0B-8Av"/>
+                                                                <constraint firstAttribute="width" constant="30" id="qo9-0B-8Av"/>
                                                             </constraints>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
                                                             <state key="normal" image="Remove"/>
                                                             <connections>
                                                                 <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
@@ -108,7 +109,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GE-Nf-lKM">
-                                                            <rect key="frame" x="38" y="13" width="231" height="13"/>
+                                                            <rect key="frame" x="38" y="13" width="239" height="13"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" button="YES" staticText="YES"/>
                                                                 <bool key="isElement" value="YES"/>

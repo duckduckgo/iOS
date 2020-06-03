@@ -271,11 +271,11 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
         }
         cell.delegate = self
-
         cell.isDeleting = false
         
         if indexPath.row < tabsModel.count {
             let tab = tabsModel.get(tabAt: indexPath.row)
+            tab.addObserver(self)
             cell.update(withTab: tab,
                         preview: previewsSource.preview(for: tab),
                         reorderRecognizer: reorderGestureRecognizer)
@@ -324,10 +324,19 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let columns = calculateNumberOfColumns(minimumColumnWidth: 180, maxColumns: 4)
+        let columns = calculateNumberOfColumns(minimumColumnWidth: 160, maxColumns: 4)
         return CGSize(width: Int(collectionView.bounds.width) / columns, height: 180)
     }
     
+}
+
+extension TabSwitcherViewController: TabObserver {
+    
+    func didChange(tab: Tab) {
+        if let index = tabsModel.indexOf(tab: tab) {
+            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        }
+    }
 }
 
 extension TabSwitcherViewController: Themable {

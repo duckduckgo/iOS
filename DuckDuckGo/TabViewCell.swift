@@ -177,9 +177,7 @@ class TabViewCell: UICollectionViewCell {
                 preview: UIImage?,
                 reorderRecognizer: UIGestureRecognizer?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
-        
-        removeTabObserver()
-        tab.addObserver(self)
+
         self.tab = tab
         self.collectionReorderRecognizer = reorderRecognizer
 
@@ -227,10 +225,6 @@ class TabViewCell: UICollectionViewCell {
         shadow.layer.shadowPath = UIBezierPath(roundedRect: cellBounds,
                                                cornerRadius: shadow.layer.cornerRadius).cgPath
     }
-
-    private func removeTabObserver() {
-        tab?.removeObserver(self)
-    }
     
     @IBAction func deleteTab() {
         guard let tab = tab else { return }
@@ -250,14 +244,6 @@ class TabViewCell: UICollectionViewCell {
                                   completionHandler: nil)
         }
     }
-}
-
-extension TabViewCell: TabObserver {
-    
-    func didChange(tab: Tab) {
-//        update(withTab: tab) FIXME
-    }
-    
 }
 
 extension TabViewCell: Themable {

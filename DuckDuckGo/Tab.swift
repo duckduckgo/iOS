@@ -94,6 +94,10 @@ public class Tab: NSObject, NSCoding {
         isDesktop = !isDesktop
     }
     
+    func didUpdatePreview() {
+        notifyObservers()
+    }
+    
     func addObserver(_ observer: TabObserver) {
         guard indexOf(observer) == nil else { return }
         observersHolder.append(WeaklyHeldTabObserver(observer: observer))

@@ -30,6 +30,7 @@ class TabPreviewsSource {
     func update(preview: UIImage, forTab tab: Tab) {
         cache[tab.uid] = preview
         store(preview: preview, forTab: tab)
+        tab.didUpdatePreview()
     }
     
     func preview(for tab: Tab) -> UIImage? {

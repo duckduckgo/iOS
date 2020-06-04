@@ -1,5 +1,5 @@
 //
-//  DaxOnboardingSettings.swift
+//  DaxDialogsSettings.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Core
 
-protocol DaxOnboardingSettings {
+protocol DaxDialogsSettings {
     
     var isDismissed: Bool { get set }
     
@@ -37,7 +37,7 @@ protocol DaxOnboardingSettings {
 
 }
 
-class DefaultDaxOnboardingSettings: DaxOnboardingSettings {
+class DefaultDaxDialogsSettings: DaxDialogsSettings {
     
     @UserDefaultsWrapper(key: .daxIsDismissed, defaultValue: false)
     var isDismissed: Bool
@@ -62,7 +62,7 @@ class DefaultDaxOnboardingSettings: DaxOnboardingSettings {
     
 }
 
-class InMemoryDaxOnboardingSettings: DaxOnboardingSettings {
+class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     
     var isDismissed: Bool = false
     

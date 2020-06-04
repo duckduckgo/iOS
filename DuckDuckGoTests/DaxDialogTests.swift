@@ -34,7 +34,7 @@ class DaxDialogTests: XCTestCase {
 
     }
 
-    var onboarding = DaxDialogs(settings: InMemoryDaxOnboardingSettings())
+    var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings())
 
     override func setUp() {
         super.setUp()
@@ -56,7 +56,7 @@ class DaxDialogTests: XCTestCase {
 
         testCases.forEach { testCase in
             
-            let onboarding = DaxDialogs(settings: InMemoryDaxOnboardingSettings())
+            let onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings())
             let siteRating = SiteRating(url: URLs.example)
             
             testCase.urls.forEach { url in

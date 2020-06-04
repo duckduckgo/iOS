@@ -90,11 +90,9 @@ class DaxDialogs {
     }
     
     private let appUrls = AppUrls()
-    private var settings: DaxOnboardingSettings
+    private var settings: DaxDialogsSettings
     
-    init(settings: DaxOnboardingSettings =
-        // InMemoryDaxOnboardingSettings()) {
-        DefaultDaxOnboardingSettings()) {
+    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.settings = settings
     }
     

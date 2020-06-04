@@ -113,7 +113,6 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func updateMessage() {
-        print(".", terminator: "")
         guard let message = message else { return }
         label.attributedText = attributedString(from: String(Array(message)[0 ..< position]))
     }

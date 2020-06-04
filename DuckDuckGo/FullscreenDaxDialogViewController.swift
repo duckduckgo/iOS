@@ -79,7 +79,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
         controller.addAction(title: "Hide tips forever", style: .default) {
-            Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxOnboardingSettings().browsingDialogsSeenCount ])
+            Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
             DaxDialogs().dismiss()
         }
         controller.addAction(title: "Cancel", style: .cancel)
@@ -88,7 +88,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 
 }
 
-fileprivate extension DefaultDaxOnboardingSettings {
+fileprivate extension DefaultDaxDialogsSettings {
     
     var browsingDialogsSeenCount: String {
         let count = [ browsingOwnedByMajorTrackingSiteShown,

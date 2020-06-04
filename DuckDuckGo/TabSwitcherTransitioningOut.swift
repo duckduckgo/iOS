@@ -71,7 +71,8 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
         UIView.animate(withDuration: Constants.duration, animations: {
             imageContainer.frame = webViewFrame
             imageContainer.layer.cornerRadius = 0
-            imageView.frame = imageContainer.bounds
+            imageView.frame = self.destinationImageFrame(for: webViewFrame.size,
+                                                         preview: preview)
             
             solidBackground.alpha = 1
             self.tabSwitcherViewController.view.alpha = 0
@@ -121,6 +122,19 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
                                  y: TabViewCell.Constants.cellHeaderHeight,
                                  width: containerSize.width,
                                  height: previewHeight)
+        return targetFrame
+    }
+    
+    private func destinationImageFrame(for containerSize: CGSize,
+                                       preview: UIImage?) -> CGRect {
+        guard let preview = preview else {
+            return CGRect(origin: .zero, size: containerSize)
+        }
+        
+        let targetFrame = CGRect(x: 0,
+                                 y: 0,
+                                 width: containerSize.width,
+                                 height: containerSize.width * (preview.size.height / preview.size.width))
         return targetFrame
     }
 

@@ -1,5 +1,5 @@
 //
-//  CompositeTransition.swift
+//  TabSwitcherTransition.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,16 +19,7 @@
 
 import UIKit
 
-class CompositeTransition: NSObject, UIViewControllerTransitioningDelegate {
-
-    let presentingController: UIViewControllerAnimatedTransitioning?
-    let dismissingController: UIViewControllerAnimatedTransitioning?
-
-    init(presenting: UIViewControllerAnimatedTransitioning?, dismissing: UIViewControllerAnimatedTransitioning?) {
-        presentingController = presenting
-        dismissingController = dismissing
-        super.init()
-    }
+class TabSwitcherTransition: NSObject, UIViewControllerTransitioningDelegate {
 
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,

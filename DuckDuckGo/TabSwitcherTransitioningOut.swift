@@ -22,7 +22,7 @@ import Core
 class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioning {
     
     struct Constants {
-        static let duration = 0.7
+        static let duration = 0.5
     }
     
     private let tabSwitcherViewController: TabSwitcherViewController

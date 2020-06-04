@@ -87,9 +87,7 @@ class MainViewController: UIViewController {
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
 
-    fileprivate lazy var blurTransition = CompositeTransition(presenting: FadeInOutAnimatedTransitioning(),
-                                                              dismissing: FadeInOutAnimatedTransitioning())
-
+    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransition()
     var currentTab: TabViewController? {
         return tabManager?.current
     }
@@ -204,7 +202,7 @@ class MainViewController: UIViewController {
         }
 
         if let controller = segue.destination as? TabSwitcherViewController {
-            controller.transitioningDelegate = blurTransition
+            controller.transitioningDelegate = tabSwitcherTransition
             controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model

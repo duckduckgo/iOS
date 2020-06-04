@@ -172,7 +172,7 @@
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		85519125247468580010FDD0 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8551912624746EDC0010FDD0 /* SnapshotHelper.swift */; };
-		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
+		855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */; };
 		855D914F206563A000C4B448 /* TLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914E206563A000C4B448 /* TLD.swift */; };
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
 		8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0371F8E54F100F04442 /* Tab.storyboard */; };
@@ -399,7 +399,6 @@
 		F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */; };
 		F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */; };
 		F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */; };
-		F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126E241EA749A30016A6C7 /* BlurAnimatedTransitioning.swift */; };
 		F1134EA61F3E2AF400B73467 /* StatisticsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134EA51F3E2AF400B73467 /* StatisticsStore.swift */; };
 		F1134EAB1F3E2C6A00B73467 /* StatisticsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134EAA1F3E2C6A00B73467 /* StatisticsUserDefaults.swift */; };
 		F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134EAF1F40AC6300B73467 /* AtbParser.swift */; };
@@ -505,7 +504,6 @@
 		F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */; };
 		F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */; };
 		F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */; };
-		F1EEAC111EAF791F006128D9 /* FadeInOutAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EEAC101EAF791F006128D9 /* FadeInOutAnimatedTransitioning.swift */; };
 		F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642021E949E1900B2A911 /* proximanova-bold.otf */; };
 		F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642031E949E1900B2A911 /* proximanova-light.otf */; };
 		F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642041E949E1900B2A911 /* proximanova-regular.otf */; };
@@ -774,7 +772,7 @@
 		85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios13-home-row.mp4"; sourceTree = "<group>"; };
 		85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRadarIntegrationTests.swift; sourceTree = "<group>"; };
 		8551912624746EDC0010FDD0 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
-		855D914C2063EF6A00C4B448 /* CompositeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTransition.swift; sourceTree = "<group>"; };
+		855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransition.swift; sourceTree = "<group>"; };
 		855D914E206563A000C4B448 /* TLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLD.swift; sourceTree = "<group>"; };
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		8563A0371F8E54F100F04442 /* Tab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tab.storyboard; sourceTree = "<group>"; };
@@ -1002,7 +1000,6 @@
 		F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkAlert.swift; sourceTree = "<group>"; };
 		F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtension.swift; sourceTree = "<group>"; };
-		F1126E241EA749A30016A6C7 /* BlurAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		F1134EA51F3E2AF400B73467 /* StatisticsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsStore.swift; sourceTree = "<group>"; };
 		F1134EAA1F3E2C6A00B73467 /* StatisticsUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsUserDefaults.swift; sourceTree = "<group>"; };
 		F1134EAF1F40AC6300B73467 /* AtbParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtbParser.swift; sourceTree = "<group>"; };
@@ -1122,7 +1119,6 @@
 		F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
 		F1ED309C1EDC2EA400651986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
-		F1EEAC101EAF791F006128D9 /* FadeInOutAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeInOutAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-bold.otf"; sourceTree = "<group>"; };
 		F1EEAC491EAFC708006128D9 /* proximanova-light.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-light.otf"; sourceTree = "<group>"; };
 		F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-regular.otf"; sourceTree = "<group>"; };
@@ -2665,11 +2661,9 @@
 		F1D796ED1E7AE4090019D451 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
-				F1126E241EA749A30016A6C7 /* BlurAnimatedTransitioning.swift */,
-				855D914C2063EF6A00C4B448 /* CompositeTransition.swift */,
+				855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */,
 				986DA94924884B18004A7E39 /* TabSwitcherTransitioningIn.swift */,
 				985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */,
-				F1EEAC101EAF791F006128D9 /* FadeInOutAnimatedTransitioning.swift */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
 				857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */,
@@ -3459,14 +3453,13 @@
 				857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
 				83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */,
-				855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */,
+				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				851B129E222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift in Sources */,
 				8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */,
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
-				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
 				98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
@@ -3594,7 +3587,6 @@
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
-				F1EEAC111EAF791F006128D9 /* FadeInOutAnimatedTransitioning.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */,

@@ -135,9 +135,6 @@ class DaxDialogs {
         return nil
     }
     
-    /// Get the next home screen message.
-    ///
-    /// Returns a tuple containing the height of the dialog and the message or nil if there's nothing left to show or the flow has been disabled
     func nextHomeScreenMessage() -> HomeScreenSpec? {
         guard !settings.isDismissed else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }

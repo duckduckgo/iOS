@@ -10,7 +10,7 @@ We are looking for a Senior Cross-Platform engineer to help shape our mobile app
 ## Building
 
 ### Submodules
-We use submodules, so you will need to bring them in to the project in order to build and run it:
+We use submodules, so you will need to bring them into the project in order to build and run it:
 
 Run `git submodule update --init --recursive`
 
@@ -42,8 +42,8 @@ We have Custom Instruments tool to help visualize and track events that happen d
 
 In order to run it:
 1. Build a Debug version and install it on Simulator/Device.
-2. Select Instruments target and run it on a Mac. New instance of Instruments app will be run that has a grayed out icon indicating that it works in debug mode with custom instruments attached.
-3. Select 'DDG Trace' template or setup a custom one by importing 'DDG Timeline' instrument from Library .
+2. Select Instruments target and run it on a Mac.A New instance of Instruments app will be run that has a grayed out icon indicating that it works in debug mode with custom instruments attached.
+3. Select 'DDG Trace' template or set up a custom one by importing 'DDG Timeline' instrument from Library.
 4. Start recording.
 
 See [Instruments Developer Help](https://help.apple.com/instruments/developer/mac/current/) for reference how to create custom instruments.

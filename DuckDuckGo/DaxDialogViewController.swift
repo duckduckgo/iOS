@@ -42,23 +42,7 @@ class DaxDialogViewController: UIViewController {
     }
     
     var onTapCta: (() -> Void)?
-    
-    var requiredHeight: CGFloat {
-        guard let message = message else { return 0 }
-        let attr = attributedString(from: message)
-        let height = attr.requiredTextHeight(forWidth: label.frame.width)
-        let verticalSpacing = CGFloat(bottomSpacing.constant / 2)
-        
-        let result = height +
-            topSpacing.constant +
-            textArea.frame.origin.y +
-            verticalSpacing +
-            (cta != nil ? button.frame.size.height + bottomSpacing.constant : 0)
-
-        print("***", height, label.frame.width, result)
-        return result
-    }
-    
+         
     private var position: Int = 0
     private var chars = [Character]()
     

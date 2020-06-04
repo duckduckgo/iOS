@@ -161,7 +161,7 @@ class HomeViewController: UIViewController {
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
         daxDialogViewController?.message = spec.message
-        daxDialogContainerHeight.constant = daxDialogViewController?.requiredHeight ?? 0.0
+        daxDialogContainerHeight.constant = spec.height
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             UIView.animate(withDuration: 0.4, animations: {
@@ -242,7 +242,6 @@ extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
         collectionView.decorate(with: theme)
-        view.backgroundColor = theme.backgroundColor
         settingsButton.tintColor = theme.barTintColor
     }
 }

@@ -51,23 +51,23 @@ class DaxDialogs {
                                                   message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA)
         
-        static let siteIsMajorTracker = BrowsingSpec(height: 340,
+        static let siteIsMajorTracker = BrowsingSpec(height: 345,
                                                      message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA)
         
-        static let siteOwnedByMajorTracker = BrowsingSpec(height: 340,
+        static let siteOwnedByMajorTracker = BrowsingSpec(height: 345,
                                                           message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA)
         
-        static let withOneTracker = BrowsingSpec(height: 340,
+        static let withOneTracker = BrowsingSpec(height: 345,
                                                       message: UserText.daxDialogBrowsingWithOneTracker,
                                                       cta: UserText.daxDialogBrowsingWithOneTrackerCTA)
 
-        static let withTwoTrackers = BrowsingSpec(height: 340,
+        static let withTwoTrackers = BrowsingSpec(height: 345,
                                                        message: UserText.daxDialogBrowsingWithTwoTrackers,
                                                        cta: UserText.daxDialogBrowsingWithTwoTrackersCTA)
         
-        static let withMutipleTrackers = BrowsingSpec(height: 340,
+        static let withMutipleTrackers = BrowsingSpec(height: 345,
                                                                message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                                cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA)
 
@@ -84,7 +84,9 @@ class DaxDialogs {
     private let appUrls = AppUrls()
     private var settings: DaxOnboardingSettings
     
-    init(settings: DaxOnboardingSettings = InMemoryDaxOnboardingSettings()) { // DefaultDaxOnboardingSettings()) {
+    init(settings: DaxOnboardingSettings =
+        // InMemoryDaxOnboardingSettings()) {
+        DefaultDaxOnboardingSettings()) {
         self.settings = settings
     }
     

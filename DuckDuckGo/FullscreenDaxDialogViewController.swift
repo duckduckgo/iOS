@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
@@ -45,6 +46,9 @@ class FullscreenDaxDialogViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if let spec = spec {
+            Pixel.fire(pixel: spec.pixelName)
+        }
         daxDialogViewController?.start()
     }
     
@@ -75,10 +79,24 @@ extension TabViewController: FullscreenDaxDialogDelegate {
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
         controller.addAction(title: "Hide tips forever", style: .default) {
+            Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxOnboardingSettings().browsingDialogsSeenCount ])
             DaxDialogs().dismiss()
         }
         controller.addAction(title: "Cancel", style: .cancel)
         present(controller, animated: true)
     }
 
+}
+
+fileprivate extension DefaultDaxOnboardingSettings {
+    
+    var browsingDialogsSeenCount: String {
+        let count = [ browsingOwnedByMajorTrackingSiteShown,
+                 browsingMajorTrackingSiteShown,
+                 browsingWithoutTrackersShown,
+                 browsingWithTrackersShown,
+                 browsingAfterSearchShown].reduce(0, { $0 + ($1 ? 1 : 0) })
+        return "\(count)"
+    }
+    
 }

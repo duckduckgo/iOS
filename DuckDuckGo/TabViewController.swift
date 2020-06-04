@@ -224,7 +224,7 @@ class TabViewController: UIViewController {
     }
     
     func installBrowsingTips() {
-        if DefaultVariantManager().isSupported(feature: .daxOnboarding) {
+        if DefaultVariantManager().isSupported(feature: .legacyOnboarding) {
             tips = BrowsingTips(delegate: self)
         }
     }

@@ -31,7 +31,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     weak var daxDialogViewController: DaxDialogViewController?
-    var daxDialogSpecToShow: DaxDialogs.HomeScreenSpec?
     
     var statusBarBackground: UIView? {
         return (parent as? MainViewController)?.statusBarBackground
@@ -147,7 +146,6 @@ class HomeViewController: UIViewController {
     func installHomeScreenTips() {
         let variantManager = DefaultVariantManager()
         if variantManager.isSupported(feature: .daxOnboarding) {
-            daxDialogSpecToShow = DaxDialogs().nextHomeScreenMessage()
             showNextDaxDialog()
         } else {
             HomeScreenTips(delegate: self)?.trigger()
@@ -155,7 +153,7 @@ class HomeViewController: UIViewController {
     }
     
     func showNextDaxDialog() {
-        guard let spec = daxDialogSpecToShow else { return }
+        guard let spec = DaxDialogs().nextHomeScreenMessage() else { return }
         collectionView.isHidden = true
         logoContainer?.isHidden = true
         daxDialogContainer.isHidden = false

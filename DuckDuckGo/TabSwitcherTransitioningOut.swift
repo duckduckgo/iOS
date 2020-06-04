@@ -66,17 +66,7 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
         imageContainer.addSubview(imageView)
         transitionContext.containerView.addSubview(imageContainer)
         
-        // If cell is outside viewport, scroll while animating
-        let collectionView = tabSwitcherViewController.collectionView!
-        if layoutAttr.frame.origin.y + layoutAttr.frame.size.height < collectionView.contentOffset.y {
-            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
-                                        at: .top,
-                                        animated: true)
-        } else if layoutAttr.frame.origin.y > collectionView.frame.height + collectionView.contentOffset.y {
-            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
-                                        at: .bottom,
-                                        animated: true)
-        }
+        scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
         
         UIView.animate(withDuration: Constants.duration, animations: {
             imageContainer.frame = webViewFrame
@@ -90,6 +80,22 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
             imageContainer.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
+    }
+    
+    private func scrollIfOutsideViewport(collectionView: UICollectionView,
+                                         rowIndex: Int,
+                                         attributes: UICollectionViewLayoutAttributes) {
+        // If cell is outside viewport, scroll while animating
+        let collectionView = tabSwitcherViewController.collectionView!
+        if attributes.frame.origin.y + attributes.frame.size.height < collectionView.contentOffset.y {
+            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
+                                        at: .top,
+                                        animated: true)
+        } else if attributes.frame.origin.y > collectionView.frame.height + collectionView.contentOffset.y {
+            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
+                                        at: .bottom,
+                                        animated: true)
+        }
     }
     
     private func sourceContainerFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {

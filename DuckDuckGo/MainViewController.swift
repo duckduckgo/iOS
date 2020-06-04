@@ -1033,10 +1033,11 @@ extension MainViewController: TabSwitcherButtonDelegate {
                 if let image = image {
                     self.previewsSource.update(preview: image,
                                                forTab: currentTab.tabModel)
+                    
                 }
+                self.performSegue(withIdentifier: "ShowTabs", sender: self)
             })
         }
-        performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 }
 

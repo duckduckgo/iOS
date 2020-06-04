@@ -33,11 +33,17 @@ class CompositeTransition: NSObject, UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
                              source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let mainVC = presenting as? MainViewController,
+            let tabSwitcherVC = presented as? TabSwitcherViewController else {
+            return nil
+        }
         
-        return presentingController
+        return TabSwitcherTransitioningIn(mainViewController: mainVC,
+                                          tabSwitcherViewController: tabSwitcherVC)
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return dismissingController
+        guard let tabSwitcherVC = dismissed as? TabSwitcherViewController else { return nil }
+        return TabSwitcherTransitioningOut(tabSwitcherViewController: tabSwitcherVC)
     }
 }

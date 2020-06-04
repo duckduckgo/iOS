@@ -72,8 +72,11 @@ class TabSwitcherViewController: UIViewController {
             collectionView.addGestureRecognizer(recognizer)
             reorderGestureRecognizer = recognizer
         }
-        
-        collectionView.reloadData()
+    }
+    
+    func prepareForPresentation() {
+        view.layoutIfNeeded()
+        self.scrollToInitialTab()
     }
     
     @objc func handleTap(gesture: UITapGestureRecognizer) {
@@ -100,7 +103,6 @@ class TabSwitcherViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        scrollToInitialTab()
         delegate?.tabSwitcherDidAppear(self)
     }
     
@@ -127,7 +129,7 @@ class TabSwitcherViewController: UIViewController {
         let index = tabsModel.currentIndex
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
         let indexPath = IndexPath(row: index, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
     }
 
     private func refreshTitle() {

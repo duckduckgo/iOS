@@ -28,7 +28,10 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
 class FullscreenDaxDialogViewController: UIViewController {
 
+    @IBOutlet weak var highlightBar: UIView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
+    @IBOutlet weak var fullScreen: NSLayoutConstraint!
+    @IBOutlet weak var showAddressBar: NSLayoutConstraint!
     
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
@@ -42,6 +45,17 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta
         containerHeight.constant = spec?.height ?? 100.0
+        
+        if spec?.highlightAddressBar ?? false {
+            fullScreen.isActive = false
+            showAddressBar.isActive = true
+            highlightBar.isHidden = false
+        } else {
+            fullScreen.isActive = true
+            showAddressBar.isActive = false
+            highlightBar.isHidden = true
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

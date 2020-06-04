@@ -279,8 +279,12 @@ DuckDuckGo!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G3-x9-wwM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="98" width="414" height="798"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.60217786815068497" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hN-QW-QID">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.60217786819999997" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmT-SX-w7H">
                                 <rect key="frame" x="19.5" y="438" width="375" height="400"/>
@@ -304,13 +308,18 @@ DuckDuckGo!</string>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="4hN-QW-QID" firstAttribute="width" secondItem="Ica-YY-s5f" secondAttribute="width" id="04f-c6-SAb"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="leading" secondItem="Ica-YY-s5f" secondAttribute="leading" id="0TY-9i-a7Z"/>
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="7G3-x9-wwM" secondAttribute="top" constant="-54" id="2W5-ID-JWT"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="EYf-zh-Pqq"/>
+                            <constraint firstItem="4hN-QW-QID" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="NHP-BS-w7e"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="RsO-pv-xjm"/>
                             <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="hgy-75-OvJ" secondAttribute="top" constant="-72" id="XDb-xE-iQc"/>
                             <constraint firstItem="hgy-75-OvJ" firstAttribute="trailing" secondItem="7G3-x9-wwM" secondAttribute="trailing" constant="-24" id="azD-JN-kS9"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="width" secondItem="yHc-FK-kfn" secondAttribute="width" priority="750" id="b3Y-VV-mAW"/>
                             <constraint firstAttribute="bottom" secondItem="7G3-x9-wwM" secondAttribute="bottom" id="f4h-cU-qpe"/>
+                            <constraint firstItem="4hN-QW-QID" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="nNn-90-J2z"/>
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="4hN-QW-QID" secondAttribute="bottom" id="qq4-L9-ia1"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="trailing" secondItem="Ica-YY-s5f" secondAttribute="trailing" id="szK-zk-axH"/>
                             <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="24" id="ur2-53-anE">
                                 <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
@@ -320,11 +329,14 @@ DuckDuckGo!</string>
                     </view>
                     <connections>
                         <outlet property="containerHeight" destination="V8D-Hc-dLK" id="mNj-Zf-ZTG"/>
+                        <outlet property="fullScreen" destination="RsO-pv-xjm" id="8Th-zb-zQD"/>
+                        <outlet property="highlightBar" destination="4hN-QW-QID" id="5xf-h4-YBF"/>
+                        <outlet property="showAddressBar" destination="2W5-ID-JWT" id="WKG-DX-nRL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VkF-pV-fJc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122" y="855"/>
+            <point key="canvasLocation" x="121.73913043478262" y="854.46428571428567"/>
         </scene>
         <!--Onboarding-->
         <scene sceneID="ERR-yD-y2u">

@@ -36,8 +36,8 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
             let webView = mainViewController.currentTab!.webView,
             let tab = mainViewController.currentTab?.tabModel,
-        let row = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
-        let selectedCell = tabSwitcherViewController.collectionView.cellForItem(at: IndexPath(row: row, section: 0)) as? TabViewCell
+            let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
+            let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
             else {
                 return
         }
@@ -52,15 +52,31 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
         webView.addSubview(solidBackground)
         
         let imageContainer = UIView()
-        imageContainer.frame = selectedCell.convert(selectedCell.background.frame,
-                                                                                to: nil)
+        imageContainer.frame = sourceContainerFrame(for: layoutAttr)
+        
         imageContainer.clipsToBounds = true
         imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+        
+        let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
         let imageView = UIImageView()
-        imageView.frame = selectedCell.preview.frame
-        imageView.image = selectedCell.preview.image
+        imageView.frame = sourceImageFrame(for: imageContainer.bounds.size,
+                                           preview: preview,
+                                           attributes: layoutAttr)
+        imageView.image = preview
         imageContainer.addSubview(imageView)
         transitionContext.containerView.addSubview(imageContainer)
+        
+        // If cell is outside viewport, scroll while animating
+        let collectionView = tabSwitcherViewController.collectionView!
+        if layoutAttr.frame.origin.y + layoutAttr.frame.size.height < collectionView.contentOffset.y {
+            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
+                                        at: .top,
+                                        animated: true)
+        } else if layoutAttr.frame.origin.y > collectionView.frame.height + collectionView.contentOffset.y {
+            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
+                                        at: .bottom,
+                                        animated: true)
+        }
         
         UIView.animate(withDuration: Constants.duration, animations: {
             imageContainer.frame = webViewFrame
@@ -74,6 +90,32 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
             imageContainer.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
+    }
+    
+    private func sourceContainerFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
+        var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
+                                                                                to: self.tabSwitcherViewController.view)
+        
+        targetFrame = targetFrame.insetBy(dx: TabViewCell.Constants.cellShadowMargin,
+                                          dy: TabViewCell.Constants.cellShadowMargin)
+        return targetFrame
+    }
+    
+    private func sourceImageFrame(for containerSize: CGSize,
+                                  preview: UIImage?,
+                                  attributes: UICollectionViewLayoutAttributes) -> CGRect {
+        let previewHeight: CGFloat
+        if let preview = preview {
+            previewHeight = containerSize.width * (preview.size.height / preview.size.width)
+        } else {
+            previewHeight = containerSize.height
+        }
+        
+        let targetFrame = CGRect(x: 0,
+                                 y: TabViewCell.Constants.cellHeaderHeight,
+                                 width: containerSize.width,
+                                 height: previewHeight)
+        return targetFrame
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {

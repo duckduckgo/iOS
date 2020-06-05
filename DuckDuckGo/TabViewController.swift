@@ -793,11 +793,14 @@ extension TabViewController: WKNavigationDelegate {
     private func showDaxDialogIfNeeded() {
         guard DefaultVariantManager().isSupported(feature: .daxOnboarding) else { return }
         guard let siteRating = self.siteRating else { return }
-
-        cancelTrackerNetworksAnimation()
-        chromeDelegate?.omniBar.cancelAllAnimations()
+        guard let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else { return }
+        
+        if spec.highlightAddressBar {
+            cancelTrackerNetworksAnimation()
+            chromeDelegate?.omniBar.cancelAllAnimations()
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else { return }
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
         }
     }

@@ -95,7 +95,7 @@ class DaxDialogs {
             return BrowsingSpec(height: height,
                                 message: String(format: message, arguments: args),
                                 cta: cta,
-                                highlightAddressBar: true,
+                                highlightAddressBar: highlightAddressBar,
                                 pixelName: pixelName)
         }
         

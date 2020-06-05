@@ -1,5 +1,5 @@
 //
-//  TabSwitcherTransitioningOut.swift
+//  TransitionToHomeScreen.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,65 +19,79 @@
 
 import Core
 
-class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioning {
+class TransitionToHomeScreen: NSObject, UIViewControllerAnimatedTransitioning {
     
     private let tabSwitcherViewController: TabSwitcherViewController
-
+    
     init(tabSwitcherViewController: TabSwitcherViewController) {
         self.tabSwitcherViewController = tabSwitcherViewController
     }
-
+    
+    // swiftlint:disable function_body_length
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
-            let webView = mainViewController.currentTab!.webView,
+            let homeScreen = mainViewController.homeController,
             let tab = mainViewController.currentTab?.tabModel,
             let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
             let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
             else {
                 return
         }
-                
-        let theme = ThemeManager.shared.currentTheme
-        let webViewFrame = webView.convert(webView.bounds, to: nil)
-        mainViewController.view.alpha = 1
         
-        let solidBackground = UIView()
-        solidBackground.backgroundColor = theme.backgroundColor
-        solidBackground.frame = webView.bounds
-        webView.addSubview(solidBackground)
+        let theme = ThemeManager.shared.currentTheme
+        mainViewController.view.alpha = 1
         
         let imageContainer = UIView()
         imageContainer.frame = sourceContainerFrame(for: layoutAttr)
+        imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
         
         imageContainer.clipsToBounds = true
         imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
         
-        let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
+        let snapshot = homeScreen.view.snapshotView(afterScreenUpdates: false)!
+        snapshot.alpha = 0
+        imageContainer.addSubview(snapshot)
+        snapshot.center = CGPoint(x: imageContainer.bounds.midX, y: imageContainer.bounds.midY)
+        
         let imageView = UIImageView()
-        imageView.frame = sourceImageFrame(for: imageContainer.bounds.size,
-                                           preview: preview,
-                                           attributes: layoutAttr)
-        imageView.image = preview
+        imageView.frame = sourceImageFrame(for: imageContainer.bounds.size)
+        imageView.image = TabViewCell.logoImage
+        imageView.contentMode = .center
+        imageView.backgroundColor = .clear
         imageContainer.addSubview(imageView)
         transitionContext.containerView.addSubview(imageContainer)
         
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
         
-        UIView.animate(withDuration: TabSwitcherTransition.Constants.duration, animations: {
-            imageContainer.frame = webViewFrame
-            imageContainer.layer.cornerRadius = 0
-            imageView.frame = self.destinationImageFrame(for: webViewFrame.size,
-                                                         preview: preview)
+        UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
-            solidBackground.alpha = 1
-            self.tabSwitcherViewController.view.alpha = 0
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
+                imageContainer.frame = homeScreen.view.convert(homeScreen.collectionView.frame, to: nil)
+                imageContainer.layer.cornerRadius = 0
+                imageContainer.backgroundColor = theme.backgroundColor
+                imageView.frame = CGRect(origin: .zero,
+                                         size: imageContainer.bounds.size)
+                snapshot.center = CGPoint(x: imageContainer.bounds.midX, y: imageContainer.bounds.midY)
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
+                imageView.alpha = 0
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {
+                snapshot.alpha = 1
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3) {
+                self.tabSwitcherViewController.view.alpha = 0
+            }
+            
         }, completion: { _ in
-            solidBackground.removeFromSuperview()
             imageContainer.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
     }
+    // swiftlint:enable function_body_length
     
     private func scrollIfOutsideViewport(collectionView: UICollectionView,
                                          rowIndex: Int,
@@ -100,40 +114,19 @@ class TabSwitcherTransitioningOut: NSObject, UIViewControllerAnimatedTransitioni
                                                                                 to: self.tabSwitcherViewController.view)
         
         targetFrame = targetFrame.insetBy(dx: TabViewCell.Constants.cellShadowMargin,
-                                          dy: TabViewCell.Constants.cellShadowMargin)
+                            dy: TabViewCell.Constants.cellShadowMargin)
+        targetFrame.origin.y += TabViewCell.Constants.cellHeaderHeight
+        targetFrame.size.height -= TabViewCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
-    private func sourceImageFrame(for containerSize: CGSize,
-                                  preview: UIImage?,
-                                  attributes: UICollectionViewLayoutAttributes) -> CGRect {
-        let previewHeight: CGFloat
-        if let preview = preview {
-            previewHeight = containerSize.width * (preview.size.height / preview.size.width)
-        } else {
-            previewHeight = containerSize.height
-        }
-        
-        let targetFrame = CGRect(x: 0,
-                                 y: TabViewCell.Constants.cellHeaderHeight,
-                                 width: containerSize.width,
-                                 height: previewHeight)
+    private func sourceImageFrame(for containerBounds: CGSize) -> CGRect {
+        var targetFrame = CGRect(origin: .zero, size: containerBounds)
+        targetFrame.origin.y -= TabViewCell.Constants.cellHeaderHeight
+        targetFrame.size.height += TabViewCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
-    private func destinationImageFrame(for containerSize: CGSize,
-                                       preview: UIImage?) -> CGRect {
-        guard let preview = preview else {
-            return CGRect(origin: .zero, size: containerSize)
-        }
-        
-        let targetFrame = CGRect(x: 0,
-                                 y: 0,
-                                 width: containerSize.width,
-                                 height: containerSize.width * (preview.size.height / preview.size.width))
-        return targetFrame
-    }
-
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return TabSwitcherTransition.Constants.duration
     }

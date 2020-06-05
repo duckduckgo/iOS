@@ -23,6 +23,7 @@ import Core
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logoContainer: UIView!
     
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!

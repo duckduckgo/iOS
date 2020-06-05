@@ -42,6 +42,7 @@ class TabViewCell: UICollectionViewCell {
         static let cellShadowMargin: CGFloat = 10.0
         static let cellCornerRadius: CGFloat = 8.0
         static let cellHeaderHeight: CGFloat = 38.0
+        static let cellLogoSize: CGFloat = 68.0
         
     }
     
@@ -66,6 +67,8 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var unread: UIImageView!
     @IBOutlet weak var preview: UIImageView!
     weak var previewAspectRatio: NSLayoutConstraint?
+    @IBOutlet var previewTopConstraint: NSLayoutConstraint?
+    @IBOutlet var previewBottomConstraint: NSLayoutConstraint?
     weak var collectionReorderRecognizer: UIGestureRecognizer?
 
     override func awakeFromNib() {
@@ -91,17 +94,28 @@ class TabViewCell: UICollectionViewCell {
                                                cornerRadius: shadow.layer.cornerRadius).cgPath
         shadow.layer.shouldRasterize = true
         shadow.layer.rasterizationScale = UIScreen.main.scale
-        
-        setupPreview(aspecRatio: 1.0)
     }
     
-    private func setupPreview(aspecRatio: CGFloat) {
+    private func updatePreview(aspecRatio: CGFloat) {
+        previewBottomConstraint?.isActive = false
+        previewTopConstraint?.constant = Constants.cellHeaderHeight
         if let constraint = previewAspectRatio {
             preview.removeConstraint(constraint)
+            previewAspectRatio = nil
         }
         
         previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspecRatio)
         previewAspectRatio?.isActive = true
+    }
+    
+    private func updatePreviewAndAnchorToBottom() {
+        if let constraint = previewAspectRatio {
+            preview.removeConstraint(constraint)
+            previewAspectRatio = nil
+        }
+        
+        previewTopConstraint?.constant = 0
+        previewBottomConstraint?.isActive = true
     }
     
     private static var darkThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
@@ -121,6 +135,21 @@ class TabViewCell: UICollectionViewCell {
             return lighThemeUnreadImage
         }
     }
+    
+    static let logoImage: UIImage = {
+        let image = UIImage(named: "Logo")!
+        let renderFormat = UIGraphicsImageRendererFormat.default()
+        renderFormat.opaque = false
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: Constants.cellLogoSize,
+                                                            height: Constants.cellLogoSize),
+                                               format: renderFormat)
+        return renderer.image { _ in
+            image.draw(in: CGRect(x: 0,
+                                  y: 0,
+                                  width: Constants.cellLogoSize,
+                                  height: Constants.cellLogoSize))
+        }
+    }()
 
     var startX: CGFloat = 0
     @objc func handleSwipe(recognizer: UIGestureRecognizer) {
@@ -219,17 +248,22 @@ class TabViewCell: UICollectionViewCell {
         
         unread.isHidden = tab.viewed
         
-        if let img = preview {
-            setupPreview(aspecRatio: img.size.height / img.size.width)
-            self.preview.image = img
-        } else {
-            self.preview.image = nil
-        }
-
         if tab.link == nil {
+            updatePreviewAndAnchorToBottom()
+            self.preview.image = Self.logoImage
+            self.preview.contentMode = .center
+            
             title.text = UserText.homeTabTitle
             favicon.image = UIImage(named: "Logo")
         } else {
+            if let preview = preview {
+                self.preview.contentMode = .scaleAspectFill
+                updatePreview(aspecRatio: preview.size.height / preview.size.width)
+                self.preview.image = preview
+            } else {
+                self.preview.image = nil
+            }
+            
             removeButton.isHidden = false
             configureFavicon(forDomain: tab.link?.url.host)
         }

@@ -299,6 +299,8 @@
 		984FD95823018E6700B3E4DE /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FD95723018E6700B3E4DE /* LocalNotifications.swift */; };
 		985892522260B1B200EEB31B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985892512260B1B200EEB31B /* ProgressView.swift */; };
 		985AAE422488FF74007A43EC /* TabSwitcherTransitioningOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */; };
+		985AAE4524899369007A43EC /* TransitionFromHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985AAE4424899369007A43EC /* TransitionFromHomeScreen.swift */; };
+		985AAE472489BC9D007A43EC /* TransitionToHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985AAE462489BC9D007A43EC /* TransitionToHomeScreen.swift */; };
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
 		9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */; };
 		986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */; };
@@ -900,6 +902,8 @@
 		984FD95723018E6700B3E4DE /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		985892512260B1B200EEB31B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransitioningOut.swift; sourceTree = "<group>"; };
+		985AAE4424899369007A43EC /* TransitionFromHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionFromHomeScreen.swift; sourceTree = "<group>"; };
+		985AAE462489BC9D007A43EC /* TransitionToHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionToHomeScreen.swift; sourceTree = "<group>"; };
 		9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesOverlay.swift; sourceTree = "<group>"; };
 		9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteHomeCell.xib; sourceTree = "<group>"; };
 		986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteCategories.swift; sourceTree = "<group>"; };
@@ -2662,6 +2666,8 @@
 			isa = PBXGroup;
 			children = (
 				855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */,
+				985AAE4424899369007A43EC /* TransitionFromHomeScreen.swift */,
+				985AAE462489BC9D007A43EC /* TransitionToHomeScreen.swift */,
 				986DA94924884B18004A7E39 /* TabSwitcherTransitioningIn.swift */,
 				985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
@@ -3601,6 +3607,7 @@
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */,
+				985AAE4524899369007A43EC /* TransitionFromHomeScreen.swift in Sources */,
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
@@ -3610,6 +3617,7 @@
 				98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */,
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
+				985AAE472489BC9D007A43EC /* TransitionToHomeScreen.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

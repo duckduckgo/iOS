@@ -104,7 +104,7 @@ class DaxDialogs {
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
     
-    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+    init(settings: DaxDialogsSettings = InMemoryDaxDialogsSettings()) {
         self.settings = settings
     }
     
@@ -113,7 +113,6 @@ class DaxDialogs {
             || settings.browsingWithTrackersShown
             || settings.browsingWithoutTrackersShown
             || settings.browsingMajorTrackingSiteShown
-            || settings.browsingOwnedByMajorTrackingSiteShown
     }
     
     func dismiss() {
@@ -128,23 +127,22 @@ class DaxDialogs {
             return searchMessage()
         }
         
+        // won't be shown if owned by major tracker message has already been shown
         if isFacebookOrGoogle(host) {
             return majorTrackerMessage(host)
         }
         
+        // won't be shown if major tracker message has already been shown
         if let owner = isOwnedByFacebookOrGoogle(host) {
             return majorTrackerOwnerMessage(host, owner)
-        }
-        
-        if siteRating.trackersBlocked.isEmpty {
-            return noTrackersMessage()
         }
         
         if let entities = entitiesBlocked(siteRating) {
             return trackersBlockedMessage(entities)
         }
         
-        return nil
+        // only shown if first time on a non-ddg page and none of the non-ddg messages shown
+        return noTrackersMessage()
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
@@ -167,16 +165,18 @@ class DaxDialogs {
     private func noTrackersMessage() -> DaxDialogs.BrowsingSpec? {
         if !settings.browsingWithoutTrackersShown {
             settings.browsingWithoutTrackersShown = true
+            settings.browsingWithoutTrackersShown = true
             return BrowsingSpec.withoutTrackers
         }
         return nil
     }
 
     func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxDialogs.BrowsingSpec? {
-        guard !settings.browsingOwnedByMajorTrackingSiteShown else { return nil }
+        guard !settings.browsingMajorTrackingSiteShown else { return nil }
         guard let entityName = majorTrackerEntity.displayName,
             let entityPrevalence = majorTrackerEntity.prevalence else { return nil }
-        settings.browsingOwnedByMajorTrackingSiteShown = true
+        settings.browsingMajorTrackingSiteShown = true
+        settings.browsingWithoutTrackersShown = true
         return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."),
                                                            entityName,
                                                            entityPrevalence)
@@ -188,6 +188,7 @@ class DaxDialogs {
             let entityName = entity.displayName,
             let entityPrevalence = entity.prevalence else { return nil }
         settings.browsingMajorTrackingSiteShown = true
+        settings.browsingWithoutTrackersShown = true
         return BrowsingSpec.siteIsMajorTracker.format(args: entityName, entityPrevalence)
     }
     

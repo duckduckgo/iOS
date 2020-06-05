@@ -46,10 +46,8 @@ class DaxDialogTests: XCTestCase {
         let testCases = [
             (urls: [ URLs.google ], expected: DaxDialogs.BrowsingSpec.withOneTracker.format(args: "Google"), line: #line),
             (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Amazon.com"), line: #line),
-            
-            // The order of trackers shouldn't matter, google should be first due to higher prevalence
+            (urls: [ URLs.amazon, URLs.ownedByFacebook ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Facebook", "Amazon.com"), line: #line),
             (urls: [ URLs.facebook, URLs.google ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Facebook"), line: #line),
-            
             (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: "Google", "Facebook", 1), line: #line)
         ]
         // swiftlint:enable line_length
@@ -65,21 +63,32 @@ class DaxDialogTests: XCTestCase {
             }
             
             // Assert the expected case
-            XCTAssertEqual(testCase.expected, onboarding.nextBrowsingMessage(siteRating: siteRating), file: #file, line: UInt(testCase.line))
+            XCTAssertEqual(testCase.expected, onboarding.nextBrowsingMessage(siteRating: siteRating), line: UInt(testCase.line))
             
             // Also assert the we don't see the message on subsequent calls
-            XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating), file: #file, line: UInt(testCase.line))
+            XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: siteRating), line: UInt(testCase.line))
         }
         
     }
+
+    func testWhenSearchShownThenNoTrackersIsShown() {
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
+    }
+
+    func testWhenMajorTrackerShownThenNoTrackersIsNotShown() {
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.facebook)))
+        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
+    }
+
+    func testWhenTrackersShownThenNoTrackersIsNotShown() {
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.amazon)))
+        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
+    }
     
-    private func detectedTrackerFrom(_ url: URL) -> DetectedTracker {
-        let entity = TrackerDataManager.shared.findEntity(forHost: url.host!)
-        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: url.absoluteString)
-        return DetectedTracker(url: url.absoluteString,
-                                      knownTracker: knownTracker,
-                                      entity: entity,
-                                      blocked: true)
+    func testWhenMajorTrackerShownThenOwnedByIsNotShown() {
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.facebook)))
+        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ownedByFacebook)))
     }
 
     func testWhenSecondTimeOnSiteThatIsOwnedByFacebookThenShowNothing() {
@@ -159,5 +168,13 @@ class DaxDialogTests: XCTestCase {
     func testWhenFirstTimeOnHomeScreenThenShowFirstDialog() {
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.initial, onboarding.nextHomeScreenMessage())
     }
-    
+        
+    private func detectedTrackerFrom(_ url: URL) -> DetectedTracker {
+        let entity = TrackerDataManager.shared.findEntity(forHost: url.host!)
+        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: url.absoluteString)
+        return DetectedTracker(url: url.absoluteString,
+                                      knownTracker: knownTracker,
+                                      entity: entity,
+                                      blocked: true)
+    }
 }

@@ -105,11 +105,10 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 fileprivate extension DefaultDaxDialogsSettings {
     
     var browsingDialogsSeenCount: String {
-        let count = [ browsingOwnedByMajorTrackingSiteShown,
-                 browsingMajorTrackingSiteShown,
-                 browsingWithoutTrackersShown,
-                 browsingWithTrackersShown,
-                 browsingAfterSearchShown].reduce(0, { $0 + ($1 ? 1 : 0) })
+        let count = [ browsingMajorTrackingSiteShown,
+                      browsingWithoutTrackersShown,
+                      browsingWithTrackersShown,
+                      browsingAfterSearchShown].reduce(0, { $0 + ($1 ? 1 : 0) })
         return "\(count)"
     }
     

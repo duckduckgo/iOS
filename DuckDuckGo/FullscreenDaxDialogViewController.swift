@@ -23,6 +23,7 @@ import Core
 protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
     func hideDaxDialogs(controller: FullscreenDaxDialogViewController)
+    func closedDaxDialogs(controller: FullscreenDaxDialogViewController)
 
 }
 
@@ -80,6 +81,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     
     private func dismissCta() {
         dismiss(animated: true)
+        delegate?.closedDaxDialogs(controller: self)
     }
     
 }
@@ -88,16 +90,25 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 
     func hideDaxDialogs(controller: FullscreenDaxDialogViewController) {
 
-        let controller = UIAlertController(title: UserText.daxDialogHideTitle,
+        let alertController = UIAlertController(title: UserText.daxDialogHideTitle,
                                            message: UserText.daxDialogHideMessage,
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
-        controller.addAction(title: UserText.daxDialogHideButton, style: .default) {
+        alertController.addAction(title: UserText.daxDialogHideButton, style: .default) {
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
             DaxDialogs().dismiss()
         }
-        controller.addAction(title: UserText.daxDialogHideCancel, style: .cancel)
-        present(controller, animated: true)
+        alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel)
+        present(alertController, animated: true)
+        if controller.spec?.highlightAddressBar ?? false {
+            chromeDelegate?.omniBar.cancelAllAnimations()
+        }
+    }
+    
+    func closedDaxDialogs(controller: FullscreenDaxDialogViewController) {
+        if controller.spec?.highlightAddressBar ?? false {
+            chromeDelegate?.omniBar.completeAnimations()
+        }
     }
 
 }

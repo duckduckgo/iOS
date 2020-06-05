@@ -501,6 +501,10 @@ class TabViewController: UIViewController {
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
             controller.spec = sender as? DaxDialogs.BrowsingSpec
             controller.delegate = self
+            
+            if controller.spec?.highlightAddressBar ?? false {
+                chromeDelegate.omniBar.cancelAllAnimations()
+            }
         }
         
     }
@@ -781,35 +785,32 @@ extension TabViewController: WKNavigationDelegate {
         
         siteRating?.finishedLoading = true
         updateSiteRating()
-        scheduleTrackerNetworksAnimation()
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
      
         tips?.onFinishedLoading(url: url, error: isError)
-        showDaxDialogIfNeeded()
+        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
     
-    private func showDaxDialogIfNeeded() {
-        guard DefaultVariantManager().isSupported(feature: .daxOnboarding) else { return }
-        guard let siteRating = self.siteRating else { return }
-        guard let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else { return }
-        
-        if spec.highlightAddressBar {
-            cancelTrackerNetworksAnimation()
-            chromeDelegate?.omniBar.cancelAllAnimations()
+    private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+        guard DefaultVariantManager().isSupported(feature: .daxOnboarding),
+            let siteRating = self.siteRating,
+            let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
+                scheduleTrackerNetworksAnimation(collapsing: true)
+                return
         }
         
+        scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
         }
     }
     
-    private func scheduleTrackerNetworksAnimation() {
+    private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
-            
-            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked))
+            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,

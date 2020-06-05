@@ -347,3 +347,8 @@
 "dax.onboarding.browsing.multiple.trackers.cta"  = "High Five!";
 
 "dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";
+
+"dax.hide.title" = "Hide remaining tips?";
+"dax.hide.message" = "There are only a few, and we tried to make them informative.";
+"dax.hide.button" = "Hide tips forever";
+"dax.hide.cancel" = "Cancel";

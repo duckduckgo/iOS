@@ -88,15 +88,15 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 
     func hideDaxDialogs(controller: FullscreenDaxDialogViewController) {
 
-        let controller = UIAlertController(title: "Hide remaining tips?",
-                                           message: "There are only a few, and we tried to make them informative.",
+        let controller = UIAlertController(title: UserText.daxDialogHideTitle,
+                                           message: UserText.daxDialogHideMessage,
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
-        controller.addAction(title: "Hide tips forever", style: .default) {
+        controller.addAction(title: UserText.daxDialogHideButton, style: .default) {
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
             DaxDialogs().dismiss()
         }
-        controller.addAction(title: "Cancel", style: .cancel)
+        controller.addAction(title: UserText.daxDialogHideCancel, style: .cancel)
         present(controller, animated: true)
     }
 

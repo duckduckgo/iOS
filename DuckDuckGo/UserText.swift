@@ -299,5 +299,11 @@ public struct UserText {
     public static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.browsing.multiple.trackers", comment: "*%1$@, %2$@* and *%3$d others* were trying to track you here.")
     public static let daxDialogBrowsingWithMultipleTrackersCTA = NSLocalizedString("dax.onboarding.browsing.multiple.trackers.cta", comment: "High Five!")
     
-    public static let daxDialogOnboardingMessage =  NSLocalizedString("dax.onboarding.message", comment: "The Internet can be kinda creepy.")
+    public static let daxDialogOnboardingMessage = NSLocalizedString("dax.onboarding.message", comment: "The Internet can be kinda creepy.")
+    
+    public static let daxDialogHideTitle = NSLocalizedString("dax.hide.title", comment: "Hide remaining tips?")
+    public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", comment: "There are only a few, and we tried to make them informative.")
+    public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", comment: "Hide tips forever")
+    public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", comment: "Cancel")
+    
 }

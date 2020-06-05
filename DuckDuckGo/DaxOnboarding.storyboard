@@ -279,7 +279,7 @@ DuckDuckGo!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G3-x9-wwM">
-                                <rect key="frame" x="0.0" y="98" width="414" height="798"/>
+                                <rect key="frame" x="0.0" y="94" width="414" height="802"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.60217786815068497" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hN-QW-QID">
@@ -310,7 +310,7 @@ DuckDuckGo!</string>
                         <constraints>
                             <constraint firstItem="4hN-QW-QID" firstAttribute="width" secondItem="Ica-YY-s5f" secondAttribute="width" id="04f-c6-SAb"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="leading" secondItem="Ica-YY-s5f" secondAttribute="leading" id="0TY-9i-a7Z"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="7G3-x9-wwM" secondAttribute="top" constant="-54" id="2W5-ID-JWT"/>
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="7G3-x9-wwM" secondAttribute="top" constant="-50" id="2W5-ID-JWT"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="EYf-zh-Pqq"/>
                             <constraint firstItem="4hN-QW-QID" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="NHP-BS-w7e"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="RsO-pv-xjm"/>

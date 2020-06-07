@@ -46,7 +46,12 @@ class TrackersAnimator {
         
         let blockedEntities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
             return (l.prevalence ?? 0) > (r.prevalence ?? 0)
-        }.filter { $0.displayName != nil }
+        }
+        .filter { $0.displayName != nil }
+        .sorted { _, r -> Bool in
+            guard let displayName = r.displayName else { return false }
+            return "AEIOU".contains(displayName[displayName.startIndex])
+        }
         
         guard !blockedEntities.isEmpty else { return false }
 

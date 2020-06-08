@@ -20,6 +20,32 @@
 import Core
 
 class HomeScreenTransition: TabSwitcherTransition {
+    
+    fileprivate var homeScreenSnapshot: UIView?
+    fileprivate var settingsButtonSnapshot: UIView?
+    
+    fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
+                                      transitionContext: UIViewControllerContextTransitioning) {
+        let viewToSnapshot: UIView
+        if homeScreen.logo.isHidden {
+            viewToSnapshot = homeScreen.collectionView
+        } else {
+            viewToSnapshot = homeScreen.logoContainer
+        }
+        
+        if let snapshot = viewToSnapshot.snapshotView(afterScreenUpdates: false) {
+            imageContainer.addSubview(snapshot)
+            snapshot.frame = imageContainer.bounds
+            homeScreenSnapshot = snapshot
+        }
+        
+        // This fixes animation glitch in centered search mode.
+        settingsButtonSnapshot = tabSwitcherViewController.settingsButton.snapshotView(afterScreenUpdates: true)
+        if let settingsButton = settingsButtonSnapshot {
+            settingsButton.frame = tabSwitcherViewController.view.convert(tabSwitcherViewController.settingsButton.frame, to: nil)
+            transitionContext.containerView.addSubview(settingsButton)
+        }
+    }
 
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
@@ -52,17 +78,6 @@ class FromHomeScreenTransition: HomeScreenTransition {
         super.init(tabSwitcherViewController: tabSwitcherViewController)
     }
     
-    private func makeSnapshot(of homeScreen: HomeViewController) -> UIView {
-        let viewToSnapshot: UIView
-        if homeScreen.logo.isHidden {
-            viewToSnapshot = homeScreen.collectionView
-        } else {
-            viewToSnapshot = homeScreen.logoContainer
-        }
-        
-        return viewToSnapshot.snapshotView(afterScreenUpdates: false)!
-    }
-    
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         prepareSubviews(using: transitionContext)
         tabSwitcherViewController.prepareForPresentation()
@@ -77,6 +92,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         
         solidBackground.frame = homeScreen.view.convert(homeScreen.collectionView.frame, to: nil)
         solidBackground.backgroundColor = theme.backgroundColor
+        
         imageContainer.frame = solidBackground.frame
         imageContainer.backgroundColor = theme.backgroundColor
         
@@ -84,12 +100,10 @@ class FromHomeScreenTransition: HomeScreenTransition {
         transitionContext.containerView.insertSubview(tabSwitcherViewController.view, belowSubview: imageContainer)
         tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         
-        let snapshot = makeSnapshot(of: homeScreen)
-        snapshot.frame = imageContainer.bounds
-        imageContainer.addSubview(snapshot)
+        prepareSnapshots(with: homeScreen, transitionContext: transitionContext)
         
         imageView.alpha = 0
-        imageView.frame = snapshot.frame
+        imageView.frame = imageContainer.bounds
         imageView.contentMode = .center
         imageView.image = TabViewCell.logoImage
         
@@ -101,11 +115,11 @@ class FromHomeScreenTransition: HomeScreenTransition {
                 self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
                 self.imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
                 self.imageView.frame = self.previewFrame(for: self.imageContainer.bounds.size)
-                snapshot.frame = self.imageContainer.bounds
+                self.homeScreenSnapshot?.frame = self.imageContainer.bounds
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3) {
-                snapshot.alpha = 0
+                self.homeScreenSnapshot?.alpha = 0
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.7) {
@@ -119,6 +133,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         }, completion: { _ in
             self.solidBackground.removeFromSuperview()
             self.imageContainer.removeFromSuperview()
+            self.settingsButtonSnapshot?.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
     }
@@ -145,10 +160,8 @@ class ToHomeScreenTransition: HomeScreenTransition {
         imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
         imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
         
-        let snapshot = homeScreen.view.snapshotView(afterScreenUpdates: false)!
-        snapshot.alpha = 0
-        imageContainer.addSubview(snapshot)
-        snapshot.frame = imageContainer.bounds
+        prepareSnapshots(with: homeScreen, transitionContext: transitionContext)
+        homeScreenSnapshot?.alpha = 0
         
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
@@ -165,7 +178,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
                 self.imageContainer.backgroundColor = theme.backgroundColor
                 self.imageView.frame = CGRect(origin: .zero,
                                               size: self.imageContainer.bounds.size)
-                snapshot.frame = self.imageContainer.bounds
+                self.homeScreenSnapshot?.frame = self.imageContainer.bounds
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
@@ -173,7 +186,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {
-                snapshot.alpha = 1
+                self.homeScreenSnapshot?.alpha = 1
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3) {
@@ -182,6 +195,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
             
         }, completion: { _ in
             self.imageContainer.removeFromSuperview()
+            self.settingsButtonSnapshot?.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
     }

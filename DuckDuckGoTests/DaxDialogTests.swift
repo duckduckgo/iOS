@@ -79,7 +79,7 @@ class DaxDialogTests: XCTestCase {
     }
 
     func testWhenMajorTrackerShownThenNoTrackersNotShown() {
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.google)))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
     }
 

@@ -22,7 +22,7 @@ import UIKit
 class TabSwitcherTransition: NSObject, UIViewControllerTransitioningDelegate {
     
     struct Constants {
-        static let duration = 0.5
+        static let duration = 0.3
     }
 
     func animationController(forPresented presented: UIViewController,
@@ -33,8 +33,8 @@ class TabSwitcherTransition: NSObject, UIViewControllerTransitioningDelegate {
             return nil
         }
         if mainVC.homeController != nil {
-            return TransitionFromHomeScreen(mainViewController: mainVC,
-            tabSwitcherViewController: tabSwitcherVC)
+            return FromHomeScreenTransition(mainViewController: mainVC,
+                                            tabSwitcherViewController: tabSwitcherVC)
         }
         
         return TabSwitcherTransitioningIn(mainViewController: mainVC,
@@ -45,7 +45,7 @@ class TabSwitcherTransition: NSObject, UIViewControllerTransitioningDelegate {
         guard let tabSwitcherVC = dismissed as? TabSwitcherViewController else { return nil }
         
         if let tab = tabSwitcherVC.tabsModel.currentTab, tab.link == nil {
-            return TransitionToHomeScreen(tabSwitcherViewController: tabSwitcherVC)
+            return ToHomeScreenTransition(tabSwitcherViewController: tabSwitcherVC)
         }
         return TabSwitcherTransitioningOut(tabSwitcherViewController: tabSwitcherVC)
     }

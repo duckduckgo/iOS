@@ -87,7 +87,7 @@ class MainViewController: UIViewController {
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
 
-    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransition()
+    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current
     }

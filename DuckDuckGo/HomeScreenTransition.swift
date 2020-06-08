@@ -19,32 +19,8 @@
 
 import Core
 
-class HomeScreenTransition: NSObject, UIViewControllerAnimatedTransitioning {
-    
-    // Used to hide contents of the 'from' VC when animating.
-    fileprivate let solidBackground = UIView()
-    // Container for the image, will clip subviews like tab switcher cell does.
-    fileprivate let imageContainer = UIView()
-    // Image to display as a preview.
-    fileprivate let imageView = UIImageView()
-    
-    fileprivate let tabSwitcherViewController: TabSwitcherViewController
-    
-    init(tabSwitcherViewController: TabSwitcherViewController) {
-        self.tabSwitcherViewController = tabSwitcherViewController
-    }
-    
-    func prepareSubviews(using transitionContext: UIViewControllerContextTransitioning) {
-        
-        transitionContext.containerView.addSubview(solidBackground)
+class HomeScreenTransition: TabSwitcherTransition {
 
-        imageContainer.clipsToBounds = true
-        
-        imageView.alpha = 0
-        imageContainer.addSubview(imageView)
-        transitionContext.containerView.addSubview(imageContainer)
-    }
-    
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                                 to: self.tabSwitcherViewController.view)
@@ -63,16 +39,6 @@ class HomeScreenTransition: NSObject, UIViewControllerAnimatedTransitioning {
         return targetFrame
     }
     
-    // MARK: UIViewControllerAnimatedTransitioning
-
-    // Override - Abstract function
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        assertionFailure("You must implement this method")
-    }
-    
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return TabSwitcherTransition.Constants.duration
-    }
 }
 
 class FromHomeScreenTransition: HomeScreenTransition {
@@ -106,6 +72,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
         let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
             else { return }
+        
         let theme = ThemeManager.shared.currentTheme
         
         solidBackground.frame = homeScreen.view.convert(homeScreen.collectionView.frame, to: nil)
@@ -118,9 +85,10 @@ class FromHomeScreenTransition: HomeScreenTransition {
         tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         
         let snapshot = makeSnapshot(of: homeScreen)
-        snapshot.frame = CGRect(origin: .zero, size: imageContainer.bounds.size)
+        snapshot.frame = imageContainer.bounds
         imageContainer.addSubview(snapshot)
         
+        imageView.alpha = 0
         imageView.frame = snapshot.frame
         imageView.contentMode = .center
         imageView.image = TabViewCell.logoImage
@@ -128,14 +96,12 @@ class FromHomeScreenTransition: HomeScreenTransition {
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
-                let theme = ThemeManager.shared.currentTheme
-                
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
                 self.imageContainer.frame = containerFrame
                 self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
                 self.imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
                 self.imageView.frame = self.previewFrame(for: self.imageContainer.bounds.size)
-                snapshot.center = CGPoint(x: containerFrame.width / 2, y: containerFrame.height / 2)
+                snapshot.frame = self.imageContainer.bounds
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3) {
@@ -182,7 +148,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         let snapshot = homeScreen.view.snapshotView(afterScreenUpdates: false)!
         snapshot.alpha = 0
         imageContainer.addSubview(snapshot)
-        snapshot.center = CGPoint(x: imageContainer.bounds.midX, y: imageContainer.bounds.midY)
+        snapshot.frame = imageContainer.bounds
         
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
@@ -199,7 +165,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
                 self.imageContainer.backgroundColor = theme.backgroundColor
                 self.imageView.frame = CGRect(origin: .zero,
                                               size: self.imageContainer.bounds.size)
-                snapshot.center = CGPoint(x: self.imageContainer.bounds.midX, y: self.imageContainer.bounds.midY)
+                snapshot.frame = self.imageContainer.bounds
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
@@ -219,21 +185,5 @@ class ToHomeScreenTransition: HomeScreenTransition {
             transitionContext.completeTransition(true)
         })
     }
-    // swiftlint:enable function_body_length
     
-    private func scrollIfOutsideViewport(collectionView: UICollectionView,
-                                         rowIndex: Int,
-                                         attributes: UICollectionViewLayoutAttributes) {
-        // If cell is outside viewport, scroll while animating
-        let collectionView = tabSwitcherViewController.collectionView!
-        if attributes.frame.origin.y + attributes.frame.size.height < collectionView.contentOffset.y {
-            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
-                                        at: .top,
-                                        animated: true)
-        } else if attributes.frame.origin.y > collectionView.frame.height + collectionView.contentOffset.y {
-            collectionView.scrollToItem(at: IndexPath(row: rowIndex, section: 0),
-                                        at: .bottom,
-                                        animated: true)
-        }
-    }
 }

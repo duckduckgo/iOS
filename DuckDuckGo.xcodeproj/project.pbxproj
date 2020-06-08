@@ -298,13 +298,12 @@
 		984E291B22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */; };
 		984FD95823018E6700B3E4DE /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FD95723018E6700B3E4DE /* LocalNotifications.swift */; };
 		985892522260B1B200EEB31B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985892512260B1B200EEB31B /* ProgressView.swift */; };
-		985AAE422488FF74007A43EC /* TabSwitcherTransitioningOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */; };
 		985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985AAE4424899369007A43EC /* HomeScreenTransition.swift */; };
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
 		9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */; };
 		986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */; };
 		986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */; };
-		986DA94A24884B18004A7E39 /* TabSwitcherTransitioningIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DA94924884B18004A7E39 /* TabSwitcherTransitioningIn.swift */; };
+		986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DA94924884B18004A7E39 /* WebViewTransition.swift */; };
 		98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98728E812417E3300033960E /* BrokenSiteInfo.swift */; };
 		9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
@@ -900,13 +899,12 @@
 		984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivacyProtectionHomeCell.xib; sourceTree = "<group>"; };
 		984FD95723018E6700B3E4DE /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		985892512260B1B200EEB31B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
-		985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransitioningOut.swift; sourceTree = "<group>"; };
 		985AAE4424899369007A43EC /* HomeScreenTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenTransition.swift; sourceTree = "<group>"; };
 		9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesOverlay.swift; sourceTree = "<group>"; };
 		9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteHomeCell.xib; sourceTree = "<group>"; };
 		986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteCategories.swift; sourceTree = "<group>"; };
 		986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBrokenSiteViewController.swift; sourceTree = "<group>"; };
-		986DA94924884B18004A7E39 /* TabSwitcherTransitioningIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransitioningIn.swift; sourceTree = "<group>"; };
+		986DA94924884B18004A7E39 /* WebViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTransition.swift; sourceTree = "<group>"; };
 		98728E812417E3300033960E /* BrokenSiteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteInfo.swift; sourceTree = "<group>"; };
 		9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPreviewsSource.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
@@ -2665,8 +2663,7 @@
 			children = (
 				855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */,
 				985AAE4424899369007A43EC /* HomeScreenTransition.swift */,
-				986DA94924884B18004A7E39 /* TabSwitcherTransitioningIn.swift */,
-				985AAE412488FF74007A43EC /* TabSwitcherTransitioningOut.swift */,
+				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
 				857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */,
@@ -3451,7 +3448,6 @@
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
 				85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
-				985AAE422488FF74007A43EC /* TabSwitcherTransitioningOut.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
@@ -3477,7 +3473,7 @@
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
-				986DA94A24884B18004A7E39 /* TabSwitcherTransitioningIn.swift in Sources */,
+				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,

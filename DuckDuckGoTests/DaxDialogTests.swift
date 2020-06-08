@@ -71,6 +71,18 @@ class DaxDialogTests: XCTestCase {
         
     }
 
+    func testWhenTrackersShownThenNoTrackersNotShown() {
+        let siteRating = SiteRating(url: URLs.example)
+        siteRating.trackerDetected(detectedTrackerFrom(URLs.google))
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
+        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
+    }
+
+    func testWhenMajorTrackerShownThenNoTrackersNotShown() {
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
+        XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
+    }
+
     func testWhenSearchShownThenNoTrackersIsShown() {
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.ddg)))
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))

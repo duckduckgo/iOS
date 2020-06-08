@@ -163,8 +163,7 @@ class DaxDialogs {
     }
     
     private func noTrackersMessage() -> DaxDialogs.BrowsingSpec? {
-        if !settings.browsingWithoutTrackersShown {
-            settings.browsingWithoutTrackersShown = true
+        if !settings.browsingWithoutTrackersShown && !settings.browsingMajorTrackingSiteShown && !settings.browsingWithTrackersShown {
             settings.browsingWithoutTrackersShown = true
             return BrowsingSpec.withoutTrackers
         }

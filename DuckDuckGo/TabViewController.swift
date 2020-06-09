@@ -803,6 +803,7 @@ extension TabViewController: WKNavigationDelegate {
         
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
         }
     }

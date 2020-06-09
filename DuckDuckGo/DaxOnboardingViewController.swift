@@ -57,6 +57,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
         daxDialog?.message = UserText.daxDialogOnboardingMessage
         daxDialog?.decorate(with: LightTheme())
+        daxDialog?.reset()
         daxDialogContainerHeight.constant = isSmall ? 190 : 195
 
         button.displayDropShadow()

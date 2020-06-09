@@ -98,6 +98,11 @@ class DaxDialogViewController: UIViewController {
         onTapCta?()
     }
     
+    func reset() {
+        position = 0
+        updateMessage()
+    }
+    
     private func showNextChar() {
         guard !atEnd(position) else { return }
         

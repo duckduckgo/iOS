@@ -69,7 +69,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         if !KeyboardSettings().onAppLaunch && (isPortrait || isPad) && AppDelegate.shared.appIsLaunching {
             transitionFromColdStart()
         } else {
-            controller.logoContainer?.isHidden = true
+            controller.hideLogo()
         }
         
     }
@@ -78,26 +78,27 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         DispatchQueue.main.async {
             self.cell?.alpha = 0.0
             if let controller = self.controller?.parent,
-                let snapshot = self.controller?.logo?.snapshotView(afterScreenUpdates: false),
                 let targetFrame = self.cell?.imageView.superview?.convert(self.cell?.imageView.frame ?? .zero, to: controller.view) {
+                let logo = UIImageView(image: UIImage(named: "Logo"))
 
-                snapshot.center = controller.view.center
-                controller.view.addSubview(snapshot)
+                logo.frame = targetFrame
+                logo.center = controller.view.center
+                controller.view.addSubview(logo)
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     UIView.animate(withDuration: 0.2, animations: {
-                        snapshot.center = CGPoint(x: targetFrame.midX, y: targetFrame.midY)
+                        logo.center = CGPoint(x: targetFrame.midX, y: targetFrame.midY)
                     }, completion: { _ in
                         UIView.animate(withDuration: 0.2, animations: {
                             self.cell?.alpha = 1.0
                         }, completion: { _ in
-                            snapshot.removeFromSuperview()
+                            logo.removeFromSuperview()
                         })
                     })
                 }
 
             }
-            self.controller?.logoContainer?.isHidden = true
+            self.controller?.hideLogo()
         }
     }
     

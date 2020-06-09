@@ -857,6 +857,15 @@ extension MainViewController: HomeControllerDelegate {
         launchSettings()
     }
     
+    func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
+        logoContainer.isHidden = hidden
+    }
+    
+    func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {
+        statusBarBackground?.alpha = percent
+        customNavigationBar?.alpha = percent
+    }
+    
 }
 
 extension MainViewController: TabDelegate {

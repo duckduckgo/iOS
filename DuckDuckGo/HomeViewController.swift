@@ -31,20 +31,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     weak var daxDialogViewController: DaxDialogViewController?
-    
-    var statusBarBackground: UIView? {
-        return (parent as? MainViewController)?.statusBarBackground
-    }
-
-    var navigationBar: UIView? {
-        return (parent as? MainViewController)?.customNavigationBar
-    }
-    
-    var bottomOffset: CGFloat {
-        // doesn't take in to account extra space on iPhone X but is good enough to show the bottom items in the collection view
-        return ((parent as? MainViewController)?.toolbar.frame.height ?? 0)
-    }
-
+ 
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
             let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
@@ -54,18 +41,9 @@ class HomeViewController: UIViewController {
                 chromeDelegate?.omniBar.resignFirstResponder()
             }
             
-            statusBarBackground?.alpha = percent
+            delegate?.home(self, searchTransitionUpdated: percent)
             chromeDelegate?.omniBar.alpha = percent
-            navigationBar?.alpha = percent
         }
-    }
-
-    var logoContainer: UIView? {
-        return (parent as? MainViewController)?.logoContainer
-    }
-    
-    var logo: UIImageView? {
-        return (parent as? MainViewController)?.logo
     }
     
     weak var delegate: HomeControllerDelegate?
@@ -160,11 +138,11 @@ class HomeViewController: UIViewController {
     func showNextDaxDialog() {
         guard let spec = homeScreenMessage else { return }
         collectionView.isHidden = true
-        logoContainer?.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
         daxDialogViewController?.message = spec.message
         daxDialogContainerHeight.constant = spec.height
+        hideLogo()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             UIView.animate(withDuration: 0.4, animations: {
@@ -176,6 +154,10 @@ class HomeViewController: UIViewController {
         
     }
 
+    func hideLogo() {
+        delegate?.home(self, didRequestHideLogo: true)
+    }
+    
     func onboardingCompleted() {
         installHomeScreenTips()
     }

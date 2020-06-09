@@ -122,35 +122,3 @@ class DaxDialogViewController: UIViewController {
     }
      
 }
-
-extension NSAttributedString {
-    
-    func requiredTextHeight(forWidth width: CGFloat) -> CGFloat {
-        let framesetter = CTFramesetterCreateWithAttributedString(self)
-        let emptyRange = CFRange(location: 0, length: 0)
-        
-        if #available(iOS 11.0, *) {
-            let constraints = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-            let height = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, emptyRange, nil, constraints, nil).height
-            return height
-        } else {
-            let path = CGPath(rect: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude), transform: nil)
-            let frame = CTFramesetterCreateFrame(framesetter, emptyRange, path, nil)
-            let lines = CTFrameGetLines(frame)
-            let numberOfLines = CFArrayGetCount(lines)
-            var height: CGFloat = 0
-            for index in 0..<numberOfLines {
-                let line: CTLine = unsafeBitCast(CFArrayGetValueAtIndex(lines, index), to: CTLine.self)
-                let rect = CTLineGetBoundsWithOptions(line,
-                                                      [ .includeLanguageExtents, .useOpticalBounds, .useHangingPunctuation, .useGlyphPathBounds ])
-                height += rect.height
-                let numberOfGlyphs = CTLineGetGlyphCount(line)
-                if numberOfGlyphs > 0 {
-                    height += 5
-                }
-            }
-            return height
-        }
-    }
-    
- }

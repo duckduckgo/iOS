@@ -42,6 +42,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        daxDialogViewController?.applyTheme(ThemeManager.shared.currentTheme)
         daxDialogViewController?.cta = spec?.cta
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta

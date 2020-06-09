@@ -45,7 +45,7 @@ extension String {
     }
 
     /// This is a super simple markdown that currently only supports `*` to make text bold.
-    func attributedStringFromMarkdown(color: UIColor = UIColor.darkGreyish,
+    func attributedStringFromMarkdown(color: UIColor,
                                       lineHeightMultiple: CGFloat = 1.37,
                                       fontSize: CGFloat = 16) -> NSAttributedString {
         

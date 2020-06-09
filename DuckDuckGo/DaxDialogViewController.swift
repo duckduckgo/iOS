@@ -118,7 +118,18 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func attributedString(from string: String) -> NSAttributedString {
-        return string.attributedStringFromMarkdown(fontSize: isSmall ? 16 : 18)
+        let theme = ThemeManager.shared.currentTheme
+        return string.attributedStringFromMarkdown(color: theme.daxDialogTextColor, fontSize: isSmall ? 16 : 18)
     }
      
+}
+
+extension DaxDialogViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        textArea.backgroundColor = theme.daxDialogBackgroundColor
+        pointer.backgroundColor = theme.daxDialogBackgroundColor
+        finish() // skip animation if user changes theme, this forces update
+    }
+    
 }

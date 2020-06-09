@@ -53,6 +53,8 @@ class DaxDialogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        applyTheme(ThemeManager.shared.currentTheme)
+        
         initLabel()
         initCTA()
         

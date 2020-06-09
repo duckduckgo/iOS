@@ -803,6 +803,7 @@ extension TabViewController: WKNavigationDelegate {
         
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
         }
@@ -924,8 +925,8 @@ extension TabViewController: WKNavigationDelegate {
             
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
-            
             completion(.cancel)
+            
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)

@@ -53,16 +53,16 @@ public class UserAgentManager {
     }
 }
 
-private struct UserAgent {
+struct UserAgent {
     
-    // swiftlint:disable line_length
     private struct Constants {
+        // swiftlint:disable line_length
         static let fallbackWekKitVersion = "605.1.15"
         static let fallbackSafariComponent = "Safari/\(fallbackWekKitVersion)"
-        static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Version/13.1.1 Mobile/15E148"
+        static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Mobile/15E148"
         static let desktopPrefixComponent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)"
+        // swiftlint:enable line_length
     }
-    // swiftlint:enable line_length
     
     private struct Regex {
         static let suffix = "(AppleWebKit/.*) Mobile"
@@ -75,26 +75,31 @@ private struct UserAgent {
     
     private let baseAgent: String
     private let baseDesktopAgent: String
-    private let mobileAgent: String
-    private let desktopAgent: String
     private let safariComponent: String
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
     
-    init(defaultAgent: String = Constants.fallbackSafariComponent) {
+    init(defaultAgent: String = Constants.fallbackDefaultAgent) {
         baseAgent = defaultAgent
-        safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
         baseDesktopAgent = UserAgent.createBaseDesktopAgent(fromAgent: baseAgent)
-        mobileAgent =  "\(baseAgent) \(applicationComponent) \(safariComponent)"
-        desktopAgent = "\(baseDesktopAgent) \(applicationComponent) \(safariComponent)"
+        safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
     public func agent(forHost host: String, isDesktop: Bool) -> String {
-        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains(host)
-        if isDesktop {
-            return !omitApplicationComponent ? desktopAgent : "\(baseDesktopAgent) \(safariComponent)"
-        } else {
-            return !omitApplicationComponent ? mobileAgent : "\(baseAgent) \(safariComponent)"
+        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { parentHost in
+            isSameOrSubdomain(child: host, parent: parentHost)
         }
+        let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+        if isDesktop {
+            return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
+        } else {
+            return concatWithSpaces(baseAgent, resolvedApplicationComponent, safariComponent)
+        }
+    }
+    
+    private func concatWithSpaces(_ elements: String?...) -> String {
+        return elements
+            .compactMap { $0 }
+            .joined(separator: " ")
     }
     
     private static func createSafariComponent(fromAgent agent: String) -> String {
@@ -119,5 +124,9 @@ private struct UserAgent {
         
         let suffix = (agent as NSString).substring(with: range)
         return "\(Constants.desktopPrefixComponent) \(suffix)"
+    }
+    
+    private func isSameOrSubdomain(child: String, parent: String) -> Bool {
+        return child == parent || child.hasSuffix(".\(parent)")
     }
 }

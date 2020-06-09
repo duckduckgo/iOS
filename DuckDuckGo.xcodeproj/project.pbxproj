@@ -43,6 +43,7 @@
 		8349119D217F4D6E00610F35 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642031E949E1900B2A911 /* proximanova-light.otf */; };
 		8349119E217F4D6E00610F35 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642041E949E1900B2A911 /* proximanova-regular.otf */; };
 		8349119F217F4D6E00610F35 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642051E949E1900B2A911 /* proximanova-semibold.otf */; };
+		834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834DF990248FDDF60075EA48 /* UserAgentTests.swift */; };
 		836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A941C247F23C600BF8EF5 /* UserAgentManager.swift */; };
 		837094302142C4C200A58838 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1AA54601E48D90700223211 /* NotificationCenter.framework */; };
 		837094332142C4C200A58838 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837094322142C4C200A58838 /* TodayViewController.swift */; };
@@ -638,6 +639,7 @@
 		8349118F217F491200610F35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83491196217F49AF00610F35 /* BookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		83491198217F4AA300610F35 /* BookmarksTodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BookmarksTodayExtension.entitlements; sourceTree = "<group>"; };
+		834DF990248FDDF60075EA48 /* UserAgentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentTests.swift; sourceTree = "<group>"; };
 		836A941C247F23C600BF8EF5 /* UserAgentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentManager.swift; sourceTree = "<group>"; };
 		8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickActionsTodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		837094322142C4C200A58838 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -2512,6 +2514,7 @@
 			isa = PBXGroup;
 			children = (
 				85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */,
+				834DF990248FDDF60075EA48 /* UserAgentTests.swift */,
 				8540BD5123D8C2220057FDD2 /* PreserveLoginsTests.swift */,
 				850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */,
 				F198D7971E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift */,
@@ -3698,6 +3701,7 @@
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				85A1B3B420C6D07100C18F15 /* CookieStorageTests.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
+				834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */,
 				F17D72391E8B35C6003E8B0E /* AppUrlsTests.swift in Sources */,
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
 				98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */,

@@ -321,7 +321,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func removeHomeScreen() {
-        logoContainer.isHidden = true
         homeController?.willMove(toParent: nil)
         homeController?.dismiss()
         homeController = nil

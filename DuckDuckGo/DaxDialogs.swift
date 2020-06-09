@@ -61,7 +61,7 @@ class DaxDialogs {
                                                      highlightAddressBar: false,
                                                      pixelName: .daxDialogsSiteIsMajor)
         
-        static let siteOwnedByMajorTracker = BrowsingSpec(height: 345,
+        static let siteOwnedByMajorTracker = BrowsingSpec(height: 365,
                                                           message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,

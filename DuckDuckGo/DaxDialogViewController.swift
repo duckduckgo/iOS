@@ -42,7 +42,12 @@ class DaxDialogViewController: UIViewController {
     }
     
     var onTapCta: (() -> Void)?
-         
+    var theme: Theme? {
+        didSet {
+            applyTheme(theme ?? ThemeManager.shared.currentTheme)
+        }
+    }
+    
     private var position: Int = 0
     private var chars = [Character]()
     
@@ -53,7 +58,7 @@ class DaxDialogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        applyTheme(theme ?? ThemeManager.shared.currentTheme)
         
         initLabel()
         initCTA()
@@ -125,7 +130,7 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func attributedString(from string: String) -> NSAttributedString {
-        let theme = ThemeManager.shared.currentTheme
+        let theme = self.theme ?? ThemeManager.shared.currentTheme
         return string.attributedStringFromMarkdown(color: theme.daxDialogTextColor, fontSize: isSmall ? 16 : 18)
     }
      
@@ -134,8 +139,9 @@ class DaxDialogViewController: UIViewController {
 extension DaxDialogViewController: Themable {
 
     func decorate(with theme: Theme) {
-        textArea.backgroundColor = theme.daxDialogBackgroundColor
-        pointer.backgroundColor = theme.daxDialogBackgroundColor
+        let themeToUse = self.theme ?? theme
+        textArea.backgroundColor = themeToUse.daxDialogBackgroundColor
+        pointer.backgroundColor = themeToUse.daxDialogBackgroundColor
         finish() // skip animation if user changes theme, this forces update
     }
     

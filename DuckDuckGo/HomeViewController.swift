@@ -109,6 +109,7 @@ class HomeViewController: UIViewController {
     
     func openedAsNewTab() {
         collectionView.openedAsNewTab()
+        installHomeScreenTips()
     }
     
     @IBAction func launchSettings() {

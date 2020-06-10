@@ -5,7 +5,7 @@ We are excited to engage the community in development!
 
 
 ## We are hiring!
-We are looking for a Senior Cross-Platform engineer to help shape our mobile apps. We embrace diverse perspectives, and seek out passionate, self-motivated people, committed to our shared vision of raising the standard of trust online. Visit our [careers](https://duckduckgo.com/hiring/#open) page to find out more!
+DuckDuckGo is growing fast and we continue to expand our fully distributed team. We embrace diverse perspectives, and seek out passionate, self-motivated people, committed to our shared vision of raising the standard of trust online. If you are a senior software engineer capable in either iOS or Android, visit our [careers](https://duckduckgo.com/hiring/#open) page to find out more about our openings!
 
 ## Building
 

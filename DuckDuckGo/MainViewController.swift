@@ -842,7 +842,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-
+    
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
@@ -868,6 +868,10 @@ extension MainViewController: HomeControllerDelegate {
     
     func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
         logoContainer.isHidden = hidden
+    }
+    
+    func homeDidRequestLogoContainer(_ home: HomeViewController) -> UIView {
+        return logoContainer
     }
     
     func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {

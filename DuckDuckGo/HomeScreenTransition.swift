@@ -27,13 +27,19 @@ class HomeScreenTransition: TabSwitcherTransition {
     fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
                                       transitionContext: UIViewControllerContextTransitioning) {
         let viewToSnapshot: UIView
-        if homeScreen.logo.isHidden {
-            viewToSnapshot = homeScreen.collectionView
+        let frameToSnapshot: CGRect
+        if let logoContainer = homeScreen.logoContainer, !logoContainer.isHidden {
+            viewToSnapshot = logoContainer
+            frameToSnapshot = homeScreen.collectionView.convert(homeScreen.collectionView.bounds,
+                                                                to: nil)
         } else {
-            viewToSnapshot = homeScreen.logoContainer
+            viewToSnapshot = homeScreen.collectionView
+            frameToSnapshot = viewToSnapshot.bounds
         }
         
-        if let snapshot = viewToSnapshot.snapshotView(afterScreenUpdates: false) {
+        if let snapshot = viewToSnapshot.resizableSnapshotView(from: frameToSnapshot,
+                                                               afterScreenUpdates: false,
+                                                               withCapInsets: .zero) {
             imageContainer.addSubview(snapshot)
             snapshot.frame = imageContainer.bounds
             homeScreenSnapshot = snapshot

@@ -94,4 +94,10 @@ struct DarkTheme: Theme {
     var activityStyle: UIActivityIndicatorView.Style = .white
     
     var destructiveColor: UIColor = UIColor.destructive
+    
+    var ddgTextTintColor: UIColor = .white
+
+    var daxDialogBackgroundColor: UIColor = .nearlyBlackLight
+    var daxDialogTextColor: UIColor = UIColor.nearlyWhite
+
 }

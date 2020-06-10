@@ -101,4 +101,9 @@ protocol Theme {
     var activityStyle: UIActivityIndicatorView.Style { get }
     
     var destructiveColor: UIColor { get }
+    
+    var ddgTextTintColor: UIColor { get }
+    
+    var daxDialogBackgroundColor: UIColor { get }
+    var daxDialogTextColor: UIColor { get }
 }

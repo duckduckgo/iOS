@@ -224,7 +224,9 @@ class TabViewController: UIViewController {
     }
     
     func installBrowsingTips() {
-        tips = BrowsingTips(delegate: self)
+        if !DefaultVariantManager().isSupported(feature: .daxOnboarding) {
+            tips = BrowsingTips(delegate: self)
+        }
     }
     
     func removeBrowsingTips() {
@@ -495,6 +497,16 @@ class TabViewController: UIViewController {
             controller.siteRating = siteRating
             controller.errorText = isError ? errorText : nil
         }
+        
+        if let controller = segue.destination as? FullscreenDaxDialogViewController {
+            controller.spec = sender as? DaxDialogs.BrowsingSpec
+            controller.delegate = self
+            
+            if controller.spec?.highlightAddressBar ?? false {
+                chromeDelegate.omniBar.cancelAllAnimations()
+            }
+        }
+        
     }
     
     private func addLoginDetectionStateObserver() {
@@ -773,18 +785,34 @@ extension TabViewController: WKNavigationDelegate {
         
         siteRating?.finishedLoading = true
         updateSiteRating()
-        scheduleTrackerNetworksAnimation()
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
+     
         tips?.onFinishedLoading(url: url, error: isError)
+        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
     
-    private func scheduleTrackerNetworksAnimation() {
+    private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+        guard DefaultVariantManager().isSupported(feature: .daxOnboarding),
+            let siteRating = self.siteRating,
+            let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
+                scheduleTrackerNetworksAnimation(collapsing: true)
+                return
+        }
+        
+        scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.chromeDelegate?.omniBar.resignFirstResponder()
+            self?.chromeDelegate?.setBarsHidden(false, animated: true)
+            self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+        }
+    }
+    
+    private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
-            
-            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked))
+            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
@@ -897,8 +925,8 @@ extension TabViewController: WKNavigationDelegate {
             
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
-            
             completion(.cancel)
+            
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)

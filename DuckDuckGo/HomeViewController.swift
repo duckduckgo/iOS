@@ -22,27 +22,16 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var logo: UIImageView!
-    
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
     @IBOutlet weak var collectionView: HomeCollectionView!
     @IBOutlet weak var settingsButton: UIButton!
     
-    var statusBarBackground: UIView? {
-        return (parent as? MainViewController)?.statusBarBackground
-    }
-
-    var navigationBar: UIView? {
-        return (parent as? MainViewController)?.customNavigationBar
-    }
-    
-    var bottomOffset: CGFloat {
-        // doesn't take in to account extra space on iPhone X but is good enough to show the bottom items in the collection view
-        return ((parent as? MainViewController)?.toolbar.frame.height ?? 0)
-    }
-
+    @IBOutlet weak var daxDialogContainer: UIView!
+    @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
+    weak var daxDialogViewController: DaxDialogViewController?
+ 
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
             let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
@@ -52,15 +41,15 @@ class HomeViewController: UIViewController {
                 chromeDelegate?.omniBar.resignFirstResponder()
             }
             
-            statusBarBackground?.alpha = percent
+            delegate?.home(self, searchTransitionUpdated: percent)
             chromeDelegate?.omniBar.alpha = percent
-            navigationBar?.alpha = percent
         }
     }
-
+    
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     
+    var homeScreenMessage: DaxDialogs.HomeScreenSpec?
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
@@ -74,6 +63,10 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if DefaultVariantManager().isSupported(feature: .daxOnboarding) {
+            homeScreenMessage = DaxDialogs().nextHomeScreenMessage()
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -116,6 +109,7 @@ class HomeViewController: UIViewController {
     
     func openedAsNewTab() {
         collectionView.openedAsNewTab()
+        installHomeScreenTips()
     }
     
     @IBAction func launchSettings() {
@@ -132,9 +126,50 @@ class HomeViewController: UIViewController {
         
         viewHasAppeared = true
     }
+        
+    func installHomeScreenTips() {
+        let variantManager = DefaultVariantManager()
+        if variantManager.isSupported(feature: .daxOnboarding) {
+            showNextDaxDialog()
+        } else {
+            HomeScreenTips(delegate: self)?.trigger()
+        }
+    }
     
-    func prepareForPresentation() {
+    func showNextDaxDialog() {
+        guard let spec = homeScreenMessage else { return }
+        collectionView.isHidden = true
+        daxDialogContainer.isHidden = false
+        daxDialogContainer.alpha = 0.0
+        daxDialogViewController?.message = spec.message
+        daxDialogContainerHeight.constant = spec.height
+        hideLogo()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.daxDialogContainer.alpha = 1.0
+            }, completion: { _ in
+                self.daxDialogViewController?.start()
+            })
+        }
+        
+    }
+
+    func hideLogo() {
+        delegate?.home(self, didRequestHideLogo: true)
+    }
+    
+    func onboardingCompleted() {
         installHomeScreenTips()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.destination is DaxDialogViewController {
+            self.daxDialogViewController = segue.destination as? DaxDialogViewController
+        }
+        
     }
 
     @IBAction func hideKeyboard() {
@@ -193,14 +228,6 @@ extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
         collectionView.decorate(with: theme)
-        view.backgroundColor = theme.backgroundColor
         settingsButton.tintColor = theme.barTintColor
-        
-        switch theme.currentImageSet {
-        case .light:
-            logo.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            logo.image = UIImage(named: "LogoLightText")
-        }
     }
 }

@@ -78,22 +78,3 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
     }
     
 }
-
-extension MainViewController {
-        
-    func startOnboardingFlowIfNotSeenBefore() {
-        
-        let settings = DefaultTutorialSettings()
-        guard !settings.hasSeenOnboarding else { return }
-        
-        // Only show tips if the user is a new one, ie they've not seen onboarding yet
-        DefaultContextualTipsStorage().isEnabled = true
-        
-        let onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
-
-        performSegue(withIdentifier: onboardingFlow, sender: self)
-
-        homeController?.prepareForPresentation()
-    }
-    
-}

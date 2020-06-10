@@ -53,7 +53,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var statusBarBackground: UIView!
     @IBOutlet weak var findInPageView: FindInPageView!
     @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-    
+
+    @IBOutlet weak var logoContainer: UIView!
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logoText: UIImageView!
+
     weak var notificationView: NotificationView?
 
     var omniBar: OmniBar!
@@ -91,7 +95,7 @@ class MainViewController: UIViewController {
     var currentTab: TabViewController? {
         return tabManager?.current
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,7 +117,30 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         startOnboardingFlowIfNotSeenBefore()
+        
+    }
+    
+    func startOnboardingFlowIfNotSeenBefore() {
+        
+        let settings = DefaultTutorialSettings()
+        let showOnboarding = !settings.hasSeenOnboarding ||
+            // allow oboarding to forced via environment variable - see scheme
+            ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
+        guard showOnboarding else { return }
+
+        let onboardingFlow: String
+        let variantManager = DefaultVariantManager()
+        if variantManager.isSupported(feature: .daxOnboarding) {
+            onboardingFlow = "DaxOnboarding"
+        } else {
+            // Only show tips if the user is a new one, ie they've not seen onboarding yet
+            DefaultContextualTipsStorage().isEnabled = true
+            onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
+        }
+
+        performSegue(withIdentifier: onboardingFlow, sender: self)
     }
     
     private func registerForKeyboardNotifications() {
@@ -276,6 +303,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func attachHomeScreen() {
+        logoContainer.isHidden = false
         findInPageView.isHidden = true
         chromeManager.detach()
         
@@ -829,6 +857,15 @@ extension MainViewController: HomeControllerDelegate {
         launchSettings()
     }
     
+    func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
+        logoContainer.isHidden = hidden
+    }
+    
+    func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {
+        statusBarBackground?.alpha = percent
+        customNavigationBar?.alpha = percent
+    }
+    
 }
 
 extension MainViewController: TabDelegate {
@@ -1113,6 +1150,8 @@ extension MainViewController: Themable {
         tabManager.decorate(with: theme)
 
         findInPageView.decorate(with: theme)
+        
+        logoText.tintColor = theme.ddgTextTintColor
     }
     
 }
@@ -1133,7 +1172,7 @@ extension MainViewController: OnboardingDelegate {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
-        homeController?.prepareForPresentation()
+        homeController?.onboardingCompleted()
     }
     
     func markOnboardingSeen() {

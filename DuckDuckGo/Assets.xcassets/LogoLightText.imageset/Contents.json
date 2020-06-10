@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "dark_portrait_logo.pdf"
+      "filename" : "dark_portrait_logo.pdf",
+      "idiom" : "universal"
     },
     {
-      "idiom" : "universal",
       "filename" : "updatedLogoWhiteText2.pdf",
-      "height-class" : "compact"
+      "height-class" : "compact",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -22,8 +22,8 @@ import os.log
 
 public class SiteRating {
 
-    struct Constants {
-        static let majorNetworkPrevalence = 7.0
+    public struct Constants {
+        public static let majorNetworkPrevalence = 7.0
     }
     
     public enum EncryptionType {

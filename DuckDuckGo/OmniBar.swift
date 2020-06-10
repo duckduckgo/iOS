@@ -133,8 +133,8 @@ class OmniBar: UIView {
         trackersAnimator.startLoadingAnimation(in: self)
     }
     
-    public func startTrackersAnimation(_ trackers: [DetectedTracker]) {
-        guard trackersAnimator.configure(self, toDisplay: trackers), state.allowsTrackersAnimation else {
+    public func startTrackersAnimation(_ trackers: [DetectedTracker], collapsing: Bool) {
+        guard trackersAnimator.configure(self, toDisplay: trackers, shouldCollapse: collapsing), state.allowsTrackersAnimation else {
             trackersAnimator.cancelAnimations(in: self)
             return
         }
@@ -144,6 +144,10 @@ class OmniBar: UIView {
     
     public func cancelAllAnimations() {
         trackersAnimator.cancelAnimations(in: self)
+    }
+    
+    public func completeAnimations() {
+        trackersAnimator.completeAnimations(in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

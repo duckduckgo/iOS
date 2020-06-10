@@ -107,12 +107,13 @@ class TabViewCell: UICollectionViewCell {
         if let constraint = previewAspectRatio {
             preview.removeConstraint(constraint)
         }
-        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspectRatio)
-        previewAspectRatio?.isActive = true
         
         previewTopConstraint?.constant = Constants.cellHeaderHeight
         previewBottomConstraint?.isActive = !portraitImage
         previewTrailingConstraint?.isActive = portraitImage
+        
+        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspectRatio)
+        previewAspectRatio?.isActive = true
     }
     
     private func updatePreviewToDisplayLogo() {

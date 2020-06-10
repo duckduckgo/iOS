@@ -66,9 +66,12 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIImageView!
     @IBOutlet weak var preview: UIImageView!
+    
     weak var previewAspectRatio: NSLayoutConstraint?
     @IBOutlet var previewTopConstraint: NSLayoutConstraint?
     @IBOutlet var previewBottomConstraint: NSLayoutConstraint?
+    @IBOutlet var previewTrailingConstraint: NSLayoutConstraint?
+    
     weak var collectionReorderRecognizer: UIGestureRecognizer?
 
     override func awakeFromNib() {
@@ -96,19 +99,23 @@ class TabViewCell: UICollectionViewCell {
         shadow.layer.rasterizationScale = UIScreen.main.scale
     }
     
-    private func updatePreview(aspecRatio: CGFloat) {
-        previewBottomConstraint?.isActive = false
-        previewTopConstraint?.constant = Constants.cellHeaderHeight
+    private func updatePreviewToDisplay(image: UIImage) {
+        let aspectRatio = image.size.height / image.size.width
+        
+        let portraitImage = aspectRatio > 1
+        
         if let constraint = previewAspectRatio {
             preview.removeConstraint(constraint)
-            previewAspectRatio = nil
         }
-        
-        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspecRatio)
+        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspectRatio)
         previewAspectRatio?.isActive = true
+        
+        previewTopConstraint?.constant = Constants.cellHeaderHeight
+        previewBottomConstraint?.isActive = !portraitImage
+        previewTrailingConstraint?.isActive = portraitImage
     }
     
-    private func updatePreviewAndAnchorToBottom() {
+    private func updatePreviewToDisplayLogo() {
         if let constraint = previewAspectRatio {
             preview.removeConstraint(constraint)
             previewAspectRatio = nil
@@ -116,6 +123,7 @@ class TabViewCell: UICollectionViewCell {
         
         previewTopConstraint?.constant = 0
         previewBottomConstraint?.isActive = true
+        previewTrailingConstraint?.isActive = true
     }
     
     private static var darkThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
@@ -249,7 +257,7 @@ class TabViewCell: UICollectionViewCell {
         unread.isHidden = tab.viewed
         
         if tab.link == nil {
-            updatePreviewAndAnchorToBottom()
+            updatePreviewToDisplayLogo()
             self.preview.image = Self.logoImage
             self.preview.contentMode = .center
             
@@ -257,8 +265,8 @@ class TabViewCell: UICollectionViewCell {
             favicon.image = UIImage(named: "Logo")
         } else {
             if let preview = preview {
+                self.updatePreviewToDisplay(image: preview)
                 self.preview.contentMode = .scaleAspectFill
-                updatePreview(aspecRatio: preview.size.height / preview.size.width)
                 self.preview.image = preview
             } else {
                 self.preview.image = nil

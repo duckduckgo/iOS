@@ -32,11 +32,22 @@ class WebViewTransition: TabSwitcherTransition {
     
     fileprivate func previewFrame(for cellBounds: CGSize, preview: UIImage) -> CGRect {
         
-        let previewHeight = cellBounds.width * (preview.size.height / preview.size.width)
+        let aspectRatio = preview.size.height / preview.size.width
+        let isPortrait = aspectRatio >= 1.0
+        
+        var targetSize = CGSize.zero
+        if isPortrait {
+            targetSize.width = cellBounds.width
+            targetSize.height = cellBounds.width * aspectRatio
+        } else {
+            targetSize.height = cellBounds.height - TabViewCell.Constants.cellHeaderHeight
+            targetSize.width = targetSize.height / aspectRatio
+        }
+        
         let targetFrame = CGRect(x: 0,
                                  y: TabViewCell.Constants.cellHeaderHeight,
-                                 width: cellBounds.width,
-                                 height: previewHeight)
+                                 width: targetSize.width,
+                                 height: targetSize.height)
         return targetFrame
     }
 }
@@ -54,6 +65,10 @@ class FromWebViewTransition: WebViewTransition {
     
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         prepareSubviews(using: transitionContext)
+        
+        tabSwitcherViewController.view.alpha = 0
+        transitionContext.containerView.insertSubview(tabSwitcherViewController.view, aboveSubview: solidBackground)
+        tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         tabSwitcherViewController.prepareForPresentation()
         
         guard let webView = mainViewController.currentTab!.webView,
@@ -62,17 +77,15 @@ class FromWebViewTransition: WebViewTransition {
         let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0)),
         let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
             else {
-                return }
+                tabSwitcherViewController.view.alpha = 1
+                return
+        }
         
         let theme = ThemeManager.shared.currentTheme
         let webViewFrame = webView.convert(webView.bounds, to: nil)
         
         solidBackground.backgroundColor = theme.backgroundColor
         solidBackground.frame = webViewFrame
-        
-        tabSwitcherViewController.view.alpha = 0
-        transitionContext.containerView.insertSubview(tabSwitcherViewController.view, aboveSubview: solidBackground)
-        tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         
         imageContainer.frame = webViewFrame
         imageView.frame = imageContainer.bounds

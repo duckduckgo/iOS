@@ -78,15 +78,23 @@ class FromHomeScreenTransition: HomeScreenTransition {
         super.init(tabSwitcherViewController: tabSwitcherViewController)
     }
     
+    // swiftlint:disable function_body_length
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         prepareSubviews(using: transitionContext)
+        
+        tabSwitcherViewController.view.alpha = 0
+        transitionContext.containerView.insertSubview(tabSwitcherViewController.view, belowSubview: imageContainer)
+        tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         tabSwitcherViewController.prepareForPresentation()
         
         guard let homeScreen = mainViewController.homeController,
             let tab = mainViewController.currentTab?.tabModel,
         let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
         let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
-            else { return }
+            else {
+                tabSwitcherViewController.view.alpha = 1
+                return
+        }
         
         let theme = ThemeManager.shared.currentTheme
         
@@ -95,10 +103,6 @@ class FromHomeScreenTransition: HomeScreenTransition {
         
         imageContainer.frame = solidBackground.frame
         imageContainer.backgroundColor = theme.backgroundColor
-        
-        tabSwitcherViewController.view.alpha = 0
-        transitionContext.containerView.insertSubview(tabSwitcherViewController.view, belowSubview: imageContainer)
-        tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         
         prepareSnapshots(with: homeScreen, transitionContext: transitionContext)
         
@@ -137,6 +141,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
             transitionContext.completeTransition(true)
         })
     }
+    // swiftlint:enable function_body_length
 }
 
 class ToHomeScreenTransition: HomeScreenTransition {

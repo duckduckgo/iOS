@@ -181,6 +181,7 @@
                                             <outlet property="preview" destination="iu2-rk-hOZ" id="FwQ-2l-FZ8"/>
                                             <outlet property="previewBottomConstraint" destination="FtQ-fl-Drb" id="QPw-68-F1b"/>
                                             <outlet property="previewTopConstraint" destination="vkb-Yq-CNN" id="JVm-Nd-rkf"/>
+                                            <outlet property="previewTrailingConstraint" destination="hDl-N2-yKQ" id="LeS-Xz-Jsg"/>
                                             <outlet property="removeButton" destination="G2C-qh-g3T" id="b0U-a4-JPU"/>
                                             <outlet property="shadow" destination="CUT-uC-txn" id="5dc-p7-rK2"/>
                                             <outlet property="title" destination="1GE-Nf-lKM" id="UpH-Y5-3en"/>

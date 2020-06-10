@@ -320,7 +320,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 
     private func calculateNumberOfColumns(minimumColumnWidth: Int, maxColumns: Int) -> Int {
         let screenWidth = Int(collectionView.bounds.width)
-        let numberOfColumns = Int(screenWidth / minimumColumnWidth)
+        let numberOfColumns = screenWidth / minimumColumnWidth
         return min(maxColumns, numberOfColumns)
     }
     

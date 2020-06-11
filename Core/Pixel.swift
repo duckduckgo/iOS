@@ -189,18 +189,20 @@ public enum PixelName: String {
     
     case brokenSiteReport = "epbf"
 
-    case preserveLoginsUserDecisionPreserve = "m_pl_p"
-    case preserveLoginsUserDecisionForget = "m_pl_f"
-    case preserveLoginsSettingsWhilePreserving = "m_pl_s_p"
-    case preserveLoginsSettingsWhileForgetting = "m_pl_s_f"
-    case preserveLoginsSettingsNewUser = "m_pl_s_u"
     case preserveLoginsSettingsSwitchOn = "m_pl_s_on"
     case preserveLoginsSettingsSwitchOff = "m_pl_s_off"
     case preserveLoginsSettingsEdit = "m_pl_s_c_e"
     case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
     case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
     case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
-
+    
+    case daxDialogsSerp = "m_dx_s"
+    case daxDialogsWithoutTrackers = "m_dx_wo"
+    case daxDialogsWithTrackers = "m_dx_wt"
+    case daxDialogsSiteIsMajor = "m_dx_sm"
+    case daxDialogsSiteOwnedByMajor = "m_dx_so"
+    case daxDialogsHidden = "m_dx_h"
+        
     // debug pixels:
     
     case dbMigrationError = "m_d_dbme"
@@ -277,7 +279,7 @@ public class Pixel {
             .addParams(newParams)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
-            os_log("Pixel fired %s", log: generalLog, type: .debug, pixel.rawValue)
+            os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
             onComplete(response.error)
         }
     }

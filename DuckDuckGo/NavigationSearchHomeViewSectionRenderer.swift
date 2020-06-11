@@ -40,7 +40,9 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.collectionView.isScrollEnabled = !fixed
         controller.settingsButton.isHidden = true
         
-        controller.logo.isHidden = !fixed
+        if !fixed {
+            controller.hideLogo()
+        }
     }
     
     func openedAsNewTab() {

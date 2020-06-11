@@ -71,6 +71,8 @@ public struct UserText {
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
+    public static let toastAddedToWhitelist = NSLocalizedString("toast.added.to.whitelist", comment: "Added to Whitelist")
+    public static let toastRemovedFromWhitelist = NSLocalizedString("toast.removed.from.whitelist", comment: "Removed from Whitelist")
     
     public static let authAlertTitle = NSLocalizedString("auth.alert.title", comment: "Authentication Alert Title")
     public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", comment: "Authentication Alert Encrypted Connection Message")
@@ -273,4 +275,35 @@ public struct UserText {
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", comment: "Home tab search and favorites")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", comment: "Home tab title")
 
+    public static let daxDialogHomeInitial = NSLocalizedString("dax.onboarding.home.initial", comment: "Next, try visiting one of your favorite sites!")
+    public static let daxDialogHomeSubsequent = NSLocalizedString("dax.onboarding.home.subsequent", comment: "You’ve got this!")
+
+    public static let daxDialogBrowsingAfterSearch = NSLocalizedString("dax.onboarding.browsing.after.search", comment: "Your DuckDuckGo searches are anonymous...")
+    public static let daxDialogBrowsingAfterSearchCTA = NSLocalizedString("dax.onboarding.browsing.after.search.cta", comment: "Phew!")
+
+    public static let daxDialogBrowsingWithoutTrackers = NSLocalizedString("dax.onboarding.browsing.without.trackers", comment: "As you tap and scroll, I'll block pesky trackers.")
+    public static let daxDialogBrowsingWithoutTrackersCTA = NSLocalizedString("dax.onboarding.browsing.without.trackers.cta", comment: "Got It")
+
+    public static let daxDialogBrowsingSiteIsMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker", comment: "Heads up! %1$@ is a major tracking network.")
+    public static let daxDialogBrowsingSiteIsMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker.cta", comment: "Got It")
+
+    public static let daxDialogBrowsingSiteOwnedByMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker", comment: "Heads up! %1$@ is owned by %2$@.")
+    public static let daxDialogBrowsingSiteOwnedByMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker.cta", comment: "Got It")
+
+    public static let daxDialogBrowsingWithOneTracker = NSLocalizedString("dax.onboarding.browsing.one.tracker", comment: "*%1$@* was trying to track you here.")
+    public static let daxDialogBrowsingWithOneTrackerCTA = NSLocalizedString("dax.onboarding.browsing.one.tracker.cta", comment: "High Five!")
+
+    public static let daxDialogBrowsingWithTwoTrackers = NSLocalizedString("dax.onboarding.browsing.two.trackers", comment: "*%1$@ and %2$@* were trying to track you here.")
+    public static let daxDialogBrowsingWithTwoTrackersCTA = NSLocalizedString("dax.onboarding.browsing.two.trackers.cta", comment: "High Five!")
+
+    public static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.browsing.multiple.trackers", comment: "*%1$@, %2$@* and *%3$d others* were trying to track you here.")
+    public static let daxDialogBrowsingWithMultipleTrackersCTA = NSLocalizedString("dax.onboarding.browsing.multiple.trackers.cta", comment: "High Five!")
+    
+    public static let daxDialogOnboardingMessage = NSLocalizedString("dax.onboarding.message", comment: "The Internet can be kinda creepy.")
+    
+    public static let daxDialogHideTitle = NSLocalizedString("dax.hide.title", comment: "Hide remaining tips?")
+    public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", comment: "There are only a few, and we tried to make them informative.")
+    public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", comment: "Hide tips forever")
+    public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", comment: "Cancel")
+    
 }

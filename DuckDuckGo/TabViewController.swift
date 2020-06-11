@@ -224,7 +224,9 @@ class TabViewController: UIViewController {
     }
     
     func installBrowsingTips() {
-        tips = BrowsingTips(delegate: self)
+        if !DefaultVariantManager().isSupported(feature: .daxOnboarding) {
+            tips = BrowsingTips(delegate: self)
+        }
     }
     
     func removeBrowsingTips() {
@@ -495,6 +497,16 @@ class TabViewController: UIViewController {
             controller.siteRating = siteRating
             controller.errorText = isError ? errorText : nil
         }
+        
+        if let controller = segue.destination as? FullscreenDaxDialogViewController {
+            controller.spec = sender as? DaxDialogs.BrowsingSpec
+            controller.delegate = self
+            
+            if controller.spec?.highlightAddressBar ?? false {
+                chromeDelegate.omniBar.cancelAllAnimations()
+            }
+        }
+        
     }
     
     private func addLoginDetectionStateObserver() {
@@ -601,30 +613,6 @@ class TabViewController: UIViewController {
             if !opened {
                 self.view.showBottomToast(UserText.failedToOpenExternally)
             }
-        }
-    }
-
-    private func isExternallyHandled(url: URL, for navigationAction: WKNavigationAction) -> Bool {
-        let schemeType = ExternalSchemeHandler.schemeType(for: url)
-        
-        switch schemeType {
-        case .external(let action):
-            guard navigationAction.navigationType == .linkActivated else {
-                // Ignore extrnal URLs if not triggered by the User.
-                return true
-            }
-            switch action {
-            case .open:
-                openExternally(url: url)
-            case .askForConfirmation:
-                presentOpenInExternalAppAlert(url: url)
-            case .cancel:
-                break
-            }
-            
-            return true
-        case .other:
-            return false
         }
     }
     
@@ -797,18 +785,34 @@ extension TabViewController: WKNavigationDelegate {
         
         siteRating?.finishedLoading = true
         updateSiteRating()
-        scheduleTrackerNetworksAnimation()
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
+     
         tips?.onFinishedLoading(url: url, error: isError)
+        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
     
-    private func scheduleTrackerNetworksAnimation() {
+    private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+        guard DefaultVariantManager().isSupported(feature: .daxOnboarding),
+            let siteRating = self.siteRating,
+            let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
+                scheduleTrackerNetworksAnimation(collapsing: true)
+                return
+        }
+        
+        scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.chromeDelegate?.omniBar.resignFirstResponder()
+            self?.chromeDelegate?.setBarsHidden(false, animated: true)
+            self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+        }
+    }
+    
+    private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
-            
-            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked))
+            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
@@ -910,10 +914,31 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if isExternallyHandled(url: url, for: navigationAction) {
+        let schemeType = SchemeHandler.schemeType(for: url)
+        
+        switch schemeType {
+        case .navigational:
+            performNavigationFor(url: url,
+                                 navigationAction: navigationAction,
+                                 allowPolicy: allowPolicy,
+                                 completion: completion)
+            
+        case .external(let action):
+            performExternalNavigationFor(url: url, action: action)
             completion(.cancel)
-            return
+            
+        case .unknown:
+            if navigationAction.navigationType == .linkActivated {
+                openExternally(url: url)
+            }
+            completion(.cancel)
         }
+    }
+    
+    private func performNavigationFor(url: URL,
+                                      navigationAction: WKNavigationAction,
+                                      allowPolicy: WKNavigationActionPolicy,
+                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
@@ -931,7 +956,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(allowPolicy)
             return
         }
-
+        
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
@@ -941,8 +966,19 @@ extension TabViewController: WKNavigationDelegate {
                 completion(.cancel)
                 return
             }
-
+            
             completion(allowPolicy)
+        }
+    }
+    
+    private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {
+        switch action {
+        case .open:
+            openExternally(url: url)
+        case .askForConfirmation:
+            presentOpenInExternalAppAlert(url: url)
+        case .cancel:
+            break
         }
     }
     

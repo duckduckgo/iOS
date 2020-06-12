@@ -97,19 +97,20 @@ class TabViewCell: UICollectionViewCell {
     }
     
     private func updatePreviewToDisplay(image: UIImage) {
-        let aspectRatio = image.size.height / image.size.width
+        let imageAspectRatio = image.size.height / image.size.width
+        let containerAspectRatio = (background.bounds.height - TabViewCell.Constants.cellHeaderHeight) / background.bounds.width
         
-        let portraitImage = aspectRatio > 1
+        let strechContainerVerically = containerAspectRatio < imageAspectRatio
         
         if let constraint = previewAspectRatio {
             preview.removeConstraint(constraint)
         }
         
         previewTopConstraint?.constant = Constants.cellHeaderHeight
-        previewBottomConstraint?.isActive = !portraitImage
-        previewTrailingConstraint?.isActive = portraitImage
+        previewBottomConstraint?.isActive = !strechContainerVerically
+        previewTrailingConstraint?.isActive = strechContainerVerically
         
-        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: aspectRatio)
+        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: imageAspectRatio)
         previewAspectRatio?.isActive = true
     }
     

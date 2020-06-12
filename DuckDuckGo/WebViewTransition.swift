@@ -28,16 +28,17 @@ class WebViewTransition: TabSwitcherTransition {
     
     fileprivate func previewFrame(for cellBounds: CGSize, preview: UIImage) -> CGRect {
         
-        let aspectRatio = preview.size.height / preview.size.width
-        let isPortrait = aspectRatio >= 1.0
+        let previewAspectRatio = preview.size.height / preview.size.width
+        let containerAspectRatio = (cellBounds.height - TabViewCell.Constants.cellHeaderHeight) / cellBounds.width
+        let strechedVerically = containerAspectRatio < previewAspectRatio
         
         var targetSize = CGSize.zero
-        if isPortrait {
+        if strechedVerically {
             targetSize.width = cellBounds.width
-            targetSize.height = cellBounds.width * aspectRatio
+            targetSize.height = cellBounds.width * previewAspectRatio
         } else {
             targetSize.height = cellBounds.height - TabViewCell.Constants.cellHeaderHeight
-            targetSize.width = targetSize.height / aspectRatio
+            targetSize.width = targetSize.height / previewAspectRatio
         }
         
         let targetFrame = CGRect(x: 0,

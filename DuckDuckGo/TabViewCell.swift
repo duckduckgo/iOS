@@ -39,7 +39,6 @@ class TabViewCell: UICollectionViewCell {
         static let unselectedAlpha: CGFloat = 0.92
         static let swipeToDeleteAlpha: CGFloat = 0.5
         
-        static let cellShadowMargin: CGFloat = 10.0
         static let cellCornerRadius: CGFloat = 8.0
         static let cellHeaderHeight: CGFloat = 38.0
         static let cellLogoSize: CGFloat = 68.0
@@ -59,7 +58,6 @@ class TabViewCell: UICollectionViewCell {
     var canDelete = false
 
     @IBOutlet weak var background: UIView!
-    @IBOutlet weak var shadow: UIView!
     @IBOutlet weak var border: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
@@ -87,16 +85,15 @@ class TabViewCell: UICollectionViewCell {
 
         unread.tintColor = .cornflowerBlue
         
-        shadow.backgroundColor = .clear
-        shadow.layer.shadowColor = UIColor.black.cgColor
-        shadow.layer.shadowOffset = CGSize(width: 0, height: 1)
-        shadow.layer.shadowRadius = 5.0
-        shadow.layer.shadowOpacity = 0.3
-        shadow.layer.masksToBounds = false
-        shadow.layer.shadowPath = UIBezierPath(roundedRect: shadow.layer.bounds,
-                                               cornerRadius: shadow.layer.cornerRadius).cgPath
-        shadow.layer.shouldRasterize = true
-        shadow.layer.rasterizationScale = UIScreen.main.scale
+        backgroundColor = .clear
+        layer.cornerRadius = backgroundView?.layer.cornerRadius ?? 0.0
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 3.0
+        layer.shadowOpacity = 0.15
+        layer.masksToBounds = false
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
     }
     
     private func updatePreviewToDisplay(image: UIImage) {
@@ -276,18 +273,6 @@ class TabViewCell: UICollectionViewCell {
             removeButton.isHidden = false
             configureFavicon(forDomain: tab.link?.url.host)
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // Using shadow.layer bounds here returns wrong (old) frame when rotating
-        var cellBounds = bounds
-        cellBounds.size.width -= 2 * Constants.cellShadowMargin
-        cellBounds.size.height -= 2 * Constants.cellShadowMargin
-        
-        shadow.layer.shadowPath = UIBezierPath(roundedRect: cellBounds,
-                                               cornerRadius: shadow.layer.cornerRadius).cgPath
     }
     
     @IBAction func deleteTab() {

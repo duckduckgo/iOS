@@ -23,6 +23,13 @@ import WebKit
 import os.log
 
 class TabSwitcherViewController: UIViewController {
+    
+    struct Constants {
+        static let prefferedMinNumberOfRows: CGFloat = 3.5
+
+        static let cellMinHeight: CGFloat = 140.0
+        static let cellMaxHeight: CGFloat = 209.0
+    }
 
     typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
     
@@ -318,18 +325,38 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 
-    private func calculateNumberOfColumns(minimumColumnWidth: Int, maxColumns: Int) -> Int {
-        let screenWidth = Int(collectionView.bounds.width)
-        let numberOfColumns = screenWidth / minimumColumnWidth
-        return min(maxColumns, numberOfColumns)
+    private func calculateColumnWidth(minimumColumnWidth: CGFloat, maxColumns: Int) -> CGFloat {
+        // Spacing is supposed to be equal between cells and on left/right side of the collection view
+        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let spacing = layout?.sectionInset.left ?? 0.0
+        
+        let contentWidth = collectionView.bounds.width - spacing
+        let numberOfColumns = min(maxColumns, Int(contentWidth / minimumColumnWidth))
+        return contentWidth / CGFloat(numberOfColumns) - spacing
+    }
+    
+    private func calculateRowHeight(columnWidth: CGFloat) -> CGFloat {
+        
+        // Calculate height based on the view size
+        let contentAspectRatio = collectionView.bounds.width / collectionView.bounds.height
+        let heightToFit = (columnWidth / contentAspectRatio) + TabViewCell.Constants.cellHeaderHeight
+        
+        // Try to display at least `prefferedMinNumberOfRows`
+        let prefferedMaxHeight = collectionView.bounds.height / Constants.prefferedMinNumberOfRows
+        let prefferedHeight = min(prefferedMaxHeight, heightToFit)
+        
+        return min(Constants.cellMaxHeight,
+                   max(Constants.cellMinHeight, prefferedHeight))
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let columns = calculateNumberOfColumns(minimumColumnWidth: 160, maxColumns: 4)
-        return CGSize(width: Int(collectionView.bounds.width) / columns, height: 180)
+        let columnWidth = calculateColumnWidth(minimumColumnWidth: 150, maxColumns: 4)
+        let rowHeight = calculateRowHeight(columnWidth: columnWidth)
+        return CGSize(width: floor(columnWidth),
+                      height: floor(rowHeight))
     }
     
 }

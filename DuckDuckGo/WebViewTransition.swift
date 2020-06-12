@@ -22,12 +22,8 @@ import Core
 class WebViewTransition: TabSwitcherTransition {
     
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
-        var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
-                                                                                to: self.tabSwitcherViewController.view)
-        
-        targetFrame = targetFrame.insetBy(dx: TabViewCell.Constants.cellShadowMargin,
-                                          dy: TabViewCell.Constants.cellShadowMargin)
-        return targetFrame
+        return self.tabSwitcherViewController.collectionView.convert(attributes.frame,
+                                                                     to: self.tabSwitcherViewController.view)
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize, preview: UIImage) -> CGRect {

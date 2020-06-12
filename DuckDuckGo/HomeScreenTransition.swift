@@ -56,9 +56,6 @@ class HomeScreenTransition: TabSwitcherTransition {
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                                 to: self.tabSwitcherViewController.view)
-        
-        targetFrame = targetFrame.insetBy(dx: TabViewCell.Constants.cellShadowMargin,
-                            dy: TabViewCell.Constants.cellShadowMargin)
         targetFrame.origin.y += TabViewCell.Constants.cellHeaderHeight
         targetFrame.size.height -= TabViewCell.Constants.cellHeaderHeight
         return targetFrame

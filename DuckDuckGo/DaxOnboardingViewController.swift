@@ -89,12 +89,12 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     func transitionFromOnboarding() {
 
         // using snapshots means the original views don't get messed up by their constraints when subsequent animations kick off
-        let transitionIconSS = self.transitionalIcon.snapshotView(afterScreenUpdates: false)!
+        let transitionIconSS: UIView = self.transitionalIcon.snapshotView(afterScreenUpdates: true) ?? self.transitionalIcon
         transitionIconSS.frame = self.transitionalIcon.frame
         view.addSubview(transitionIconSS)
         self.transitionalIcon.isHidden = true
         
-        let onboardingIconSS = self.onboardingIcon.snapshotView(afterScreenUpdates: false)!
+        let onboardingIconSS: UIView = self.onboardingIcon.snapshotView(afterScreenUpdates: true) ?? self.onboardingIcon
         onboardingIconSS.frame = self.onboardingIcon.frame
         view.addSubview(onboardingIconSS)
         self.onboardingIcon.isHidden = true
@@ -127,7 +127,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
     func transitionToDaxDialog() {
 
-        let snapshot = self.daxIcon.snapshotView(afterScreenUpdates: false)!
+        let snapshot: UIView = self.daxIcon.snapshotView(afterScreenUpdates: true) ?? self.daxIcon
         snapshot.frame = self.daxIcon.frame
         view.addSubview(snapshot)
         self.daxIcon.isHidden = true

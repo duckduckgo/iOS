@@ -25,7 +25,7 @@ import os.log
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
-        static let prefferedMinNumberOfRows: CGFloat = 3.5
+        static let preferredMinNumberOfRows: CGFloat = 3.5
 
         static let cellMinHeight: CGFloat = 140.0
         static let cellMaxHeight: CGFloat = 209.0
@@ -341,12 +341,12 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
         let contentAspectRatio = collectionView.bounds.width / collectionView.bounds.height
         let heightToFit = (columnWidth / contentAspectRatio) + TabViewCell.Constants.cellHeaderHeight
         
-        // Try to display at least `prefferedMinNumberOfRows`
-        let prefferedMaxHeight = collectionView.bounds.height / Constants.prefferedMinNumberOfRows
-        let prefferedHeight = min(prefferedMaxHeight, heightToFit)
+        // Try to display at least `preferredMinNumberOfRows`
+        let preferredMaxHeight = collectionView.bounds.height / Constants.preferredMinNumberOfRows
+        let preferredHeight = min(preferredMaxHeight, heightToFit)
         
         return min(Constants.cellMaxHeight,
-                   max(Constants.cellMinHeight, prefferedHeight))
+                   max(Constants.cellMinHeight, preferredHeight))
     }
     
     func collectionView(_ collectionView: UICollectionView,

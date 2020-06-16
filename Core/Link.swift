@@ -20,6 +20,10 @@
 import Foundation
 
 public class Link: NSObject, NSCoding {
+    
+    struct Constants {
+        static let ddgSuffix = " at DuckDuckGo"
+    }
 
     private struct NSCodingKeys {
         static let title = "title"
@@ -31,7 +35,15 @@ public class Link: NSObject, NSCoding {
     
     public var displayTitle: String? {
         let host = url.host?.dropPrefix(prefix: "www.") ?? url.absoluteString
-        return (title?.isEmpty ?? true) ? host : title
+        
+        var displayTitle = (title?.isEmpty ?? true) ? host : title
+        
+        if url.host == "duckduckgo.com",
+            let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
+            displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
+        }
+        
+        return displayTitle
     }
 
     public required init(title: String?, url: URL) {

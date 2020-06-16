@@ -25,7 +25,7 @@ import os.log
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
-        static let preferredMinNumberOfRows: CGFloat = 3.5
+        static let preferredMinNumberOfRows: CGFloat = 2.7
 
         static let cellMinHeight: CGFloat = 140.0
         static let cellMaxHeight: CGFloat = 209.0

@@ -29,6 +29,8 @@ public class Link: NSObject, NSCoding {
         static let title = "title"
         static let url = "url"
     }
+    
+    static let appUrls = AppUrls()
 
     public let title: String?
     public let url: URL
@@ -38,7 +40,7 @@ public class Link: NSObject, NSCoding {
         
         var displayTitle = (title?.isEmpty ?? true) ? host : title
         
-        if url.host == "duckduckgo.com",
+        if Self.appUrls.isDuckDuckGo(url: url),
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }

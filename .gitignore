@@ -69,4 +69,4 @@ fastlane/test_output
 # DuckDuckGo
 
 Configuration/ExternalDeveloper.xcconfig
-fonts/licensed/*
+fonts/licensed/*.otf

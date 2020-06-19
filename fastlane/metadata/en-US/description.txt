@@ -1,24 +1,23 @@
+Tired of being tracked online? We can help. At DuckDuckGo, we believe online privacy should be simple.
+
+DuckDuckGo Privacy Browser has the speed you need, the browsing features you expect (like tabs & bookmarks), and comes packed with best-in-class privacy essentials:
+
+ • Tap Fire Button, Burn Data — clear all your tabs and browsing data with one tap. 
+
+ • Escape Online Tracking — automatically block hidden third-party trackers we can find lurking on websites you visit, which stops the companies behind those trackers from collecting and selling your data. 
+
+ • Search Privately — our private search engine comes built-in so you can search the Internet without being tracked.
+
+ • Enforce Encryption — force sites to use an encrypted (HTTPS) connection where available, protecting your data from prying eyes, like from unwanted snoopers and Internet service providers.
+
+ • Decode Privacy — each site you visit gets a Privacy Grade (A-F) so you can see how protected you are at a glance, and you can even dig into the details to see who we caught trying to track you. 
+
+ • Limit Access — secure your browser with Touch ID or Face ID.
+
 Privacy, simplified.
 
-At DuckDuckGo, we believe the Internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds. 
-
-Our app provides the privacy essentials you need to seamlessly take control of your personal information as you search and browse the web, no matter where the Internet takes you:
-  • Escape Advertising Tracker Networks — Our Privacy Protection will block all the hidden third-party trackers we can find, exposing the major advertising networks tracking you over time, so that you can track who's trying to track you.
-  • Increase Encryption Protection — We force sites to use an encrypted connection where available, protecting your data from prying eyes, like ISPs.
-  • Search Privately — You share your most personal information with your search engine, like your financial, medical, and political questions. What you search for is your own business, which is why DuckDuckGo search doesn't track you. Ever.
-  • Decode Privacy Policies — We’ve partnered with Terms of Service Didn't Read to include their scores and labels of website terms of service and privacy policies, where available. 
-
-As you search and browse, the DuckDuckGo Privacy Browser shows you a Privacy Grade rating when you visit a website (A-F). This rating lets you see how protected you are at a glance, dig into the details to see who we caught trying to track you, and learn how we enhanced the underlying site's privacy measures. The Privacy Grade is scored automatically based on the prevalence of hidden tracker networks, encryption availability, and website privacy practices.
-
-Our app provides standard browsing functionality including tabs, bookmarks, and autocomplete. In addition to strong Privacy Protection as described above, we also packed in some extra privacy features into the browser itself:
- • Fire Button — Clear all your tabs and data with one tap.
- • Application Lock — Secure the app with Touch ID or Face ID.
-
-Too many people believe you simply can’t expect privacy on the Internet. We're fighting to change that, and have made it our mission to set a new standard of trust online. Install DuckDuckGo and take back your privacy!
-
 About Us: https://duckduckgo.com/about/
-Device Privacy Tips: https://spreadprivacy.com/tag/device-privacy-tips/
-More Privacy Education: https://spreadprivacy.com/tag/privacy-newsletter/
-Our Privacy Policy: https://duckduckgo.com/privacy/
-
-This app is open source at https://github.com/duckduckgo/iOS.
+Device Privacy: https://spreadprivacy.com/tag/device-privacy-tips/ 
+Privacy Newsletter: https://duckduckgo.com/newsletter 
+Privacy Policy: https://duckduckgo.com/privacy/
+Open Source: https://github.com/duckduckgo/iOS

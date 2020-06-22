@@ -89,13 +89,14 @@ class PrivacyProtectionIconSource {
     /// Based on iconImage create image that has a border around it.
     /// Result can be used to create stack of images that overlap each other.
     static func stackedIconImage(withIconImage iconImage: UIImage,
+                                 borderWidth: CGFloat = Constants.buttonBorderWidth,
                                  foregroundColor: UIColor,
                                  borderColor: UIColor) -> UIImage {
         
         let imageRect = CGRect(x: 0,
                                y: 0,
-                               width: iconImage.size.width + Constants.buttonBorderWidth * 2,
-                               height: iconImage.size.height + Constants.buttonBorderWidth * 2)
+                               width: iconImage.size.width + borderWidth * 2,
+                               height: iconImage.size.height + borderWidth * 2)
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)
         let icon = renderer.image { imageContext in
@@ -104,8 +105,8 @@ class PrivacyProtectionIconSource {
             context.fillEllipse(in: imageRect)
             
             context.setFillColor(foregroundColor.cgColor)
-            let contentFrame = CGRect(origin: CGPoint(x: Constants.buttonBorderWidth,
-                                                      y: Constants.buttonBorderWidth),
+            let contentFrame = CGRect(origin: CGPoint(x: borderWidth,
+                                                      y: borderWidth),
                                       size: iconImage.size)
             iconImage.draw(in: contentFrame)
         }

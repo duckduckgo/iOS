@@ -39,6 +39,10 @@ class TabViewCell: UICollectionViewCell {
         static let unselectedAlpha: CGFloat = 0.92
         static let swipeToDeleteAlpha: CGFloat = 0.5
         
+        static let cellCornerRadius: CGFloat = 8.0
+        static let cellHeaderHeight: CGFloat = 38.0
+        static let cellLogoSize: CGFloat = 68.0
+        
     }
     
     static let reuseIdentifier = "TabCell"
@@ -54,18 +58,105 @@ class TabViewCell: UICollectionViewCell {
     var canDelete = false
 
     @IBOutlet weak var background: UIView!
+    @IBOutlet weak var border: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
-    @IBOutlet weak var unread: UIView!
+    @IBOutlet weak var unread: UIImageView!
+    @IBOutlet weak var preview: UIImageView!
+    
+    weak var previewAspectRatio: NSLayoutConstraint?
+    @IBOutlet var previewTopConstraint: NSLayoutConstraint?
+    @IBOutlet var previewBottomConstraint: NSLayoutConstraint?
+    @IBOutlet var previewTrailingConstraint: NSLayoutConstraint?
+    
+    weak var collectionReorderRecognizer: UIGestureRecognizer?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
         recognizer.delegate = self
         addGestureRecognizer(recognizer)
+        
+        setupSubviews()
     }
+    
+    private func setupSubviews() {
+
+        unread.tintColor = .cornflowerBlue
+        
+        backgroundColor = .clear
+        layer.cornerRadius = backgroundView?.layer.cornerRadius ?? 0.0
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 3.0
+        layer.shadowOpacity = 0.15
+        layer.masksToBounds = false
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+    }
+    
+    private func updatePreviewToDisplay(image: UIImage) {
+        let imageAspectRatio = image.size.height / image.size.width
+        let containerAspectRatio = (background.bounds.height - TabViewCell.Constants.cellHeaderHeight) / background.bounds.width
+        
+        let strechContainerVerically = containerAspectRatio < imageAspectRatio
+        
+        if let constraint = previewAspectRatio {
+            preview.removeConstraint(constraint)
+        }
+        
+        previewTopConstraint?.constant = Constants.cellHeaderHeight
+        previewBottomConstraint?.isActive = !strechContainerVerically
+        previewTrailingConstraint?.isActive = strechContainerVerically
+        
+        previewAspectRatio = preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: imageAspectRatio)
+        previewAspectRatio?.isActive = true
+    }
+    
+    private func updatePreviewToDisplayLogo() {
+        if let constraint = previewAspectRatio {
+            preview.removeConstraint(constraint)
+            previewAspectRatio = nil
+        }
+        
+        previewTopConstraint?.constant = 0
+        previewBottomConstraint?.isActive = true
+        previewTrailingConstraint?.isActive = true
+    }
+    
+    private static var darkThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                                     borderWidth: 6.0,
+                                                                                     foregroundColor: .cornflowerBlue,
+                                                                                     borderColor: DarkTheme().tabSwitcherCellBackgroundColor)
+    private static var lighThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                                     borderWidth: 6.0,
+                                                                                     foregroundColor: .cornflowerBlue,
+                                                                                     borderColor: LightTheme().tabSwitcherCellBackgroundColor)
+    
+    private static func unreadImage(for theme: Theme) -> UIImage {
+        switch theme.currentImageSet {
+        case .dark:
+            return darkThemeUnreadImage
+        case .light:
+            return lighThemeUnreadImage
+        }
+    }
+    
+    static let logoImage: UIImage = {
+        let image = UIImage(named: "Logo")!
+        let renderFormat = UIGraphicsImageRendererFormat.default()
+        renderFormat.opaque = false
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: Constants.cellLogoSize,
+                                                            height: Constants.cellLogoSize),
+                                               format: renderFormat)
+        return renderer.image { _ in
+            image.draw(in: CGRect(x: 0,
+                                  y: 0,
+                                  width: Constants.cellLogoSize,
+                                  height: Constants.cellLogoSize))
+        }
+    }()
 
     var startX: CGFloat = 0
     @objc func handleSwipe(recognizer: UIGestureRecognizer) {
@@ -139,21 +230,22 @@ class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func update(withTab tab: Tab, homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+    func update(withTab tab: Tab,
+                preview: UIImage?,
+                reorderRecognizer: UIGestureRecognizer?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
-        
-        removeTabObserver()
-        tab.addObserver(self)
+
         self.tab = tab
+        self.collectionReorderRecognizer = reorderRecognizer
 
         if !isDeleting {
             isHidden = false
         }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
-        background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
-        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
-        background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
+        decorate(with: ThemeManager.shared.currentTheme)
+        
+        border.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
@@ -162,21 +254,26 @@ class TabViewCell: UICollectionViewCell {
         }
         
         unread.isHidden = tab.viewed
-
+        
         if tab.link == nil {
-            let linkText = homePageSettings.favorites ? UserText.homeTabSearchAndFavorites : UserText.homeTabSearchOnly
+            updatePreviewToDisplayLogo()
+            self.preview.image = Self.logoImage
+            self.preview.contentMode = .center
+            
             title.text = UserText.homeTabTitle
-            link.text = linkText
             favicon.image = UIImage(named: "Logo")
         } else {
+            if let preview = preview {
+                self.updatePreviewToDisplay(image: preview)
+                self.preview.contentMode = .scaleAspectFill
+                self.preview.image = preview
+            } else {
+                self.preview.image = nil
+            }
+            
             removeButton.isHidden = false
-            link.text = tab.link?.url.absoluteString ?? ""
             configureFavicon(forDomain: tab.link?.url.host)
         }
-    }
-
-    private func removeTabObserver() {
-        tab?.removeObserver(self)
     }
     
     @IBAction func deleteTab() {
@@ -199,12 +296,15 @@ class TabViewCell: UICollectionViewCell {
     }
 }
 
-extension TabViewCell: TabObserver {
+extension TabViewCell: Themable {
     
-    func didChange(tab: Tab) {
-        update(withTab: tab)
+    func decorate(with theme: Theme) {
+        border.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
+        unread.image = Self.unreadImage(for: theme)
+        
+        background.backgroundColor = theme.tabSwitcherCellBackgroundColor
+        title.textColor = theme.tabSwitcherCellTextColor
     }
-    
 }
 
 extension TabViewCell: UIGestureRecognizerDelegate {
@@ -218,6 +318,13 @@ extension TabViewCell: UIGestureRecognizerDelegate {
         guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return true }
         let velocity = pan.velocity(in: self)
         return abs(velocity.y) < abs(velocity.x)
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard otherGestureRecognizer == collectionReorderRecognizer else {
+            return false
+        }
+        return true
     }
     
 }

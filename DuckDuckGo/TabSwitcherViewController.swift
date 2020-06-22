@@ -23,6 +23,13 @@ import WebKit
 import os.log
 
 class TabSwitcherViewController: UIViewController {
+    
+    struct Constants {
+        static let preferredMinNumberOfRows: CGFloat = 2.7
+
+        static let cellMinHeight: CGFloat = 140.0
+        static let cellMaxHeight: CGFloat = 209.0
+    }
 
     typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
     
@@ -40,8 +47,9 @@ class TabSwitcherViewController: UIViewController {
     weak var homePageSettingsDelegate: HomePageSettingsDelegate?
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
-
-    fileprivate var hasSeenFooter = false
+    weak var previewsSource: TabPreviewsSource!
+    
+    weak var reorderGestureRecognizer: UIGestureRecognizer?
     
     override var canBecomeFirstResponder: Bool { return true }
     
@@ -50,17 +58,36 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
+        setupBackgroundView()
         currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
         becomeFirstResponder()
+    }
+    
+    func setupBackgroundView() {
+        let view = UIView(frame: collectionView.frame)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:))))
+        collectionView.backgroundView = view
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
-        
-        collectionView.reloadData()
+        if reorderGestureRecognizer == nil {
+            let recognizer = UILongPressGestureRecognizer(target: self,
+                                                          action: #selector(handleLongPress(gesture:)))
+            collectionView.addGestureRecognizer(recognizer)
+            reorderGestureRecognizer = recognizer
+        }
+    }
+    
+    func prepareForPresentation() {
+        view.layoutIfNeeded()
+        self.scrollToInitialTab()
+    }
+    
+    @objc func handleTap(gesture: UITapGestureRecognizer) {
+        dismiss()
     }
 
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -83,7 +110,6 @@ class TabSwitcherViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        scrollToInitialTab()
         delegate?.tabSwitcherDidAppear(self)
     }
     
@@ -110,7 +136,7 @@ class TabSwitcherViewController: UIViewController {
         let index = tabsModel.currentIndex
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
         let indexPath = IndexPath(row: index, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
     }
 
     private func refreshTitle() {
@@ -217,17 +243,19 @@ extension TabSwitcherViewController: TabViewCellDelegate {
     func deleteTab(tab: Tab) {
         guard let index = tabsModel.indexOf(tab: tab) else { return }
         let isLastTab = tabsModel.count == 1
-        delegate.tabSwitcher(self, didRemoveTab: tab)
-        currentSelection = tabsModel.currentIndex
-        refreshTitle()
-        
         if isLastTab {
+            delegate.tabSwitcher(self, didRemoveTab: tab)
+            currentSelection = tabsModel.currentIndex
+            refreshTitle()
             collectionView.reloadData()
         } else {
             collectionView.performBatchUpdates({
-                self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+                delegate.tabSwitcher(self, didRemoveTab: tab)
+                currentSelection = tabsModel.currentIndex
+                collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
             }, completion: { _ in
                 guard let current = self.currentSelection else { return }
+                self.refreshTitle()
                 self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
             })
         }
@@ -254,30 +282,18 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
         }
         cell.delegate = self
-
         cell.isDeleting = false
         
         if indexPath.row < tabsModel.count {
             let tab = tabsModel.get(tabAt: indexPath.row)
-            cell.update(withTab: tab)
+            tab.addObserver(self)
+            cell.update(withTab: tab,
+                        preview: previewsSource.preview(for: tab),
+                        reorderRecognizer: reorderGestureRecognizer)
         }
         
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        let reuseIdentifier = TabsFooter.reuseIdentifier
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                         withReuseIdentifier: reuseIdentifier,
-                                                                         for: indexPath) as? TabsFooter else {
-            fatalError("Failed to dequeue footer \(TabsFooter.reuseIdentifier) as TabsFooter")
-        }
-        view.decorate(with: ThemeManager.shared.currentTheme)
-        return view
-    }
-
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegate {
@@ -309,22 +325,63 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 
+    private func calculateColumnWidth(minimumColumnWidth: CGFloat, maxColumns: Int) -> CGFloat {
+        // Spacing is supposed to be equal between cells and on left/right side of the collection view
+        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let spacing = layout?.sectionInset.left ?? 0.0
+        
+        let contentWidth = collectionView.bounds.width - spacing
+        let numberOfColumns = min(maxColumns, Int(contentWidth / minimumColumnWidth))
+        return contentWidth / CGFloat(numberOfColumns) - spacing
+    }
+    
+    private func calculateRowHeight(columnWidth: CGFloat) -> CGFloat {
+        
+        // Calculate height based on the view size
+        let contentAspectRatio = collectionView.bounds.width / collectionView.bounds.height
+        let heightToFit = (columnWidth / contentAspectRatio) + TabViewCell.Constants.cellHeaderHeight
+        
+        // Try to display at least `preferredMinNumberOfRows`
+        let preferredMaxHeight = collectionView.bounds.height / Constants.preferredMinNumberOfRows
+        let preferredHeight = min(preferredMaxHeight, heightToFit)
+        
+        return min(Constants.cellMaxHeight,
+                   max(Constants.cellMinHeight, preferredHeight))
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 70)
+        
+        let columnWidth = calculateColumnWidth(minimumColumnWidth: 150, maxColumns: 4)
+        let rowHeight = calculateRowHeight(columnWidth: columnWidth)
+        return CGSize(width: floor(columnWidth),
+                      height: floor(rowHeight))
     }
     
+}
+
+extension TabSwitcherViewController: TabObserver {
+    
+    func didChange(tab: Tab) {
+        if let index = tabsModel.indexOf(tab: tab) {
+            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        }
+    }
 }
 
 extension TabSwitcherViewController: Themable {
     
     func decorate(with theme: Theme) {
-        titleView.textColor = theme.tintOnBlurColor
-        settingsButton.tintColor = theme.tintOnBlurColor
-        bookmarkAllButton.tintColor = theme.tintOnBlurColor
+        view.backgroundColor = theme.backgroundColor
+        
+        titleView.textColor = theme.barTintColor
+        settingsButton.tintColor = theme.barTintColor
+        bookmarkAllButton.tintColor = theme.barTintColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
+        
+        collectionView.reloadData()
     }
 }

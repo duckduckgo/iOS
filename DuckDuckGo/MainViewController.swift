@@ -81,6 +81,7 @@ class MainViewController: UIViewController {
     private lazy var appUrls: AppUrls = AppUrls()
 
     var tabManager: TabManager!
+    private let previewsSource = TabPreviewsSource()
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     fileprivate lazy var homePageSettings: HomePageSettings = DefaultHomePageSettings()
@@ -90,8 +91,7 @@ class MainViewController: UIViewController {
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
 
-    fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
-
+    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current
     }
@@ -106,6 +106,7 @@ class MainViewController: UIViewController {
         attachOmniBar()
         configureTabManager()
         loadInitialView()
+        previewsSource.prepare()
         addLaunchTabNotificationObserver()
 
         findInPageView.delegate = self
@@ -228,10 +229,11 @@ class MainViewController: UIViewController {
         }
 
         if let controller = segue.destination as? TabSwitcherViewController {
-            controller.transitioningDelegate = blurTransition
+            controller.transitioningDelegate = tabSwitcherTransition
             controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
+            controller.previewsSource = previewsSource
             tabSwitcherController = controller
             return
         }
@@ -273,9 +275,17 @@ class MainViewController: UIViewController {
             tabsModel = TabsModel()
             tabsModel.save()
         } else {
-            tabsModel = TabsModel.get() ?? TabsModel()
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel()
+            }
         }
-        tabManager = TabManager(model: tabsModel, delegate: self)
+        tabManager = TabManager(model: tabsModel,
+                                previewsSource: previewsSource,
+                                delegate: self)
     }
 
     private func addLaunchTabNotificationObserver() {
@@ -435,8 +445,7 @@ class MainViewController: UIViewController {
 
     }
 
-    fileprivate func remove(tabAt index: Int) {
-        tabManager.remove(at: index)
+    fileprivate func updateCurrentTab() {
         if let currentTab = currentTab {
             select(tab: currentTab)
         } else {
@@ -833,7 +842,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-
+    
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
@@ -859,6 +868,10 @@ extension MainViewController: HomeControllerDelegate {
     
     func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
         logoContainer.isHidden = hidden
+    }
+    
+    func homeDidRequestLogoContainer(_ home: HomeViewController) -> UIView {
+        return logoContainer
     }
     
     func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {
@@ -898,6 +911,10 @@ extension MainViewController: TabDelegate {
             refreshControls()
         }
         tabManager?.save()
+    }
+    
+    func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
+        previewsSource.update(preview: preview, forTab: tab.tabModel)
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
@@ -1007,7 +1024,8 @@ extension MainViewController: TabSwitcherDelegate {
     
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
-        remove(tabAt: index)
+        tabManager.remove(at: index)
+        updateCurrentTab()
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
@@ -1049,9 +1067,17 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        performSegue(withIdentifier: "ShowTabs", sender: self)
+        if let currentTab = currentTab {
+            currentTab.preparePreview(completion: { image in
+                if let image = image {
+                    self.previewsSource.update(preview: image,
+                                               forTab: currentTab.tabModel)
+                    
+                }
+                self.performSegue(withIdentifier: "ShowTabs", sender: self)
+            })
+        }
     }
-
 }
 
 extension MainViewController: GestureToolbarButtonDelegate {

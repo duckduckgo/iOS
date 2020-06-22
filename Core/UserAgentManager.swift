@@ -14,41 +14,41 @@ public class UserAgentManager {
     public static let shared = UserAgentManager()
     
     private var defaultAgentRetreived = false
-    private lazy var userAgent = UserAgent()
+    private var userAgent: UserAgent
     
-    public func update(forWebView webView: WKWebView, policy: WKNavigationActionPolicy, isDesktop: Bool, url: URL) {
-        
-        if !defaultAgentRetreived {
-            defaultAgentRetreived = true
-            if let defaultAgent = getDefaultAgent(webView: webView) {
-                userAgent = UserAgent(defaultAgent: defaultAgent)
-            }
+    init() {
+        let webview = WKWebView()
+        webview.load(URLRequest(url: URL(string: "https://duckduckgo.com")!))
+        if let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) {
+            userAgent = UserAgent(defaultAgent: defaultAgent)
+        } else {
+            userAgent = UserAgent()
         }
-        
-        guard policy == WKNavigationActionPolicy.allow else {
-            return
-        }
-        
-        guard let host = url.host else {
-            return
-        }
-        
-        let agent = userAgent.agent(forHost: host, isDesktop: isDesktop)
+    }
+    
+    public func update(forWebView webView: WKWebView, isDesktop: Bool, url: URL?) {
+        let agent = userAgent.agent(forHost: url?.host, isDesktop: isDesktop)
         webView.customUserAgent = agent
     }
     
-    public func getDefaultAgent(webView: WKWebView) -> String? {
+    public static func getDefaultAgent(webView: WKWebView) -> String? {
         var agent: String?
         var complete = false
-        
+
         webView.evaluateJavaScript("navigator.userAgent") { (result, _) in
             agent = result as? String
             complete = true
         }
+
+        let limit = Date().addingTimeInterval(TimeInterval(3.0))
         while !complete {
-            RunLoop.current.run(mode: RunLoop.Mode.default, before: .distantFuture)
+            RunLoop.current.run(mode: .default, before: .distantFuture)
+            let now = Date()
+            if now > limit {
+                complete = true
+            }
         }
-        
+
         return agent
     }
 }
@@ -84,9 +84,12 @@ struct UserAgent {
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
-    public func agent(forHost host: String, isDesktop: Bool) -> String {
-        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { parentHost in
-            isSameOrSubdomain(child: host, parent: parentHost)
+    public func agent(forHost host: String?, isDesktop: Bool) -> String {
+        var omitApplicationComponent = false
+        if let host = host {
+            omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { parentHost in
+                isSameOrSubdomain(child: host, parent: parentHost)
+            }
         }
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
         if isDesktop {

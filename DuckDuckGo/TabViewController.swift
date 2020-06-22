@@ -396,6 +396,12 @@ class TabViewController: UIViewController {
         if #available(iOS 13, *) {
             webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
         }
+
+        // Prior to iOS12 we cannot set the UA dynamically on time and so we set it statically here
+        guard #available(iOS 12.0, *) else {
+            UserAgentManager.shared.update(forWebView: webView, isDesktop: tabModel.isDesktop, url: nil)
+            return
+        }
     }
     
     func goBack() {
@@ -917,9 +923,15 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
             return
         }
+
+        // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
+        if #available(iOS 12, *) {
+            if (allowPolicy == WKNavigationActionPolicy.allow) {
+                UserAgentManager.shared.update(forWebView: webView, isDesktop: tabModel.isDesktop, url: url)
+            }
+        }
         
         if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
-            UserAgentManager.shared.update(forWebView: webView, policy: allowPolicy, isDesktop: tabModel.isDesktop, url: url)
             completion(allowPolicy)
             return
         }
@@ -931,10 +943,6 @@ extension TabViewController: WKNavigationDelegate {
                 self?.load(url: upgradedUrl)
                 completion(.cancel)
                 return
-            }
-            
-            if let isDesktop = self?.tabModel.isDesktop, let webView = self?.webView {
-                UserAgentManager.shared.update(forWebView: webView, policy: allowPolicy, isDesktop: isDesktop, url: url)
             }
             completion(allowPolicy)
         }

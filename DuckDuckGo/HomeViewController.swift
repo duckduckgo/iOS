@@ -31,6 +31,10 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     weak var daxDialogViewController: DaxDialogViewController?
+    
+    var logoContainer: UIView! {
+        return delegate?.homeDidRequestLogoContainer(self)
+    }
  
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {

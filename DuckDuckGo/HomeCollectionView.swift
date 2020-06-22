@@ -184,7 +184,6 @@ extension HomeCollectionView: UIGestureRecognizerDelegate {
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == collectionViewReorderingGesture,
             let indexPath = indexPathForItem(at: gestureRecognizer.location(in: self)) {
-            print("-    \(renderers.rendererFor(section: indexPath.section).supportsReordering())")
             return renderers.rendererFor(section: indexPath.section).supportsReordering()
         }
         return super.gestureRecognizerShouldBegin(gestureRecognizer)

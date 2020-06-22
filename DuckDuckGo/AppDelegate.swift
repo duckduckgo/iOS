@@ -30,8 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
     
+    static var shared: AppDelegate {
+        // swiftlint:disable force_cast
+        return UIApplication.shared.delegate as! AppDelegate
+        // swiftlint:enable force_cast
+    }
+    
     private var testing = false
-    private var appIsLaunching = false
+    var appIsLaunching = false
     var overlayWindow: UIWindow?
     var window: UIWindow?
 
@@ -80,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         clearLegacyAllowedDomainCookies()
-    
+        
         appIsLaunching = true
         return true
     }

@@ -130,6 +130,9 @@
 		8521FDEE238DD1B500A44CC3 /* MockEntityMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */; };
 		8521FDF1238DD82700A44CC3 /* TrackerDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */; };
 		8521FDF3238DF4BB00A44CC3 /* KnownTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDF2238DF4BB00A44CC3 /* KnownTrackerTests.swift */; };
+		8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */; };
+		8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC95246D620B00E59D45 /* String+Markdown.swift */; };
+		8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */; };
 		85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D222151221C00A0CE28 /* PrivacyPractices.swift */; };
 		85267D2521513FC700A0CE28 /* EntityMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2421513FC700A0CE28 /* EntityMapping.swift */; };
 		85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */; };
@@ -196,6 +199,11 @@
 		857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DC8223A9E7D00833940 /* MockAppSettings.swift */; };
 		857D1DCD22401F0200833940 /* NotFoundCachingImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
+		858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D02469BCDE00C36F8A /* DaxDialogs.swift */; };
+		858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxDialogTests.swift */; };
+		858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */; };
+		858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */; };
+		858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858650DA246B111900C36F8A /* DaxOnboarding.xcassets */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */; };
@@ -237,6 +245,10 @@
 		85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271DE1FD044D7007216B4 /* HTTPSUpgradeStore.swift */; };
 		85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E31FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift */; };
 		85C271E61FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */; };
+		85C297042476C1FD0063A335 /* DaxDialogsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C297032476C1FD0063A335 /* DaxDialogsSettings.swift */; };
+		85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C29706247BDCFF0063A335 /* DaxDialogsBrowsingSpecTests.swift */; };
+		85C2970A247EB7AA0063A335 /* Text.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85C29709247EB7AA0063A335 /* Text.xcassets */; };
+		85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */; };
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
 		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
@@ -731,6 +743,9 @@
 		8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEntityMapping.swift; sourceTree = "<group>"; };
 		8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDataManagerTests.swift; sourceTree = "<group>"; };
 		8521FDF2238DF4BB00A44CC3 /* KnownTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownTrackerTests.swift; sourceTree = "<group>"; };
+		8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogViewController.swift; sourceTree = "<group>"; };
+		8524CC95246D620B00E59D45 /* String+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Markdown.swift"; sourceTree = "<group>"; };
+		8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenDaxDialogViewController.swift; sourceTree = "<group>"; };
 		85267D222151221C00A0CE28 /* PrivacyPractices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPractices.swift; sourceTree = "<group>"; };
 		85267D2421513FC700A0CE28 /* EntityMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMapping.swift; sourceTree = "<group>"; };
 		85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMappingTests.swift; sourceTree = "<group>"; };
@@ -798,6 +813,11 @@
 		857D1DC8223A9E7D00833940 /* MockAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppSettings.swift; sourceTree = "<group>"; };
 		857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotFoundCachingImageDownloader.swift; path = DuckDuckGoTests/NotFoundCachingImageDownloader.swift; sourceTree = SOURCE_ROOT; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
+		858650D02469BCDE00C36F8A /* DaxDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogs.swift; sourceTree = "<group>"; };
+		858650D22469BFAD00C36F8A /* DaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogTests.swift; sourceTree = "<group>"; };
+		858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DaxOnboarding.storyboard; sourceTree = "<group>"; };
+		858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingViewController.swift; sourceTree = "<group>"; };
+		858650DA246B111900C36F8A /* DaxOnboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DaxOnboarding.xcassets; sourceTree = "<group>"; };
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsTests.swift; sourceTree = "<group>"; };
@@ -839,6 +859,10 @@
 		85C271DE1FD044D7007216B4 /* HTTPSUpgradeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeStore.swift; sourceTree = "<group>"; };
 		85C271E31FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeParserTests.swift; sourceTree = "<group>"; };
 		85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradePersistenceTests.swift; sourceTree = "<group>"; };
+		85C297032476C1FD0063A335 /* DaxDialogsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogsSettings.swift; sourceTree = "<group>"; };
+		85C29706247BDCFF0063A335 /* DaxDialogsBrowsingSpecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogsBrowsingSpecTests.swift; sourceTree = "<group>"; };
+		85C29709247EB7AA0063A335 /* Text.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Text.xcassets; sourceTree = "<group>"; };
+		85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingPadViewController.swift; sourceTree = "<group>"; };
 		85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionOverviewController.swift; sourceTree = "<group>"; };
 		85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedTermsOfServiceStoreTests.swift; sourceTree = "<group>"; };
 		85C7438F2154E981005CF998 /* GradeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCache.swift; sourceTree = "<group>"; };
@@ -1529,6 +1553,7 @@
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
 				F1F533861F26ABAC00D80D4F /* Localizable.strings */,
 				85081A041FE05D40006561FD /* Localizable.stringsdict */,
+				85C29709247EB7AA0063A335 /* Text.xcassets */,
 			);
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
@@ -1686,6 +1711,21 @@
 			path = OpenAction;
 			sourceTree = "<group>";
 		};
+		858650CF2469BCC100C36F8A /* DaxOnboarding */ = {
+			isa = PBXGroup;
+			children = (
+				858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */,
+				858650D02469BCDE00C36F8A /* DaxDialogs.swift */,
+				858650DA246B111900C36F8A /* DaxOnboarding.xcassets */,
+				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
+				8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */,
+				8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */,
+				85C297032476C1FD0063A335 /* DaxDialogsSettings.swift */,
+				85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */,
+			);
+			name = DaxOnboarding;
+			sourceTree = "<group>";
+		};
 		8595BF491FE847EB00F692EC /* ios-js-support */ = {
 			isa = PBXGroup;
 			children = (
@@ -1754,6 +1794,15 @@
 				85C11E522090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift */,
 			);
 			name = HomeRow;
+			sourceTree = "<group>";
+		};
+		85C29705247BDCE60063A335 /* Dax */ = {
+			isa = PBXGroup;
+			children = (
+				858650D22469BFAD00C36F8A /* DaxDialogTests.swift */,
+				85C29706247BDCFF0063A335 /* DaxDialogsBrowsingSpecTests.swift */,
+			);
+			name = Dax;
 			sourceTree = "<group>";
 		};
 		85C9E5F321B422AD00460EBC /* Bookmarks */ = {
@@ -2094,6 +2143,7 @@
 		F11CEF581EBB66C80088E4D7 /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				858650CF2469BCC100C36F8A /* DaxOnboarding */,
 				85EE7F53224667C3000FE757 /* WebContainer */,
 				851B129422242CD2004781BC /* Contextual */,
 				85C11E4A209084DE00BFFEB4 /* HomeRow */,
@@ -2138,6 +2188,7 @@
 		F12790DD1EBBDDF3001D3AEC /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				85C29705247BDCE60063A335 /* Dax */,
 				851B12AD2226B18A004781BC /* Contextual */,
 				85C11E4D2090893900BFFEB4 /* HomeRow */,
 			);
@@ -2678,6 +2729,7 @@
 				985892512260B1B200EEB31B /* ProgressView.swift */,
 				F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */,
 				F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */,
+				8524CC95246D620B00E59D45 /* String+Markdown.swift */,
 				F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */,
 				98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */,
 				83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */,
@@ -3164,6 +3216,8 @@
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
+				858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */,
+				858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
 				AA4D6AF623DF0312007E8790 /* AppIconRed60x60@3x.png in Resources */,
@@ -3187,6 +3241,7 @@
 				AA4D6AA523DE4CC4007E8790 /* AppIconBlue29x29@3x.png in Resources */,
 				AA4D6ACF23DE4D27007E8790 /* AppIconPurple76x76@2x.png in Resources */,
 				98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */,
+				85C2970A247EB7AA0063A335 /* Text.xcassets in Resources */,
 				85081A051FE05D40006561FD /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3467,17 +3522,20 @@
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
+				858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */,
 				98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
+				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
 				851B129C22243178004781BC /* BrowsingTips.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
+				85C297042476C1FD0063A335 /* DaxDialogsSettings.swift in Sources */,
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
@@ -3527,6 +3585,7 @@
 				980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */,
+				8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				851B129622242D94004781BC /* HomeScreenTips.swift in Sources */,
@@ -3556,6 +3615,7 @@
 				8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
+				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,
@@ -3582,6 +3642,7 @@
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
+				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				85374D3A21AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
@@ -3610,6 +3671,7 @@
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
+				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 				984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */,
 				85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */,
@@ -3633,6 +3695,7 @@
 				8570656E1F6AAE270044DCB1 /* DetectedTrackerTests.swift in Sources */,
 				85267D2D215286C500A0CE28 /* PrivacyPracticesTests.swift in Sources */,
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
+				85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */,
 				8519FDEA23FED2E700CFF73A /* HomePageSettingsTests.swift in Sources */,
 				851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */,
 				85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */,
@@ -3653,6 +3716,7 @@
 				85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */,
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
+				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */,
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				853C5F6321C3D667001F7A05 /* EnhancedHomePageVariantManagerTests.swift in Sources */,
@@ -4339,6 +4403,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -4364,6 +4429,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

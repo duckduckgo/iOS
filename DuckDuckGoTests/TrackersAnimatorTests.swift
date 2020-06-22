@@ -40,7 +40,8 @@ class TrackersAnimatorTests: XCTestCase {
     
     func testWhenNoTrackersWereFoundThenThereIsNoConfigNeeded() {
         XCTAssertFalse(omniBar.trackersAnimator.configure(omniBar,
-                                                          toDisplay: []))
+                                                          toDisplay: [],
+                                                          shouldCollapse: false))
     }
     
     func testWhenOneTrackerNetworkWasFoundThenThereIsOneItemPresented() {
@@ -55,7 +56,8 @@ class TrackersAnimatorTests: XCTestCase {
                                         blocked: true)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
-                                                     toDisplay: trackers))
+                                                     toDisplay: trackers,
+                                                     shouldCollapse: false))
         
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
         XCTAssert(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
@@ -76,7 +78,8 @@ class TrackersAnimatorTests: XCTestCase {
                                         blocked: true)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
-                                                     toDisplay: trackers))
+                                                     toDisplay: trackers,
+                                                     shouldCollapse: false))
         
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
@@ -102,7 +105,8 @@ class TrackersAnimatorTests: XCTestCase {
                                         blocked: true)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
-                                                     toDisplay: trackers))
+                                                     toDisplay: trackers,
+                                                     shouldCollapse: false))
         
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[1].isHidden)
@@ -132,7 +136,8 @@ class TrackersAnimatorTests: XCTestCase {
                                         blocked: true)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
-                                                     toDisplay: trackers))
+                                                     toDisplay: trackers,
+                                                     shouldCollapse: true))
         
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[0].isHidden)
         XCTAssertFalse(omniBar.siteRatingContainer.trackerIcons[1].isHidden)

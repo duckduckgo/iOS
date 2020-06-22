@@ -22,7 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
     
-    var controllerNames = [String]()
+    var controllerNames = ["onboardingSummary", "onboardingHomeRow"]
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
@@ -45,8 +45,6 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
     
     private func loadInitialContent() {
-        controllerNames = ["onboardingSummary", "onboardingHomeRow"]
-        
         guard let name = controllerNames.first,
             let controller = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController else {
                 fatalError("Unable to load initial content")

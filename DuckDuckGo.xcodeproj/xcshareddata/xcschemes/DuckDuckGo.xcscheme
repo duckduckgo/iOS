@@ -107,7 +107,12 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "VARIANT"
-            value = "mp"
+            value = "mb"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "ONBOARDING"
+            value = "true"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

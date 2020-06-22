@@ -37,12 +37,21 @@ class TrackersAnimator {
         static let gradeLoadingAnimationKey = "gradeLoadingAnimation"
     }
     
+    var shouldCollapse = true
+    
     func configure(_ omniBar: OmniBar,
-                   toDisplay trackers: [DetectedTracker]) -> Bool {
+                   toDisplay trackers: [DetectedTracker],
+                   shouldCollapse: Bool) -> Bool {
+        self.shouldCollapse = shouldCollapse
         
         let blockedEntities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
             return (l.prevalence ?? 0) > (r.prevalence ?? 0)
-        }.filter { $0.displayName != nil }
+        }
+        .filter { $0.displayName != nil }
+        .sorted { _, r -> Bool in
+            guard let displayName = r.displayName else { return false }
+            return "AEIOU".contains(displayName[displayName.startIndex])
+        }
         
         guard !blockedEntities.isEmpty else { return false }
 
@@ -146,12 +155,16 @@ class TrackersAnimator {
         }, completion: { _ in
             let animateCrossOut = DispatchWorkItem(block: {
                 omniBar.siteRatingContainer.crossOutTrackerIcons(duration: Constants.crossOutDuration)
-                
+
                 let hideTrackers = DispatchWorkItem {
                     self.collapseIcons(in: omniBar)
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.delayAfterCrossOut,
-                                              execute: hideTrackers)
+
+                if self.shouldCollapse {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.delayAfterCrossOut,
+                                                  execute: hideTrackers)
+                }
+                
                 self.nextAnimation = hideTrackers
             })
             
@@ -197,6 +210,10 @@ class TrackersAnimator {
             omniBar.textField.alpha = 1
             omniBar.siteRatingContainer.resetTrackerIcons()
         }, completion: { _ in })
+    }
+    
+    func completeAnimations(in omniBar: OmniBar) {
+        collapseIcons(in: omniBar)
     }
     
 }

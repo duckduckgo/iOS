@@ -778,6 +778,36 @@ extension TabViewController: WKNavigationDelegate {
         
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
+        updatePreview()
+    }
+    
+    func preparePreview(completion: @escaping (UIImage?) -> Void) {
+        if #available(iOS 11.0, *) {
+            let config = WKSnapshotConfiguration()
+            config.rect = webView.bounds
+            let snapshotWidth = Float(webView.bounds.width / 2)
+            config.snapshotWidth = NSNumber(value: snapshotWidth)
+            webView.takeSnapshot(with: config) { image, _ in
+                completion(image)
+            }
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                guard let webView = self?.webView else { completion(nil); return }
+                UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                completion(image)
+            }
+        }
+    }
+    
+    private func updatePreview() {
+        preparePreview { image in
+            if let image = image {
+                self.delegate?.tab(self, didUpdatePreview: image)
+            }
+        }
     }
     
     private func onWebpageDidFinishLoading() {

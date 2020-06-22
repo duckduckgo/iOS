@@ -25,7 +25,8 @@ public class TabsModel: NSObject, NSCoding {
     private struct NSCodingKeys {
         static let legacyIndex = "currentIndex"
         static let currentIndex = "currentIndex2"
-        static let tabs = "tabs"
+        static let legacyTabs = "tabs"
+        static let tabs = "tabs2"
     }
 
     private(set) var currentIndex: Int
@@ -41,7 +42,17 @@ public class TabsModel: NSObject, NSCoding {
     }
 
     public convenience required init?(coder decoder: NSCoder) {
-        guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab], !tabs.isEmpty else { return nil }
+        // we migrated tabs to support uid
+        let storedTabs: [Tab]?
+        if let legacyTabs = decoder.decodeObject(forKey: NSCodingKeys.legacyTabs) as? [Tab], !legacyTabs.isEmpty {
+            storedTabs = legacyTabs
+        } else {
+            storedTabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab]
+        }
+        
+        guard let tabs = storedTabs else {
+            return nil
+        }
 
         // we migrated from an optional int to an actual int
         var currentIndex = 0

@@ -19,11 +19,13 @@ public class UserAgentManager {
     init() {
         let webview = WKWebView()
         webview.load(URLRequest(url: URL(string: "https://duckduckgo.com")!))
-        if let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) {
-            userAgent = UserAgent(defaultAgent: defaultAgent)
-        } else {
+        
+        guard let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) else {
             userAgent = UserAgent()
+            return
         }
+        
+        userAgent = UserAgent(defaultAgent: defaultAgent)
     }
     
     public func update(forWebView webView: WKWebView, isDesktop: Bool, url: URL?) {
@@ -61,6 +63,7 @@ struct UserAgent {
         static let fallbackSafariComponent = "Safari/\(fallbackWekKitVersion)"
         static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Mobile/15E148"
         static let desktopPrefixComponent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)"
+        static let desktopVersionComponent = "Version/13.1.1"
         // swiftlint:enable line_length
     }
     
@@ -126,7 +129,7 @@ struct UserAgent {
         }
         
         let suffix = (agent as NSString).substring(with: range)
-        return "\(Constants.desktopPrefixComponent) \(suffix)"
+        return "\(Constants.desktopPrefixComponent) \(suffix) \(Constants.desktopVersionComponent)"
     }
     
     private func isSameOrSubdomain(child: String, parent: String) -> Bool {

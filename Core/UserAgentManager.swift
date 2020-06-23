@@ -29,7 +29,7 @@ public class UserAgentManager {
     
     init() {
         let webview = WKWebView()
-        webview.load(URLRequest(url: URL(string: "https://duckduckgo.com")!))
+        webview.load(URLRequest(url: URL(string: "about:blank")!))
         
         guard let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) else {
             userAgent = UserAgent()

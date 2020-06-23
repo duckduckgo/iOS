@@ -39,8 +39,8 @@ public class UserAgentManager {
         userAgent = UserAgent(defaultAgent: defaultAgent)
     }
     
-    public func update(forWebView webView: WKWebView, isDesktop: Bool, url: URL?) {
-        let agent = userAgent.agent(forHost: url?.host, isDesktop: isDesktop)
+    public func update(webView: WKWebView, isDesktop: Bool, url: URL?) {
+        let agent = userAgent.agent(forUrl: url, isDesktop: isDesktop)
         webView.customUserAgent = agent
     }
     
@@ -98,13 +98,11 @@ struct UserAgent {
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
-    public func agent(forHost host: String?, isDesktop: Bool) -> String {
-        var omitApplicationComponent = false
-        if let host = host {
-            omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { parentHost in
-                isSameOrSubdomain(child: host, parent: parentHost)
-            }
+    public func agent(forUrl url: URL?, isDesktop: Bool) -> String {
+        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { domain in
+            url?.isPart(ofDomain: domain) ?? false
         }
+        
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
         if isDesktop {
             return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
@@ -141,9 +139,5 @@ struct UserAgent {
         
         let suffix = (agent as NSString).substring(with: range)
         return "\(Constants.desktopPrefixComponent) \(suffix) \(Constants.desktopVersionComponent)"
-    }
-    
-    private func isSameOrSubdomain(child: String, parent: String) -> Bool {
-        return child == parent || child.hasSuffix(".\(parent)")
     }
 }

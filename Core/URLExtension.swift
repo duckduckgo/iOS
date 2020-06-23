@@ -158,4 +158,8 @@ extension URL {
         return host.matches(pattern: ipRegex)
     }
     
+    public func isPart(ofDomain domain: String) -> Bool {
+        guard let host = host else { return false }
+        return host == domain || host.hasSuffix(".\(domain)")
+    }
 }

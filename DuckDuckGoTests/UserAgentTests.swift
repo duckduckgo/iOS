@@ -40,48 +40,48 @@ class UserAgentTests: XCTestCase {
     }
     
     private struct Constants {
-        static let domain = "example.com"
-        static let noAppDomain = "cvs.com"
-        static let noAppSubdomainDomain = "subdomain.cvs.com"
+        static let url = URL(string: "http://example.com/index.html")
+        static let noAppUrl = URL(string: "http://cvs.com/index.html")
+        static let noAppSubdomainUrl = URL(string: "http://subdomain.cvs.com/index.html")
     }
     
     func testWhenMobileUaAndDektopFalseThenMobileAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forHost: Constants.domain, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forUrl: Constants.url, isDesktop: false))
     }
     
     func testWhenMobileUaAndDektopTrueThenDesktopAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forHost: Constants.domain, isDesktop: true))
+        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forUrl: Constants.url, isDesktop: true))
     }
-        
+    
     func testWhenTabletUaAndDektopFalseThenTabletAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
-        XCTAssertEqual(ExpectedAgent.tablet, testee.agent(forHost: Constants.domain, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.tablet, testee.agent(forUrl: Constants.url, isDesktop: false))
     }
     
     func testWhenTabletUaAndDektopTrueThenDesktopAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
-        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forHost: Constants.domain, isDesktop: true))
+        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forUrl: Constants.url, isDesktop: true))
     }
     
     func testWhenNoUaAndDesktopFalseThenFallbackMobileAgentIsUsed() {
         let testee = UserAgent()
-        XCTAssertEqual(ExpectedAgent.mobileFallback, testee.agent(forHost: Constants.domain, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobileFallback, testee.agent(forUrl: Constants.url, isDesktop: false))
     }
     
     func testWhenNoUaAndDesktopTrueThenFallbackDesktopAgentIsUsed() {
         let testee = UserAgent()
-        XCTAssertEqual(ExpectedAgent.desktopFallback, testee.agent(forHost: Constants.domain, isDesktop: true))
+        XCTAssertEqual(ExpectedAgent.desktopFallback, testee.agent(forUrl: Constants.url, isDesktop: true))
     }
     
     func testWhenDomainDoesNotSupportApplicationComponentThenApplicationIsOmittedFromUa() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forHost: Constants.noAppDomain, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.noAppUrl, isDesktop: false))
     }
     
     func testWhenSubdomainDoesNotSupportApplicationComponentThenApplicationIsOmittedFromUa() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forHost: Constants.noAppSubdomainDomain, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.noAppSubdomainUrl, isDesktop: false))
     }
 }

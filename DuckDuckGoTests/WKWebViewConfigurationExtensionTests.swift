@@ -33,18 +33,4 @@ class WKWebViewConfigurationExtensionTests: XCTestCase {
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
         XCTAssertTrue(webView.configuration.websiteDataStore.isPersistent)
     }
-    
-    func testWhenDddgNameForUserAgentRequestedThenNameAndVersionAreCorrect() {
-        XCTAssertEqual("DuckDuckGo/7", WKWebViewConfiguration.ddgNameForUserAgent)
-    }
-    
-    func testWhenPersistantConfigurationCreatedThenApplicationForUserAgentIsSet() {
-        let configuration = WKWebViewConfiguration.persistent()
-        XCTAssertTrue(configuration.applicationNameForUserAgent?.hasSuffix("DuckDuckGo/7") ?? false)
-    }
-    
-    func testWhenNonPersistantConfigurationCreatedThenApplicationForUserAgentIsSet() {
-        let configuration = WKWebViewConfiguration.nonPersistent()
-        XCTAssertTrue(configuration.applicationNameForUserAgent?.hasSuffix("DuckDuckGo/7") ?? false)
-    }
 }

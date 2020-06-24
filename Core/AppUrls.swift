@@ -124,9 +124,8 @@ public struct AppUrls {
     }
 
     public func isDuckDuckGo(url: URL) -> Bool {
-        guard let host = url.host else { return false }
         guard let searchHost = base.host else { return false }
-        return host == searchHost || host.hasSuffix(".\(searchHost)")
+        return url.isPart(ofDomain: searchHost)
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {

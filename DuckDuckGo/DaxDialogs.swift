@@ -128,7 +128,7 @@ class DaxDialogs {
         }
         
         // won't be shown if owned by major tracker message has already been shown
-        if isFacebookOrGoogle(host) {
+        if isFacebookOrGoogle(siteRating.url) {
             return majorTrackerMessage(host)
         }
         
@@ -227,9 +227,9 @@ class DaxDialogs {
         return Array(entities).sorted(by: { $0.prevalence ?? 0.0 > $1.prevalence ?? 0.0 })
     }
     
-    private func isFacebookOrGoogle(_ host: String) -> Bool {
+    private func isFacebookOrGoogle(_ url: URL) -> Bool {
         return [ MajorTrackers.facebookDomain, MajorTrackers.googleDomain ].contains { domain in
-            return domain == host || host.hasSuffix("." + domain)
+            return url.isPart(ofDomain: domain)
         }
     }
     

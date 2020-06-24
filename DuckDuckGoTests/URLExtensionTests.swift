@@ -243,4 +243,20 @@ class URLExtensionTests: XCTestCase {
         let url = URL(string: "mailto://test.com")!
         XCTAssertFalse(url.isHttps())
     }
+    
+    func testWhenHostMatchesDomainThenIsPartOfDomainIsTrue() {
+        let url = URL(string: "http://example.com/index.html")!
+        XCTAssertTrue(url.isPart(ofDomain: "example.com"))
+    }
+    
+    func testWhenHostIsSubdomainThenIsPartOfDomainIsTrue() {
+        let url = URL(string: "http://subdomain.example.com/index.html")!
+        XCTAssertTrue(url.isPart(ofDomain: "example.com"))
+    }
+    
+    func testWhenHostDoesNotMatchThenIsPartOfDomainIsFalse() {
+        let url = URL(string: "http://notexample.com/index.html")!
+        XCTAssertFalse(url.isPart(ofDomain: "example.com"))
+    }
+
 }

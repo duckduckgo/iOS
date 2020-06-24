@@ -1,1 +1,2 @@
-• Bug fixes and improvements.
+• We added webpage previews for each tab and a new grid layout to make it easier to manage your tabs.
+• Other bug fixes and improvements.

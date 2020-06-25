@@ -33,11 +33,6 @@ class TabViewController: UIViewController {
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
     }
-
-    private struct UserAgent {
-        static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15 " +
-                             WKWebViewConfiguration.ddgNameForUserAgent
-    }
     
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
@@ -259,7 +254,7 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
 
         reloadUserScripts()
-        updateUserAgent()
+        updateContentMode()
         
         instrumentation.didPrepareWebView()
 
@@ -306,7 +301,7 @@ class TabViewController: UIViewController {
     public func load(url: URL) {
         self.url = url
         lastError = nil
-        updateUserAgent()
+        updateContentMode()
         load(urlRequest: URLRequest(url: url))
     }
     
@@ -395,14 +390,19 @@ class TabViewController: UIViewController {
         if scripts {
             reloadUserScripts()
         }
-        updateUserAgent()
+        updateContentMode()
         webView.reload()
     }
     
-    func updateUserAgent() {
-        webView.customUserAgent = tabModel.isDesktop ? UserAgent.desktop : nil
+    func updateContentMode() {
         if #available(iOS 13, *) {
             webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
+        }
+
+        // Prior to iOS12 we cannot set the UA dynamically on time and so we set it statically here
+        guard #available(iOS 12.0, *) else {
+            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: nil)
+            return
         }
     }
     
@@ -778,6 +778,36 @@ extension TabViewController: WKNavigationDelegate {
         
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
+        updatePreview()
+    }
+    
+    func preparePreview(completion: @escaping (UIImage?) -> Void) {
+        if #available(iOS 11.0, *) {
+            let config = WKSnapshotConfiguration()
+            config.rect = webView.bounds
+            let snapshotWidth = Float(webView.bounds.width / 2)
+            config.snapshotWidth = NSNumber(value: snapshotWidth)
+            webView.takeSnapshot(with: config) { image, _ in
+                completion(image)
+            }
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                guard let webView = self?.webView else { completion(nil); return }
+                UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                completion(image)
+            }
+        }
+    }
+    
+    private func updatePreview() {
+        preparePreview { image in
+            if let image = image {
+                self.delegate?.tab(self, didUpdatePreview: image)
+            }
+        }
     }
     
     private func onWebpageDidFinishLoading() {
@@ -951,14 +981,20 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
             return
         }
+
+        // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
+        if #available(iOS 12, *) {
+            if allowPolicy == WKNavigationActionPolicy.allow {
+                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
+            }
+        }
         
         if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
             completion(allowPolicy)
             return
         }
-        
+
         httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
-            
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
                 NetworkLeaderboard.shared.incrementHttpsUpgrades()
                 self?.lastUpgradedURL = upgradedUrl
@@ -966,11 +1002,10 @@ extension TabViewController: WKNavigationDelegate {
                 completion(.cancel)
                 return
             }
-            
             completion(allowPolicy)
         }
     }
-    
+
     private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {
         switch action {
         case .open:

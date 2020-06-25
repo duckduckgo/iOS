@@ -36,7 +36,7 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
     enum Configuration: String {
         case httpsBloomFilterSpec
         case httpsBloomFilter
-        case httpsWhitelist
+        case httpsExcludedDomains
         case surrogates
         case trackerDataSet
         case temporaryWhitelist
@@ -70,7 +70,7 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         switch list {
         case .httpsBloomFilterSpec: return appUrls.httpsBloomFilterSpec
         case .httpsBloomFilter: return appUrls.httpsBloomFilter
-        case .httpsWhitelist: return appUrls.httpsWhitelist
+        case .httpsExcludedDomains: return appUrls.httpsExcludedDomains
         case .surrogates: return appUrls.surrogates
         case .trackerDataSet: return appUrls.trackerDataSet
         case .temporaryWhitelist: return appUrls.temporaryWhitelist

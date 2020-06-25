@@ -125,17 +125,17 @@ public class ContentBlockerLoader {
     }
     
     private func requestHttpsWhitelist(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.httpsWhitelist) { response in
+        contentBlockerRequest.request(.httpsExcludedDomains) { response in
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
                 return
             }
             
-            let isCached = etag != nil && self.etagStorage.etag(for: .httpsWhitelist) == etag
+            let isCached = etag != nil && self.etagStorage.etag(for: .httpsExcludedDomains) == etag
             
             if !isCached, let whitelist = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data) {
-                self.newData[.httpsWhitelist] = whitelist
-                self.etags[.httpsWhitelist] = etag
+                self.newData[.httpsExcludedDomains] = whitelist
+                self.etags[.httpsExcludedDomains] = etag
             }
             semaphore.signal()
         }

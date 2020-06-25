@@ -44,7 +44,7 @@ public struct AppUrls {
  
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
-        static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
+        static let httpsExcludedDomains = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
         static let httpsLookupService = "\(base)/smarter_encryption.js"
 
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
@@ -187,8 +187,8 @@ public struct AppUrls {
         return URL(string: Url.httpsBloomFilterSpec)!
     }
 
-    public var httpsWhitelist: URL {
-        return URL(string: Url.httpsWhitelist)!
+    public var httpsExcludedDomains: URL {
+        return URL(string: Url.httpsExcludedDomains)!
     }
 
     public func httpsLookupServiceUrl(forPartialHost partialHashedHost: String) -> URL {

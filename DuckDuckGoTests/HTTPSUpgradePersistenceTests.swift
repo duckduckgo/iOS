@@ -72,22 +72,22 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     }
 
     func testWhenWhitelistDomainsPersistedThenHasDomainIsTrue() {
-        testee.persistWhitelist(domains: [ "www.example.com", "apple.com" ])
-        XCTAssertTrue(testee.hasWhitelistedDomain("www.example.com"))
-        XCTAssertTrue(testee.hasWhitelistedDomain("apple.com"))
+        testee.persistExcludedDomains([ "www.example.com", "apple.com" ])
+        XCTAssertFalse(testee.shouldUpgradeDomain("www.example.com"))
+        XCTAssertFalse(testee.shouldUpgradeDomain("apple.com"))
     }
     
     func testWhenNoWhitelistDomainsPersistedThenHasDomainIsFalse() {
-        XCTAssertFalse(testee.hasWhitelistedDomain("www.example.com"))
-        XCTAssertFalse(testee.hasWhitelistedDomain("apple.com"))
+        XCTAssertTrue(testee.shouldUpgradeDomain("www.example.com"))
+        XCTAssertTrue(testee.shouldUpgradeDomain("apple.com"))
     }
     
     func testWhenWhitelistDomainsPersistedThenOldDomainsAreDeleted() {
-        testee.persistWhitelist(domains: [ "www.old.com", "otherold.com" ])
-        testee.persistWhitelist(domains: [ "www.new.com", "othernew.com" ])
-        XCTAssertFalse(testee.hasWhitelistedDomain("www.old.com"))
-        XCTAssertFalse(testee.hasWhitelistedDomain("otherold.com"))
-        XCTAssertTrue(testee.hasWhitelistedDomain("www.new.com"))
-        XCTAssertTrue(testee.hasWhitelistedDomain("othernew.com"))
+        testee.persistExcludedDomains([ "www.old.com", "otherold.com" ])
+        testee.persistExcludedDomains([ "www.new.com", "othernew.com" ])
+        XCTAssertTrue(testee.shouldUpgradeDomain("www.old.com"))
+        XCTAssertTrue(testee.shouldUpgradeDomain("otherold.com"))
+        XCTAssertFalse(testee.shouldUpgradeDomain("www.new.com"))
+        XCTAssertFalse(testee.shouldUpgradeDomain("othernew.com"))
     }
 }

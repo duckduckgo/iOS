@@ -48,6 +48,10 @@ In order to run it:
 
 See [Instruments Developer Help](https://help.apple.com/instruments/developer/mac/current/) for reference how to create custom instruments.
 
+## Terminology
+
+We have taken steps to update our terminology and remove words with problematic racial connotations, most notably the change to `main` branches, `allow lists`, and `blocklists`. Closed issues or PRs may contain deprecated terminology that should not be used going forward.
+
 ## Contribute
 
 Please refer to [contributing](CONTRIBUTING.md).

@@ -148,6 +148,16 @@ extension TabViewController {
         let operation = isProtected ? manager.add : manager.remove
         
         return UIAlertAction(title: title, style: .default) { _ in
+            
+            let window = UIApplication.shared.keyWindow
+            window?.hideAllToasts()
+            
+            if isProtected {
+               window?.showBottomToast(UserText.toastProtectionDisabled.format(arguments: domain), duration: 1)
+            } else {
+                window?.showBottomToast(UserText.toastProtectionEnabled.format(arguments: domain), duration: 1)
+            }
+            
             Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
             operation(domain)
         }

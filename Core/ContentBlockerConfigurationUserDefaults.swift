@@ -23,7 +23,7 @@ import SafariServices
 public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore {
 
     private struct Keys {
-        static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
+        static let unprotectedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
 
@@ -39,13 +39,13 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
 
     public private(set) var unprotectedDomains: Set<String> {
         get {
-            guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
-            guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
-            return whitelist
+            guard let data = userDefaults?.data(forKey: Keys.unprotectedDomains) else { return Set<String>() }
+            guard let unprotectedDomains = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
+            return unprotectedDomains
         }
-        set(newWhitelistedDomain) {
-            let data = NSKeyedArchiver.archivedData(withRootObject: newWhitelistedDomain)
-            userDefaults?.set(data, forKey: Keys.whitelistedDomains)
+        set(newUnprotectedDomain) {
+            let data = NSKeyedArchiver.archivedData(withRootObject: newUnprotectedDomain)
+            userDefaults?.set(data, forKey: Keys.unprotectedDomains)
             onStoreChanged()
         }
     }

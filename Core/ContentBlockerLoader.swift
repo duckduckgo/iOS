@@ -69,9 +69,9 @@ public class ContentBlockerLoader {
         
         request(.surrogates, with: dataSource, semaphore)
         request(.trackerDataSet, with: dataSource, semaphore)
-        request(.temporaryWhitelist, with: dataSource, semaphore)
+        request(.temporaryUnprotectedSites, with: dataSource, semaphore)
         requestHttpsUpgrade(dataSource, semaphore)
-        requestHttpsWhitelist(dataSource, semaphore)
+        requestHttpsExcludedDomains(dataSource, semaphore)
         
         return dataSource.requestCount
     }
@@ -124,7 +124,7 @@ public class ContentBlockerLoader {
         }
     }
     
-    private func requestHttpsWhitelist(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
+    private func requestHttpsExcludedDomains(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.httpsExcludedDomains) { response in
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
@@ -133,8 +133,8 @@ public class ContentBlockerLoader {
             
             let isCached = etag != nil && self.etagStorage.etag(for: .httpsExcludedDomains) == etag
             
-            if !isCached, let whitelist = try? HTTPSUpgradeParser.convertExcludedDomainsData(data) {
-                self.newData[.httpsExcludedDomains] = whitelist
+            if !isCached, let excludedDomains = try? HTTPSUpgradeParser.convertExcludedDomainsData(data) {
+                self.newData[.httpsExcludedDomains] = excludedDomains
                 self.etags[.httpsExcludedDomains] = etag
             }
             semaphore.signal()

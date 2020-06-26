@@ -73,7 +73,7 @@ public class StorageCache: StorageCacheUpdating {
             }
             return false
             
-        case .temporaryWhitelist:
+        case .temporaryUnprotectedSites:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
         }

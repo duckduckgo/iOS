@@ -65,17 +65,17 @@ class ContentBlockerLoaderTests: XCTestCase {
         
         XCTAssertEqual(mockEtagStorage.etags[.trackerDataSet], "test")
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "old")
-        XCTAssertEqual(mockEtagStorage.etags[.temporaryWhitelist], nil)
+        XCTAssertEqual(mockEtagStorage.etags[.temporaryUnprotectedSites], nil)
         
         loader.applyUpdate(to: mockStorageCache)
         
         XCTAssertEqual(mockEtagStorage.etags[.trackerDataSet], "test")
         XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        XCTAssertEqual(mockEtagStorage.etags[.temporaryWhitelist], "test")
+        XCTAssertEqual(mockEtagStorage.etags[.temporaryUnprotectedSites], "test")
 
         XCTAssertNil(mockStorageCache.processedUpdates[.trackerDataSet])
         XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.temporaryWhitelist])
+        XCTAssertNotNil(mockStorageCache.processedUpdates[.temporaryUnprotectedSites])
     }
 
     func testWhenEtagIsMissingThenResponseIsStored() {

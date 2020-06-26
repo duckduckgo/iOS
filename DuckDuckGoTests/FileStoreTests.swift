@@ -25,7 +25,7 @@ class FileStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .surrogates))
-        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .temporaryWhitelist))
+        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .temporaryUnprotectedSites))
     }
     
     func testWhenFileExistsThenHasDataReturnsTrue() {
@@ -47,7 +47,7 @@ class FileStoreTests: XCTestCase {
         let store = FileStore()
         XCTAssertTrue(store.persist(data, forConfiguration: .surrogates))
         XCTAssertEqual(uuid, store.loadAsString(forConfiguration: .surrogates))
-        XCTAssertNil(store.loadAsString(forConfiguration: .temporaryWhitelist))
+        XCTAssertNil(store.loadAsString(forConfiguration: .temporaryUnprotectedSites))
     }
     
     func testWhenRemovingLegacyDataThenItAllGetsDeleted() {

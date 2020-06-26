@@ -44,7 +44,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
+    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
 
     var rows = [Row]()
 
@@ -145,9 +145,9 @@ extension PrivacyProtectionPracticesController: UITableViewDelegate {
 
 extension PrivacyProtectionPracticesController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
-        self.contentBlockerConfiguration = configuration
+        self.protectionStore = protectionStore
         update()
     }
 

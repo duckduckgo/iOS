@@ -29,7 +29,7 @@ public class StorageCache: StorageCacheUpdating {
     public let fileStore = FileStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     
-    public let configuration: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
+    public let protectionStore: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     
     // Read only
     public let tld: TLD

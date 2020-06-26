@@ -28,7 +28,7 @@ class PrivacyProtectionFooterController: UIViewController {
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
 
     fileprivate var domain: String?
-    fileprivate var contentBlockerProtection: ContentBlockerProtectionStore!
+    fileprivate var protectionStore: ContentBlockerProtectionStore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +44,11 @@ class PrivacyProtectionFooterController: UIViewController {
         window?.hideAllToasts()
         
         if isProtected {
-            contentBlockerProtection.enableProtection(forDomain: domain)
+            protectionStore.enableProtection(forDomain: domain)
             
             window?.showBottomToast(UserText.toastProtectionEnabled.format(arguments: domain), duration: 1)
         } else {
-            contentBlockerProtection.disableProtection(forDomain: domain)
+            protectionStore.disableProtection(forDomain: domain)
             
             window?.showBottomToast(UserText.toastProtectionDisabled.format(arguments: domain), duration: 1)
         }
@@ -62,7 +62,7 @@ class PrivacyProtectionFooterController: UIViewController {
     }
 
     private func updateProtectionToggle() {
-        let isProtected = contentBlockerProtection.isProtected(domain: domain)
+        let isProtected = protectionStore.isProtected(domain: domain)
         privacyProtectionSwitch.isOn = isProtected
         privacyProtectionView.backgroundColor = isProtected ? UIColor.ppGreen : UIColor.ppGray
     }
@@ -98,9 +98,9 @@ class PrivacyProtectionFooterController: UIViewController {
 
 extension PrivacyProtectionFooterController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
         self.domain = siteRating.domain
-        self.contentBlockerProtection = configuration
+        self.protectionStore = protectionStore
         update()
     }
 

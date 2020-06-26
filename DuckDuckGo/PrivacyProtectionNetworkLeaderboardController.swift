@@ -35,7 +35,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var hoveringView: UIView!
     @IBOutlet weak var resetView: UIView!
 
-    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
+    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
     private var siteRating: SiteRating!
 
     let leaderboard = NetworkLeaderboard.shared
@@ -84,8 +84,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initHeroIcon() {
-        let resultImage = siteRating.networksSuccess(configuration: contentBlockerConfiguration) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
-        heroIconImage.image = siteRating.protecting(contentBlockerConfiguration) ? resultImage : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
+        let resultImage = siteRating.networksSuccess(protectionStore: protectionStore) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
+        heroIconImage.image = siteRating.protecting(protectionStore) ? resultImage : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
     }
 
     private func initTable() {
@@ -201,9 +201,9 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
 
 extension PrivacyProtectionNetworkLeaderboardController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
-        self.contentBlockerConfiguration = configuration
+        self.protectionStore = protectionStore
         update()
     }
 

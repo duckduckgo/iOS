@@ -39,7 +39,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     }
 
     public var source: String {
-        let whitelist = (WhitelistManager().domains?.joined(separator: "\n") ?? "")
+        let unprotectedDomains = (UnprotectedSitesManager().domains?.joined(separator: "\n") ?? "")
             + "\n"
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryWhitelist) ?? "")
         let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
@@ -49,7 +49,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         let trackerData = String(data: encodedTrackerData!, encoding: .utf8)!
         
         return loadJS("contentblocker", withReplacements: [
-            "${whitelist}": whitelist,
+            "${whitelist}": unprotectedDomains,
             "${trackerData}": trackerData,
             "${surrogates}": surrogates
         ])

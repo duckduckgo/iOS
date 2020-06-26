@@ -63,7 +63,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private let contentBlockerConfiguration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -519,7 +519,7 @@ class TabViewController: UIViewController {
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onContentBlockerConfigurationChanged),
-                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               name: ContentBlockerProtectionChangedNotification.name,
                                                object: nil)
     }
 
@@ -989,7 +989,7 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+        if !contentBlockerProtection.isProtected(domain: url.host) {
             completion(allowPolicy)
             return
         }

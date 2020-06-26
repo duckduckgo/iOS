@@ -59,11 +59,11 @@ extension SiteRating {
         return privacyPractice.summary
     }
     
-    func majorNetworksText(configuration: ContentBlockerConfigurationStore) -> String {
+    func majorNetworksText(configuration: ContentBlockerProtectionStore) -> String {
         return protecting(configuration) ? majorNetworksBlockedText() : majorNetworksDetectedText()
     }
     
-    func majorNetworksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
+    func majorNetworksSuccess(configuration: ContentBlockerProtectionStore) -> Bool {
         return (protecting(configuration) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
     }
     
@@ -75,11 +75,11 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionMajorTrackersFound, majorTrackerNetworksDetected)
     }
     
-    func networksText(configuration: ContentBlockerConfigurationStore) -> String {
+    func networksText(configuration: ContentBlockerProtectionStore) -> String {
         return protecting(configuration) ? networksBlockedText() : networksDetectedText()
     }
     
-    func networksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
+    func networksSuccess(configuration: ContentBlockerProtectionStore) -> Bool {
         return (protecting(configuration) ? trackersBlocked.count : trackersDetected.count) <= 0
     }
     
@@ -91,9 +91,8 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionTrackersFound, trackersDetected.count)
     }
     
-    func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        guard let domain = domain else { return true }
-        return !contentBlocker.domainWhitelist.contains(domain)
+    func protecting(_ contentBlocker: ContentBlockerProtectionStore) -> Bool {
+        return contentBlocker.isProtected(domain: domain)
     }
     
     static let gradeImages: [Grade.Grading: UIImage] = [

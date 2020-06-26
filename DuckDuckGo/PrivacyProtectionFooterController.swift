@@ -28,7 +28,7 @@ class PrivacyProtectionFooterController: UIViewController {
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
 
     fileprivate var domain: String?
-    fileprivate var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    fileprivate var contentBlockerProtection: ContentBlockerProtectionStore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,21 +38,21 @@ class PrivacyProtectionFooterController: UIViewController {
     
     @IBAction func toggleProtection() {
         guard let domain = domain else { return }
-        let whitelisted = !privacyProtectionSwitch.isOn
+        let isProtected = privacyProtectionSwitch.isOn
         
         let window = UIApplication.shared.keyWindow
         window?.hideAllToasts()
         
-        if whitelisted {
-            contentBlockerConfiguration.addToWhitelist(domain: domain)
+        if isProtected {
+            contentBlockerProtection.enableProtection(forDomain: domain)
             
-            window?.showBottomToast(UserText.toastAddedToWhitelist.format(arguments: domain), duration: 1)
+            window?.showBottomToast(UserText.toastProtectionEnabled.format(arguments: domain), duration: 1)
         } else {
-            contentBlockerConfiguration.removeFromWhitelist(domain: domain)
+            contentBlockerProtection.disableProtection(forDomain: domain)
             
-            window?.showBottomToast(UserText.toastRemovedFromWhitelist.format(arguments: domain), duration: 1)
+            window?.showBottomToast(UserText.toastProtectionDisabled.format(arguments: domain), duration: 1)
         }
-        Pixel.fire(pixel: whitelisted ? .privacyDashboardWhitelistAdd : .privacyDashboardWhitelistRemove)
+        Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
     }
 
     private func update() {
@@ -62,15 +62,14 @@ class PrivacyProtectionFooterController: UIViewController {
     }
 
     private func updateProtectionToggle() {
-        guard let domain = domain else { return }
-        let isWhitelisted = contentBlockerConfiguration.whitelisted(domain: domain)
-        privacyProtectionSwitch.isOn = !isWhitelisted
-        privacyProtectionView.backgroundColor = isWhitelisted ? UIColor.ppGray : UIColor.ppGreen
+        let isProtected = contentBlockerProtection.isProtected(domain: domain)
+        privacyProtectionSwitch.isOn = isProtected
+        privacyProtectionView.backgroundColor = isProtected ? UIColor.ppGreen : UIColor.ppGray
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let whitelistController = segue.destination as? WhitelistViewController {
-            prepareforSegue(to: whitelistController)
+        if let unprotectedSitesController = segue.destination as? UnprotectedSitesViewController {
+            prepareforSegue(to: unprotectedSitesController)
             return
         }
         
@@ -88,20 +87,20 @@ class PrivacyProtectionFooterController: UIViewController {
         }
     }
     
-    private func prepareforSegue(to whitelistController: WhitelistViewController) {
-        whitelistController.enforceLightTheme = true
+    private func prepareforSegue(to unprotectedSitesController: UnprotectedSitesViewController) {
+        unprotectedSitesController.enforceLightTheme = true
         if isPad {
-            whitelistController.showBackButton = true
+            unprotectedSitesController.showBackButton = true
         }
-        Pixel.fire(pixel: .privacyDashboardManageWhitelist)
+        Pixel.fire(pixel: .privacyDashboardManageProtection)
     }
 }
 
 extension PrivacyProtectionFooterController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
         self.domain = siteRating.domain
-        self.contentBlockerConfiguration = configuration
+        self.contentBlockerProtection = configuration
         update()
     }
 

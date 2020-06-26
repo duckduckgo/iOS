@@ -20,7 +20,7 @@
 import Foundation
 import SafariServices
 
-public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
+public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore {
 
     private struct Keys {
         static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
@@ -37,7 +37,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         return UserDefaults(suiteName: suiteName)
     }
 
-    public private(set) var domainWhitelist: Set<String> {
+    public private(set) var unprotectedDomains: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
             guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
@@ -50,28 +50,24 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
     }
 
-    public func whitelisted(domain: String) -> Bool {
-        return domainWhitelist.contains(domain)
-    }
-
-    public func addToWhitelist(domain: String) {
-        var whitelist = domainWhitelist
-        whitelist.insert(domain)
-        domainWhitelist = whitelist
-    }
-
-    public func removeFromWhitelist(domain: String) {
-        var whitelist = domainWhitelist
-        whitelist.remove(domain)
-        domainWhitelist = whitelist
-    }
-
-    public func protecting(domain: String?) -> Bool {
+    public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
-        return !whitelisted(domain: domain)
+        return !unprotectedDomains.contains(domain)
+    }
+
+    public func disableProtection(forDomain domain: String) {
+        var domains = unprotectedDomains
+        domains.insert(domain)
+        unprotectedDomains = domains
+    }
+
+    public func enableProtection(forDomain domain: String) {
+        var domains = unprotectedDomains
+        domains.remove(domain)
+        unprotectedDomains = domains
     }
 
     private func onStoreChanged() {
-        NotificationCenter.default.post(name: ContentBlockerConfigurationChangedNotification.name, object: nil)
+        NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
     }
 }

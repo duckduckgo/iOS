@@ -1,5 +1,5 @@
 //
-//  WhitelistManager.swift
+//  UnprotectedSitesManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,32 +19,32 @@
 
 import Foundation
 
-public class WhitelistManager {
+public class UnprotectedSitesManager {
 
-    private let contentBlockerConfigurationStore: ContentBlockerConfigurationStore
+    private let contentBlockerProtectionStore: ContentBlockerProtectionStore
 
     public var count: Int {
-        return contentBlockerConfigurationStore.domainWhitelist.count
+        return contentBlockerProtectionStore.unprotectedDomains.count
     }
 
     var domains: [String]? {
-        Array(contentBlockerConfigurationStore.domainWhitelist).sorted()
+        Array(contentBlockerProtectionStore.unprotectedDomains).sorted()
     }
 
-    public init(contentBlockerConfigurationStore: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
-        self.contentBlockerConfigurationStore = contentBlockerConfigurationStore
+    public init(contentBlockerProtectionStore: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()) {
+        self.contentBlockerProtectionStore = contentBlockerProtectionStore
     }
 
     public func add(domain: String) {
-        contentBlockerConfigurationStore.addToWhitelist(domain: domain)
+        contentBlockerProtectionStore.disableProtection(forDomain: domain)
     }
 
     public func remove(domain: String) {
-        contentBlockerConfigurationStore.removeFromWhitelist(domain: domain)
+        contentBlockerProtectionStore.enableProtection(forDomain: domain)
     }
 
-    public func isWhitelisted(domain: String) -> Bool {
-        return contentBlockerConfigurationStore.domainWhitelist.contains(domain)
+    public func isProtected(domain: String) -> Bool {
+        return contentBlockerProtectionStore.isProtected(domain: domain)
     }
 
     public func domain(at index: Int) -> String? {

@@ -150,7 +150,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
             do {
                 try context.save()
             } catch {
-                Pixel.fire(pixel: .dbSaveWhitelistError, error: error, isCounted: true)
+                Pixel.fire(pixel: .dbSaveExcludedHTTPSDomainsError, error: error, isCounted: true)
                 result = false
             }
         }

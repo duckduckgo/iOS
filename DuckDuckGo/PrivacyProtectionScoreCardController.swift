@@ -111,7 +111,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
 
 extension PrivacyProtectionScoreCardController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
         self.contentBlockerConfiguration = configuration
         update()

@@ -59,7 +59,7 @@ extension TabViewController {
         }
         
         if let domain = siteRating?.domain {
-            alert.addAction(buildWhitelistAction(forDomain: domain))
+            alert.addAction(buildToggleProtectionAction(forDomain: domain))
         }
         
         alert.addAction(title: UserText.actionReportBrokenSite) { [weak self] in
@@ -141,14 +141,14 @@ extension TabViewController {
         delegate?.tabDidRequestSettings(tab: self)
     }
     
-    private func buildWhitelistAction(forDomain domain: String) -> UIAlertAction {
-        let whitelistManager = WhitelistManager()
-        let whitelisted = whitelistManager.isWhitelisted(domain: domain)
-        let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
-        let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
+    private func buildToggleProtectionAction(forDomain domain: String) -> UIAlertAction {
+        let manager = UnprotectedSitesManager()
+        let isProtected = manager.isProtected(domain: domain)
+        let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
+        let operation = isProtected ? manager.add : manager.remove
         
         return UIAlertAction(title: title, style: .default) { _ in
-            Pixel.fire(pixel: whitelisted ?.browsingMenuWhitelistRemove : .browsingMenuWhitelistAdd)
+            Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
             operation(domain)
         }
     }

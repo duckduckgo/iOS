@@ -60,7 +60,7 @@ class PrivacyProtectionHeaderController: UIViewController {
         guard isViewLoaded else { return }
 
         let grades = siteRating.scores
-        let protecting = contentBlockerConfiguration.protecting(domain: siteRating.domain)
+        let protecting = contentBlockerConfiguration.isProtected(domain: siteRating.domain)
         let grade =  protecting ? grades.enhanced.grade : grades.site.grade
         gradeImage.image = protecting ? PrivacyProtectionHeaderController.gradesOn[grade] : PrivacyProtectionHeaderController.gradesOff[grade]
 
@@ -74,7 +74,7 @@ class PrivacyProtectionHeaderController: UIViewController {
         stackView.removeArrangedSubview(protectionDisabledLabel)
         stackView.removeArrangedSubview(protectionUpgraded)
 
-        if contentBlockerConfiguration.domainWhitelist.contains(siteRating.domain ?? "") {
+        if !protecting {
             stackView.addArrangedSubview(protectionDisabledLabel)
         } else if differentGrades() {
             protectionUpgraded.update(with: siteRating)
@@ -95,7 +95,7 @@ class PrivacyProtectionHeaderController: UIViewController {
 
 extension PrivacyProtectionHeaderController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
         self.contentBlockerConfiguration = configuration
         update()

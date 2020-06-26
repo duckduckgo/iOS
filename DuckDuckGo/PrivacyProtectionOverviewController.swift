@@ -126,7 +126,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func protecting() -> Bool {
-        return contentBlockerConfiguration.protecting(domain: siteRating.domain)
+        return contentBlockerConfiguration.isProtected(domain: siteRating.domain)
     }
     
     // see https://stackoverflow.com/a/41248703
@@ -148,7 +148,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
 extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
     
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
         self.contentBlockerConfiguration = configuration
         update()

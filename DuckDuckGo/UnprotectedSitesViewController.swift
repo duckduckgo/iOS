@@ -1,5 +1,5 @@
 //
-//  WhitelistViewController.swift
+//  UnprotectedSitesViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -114,8 +114,8 @@ class UnprotectedSitesViewController: UITableViewController {
 
     @IBAction func onAddPressed() {
 
-        let title = UserText.alertAddToWhitelist
-        let placeholder = UserText.alertAddToWhitelistPlaceholder
+        let title = UserText.alertDisableProtection
+        let placeholder = UserText.alertDisableProtectionPlaceholder
         let confirm = UserText.actionConfirm
         let cancel = UserText.actionCancel
 
@@ -174,9 +174,9 @@ class UnprotectedSitesViewController: UITableViewController {
     private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         if unprotectedSitesManager.count > 0 {
-            cell = createWhitelistedSiteCell(forRowAt: indexPath)
+            cell = createUnprotectedSiteCell(forRowAt: indexPath)
         } else {
-            cell = createNoWhitelistedSitesCell(forRowAt: indexPath)
+            cell = createAllProtectedCell(forRowAt: indexPath)
         }
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
@@ -186,28 +186,28 @@ class UnprotectedSitesViewController: UITableViewController {
         return cell
     }
     
-    private func createNoWhitelistedSitesCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let noWhitelistedSitesCell = tableView.dequeueReusableCell(withIdentifier: "AllProtectedCell") as? NoSuggestionsTableViewCell else {
+    private func createAllProtectedCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let allProtectedCell = tableView.dequeueReusableCell(withIdentifier: "AllProtectedCell") as? NoSuggestionsTableViewCell else {
             fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'AllProtectedCell'")
         }
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
-        noWhitelistedSitesCell.label.textColor = theme.tableCellTextColor
+        allProtectedCell.label.textColor = theme.tableCellTextColor
         
-        return noWhitelistedSitesCell
+        return allProtectedCell
     }
     
-    private func createWhitelistedSiteCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "UnprotectedSitesItemCell") as? UnprotectedSitesItemCell else {
+    private func createUnprotectedSiteCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let unprotectedItemCell = tableView.dequeueReusableCell(withIdentifier: "UnprotectedSitesItemCell") as? UnprotectedSitesItemCell else {
             fatalError("Failed to dequeue cell as UnprotectedSitesItemCell")
         }
         
-        whitelistItemCell.domain = unprotectedSitesManager.domain(at: indexPath.row)
+        unprotectedItemCell.domain = unprotectedSitesManager.domain(at: indexPath.row)
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
-        whitelistItemCell.domainLabel.textColor = theme.tableCellTextColor
+        unprotectedItemCell.domainLabel.textColor = theme.tableCellTextColor
         
-        return whitelistItemCell
+        return unprotectedItemCell
     }
 
 }

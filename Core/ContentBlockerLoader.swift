@@ -133,7 +133,7 @@ public class ContentBlockerLoader {
             
             let isCached = etag != nil && self.etagStorage.etag(for: .httpsExcludedDomains) == etag
             
-            if !isCached, let whitelist = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data) {
+            if !isCached, let whitelist = try? HTTPSUpgradeParser.convertExcludedDomainsData(data) {
                 self.newData[.httpsExcludedDomains] = whitelist
                 self.etags[.httpsExcludedDomains] = etag
             }

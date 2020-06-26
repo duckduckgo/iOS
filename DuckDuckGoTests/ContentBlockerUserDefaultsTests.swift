@@ -35,16 +35,16 @@ class ContentBlockerUserDefaultsTests: XCTestCase {
         testee = ContentBlockerProtectionUserDefaults(suiteName: Constants.userDefaultsSuit)
     }
 
-    func testWhenNothingInWhitelistThenWhitelistedIsFalse() {
+    func testWhenNothingIsUnprotectedThenProtectedReturnsTrue() {
         XCTAssertTrue(testee.isProtected(domain: Constants.domain))
     }
 
-    func testWhenDomainAddedToWhitelistThenWhitelistedIsTrue() {
+    func testWhenDomainIsUnprotectedThenProtectedReturnsFalse() {
         testee.disableProtection(forDomain: Constants.domain)
         XCTAssertFalse(testee.isProtected(domain: Constants.domain))
     }
 
-    func testWhenRemovedFromWhitelistThenWhitelistedIsFalse() {
+    func testWhenDomainProtectionIsEnabledThenProtectedReturnsTrue() {
         testee.disableProtection(forDomain: Constants.domain)
         testee.enableProtection(forDomain: Constants.domain)
         XCTAssertTrue(testee.isProtected(domain: Constants.domain))

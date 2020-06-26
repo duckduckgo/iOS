@@ -45,9 +45,9 @@ class HTTPSUpgradeTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
-    func testWhenURLIsInWhiteListThenShouldUpgradeResultIsFalse() {
+    func testWhenURLIsExcludedThenShouldUpgradeResultIsFalse() {
         
-        let expect = expectation(description: "Http excluded urls should not be upgraded")
+        let expect = expectation(description: "Excluded http:// urls should not be upgraded")
         let url = URL(string: "http://excluded.url")!
         
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))

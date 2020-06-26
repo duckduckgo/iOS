@@ -49,7 +49,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         let trackerData = String(data: encodedTrackerData!, encoding: .utf8)!
         
         return loadJS("contentblocker", withReplacements: [
-            "${whitelist}": unprotectedDomains,
+            "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
             "${surrogates}": surrogates
         ])

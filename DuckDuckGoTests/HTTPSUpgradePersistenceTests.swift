@@ -71,18 +71,18 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
         XCTAssertEqual(newSpecification, storedSpecification)
     }
 
-    func testWhenWhitelistDomainsPersistedThenHasDomainIsTrue() {
+    func testWhenExcludedDomainsPersistedThenHasDomainIsTrue() {
         testee.persistExcludedDomains([ "www.example.com", "apple.com" ])
         XCTAssertFalse(testee.shouldUpgradeDomain("www.example.com"))
         XCTAssertFalse(testee.shouldUpgradeDomain("apple.com"))
     }
     
-    func testWhenNoWhitelistDomainsPersistedThenHasDomainIsFalse() {
+    func testWhenNoExcludedDomainsPersistedThenHasDomainIsFalse() {
         XCTAssertTrue(testee.shouldUpgradeDomain("www.example.com"))
         XCTAssertTrue(testee.shouldUpgradeDomain("apple.com"))
     }
     
-    func testWhenWhitelistDomainsPersistedThenOldDomainsAreDeleted() {
+    func testWhenExcludedDomainsPersistedThenOldDomainsAreDeleted() {
         testee.persistExcludedDomains([ "www.old.com", "otherold.com" ])
         testee.persistExcludedDomains([ "www.new.com", "othernew.com" ])
         XCTAssertTrue(testee.shouldUpgradeDomain("www.old.com"))

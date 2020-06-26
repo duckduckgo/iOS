@@ -43,7 +43,7 @@ public class SchemeHandler {
         case about
     }
     
-    private enum WhitelistedScheme: String {
+    private enum PlatformScheme: String {
         case tel
         case mailto
         case maps
@@ -57,14 +57,14 @@ public class SchemeHandler {
         case itunes
     }
     
-    private enum BlacklistedScheme: String {
+    private enum BlockedScheme: String {
         case appleDataDetectors = "x-apple-data-detectors"
     }
     
     public static func schemeType(for url: URL) -> SchemeType {
         guard let schemeString = url.scheme else { return .unknown }
         
-        guard BlacklistedScheme(rawValue: schemeString) == nil else {
+        guard BlockedScheme(rawValue: schemeString) == nil else {
             return .external(.cancel)
         }
         
@@ -72,7 +72,7 @@ public class SchemeHandler {
             return .navigational
         }
         
-        if let scheme = WhitelistedScheme(rawValue: schemeString) {
+        if let scheme = PlatformScheme(rawValue: schemeString) {
             
             switch scheme {
             case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss:

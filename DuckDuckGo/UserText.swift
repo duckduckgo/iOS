@@ -70,8 +70,8 @@ public struct UserText {
     public static let alertBookmarkAllTitle = NSLocalizedString("alert.title.bookmarkAll", comment: "Bookmark All Tabs?")
     public static let alertBookmarkAllMessage = NSLocalizedString("alert.message.bookmarkAll", comment: "Existing bookmarks will not be duplicated.")
 
-    public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
-    public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
+    public static let alertDisableProtection = NSLocalizedString("alert.title.disable.protection", comment: "Disable protection alert")
+    public static let alertDisableProtectionPlaceholder = NSLocalizedString("alert.title.disable.protection.placeholder", comment: "Disable potection alert placeholder")
     public static let toastProtectionDisabled = NSLocalizedString("toast.protection.disabled", comment: "Protection Disabled")
     public static let toastProtectionEnabled = NSLocalizedString("toast.protection.enabled", comment: "Protection Enabled")
     

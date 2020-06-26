@@ -49,36 +49,6 @@ class FileStoreTests: XCTestCase {
         XCTAssertEqual(uuid, store.loadAsString(forConfiguration: .surrogates))
         XCTAssertNil(store.loadAsString(forConfiguration: .temporaryUnprotectedSites))
     }
-    
-    func testWhenRemovingLegacyDataThenItAllGetsDeleted() {
-        let store = FileStore()
-        let location = store.persistenceLocation(forConfiguration: .surrogates).deletingLastPathComponent()
-                
-        do {
-            try FileStore.Constants.legacyFiles.forEach {
-                try "test".write(to: location.appendingPathComponent($0), atomically: true, encoding: .utf8)
-            }
-        } catch {
-            XCTFail("Failed to write file \(error.localizedDescription)")
-        }
-        
-        FileStore().removeLegacyData()
-        
-        FileStore.Constants.legacyFiles.forEach {
-            assertDeleted(location.appendingPathComponent($0))
-        }
-    }
-    
-    func testLegacyFiles() {
-        
-        XCTAssertEqual([
-            "disconnectme.json",
-            "easylistWhitelist.txt",
-            "entitylist2.json",
-            "surrogate.js"
-        ], FileStore.Constants.legacyFiles)
-        
-    }
 
     private func assertDeleted(_ url: URL, file: StaticString = #file, line: UInt = #line) {
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.absoluteString), file: file, line: line)

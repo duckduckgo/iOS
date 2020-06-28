@@ -23,16 +23,20 @@ import WebKit
 public class UserAgentManager {
     
     public static let shared = UserAgentManager()
-    
-    private var defaultAgentRetreived = false
-    private var userAgent: UserAgent
+
+    private var userAgent = UserAgent()
     
     init() {
+        DispatchQueue.main.async {
+            self.prepareUserAgent()
+        }
+    }
+    
+    private func prepareUserAgent() {
         let webview = WKWebView()
         webview.load(URLRequest(url: URL(string: "about:blank")!))
         
         guard let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) else {
-            userAgent = UserAgent()
             return
         }
         
@@ -44,7 +48,7 @@ public class UserAgentManager {
         webView.customUserAgent = agent
     }
     
-    public static func getDefaultAgent(webView: WKWebView) -> String? {
+    private static func getDefaultAgent(webView: WKWebView) -> String? {
         var agent: String?
         var complete = false
 

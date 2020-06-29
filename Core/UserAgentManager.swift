@@ -27,20 +27,20 @@ public class UserAgentManager {
     private var userAgent = UserAgent()
     
     init() {
-        DispatchQueue.main.async {
-            self.prepareUserAgent()
-        }
+        prepareUserAgent()
     }
     
     private func prepareUserAgent() {
         let webview = WKWebView()
         webview.load(URLRequest(url: URL(string: "about:blank")!))
         
-        guard let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) else {
-            return
+        getDefaultAgent(webView: webview) { [weak self] agent in
+            // Reference webview instance to keep it in scope and allow UA to be returned
+            _ = webview
+            
+            guard let defaultAgent = agent else { return }
+            self?.userAgent = UserAgent(defaultAgent: defaultAgent)
         }
-        
-        userAgent = UserAgent(defaultAgent: defaultAgent)
     }
     
     public func update(webView: WKWebView, isDesktop: Bool, url: URL?) {
@@ -48,25 +48,11 @@ public class UserAgentManager {
         webView.customUserAgent = agent
     }
     
-    private static func getDefaultAgent(webView: WKWebView) -> String? {
-        var agent: String?
-        var complete = false
-
+    private func getDefaultAgent(webView: WKWebView, completion: @escaping (String?) -> Void) {
         webView.evaluateJavaScript("navigator.userAgent") { (result, _) in
-            agent = result as? String
-            complete = true
+            let agent = result as? String
+            completion(agent)
         }
-
-        let limit = Date().addingTimeInterval(TimeInterval(3.0))
-        while !complete {
-            RunLoop.current.run(mode: .default, before: .distantFuture)
-            let now = Date()
-            if now > limit {
-                complete = true
-            }
-        }
-
-        return agent
     }
 }
 

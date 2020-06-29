@@ -257,10 +257,10 @@ extension TabSwitcherViewController: TabViewCellDelegate {
                 currentSelection = tabsModel.currentIndex
                 collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
             }, completion: { _ in
+                self.isProcessingUpdates = false
                 guard let current = self.currentSelection else { return }
                 self.refreshTitle()
                 self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
-                self.isProcessingUpdates = false
             })
         }
     }

@@ -54,6 +54,8 @@ class TabSwitcherViewController: UIViewController {
     override var canBecomeFirstResponder: Bool { return true }
     
     var currentSelection: Int?
+    
+    private var isProcessingUpdates = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -250,6 +252,7 @@ extension TabSwitcherViewController: TabViewCellDelegate {
             collectionView.reloadData()
         } else {
             collectionView.performBatchUpdates({
+                isProcessingUpdates = true
                 delegate.tabSwitcher(self, didRemoveTab: tab)
                 currentSelection = tabsModel.currentIndex
                 collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
@@ -257,6 +260,7 @@ extension TabSwitcherViewController: TabViewCellDelegate {
                 guard let current = self.currentSelection else { return }
                 self.refreshTitle()
                 self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
+                self.isProcessingUpdates = false
             })
         }
     }
@@ -364,6 +368,9 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 extension TabSwitcherViewController: TabObserver {
     
     func didChange(tab: Tab) {
+        //Reloading when updates are processed will result in a crash
+        guard !isProcessingUpdates else { return }
+        
         if let index = tabsModel.indexOf(tab: tab) {
             collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
         }

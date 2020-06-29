@@ -151,6 +151,10 @@ class HomeViewController: UIViewController {
         delegate?.home(self, didRequestHideLogo: true)
     }
     
+    func onboardingCompleted() {
+        showNextDaxDialog()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         

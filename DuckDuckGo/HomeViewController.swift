@@ -68,9 +68,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if DefaultVariantManager().isSupported(feature: .daxOnboarding) {
-            homeScreenMessage = DaxDialogs().nextHomeScreenMessage()
-        }
+        homeScreenMessage = DaxDialogs().nextHomeScreenMessage()
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -113,7 +111,7 @@ class HomeViewController: UIViewController {
     
     func openedAsNewTab() {
         collectionView.openedAsNewTab()
-        installHomeScreenTips()
+        showNextDaxDialog()
     }
     
     @IBAction func launchSettings() {
@@ -125,21 +123,11 @@ class HomeViewController: UIViewController {
         
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
             Pixel.fire(pixel: .homeScreenShown)
-            installHomeScreenTips()
         }
         
         viewHasAppeared = true
     }
         
-    func installHomeScreenTips() {
-        let variantManager = DefaultVariantManager()
-        if variantManager.isSupported(feature: .daxOnboarding) {
-            showNextDaxDialog()
-        } else {
-            HomeScreenTips(delegate: self)?.trigger()
-        }
-    }
-    
     func showNextDaxDialog() {
         guard let spec = homeScreenMessage else { return }
         collectionView.isHidden = true
@@ -161,10 +149,6 @@ class HomeViewController: UIViewController {
 
     func hideLogo() {
         delegate?.home(self, didRequestHideLogo: true)
-    }
-    
-    func onboardingCompleted() {
-        installHomeScreenTips()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

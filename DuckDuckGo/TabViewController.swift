@@ -77,8 +77,6 @@ class TabViewController: UIViewController {
     private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
     
-    private var tips: BrowsingTips?
-
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
@@ -173,13 +171,7 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        installBrowsingTips()
         resetNavigationBar()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        removeBrowsingTips()
     }
     
     func initUserScripts() {
@@ -217,17 +209,7 @@ class TabViewController: UIViewController {
             tabModel.link = nil
         }
     }
-    
-    func installBrowsingTips() {
-        if !DefaultVariantManager().isSupported(feature: .daxOnboarding) {
-            tips = BrowsingTips(delegate: self)
-        }
-    }
-    
-    func removeBrowsingTips() {
-        tips = nil
-    }
-    
+        
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
@@ -819,13 +801,11 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
      
-        tips?.onFinishedLoading(url: url, error: isError)
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
     
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
-        guard DefaultVariantManager().isSupported(feature: .daxOnboarding),
-            let siteRating = self.siteRating,
+        guard let siteRating = self.siteRating,
             let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return

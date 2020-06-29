@@ -66,8 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         migrateHomePageSettings()
-
-        EasyTipView.updateGlobalPreferences()
+        
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"

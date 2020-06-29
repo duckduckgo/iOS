@@ -33,7 +33,7 @@ public class UserAgentManager {
         
         guard let defaultAgent = UserAgentManager.getDefaultAgent(webView: webview) else {
             userAgent = UserAgent()
-            return
+            return  
         }
         
         userAgent = UserAgent(defaultAgent: defaultAgent)

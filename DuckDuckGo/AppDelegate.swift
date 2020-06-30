@@ -74,8 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             
-            // Remove users with devices that does not support App Icon switching
-            return AppIconManager.shared.isAppIconChangeSupported
+            DaxDialogs().primeForUse()
+            return .includeInCohort
         }
 
         if let main = mainViewController {

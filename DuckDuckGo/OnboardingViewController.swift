@@ -39,7 +39,6 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Pixel.fire(pixel: .onboardingShown)
         loadInitialContent()
         updateForSmallerScreens()
     }

@@ -119,6 +119,10 @@ class DaxDialogs {
         settings.isDismissed = true
     }
     
+    func primeForUse() {
+        settings.isDismissed = false
+    }
+    
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
         guard let host = siteRating.domain else { return nil }
         guard !settings.isDismissed else { return nil }

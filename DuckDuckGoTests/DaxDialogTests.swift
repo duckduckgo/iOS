@@ -38,6 +38,7 @@ class DaxDialogTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        UserDefaults.clearStandard()
     }
 
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
@@ -179,6 +180,19 @@ class DaxDialogTests: XCTestCase {
 
     func testWhenFirstTimeOnHomeScreenThenShowFirstDialog() {
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.initial, onboarding.nextHomeScreenMessage())
+    }
+    
+    func testWhenPrimingDaxDialogForUseThenDismissedIsFalse() {
+        let settings = InMemoryDaxDialogsSettings()
+        settings.isDismissed = true
+        
+        let onboarding = DaxDialogs(settings: settings)
+        onboarding.primeForUse()
+        XCTAssertFalse(settings.isDismissed)
+    }
+    
+    func testDaxDialogsDismissedByDefault() {
+        XCTAssertTrue(DefaultDaxDialogsSettings().isDismissed)
     }
         
     private func detectedTrackerFrom(_ url: URL) -> DetectedTracker {

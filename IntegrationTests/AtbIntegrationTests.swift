@@ -60,8 +60,10 @@ class AtbIntegrationTests: XCTestCase {
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
             "BASE_PIXEL_URL": "http://localhost:8080",
-            // usually just has to match an existing variant to prevent one being allocated and written to storage but we're changing oboarding
-            "VARIANT": "ma"
+            "DAXDIALOGS": "false",
+            "ONBOARDING": "false",
+            // usually just has to match an existing variant to prevent one being allocated
+            "VARIANT": "sa"
         ]
         
         addRequestHandlers()
@@ -74,7 +76,6 @@ class AtbIntegrationTests: XCTestCase {
         
         Springboard.deleteMyApp()
         app.launch()
-        skipOnboarding()
     }
     
     override func tearDown() {
@@ -237,11 +238,6 @@ class AtbIntegrationTests: XCTestCase {
                 "version": self.atbToSet
             ] as AnyObject))
         }
-    }
-    
-    private func skipOnboarding() {
-        waitForButtonThenTap("Continue")
-        waitForButtonThenTap("Start Browsing")
     }
     
     private func waitForButtonThenTap(_ named: String) {

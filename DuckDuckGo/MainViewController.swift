@@ -125,9 +125,14 @@ class MainViewController: UIViewController {
     
     func startOnboardingFlowIfNotSeenBefore() {
         
+        guard ProcessInfo.processInfo.environment["ONBOARDING"] != "false" else {
+            // explicitly skip onboarding, e.g. for integration tests
+            return
+        }
+        
         let settings = DefaultTutorialSettings()
         let showOnboarding = !settings.hasSeenOnboarding ||
-            // allow oboarding to forced via environment variable - see scheme
+            // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
 

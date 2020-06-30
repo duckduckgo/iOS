@@ -123,9 +123,15 @@ class DaxDialogs {
         settings.isDismissed = false
     }
     
+    var isEnabled: Bool {
+        // skip dax dialogs in integration tests
+        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
+        return !settings.isDismissed
+    }
+    
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
+        guard isEnabled else { return nil }
         guard let host = siteRating.domain else { return nil }
-        guard !settings.isDismissed else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
@@ -150,7 +156,7 @@ class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-        guard !settings.isDismissed else { return nil }
+        guard isEnabled else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }
         
         if settings.homeScreenMessagesSeen == 0 {

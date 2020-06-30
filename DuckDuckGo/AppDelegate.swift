@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import EasyTipView
 import UserNotifications
 import os.log
 

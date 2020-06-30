@@ -89,10 +89,10 @@ DuckDuckGo!</string>
                                 <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
-                                <rect key="frame" x="149.5" y="393.5" width="115" height="115"/>
+                                <rect key="frame" x="149.5" y="321.5" width="115" height="115"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
-                                <rect key="frame" x="159" y="400" width="96" height="96"/>
+                                <rect key="frame" x="159" y="328" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="oo7-26-ciN"/>
                                     <constraint firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1:1" id="pjk-YG-kx9"/>
@@ -130,7 +130,7 @@ DuckDuckGo!</string>
                             <constraint firstItem="qNL-CF-WGF" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="60" id="mFu-EV-af4"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="ss2-jr-gcc"/>
                             <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerX" secondItem="DD1-q3-GlA" secondAttribute="centerX" id="svY-An-J11"/>
-                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="IfD-pB-0T8" secondAttribute="centerY" id="sxT-iD-NZp"/>
+                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="IfD-pB-0T8" secondAttribute="centerY" constant="-72" id="sxT-iD-NZp"/>
                             <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerY" secondItem="DD1-q3-GlA" secondAttribute="centerY" constant="3" id="uJC-CM-mkB"/>
                             <constraint firstItem="DD1-q3-GlA" firstAttribute="centerX" secondItem="IfD-pB-0T8" secondAttribute="centerX" id="wOb-am-IrD"/>
                         </constraints>
@@ -158,7 +158,7 @@ DuckDuckGo!</string>
             <objects>
                 <viewController storyboardIdentifier="DaxDialog" id="UUS-R7-a2i" customClass="DaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="im0-JF-Sin">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UzU-6y-Vfa">
@@ -169,7 +169,7 @@ DuckDuckGo!</string>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="Background">
-                                <rect key="frame" x="10" y="82" width="355" height="318"/>
+                                <rect key="frame" x="10" y="82" width="355" height="113"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
                                         <rect key="frame" x="16" y="10" width="323" height="22"/>
@@ -188,7 +188,7 @@ DuckDuckGo!</string>
                                         </connections>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
-                                        <rect key="frame" x="16" y="250" width="323" height="44"/>
+                                        <rect key="frame" x="16" y="45" width="323" height="44"/>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Gta-qP-xcx"/>
@@ -387,7 +387,7 @@ DuckDuckGo!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="WM8-Xy-pab"/>
+        <segue reference="Z8u-vf-YsD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>

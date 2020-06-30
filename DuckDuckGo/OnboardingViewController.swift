@@ -22,7 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
     
-    var controllerNames = ["onboardingSummary", "onboardingHomeRow"]
+    private var controllerNames = ["onboardingHomeRow"]
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!

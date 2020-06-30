@@ -81,7 +81,6 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
             controller.delegate = self
         } else if let controller = segue.destination as? OnboardingViewController {
             controller.delegate = self
-            controller.updateForDaxOnboarding()
         }
         
     }
@@ -185,12 +184,4 @@ extension DaxOnboardingViewController: OnboardingDelegate {
         controller.dismiss(animated: true)
         self.delegate?.onboardingCompleted(controller: self)
     }
-}
-
-extension OnboardingViewController {
-    
-    func updateForDaxOnboarding() {
-        controllerNames = ["onboardingHomeRow"]
-    }
-    
 }

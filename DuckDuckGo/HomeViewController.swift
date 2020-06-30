@@ -53,7 +53,6 @@ class HomeViewController: UIViewController {
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     
-    var homeScreenMessage: DaxDialogs.HomeScreenSpec?
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
@@ -68,13 +67,15 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        homeScreenMessage = DaxDialogs().nextHomeScreenMessage()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
-        collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
+        configureCollectionView()
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    func configureCollectionView() {
+        collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
     }
     
     func enableContentUnderflow() -> CGFloat {
@@ -122,14 +123,19 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
+            showNextDaxDialog()
             Pixel.fire(pixel: .homeScreenShown)
         }
-        
+                
         viewHasAppeared = true
+    }
+    
+    var isShowingDax: Bool {
+        return !daxDialogContainer.isHidden
     }
         
     func showNextDaxDialog() {
-        guard let spec = homeScreenMessage else { return }
+        guard let spec = DaxDialogs().nextHomeScreenMessage() else { return }
         collectionView.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
@@ -144,7 +150,8 @@ class HomeViewController: UIViewController {
                 self.daxDialogViewController?.start()
             })
         }
-        
+
+        configureCollectionView()
     }
 
     func hideLogo() {

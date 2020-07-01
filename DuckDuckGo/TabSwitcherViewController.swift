@@ -56,7 +56,7 @@ class TabSwitcherViewController: UIViewController {
     
     var currentSelection: Int?
     
-    private static var isGridEnabled = true
+    static var isGridEnabled = true
     private var isProcessingUpdates = false
 
     override func viewDidLoad() {
@@ -221,7 +221,12 @@ class TabSwitcherViewController: UIViewController {
         Self.isGridEnabled = !Self.isGridEnabled
         
         refreshDisplayModeButton()
-        collectionView.reloadData()
+        
+        UIView.transition(with: view,
+                          duration: 0.3,
+                          options: .transitionCrossDissolve, animations: {
+                            self.collectionView.reloadData()
+        }, completion: nil)
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {

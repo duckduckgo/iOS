@@ -54,10 +54,7 @@ class TabViewListCell: TabViewCell {
             isHidden = false
         }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
-        
-        background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
-        background.layer.borderColor = ThemeManager.shared.currentTheme.tabSwitcherCellBorderColor.cgColor
-        background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
+        decorate(with: ThemeManager.shared.currentTheme)
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
@@ -83,4 +80,16 @@ class TabViewListCell: TabViewCell {
 //        guard let tab = tab else { return }
 //        self.delegate?.deleteTab(tab: tab)
 //    }
+    
+    override func decorate(with theme: Theme) {
+        super.decorate(with: theme)
+        
+        background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+        background.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
+        background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
+        
+        background.backgroundColor = theme.tabSwitcherCellBackgroundColor
+        title.textColor = theme.tabSwitcherCellTextColor
+//        link.textColor = theme.tabSwitcherCellTextColor
+    }
 }

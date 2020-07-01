@@ -22,7 +22,6 @@ import Core
 class HomeScreenTransition: TabSwitcherTransition {
     
     fileprivate var homeScreenSnapshot: UIView?
-    fileprivate var settingsButtonSnapshot: UIView?
     
     fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
                                       transitionContext: UIViewControllerContextTransitioning) {
@@ -44,24 +43,26 @@ class HomeScreenTransition: TabSwitcherTransition {
             snapshot.frame = imageContainer.bounds
             homeScreenSnapshot = snapshot
         }
-        
-        // This fixes animation glitch in centered search mode.
-//        settingsButtonSnapshot = tabSwitcherViewController.settingsButton.snapshotView(afterScreenUpdates: true)
-        if let settingsButton = settingsButtonSnapshot {
-//            settingsButton.frame = tabSwitcherViewController.view.convert(tabSwitcherViewController.settingsButton.frame, to: nil)
-            transitionContext.containerView.addSubview(settingsButton)
-        }
     }
 
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                                 to: self.tabSwitcherViewController.view)
+        
+        guard TabSwitcherViewController.isGridEnabled else {
+            return targetFrame
+        }
+        
         targetFrame.origin.y += TabViewGridCell.Constants.cellHeaderHeight
         targetFrame.size.height -= TabViewGridCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize) -> CGRect {
+        guard TabSwitcherViewController.isGridEnabled else {
+            return CGRect(origin: .zero, size: cellBounds)
+        }
+        
         var targetFrame = CGRect(origin: .zero, size: cellBounds)
         targetFrame.origin.y -= TabViewGridCell.Constants.cellHeaderHeight
         targetFrame.size.height += TabViewGridCell.Constants.cellHeaderHeight
@@ -112,7 +113,9 @@ class FromHomeScreenTransition: HomeScreenTransition {
         imageView.alpha = 0
         imageView.frame = imageContainer.bounds
         imageView.contentMode = .center
-        imageView.image = TabViewGridCell.logoImage
+        if TabSwitcherViewController.isGridEnabled {
+            imageView.image = TabViewGridCell.logoImage
+        }
         
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
@@ -133,14 +136,19 @@ class FromHomeScreenTransition: HomeScreenTransition {
                 self.tabSwitcherViewController.view.alpha = 1
             }
             
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3) {
-                self.imageView.alpha = 1
+            if TabSwitcherViewController.isGridEnabled {
+                UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3) {
+                    self.imageView.alpha = 1
+                }
+            } else {
+                UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3) {
+                    self.imageContainer.alpha = 0
+                }
             }
 
         }, completion: { _ in
             self.solidBackground.removeFromSuperview()
             self.imageContainer.removeFromSuperview()
-            self.settingsButtonSnapshot?.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
     }
@@ -173,7 +181,11 @@ class ToHomeScreenTransition: HomeScreenTransition {
         
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
-        imageView.image = TabViewGridCell.logoImage
+        if TabSwitcherViewController.isGridEnabled {
+            imageView.image = TabViewGridCell.logoImage
+        } else {
+            imageContainer.alpha = 0
+        }
         imageView.backgroundColor = .clear
         
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
@@ -191,6 +203,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
             
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
                 self.imageView.alpha = 0
+                self.imageContainer.alpha = 1
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {
@@ -203,7 +216,6 @@ class ToHomeScreenTransition: HomeScreenTransition {
             
         }, completion: { _ in
             self.imageContainer.removeFromSuperview()
-            self.settingsButtonSnapshot?.removeFromSuperview()
             transitionContext.completeTransition(true)
         })
     }

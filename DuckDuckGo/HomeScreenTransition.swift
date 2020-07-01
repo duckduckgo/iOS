@@ -46,9 +46,9 @@ class HomeScreenTransition: TabSwitcherTransition {
         }
         
         // This fixes animation glitch in centered search mode.
-        settingsButtonSnapshot = tabSwitcherViewController.settingsButton.snapshotView(afterScreenUpdates: true)
+//        settingsButtonSnapshot = tabSwitcherViewController.settingsButton.snapshotView(afterScreenUpdates: true)
         if let settingsButton = settingsButtonSnapshot {
-            settingsButton.frame = tabSwitcherViewController.view.convert(tabSwitcherViewController.settingsButton.frame, to: nil)
+//            settingsButton.frame = tabSwitcherViewController.view.convert(tabSwitcherViewController.settingsButton.frame, to: nil)
             transitionContext.containerView.addSubview(settingsButton)
         }
     }
@@ -56,15 +56,15 @@ class HomeScreenTransition: TabSwitcherTransition {
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                                 to: self.tabSwitcherViewController.view)
-        targetFrame.origin.y += TabViewCell.Constants.cellHeaderHeight
-        targetFrame.size.height -= TabViewCell.Constants.cellHeaderHeight
+        targetFrame.origin.y += TabViewGridCell.Constants.cellHeaderHeight
+        targetFrame.size.height -= TabViewGridCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize) -> CGRect {
         var targetFrame = CGRect(origin: .zero, size: cellBounds)
-        targetFrame.origin.y -= TabViewCell.Constants.cellHeaderHeight
-        targetFrame.size.height += TabViewCell.Constants.cellHeaderHeight
+        targetFrame.origin.y -= TabViewGridCell.Constants.cellHeaderHeight
+        targetFrame.size.height += TabViewGridCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
@@ -112,14 +112,14 @@ class FromHomeScreenTransition: HomeScreenTransition {
         imageView.alpha = 0
         imageView.frame = imageContainer.bounds
         imageView.contentMode = .center
-        imageView.image = TabViewCell.logoImage
+        imageView.image = TabViewGridCell.logoImage
         
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
                 self.imageContainer.frame = containerFrame
-                self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+                self.imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
                 self.imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
                 self.imageView.frame = self.previewFrame(for: self.imageContainer.bounds.size)
                 self.homeScreenSnapshot?.frame = self.imageContainer.bounds
@@ -166,14 +166,14 @@ class ToHomeScreenTransition: HomeScreenTransition {
         let theme = ThemeManager.shared.currentTheme
         imageContainer.frame = tabSwitcherCellFrame(for: layoutAttr)
         imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
-        imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+        imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
         
         prepareSnapshots(with: homeScreen, transitionContext: transitionContext)
         homeScreenSnapshot?.alpha = 0
         
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
-        imageView.image = TabViewCell.logoImage
+        imageView.image = TabViewGridCell.logoImage
         imageView.backgroundColor = .clear
         
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)

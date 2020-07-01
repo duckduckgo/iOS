@@ -31,15 +31,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-vl-rDZ">
-                                <rect key="frame" x="375" y="9" width="34" height="34"/>
+                                <rect key="frame" x="355" y="9" width="50" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="3is-x4-uWE"/>
+                                    <constraint firstAttribute="width" constant="50" id="3is-x4-uWE"/>
                                     <constraint firstAttribute="height" constant="34" id="XXt-3T-rvh"/>
                                 </constraints>
-                                <state key="normal" image="Settings"/>
+                                <state key="normal" image="TabsToggleGrid"/>
                                 <connections>
-                                    <action selector="onSettingsPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="4Gm-63-Dgp"/>
-                                    <segue destination="2xB-ij-q9e" kind="presentation" id="xf6-Fk-1xY"/>
+                                    <action selector="onDisplayModeButtonPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="LRf-f4-30A"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
@@ -52,7 +51,7 @@
                                     <inset key="sectionInset" minX="14" minY="14" maxX="14" maxY="14"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="Mdh-yg-dRH" customClass="TabViewCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <collectionViewCell multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabViewGridCell" id="Mdh-yg-dRH" customClass="TabViewGridCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="43.666666666666664" y="14" width="327" height="206"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -179,6 +178,117 @@
                                             <outlet property="unread" destination="Gyy-py-IOg" id="9Ow-2Z-BPg"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabViewListCell" id="Ml9-Ia-4eU" customClass="TabViewListCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="43.666666666666664" y="234" width="327" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJG-u5-taI" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2en-CB-bYH">
+                                                            <rect key="frame" x="279" y="13" width="44" height="44"/>
+                                                            <accessibility key="accessibilityConfiguration" label="Close Tab"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="BSv-9y-qF3"/>
+                                                                <constraint firstAttribute="width" constant="44" id="ZfB-01-SHK"/>
+                                                            </constraints>
+                                                            <state key="normal" image="Remove"/>
+                                                            <connections>
+                                                                <action selector="deleteTab" destination="Ml9-Ia-4eU" eventType="touchUpInside" id="O4f-UF-Jat"/>
+                                                            </connections>
+                                                        </button>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TabUnread" translatesAutoresizingMaskIntoConstraints="NO" id="qrJ-aX-XrW">
+                                                            <rect key="frame" x="6" y="6" width="10" height="10"/>
+                                                            <accessibility key="accessibilityConfiguration" label="Tab Unread">
+                                                                <bool key="isElement" value="NO"/>
+                                                            </accessibility>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="10" id="mCd-1Y-chK"/>
+                                                                <constraint firstAttribute="height" constant="10" id="qpE-qL-l51"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="ARc-nQ-K4S">
+                                                            <rect key="frame" x="14" y="26.666666666666671" width="17" height="17"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="17" id="9Z9-N6-wrb"/>
+                                                                <constraint firstAttribute="height" constant="17" id="vXM-m8-YnJ"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GU-MM-UwX">
+                                                            <rect key="frame" x="45" y="18" width="234" height="16"/>
+                                                            <accessibility key="accessibilityConfiguration">
+                                                                <accessibilityTraits key="traits" button="YES" staticText="YES"/>
+                                                                <bool key="isElement" value="YES"/>
+                                                            </accessibility>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <color key="textColor" red="0.086260028180000003" green="0.086282856759999998" blue="0.086258567869999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbT-NO-T0G">
+                                                            <rect key="frame" x="45" y="41" width="234" height="14"/>
+                                                            <accessibility key="accessibilityConfiguration">
+                                                                <bool key="isElement" value="NO"/>
+                                                            </accessibility>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
+                                                            <color key="textColor" red="0.63914442059999999" green="0.63925665620000005" blue="0.63913732769999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" button="YES"/>
+                                                        <bool key="isElement" value="NO"/>
+                                                    </accessibility>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="2en-CB-bYH" secondAttribute="trailing" constant="4" id="8BW-JF-EYr"/>
+                                                        <constraint firstItem="2GU-MM-UwX" firstAttribute="leading" secondItem="ARc-nQ-K4S" secondAttribute="trailing" constant="14" id="Djl-Yd-QCT"/>
+                                                        <constraint firstItem="qrJ-aX-XrW" firstAttribute="leading" secondItem="PJG-u5-taI" secondAttribute="leading" constant="6" id="DpI-fP-Fsu"/>
+                                                        <constraint firstItem="LbT-NO-T0G" firstAttribute="leading" secondItem="ARc-nQ-K4S" secondAttribute="trailing" constant="14" id="Dxm-3p-x1E"/>
+                                                        <constraint firstItem="ARc-nQ-K4S" firstAttribute="centerY" secondItem="PJG-u5-taI" secondAttribute="centerY" id="G5t-uz-YWi"/>
+                                                        <constraint firstItem="qrJ-aX-XrW" firstAttribute="top" secondItem="PJG-u5-taI" secondAttribute="top" constant="6" id="HI7-T3-dNQ"/>
+                                                        <constraint firstItem="2en-CB-bYH" firstAttribute="centerY" secondItem="PJG-u5-taI" secondAttribute="centerY" id="JIz-PK-8c3"/>
+                                                        <constraint firstItem="ARc-nQ-K4S" firstAttribute="leading" secondItem="PJG-u5-taI" secondAttribute="leading" constant="14" id="SVZ-DA-gLW"/>
+                                                        <constraint firstItem="2GU-MM-UwX" firstAttribute="top" secondItem="PJG-u5-taI" secondAttribute="top" constant="18" id="UVN-Pa-yb3"/>
+                                                        <constraint firstItem="2en-CB-bYH" firstAttribute="leading" secondItem="2GU-MM-UwX" secondAttribute="trailing" id="Xiz-f2-OVD"/>
+                                                        <constraint firstAttribute="bottom" secondItem="LbT-NO-T0G" secondAttribute="bottom" constant="15" id="nfJ-mB-twe"/>
+                                                        <constraint firstItem="2en-CB-bYH" firstAttribute="leading" secondItem="LbT-NO-T0G" secondAttribute="trailing" id="tv7-Xx-K1o"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.98420697450000005" green="0.98437517880000003" blue="0.98419648410000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="6"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="PJG-u5-taI" firstAttribute="top" secondItem="Ml9-Ia-4eU" secondAttribute="top" id="7B6-Jw-HGG"/>
+                                            <constraint firstAttribute="bottom" secondItem="PJG-u5-taI" secondAttribute="bottom" id="Aoa-Lh-KNE"/>
+                                            <constraint firstAttribute="trailing" secondItem="PJG-u5-taI" secondAttribute="trailing" id="Q7P-qV-oLG"/>
+                                            <constraint firstItem="PJG-u5-taI" firstAttribute="leading" secondItem="Ml9-Ia-4eU" secondAttribute="leading" id="tk0-5g-bz5"/>
+                                        </constraints>
+                                        <size key="customSize" width="327" height="70"/>
+                                        <connections>
+                                            <outlet property="background" destination="PJG-u5-taI" id="YY2-YL-SyA"/>
+                                            <outlet property="favicon" destination="ARc-nQ-K4S" id="9Xm-Sn-4YD"/>
+                                            <outlet property="link" destination="LbT-NO-T0G" id="gbZ-zt-wiq"/>
+                                            <outlet property="removeButton" destination="2en-CB-bYH" id="Kz8-Ay-ARL"/>
+                                            <outlet property="title" destination="2GU-MM-UwX" id="OF3-LD-5dO"/>
+                                            <outlet property="unread" destination="qrJ-aX-XrW" id="upS-3J-42I"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="G9p-Sf-e96" id="gcb-SK-xXr"/>
@@ -243,7 +353,7 @@
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="ceJ-FA-nQB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="gF9-g1-aML"/>
-                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="5" id="moD-HB-CMD"/>
+                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="9" id="moD-HB-CMD"/>
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="9" id="tuE-z4-kMM"/>
                         </constraints>
@@ -252,10 +362,10 @@
                     <connections>
                         <outlet property="bookmarkAllButton" destination="2aH-nO-H3f" id="KSo-gy-fGA"/>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
+                        <outlet property="displayModeButton" destination="L7l-vl-rDZ" id="F9o-yf-XT6"/>
                         <outlet property="doneButton" destination="S1O-aT-Bgw" id="8I7-gH-bhZ"/>
                         <outlet property="fireButton" destination="h1S-c2-Spf" id="VfW-9h-WGv"/>
                         <outlet property="plusButton" destination="nYf-xs-PE7" id="9pP-uN-hsa"/>
-                        <outlet property="settingsButton" destination="L7l-vl-rDZ" id="rFL-vJ-fSE"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
                         <outlet property="toolbar" destination="PrD-ff-flI" id="6c2-zx-gsM"/>
                     </connections>
@@ -264,14 +374,6 @@
             </objects>
             <point key="canvasLocation" x="1163.768115942029" y="-7.3369565217391308"/>
         </scene>
-        <!--Settings-->
-        <scene sceneID="QEK-TE-85v">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Settings" id="2xB-ij-q9e" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NqH-p4-TYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1790" y="-7"/>
-        </scene>
     </scenes>
     <resources>
         <image name="AddBookmarks" width="24" height="24"/>
@@ -279,7 +381,7 @@
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="NewTab" width="24" height="24"/>
         <image name="Remove" width="24" height="24"/>
-        <image name="Settings" width="24" height="24"/>
         <image name="TabUnread" width="24" height="24"/>
+        <image name="TabsToggleGrid" width="43" height="16"/>
     </resources>
 </document>

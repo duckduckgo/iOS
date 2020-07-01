@@ -176,7 +176,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 removeOverlay()
             }
             mainViewController?.onQuickFirePressed()
+        } else {
+            mainViewController?.loadUrlInNewTab(url)
         }
+        
         return true
     }
 

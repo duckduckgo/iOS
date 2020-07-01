@@ -157,6 +157,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
 
 class ToHomeScreenTransition: HomeScreenTransition {
 
+    // swiftlint:disable function_body_length
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         prepareSubviews(using: transitionContext)
         
@@ -219,5 +220,6 @@ class ToHomeScreenTransition: HomeScreenTransition {
             transitionContext.completeTransition(true)
         })
     }
+    // swiftlint:enable function_body_length
     
 }

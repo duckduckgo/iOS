@@ -22,6 +22,7 @@ import Core
 import WebKit
 import os.log
 
+// swiftlint:disable file_length
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
@@ -423,3 +424,4 @@ extension TabSwitcherViewController: Themable {
         collectionView.reloadData()
     }
 }
+// swiftlint:enable file_length

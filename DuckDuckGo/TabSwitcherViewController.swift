@@ -56,7 +56,7 @@ class TabSwitcherViewController: UIViewController {
     
     var currentSelection: Int?
     
-    private var isGridEnabled = true
+    private static var isGridEnabled = true
     private var isProcessingUpdates = false
 
     override func viewDidLoad() {
@@ -78,13 +78,13 @@ class TabSwitcherViewController: UIViewController {
         switch theme.currentImageSet {
         case .dark:
             // Reverse colors (selection)
-            if isGridEnabled {
+            if Self.isGridEnabled {
                 displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
             } else {
                 displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
             }
         case .light:
-            if isGridEnabled {
+            if Self.isGridEnabled {
                 displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
             } else {
                 displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
@@ -218,7 +218,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
-        isGridEnabled = !isGridEnabled
+        Self.isGridEnabled = !Self.isGridEnabled
         
         refreshDisplayModeButton()
         collectionView.reloadData()
@@ -305,7 +305,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cellIdentifier = isGridEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
+        let cellIdentifier = Self.isGridEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(cellIdentifier) as TabViewCell")
         }
@@ -381,7 +381,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if isGridEnabled {
+        if Self.isGridEnabled {
             let columnWidth = calculateColumnWidth(minimumColumnWidth: 150, maxColumns: 4)
             let rowHeight = calculateRowHeight(columnWidth: columnWidth)
             return CGSize(width: floor(columnWidth),

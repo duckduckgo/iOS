@@ -54,16 +54,6 @@ class TabViewGridCell: TabViewCell {
         super.setupSubviews()
 
         unread.tintColor = .cornflowerBlue
-        
-        backgroundColor = .clear
-        layer.cornerRadius = backgroundView?.layer.cornerRadius ?? 0.0
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowRadius = 3.0
-        layer.shadowOpacity = 0.15
-        layer.masksToBounds = false
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
     }
     
     private func updatePreviewToDisplay(image: UIImage) {

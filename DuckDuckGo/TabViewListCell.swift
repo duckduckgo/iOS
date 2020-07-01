@@ -56,7 +56,7 @@ class TabViewListCell: TabViewCell {
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
-        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
+        background.layer.borderColor = ThemeManager.shared.currentTheme.tabSwitcherCellBorderColor.cgColor
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
 
         if let link = tab.link {

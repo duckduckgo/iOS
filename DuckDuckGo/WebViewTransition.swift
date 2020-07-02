@@ -21,13 +21,15 @@ import Core
 
 class WebViewTransition: TabSwitcherTransition {
     
+    fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         return self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                      to: self.tabSwitcherViewController.view)
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize, preview: UIImage) -> CGRect {
-        guard TabSwitcherViewController.isGridEnabled else {
+        guard tabSwitcherSettings.isGridViewEnabled else {
             return CGRect(origin: .zero, size: cellBounds)
         }
         
@@ -104,7 +106,7 @@ class FromWebViewTransition: WebViewTransition {
                 self.tabSwitcherViewController.view.alpha = 1
             }
             
-            if !TabSwitcherViewController.isGridEnabled {
+            if !self.tabSwitcherSettings.isGridViewEnabled {
                 UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.5) {
                     self.imageView.alpha = 0
                 }
@@ -154,7 +156,7 @@ class ToWebViewTransition: WebViewTransition {
         }
         imageView.image = preview
         
-        if !TabSwitcherViewController.isGridEnabled {
+        if !tabSwitcherSettings.isGridViewEnabled {
             self.imageView.alpha = 0
         }
         

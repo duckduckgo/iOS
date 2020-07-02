@@ -22,6 +22,7 @@ import Core
 class HomeScreenTransition: TabSwitcherTransition {
     
     fileprivate var homeScreenSnapshot: UIView?
+    fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     
     fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
                                       transitionContext: UIViewControllerContextTransitioning) {
@@ -49,7 +50,7 @@ class HomeScreenTransition: TabSwitcherTransition {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                                 to: self.tabSwitcherViewController.view)
         
-        guard TabSwitcherViewController.isGridEnabled else {
+        guard tabSwitcherSettings.isGridViewEnabled else {
             return targetFrame
         }
         
@@ -59,7 +60,7 @@ class HomeScreenTransition: TabSwitcherTransition {
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize) -> CGRect {
-        guard TabSwitcherViewController.isGridEnabled else {
+        guard tabSwitcherSettings.isGridViewEnabled else {
             return CGRect(origin: .zero, size: cellBounds)
         }
         
@@ -113,7 +114,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         imageView.alpha = 0
         imageView.frame = imageContainer.bounds
         imageView.contentMode = .center
-        if TabSwitcherViewController.isGridEnabled {
+        if tabSwitcherSettings.isGridViewEnabled {
             imageView.image = TabViewGridCell.logoImage
         }
         
@@ -136,7 +137,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
                 self.tabSwitcherViewController.view.alpha = 1
             }
             
-            if TabSwitcherViewController.isGridEnabled {
+            if self.tabSwitcherSettings.isGridViewEnabled {
                 UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3) {
                     self.imageView.alpha = 1
                 }
@@ -182,7 +183,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
-        if TabSwitcherViewController.isGridEnabled {
+        if tabSwitcherSettings.isGridViewEnabled {
             imageView.image = TabViewGridCell.logoImage
         } else {
             imageContainer.alpha = 0

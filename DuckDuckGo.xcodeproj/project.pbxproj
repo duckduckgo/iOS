@@ -309,6 +309,7 @@
 		983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB923619986003948D1 /* DatabaseMigrationTests.swift */; };
 		984D035824ACCC6F0066CFB8 /* TabViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D035724ACCC6F0066CFB8 /* TabViewListCell.swift */; };
 		984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D035924ACCC7D0066CFB8 /* TabViewCell.swift */; };
+		984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D035B24AE15CD0066CFB8 /* TabSwitcherSettings.swift */; };
 		984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */; };
 		984E291922CD67B500EE7154 /* PrivacyProtectionHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */; };
 		984E291B22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */; };
@@ -926,6 +927,7 @@
 		9846AA6622BD3BBF007DE48E /* InitHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitHelpers.swift; sourceTree = "<group>"; };
 		984D035724ACCC6F0066CFB8 /* TabViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewListCell.swift; sourceTree = "<group>"; };
 		984D035924ACCC7D0066CFB8 /* TabViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
+		984D035B24AE15CD0066CFB8 /* TabSwitcherSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherSettings.swift; sourceTree = "<group>"; };
 		984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHomeCell.swift; sourceTree = "<group>"; };
 		984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivacyProtectionHomeCell.xib; sourceTree = "<group>"; };
@@ -2223,6 +2225,7 @@
 			isa = PBXGroup;
 			children = (
 				F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */,
+				984D035B24AE15CD0066CFB8 /* TabSwitcherSettings.swift */,
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */,
@@ -3646,6 +3649,7 @@
 				8565A3431FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
+				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,

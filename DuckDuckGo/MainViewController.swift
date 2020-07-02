@@ -230,7 +230,6 @@ class MainViewController: UIViewController {
 
         if let controller = segue.destination as? TabSwitcherViewController {
             controller.transitioningDelegate = tabSwitcherTransition
-            controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
             controller.previewsSource = previewsSource

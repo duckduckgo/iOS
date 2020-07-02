@@ -44,8 +44,7 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
-    
-    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
+
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     weak var previewsSource: TabPreviewsSource!
@@ -56,7 +55,7 @@ class TabSwitcherViewController: UIViewController {
     
     var currentSelection: Int?
     
-    static var isGridEnabled = true
+    private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     private var isProcessingUpdates = false
 
     override func viewDidLoad() {
@@ -78,13 +77,13 @@ class TabSwitcherViewController: UIViewController {
         switch theme.currentImageSet {
         case .dark:
             // Reverse colors (selection)
-            if Self.isGridEnabled {
+            if tabSwitcherSettings.isGridViewEnabled {
                 displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
             } else {
                 displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
             }
         case .light:
-            if Self.isGridEnabled {
+            if tabSwitcherSettings.isGridViewEnabled {
                 displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
             } else {
                 displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
@@ -143,15 +142,6 @@ class TabSwitcherViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.collectionViewLayout.invalidateLayout()
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let nav = segue.destination as? UINavigationController,
-            let controller = nav.topViewController as? SettingsViewController {
-            controller.homePageSettingsDelegate = homePageSettingsDelegate
-        }
-        
     }
     
     private func scrollToInitialTab() {
@@ -218,7 +208,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
-        Self.isGridEnabled = !Self.isGridEnabled
+        tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
         
         refreshDisplayModeButton()
         
@@ -310,7 +300,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cellIdentifier = Self.isGridEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
+        let cellIdentifier = tabSwitcherSettings.isGridViewEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(cellIdentifier) as TabViewCell")
         }
@@ -386,7 +376,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if Self.isGridEnabled {
+        if tabSwitcherSettings.isGridViewEnabled {
             let columnWidth = calculateColumnWidth(minimumColumnWidth: 150, maxColumns: 4)
             let rowHeight = calculateRowHeight(columnWidth: columnWidth)
             return CGSize(width: floor(columnWidth),

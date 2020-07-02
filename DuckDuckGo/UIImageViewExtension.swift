@@ -56,13 +56,15 @@ extension UIImageView {
         let insecureFaviconUrl = Self.FaviconConstants.appUrls.faviconUrl(forDomain: domain, secure: false)
         let options = Self.FaviconConstants.options
 
-        kf.setImage(with: secureFaviconUrl, options: options) { secureFaviconImage, _, _, _ in
+        kf.setImage(with: secureFaviconUrl, options: options) { [weak self] secureFaviconImage, _, _, _ in
             
             if let url = secureFaviconUrl, secureFaviconImage == nil {
                 NotFoundCachingDownloader.cacheNotFound(url)
             }
             
-            self.kf.setImage(with: secureAppleTouchUrl, placeholder: secureFaviconImage, options: options) { secureAppleTouchImage, _, _, _ in
+            self?.kf.setImage(with: secureAppleTouchUrl,
+                              placeholder: secureFaviconImage,
+                              options: options) { [weak self] secureAppleTouchImage, _, _, _ in
 
                 if let url = secureAppleTouchUrl, secureAppleTouchImage == nil {
                     NotFoundCachingDownloader.cacheNotFound(url)
@@ -70,14 +72,14 @@ extension UIImageView {
 
                 if secureFaviconImage == nil && secureAppleTouchImage == nil {
                 
-                    self.kf.setImage(with: insecureFaviconUrl, options: options) { insecureFaviconImage, _, _, _ in
+                    self?.kf.setImage(with: insecureFaviconUrl, options: options) { [weak self] insecureFaviconImage, _, _, _ in
                     
                         if let url = insecureFaviconUrl, insecureFaviconImage == nil {
                             NotFoundCachingDownloader.cacheNotFound(url)
                         }
 
                         if insecureFaviconImage == nil {
-                            self.image = fallbackImage
+                            self?.image = fallbackImage
                         } else {
                             completion?(.favicon)
                         }

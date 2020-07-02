@@ -22,7 +22,7 @@ import Kingfisher
 
 class NotFoundCachingDownloader: ImageDownloader {
     
-    static let oneHour: TimeInterval = 60 * 60
+    static let expiry: TimeInterval = 60 * 60 // 1 hour
     static var notFoundCache = [URL: TimeInterval]()
     
     convenience init() {
@@ -36,7 +36,7 @@ class NotFoundCachingDownloader: ImageDownloader {
                                 completionHandler: ImageDownloaderCompletionHandler?) -> RetrieveImageDownloadTask? {
 
         if let cacheAddTime = NotFoundCachingDownloader.notFoundCache[url],
-            Date().timeIntervalSince1970 - cacheAddTime < NotFoundCachingDownloader.oneHour {
+            Date().timeIntervalSince1970 - cacheAddTime < NotFoundCachingDownloader.expiry {
             completionHandler?(nil, nil, nil, nil)
             return nil
         }

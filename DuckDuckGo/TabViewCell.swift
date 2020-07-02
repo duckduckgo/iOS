@@ -272,7 +272,7 @@ class TabViewCell: UICollectionViewCell {
             }
             
             removeButton.isHidden = false
-            configureFavicon(forDomain: tab.link?.url.host)
+            favicon.loadFavicon(forDomain: tab.link?.url.host)
         }
     }
     
@@ -280,20 +280,7 @@ class TabViewCell: UICollectionViewCell {
         guard let tab = tab else { return }
         self.delegate?.deleteTab(tab: tab)
     }
-
-    private func configureFavicon(forDomain domain: String?) {
-        let placeholder = #imageLiteral(resourceName: "GlobeSmall")
-        favicon.image = placeholder
-
-        if let domain = domain {
-            let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
-            favicon.kf.setImage(with: faviconUrl,
-                                  placeholder: placeholder,
-                                  options: [.downloader(NotFoundCachingDownloader())],
-                                  progressBlock: nil,
-                                  completionHandler: nil)
-        }
-    }
+    
 }
 
 extension TabViewCell: Themable {

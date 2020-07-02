@@ -54,16 +54,16 @@ class AppUrlsTests: XCTestCase {
         XCTAssertEqual("x", pixelUrl.getParam(name: "atb"))
     }
 
-    func testWhenDomainIsBadThenFaviconURLIsNil() {
+    func testWhenFaviconUrlForSecureDomainRequestedThenCorrectDomainIsCreated() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let faviconURL = testee.faviconUrl(forDomain: "Contains spaces because the website is broken")
-        XCTAssertNil(faviconURL)
+        let faviconURL = testee.faviconUrl(forDomain: "example.com", secure: true)
+        XCTAssertEqual("https://example.com/favicon.ico", faviconURL?.absoluteString)
     }
 
-    func testWhenFaviconUrlForDomainRequestedThenCorrectDomainIsCreated() {
+    func testWhenFaviconUrlForInsecureDomainRequestedThenCorrectDomainIsCreated() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let faviconURL = testee.faviconUrl(forDomain: "example.com")
-        XCTAssertEqual("https://external-content.duckduckgo.com/ip3/example.com.ico", faviconURL?.absoluteString)
+        let faviconURL = testee.faviconUrl(forDomain: "example.com", secure: false)
+        XCTAssertEqual("http://example.com/favicon.ico", faviconURL?.absoluteString)
     }
 
     func testBaseUrlDoesNotHaveSubDomain() {

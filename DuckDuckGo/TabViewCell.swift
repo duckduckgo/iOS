@@ -148,20 +148,6 @@ class TabViewCell: UICollectionViewCell, Themable {
         self.delegate?.deleteTab(tab: tab)
     }
     
-    func configureFavicon(_ favicon: UIImageView, forDomain domain: String?) {
-        let placeholder = #imageLiteral(resourceName: "GlobeSmall")
-        favicon.image = placeholder
-        
-        if let domain = domain {
-            let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
-            favicon.kf.setImage(with: faviconUrl,
-                                placeholder: placeholder,
-                                options: [.downloader(NotFoundCachingDownloader())],
-                                progressBlock: nil,
-                                completionHandler: nil)
-        }
-    }
-    
     func decorate(with theme: Theme) {}
 }
 

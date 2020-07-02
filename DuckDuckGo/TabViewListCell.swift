@@ -72,14 +72,9 @@ class TabViewListCell: TabViewCell {
         } else {
             removeButton.isHidden = false
             link.text = tab.link?.url.absoluteString ?? ""
-            configureFavicon(favicon, forDomain: tab.link?.url.host)
+            favicon.loadFavicon(forDomain: tab.link?.url.host)
         }
     }
-    
-//    @IBAction func deleteTab() {
-//        guard let tab = tab else { return }
-//        self.delegate?.deleteTab(tab: tab)
-//    }
     
     override func decorate(with theme: Theme) {
         super.decorate(with: theme)

@@ -34,6 +34,7 @@ public struct UserDefaultsWrapper<T> {
         case keyboardOnAppLaunch = "com.duckduckgo.ios.keyboard.applaunch"
         
         case gridViewEnabled = "com.duckduckgo.ios.tabs.grid"
+        case gridViewSeen = "com.duckduckgo.ios.tabs.seen"
         
         case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
         case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"

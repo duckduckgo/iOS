@@ -65,6 +65,11 @@ class TabSwitcherViewController: UIViewController {
         currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
         becomeFirstResponder()
+        
+        if !tabSwitcherSettings.hasSeenNewLayout {
+            Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
+            tabSwitcherSettings.hasSeenNewLayout = true
+        }
     }
     
     private func setupBackgroundView() {
@@ -209,6 +214,12 @@ class TabSwitcherViewController: UIViewController {
     
     @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
         tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
+        
+        if tabSwitcherSettings.isGridViewEnabled {
+            Pixel.fire(pixel: .tabSwitcherGridEnabled)
+        } else {
+            Pixel.fire(pixel: .tabSwitcherListEnabled)
+        }
         
         refreshDisplayModeButton()
         

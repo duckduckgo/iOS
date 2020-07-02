@@ -22,6 +22,7 @@ import Core
 protocol TabSwitcherSettings {
  
     var isGridViewEnabled: Bool { get set }
+    var hasSeenNewLayout: Bool { get set }
     
 }
 
@@ -30,4 +31,6 @@ class DefaultTabSwitcherSettings: TabSwitcherSettings {
     @UserDefaultsWrapper(key: .gridViewEnabled, defaultValue: true)
     var isGridViewEnabled: Bool
 
+    @UserDefaultsWrapper(key: .gridViewSeen, defaultValue: false)
+    var hasSeenNewLayout: Bool
 }

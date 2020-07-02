@@ -107,7 +107,10 @@ class FavoriteHomeCell: UICollectionViewCell {
             iconImage.image = UIImage(named: "Logo")
             applyFavicon(iconImage.image!)
         } else {
-            loadAppleTouchIcon(forLink: link)
+            iconImage.loadFavicon(forDomain: link.url.host, fallbackImage: nil) {
+                guard let image = self.iconImage.image else { return }
+                self.applyFavicon(image)
+            }
         }
     }
 
@@ -116,48 +119,13 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconImage.layer.masksToBounds = !border
         iconImage.layer.cornerRadius = border ? 3 : 8
     }
-    
-    private func loadAppleTouchIcon(forLink link: Link) {
-        
-        guard let url = link.appleTouchIcon else {
-            loadFavicon(forLink: link)
-            return
-        }
-        
-        iconImage.kf.setImage(with: url,
-                              placeholder: nil,
-                              options: [
-                                .downloader(Self.downloader),
-                                .targetCache(Self.targetCache)
-                              ], progressBlock: nil) { [weak self] image, error, _, _ in
-          
-            guard let image = image, error == nil else {
-                NotFoundCachingDownloader.cacheNotFound(url)
-                self?.loadFavicon(forLink: link)
-                return
-            }
-
-            self?.useImageBorder(false)
-            self?.applyFavicon(image)
-        }
-        
-    }
-    
-    private func loadFavicon(forLink link: Link) {
-
-        iconImage.loadFavicon(forDomain: link.url.host) { [weak self] image in
-            guard let image = image, image.size.width > Constants.smallFaviconSize else { return }
-            self?.applyFavicon(image)
-        }
-
-    }
-        
+  
     private func applyFavicon(_ image: UIImage) {
 
         iconLabel.isHidden = true
         iconImage.isHidden = false
         iconImage.contentMode = image.size.width < Constants.largeFaviconSize ? .center : .scaleAspectFit
-        
+
         guard let theme = theme else { return }
         iconBackground.backgroundColor = theme.faviconBackgroundColor
     }

@@ -107,8 +107,13 @@ class FavoriteHomeCell: UICollectionViewCell {
             iconImage.image = UIImage(named: "Logo")
             applyFavicon(iconImage.image!)
         } else {
-            iconImage.loadFavicon(forDomain: link.url.host, fallbackImage: nil) {
+            iconImage.loadFavicon(forDomain: link.url.host, fallbackImage: nil) { faviconType in
                 guard let image = self.iconImage.image else { return }
+                
+                if faviconType == .appleTouch {
+                    self.useImageBorder(image.size.width < Constants.largeFaviconSize)
+                }
+                
                 self.applyFavicon(image)
             }
         }

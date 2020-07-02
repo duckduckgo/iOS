@@ -23,6 +23,13 @@ import Kingfisher
 
 extension UIImageView {
     
+    enum FaviconType {
+        
+        case favicon
+        case appleTouch
+        
+    }
+    
     struct FaviconConstants {
 
         static let standardPlaceHolder = UIImage(named: "GlobeSmall")
@@ -36,7 +43,8 @@ extension UIImageView {
     /// Loads a favicon for a given domain.
     /// `fallback` only called if no icon could be found
     /// `completion` only called when at least one image is found after all
-    func loadFavicon(forDomain domain: String?, fallbackImage: UIImage? = FaviconConstants.standardPlaceHolder, completion: (() -> Void)? = nil) {
+    func loadFavicon(forDomain domain: String?, fallbackImage: UIImage? = FaviconConstants.standardPlaceHolder,
+                     completion: ((UIImageView.FaviconType) -> Void)? = nil) {
         
         guard let domain = domain else {
             self.image = fallbackImage
@@ -71,14 +79,14 @@ extension UIImageView {
                         if insecureFaviconImage == nil {
                             self.image = fallbackImage
                         } else {
-                            completion?()
+                            completion?(.favicon)
                         }
                     
                     }
                     
                 } else {
                     
-                    completion?()
+                    completion?(secureAppleTouchImage != nil ? .appleTouch : .favicon)
                     
                 }
             }

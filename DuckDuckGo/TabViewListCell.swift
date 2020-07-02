@@ -90,6 +90,6 @@ class TabViewListCell: TabViewCell {
         
         background.backgroundColor = theme.tabSwitcherCellBackgroundColor
         title.textColor = theme.tabSwitcherCellTextColor
-//        link.textColor = theme.tabSwitcherCellTextColor
+        link.textColor = theme.tabSwitcherCellSecondaryTextColor
     }
 }

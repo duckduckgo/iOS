@@ -36,8 +36,6 @@ class FavoriteHomeCell: UICollectionViewCell {
     @IBOutlet weak var iconSize: NSLayoutConstraint!
     
     static let appUrls = AppUrls()
-    static let downloader = NotFoundCachingDownloader()
-    static let targetCache = ImageCache(name: BookmarksManager.imageCacheName)
     
     var isReordering = false {
         didSet {

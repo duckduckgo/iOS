@@ -82,10 +82,10 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .centeredSearch(let fixed):
-                if controller.homeScreenMessage == nil {
-                    renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
-                } else {
+                if controller.isShowingDax {
                     renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
+                } else {
+                    renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
                 }
                 
             case .extraContent:

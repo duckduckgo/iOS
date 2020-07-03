@@ -41,12 +41,22 @@ class DaxDialogsBrowsingSpecTests: XCTestCase {
         XCTAssertTrue(message.contains("34%"))
         XCTAssertEqual(2, message.countInstances(of: majorTracker1))
     }
-    
-    func testWhenTwoTrackersAndCountThenMessageContainsTrackersAndCount() {
+
+    func testWhenTwoTrackersAndCountOfOneThenMessageContainsTrackersAndCount() {
+        let majorTracker1 = "TestTracker1"
+        let majorTracker2 = "TestTracker2"
+        let count = 1
+        let message = DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: majorTracker1, majorTracker2, count).message
+        XCTAssertTrue(message.contains(majorTracker1))
+        XCTAssertTrue(message.contains(majorTracker2))
+        XCTAssertTrue(message.contains("\(count)"))
+    }
+
+    func testWhenTwoTrackersAndCountOfMoreThanOneThenMessageContainsTrackersAndCount() {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
         let count = 6
-        let message = DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: majorTracker1, majorTracker2, count).message
+        let message = DaxDialogs.BrowsingSpec.withMutipleTrackersPlural.format(args: majorTracker1, majorTracker2, count).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
         XCTAssertTrue(message.contains("\(count)"))

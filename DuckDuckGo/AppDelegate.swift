@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import EasyTipView
 import UserNotifications
 import os.log
 
@@ -66,8 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         migrateHomePageSettings()
-
-        EasyTipView.updateGlobalPreferences()
+        
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
@@ -76,8 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             
-            // Remove users with devices that does not support App Icon switching
-            return AppIconManager.shared.isAppIconChangeSupported
+            DaxDialogs().primeForUse()
+            return .includeInCohort
         }
 
         if let main = mainViewController {

@@ -29,7 +29,4 @@ protocol TabSwitcherDelegate: class {
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController)
     
-    func tabSwitcherDidAppear(_ tabSwitcher: TabSwitcherViewController)
-    
-    func tabSwitcherDidDisappear(_ tabSwitcher: TabSwitcherViewController)
 }

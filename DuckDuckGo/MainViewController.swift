@@ -125,21 +125,18 @@ class MainViewController: UIViewController {
     
     func startOnboardingFlowIfNotSeenBefore() {
         
+        guard ProcessInfo.processInfo.environment["ONBOARDING"] != "false" else {
+            // explicitly skip onboarding, e.g. for integration tests
+            return
+        }
+        
         let settings = DefaultTutorialSettings()
         let showOnboarding = !settings.hasSeenOnboarding ||
-            // allow oboarding to forced via environment variable - see scheme
+            // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
 
-        let onboardingFlow: String
-        let variantManager = DefaultVariantManager()
-        if variantManager.isSupported(feature: .daxOnboarding) {
-            onboardingFlow = "DaxOnboarding"
-        } else {
-            // Only show tips if the user is a new one, ie they've not seen onboarding yet
-            DefaultContextualTipsStorage().isEnabled = true
-            onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
-        }
+        let onboardingFlow = "DaxOnboarding"
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
     }
@@ -1032,14 +1029,6 @@ extension MainViewController: TabSwitcherDelegate {
         self.forgetAllWithAnimation {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
-    }
-    
-    func tabSwitcherDidAppear(_ tabSwitcher: TabSwitcherViewController) {
-        currentTab?.removeBrowsingTips()
-    }
-    
-    func tabSwitcherDidDisappear(_ tabSwitcher: TabSwitcherViewController) {
-        currentTab?.installBrowsingTips()
     }
     
 }

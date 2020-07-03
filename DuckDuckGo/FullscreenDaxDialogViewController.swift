@@ -52,8 +52,8 @@ class FullscreenDaxDialogViewController: UIViewController {
             showAddressBar.isActive = true
             highlightBar.isHidden = false
         } else {
-            fullScreen.isActive = true
             showAddressBar.isActive = false
+            fullScreen.isActive = true
             highlightBar.isHidden = true
         }
         

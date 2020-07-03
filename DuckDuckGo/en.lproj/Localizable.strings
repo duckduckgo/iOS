@@ -328,7 +328,7 @@
 "dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌";
 "dax.onboarding.browsing.after.search.cta" = "Phew!";
 
-"dax.onboarding.browsing.without.trackers" = "As you tap and scroll, I'll block pesky trackers.\n\nGo head - keep browsing!";
+"dax.onboarding.browsing.without.trackers" = "As you tap and scroll, I'll block pesky trackers.\n\nGo ahead - keep browsing!";
 "dax.onboarding.browsing.without.trackers.cta" = "Got It";
 
 "dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don't worry!\n\nI'll block %1$@ from seeing your activity on those sites.";

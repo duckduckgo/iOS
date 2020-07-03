@@ -134,9 +134,6 @@ public enum PixelName: String {
     case tabBarBookmarksLongPressed = "mt_bl"
     case tabBarTabSwitcherPressed = "mt_tb"
 
-    case onboardingShown = "m_o"
-    case onboardingSummaryFinished = "m_o_s"
-    
     case homeScreenShown = "mh"
     case homeScreenSearchTapped = "mh_st"
     case homeScreenFavouriteLaunched = "mh_fl"

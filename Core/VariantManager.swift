@@ -25,9 +25,13 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
-    // Dax Onboarding
-    case legacyOnboarding
-    case daxOnboarding
+}
+
+public enum CohortFiltering {
+    
+    case includeInCohort
+    case excludeFromCohort
+    
 }
 
 public struct Variant {
@@ -38,11 +42,7 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: doNotAllocate, features: []),
-        
-        // Dax onboarding
-        Variant(name: "ma", weight: 1, features: [ .legacyOnboarding ]),
-        Variant(name: "mb", weight: 1, features: [ .daxOnboarding ])
+        Variant(name: "se", weight: doNotAllocate, features: [])
     ]
     
     public let name: String
@@ -60,7 +60,7 @@ public protocol VariantRNG {
 public protocol VariantManager {
     
     var currentVariant: Variant? { get }
-    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Bool)
+    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> CohortFiltering)
     func isSupported(feature: FeatureName) -> Bool
     
 }
@@ -91,7 +91,7 @@ public class DefaultVariantManager: VariantManager {
         return currentVariant?.features.contains(feature) ?? false
     }
     
-    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Bool) {
+    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> CohortFiltering) {
         guard !storage.hasInstallStatistics else {
             os_log("no new variant needed for existing user", log: generalLog, type: .debug)
             return
@@ -104,11 +104,14 @@ public class DefaultVariantManager: VariantManager {
         
         guard let variant = selectVariant() else {
             os_log("Failed to assign variant", log: generalLog, type: .debug)
+            
+            // it's possible this failed because there are none to assign, we should still let new install logic execute
+            _ = newInstallCompletion(self)
             return
         }
         
         storage.variant = variant.name
-        if !newInstallCompletion(self) {
+        if newInstallCompletion(self) == .excludeFromCohort {
             storage.variant = nil
         }
     }

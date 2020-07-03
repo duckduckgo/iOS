@@ -273,6 +273,7 @@ class MainViewController: UIViewController {
         if shouldClearTabsModelOnStartup {
             tabsModel = TabsModel()
             tabsModel.save()
+            previewsSource.removeAllPreviews()
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration

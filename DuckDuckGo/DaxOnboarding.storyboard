@@ -183,9 +183,6 @@ DuckDuckGo!</string>
                                             </fragment>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="1gA-Oe-qi9" appends="YES" id="ae7-zE-ZqN"/>
-                                        </connections>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
                                         <rect key="frame" x="16" y="45" width="323" height="44"/>
@@ -265,6 +262,11 @@ DuckDuckGo!</string>
                 <tapGestureRecognizer id="1gA-Oe-qi9">
                     <connections>
                         <action selector="onTapText" destination="UUS-R7-a2i" id="QGR-gw-YBK"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="IpT-mY-clw">
+                    <connections>
+                        <action selector="onTapText" destination="UUS-R7-a2i" id="E04-X1-lJT"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

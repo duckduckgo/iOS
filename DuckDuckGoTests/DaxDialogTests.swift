@@ -31,6 +31,7 @@ class DaxDialogTests: XCTestCase {
         static let google = URL(string: "https://www.google.com")!
         static let ownedByFacebook = URL(string: "https://www.instagram.com")!
         static let amazon = URL(string: "https://www.amazon.com")!
+        static let tracker = URL(string: "https://www.1dmp.io")!
 
     }
 
@@ -49,7 +50,8 @@ class DaxDialogTests: XCTestCase {
             (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Amazon.com"), line: #line),
             (urls: [ URLs.amazon, URLs.ownedByFacebook ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Facebook", "Amazon.com"), line: #line),
             (urls: [ URLs.facebook, URLs.google ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Facebook"), line: #line),
-            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: "Google", "Facebook", 1), line: #line)
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: "Google", "Facebook", 1), line: #line),
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon, URLs.tracker ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackersPlural.format(args: "Google", "Facebook", 2), line: #line)
         ]
         // swiftlint:enable line_length
 

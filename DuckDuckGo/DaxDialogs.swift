@@ -85,6 +85,12 @@ class DaxDialogs {
                                                                highlightAddressBar: true,
                                                                pixelName: .daxDialogsWithTrackers)
 
+        static let withMutipleTrackersPlural = BrowsingSpec(height: 345,
+                                                               message: UserText.daxDialogBrowsingWithMultipleTrackersPlural,
+                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
+                                                               highlightAddressBar: true,
+                                                               pixelName: .daxDialogsWithTrackers)
+
         let height: CGFloat
         let message: String
         let cta: String
@@ -104,7 +110,7 @@ class DaxDialogs {
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
     
-    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+    init(settings: DaxDialogsSettings = InMemoryDaxDialogsSettings()) {
         self.settings = settings
     }
     
@@ -225,8 +231,14 @@ class DaxDialogs {
             
         default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withMutipleTrackers.format(args:
-                entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
+            
+            if entitiesBlocked.count - 2 > 1 {
+                return BrowsingSpec.withMutipleTrackersPlural.format(args:
+                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
+            } else {
+                return BrowsingSpec.withMutipleTrackers.format(args:
+                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
+            }
         }
 
     }

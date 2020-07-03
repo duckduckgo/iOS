@@ -343,7 +343,8 @@
 "dax.onboarding.browsing.two.trackers" = "*%1$@ and %2$@* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
 "dax.onboarding.browsing.two.trackers.cta" = "High Five!";
 
-"dax.onboarding.browsing.multiple.trackers" = "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
+"dax.onboarding.browsing.multiple.trackers" = "*%1$@, %2$@* and *1 other* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
+"dax.onboarding.browsing.multiple.trackers.plural" = "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
 "dax.onboarding.browsing.multiple.trackers.cta"  = "High Five!";
 
 "dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";

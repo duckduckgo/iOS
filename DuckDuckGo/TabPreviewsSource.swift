@@ -27,6 +27,15 @@ class TabPreviewsSource {
     
     private var cache = [String: UIImage]()
     
+    private var previewStoreDir: URL?
+    private var legacyPreviewStoreDir: URL?
+    
+    init(storeDir: URL? = TabPreviewsSource.previewStoreDir,
+         legacyDir: URL? = TabPreviewsSource.legacyPreviewStoreDir) {
+        previewStoreDir = storeDir
+        legacyPreviewStoreDir = legacyDir
+    }
+    
     func prepare() {
         ensurePreviewStoreDirectoryExists()
         migratePreviewStoreDirectoryFromCache()
@@ -70,13 +79,13 @@ class TabPreviewsSource {
         }
     }
     
-    private var previewStoreDir: URL? {
+    static private var previewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
         cachesDirURL.appendPathComponent(Constants.previewsDirectoryName, isDirectory: true)
         return cachesDirURL
     }
     
-    private var legacyPreviewStoreDir: URL? {
+    static private var legacyPreviewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
         cachesDirURL.appendPathComponent(Constants.previewsDirectoryName, isDirectory: true)
         return cachesDirURL
@@ -95,14 +104,14 @@ class TabPreviewsSource {
         
         if !FileManager.default.fileExists(atPath: url.path, isDirectory: nil) {
             
+            try? FileManager.default.createDirectory(at: url,
+                                                     withIntermediateDirectories: false,
+                                                     attributes: nil)
+            
             // Exclude Previews Dir from backup
             var resourceValues = URLResourceValues()
             resourceValues.isExcludedFromBackup = true
             try? url.setResourceValues(resourceValues)
-            
-            try? FileManager.default.createDirectory(at: url,
-                                                     withIntermediateDirectories: false,
-                                                     attributes: nil)
         }
     }
     
@@ -117,8 +126,7 @@ class TabPreviewsSource {
         
         for preview in previews {
             let desitnationURL = destination.appendingPathComponent(preview.lastPathComponent)
-            do { try FileManager.default.moveItem(at: preview, to: desitnationURL) }
-            catch { print("\(error)") }
+            try? FileManager.default.moveItem(at: preview, to: desitnationURL)
         }
         
         try? FileManager.default.removeItem(at: source)

@@ -41,6 +41,11 @@ class TabPreviewsSource {
     func prepare() {
         ensurePreviewStoreDirectoryExists()
         migratePreviewStoreDirectoryFromCache()
+        
+        // Remove already stored previews for tabs that were not yet closed by the user
+        if !tabSettings.isGridViewEnabled {
+            removeAllPreviews()
+        }
     }
     
     func update(preview: UIImage, forTab tab: Tab) {

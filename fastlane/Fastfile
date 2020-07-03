@@ -1,21 +1,8 @@
-fastlane_version "1.109.0"
-
-# This value helps us track success metrics for Fastfiles
-# we automatically generate. Feel free to remove this line
-# once you get things running smoothly!
-generated_fastfile_id "c7ddc28b-25d3-424d-b688-e693165a4521"
+fastlane_version "2.150.0"
 
 default_platform :ios
 
 lane :release do 
-
-#  version_number = get_version_number(
-#    target: "DuckDuckGo"
-#  )
-#
-#  increment_version_number(
-#    version_number: version_number,
-#  )
 
   gym(
     scheme: "DuckDuckGo",
@@ -28,7 +15,11 @@ lane :release do
     phased_release: true,
     username: "jenkins-itunes@duckduckgo.com",
     force: true,
-    skip_screenshots: true
+    skip_screenshots: true,
+    precheck_include_in_app_purchases: false,
+    submission_information: {
+       add_id_info_uses_idfa: false
+    }
   )
 
 end

@@ -27,6 +27,8 @@ class TabPreviewsSource {
     
     private var cache = [String: UIImage]()
     
+    private let tabSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    
     private var previewStoreDir: URL?
     private var legacyPreviewStoreDir: URL?
     
@@ -43,7 +45,11 @@ class TabPreviewsSource {
     
     func update(preview: UIImage, forTab tab: Tab) {
         cache[tab.uid] = preview
-        store(preview: preview, forTab: tab)
+        
+        if tabSettings.isGridViewEnabled {
+            store(preview: preview, forTab: tab)
+        }
+
         tab.didUpdatePreview()
     }
     

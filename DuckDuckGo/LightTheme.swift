@@ -66,6 +66,7 @@ struct LightTheme: Theme {
     var tabSwitcherCellBackgroundColor = UIColor.white
     var tabSwitcherCellBorderColor = UIColor.nearlyBlackLight
     var tabSwitcherCellTextColor = UIColor.black
+    var tabSwitcherCellSecondaryTextColor = UIColor.greyishBrown2
     
     var iconCellBorderColor = UIColor.darkGreyish
 

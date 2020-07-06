@@ -227,7 +227,6 @@ class MainViewController: UIViewController {
 
         if let controller = segue.destination as? TabSwitcherViewController {
             controller.transitioningDelegate = tabSwitcherTransition
-            controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
             controller.previewsSource = previewsSource
@@ -271,6 +270,7 @@ class MainViewController: UIViewController {
         if shouldClearTabsModelOnStartup {
             tabsModel = TabsModel()
             tabsModel.save()
+            previewsSource.removeAllPreviews()
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration
@@ -1014,7 +1014,10 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
         if tabManager.count == 1 {
-            tabSwitcher.dismiss()
+            // Make sure UI updates finish before dimissing the view.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                tabSwitcher.dismiss()
+            }
         }
         closeTab(tab)
     }

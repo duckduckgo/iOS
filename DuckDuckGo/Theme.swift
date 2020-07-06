@@ -68,6 +68,7 @@ protocol Theme {
     var tabSwitcherCellBackgroundColor: UIColor { get }
     var tabSwitcherCellBorderColor: UIColor { get }
     var tabSwitcherCellTextColor: UIColor { get }
+    var tabSwitcherCellSecondaryTextColor: UIColor { get }
     
     var iconCellBorderColor: UIColor { get }
     

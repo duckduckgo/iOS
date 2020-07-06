@@ -21,15 +21,20 @@ import Core
 
 class WebViewTransition: TabSwitcherTransition {
     
+    fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         return self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                      to: self.tabSwitcherViewController.view)
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize, preview: UIImage) -> CGRect {
+        guard tabSwitcherSettings.isGridViewEnabled else {
+            return CGRect(origin: .zero, size: cellBounds)
+        }
         
         let previewAspectRatio = preview.size.height / preview.size.width
-        let containerAspectRatio = (cellBounds.height - TabViewCell.Constants.cellHeaderHeight) / cellBounds.width
+        let containerAspectRatio = (cellBounds.height - TabViewGridCell.Constants.cellHeaderHeight) / cellBounds.width
         let strechedVerically = containerAspectRatio < previewAspectRatio
         
         var targetSize = CGSize.zero
@@ -37,12 +42,12 @@ class WebViewTransition: TabSwitcherTransition {
             targetSize.width = cellBounds.width
             targetSize.height = cellBounds.width * previewAspectRatio
         } else {
-            targetSize.height = cellBounds.height - TabViewCell.Constants.cellHeaderHeight
+            targetSize.height = cellBounds.height - TabViewGridCell.Constants.cellHeaderHeight
             targetSize.width = targetSize.height / previewAspectRatio
         }
         
         let targetFrame = CGRect(x: 0,
-                                 y: TabViewCell.Constants.cellHeaderHeight,
+                                 y: TabViewGridCell.Constants.cellHeaderHeight,
                                  width: targetSize.width,
                                  height: targetSize.height)
         return targetFrame
@@ -93,12 +98,18 @@ class FromWebViewTransition: WebViewTransition {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
                 self.imageContainer.frame = containerFrame
-                self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+                self.imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
                 self.imageView.frame = self.previewFrame(for: containerFrame.size, preview: preview)
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.7) {
                 self.tabSwitcherViewController.view.alpha = 1
+            }
+            
+            if !self.tabSwitcherSettings.isGridViewEnabled {
+                UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.5) {
+                    self.imageView.alpha = 0
+                }
             }
         }, completion: { _ in
             self.solidBackground.removeFromSuperview()
@@ -134,7 +145,7 @@ class ToWebViewTransition: WebViewTransition {
         webView.addSubview(solidBackground)
         
         imageContainer.frame = tabSwitcherCellFrame(for: layoutAttr)
-        imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+        imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
         
         let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
         if let preview = preview {
@@ -145,6 +156,10 @@ class ToWebViewTransition: WebViewTransition {
         }
         imageView.image = preview
         
+        if !tabSwitcherSettings.isGridViewEnabled {
+            self.imageView.alpha = 0
+        }
+        
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
         
         UIView.animate(withDuration: TabSwitcherTransition.Constants.duration, animations: {
@@ -152,6 +167,7 @@ class ToWebViewTransition: WebViewTransition {
             self.imageContainer.layer.cornerRadius = 0
             self.imageView.frame = self.destinationImageFrame(for: webViewFrame.size,
                                                               preview: preview)
+            self.imageView.alpha = 1
             
             self.solidBackground.alpha = 1
             self.tabSwitcherViewController.view.alpha = 0

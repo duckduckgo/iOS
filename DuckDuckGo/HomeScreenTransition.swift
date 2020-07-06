@@ -24,6 +24,8 @@ class HomeScreenTransition: TabSwitcherTransition {
     fileprivate var homeScreenSnapshot: UIView?
     fileprivate var settingsButtonSnapshot: UIView?
     
+    fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    
     fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
                                       transitionContext: UIViewControllerContextTransitioning) {
         let viewToSnapshot: UIView
@@ -46,9 +48,9 @@ class HomeScreenTransition: TabSwitcherTransition {
         }
         
         // This fixes animation glitch in centered search mode.
-        settingsButtonSnapshot = tabSwitcherViewController.settingsButton.snapshotView(afterScreenUpdates: true)
+        settingsButtonSnapshot = homeScreen.settingsButton.snapshotView(afterScreenUpdates: true)
         if let settingsButton = settingsButtonSnapshot {
-            settingsButton.frame = tabSwitcherViewController.view.convert(tabSwitcherViewController.settingsButton.frame, to: nil)
+            settingsButton.frame = homeScreen.view.convert(homeScreen.settingsButton.frame, to: nil)
             transitionContext.containerView.addSubview(settingsButton)
         }
     }
@@ -56,15 +58,24 @@ class HomeScreenTransition: TabSwitcherTransition {
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {
         var targetFrame = self.tabSwitcherViewController.collectionView.convert(attributes.frame,
                                                                                 to: self.tabSwitcherViewController.view)
-        targetFrame.origin.y += TabViewCell.Constants.cellHeaderHeight
-        targetFrame.size.height -= TabViewCell.Constants.cellHeaderHeight
+        
+        guard tabSwitcherSettings.isGridViewEnabled else {
+            return targetFrame
+        }
+        
+        targetFrame.origin.y += TabViewGridCell.Constants.cellHeaderHeight
+        targetFrame.size.height -= TabViewGridCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
     fileprivate func previewFrame(for cellBounds: CGSize) -> CGRect {
+        guard tabSwitcherSettings.isGridViewEnabled else {
+            return CGRect(origin: .zero, size: cellBounds)
+        }
+        
         var targetFrame = CGRect(origin: .zero, size: cellBounds)
-        targetFrame.origin.y -= TabViewCell.Constants.cellHeaderHeight
-        targetFrame.size.height += TabViewCell.Constants.cellHeaderHeight
+        targetFrame.origin.y -= TabViewGridCell.Constants.cellHeaderHeight
+        targetFrame.size.height += TabViewGridCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
@@ -112,14 +123,16 @@ class FromHomeScreenTransition: HomeScreenTransition {
         imageView.alpha = 0
         imageView.frame = imageContainer.bounds
         imageView.contentMode = .center
-        imageView.image = TabViewCell.logoImage
+        if tabSwitcherSettings.isGridViewEnabled {
+            imageView.image = TabViewGridCell.logoImage
+        }
         
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
                 self.imageContainer.frame = containerFrame
-                self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+                self.imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
                 self.imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
                 self.imageView.frame = self.previewFrame(for: self.imageContainer.bounds.size)
                 self.homeScreenSnapshot?.frame = self.imageContainer.bounds
@@ -133,8 +146,16 @@ class FromHomeScreenTransition: HomeScreenTransition {
                 self.tabSwitcherViewController.view.alpha = 1
             }
             
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3) {
-                self.imageView.alpha = 1
+            if self.tabSwitcherSettings.isGridViewEnabled {
+                UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3) {
+                    self.imageView.alpha = 1
+                    self.settingsButtonSnapshot?.alpha = 0
+                }
+            } else {
+                UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3) {
+                    self.imageContainer.alpha = 0
+                    self.settingsButtonSnapshot?.alpha = 0
+                }
             }
 
         }, completion: { _ in
@@ -149,6 +170,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
 
 class ToHomeScreenTransition: HomeScreenTransition {
 
+    // swiftlint:disable function_body_length
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         prepareSubviews(using: transitionContext)
         
@@ -166,14 +188,19 @@ class ToHomeScreenTransition: HomeScreenTransition {
         let theme = ThemeManager.shared.currentTheme
         imageContainer.frame = tabSwitcherCellFrame(for: layoutAttr)
         imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
-        imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
+        imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
         
         prepareSnapshots(with: homeScreen, transitionContext: transitionContext)
         homeScreenSnapshot?.alpha = 0
+        settingsButtonSnapshot?.alpha = 0
         
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
-        imageView.image = TabViewCell.logoImage
+        if tabSwitcherSettings.isGridViewEnabled {
+            imageView.image = TabViewGridCell.logoImage
+        } else {
+            imageContainer.alpha = 0
+        }
         imageView.backgroundColor = .clear
         
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
@@ -191,10 +218,12 @@ class ToHomeScreenTransition: HomeScreenTransition {
             
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
                 self.imageView.alpha = 0
+                self.imageContainer.alpha = 1
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {
                 self.homeScreenSnapshot?.alpha = 1
+                self.settingsButtonSnapshot?.alpha = 1
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3) {
@@ -207,5 +236,6 @@ class ToHomeScreenTransition: HomeScreenTransition {
             transitionContext.completeTransition(true)
         })
     }
+    // swiftlint:enable function_body_length
     
 }

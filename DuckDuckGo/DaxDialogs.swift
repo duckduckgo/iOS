@@ -85,6 +85,12 @@ class DaxDialogs {
                                                                highlightAddressBar: true,
                                                                pixelName: .daxDialogsWithTrackers)
 
+        static let withMutipleTrackersPlural = BrowsingSpec(height: 345,
+                                                               message: UserText.daxDialogBrowsingWithMultipleTrackersPlural,
+                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
+                                                               highlightAddressBar: true,
+                                                               pixelName: .daxDialogsWithTrackers)
+
         let height: CGFloat
         let message: String
         let cta: String
@@ -119,9 +125,19 @@ class DaxDialogs {
         settings.isDismissed = true
     }
     
+    func primeForUse() {
+        settings.isDismissed = false
+    }
+    
+    var isEnabled: Bool {
+        // skip dax dialogs in integration tests
+        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
+        return !settings.isDismissed
+    }
+    
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
+        guard isEnabled else { return nil }
         guard let host = siteRating.domain else { return nil }
-        guard !settings.isDismissed else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
@@ -146,7 +162,7 @@ class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-        guard !settings.isDismissed else { return nil }
+        guard isEnabled else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }
         
         if settings.homeScreenMessagesSeen == 0 {
@@ -215,8 +231,14 @@ class DaxDialogs {
             
         default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withMutipleTrackers.format(args:
-                entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
+            
+            if entitiesBlocked.count - 2 > 1 {
+                return BrowsingSpec.withMutipleTrackersPlural.format(args:
+                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
+            } else {
+                return BrowsingSpec.withMutipleTrackers.format(args:
+                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
+            }
         }
 
     }

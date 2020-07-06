@@ -28,21 +28,21 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="KGS-6D-8Qu">
-                                        <rect key="frame" x="159" y="400" width="96" height="96"/>
+                                        <rect key="frame" x="159" y="328" width="96" height="96"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="KGS-6D-8Qu" secondAttribute="height" multiplier="1:1" id="8Sj-qV-mg4"/>
                                             <constraint firstAttribute="width" constant="96" id="cmA-xS-5w3"/>
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextDuckDuckGo" translatesAutoresizingMaskIntoConstraints="NO" id="x0w-JG-l7a">
-                                        <rect key="frame" x="126" y="508" width="162" height="21"/>
+                                        <rect key="frame" x="126" y="436" width="162" height="21"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="x0w-JG-l7a" firstAttribute="centerX" secondItem="KGS-6D-8Qu" secondAttribute="centerX" id="Aio-Ik-cjV"/>
                                     <constraint firstItem="KGS-6D-8Qu" firstAttribute="centerX" secondItem="EJw-WC-cX3" secondAttribute="centerX" id="BOx-Fp-AoS"/>
                                     <constraint firstItem="x0w-JG-l7a" firstAttribute="top" secondItem="KGS-6D-8Qu" secondAttribute="bottom" constant="12" id="HNt-BA-qHd"/>
-                                    <constraint firstItem="KGS-6D-8Qu" firstAttribute="centerY" secondItem="EJw-WC-cX3" secondAttribute="centerY" id="xSF-LC-mFj"/>
+                                    <constraint firstItem="KGS-6D-8Qu" firstAttribute="centerY" secondItem="EJw-WC-cX3" secondAttribute="centerY" constant="-72" id="xSF-LC-mFj"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
@@ -307,8 +307,6 @@
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
-                        <segue destination="9Vl-Oh-arA" kind="presentation" identifier="Onboarding" animates="NO" modalPresentationStyle="overFullScreen" id="lRm-1E-WkW"/>
-                        <segue destination="rGZ-0A-HjK" kind="presentation" identifier="Onboarding-iPad" animates="NO" modalPresentationStyle="overFullScreen" id="Wtv-32-dHC"/>
                         <segue destination="HTt-o2-2gp" kind="presentation" identifier="DaxOnboarding" animates="NO" modalPresentationStyle="overFullScreen" id="eix-GD-QaT"/>
                     </connections>
                 </viewController>
@@ -323,22 +321,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="105" y="537"/>
-        </scene>
-        <!--Onboarding-->
-        <scene sceneID="j2a-eV-zLp">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" id="9Vl-Oh-arA" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TMG-cz-wUq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="944" y="-222"/>
-        </scene>
-        <!--Onboarding-iPad-->
-        <scene sceneID="ty9-dO-Pdc">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding-iPad" id="rGZ-0A-HjK" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QIb-IK-QWM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="974" y="-106"/>
         </scene>
         <!--HomeRow-->
         <scene sceneID="ct1-fI-xYV">

@@ -1,2 +1,2 @@
-• Retrieve favicons directly from websites.
-• Bug fixes and other improvements.
+• Now you can see page previews on the tab switcher screen. If you prefer the list view, you can use the toggle to switch between the two layouts.
+• Bug fixed and improvements.

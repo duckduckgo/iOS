@@ -222,7 +222,11 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
-        dismiss()
+        
+        // Delay dismissal so new tab inertion can be animated.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.dismiss()
+        }
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {

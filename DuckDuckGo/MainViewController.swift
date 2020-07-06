@@ -1014,7 +1014,10 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
         if tabManager.count == 1 {
-            tabSwitcher.dismiss()
+            // Make sure UI updates finish before dimissing the view.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                tabSwitcher.dismiss()
+            }
         }
         closeTab(tab)
     }

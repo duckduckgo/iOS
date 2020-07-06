@@ -21,15 +21,40 @@ import UIKit
 
 class TabPreviewsSource {
     
+    struct Constants {
+        static let previewsDirectoryName = "Previews"
+    }
+    
     private var cache = [String: UIImage]()
+    
+    private let tabSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    
+    private var previewStoreDir: URL?
+    private var legacyPreviewStoreDir: URL?
+    
+    init(storeDir: URL? = TabPreviewsSource.previewStoreDir,
+         legacyDir: URL? = TabPreviewsSource.legacyPreviewStoreDir) {
+        previewStoreDir = storeDir
+        legacyPreviewStoreDir = legacyDir
+    }
     
     func prepare() {
         ensurePreviewStoreDirectoryExists()
+        migratePreviewStoreDirectoryFromCache()
+        
+        // Remove already stored previews for tabs that were not yet closed by the user
+        if !tabSettings.isGridViewEnabled {
+            removeAllPreviews()
+        }
     }
     
     func update(preview: UIImage, forTab tab: Tab) {
         cache[tab.uid] = preview
-        store(preview: preview, forTab: tab)
+        
+        if tabSettings.isGridViewEnabled {
+            store(preview: preview, forTab: tab)
+        }
+
         tab.didUpdatePreview()
     }
     
@@ -65,19 +90,57 @@ class TabPreviewsSource {
         }
     }
     
-    private var previewStoreDir: URL? {
+    static private var previewStoreDir: URL? {
+        guard var cachesDirURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
+        cachesDirURL.appendPathComponent(Constants.previewsDirectoryName, isDirectory: true)
+        return cachesDirURL
+    }
+    
+    static private var legacyPreviewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
-        cachesDirURL.appendPathComponent("Previews", isDirectory: true)
+        cachesDirURL.appendPathComponent(Constants.previewsDirectoryName, isDirectory: true)
         return cachesDirURL
     }
     
     private func ensurePreviewStoreDirectoryExists() {
-        guard let url = previewStoreDir else { return }
-        if !FileManager.default.fileExists(atPath: url.absoluteString, isDirectory: nil) {
-            try? FileManager.default.createDirectory(at: url,
+        guard var url = previewStoreDir else { return }
+        
+        // Create Application Support Dir if needed.
+        let parentDirURL = url.deletingLastPathComponent()
+        if !FileManager.default.fileExists(atPath: parentDirURL.path, isDirectory: nil) {
+            try? FileManager.default.createDirectory(at: parentDirURL,
                                                      withIntermediateDirectories: false,
                                                      attributes: nil)
         }
+        
+        if !FileManager.default.fileExists(atPath: url.path, isDirectory: nil) {
+            
+            try? FileManager.default.createDirectory(at: url,
+                                                     withIntermediateDirectories: false,
+                                                     attributes: nil)
+            
+            // Exclude Previews Dir from backup
+            var resourceValues = URLResourceValues()
+            resourceValues.isExcludedFromBackup = true
+            try? url.setResourceValues(resourceValues)
+        }
+    }
+    
+    private func migratePreviewStoreDirectoryFromCache() {
+        guard let source = legacyPreviewStoreDir,
+            let destination = previewStoreDir else { return }
+        
+        let contents = (try? FileManager.default.contentsOfDirectory(at: source,
+                                                                    includingPropertiesForKeys: nil,
+                                                                    options: .skipsSubdirectoryDescendants)) ?? []
+        let previews = contents.filter { $0.lastPathComponent.hasSuffix(".png") }
+        
+        for preview in previews {
+            let desitnationURL = destination.appendingPathComponent(preview.lastPathComponent)
+            try? FileManager.default.moveItem(at: preview, to: desitnationURL)
+        }
+        
+        try? FileManager.default.removeItem(at: source)
     }
     
     private func previewLocation(for tab: Tab) -> URL? {

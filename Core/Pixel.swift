@@ -67,8 +67,11 @@ public enum PixelName: String {
     case bookmarksEditPressed = "m_b_e"
     case overlayFavoriteLaunched = "m_ov_f"
     
+    case tabSwitcherNewLayoutSeen = "m_ts_n"
+    case tabSwitcherListEnabled = "m_ts_l"
+    case tabSwitcherGridEnabled = "m_ts_g"
+    
     case settingsOpened = "ms"
-    case settingsOpenedFromTabsSwitcher = "ms_ot"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
     case settingsThemeShown = "ms_tp"

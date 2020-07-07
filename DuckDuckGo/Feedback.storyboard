@@ -193,9 +193,6 @@
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                                         </accessibility>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="33" id="cd2-gg-jV3"/>
-                                                        </constraints>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Please share the love by rating the app on the App Store.">
                                                                 <attributes>

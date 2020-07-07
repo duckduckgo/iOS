@@ -40,7 +40,6 @@ public struct UserText {
     public static let actionPasteAndGo = NSLocalizedString("action.title.pasteAndGo", comment: "Paste and Go action")
     public static let actionRefresh = NSLocalizedString("action.title.refresh", comment: "Refresh action")
     public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
-    public static let actionConfirm = NSLocalizedString("action.title.confirm", comment: "Confirm action")
     public static let actionSave = NSLocalizedString("action.title.save", comment: "Save action")
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
     public static let actionBookmark = NSLocalizedString("action.title.bookmark", comment: "Bookmark action")

@@ -116,7 +116,7 @@ class UnprotectedSitesViewController: UITableViewController {
 
         let title = UserText.alertDisableProtection
         let placeholder = UserText.alertDisableProtectionPlaceholder
-        let confirm = UserText.actionConfirm
+        let confirm = UserText.actionAdd
         let cancel = UserText.actionCancel
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)

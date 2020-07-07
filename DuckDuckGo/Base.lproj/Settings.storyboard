@@ -39,14 +39,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f1O-6u-LFY">
-                                                    <rect key="frame" x="20" y="13.000000000000002" width="49" height="18.666666666666668"/>
+                                                    <rect key="frame" x="19.999999999999996" y="14" width="49.666666666666664" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gbx-kl-uOO">
-                                                    <rect key="frame" x="324" y="13.000000000000002" width="51" height="18.666666666666668"/>
+                                                    <rect key="frame" x="324.66666666666669" y="14" width="50.333333333333336" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -70,7 +70,7 @@
                                                     <rect key="frame" x="20" y="10" width="355" height="24"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Icon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="cKo-er-HNj">
-                                                            <rect key="frame" x="0.0" y="2.6666666666666661" width="323" height="18.666666666666671"/>
+                                                            <rect key="frame" x="0.0" y="4" width="323" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -109,14 +109,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="New Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jy0-Hs-WSz">
-                                                    <rect key="frame" x="20.000000000000004" y="13.000000000000002" width="62.333333333333336" height="18.666666666666668"/>
+                                                    <rect key="frame" x="19.999999999999996" y="14" width="62.666666666666664" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O9k-vm-boT">
-                                                    <rect key="frame" x="324" y="13.000000000000002" width="51" height="18.666666666666668"/>
+                                                    <rect key="frame" x="324.66666666666669" y="14" width="50.333333333333336" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -161,7 +161,7 @@
                                                     <rect key="frame" x="20" y="6.6666666666666679" width="374" height="31.000000000000004"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-cQ-5WW">
-                                                            <rect key="frame" x="0.0" y="5.9999999999999982" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.3333333333333321" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -194,7 +194,7 @@
                                                     <rect key="frame" x="20" y="6.6666666666666679" width="374" height="31.000000000000004"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long-Press Previews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-R8-xxF">
-                                                            <rect key="frame" x="0.0" y="5.9999999999999982" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.3333333333333321" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -231,14 +231,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
-                                                    <rect key="frame" x="20" y="13.000000000000002" width="133.66666666666666" height="18.666666666666668"/>
+                                                    <rect key="frame" x="20" y="14" width="134.66666666666666" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On/Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QAv-VN-hEJ">
-                                                    <rect key="frame" x="327" y="13.000000000000002" width="48" height="18.666666666666668"/>
+                                                    <rect key="frame" x="327.66666666666669" y="14" width="47.333333333333336" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -259,14 +259,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Automatically Clear Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FgW-X9-qoE">
-                                                    <rect key="frame" x="20" y="13.000000000000002" width="176.66666666666666" height="18.666666666666668"/>
+                                                    <rect key="frame" x="20" y="14" width="177" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On/Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ccm-w6-p6U">
-                                                    <rect key="frame" x="327" y="13.000000000000002" width="48" height="18.666666666666668"/>
+                                                    <rect key="frame" x="327.66666666666669" y="14" width="47.333333333333336" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -311,7 +311,7 @@
                                                     <rect key="frame" x="20" y="6.6666666666666679" width="374" height="31.000000000000004"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-yq-FYj">
-                                                            <rect key="frame" x="0.0" y="5.9999999999999982" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.3333333333333321" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -348,7 +348,7 @@
                                                     <rect key="frame" x="20" y="6.6666666666666679" width="374" height="31.000000000000004"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Links in their Associated Apps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="a1T-ui-4Nw">
-                                                            <rect key="frame" x="0.0" y="5.9999999999999982" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.3333333333333321" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -488,14 +488,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="14.999999999999996" y="6" width="52.666666666666664" height="18.666666666666668"/>
+                                                    <rect key="frame" x="15" y="8" width="54" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="15" y="24.666666666666668" width="107" height="14"/>
+                                                    <rect key="frame" x="15.000000000000007" y="24" width="98.666666666666671" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -624,7 +624,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="675.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="672.33333333333337"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="127" y="32" width="160" height="160"/>
@@ -635,7 +635,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="121.33333333333333" y="224" width="171.66666666666669" height="23.333333333333343"/>
+                                                <rect key="frame" x="120.33333333333333" y="224" width="173.66666666666669" height="20"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -644,7 +644,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="67" y="279.33333333333326" width="280" height="336.66666666666674"/>
+                                                <rect key="frame" x="67" y="276" width="280" height="336.66666666666674"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="nip-EV-w1g">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
@@ -667,7 +667,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="91.666666666666686" y="624" width="231" height="31"/>
+                                                <rect key="frame" x="93" y="620.66666666666663" width="228" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="31" id="U2d-nM-OL3"/>
@@ -750,7 +750,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                     <rect key="frame" x="20" y="6.3333333333333321" width="374" height="30.999999999999996"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatically Clear Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5YD-Od-uDU">
-                                                            <rect key="frame" x="0.0" y="6.3333333333333339" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -784,10 +784,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="z1f-lE-NMb">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="334" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="334" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Tabs and Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="S1O-sW-Zbv">
-                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -811,10 +811,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aAz-mJ-iDU">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="366" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="366" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Tabs only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="DwI-Vs-jTc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -842,10 +842,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7vY-C0-hhu">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="334" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="334" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App exit only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kdu-cM-RtO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -869,10 +869,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Bmn-f8-g43">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="366" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="366" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App exit, inactive for 5min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="p5y-Xc-Tsx">
-                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -896,10 +896,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sHh-6s-g5h">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="366" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="366" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App exit, inactive for 15min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kx5-bI-7Cy">
-                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -923,10 +923,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RlG-za-WXx">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="366" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="366" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App exit, inactive for 30min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="IeU-tf-cs0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -950,10 +950,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ca4-Dh-1VE">
-                                                    <rect key="frame" x="20" y="12.666666666666666" width="366" height="18.666666666666671"/>
+                                                    <rect key="frame" x="20" y="14" width="366" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App exit, inactive for 60min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="pcs-Mv-SCc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="18.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1053,7 +1053,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                     <rect key="frame" x="20" y="6.3333333333333321" width="374" height="30.999999999999996"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="alN-YL-NVJ">
-                                                            <rect key="frame" x="0.0" y="6.3333333333333339" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1174,8 +1174,8 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="0.0" y="19.666666666666668" width="414" height="32.666666666666657"/>
-                                    <string key="text">These sites will not be 
+                                    <rect key="frame" x="99.666666666666686" y="22" width="215" height="28"/>
+                                    <string key="text">These unprotected sites will not be
 enhanced by Privacy Protection.</string>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                     <color key="textColor" red="0.7434888482093811" green="0.76165848970413208" blue="0.79455751180648804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1198,7 +1198,6 @@ enhanced by Privacy Protection.</string>
                                 <constraint firstItem="SWM-CB-n4U" firstAttribute="leading" secondItem="FGH-RR-RSf" secondAttribute="leading" constant="20" id="Npr-t4-BQD"/>
                                 <constraint firstItem="SWM-CB-n4U" firstAttribute="centerY" secondItem="zvh-2e-Wmz" secondAttribute="centerY" id="TRo-Q2-km7"/>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="centerY" secondItem="FGH-RR-RSf" secondAttribute="centerY" id="dJp-bP-2uG"/>
-                                <constraint firstItem="zvh-2e-Wmz" firstAttribute="width" secondItem="FGH-RR-RSf" secondAttribute="width" id="oX4-WQ-JuS"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -1210,10 +1209,10 @@ enhanced by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
+                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1240,8 +1239,8 @@ enhanced by Privacy Protection.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection is on for all sites." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Unprotected Sites Yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
+                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1317,10 +1316,10 @@ enhanced by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
-                                            <rect key="frame" x="20" y="12.666666666666666" width="374" height="18.666666666666671"/>
+                                            <rect key="frame" x="20" y="14" width="374" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1372,7 +1371,7 @@ enhanced by Privacy Protection.</string>
                                             <rect key="frame" x="20" y="6.3333333333333321" width="374" height="30.999999999999996"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When Signing In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="bIg-0T-UWq">
-                                                    <rect key="frame" x="0.0" y="5.9999999999999982" width="317" height="18.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="7.3333333333333321" width="317" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1526,7 +1525,7 @@ enhanced by Privacy Protection.</string>
                                                     <rect key="frame" x="20" y="6.3333333333333321" width="374" height="30.999999999999996"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zpg-h0-rYv">
-                                                            <rect key="frame" x="0.0" y="6.3333333333333339" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1558,7 +1557,7 @@ enhanced by Privacy Protection.</string>
                                                     <rect key="frame" x="20" y="6.3333333333333321" width="374" height="30.999999999999996"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="13n-KI-KLq">
-                                                            <rect key="frame" x="0.0" y="6.3333333333333339" width="317" height="18.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.6666666666666679" width="317" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>

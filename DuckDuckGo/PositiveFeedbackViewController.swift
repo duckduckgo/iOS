@@ -31,6 +31,10 @@ class PositiveFeedbackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Temporary solution to bypass app store rejection
+        rateAppButton.isHidden = true
+        supplementaryText.isHidden = true
+        
         configureLabels()
         configureButtons()
 

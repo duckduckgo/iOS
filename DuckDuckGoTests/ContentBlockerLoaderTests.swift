@@ -138,6 +138,10 @@ class MockFileStore: FileStore {
         return nil
     }
     
+    override func hasData(forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
+        return false
+    }
+    
 }
 
 class MockEtagStorage: BlockerListETagStorage {
@@ -159,8 +163,7 @@ class MockContenBlockingRequest: ContentBlockerRemoteDataSource {
     
     func request(_ configuration: ContentBlockerRequest.Configuration, completion: @escaping (ContentBlockerRequest.Response) -> Void) {
         guard let response = mockResponse else {
-            XCTFail("No mock response set")
-            return
+            fatalError("No mock response set")
         }
         requestCount += 1
         

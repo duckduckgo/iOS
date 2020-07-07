@@ -125,13 +125,25 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func updateMessage() {
+        let theme = self.theme ?? ThemeManager.shared.currentTheme
+        
         guard let message = message else { return }
-        label.attributedText = attributedString(from: String(Array(message)[0 ..< position]))
+        let baseText = attributedString(from: String(Array(message)[0 ..< position]), color: theme.daxDialogTextColor)
+        label.attributedText = baseText
+        
+        let restOfString = String(Array(message)[position...])
+        guard let nextWhitespace = restOfString.firstIndex(where: { $0.isWhitespace }) else { return }
+        let restOfWord = String(restOfString[restOfString.startIndex ..< nextWhitespace])
+        let invisible = attributedString(from: restOfWord, color: theme.daxDialogBackgroundColor)
+        
+        let combined = NSMutableAttributedString()
+        combined.append(baseText)
+        combined.append(invisible)
+        label.attributedText = combined
     }
     
-    private func attributedString(from string: String) -> NSAttributedString {
-        let theme = self.theme ?? ThemeManager.shared.currentTheme
-        return string.attributedStringFromMarkdown(color: theme.daxDialogTextColor, fontSize: isSmall ? 16 : 18)
+    private func attributedString(from string: String, color: UIColor) -> NSAttributedString {
+        return string.attributedStringFromMarkdown(color: color, fontSize: isSmall ? 16 : 18)
     }
      
 }

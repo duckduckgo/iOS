@@ -22,6 +22,7 @@ import Core
 import WebKit
 import os.log
 
+// swiftlint:disable file_length
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
@@ -37,14 +38,13 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
     
-    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var displayModeButton: UIButton!
     @IBOutlet weak var bookmarkAllButton: UIButton!
     
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
-    
-    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
+
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     weak var previewsSource: TabPreviewsSource!
@@ -54,6 +54,9 @@ class TabSwitcherViewController: UIViewController {
     override var canBecomeFirstResponder: Bool { return true }
     
     var currentSelection: Int?
+    
+    private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    private var isProcessingUpdates = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,12 +65,35 @@ class TabSwitcherViewController: UIViewController {
         currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
         becomeFirstResponder()
+        
+        if !tabSwitcherSettings.hasSeenNewLayout {
+            Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
+            tabSwitcherSettings.hasSeenNewLayout = true
+        }
     }
     
-    func setupBackgroundView() {
+    private func setupBackgroundView() {
         let view = UIView(frame: collectionView.frame)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:))))
         collectionView.backgroundView = view
+    }
+    
+    private func refreshDisplayModeButton(theme: Theme = ThemeManager.shared.currentTheme) {
+        switch theme.currentImageSet {
+        case .dark:
+            // Reverse colors (selection)
+            if tabSwitcherSettings.isGridViewEnabled {
+                displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
+            } else {
+                displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
+            }
+        case .light:
+            if tabSwitcherSettings.isGridViewEnabled {
+                displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
+            } else {
+                displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -108,28 +134,9 @@ class TabSwitcherViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        delegate?.tabSwitcherDidAppear(self)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        delegate?.tabSwitcherDidDisappear(self)
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.collectionViewLayout.invalidateLayout()
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let nav = segue.destination as? UINavigationController,
-            let controller = nav.topViewController as? SettingsViewController {
-            controller.homePageSettingsDelegate = homePageSettingsDelegate
-        }
-        
     }
     
     private func scrollToInitialTab() {
@@ -195,14 +202,31 @@ class TabSwitcherViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func onSettingsPressed(_ sender: UIButton) {
-        // Segue performed from storyboard
-        Pixel.fire(pixel: .settingsOpenedFromTabsSwitcher)
+    @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
+        tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
+        
+        if tabSwitcherSettings.isGridViewEnabled {
+            Pixel.fire(pixel: .tabSwitcherGridEnabled)
+        } else {
+            Pixel.fire(pixel: .tabSwitcherListEnabled)
+        }
+        
+        refreshDisplayModeButton()
+        
+        UIView.transition(with: view,
+                          duration: 0.3,
+                          options: .transitionCrossDissolve, animations: {
+                            self.collectionView.reloadData()
+        }, completion: nil)
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
-        dismiss()
+        
+        // Delay dismissal so new tab inertion can be animated.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.dismiss()
+        }
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
@@ -250,10 +274,12 @@ extension TabSwitcherViewController: TabViewCellDelegate {
             collectionView.reloadData()
         } else {
             collectionView.performBatchUpdates({
+                isProcessingUpdates = true
                 delegate.tabSwitcher(self, didRemoveTab: tab)
                 currentSelection = tabsModel.currentIndex
                 collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
             }, completion: { _ in
+                self.isProcessingUpdates = false
                 guard let current = self.currentSelection else { return }
                 self.refreshTitle()
                 self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
@@ -278,8 +304,10 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as? TabViewCell else {
-            fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
+        
+        let cellIdentifier = tabSwitcherSettings.isGridViewEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? TabViewCell else {
+            fatalError("Failed to dequeue cell \(cellIdentifier) as TabViewCell")
         }
         cell.delegate = self
         cell.isDeleting = false
@@ -339,7 +367,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
         
         // Calculate height based on the view size
         let contentAspectRatio = collectionView.bounds.width / collectionView.bounds.height
-        let heightToFit = (columnWidth / contentAspectRatio) + TabViewCell.Constants.cellHeaderHeight
+        let heightToFit = (columnWidth / contentAspectRatio) + TabViewGridCell.Constants.cellHeaderHeight
         
         // Try to display at least `preferredMinNumberOfRows`
         let preferredMaxHeight = collectionView.bounds.height / Constants.preferredMinNumberOfRows
@@ -353,10 +381,17 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let columnWidth = calculateColumnWidth(minimumColumnWidth: 150, maxColumns: 4)
-        let rowHeight = calculateRowHeight(columnWidth: columnWidth)
-        return CGSize(width: floor(columnWidth),
-                      height: floor(rowHeight))
+        if tabSwitcherSettings.isGridViewEnabled {
+            let columnWidth = calculateColumnWidth(minimumColumnWidth: 150, maxColumns: 4)
+            let rowHeight = calculateRowHeight(columnWidth: columnWidth)
+            return CGSize(width: floor(columnWidth),
+                          height: floor(rowHeight))
+        } else {
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+            let spacing = layout?.sectionInset.left ?? 0.0
+            
+            return CGSize(width: collectionView.bounds.size.width - 2 * spacing, height: 70)
+        }
     }
     
 }
@@ -364,6 +399,9 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 extension TabSwitcherViewController: TabObserver {
     
     func didChange(tab: Tab) {
+        //Reloading when updates are processed will result in a crash
+        guard !isProcessingUpdates else { return }
+        
         if let index = tabsModel.indexOf(tab: tab) {
             collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
         }
@@ -375,8 +413,9 @@ extension TabSwitcherViewController: Themable {
     func decorate(with theme: Theme) {
         view.backgroundColor = theme.backgroundColor
         
+        refreshDisplayModeButton(theme: theme)
+        
         titleView.textColor = theme.barTintColor
-        settingsButton.tintColor = theme.barTintColor
         bookmarkAllButton.tintColor = theme.barTintColor
         
         toolbar.barTintColor = theme.barBackgroundColor
@@ -385,3 +424,4 @@ extension TabSwitcherViewController: Themable {
         collectionView.reloadData()
     }
 }
+// swiftlint:enable file_length

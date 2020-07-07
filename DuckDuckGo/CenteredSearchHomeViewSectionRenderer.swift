@@ -29,6 +29,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         static let fixedSearchCenterOffset: CGFloat = 40
         
+        static let logoOffset: CGFloat = -72        
     }
     
     private var searchCenterOffset: CGFloat {
@@ -82,7 +83,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                 let logo = UIImageView(image: UIImage(named: "Logo"))
 
                 logo.frame = targetFrame
-                logo.center = controller.view.center
+                logo.center = CGPoint(x: controller.view.center.x, y: controller.view.center.y + Constants.logoOffset)
                 controller.view.addSubview(logo)
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {

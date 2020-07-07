@@ -1,2 +1,2 @@
-• We added webpage previews for each tab and a new grid layout to make it easier to manage your tabs.
-• Other bug fixes and improvements.
+• Now you can see page previews on the tab switcher screen. If you prefer the list view, you can use the toggle to switch between the two layouts.
+• Bug fixed and improvements.

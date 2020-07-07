@@ -108,14 +108,12 @@ class BookmarksManager {
 
     func deleteBookmark(at index: Int) {
         var bookmarks = dataStore.bookmarks
-        bookmarks[index].removeCachedFavicon()
         bookmarks.remove(at: index)
         dataStore.bookmarks = bookmarks
     }
 
     func deleteFavorite(at index: Int) {
         var favorites = dataStore.favorites
-        favorites[index].removeCachedFavicon()
         favorites.remove(at: index)
         dataStore.favorites = favorites
     }
@@ -165,14 +163,4 @@ class BookmarksManager {
         }
     }
     
-}
-
-fileprivate extension Link {
-
-    func removeCachedFavicon() {
-        guard let domain = url.host else { return }
-        guard let url = AppUrls().faviconUrl(forDomain: domain) else { return }
-        ImageCache(name: BookmarksManager.imageCacheName).removeImage(forKey: url.absoluteString)
-    }
-
 }

@@ -54,7 +54,7 @@ class VariantManagerTests: XCTestCase {
         for i in 0 ..< 100 {
             
             let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i))
-            subject.assignVariantIfNeeded { _ in return true }
+            subject.assignVariantIfNeeded { _ in return .includeInCohort }
             XCTAssertNotEqual("mt", subject.currentVariant?.name)
 
         }
@@ -67,7 +67,7 @@ class VariantManagerTests: XCTestCase {
         mockStore.atb = "atb"
 
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
-        subject.assignVariantIfNeeded { _ in return true }
+        subject.assignVariantIfNeeded { _ in return .includeInCohort }
         XCTAssertNil(subject.currentVariant)
 
     }
@@ -76,7 +76,7 @@ class VariantManagerTests: XCTestCase {
 
         let variant = Variant(name: "anything", weight: 100, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
-        subject.assignVariantIfNeeded { _ in return true }
+        subject.assignVariantIfNeeded { _ in return .includeInCohort }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)
 
     }
@@ -104,7 +104,7 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
-        subject.assignVariantIfNeeded { _ in return true }
+        subject.assignVariantIfNeeded { _ in return .includeInCohort }
         XCTAssertEqual("mb", subject.currentVariant?.name)
         XCTAssertEqual("mb", mockStore.variant)
 
@@ -125,7 +125,7 @@ class VariantManagerTests: XCTestCase {
 
     private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
         let variantManager = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: rng)
-        variantManager.assignVariantIfNeeded { _ in return true }
+        variantManager.assignVariantIfNeeded { _ in return .includeInCohort }
         return variantManager
     }
 

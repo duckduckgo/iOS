@@ -37,7 +37,7 @@ protocol DaxDialogsSettings {
 
 class DefaultDaxDialogsSettings: DaxDialogsSettings {
     
-    @UserDefaultsWrapper(key: .daxIsDismissed, defaultValue: false)
+    @UserDefaultsWrapper(key: .daxIsDismissed, defaultValue: true)
     var isDismissed: Bool
     
     @UserDefaultsWrapper(key: .daxHomeScreenMessagesSeen, defaultValue: 0)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h22-TC-N6i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h22-TC-N6i">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -193,6 +193,9 @@
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                                         </accessibility>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="33" id="cd2-gg-jV3"/>
+                                                        </constraints>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Please share the love by rating the app on the App Store.">
                                                                 <attributes>
@@ -218,13 +221,13 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Elk-FL-6tl" userLabel="Buttons Container">
-                                                <rect key="frame" x="37" y="440" width="340" height="172"/>
+                                                <rect key="frame" x="37" y="484" width="340" height="128"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APU-da-5BY">
-                                                        <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="340" height="0.0"/>
                                                         <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="44" id="wdh-YQ-Ir7"/>
+                                                            <constraint firstAttribute="height" id="wdh-YQ-Ir7"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <state key="normal" title="Rate the App">
@@ -240,7 +243,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zN-Xh-yYi">
-                                                        <rect key="frame" x="0.0" y="64" width="340" height="44"/>
+                                                        <rect key="frame" x="0.0" y="20" width="340" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="yXW-Ta-pKW"/>
                                                         </constraints>
@@ -258,7 +261,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1s-GY-hbq">
-                                                        <rect key="frame" x="0.0" y="128" width="340" height="44"/>
+                                                        <rect key="frame" x="0.0" y="84" width="340" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="Yze-Gt-ETV"/>
                                                         </constraints>

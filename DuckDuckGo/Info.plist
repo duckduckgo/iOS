@@ -136,6 +136,8 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleURLSchemes</key>
@@ -144,6 +146,8 @@
 				<string>ddgQuickLink</string>
 				<string>ddgBookmarks</string>
 				<string>ddgFire</string>
+				<string>http</string>
+				<string>https</string>
 			</array>
 		</dict>
 	</array>
@@ -170,8 +174,6 @@
 	<string>Allows you to share recordings</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allows you to save images to your device</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to upload photographs and videos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>proximanova-extrabold.otf</string>

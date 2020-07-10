@@ -104,8 +104,8 @@ class SettingsViewController: UITableViewController {
             return
         }
 
-        if segue.destination is WhitelistViewController {
-            Pixel.fire(pixel: .settingsManageWhitelist)
+        if segue.destination is UnprotectedSitesViewController {
+            Pixel.fire(pixel: .settingsUnprotectedSites)
             return
         }
         

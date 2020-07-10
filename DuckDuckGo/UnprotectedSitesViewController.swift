@@ -1,5 +1,5 @@
 //
-//  WhitelistViewController.swift
+//  UnprotectedSitesViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-class WhitelistViewController: UITableViewController {
+class UnprotectedSitesViewController: UITableViewController {
     
     @IBOutlet var infoText: UILabel!
     @IBOutlet var backButton: UIButton!
@@ -32,7 +32,7 @@ class WhitelistViewController: UITableViewController {
     private var hiddenNavBarItem: UIBarButtonItem?
     private var hiddenNavBarItems: [UIBarButtonItem]?
     
-    let whitelistManager = WhitelistManager()
+    let unprotectedSitesManager = UnprotectedSitesManager()
     
     var showBackButton = false
     var enforceLightTheme = false
@@ -60,7 +60,7 @@ class WhitelistViewController: UITableViewController {
             setToolbarItems([flexibleSpace, editButton], animated: animated)
         }
         
-        editButton.isEnabled = whitelistManager.count > 0
+        editButton.isEnabled = unprotectedSitesManager.count > 0
     }
     
     private func configureBackButton() {
@@ -74,7 +74,7 @@ class WhitelistViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return whitelistManager.count == 0 ? 1 : whitelistManager.count
+        return unprotectedSitesManager.count == 0 ? 1 : unprotectedSitesManager.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,16 +82,16 @@ class WhitelistViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return whitelistManager.count > 0
+        return unprotectedSitesManager.count > 0
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
 
-        if let domain = whitelistManager.domain(at: indexPath.row) {
-            whitelistManager.remove(domain: domain)
+        if let domain = unprotectedSitesManager.domain(at: indexPath.row) {
+            unprotectedSitesManager.remove(domain: domain)
             
-            if whitelistManager.count == 0 {
+            if unprotectedSitesManager.count == 0 {
                 if tableView.isEditing {
                     // According to documentation it is inivalid to call it synchronously here.
                     DispatchQueue.main.async {
@@ -114,9 +114,9 @@ class WhitelistViewController: UITableViewController {
 
     @IBAction func onAddPressed() {
 
-        let title = UserText.alertAddToWhitelist
-        let placeholder = UserText.alertAddToWhitelistPlaceholder
-        let add = UserText.actionAdd
+        let title = UserText.alertDisableProtection
+        let placeholder = UserText.alertDisableProtectionPlaceholder
+        let confirm = UserText.actionAdd
         let cancel = UserText.actionCancel
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
@@ -125,7 +125,7 @@ class WhitelistViewController: UITableViewController {
             textField.placeholder = placeholder
             textField.keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         }
-        addSiteBox.addAction(UIAlertAction.init(title: add, style: .default, handler: { _ in self.addSite(from: addSiteBox) }))
+        addSiteBox.addAction(UIAlertAction.init(title: confirm, style: .default, handler: { _ in self.addSite(from: addSiteBox) }))
         addSiteBox.addAction(UIAlertAction.init(title: cancel, style: .cancel, handler: nil))
         present(addSiteBox, animated: true, completion: nil)
 
@@ -160,7 +160,7 @@ class WhitelistViewController: UITableViewController {
     private func addSite(from controller: UIAlertController) {
         guard let field = controller.textFields?[0] else { return }
         guard let domain = domain(from: field) else { return }
-        whitelistManager.add(domain: domain)
+        unprotectedSitesManager.add(domain: domain)
         tableView.reloadData()
         refreshToolbarItems(animated: true)
     }
@@ -173,10 +173,10 @@ class WhitelistViewController: UITableViewController {
 
     private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        if whitelistManager.count > 0 {
-            cell = createWhitelistedSiteCell(forRowAt: indexPath)
+        if unprotectedSitesManager.count > 0 {
+            cell = createUnprotectedSiteCell(forRowAt: indexPath)
         } else {
-            cell = createNoWhitelistedSitesCell(forRowAt: indexPath)
+            cell = createAllProtectedCell(forRowAt: indexPath)
         }
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
@@ -186,33 +186,33 @@ class WhitelistViewController: UITableViewController {
         return cell
     }
     
-    private func createNoWhitelistedSitesCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let noWhitelistedSitesCell = tableView.dequeueReusableCell(withIdentifier: "NoWhitelistCell") as? NoSuggestionsTableViewCell else {
-            fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'NoWhitelistCell' identifier as ")
+    private func createAllProtectedCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let allProtectedCell = tableView.dequeueReusableCell(withIdentifier: "AllProtectedCell") as? NoSuggestionsTableViewCell else {
+            fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'AllProtectedCell'")
         }
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
-        noWhitelistedSitesCell.label.textColor = theme.tableCellTextColor
+        allProtectedCell.label.textColor = theme.tableCellTextColor
         
-        return noWhitelistedSitesCell
+        return allProtectedCell
     }
     
-    private func createWhitelistedSiteCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as? WhitelistItemCell else {
-            fatalError("Failed to dequeue cell as WhitelistItemCell")
+    private func createUnprotectedSiteCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let unprotectedItemCell = tableView.dequeueReusableCell(withIdentifier: "UnprotectedSitesItemCell") as? UnprotectedSitesItemCell else {
+            fatalError("Failed to dequeue cell as UnprotectedSitesItemCell")
         }
         
-        whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
+        unprotectedItemCell.domain = unprotectedSitesManager.domain(at: indexPath.row)
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
-        whitelistItemCell.domainLabel.textColor = theme.tableCellTextColor
+        unprotectedItemCell.domainLabel.textColor = theme.tableCellTextColor
         
-        return whitelistItemCell
+        return unprotectedItemCell
     }
 
 }
 
-class WhitelistItemCell: UITableViewCell {
+class UnprotectedSitesItemCell: UITableViewCell {
 
     @IBOutlet weak var domainLabel: UILabel!
 
@@ -227,7 +227,7 @@ class WhitelistItemCell: UITableViewCell {
 
 }
 
-extension WhitelistViewController: Themable {
+extension UnprotectedSitesViewController: Themable {
     
     func decorate(with theme: Theme) {
         let theme = enforceLightTheme ? LightTheme() : theme

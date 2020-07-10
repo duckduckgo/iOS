@@ -104,7 +104,7 @@ class PrivacyProtectionController: ThemableNavigationController {
 
         viewControllers.forEach {
             guard let infoDisplaying = $0 as? PrivacyProtectionInfoDisplaying else { return }
-            infoDisplaying.using(siteRating: siteRating, configuration: storageCache.configuration)
+            infoDisplaying.using(siteRating: siteRating, protectionStore: storageCache.protectionStore)
         }
     }
 

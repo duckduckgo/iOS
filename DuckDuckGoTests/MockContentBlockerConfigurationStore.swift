@@ -1,5 +1,5 @@
 //
-//  MockContentBlockerConfigurationStore.swift
+//  MockContentBlockerProtectionStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,26 +19,22 @@
 
 @testable import Core
 
-class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
+class MockContentBlockerProtectionStore: ContentBlockerProtectionStore {
 
-    var domainWhitelist = Set<String>()
+    var unprotectedDomains = Set<String>()
     var protecting = true
     var enabled = true
 
-    func whitelisted(domain: String) -> Bool {
-        return domainWhitelist.contains(domain)
+    func isProtected(domain: String?) -> Bool {
+        guard let domain = domain else { return true }
+        return unprotectedDomains.contains(domain)
     }
 
-    func addToWhitelist(domain: String) {
-        domainWhitelist.insert(domain)
+    func disableProtection(forDomain domain: String) {
+        unprotectedDomains.insert(domain)
     }
 
-    func removeFromWhitelist(domain: String) {
-        domainWhitelist.remove(domain)
+    func enableProtection(forDomain domain: String) {
+        unprotectedDomains.remove(domain)
     }
-
-    func protecting(domain: String?) -> Bool {
-        return protecting
-    }
-
 }

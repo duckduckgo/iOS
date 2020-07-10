@@ -57,7 +57,7 @@ public class HTTPSUpgrade {
             return
         }
         
-        guard !store.hasWhitelistedDomain(host) else {
+        guard store.shouldUpgradeDomain(host) else {
             Pixel.fire(pixel: .httpsNoLookup)
             completion(false)
             return

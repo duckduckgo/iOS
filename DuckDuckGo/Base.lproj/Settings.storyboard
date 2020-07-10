@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -286,7 +286,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Privacy Protection Whitelist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FHC-1z-Z3v">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Unprotected Sites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FHC-1z-Z3v">
                                                     <rect key="frame" x="20" y="0.0" width="355" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1159,10 +1159,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
             </objects>
             <point key="canvasLocation" x="4181.6000000000004" y="929.55665024630548"/>
         </scene>
-        <!--Whitelist-->
+        <!--Unprotected Sites-->
         <scene sceneID="tsd-dd-bMe">
             <objects>
-                <tableViewController storyboardIdentifier="Whitelist" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UEu-y1-KbY" customClass="WhitelistViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Unprotected Sites" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UEu-y1-KbY" customClass="UnprotectedSitesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wBV-2d-nqZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1174,9 +1174,9 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="0.0" y="22" width="414" height="28"/>
-                                    <string key="text">These whitelisted sites will not be 
-upgraded by Privacy Protection.</string>
+                                    <rect key="frame" x="99.666666666666686" y="22" width="215" height="28"/>
+                                    <string key="text">These unprotected sites will not be
+enhanced by Privacy Protection.</string>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                     <color key="textColor" red="0.7434888482093811" green="0.76165848970413208" blue="0.79455751180648804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -1198,11 +1198,10 @@ upgraded by Privacy Protection.</string>
                                 <constraint firstItem="SWM-CB-n4U" firstAttribute="leading" secondItem="FGH-RR-RSf" secondAttribute="leading" constant="20" id="Npr-t4-BQD"/>
                                 <constraint firstItem="SWM-CB-n4U" firstAttribute="centerY" secondItem="zvh-2e-Wmz" secondAttribute="centerY" id="TRo-Q2-km7"/>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="centerY" secondItem="FGH-RR-RSf" secondAttribute="centerY" id="dJp-bP-2uG"/>
-                                <constraint firstItem="zvh-2e-Wmz" firstAttribute="width" secondItem="FGH-RR-RSf" secondAttribute="width" id="oX4-WQ-JuS"/>
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WhitelistItemCell" id="F98-L0-AqM" customClass="WhitelistItemCell" customModule="DuckDuckGo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UnprotectedSitesItemCell" id="F98-L0-AqM" customClass="UnprotectedSitesItemCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="127.33333206176758" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F98-L0-AqM" id="cYQ-bZ-RLd">
@@ -1233,14 +1232,14 @@ upgraded by Privacy Protection.</string>
                                     <outlet property="domainLabel" destination="EIq-Ev-nfj" id="QhA-qR-NwC"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoWhitelistCell" id="w3x-fs-5fy" userLabel="Empty" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AllProtectedCell" id="w3x-fs-5fy" userLabel="Empty" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="171" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w3x-fs-5fy" id="Zj3-Tz-dY0">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No whitelisted sites yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Unprotected Sites Yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
                                             <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1278,7 +1277,7 @@ upgraded by Privacy Protection.</string>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Whitelist" id="OHV-qC-tL9">
+                    <navigationItem key="navigationItem" title="Unprotected Sites" id="OHV-qC-tL9">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="CxT-QK-iVn">
                             <connections>
                                 <action selector="onAddPressed" destination="UEu-y1-KbY" id="wOp-Gh-hyF"/>

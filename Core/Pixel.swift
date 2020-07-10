@@ -37,9 +37,9 @@ public enum PixelName: String {
     case privacyDashboardNetworks = "mp_n"
     case privacyDashboardPrivacyPractices = "mp_p"
     case privacyDashboardGlobalStats = "mp_s"
-    case privacyDashboardWhitelistAdd = "mp_wla"
-    case privacyDashboardWhitelistRemove = "mp_wlr"
-    case privacyDashboardManageWhitelist = "mp_mw"
+    case privacyDashboardProtectionDisabled = "mp_wla"
+    case privacyDashboardProtectionEnabled = "mp_wlr"
+    case privacyDashboardManageProtection = "mp_mw"
     case privacyDashboardReportBrokenSite = "mp_rb"
     
     case httpsNoLookup = "m_https_nl"
@@ -100,7 +100,7 @@ public enum PixelName: String {
     case settingsKeyboardAppLaunchOn = "ms_ks_al_on"
     case settingsKeyboardAppLaunchOff = "ms_ks_pl_off"
     
-    case settingsManageWhitelist = "ms_mw"
+    case settingsUnprotectedSites = "ms_mw"
     case settingsLinkPreviewsOff = "ms_lp_f"
     case settingsLinkPreviewsOn = "ms_lp_n"
 
@@ -123,8 +123,8 @@ public enum PixelName: String {
     case browsingMenuShare = "mb_sh"
     case browsingMenuSettings = "mb_st"
     case browsingMenuFindInPage = "mb_fp"
-    case browsingMenuWhitelistAdd = "mb_wla"
-    case browsingMenuWhitelistRemove = "mb_wlr"
+    case browsingMenuDisableProtection = "mb_wla"
+    case browsingMenuEnableProtection = "mb_wlr"
     case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuFireproof = "mb_f"
     
@@ -210,7 +210,7 @@ public enum PixelName: String {
     case dbDestroyError = "m_d_dbde"
     case dbDestroyFileError = "m_d_dbdf"
     case dbInitializationError = "m_d_dbie"
-    case dbSaveWhitelistError = "m_d_dbsw"
+    case dbSaveExcludedHTTPSDomainsError = "m_d_dbsw"
     case dbSaveBloomFilterError = "m_d_dbsb"
     
     case configurationFetchInfo = "m_d_cfgfetch"

@@ -56,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         DispatchQueue.global(qos: .background).async {
-            FileStore().removeLegacyData()
             ContentBlockerStringCache.removeLegacyData()
         }
         

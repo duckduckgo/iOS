@@ -29,7 +29,7 @@ public class StorageCache: StorageCacheUpdating {
     public let fileStore = FileStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     
-    public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    public let protectionStore: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     
     // Read only
     public let tld: TLD
@@ -47,9 +47,9 @@ public class StorageCache: StorageCacheUpdating {
     
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
         switch configuration {
-        case .httpsWhitelist:
-            guard let whitelist = data as? [String] else { return false }
-            return httpsUpgradeStore.persistWhitelist(domains: whitelist)
+        case .httpsExcludedDomains:
+            guard let excludedDomains = data as? [String] else { return false }
+            return httpsUpgradeStore.persistExcludedDomains(excludedDomains)
             
         case .httpsBloomFilter:
             guard let bloomFilter = data as? (spec: HTTPSBloomFilterSpecification, data: Data) else { return false }
@@ -73,7 +73,7 @@ public class StorageCache: StorageCacheUpdating {
             }
             return false
             
-        case .temporaryWhitelist:
+        case .temporaryUnprotectedSites:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
         }

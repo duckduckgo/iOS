@@ -48,8 +48,8 @@
 "action.title.share"= "Share...";
 "action.title.request.desktop.site" = "Request Desktop Site";
 "action.title.request.mobile.site" = "Request Mobile Site";
-"action.title.add.to.whitelist" = "Add to Whitelist";
-"action.title.remove.from.whitelist" = "Remove from Whitelist";
+"action.title.disable.protection" = "Disable Privacy Protection";
+"action.title.enable.protection" = "Enable Privacy Protection";
 "action.title.remove.bookmark" = "Remove Bookmark";
 "action.title.save.bookmark" = "Add to Bookmarks";
 "action.title.save.favorite" = "Add to Favorites";
@@ -61,10 +61,10 @@
 "alert.title.bookmarkAll" = "Bookmark All Tabs?";
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
-"alert.title.add.to.whitelist" = "Add to Whitelist";
-"alert.title.add.to.whitelist.placeholder" = "www.example.com";
-"toast.added.to.whitelist" = "%@ added to whitelist";
-"toast.removed.from.whitelist" = "%@ removed from whitelist";
+"alert.title.disable.protection" = "Add to Unprotected Sites";
+"alert.title.disable.protection.placeholder" = "www.example.com";
+"toast.protection.disabled" = "%@ added to unprotected sites";
+"toast.protection.enabled" = "%@ removed from unprotected sites";
 
 "auth.alert.title" = "Authentication required";
 "auth.alert.message.encrypted" = "Log in to %@. Your login information will be sent securely.";

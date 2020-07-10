@@ -59,12 +59,12 @@ extension SiteRating {
         return privacyPractice.summary
     }
     
-    func majorNetworksText(configuration: ContentBlockerConfigurationStore) -> String {
-        return protecting(configuration) ? majorNetworksBlockedText() : majorNetworksDetectedText()
+    func majorNetworksText(protectionStore: ContentBlockerProtectionStore) -> String {
+        return protecting(protectionStore) ? majorNetworksBlockedText() : majorNetworksDetectedText()
     }
     
-    func majorNetworksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(configuration) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
+    func majorNetworksSuccess(protectionStore: ContentBlockerProtectionStore) -> Bool {
+        return (protecting(protectionStore) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
     }
     
     func majorNetworksBlockedText() -> String {
@@ -75,12 +75,12 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionMajorTrackersFound, majorTrackerNetworksDetected)
     }
     
-    func networksText(configuration: ContentBlockerConfigurationStore) -> String {
-        return protecting(configuration) ? networksBlockedText() : networksDetectedText()
+    func networksText(protectionStore: ContentBlockerProtectionStore) -> String {
+        return protecting(protectionStore) ? networksBlockedText() : networksDetectedText()
     }
     
-    func networksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(configuration) ? trackersBlocked.count : trackersDetected.count) <= 0
+    func networksSuccess(protectionStore: ContentBlockerProtectionStore) -> Bool {
+        return (protecting(protectionStore) ? trackersBlocked.count : trackersDetected.count) <= 0
     }
     
     func networksBlockedText() -> String {
@@ -91,9 +91,8 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionTrackersFound, trackersDetected.count)
     }
     
-    func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        guard let domain = domain else { return true }
-        return !contentBlocker.domainWhitelist.contains(domain)
+    func protecting(_ protectionStore: ContentBlockerProtectionStore) -> Bool {
+        return protectionStore.isProtected(domain: domain)
     }
     
     static let gradeImages: [Grade.Grading: UIImage] = [

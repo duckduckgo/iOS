@@ -22,23 +22,23 @@ import XCTest
 
 class HTTPSUpgradeParserTests: XCTestCase {
     
-    func testWhenWhitelistJSONIsUnexpectedThenTypeMismatchErrorThrown() {
+    func testWhenExcludedDomainsJSONIsUnexpectedThenTypeMismatchErrorThrown() {
         let data = JsonTestDataLoader().unexpected()
-        XCTAssertThrowsError(try HTTPSUpgradeParser.convertWhitelist(fromJSONData: data)) { error in
+        XCTAssertThrowsError(try HTTPSUpgradeParser.convertExcludedDomainsData(data)) { error in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
-    func testWhenWhitelistJSONIsInvalidThenInvalidJsonErrorThrown() {
+    func testWhenExcludedDomainsJSONIsInvalidThenInvalidJsonErrorThrown() {
         let data = JsonTestDataLoader().invalid()
-        XCTAssertThrowsError(try HTTPSUpgradeParser.convertWhitelist(fromJSONData: data)) { error in
+        XCTAssertThrowsError(try HTTPSUpgradeParser.convertExcludedDomainsData(data)) { error in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
     
-    func testWhenWhitelistIsValidThenDomainsReturned() {
-        let data = JsonTestDataLoader().fromJsonFile("MockFiles/https_whitelist.json")
-        let result = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data)
+    func testWhenExcludedDomainsJSONIsValidThenDomainsReturned() {
+        let data = JsonTestDataLoader().fromJsonFile("MockFiles/https_excluded_domains.json")
+        let result = try? HTTPSUpgradeParser.convertExcludedDomainsData(data)
         XCTAssertEqual(Set<String>(["www.example.com", "example.com", "test.com", "anothertest.com"]), Set<String>(result!))
     }
     

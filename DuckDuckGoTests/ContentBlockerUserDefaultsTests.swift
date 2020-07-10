@@ -28,25 +28,25 @@ class ContentBlockerUserDefaultsTests: XCTestCase {
         static let someOtherDomain = "someotherdomain.com"
     }
 
-    var testee: ContentBlockerConfigurationUserDefaults!
+    var testee: ContentBlockerProtectionUserDefaults!
 
     override func setUp() {
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
-        testee = ContentBlockerConfigurationUserDefaults(suiteName: Constants.userDefaultsSuit)
+        testee = ContentBlockerProtectionUserDefaults(suiteName: Constants.userDefaultsSuit)
     }
 
-    func testWhenNothingInWhitelistThenWhitelistedIsFalse() {
-        XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
+    func testWhenNothingIsUnprotectedThenProtectedReturnsTrue() {
+        XCTAssertTrue(testee.isProtected(domain: Constants.domain))
     }
 
-    func testWhenDomainAddedToWhitelistThenWhitelistedIsTrue() {
-        testee.addToWhitelist(domain: Constants.domain)
-        XCTAssertTrue(testee.whitelisted(domain: Constants.domain))
+    func testWhenDomainIsUnprotectedThenProtectedReturnsFalse() {
+        testee.disableProtection(forDomain: Constants.domain)
+        XCTAssertFalse(testee.isProtected(domain: Constants.domain))
     }
 
-    func testWhenRemovedFromWhitelistThenWhitelistedIsFalse() {
-        testee.addToWhitelist(domain: Constants.domain)
-        testee.removeFromWhitelist(domain: Constants.domain)
-        XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
+    func testWhenDomainProtectionIsEnabledThenProtectedReturnsTrue() {
+        testee.disableProtection(forDomain: Constants.domain)
+        testee.enableProtection(forDomain: Constants.domain)
+        XCTAssertTrue(testee.isProtected(domain: Constants.domain))
     }
 }

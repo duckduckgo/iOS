@@ -77,7 +77,7 @@ public class SiteRatingView: UIView {
             circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
                                                                                   iconSize: circleIndicator.bounds.size)
         case .ready:
-            grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+            grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
             circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())

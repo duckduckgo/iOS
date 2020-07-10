@@ -29,9 +29,9 @@ public protocol HTTPSUpgradeStore {
     
     func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool
     
-    func hasWhitelistedDomain(_ domain: String) -> Bool
+    func shouldUpgradeDomain(_ domain: String) -> Bool
     
-    func persistWhitelist(domains: [String]) -> Bool
+    func persistExcludedDomains(_ domains: [String]) -> Bool
 }
 
 public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
@@ -124,48 +124,48 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
         }
     }
     
-    public func hasWhitelistedDomain(_ domain: String) -> Bool {
-        var result = false
+    public func shouldUpgradeDomain(_ domain: String) -> Bool {
+        var result = true
         context.performAndWait {
-            let request: NSFetchRequest<HTTPSWhitelistedDomain> = HTTPSWhitelistedDomain.fetchRequest()
+            let request: NSFetchRequest<HTTPSExcludedDomain> = HTTPSExcludedDomain.fetchRequest()
             request.predicate = NSPredicate(format: "domain = %@", domain.lowercased())
             guard let count = try? context.count(for: request) else { return }
-            result = count > 0
+            result = count == 0
         }
         return result
     }
     
     @discardableResult
-    public func persistWhitelist(domains: [String]) -> Bool {
+    public func persistExcludedDomains(_ domains: [String]) -> Bool {
         var result = true
         context.performAndWait {
-            deleteWhitelist()
+            deleteExcludedDomains()
 
             for domain in domains {
-                let entityName = String(describing: HTTPSWhitelistedDomain.self)
-                if let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSWhitelistedDomain {
+                let entityName = String(describing: HTTPSExcludedDomain.self)
+                if let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSExcludedDomain {
                     storedDomain.domain = domain.lowercased()
                 }
             }
             do {
                 try context.save()
             } catch {
-                Pixel.fire(pixel: .dbSaveWhitelistError, error: error, isCounted: true)
+                Pixel.fire(pixel: .dbSaveExcludedHTTPSDomainsError, error: error, isCounted: true)
                 result = false
             }
         }
         return result
     }
     
-    private func deleteWhitelist() {
+    private func deleteExcludedDomains() {
         context.performAndWait {
-            context.deleteAll(matching: HTTPSWhitelistedDomain.fetchRequest())
+            context.deleteAll(matching: HTTPSExcludedDomain.fetchRequest())
         }
     }
     
     func reset() {
         deleteBloomFilterSpecification()
         deleteBloomFilter()
-        deleteWhitelist()
+        deleteExcludedDomains()
     }
 }

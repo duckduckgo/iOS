@@ -99,6 +99,7 @@ extension TabViewController {
         
         return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToBookmarks)
+            Favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks)
             bookmarksManager.save(bookmark: link)
             self?.view.showBottomToast(UserText.webSaveBookmarkDone)
         }
@@ -112,6 +113,7 @@ extension TabViewController {
 
         return UIAlertAction(title: UserText.actionSaveFavorite, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToFavorites)
+            Favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks)
             bookmarksManager.save(favorite: link)
             self?.view.showBottomToast(UserText.webSaveFavoriteDone)
         }

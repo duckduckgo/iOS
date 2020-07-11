@@ -33,6 +33,11 @@ extension URL {
     enum Host: String {
         case localhost
     }
+
+    public func hashDomain() -> String? {
+        guard let domain = host else { return nil }
+        return ("DDGSalt" + domain).sha256()
+    }
     
     public func toHttps() -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }

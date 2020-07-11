@@ -22,78 +22,13 @@ import Core
 import Kingfisher
 
 extension UIImageView {
-    
-    enum FaviconType {
-        
-        case favicon
-        case appleTouch
-        
-    }
-    
-    struct FaviconConstants {
 
-        static let standardPlaceHolder = UIImage(named: "GlobeSmall")
-        static let appUrls = AppUrls()
-        static let options: KingfisherOptionsInfo = [
-            .downloader(NotFoundCachingDownloader())
-        ]
+//    /// Loads a favicon for a given domain.  DDG domain gets the ddg icon from the app automatically.
+//    /// `fallback` only called if no icon could be found
+//    /// `completion` only called when at least one image is found after all
+//    func loadFavicon(forDomain domain: String?, fallbackImage: UIImage? = FaviconConstants.standardPlaceHolder,
+//                     completion: ((UIImage?) -> Void)? = nil) {
+//
+//    }
 
-    }
-    
-    /// Loads a favicon for a given domain.
-    /// `fallback` only called if no icon could be found
-    /// `completion` only called when at least one image is found after all
-    func loadFavicon(forDomain domain: String?, fallbackImage: UIImage? = FaviconConstants.standardPlaceHolder,
-                     completion: ((UIImageView.FaviconType) -> Void)? = nil) {
-        
-        guard let domain = domain else {
-            self.image = fallbackImage
-            return
-        }
-    
-        let secureFaviconUrl = Self.FaviconConstants.appUrls.faviconUrl(forDomain: domain, secure: true)
-        let secureAppleTouchUrl = Self.FaviconConstants.appUrls.appleTouchIcon(forDomain: domain)
-        let insecureFaviconUrl = Self.FaviconConstants.appUrls.faviconUrl(forDomain: domain, secure: false)
-        let options = Self.FaviconConstants.options
-
-        kf.setImage(with: secureFaviconUrl, options: options) { [weak self] secureFaviconImage, _, _, _ in
-            
-            if let url = secureFaviconUrl, secureFaviconImage == nil {
-                NotFoundCachingDownloader.cacheNotFound(url)
-            }
-            
-            self?.kf.setImage(with: secureAppleTouchUrl,
-                              placeholder: secureFaviconImage,
-                              options: options) { [weak self] secureAppleTouchImage, _, _, _ in
-
-                if let url = secureAppleTouchUrl, secureAppleTouchImage == nil {
-                    NotFoundCachingDownloader.cacheNotFound(url)
-                }
-
-                if secureFaviconImage == nil && secureAppleTouchImage == nil {
-                
-                    self?.kf.setImage(with: insecureFaviconUrl, options: options) { [weak self] insecureFaviconImage, _, _, _ in
-                    
-                        if let url = insecureFaviconUrl, insecureFaviconImage == nil {
-                            NotFoundCachingDownloader.cacheNotFound(url)
-                        }
-
-                        if insecureFaviconImage == nil {
-                            self?.image = fallbackImage
-                        } else {
-                            completion?(.favicon)
-                        }
-                    
-                    }
-                    
-                } else {
-                    
-                    completion?(secureAppleTouchImage != nil ? .appleTouch : .favicon)
-                    
-                }
-            }
-        }
-        
-    }
-    
 }

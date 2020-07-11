@@ -18,7 +18,6 @@
 //
 
 import Core
-import Kingfisher
 
 class BookmarksManager {
 
@@ -53,10 +52,12 @@ class BookmarksManager {
     }
 
     func save(bookmark: Link) {
+        Favicons.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks)
         dataStore.addBookmark(bookmark)
     }
 
     func save(favorite: Link) {
+        Favicons.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks)
         dataStore.addFavorite(favorite)
     }
 

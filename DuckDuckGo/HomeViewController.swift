@@ -218,6 +218,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
+        Favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks)
         delegate?.home(self, didRequestUrl: link.url)
     }
 

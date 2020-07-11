@@ -185,7 +185,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             fatalError()
         }
         cell.label.textColor = theme.tableCellTextColor
-        cell.faviconImage?.loadFavicon(forDomain: model[index])
+        Favicons.loadFavicon(forDomain: model[index], intoImageView: cell.faviconImage, usingCache: .bookmarks)
         cell.label?.text = model[index].dropPrefix(prefix: wwwPrefix)
         cell.decorate(with: theme)
         return cell

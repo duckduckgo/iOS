@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import Kingfisher
 
 class BookmarkCell: UITableViewCell {
     
@@ -30,7 +29,7 @@ class BookmarkCell: UITableViewCell {
     
     func update(withBookmark bookmark: Link) {
         title.text = bookmark.title
-        favicon.loadFavicon(forDomain: bookmark.url.host)
+        Favicons.loadFavicon(forDomain: bookmark.url.host, intoImageView: favicon, usingCache: .bookmarks)
     }
     
 }

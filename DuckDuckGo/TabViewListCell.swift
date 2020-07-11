@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import Kingfisher
 
 class TabViewListCell: TabViewCell {
 
@@ -72,7 +71,7 @@ class TabViewListCell: TabViewCell {
         } else {
             removeButton.isHidden = false
             link.text = tab.link?.url.absoluteString ?? ""
-            favicon.loadFavicon(forDomain: tab.link?.url.host)
+            Favicons.loadFavicon(forDomain: tab.link?.url.host, intoImageView: favicon, usingCache: .tabs)
         }
     }
     

@@ -1,7 +1,7 @@
 # We are using a more recent commit for exception handling. Upgrade
 # to next release after 3.1.4, when available
 
-github "duckduckgo/Kingfisher" ~> 4.10.0
+github "duckduckgo/Kingfisher" "brindy/hashprovider"
 
 github "duckduckgo/Device.swift" ~> 1.1.2
 

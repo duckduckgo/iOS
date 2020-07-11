@@ -21,6 +21,10 @@ import XCTest
 
 class StringExtensionTests: XCTestCase {
 
+    func testSHA256() {
+        XCTAssertEqual("63746975aa3c4d6a874e070fcab8205b27607a3ec59f79fba28c7859fb0ff960", "DDGSalthello".sha256())
+    }
+
     func testWhenPunycodeUrlIsCalledOnQueryThenUrlIsNotReturned() {
         XCTAssertNil(" ".punycodedUrl?.absoluteString)
     }

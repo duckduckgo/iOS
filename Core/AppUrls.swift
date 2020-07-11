@@ -40,7 +40,6 @@ public struct AppUrls {
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
-        static let faviconService = "\(externalContentBase)/ip3/%@.ico"
  
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"

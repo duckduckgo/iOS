@@ -129,7 +129,20 @@ public class Favicons {
 extension ImageCache {
 
     static func create(_ type: Favicons.CacheType) -> ImageCache {
-        let imageCache = ImageCache(name: type.rawValue)
+
+        let imageCache: ImageCache
+
+        switch type {
+        case .bookmarks:
+            let groupName = BookmarkUserDefaults.Constants.groupName
+            let sharedLocation = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
+            print("***", #function, sharedLocation as Any)
+            imageCache = (try? ImageCache(name: type.rawValue, cacheDirectoryURL: sharedLocation))
+                            ?? ImageCache(name: type.rawValue)
+        case .tabs:
+            imageCache = ImageCache(name: type.rawValue)
+        }
+
         // We hash the key when loading the resource
         imageCache.diskStorage.config.usesHashedFileName = false
         return imageCache

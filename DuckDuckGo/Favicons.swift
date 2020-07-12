@@ -16,7 +16,12 @@ class Favicons {
 
         static let standardPlaceHolder = UIImage(named: "GlobeSmall")
         static let appUrls = AppUrls()
-
+        static let bookmarksCache = ImageCache.create(.bookmarks)
+        static let tabsCache = ImageCache.create(.tabs)
+        static let caches: [CacheType: ImageCache] = [
+            .bookmarks: bookmarksCache,
+            .tabs: tabsCache
+        ]
     }
 
     enum CacheType: String {
@@ -28,11 +33,12 @@ class Favicons {
 
     class NotFoundCachingDownloader: ImageDownloader {
 
-        static let expiry: TimeInterval = 60 * 60 // 1 hour
+        static let expiry: TimeInterval = 60 * 60 * 24 * 7 // 1 week
 
         static let shared = NotFoundCachingDownloader()
 
-        var notFoundCache = [String: TimeInterval]()
+        @UserDefaultsWrapper(key: .notFoundCache, defaultValue: [:])
+        var notFoundCache: [String: TimeInterval]
 
         private init() {
             super.init(name: String(describing: Self.Type.self))
@@ -45,6 +51,7 @@ class Favicons {
             print("***", #function, url)
 
             if wasNotFound(url) {
+                print("***", #function, url, "was not found")
                 completionHandler?(.failure(.requestError(reason: .emptyRequest)))
                 return nil
             }
@@ -54,21 +61,47 @@ class Favicons {
             return super.downloadImage(with: url, options: options, completionHandler: completionHandler)
         }
 
+        func removeExpired() {
+            let cache = notFoundCache
+            cache.forEach { key, time in
+                if Date().timeIntervalSince1970 - time > Self.expiry {
+                    print("***", #function, "removing", key)
+                    notFoundCache.removeValue(forKey: key)
+                }
+            }
+        }
+
         func cacheNotFound(_ domain: String) {
-            // TODO use hash of the domain and persist
-            notFoundCache[domain] = Date().timeIntervalSince1970
+            let hashedKey = Favicons.hasher(string: domain)
+            notFoundCache[hashedKey] = Date().timeIntervalSince1970
         }
 
         func wasNotFound(_ url: URL) -> Bool {
-            // TODO use hash of the domain
-            if let domain = url.host,
-                let cacheAddTime = notFoundCache[domain],
+            guard let domain = url.host else { return false }
+            let hashedKey = Favicons.hasher(string: domain)
+            if let cacheAddTime = notFoundCache[hashedKey],
                 Date().timeIntervalSince1970 - cacheAddTime < Self.expiry {
                 return true
             }
             return false
         }
 
+    }
+
+    static func hasher(string: String) -> String {
+        print("***", #function, string)
+        let domain = URL(string: string)?.host ?? string
+        let hashed = "DDGSalt:\(domain)".sha256()
+        print("***", #function, string, domain, hashed)
+        return hashed
+    }
+
+    static func clearCache(_ cacheType: CacheType) {
+        Constants.caches[cacheType]?.clearDiskCache()
+    }
+
+    static func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
+        Constants.caches[cacheType]?.removeImage(forKey: "https://\(domain)", fromDisk: true)
     }
 
     // Call this when the user interacts with an entity of the specific type with a given URL,
@@ -92,7 +125,10 @@ class Favicons {
             return
         }
 
-        let cache = ImageCache.create(cacheType)
+        guard let cache = Constants.caches[cacheType] else {
+            print("***", #function, "no cache for", cacheType)
+            return
+        }
 
         let options: KingfisherOptionsInfo = [
             .downloader(Favicons.NotFoundCachingDownloader.shared),
@@ -104,18 +140,25 @@ class Favicons {
         ]
 
         KingfisherManager.shared.retrieveImage(with: secureAppleTouchUrl, options: options) { result in
+            guard let host = secureAppleTouchUrl.host else { return }
 
             switch result {
             case .failure(let error):
-                if error.isInvalidResponseStatusCode {
-                    Favicons.NotFoundCachingDownloader.shared.cacheNotFound(domain)
+                switch error {
+                case .imageSettingError(let settingError):
+                    switch settingError {
+                    case .alternativeSourcesExhausted:
+                        Favicons.NotFoundCachingDownloader.shared.cacheNotFound(host)
+
+                    default: break
+                    }
+
+                default: break
                 }
 
             default: break
             }
-
         }
-
     }
 
     static func path(url: URL, path: String) -> URL {
@@ -153,7 +196,10 @@ class Favicons {
             return
         }
 
-        let cache = ImageCache.create(cacheType)
+        guard let cache = Constants.caches[cacheType] else {
+            print("***", #function, "no cache for", cacheType)
+            return
+        }
 
         let options: KingfisherOptionsInfo = [
             .onlyFromCache,
@@ -175,11 +221,8 @@ extension ImageCache {
 
     static func create(_ type: Favicons.CacheType) -> ImageCache {
         let imageCache = ImageCache(name: type.rawValue)
-        imageCache.diskStorage.config.fileNameHashProvider = {
-            let hashed = "DDGSalt:\($0)".sha256()
-            print("***", $0, hashed)
-            return hashed
-        }
+        print("***", #function, imageCache.diskStorage.cacheFileURL(forKey: "test"))
+        imageCache.diskStorage.config.fileNameHashProvider = Favicons.hasher
         return imageCache
     }
 

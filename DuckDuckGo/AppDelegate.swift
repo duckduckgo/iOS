@@ -56,9 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        // TODO remove
-        ImageCache(name: Favicons.CacheType.bookmarks.rawValue).clearDiskCache()
-        ImageCache(name: Favicons.CacheType.tabs.rawValue).clearDiskCache()
+        // Every now and then just clear out old cache entries to save space
+        Favicons.NotFoundCachingDownloader.shared.removeExpired()
 
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()

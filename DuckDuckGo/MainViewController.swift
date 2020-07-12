@@ -1110,13 +1110,13 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
+        Favicons.clearCache(.tabs)
     }
     
     func forgetData() {
         findInPageView?.done()
         
         ServerTrustCache.shared.clear()
-        KingfisherManager.shared.cache.clearDiskCache()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {

@@ -47,7 +47,9 @@ public struct UserDefaultsWrapper<T> {
         case daxBrowsingWithoutTrackersShown = "com.duckduckgo.ios.daxOnboardingBrowsingWithoutTrackersShown"
         case daxBrowsingMajorTrackingSiteShown = "com.duckduckgo.ios.daxOnboardingBrowsingMajorTrackingSiteShown"
         case daxBrowsingOwnedByMajorTrackingSiteShown = "com.duckduckgo.ios.daxOnboardingBrowsingOwnedByMajorTrackingSiteShown"
-        
+
+        case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
+
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
     }
 

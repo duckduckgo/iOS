@@ -108,15 +108,33 @@ class BookmarksManager {
     }
 
     func deleteBookmark(at index: Int) {
+        let link = bookmark(atIndex: index)
         var bookmarks = dataStore.bookmarks
         bookmarks.remove(at: index)
         dataStore.bookmarks = bookmarks
+        removeFavicon(forLink: link)
     }
 
     func deleteFavorite(at index: Int) {
+        let link = favorite(atIndex: index)
         var favorites = dataStore.favorites
         favorites.remove(at: index)
         dataStore.favorites = favorites
+        removeFavicon(forLink: link)
+    }
+
+    // TODO Check fireproofed sites
+
+    func removeFavicon(forLink link: Link?) {
+        guard let domain = link?.url.host else { return }
+        let favorites = dataStore.favorites
+        let bookmarks = dataStore.bookmarks
+        DispatchQueue.global(qos: .background).async {
+            let matchesDomain: ((Link) -> Bool) = { $0.url.host == domain }
+            if !favorites.contains(where: matchesDomain) && !bookmarks.contains(where: matchesDomain) {
+                Favicons.removeFavicon(forDomain: domain, fromCache: .bookmarks)
+            }
+        }
     }
 
     func updateFavorite(at index: Int, with link: Link) {

@@ -36,11 +36,11 @@ extension UIImageView {
         }
 
         guard var options = Favicons.kfOptions(forDomain: domain, usingCache: cacheType),
-            let favicon = Favicons.defaultFavicon(forDomain: domain) else { return }
+            let resource = Favicons.defaultResource(forDomain: domain) else { return }
 
         options.append(.onlyFromCache)
 
-        kf.setImage(with: favicon, placeholder: fallbackImage, options: options) { _ in
+        kf.setImage(with: resource, placeholder: fallbackImage, options: options) { _ in
             completion?(self.image)
         }
     }

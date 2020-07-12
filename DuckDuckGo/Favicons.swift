@@ -33,11 +33,6 @@ public class Favicons {
 
     }
 
-    static func hasher(string: String) -> String {
-        let domain = URL(string: string)?.host ?? string
-        return "DDGSalt:\(domain)".sha256()
-    }
-
     public static func removeExpiredNotFoundEntries() {
         Constants.downloader.removeExpired()
     }
@@ -67,11 +62,13 @@ public class Favicons {
     // Call this when the user interacts with an entity of the specific type with a given URL,
     //  e.g. if launching a bookmark, or clicking on a tab.
     public static func loadFavicon(forDomain domain: String?, intoCache cacheType: CacheType) {
-        guard let options = Self.kfOptions(forDomain: domain, usingCache: cacheType),
-            let favicon = Self.defaultFavicon(forDomain: domain) else { return }
 
-        KingfisherManager.shared.retrieveImage(with: favicon, options: options) { result in
-            guard let host = favicon.host else { return }
+        guard let domain = domain,
+            let options = Self.kfOptions(forDomain: domain, usingCache: cacheType),
+            let resource = Self.defaultResource(forDomain: domain) else { return }
+
+        KingfisherManager.shared.retrieveImage(with: resource, options: options) { result in
+            guard let domain = resource.downloadURL.host else { return }
 
             switch result {
             case .failure(let error):
@@ -79,7 +76,7 @@ public class Favicons {
                 case .imageSettingError(let settingError):
                     switch settingError {
                     case .alternativeSourcesExhausted:
-                        Constants.downloader.cacheNotFound(host)
+                        Constants.downloader.cacheNotFound(domain)
 
                     default: break
                     }
@@ -92,9 +89,11 @@ public class Favicons {
         }
     }
 
-    public static func defaultFavicon(forDomain domain: String?) -> URL? {
+    public static func defaultResource(forDomain domain: String?) -> ImageResource? {
         guard let domain = domain else { return nil }
-        return Constants.appUrls.appleTouchIcon(forDomain: domain)
+        guard let faviconUrl = Constants.appUrls.appleTouchIcon(forDomain: domain) else { return nil }
+        let key = "DDGSalt:\(domain)".sha256()
+        return ImageResource(downloadURL: faviconUrl, cacheKey: key)
     }
 
     public static func kfOptions(forDomain domain: String?, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
@@ -131,7 +130,8 @@ extension ImageCache {
 
     static func create(_ type: Favicons.CacheType) -> ImageCache {
         let imageCache = ImageCache(name: type.rawValue)
-        imageCache.diskStorage.config.fileNameHashProvider = Favicons.hasher
+        // We hash the key when loading the resource
+        imageCache.diskStorage.config.usesHashedFileName = false
         return imageCache
     }
 

@@ -54,6 +54,7 @@ struct PreserveLoginsWorker {
     private func addDomain(_ domain: String) {
         guard let controller = controller else { return }
         PreserveLogins.shared.addToAllowed(domain: domain)
+        Favicons.loadFavicon(forDomain: domain, intoCache: .bookmarks)
         PreserveLoginsAlert.showFireproofToast(usingController: controller, forDomain: domain)
     }
     

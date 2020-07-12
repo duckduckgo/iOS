@@ -29,7 +29,7 @@ class BookmarkCell: UITableViewCell {
     
     func update(withBookmark bookmark: Link) {
         title.text = bookmark.title
-        Favicons.loadFavicon(forDomain: bookmark.url.host, intoImageView: favicon, usingCache: .bookmarks)
+        favicon.loadFavicon(forDomain: bookmark.url.host, usingCache: .bookmarks)
     }
     
 }

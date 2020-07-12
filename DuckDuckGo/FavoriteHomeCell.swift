@@ -101,7 +101,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconBackground.backgroundColor = host.color
         useImageBorder(true)
 
-        Favicons.loadFavicon(forDomain: link.url.host, intoImageView: iconImage, usingCache: .bookmarks, fallbackImage: nil) { image in
+        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, fallbackImage: nil) { image in
             guard let image = image else { return }
 
             let useBorder = image == Constants.ddgLogo || image.size.width < Constants.largeFaviconSize

@@ -23,12 +23,26 @@ import Kingfisher
 
 extension UIImageView {
 
-//    /// Loads a favicon for a given domain.  DDG domain gets the ddg icon from the app automatically.
-//    /// `fallback` only called if no icon could be found
-//    /// `completion` only called when at least one image is found after all
-//    func loadFavicon(forDomain domain: String?, fallbackImage: UIImage? = FaviconConstants.standardPlaceHolder,
-//                     completion: ((UIImage?) -> Void)? = nil) {
-//
-//    }
+    /// Load a favicon from the cache in to this uiview.  This will not load the favicon from the network.
+    func loadFavicon(forDomain domain: String?,
+                     usingCache cacheType: Favicons.CacheType,
+                     fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
+                     completion: ((UIImage?) -> Void)? = nil) {
+
+        if domain == AppUrls.ddgDomain {
+            self.image = UIImage(named: "Logo")
+            completion?(self.image)
+            return
+        }
+
+        guard var options = Favicons.kfOptions(forDomain: domain, usingCache: cacheType),
+            let favicon = Favicons.defaultFavicon(forDomain: domain) else { return }
+
+        options.append(.onlyFromCache)
+
+        kf.setImage(with: favicon, placeholder: fallbackImage, options: options) { _ in
+            completion?(self.image)
+        }
+    }
 
 }

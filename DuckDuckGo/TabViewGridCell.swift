@@ -159,7 +159,7 @@ class TabViewGridCell: TabViewCell {
             }
             
             removeButton.isHidden = false
-            Favicons.loadFavicon(forDomain: tab.link?.url.host, intoImageView: favicon, usingCache: .tabs)
+            favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
         }
     }
     

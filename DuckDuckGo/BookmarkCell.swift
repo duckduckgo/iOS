@@ -34,7 +34,7 @@ class BookmarkCell: UITableViewCell {
             } else {
                 title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
             }
-            Favicons.loadFavicon(forDomain: link?.url.host, intoImageView: linkImage, usingCache: .bookmarks)
+            linkImage.loadFavicon(forDomain: link?.url.host, usingCache: .bookmarks)
         }
     }
 

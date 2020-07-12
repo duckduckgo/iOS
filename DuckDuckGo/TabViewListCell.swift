@@ -71,7 +71,7 @@ class TabViewListCell: TabViewCell {
         } else {
             removeButton.isHidden = false
             link.text = tab.link?.url.absoluteString ?? ""
-            Favicons.loadFavicon(forDomain: tab.link?.url.host, intoImageView: favicon, usingCache: .tabs)
+            favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
         }
     }
     

@@ -123,8 +123,6 @@ class BookmarksManager {
         removeFavicon(forLink: link)
     }
 
-    // TODO Check fireproofed sites
-
     func removeFavicon(forLink link: Link?) {
         guard let domain = link?.url.host else { return }
         let favorites = dataStore.favorites
@@ -132,7 +130,7 @@ class BookmarksManager {
         DispatchQueue.global(qos: .background).async {
             let matchesDomain: ((Link) -> Bool) = { $0.url.host == domain }
             if !favorites.contains(where: matchesDomain) && !bookmarks.contains(where: matchesDomain) {
-                Favicons.removeFavicon(forDomain: domain, fromCache: .bookmarks)
+                Favicons.removeBookmarkFavicon(forDomain: domain)
             }
         }
     }

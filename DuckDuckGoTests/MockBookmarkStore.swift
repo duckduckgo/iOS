@@ -34,5 +34,9 @@ class MockBookmarkStore: BookmarkStore {
     func addFavorite(_ favorite: Link) {
         addedFavorites.append(favorite)
     }
-    
+
+    func contains(domain: String) -> Bool {
+        return false
+    }
+
 }

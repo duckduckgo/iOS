@@ -21,15 +21,17 @@ import Foundation
 
 public struct AppUrls {
 
+    public static let ddgDomain = "duckduckgo.com"
+
     private struct Url {
         
         static var devMode: String {
             return isDebugBuild ? "?test=1" : ""
         }
         
-        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
-        static let externalContentBase = "https://external-content.duckduckgo.com"
-        static let staticBase = "https://staticcdn.duckduckgo.com"
+        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://\(AppUrls.ddgDomain)"]
+        static let externalContentBase = "https://external-content.\(AppUrls.ddgDomain)"
+        static let staticBase = "https://staticcdn.\(AppUrls.ddgDomain)"
         
         static let autocomplete = "\(base)/ac/"
         

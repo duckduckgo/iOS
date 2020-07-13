@@ -246,6 +246,7 @@
 		85CA53A624BB238500A6288C /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076A1E800DC30059FEC7 /* BookmarksManager.swift */; };
 		85CA53A824BB343700A6288C /* Favicons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53A324B9F2BD00A6288C /* Favicons.swift */; };
 		85CA53AA24BB376800A6288C /* NotFoundCachingDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */; };
+		85CA53AC24BBD39300A6288C /* FaviconRequestModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53AB24BBD39300A6288C /* FaviconRequestModifier.swift */; };
 		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
 		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
 		85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */; };
@@ -850,6 +851,7 @@
 		85C9E5F721B4232A00460EBC /* HomePageConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfigurationTests.swift; sourceTree = "<group>"; };
 		85CA53A324B9F2BD00A6288C /* Favicons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Favicons.swift; path = ../DuckDuckGo/Favicons.swift; sourceTree = "<group>"; };
 		85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundCachingDownloader.swift; sourceTree = "<group>"; };
+		85CA53AB24BBD39300A6288C /* FaviconRequestModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconRequestModifier.swift; sourceTree = "<group>"; };
 		85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NetworkLeaderboard 2.xcdatamodel"; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
 		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
@@ -1788,6 +1790,7 @@
 			children = (
 				85CA53A324B9F2BD00A6288C /* Favicons.swift */,
 				85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */,
+				85CA53AB24BBD39300A6288C /* FaviconRequestModifier.swift */,
 			);
 			name = Favicons;
 			sourceTree = "<group>";
@@ -3774,6 +3777,7 @@
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
 				85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */,
 				8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */,
+				85CA53AC24BBD39300A6288C /* FaviconRequestModifier.swift in Sources */,
 				85BDC3172434E55D0053DB07 /* ContentBlockerUserScript.swift in Sources */,
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,

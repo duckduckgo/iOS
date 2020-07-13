@@ -17,6 +17,7 @@ public class Favicons {
         public static let appUrls = AppUrls()
         
         static let downloader = NotFoundCachingDownloader()
+        static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = ImageCache.create(.bookmarks)
         static let tabsCache = ImageCache.create(.tabs)
         static let caches = [
@@ -42,7 +43,8 @@ public class Favicons {
     }
 
     public static func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
-        Constants.caches[cacheType]?.removeImage(forKey: "https://\(domain)", fromDisk: true)
+        let key = Self.defaultResource(forDomain: domain)?.cacheKey ?? domain
+        Constants.caches[cacheType]?.removeImage(forKey: key, fromDisk: true)
     }
 
     public static func removeBookmarkFavicon(forDomain domain: String) {
@@ -116,12 +118,18 @@ public class Favicons {
 
         return [
             .downloader(Constants.downloader),
+            .requestModifier(Constants.requestModifier),
             .targetCache(cache),
+            .diskCacheAccessExtendingExpiration(.expirationTime(.days(7))),
             .alternativeSources([
                 Source.network(secureFaviconUrl),
                 Source.network(insecureFaviconUrl)
             ])
         ]
+    }
+
+    static func requestModifier(request: URLRequest) -> URLRequest {
+        return request
     }
 
 }
@@ -143,8 +151,9 @@ extension ImageCache {
             imageCache = ImageCache(name: type.rawValue)
         }
 
-        // We hash the key when loading the resource
+        // We hash the resource key when loading the resource
         imageCache.diskStorage.config.usesHashedFileName = false
+
         return imageCache
     }
 

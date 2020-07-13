@@ -38,9 +38,12 @@ extension UIImageView {
         guard var options = Favicons.kfOptions(forDomain: domain, usingCache: cacheType),
             let resource = Favicons.defaultResource(forDomain: domain) else { return }
 
-        options.append(.onlyFromCache)
+        // In the case of tabs, we only load from the cache.  It'll be updated on actual user access.
+        if cacheType == .tabs {
+            options.append(.onlyFromCache)
+        }
 
-        kf.setImage(with: resource, placeholder: fallbackImage, options: options) { _ in
+        kf.setImage(with: resource, placeholder: fallbackImage, options: options) { result in
             completion?(self.image)
         }
     }

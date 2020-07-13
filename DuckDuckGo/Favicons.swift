@@ -19,6 +19,7 @@
 
 import Kingfisher
 import UIKit
+import os
 
 public class Favicons {
 
@@ -155,10 +156,12 @@ extension ImageCache {
         case .bookmarks:
             let groupName = BookmarkUserDefaults.Constants.groupName
             let sharedLocation = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
-            print("***", #function, sharedLocation as Any)
+            os_log("favicons bookmarks location %s", log: generalLog, type: .debug, sharedLocation?.absoluteString ?? "<none>")
             imageCache = (try? ImageCache(name: type.rawValue, cacheDirectoryURL: sharedLocation))
                             ?? ImageCache(name: type.rawValue)
         case .tabs:
+            let location = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+            os_log("favicons tabs location %s", log: generalLog, type: .debug, location[0].absoluteString)
             imageCache = ImageCache(name: type.rawValue)
         }
 

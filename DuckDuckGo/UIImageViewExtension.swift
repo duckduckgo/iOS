@@ -43,7 +43,7 @@ extension UIImageView {
             options.append(.onlyFromCache)
         }
 
-        kf.setImage(with: resource, placeholder: fallbackImage, options: options) { result in
+        kf.setImage(with: resource, placeholder: fallbackImage, options: options) { _ in
             completion?(self.image)
         }
     }

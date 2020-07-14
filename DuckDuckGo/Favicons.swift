@@ -81,7 +81,6 @@ public class Favicons {
     
     public func migrateIfNeeded() {
         guard needsMigration else { return }
-        print("***", #function)
         
         ImageCache.default.clearDiskCache()
         
@@ -89,7 +88,6 @@ public class Favicons {
             + PreserveLogins.shared.allowedDomains
         
         Set(links).forEach { domain in
-            print("***", #function, domain)
             loadFavicon(forDomain: domain, intoCache: .bookmarks)
         }
 

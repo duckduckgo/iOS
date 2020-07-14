@@ -32,7 +32,8 @@ public class Favicons {
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = ImageCache.create(.bookmarks)
         static let tabsCache = ImageCache.create(.tabs)
-        static let caches = [
+        
+        public static let caches = [
             CacheType.bookmarks: bookmarksCache,
             CacheType.tabs: tabsCache
         ]
@@ -132,16 +133,11 @@ public class Favicons {
             .downloader(Constants.downloader),
             .requestModifier(Constants.requestModifier),
             .targetCache(cache),
-            .diskCacheAccessExtendingExpiration(.expirationTime(.days(7))),
             .alternativeSources([
                 Source.network(secureFaviconUrl),
                 Source.network(insecureFaviconUrl)
             ])
         ]
-    }
-
-    static func requestModifier(request: URLRequest) -> URLRequest {
-        return request
     }
 
 }
@@ -159,6 +155,7 @@ extension ImageCache {
             os_log("favicons bookmarks location %s", log: generalLog, type: .debug, sharedLocation?.absoluteString ?? "<none>")
             imageCache = (try? ImageCache(name: type.rawValue, cacheDirectoryURL: sharedLocation))
                             ?? ImageCache(name: type.rawValue)
+                        
         case .tabs:
             let location = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
             os_log("favicons tabs location %s", log: generalLog, type: .debug, location[0].absoluteString)

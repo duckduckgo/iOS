@@ -38,9 +38,7 @@ class NotFoundCachingDownloader: ImageDownloader {
             completionHandler?(.failure(.requestError(reason: .emptyRequest)))
             return nil
         }
-
-        // Default to normal download behaviour because even though we try several URLs it'll still
-        //  take the image from the cache thanks to the alternative sources option.
+        
         return super.downloadImage(with: url, options: options, completionHandler: completionHandler)
     }
 

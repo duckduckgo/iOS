@@ -134,7 +134,12 @@ public class Favicons {
             guard let domain = resource.downloadURL.host else { return }
 
             switch result {
+            case .success(let imageResult):
+                // Store it anyway - Kingfisher doesn't appear to store the image if it came from an alterantive source
+                Favicons.Constants.caches[cacheType]?.store(imageResult.image, forKey: resource.cacheKey, options: .init(options))
+                
             case .failure(let error):
+                
                 switch error {
                 case .imageSettingError(let settingError):
                     switch settingError {
@@ -146,8 +151,6 @@ public class Favicons {
 
                 default: break
                 }
-
-            default: break
             }
         }
     }

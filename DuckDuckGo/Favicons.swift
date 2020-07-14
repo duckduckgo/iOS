@@ -30,8 +30,8 @@ public class Favicons {
         
         static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
-        static let bookmarksCache = ImageCache.create(.bookmarks)
-        static let tabsCache = ImageCache.create(.tabs)
+        static let bookmarksCache = CacheType.bookmarks.create()
+        static let tabsCache = CacheType.tabs.create()
         
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
@@ -45,6 +45,30 @@ public class Favicons {
         case tabs
         case bookmarks
 
+        func create() -> ImageCache {
+
+            let imageCache: ImageCache
+
+            switch self {
+            case .bookmarks:
+                let groupName = BookmarkUserDefaults.Constants.groupName
+                let sharedLocation = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
+                os_log("favicons bookmarks location %s", log: generalLog, type: .debug, sharedLocation?.absoluteString ?? "<none>")
+                imageCache = (try? ImageCache(name: self.rawValue, cacheDirectoryURL: sharedLocation))
+                                ?? ImageCache(name: self.rawValue)
+                            
+            case .tabs:
+                let location = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+                os_log("favicons tabs location %s", log: generalLog, type: .debug, location[0].absoluteString)
+                imageCache = ImageCache(name: self.rawValue)
+            }
+
+            // We hash the resource key when loading the resource
+            imageCache.diskStorage.config.usesHashedFileName = false
+
+            return imageCache
+        }
+        
     }
 
     public static func removeExpiredNotFoundEntries() {
@@ -138,34 +162,6 @@ public class Favicons {
                 Source.network(insecureFaviconUrl)
             ])
         ]
-    }
-
-}
-
-extension ImageCache {
-
-    static func create(_ type: Favicons.CacheType) -> ImageCache {
-
-        let imageCache: ImageCache
-
-        switch type {
-        case .bookmarks:
-            let groupName = BookmarkUserDefaults.Constants.groupName
-            let sharedLocation = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
-            os_log("favicons bookmarks location %s", log: generalLog, type: .debug, sharedLocation?.absoluteString ?? "<none>")
-            imageCache = (try? ImageCache(name: type.rawValue, cacheDirectoryURL: sharedLocation))
-                            ?? ImageCache(name: type.rawValue)
-                        
-        case .tabs:
-            let location = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-            os_log("favicons tabs location %s", log: generalLog, type: .debug, location[0].absoluteString)
-            imageCache = ImageCache(name: type.rawValue)
-        }
-
-        // We hash the resource key when loading the resource
-        imageCache.diskStorage.config.usesHashedFileName = false
-
-        return imageCache
     }
 
 }

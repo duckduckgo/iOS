@@ -28,52 +28,70 @@ extension UIImageView {
                      usingCache cacheType: Favicons.CacheType,
                      fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
                      completion: ((UIImage?) -> Void)? = nil) {
+        
+        DispatchQueue.global(qos: .utility).async {
+            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, fallbackImage: fallbackImage, completion: completion)
+        }
+        
+    }
 
-        defer {
-            completion?(self.image)
+    private func loadFaviconSync(forDomain domain: String?,
+                                 usingCache cacheType: Favicons.CacheType,
+                                 fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
+                                 completion: ((UIImage?) -> Void)? = nil) {
+        
+        func complete(_ image: UIImage?) {
+            DispatchQueue.main.async {
+                self.image = image
+                completion?(self.image)
+            }
         }
                 
         if domain == AppUrls.ddgDomain {
-            self.image = UIImage(named: "Logo")
+            complete(UIImage(named: "Logo"))
             return
         }
         
         guard let cache = Favicons.Constants.caches[cacheType] else {
+            complete(fallbackImage)
             return
         }
         
-        guard let resources = Favicons.defaultResource(forDomain: domain) else {
+        guard let resource = Favicons.defaultResource(forDomain: domain) else {
+            complete(fallbackImage)
             return
         }
         
-        if let image = cache.retrieveImageInMemoryCache(forKey: resources.cacheKey) {
-            print("***", resources.cacheKey, "loaded from memory")
-            self.image = image
+        if let image = cache.retrieveImageInMemoryCache(forKey: resource.cacheKey) {
+            complete(image)
         } else {
-            let url = cache.diskStorage.cacheFileURL(forKey: resources.cacheKey)
+            
+            // Not in memory, could because it's expired or we have cold started.
+            
+            // Load manually otherwise Kingfisher won't load it if the file's modification date > current date
+            let url = cache.diskStorage.cacheFileURL(forKey: resource.cacheKey)
             guard let data = (try? Data(contentsOf: url)), let image = UIImage(data: data) else {
-                self.image = fallbackImage
+                complete(fallbackImage)
                 return
             }
+            
+            complete(image)
 
-            print("***", resources.cacheKey, "loaded from disk")
-            self.image = image
-
-            // If we loaded from disk it could be because we cold started.  Cache in memory with the original expiry date so that the
-            //  image will be refreshed on user interaction.
+            // Cache in memory with the original expiry date so that the image will be refreshed on user interaction.
             
             guard let attributes = (try? FileManager.default.attributesOfItem(atPath: url.path)),
                 let fileModificationDate = attributes[.modificationDate] as? Date else {
                 return
             }
             
-            cache.store(image, forKey: resources.cacheKey, options: KingfisherParsedOptionsInfo([
+            cache.store(image, forKey: resource.cacheKey, options: KingfisherParsedOptionsInfo([
                 .cacheMemoryOnly,
                 .diskCacheAccessExtendingExpiration(.none),
                 .memoryCacheExpiration(.date(fileModificationDate))
             ]), toDisk: false)
             
         }
-   }
 
+    }
+    
 }

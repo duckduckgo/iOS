@@ -815,7 +815,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks)
+        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks)
         loadUrl(link.url)
         showHomeRowReminder()
     }
@@ -1110,7 +1110,7 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
-        Favicons.clearCache(.tabs)
+        Favicons.shared.clearCache(.tabs)
     }
     
     func forgetData() {

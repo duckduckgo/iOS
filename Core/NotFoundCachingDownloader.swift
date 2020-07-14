@@ -54,13 +54,13 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
 
     func cacheNotFound(_ domain: String) {
-        guard let hashedKey = Favicons.defaultResource(forDomain: domain)?.cacheKey else { return }
+        guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return }
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }
 
     func wasNotFound(_ url: URL) -> Bool {
         guard let domain = url.host else { return false }
-        guard let hashedKey = Favicons.defaultResource(forDomain: domain)?.cacheKey else { return false }
+        guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return false }
         if let cacheAddTime = notFoundCache[hashedKey],
             Date().timeIntervalSince1970 - cacheAddTime < Self.expiry {
             return true

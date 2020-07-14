@@ -57,7 +57,7 @@ extension UIImageView {
             return
         }
         
-        guard let resource = Favicons.defaultResource(forDomain: domain) else {
+        guard let resource = Favicons.shared.defaultResource(forDomain: domain) else {
             complete(fallbackImage)
             return
         }

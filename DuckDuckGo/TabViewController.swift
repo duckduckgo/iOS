@@ -710,7 +710,7 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        Favicons.loadFavicon(forDomain: url?.host, intoCache: .tabs)
+        Favicons.shared.loadFavicon(forDomain: url?.host, intoCache: .tabs)
 
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {

@@ -57,7 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // Every now and then just clear out old cache entries to save space
-        Favicons.removeExpiredNotFoundEntries()
+        Favicons.shared.removeExpiredNotFoundEntries()
+        Favicons.shared.migrateIfNeeded()
 
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()

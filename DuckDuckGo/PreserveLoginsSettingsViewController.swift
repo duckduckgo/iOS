@@ -147,7 +147,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
-        Favicons.removeFireproofFavicon(forDomain: domain)
+        Favicons.shared.removeFireproofFavicon(forDomain: domain)
         WebCacheManager.shared.removeCookies(forDomains: [domain]) { }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if self.model.isEmpty {

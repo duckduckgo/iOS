@@ -71,27 +71,53 @@ public class Favicons {
         
     }
 
-    public static func removeExpiredNotFoundEntries() {
+    public static let shared = Favicons()
+
+    @UserDefaultsWrapper(key: .faviconsNeedMigration, defaultValue: true)
+    var needsMigration: Bool
+    
+    private init() {
+    }
+    
+    public func migrateIfNeeded() {
+        guard needsMigration else { return }
+        print("***", #function)
+        
+        ImageCache.default.clearDiskCache()
+        
+        let links = ((BookmarkUserDefaults().bookmarks + BookmarkUserDefaults().favorites).compactMap { $0.url.host })
+            + PreserveLogins.shared.allowedDomains
+        
+        Set(links).forEach { domain in
+            print("***", #function, domain)
+            loadFavicon(forDomain: domain, intoCache: .bookmarks)
+        }
+
+        needsMigration = false
+    }
+    
+    // "not found" entries that have expired should be removed from the user settings occasionally
+    public func removeExpiredNotFoundEntries() {
         Constants.downloader.removeExpired()
     }
 
-    public static func clearCache(_ cacheType: CacheType) {
+    public func clearCache(_ cacheType: CacheType) {
         Constants.caches[cacheType]?.clearDiskCache()
     }
 
-    public static func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
-        let key = Self.defaultResource(forDomain: domain)?.cacheKey ?? domain
+    public func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
+        let key = defaultResource(forDomain: domain)?.cacheKey ?? domain
         Constants.caches[cacheType]?.removeImage(forKey: key, fromDisk: true)
     }
 
-    public static func removeBookmarkFavicon(forDomain domain: String) {
+    public func removeBookmarkFavicon(forDomain domain: String) {
 
         guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return }
         removeFavicon(forDomain: domain, fromCache: .bookmarks)
 
     }
 
-    public static func removeFireproofFavicon(forDomain domain: String) {
+    public func removeFireproofFavicon(forDomain domain: String) {
 
         guard !BookmarkUserDefaults().contains(domain: domain) else { return }
         removeFavicon(forDomain: domain, fromCache: .bookmarks)
@@ -100,11 +126,11 @@ public class Favicons {
 
     // Call this when the user interacts with an entity of the specific type with a given URL,
     //  e.g. if launching a bookmark, or clicking on a tab.
-    public static func loadFavicon(forDomain domain: String?, intoCache cacheType: CacheType) {
+    public func loadFavicon(forDomain domain: String?, intoCache cacheType: CacheType) {
 
         guard let domain = domain,
-            let options = Self.kfOptions(forDomain: domain, usingCache: cacheType),
-            let resource = Self.defaultResource(forDomain: domain) else { return }
+            let options = kfOptions(forDomain: domain, usingCache: cacheType),
+            let resource = defaultResource(forDomain: domain) else { return }
 
         KingfisherManager.shared.retrieveImage(with: resource, options: options) { result in
             guard let domain = resource.downloadURL.host else { return }
@@ -128,14 +154,14 @@ public class Favicons {
         }
     }
 
-    public static func defaultResource(forDomain domain: String?) -> ImageResource? {
+    public func defaultResource(forDomain domain: String?) -> ImageResource? {
         guard let domain = domain else { return nil }
         guard let faviconUrl = Constants.appUrls.appleTouchIcon(forDomain: domain) else { return nil }
         let key = "DDGSalt:\(domain)".sha256()
         return ImageResource(downloadURL: faviconUrl, cacheKey: key)
     }
 
-    public static func kfOptions(forDomain domain: String?, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
+    public func kfOptions(forDomain domain: String?, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
         guard let domain = domain else {
             return nil
         }

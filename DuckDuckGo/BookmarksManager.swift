@@ -52,12 +52,12 @@ class BookmarksManager {
     }
 
     func save(bookmark: Link) {
-        Favicons.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks)
+        Favicons.shared.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks)
         dataStore.addBookmark(bookmark)
     }
 
     func save(favorite: Link) {
-        Favicons.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks)
+        Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks)
         dataStore.addFavorite(favorite)
     }
 
@@ -130,7 +130,7 @@ class BookmarksManager {
         DispatchQueue.global(qos: .background).async {
             let matchesDomain: ((Link) -> Bool) = { $0.url.host == domain }
             if !favorites.contains(where: matchesDomain) && !bookmarks.contains(where: matchesDomain) {
-                Favicons.removeBookmarkFavicon(forDomain: domain)
+                Favicons.shared.removeBookmarkFavicon(forDomain: domain)
             }
         }
     }

@@ -252,7 +252,6 @@
 		85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187324BF25CD004373D2 /* FaviconsTests.swift */; };
 		85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187524BF6164004373D2 /* FaviconSourcesProvider.swift */; };
 		85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187724BF6B88004373D2 /* FaviconSourcesProviderTests.swift */; };
-		85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */; };
 		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
 		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
 		85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */; };
@@ -864,7 +863,6 @@
 		85D2187324BF25CD004373D2 /* FaviconsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconsTests.swift; sourceTree = "<group>"; };
 		85D2187524BF6164004373D2 /* FaviconSourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconSourcesProvider.swift; sourceTree = "<group>"; };
 		85D2187724BF6B88004373D2 /* FaviconSourcesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconSourcesProviderTests.swift; sourceTree = "<group>"; };
-		85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconUserScript.swift; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
 		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
 		85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerNavigationController.swift; sourceTree = "<group>"; };
@@ -1804,7 +1802,6 @@
 				85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */,
 				85CA53AB24BBD39300A6288C /* FaviconRequestModifier.swift */,
 				85D2187524BF6164004373D2 /* FaviconSourcesProvider.swift */,
-				85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */,
 			);
 			name = Favicons;
 			sourceTree = "<group>";
@@ -3852,7 +3849,6 @@
 				85C743902154E981005CF998 /* GradeCache.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */,
-				85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */,
 				85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */,
 				F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */,
 				85F21DC621145DD5002631A6 /* global.swift in Sources */,

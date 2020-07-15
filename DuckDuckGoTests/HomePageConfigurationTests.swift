@@ -24,33 +24,33 @@ import XCTest
 
 class HomePageConfigurationTests: XCTestCase {
 
-    func testLayoutCentered() {
+    func testWhenCenteredAndFavoritesDisabledThenFixedCenteredIsUsed() {
         let test = Test(layout: .centered, favorites: false, links: [])
         assertLayout(test: test, expected: [ .centeredSearch(fixed: true) ])
     }
 
-    func testLayoutCenteredWithFavourites() {
+    func testWhenCenteredAndFavoritesEnabledThenFixedCenteredWithFavoritesAndPaddingIsUsed() {
         let test = Test(layout: .centered, favorites: true, links: [])
         assertLayout(test: test, expected: [ .centeredSearch(fixed: true), .favorites, .padding ])
     }
 
-    func testLayoutCenteredWithFavouritesAndLink() {
+    func testWhenCenteredAndFavoritesEnabledWithLinkThenNotFixedCenteredWithFavoritesAndPaddingIsUsed() {
         let url = URL(string: "http://www.example.com")!
         let test = Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)])
         assertLayout(test: test, expected: [.centeredSearch(fixed: false), .favorites, .padding])
     }
 
-    func testLayoutNavigationBar() {
+    func testWhenNavigavigationBarAndFavoritesDisabledThenFixedNavigationBarSearchIsUsed() {
         let test = Test(layout: .navigationBar, favorites: false, links: [])
         assertLayout(test: test, expected: [ .navigationBarSearch(fixed: true) ])
     }
 
-    func testLayoutNavigationBarWithFavourites() {
+    func testWhenNavigationBarAndFavoritesEnabledThenFixedNavigationBarSearchWithFavoritesIsUsed() {
         let test = Test(layout: .navigationBar, favorites: true, links: [])
         assertLayout(test: test, expected: [ .navigationBarSearch(fixed: true), .favorites ])
     }
 
-    func testLayoutWithNavigationBarFavouritesAndLink() {
+    func testWhenNavigationBarAndFavoritesEnabledWithLinkThenNotFixedNavigationBarSearchWithFavoritesIsUsed() {
         let url = URL(string: "http://www.example.com")!
         let test = Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)])
         assertLayout(test: test, expected: [ .navigationBarSearch(fixed: false), .favorites ])

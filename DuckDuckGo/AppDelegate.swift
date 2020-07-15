@@ -56,7 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        Favicons.shared.migrateIfNeeded()
+        // Do this ASAP or it crashes when initialised off the main thread
+        _ = UserAgentManager.shared
+        
         Favicons.shared.removeExpiredNotFoundEntries()
 
         DispatchQueue.global(qos: .background).async {

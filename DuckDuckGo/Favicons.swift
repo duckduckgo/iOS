@@ -79,19 +79,27 @@ public class Favicons {
     private init() {
     }
     
-    public func migrateIfNeeded() {
-        guard needsMigration else { return }
+    public func migrateIfNeeded(completion: () -> Void) {
+         guard needsMigration else { return }
         
-        ImageCache.default.clearDiskCache()
-        
-        let links = ((BookmarkUserDefaults().bookmarks + BookmarkUserDefaults().favorites).compactMap { $0.url.host })
-            + PreserveLogins.shared.allowedDomains
-        
-        Set(links).forEach { domain in
-            loadFavicon(forDomain: domain, intoCache: .bookmarks)
-        }
+        DispatchQueue.global(qos: .utility).async {
+            ImageCache.default.clearDiskCache()
+            
+            let links = ((BookmarkUserDefaults().bookmarks + BookmarkUserDefaults().favorites).compactMap { $0.url.host })
+                + PreserveLogins.shared.allowedDomains
+            
+            let group = DispatchGroup()
+            Set(links).forEach { domain in
+                group.enter()
+                self.loadFavicon(forDomain: domain, intoCache: .bookmarks) {
+                    group.leave()
+                }
+            }
+            group.wait()
 
-        needsMigration = false
+            self.needsMigration = false
+        }
+        
     }
     
     // "not found" entries that have expired should be removed from the user settings occasionally
@@ -124,14 +132,20 @@ public class Favicons {
 
     // Call this when the user interacts with an entity of the specific type with a given URL,
     //  e.g. if launching a bookmark, or clicking on a tab.
-    public func loadFavicon(forDomain domain: String?, intoCache cacheType: CacheType) {
+    public func loadFavicon(forDomain domain: String?, intoCache cacheType: CacheType, completion: (() -> Void)? = nil) {
 
         guard let domain = domain,
             let options = kfOptions(forDomain: domain, usingCache: cacheType),
-            let resource = defaultResource(forDomain: domain) else { return }
+            let resource = defaultResource(forDomain: domain) else {
+                completion?()
+                return
+            }
 
         KingfisherManager.shared.retrieveImage(with: resource, options: options) { result in
-            guard let domain = resource.downloadURL.host else { return }
+            guard let domain = resource.downloadURL.host else {
+                completion?()
+                return
+            }
 
             switch result {
             case .success(let imageResult):
@@ -152,6 +166,8 @@ public class Favicons {
                 default: break
                 }
             }
+            
+            completion?()
         }
     }
 

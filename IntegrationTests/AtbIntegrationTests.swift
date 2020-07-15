@@ -128,6 +128,7 @@ class AtbIntegrationTests: XCTestCase {
         assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertSearch(text: "pears", atb: Constants.initialAtb)
 
+        Snapshot.waitForLoadingIndicatorToDisappear(within: 30)
         assertStatisticsRequestCount(count: 2)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)

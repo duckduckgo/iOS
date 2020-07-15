@@ -34,18 +34,18 @@ class NotFoundCachingDownloader: ImageDownloader {
                                 options: KingfisherParsedOptionsInfo,
                                 completionHandler: ((Result<ImageLoadingResult, KingfisherError>) -> Void)? = nil) -> DownloadTask? {
 
-        if wasNotFound(url) {
-            completionHandler?(.failure(.requestError(reason: .emptyRequest)))
-            return nil
+        if shouldDownload(url) {
+            return super.downloadImage(with: url, options: options, completionHandler: completionHandler)
         }
         
-        return super.downloadImage(with: url, options: options, completionHandler: completionHandler)
+        completionHandler?(.failure(.requestError(reason: .emptyRequest)))
+        return nil
     }
 
-    func removeExpired() {
+    func removeExpired(referenceDate: Date = Date()) {
         let cache = notFoundCache
         cache.forEach { key, time in
-            if Date().timeIntervalSince1970 - time > Self.expiry {
+            if referenceDate.timeIntervalSince1970 - time > Self.expiry {
                 notFoundCache.removeValue(forKey: key)
             }
         }
@@ -56,14 +56,14 @@ class NotFoundCachingDownloader: ImageDownloader {
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }
 
-    func wasNotFound(_ url: URL) -> Bool {
+    func shouldDownload(_ url: URL, referenceDate: Date = Date()) -> Bool {
         guard let domain = url.host else { return false }
         guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return false }
         if let cacheAddTime = notFoundCache[hashedKey],
-            Date().timeIntervalSince1970 - cacheAddTime < Self.expiry {
-            return true
+            referenceDate.timeIntervalSince1970 - cacheAddTime < Self.expiry {
+            return false
         }
-        return false
+        return true
     }
 
 }

@@ -96,22 +96,6 @@ public struct AppUrls {
         return URL(string: Url.feedback)!
     }
     
-    public func faviconUrl(forDomain domain: String, secure: Bool) -> URL? {
-        var components = URLComponents()
-        components.scheme = secure ? "https" : "http"
-        components.host = domain
-        components.path = "/favicon.ico"
-        return components.url
-    }
-    
-    public func appleTouchIcon(forDomain domain: String) -> URL? {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = domain
-        components.path = "/apple-touch-icon.png"
-        return components.url
-    }
-
     public var initialAtb: URL {
         return URL(string: Url.atb)!
     }

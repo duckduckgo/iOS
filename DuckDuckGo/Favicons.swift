@@ -28,6 +28,7 @@ public class Favicons {
         public static let standardPlaceHolder = UIImage(named: "GlobeSmall")
         public static let appUrls = AppUrls()
         
+        static let salt = "DDGSalt:"
         static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
@@ -76,10 +77,13 @@ public class Favicons {
     @UserDefaultsWrapper(key: .faviconsNeedMigration, defaultValue: true)
     var needsMigration: Bool
     
-    private init() {
+    let sourcesProvider: FaviconSourcesProvider
+    
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider()) {
+        self.sourcesProvider = sourcesProvider
     }
     
-    public func migrateIfNeeded(completion: () -> Void) {
+    public func migrateIfNeeded(completion: @escaping () -> Void) {
          guard needsMigration else { return }
         
         DispatchQueue.global(qos: .utility).async {
@@ -98,6 +102,7 @@ public class Favicons {
             group.wait()
 
             self.needsMigration = false
+            completion()
         }
         
     }
@@ -149,7 +154,7 @@ public class Favicons {
 
             switch result {
             case .success(let imageResult):
-                // Store it anyway - Kingfisher doesn't appear to store the image if it came from an alterantive source
+                // Store it anyway - Kingfisher doesn't appear to store the image if it came from an alternative source
                 Favicons.Constants.caches[cacheType]?.store(imageResult.image, forKey: resource.cacheKey, options: .init(options))
                 
             case .failure(let error):
@@ -172,9 +177,11 @@ public class Favicons {
     }
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {
-        guard let domain = domain else { return nil }
-        guard let faviconUrl = Constants.appUrls.appleTouchIcon(forDomain: domain) else { return nil }
-        let key = "DDGSalt:\(domain)".sha256()
+        guard let domain = domain,
+            let source = sourcesProvider.mainSource(forDomain: domain),
+            let faviconUrl = URL(string: source) else { return nil }
+        
+        let key = "\(Constants.salt)\(domain)".sha256()
         return ImageResource(downloadURL: faviconUrl, cacheKey: key)
     }
 
@@ -187,23 +194,17 @@ public class Favicons {
             return nil
         }
 
-        guard let secureFaviconUrl = Constants.appUrls.faviconUrl(forDomain: domain, secure: true),
-            let insecureFaviconUrl = Constants.appUrls.faviconUrl(forDomain: domain, secure: false) else {
-            return nil
-        }
-
         guard let cache = Constants.caches[cacheType] else {
             return nil
         }
+
+        let sources = sourcesProvider.additionalSources(forDomain: domain).compactMap { URL(string: $0) }.map { Source.network($0) }
 
         return [
             .downloader(Constants.downloader),
             .requestModifier(Constants.requestModifier),
             .targetCache(cache),
-            .alternativeSources([
-                Source.network(secureFaviconUrl),
-                Source.network(insecureFaviconUrl)
-            ])
+            .alternativeSources(sources)
         ]
     }
 

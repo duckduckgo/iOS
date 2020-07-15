@@ -26,7 +26,6 @@ public class Favicons {
     public struct Constants {
 
         public static let standardPlaceHolder = UIImage(named: "GlobeSmall")
-        public static let appUrls = AppUrls()
         
         static let salt = "DDGSalt:"
         static let downloader = NotFoundCachingDownloader()
@@ -190,7 +189,7 @@ public class Favicons {
             return nil
         }
 
-        if let url = URL(string: "https://\(domain)"), Constants.appUrls.isDuckDuckGo(url: url) {
+        if AppUrls.isDuckDuckGo(domain: domain) {
             return nil
         }
 

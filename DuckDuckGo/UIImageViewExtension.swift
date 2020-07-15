@@ -46,8 +46,8 @@ extension UIImageView {
                 completion?(self.image)
             }
         }
-                
-        if domain == AppUrls.ddgDomain {
+        
+        if AppUrls.isDuckDuckGo(domain: domain) {
             complete(UIImage(named: "Logo"))
             return
         }

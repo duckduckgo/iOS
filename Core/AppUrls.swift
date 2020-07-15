@@ -119,9 +119,12 @@ public struct AppUrls {
             .addParam(name: Param.setAtb, value: setAtb)
     }
 
+    public static func isDuckDuckGo(domain: String?) -> Bool {
+        return domain == AppUrls.ddgDomain || domain?.hasSuffix(".\(AppUrls.ddgDomain)") ?? false
+    }
+    
     public func isDuckDuckGo(url: URL) -> Bool {
-        guard let searchHost = base.host else { return false }
-        return url.isPart(ofDomain: searchHost)
+        return Self.isDuckDuckGo(domain: url.host)
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {

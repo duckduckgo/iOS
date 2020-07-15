@@ -24,81 +24,68 @@ import XCTest
 
 class HomePageConfigurationTests: XCTestCase {
 
-    struct Test {
-
-        let layout: HomePageLayout
-        let favorites: Bool
-        let links: [Link]
-        let expected: [HomePageConfiguration.Component]
-
+    func testWhenCenteredAndFavoritesDisabledThenFixedCenteredIsUsed() {
+        let test = Test(layout: .centered, favorites: false, links: [])
+        assertLayout(test: test, expected: [ .centeredSearch(fixed: true) ])
     }
 
-    func test() {
+    func testWhenCenteredAndFavoritesEnabledThenFixedCenteredWithFavoritesAndPaddingIsUsed() {
+        let test = Test(layout: .centered, favorites: true, links: [])
+        assertLayout(test: test, expected: [ .centeredSearch(fixed: true), .favorites, .padding ])
+    }
 
+    func testWhenCenteredAndFavoritesEnabledWithLinkThenNotFixedCenteredWithFavoritesAndPaddingIsUsed() {
         let url = URL(string: "http://www.example.com")!
-
-        let tests = [
-            Test(layout: .centered, favorites: false, links: [],
-                 expected: [ .centeredSearch(fixed: true) ]),
-
-            Test(layout: .centered, favorites: true, links: [],
-                 expected: [ .centeredSearch(fixed: true), .favorites, .padding ]),
-
-            Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .centeredSearch(fixed: false), .favorites, .padding ]),
-
-            Test(layout: .navigationBar, favorites: false, links: [],
-                 expected: [ .navigationBarSearch(fixed: true) ]),
-
-            Test(layout: .navigationBar, favorites: true, links: [],
-                 expected: [ .navigationBarSearch(fixed: true), .favorites ]),
-
-            Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .navigationBarSearch(fixed: false), .favorites ]),
-            
-            Test(layout: .centered, favorites: false, links: [],
-                 expected: [ .centeredSearch(fixed: true) ]),
-
-            Test(layout: .centered, favorites: true, links: [],
-                 expected: [ .centeredSearch(fixed: true), .favorites, .padding ]),
-
-            Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .centeredSearch(fixed: false), .favorites, .padding ]),
-
-            Test(layout: .navigationBar, favorites: false, links: [],
-                 expected: [ .navigationBarSearch(fixed: true) ]),
-
-            Test(layout: .navigationBar, favorites: true, links: [],
-                 expected: [ .navigationBarSearch(fixed: true), .favorites ]),
-
-            Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)],
-                 expected: [ .navigationBarSearch(fixed: false), .favorites ])
-
-        ]
-
-        for test in tests {
-
-            let settings = StubHomePageSettings(layout: test.layout, favorites: test.favorites)
-            let store = MockBookmarkStore()
-            store.favorites = test.links
-
-            let manager = BookmarksManager(dataStore: store)
-
-            let config = HomePageConfiguration(settings: settings)
-
-            let actual = config.components(bookmarksManager: manager)
-            if actual != test.expected {
-                // This makes it easier to debug failures
-                XCTFail("\(test) was \(actual)")
-            }
-
-        }
-
+        let test = Test(layout: .centered, favorites: true, links: [Link(title: nil, url: url)])
+        assertLayout(test: test, expected: [.centeredSearch(fixed: false), .favorites, .padding])
     }
 
+    func testWhenNavigavigationBarAndFavoritesDisabledThenFixedNavigationBarSearchIsUsed() {
+        let test = Test(layout: .navigationBar, favorites: false, links: [])
+        assertLayout(test: test, expected: [ .navigationBarSearch(fixed: true) ])
+    }
+
+    func testWhenNavigationBarAndFavoritesEnabledThenFixedNavigationBarSearchWithFavoritesIsUsed() {
+        let test = Test(layout: .navigationBar, favorites: true, links: [])
+        assertLayout(test: test, expected: [ .navigationBarSearch(fixed: true), .favorites ])
+    }
+
+    func testWhenNavigationBarAndFavoritesEnabledWithLinkThenNotFixedNavigationBarSearchWithFavoritesIsUsed() {
+        let url = URL(string: "http://www.example.com")!
+        let test = Test(layout: .navigationBar, favorites: true, links: [Link(title: nil, url: url)])
+        assertLayout(test: test, expected: [ .navigationBarSearch(fixed: false), .favorites ])
+    }
 }
 
-struct StubHomePageSettings: HomePageSettings {
+private func assertLayout(
+    test: Test,
+    expected: [HomePageConfiguration.Component],
+    file: StaticString = #file,
+    line: UInt = #line
+) {
+    let actual = homePageConfigurationComponents(for: test)
+    XCTAssertEqual(actual, expected, "\(test) was \(actual)", file: file, line: line)
+}
+
+private func homePageConfigurationComponents(for test: Test) -> [HomePageConfiguration.Component] {
+    let settings = StubHomePageSettings(layout: test.layout, favorites: test.favorites)
+
+    let store = MockBookmarkStore()
+    store.favorites = test.links
+    let manager = BookmarksManager(dataStore: store)
+
+    let config = HomePageConfiguration(settings: settings)
+
+    return config.components(bookmarksManager: manager)
+}
+
+private struct Test {
+    let layout: HomePageLayout
+    let favorites: Bool
+    let links: [Link]
+}
+
+private struct StubHomePageSettings: HomePageSettings {
 
     var layout: HomePageLayout
     var favorites: Bool

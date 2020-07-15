@@ -51,7 +51,7 @@ class NotFoundCachingDownloader: ImageDownloader {
         }
     }
 
-    func cacheNotFound(_ domain: String) {
+    func noFaviconsFound(forDomain domain: String) {
         guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return }
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }

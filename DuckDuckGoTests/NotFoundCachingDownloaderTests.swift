@@ -29,7 +29,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
     
     func testWhenURLSavedNotStoredInPlainText() {
         let downloader = NotFoundCachingDownloader()
-        downloader.cacheNotFound("example.com")
+        downloader.noFaviconsFound(forDomain: "example.com")
 
         guard let domains: [String: TimeInterval] = UserDefaults.standard.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
             as? [String: TimeInterval] else {
@@ -47,7 +47,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
     func testWhenExpiredEntriesAreRemovedThenDomainsShouldDownload() {
 
         let downloader = NotFoundCachingDownloader()
-        downloader.cacheNotFound("example.com")
+        downloader.noFaviconsFound(forDomain: "example.com")
         
         let moreThanAWeekFromNow = Date().addingTimeInterval(60 * 60 * 24 * 8)
         downloader.removeExpired(referenceDate: moreThanAWeekFromNow)
@@ -58,7 +58,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
     
     func testWhenDomainMarkedAsDomainExpiresThenShouldDownload() {
         let downloader = NotFoundCachingDownloader()
-        downloader.cacheNotFound("example.com")
+        downloader.noFaviconsFound(forDomain: "example.com")
         
         let moreThanAWeekFromNow = Date().addingTimeInterval(60 * 60 * 24 * 8)
         XCTAssertTrue(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!, referenceDate: moreThanAWeekFromNow))
@@ -66,7 +66,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
 
     func testWhenMarkingDomainAsNotFoundThenShouldNotDownload() {
         let downloader = NotFoundCachingDownloader()
-        downloader.cacheNotFound("example.com")
+        downloader.noFaviconsFound(forDomain: "example.com")
         XCTAssertFalse(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!))
     }
 

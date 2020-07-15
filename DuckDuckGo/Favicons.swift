@@ -162,7 +162,7 @@ public class Favicons {
                 case .imageSettingError(let settingError):
                     switch settingError {
                     case .alternativeSourcesExhausted:
-                        Constants.downloader.cacheNotFound(domain)
+                        Constants.downloader.noFaviconsFound(forDomain: domain)
 
                     default: break
                     }

@@ -135,6 +135,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
@@ -179,7 +180,8 @@ class TabViewController: UIViewController {
         generalScripts = [
             debugScript,
             findInPageScript,
-            contentBlockerScript
+            contentBlockerScript,
+            faviconScript
         ]
         
         ddgScripts = [
@@ -197,6 +199,7 @@ class TabViewController: UIViewController {
             ddgScripts.append(documentScript)
         }
         
+        faviconScript.webView = webView
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self

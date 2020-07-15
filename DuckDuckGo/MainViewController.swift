@@ -821,7 +821,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks)
+        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
         loadUrl(link.url)
         showHomeRowReminder()
     }

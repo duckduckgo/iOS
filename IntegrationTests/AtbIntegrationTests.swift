@@ -86,7 +86,7 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     func test() throws {
-        try assertWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved()
+        try assertWhenAppIsInstalledAndLaunchedThenExtiIsCalledAndInitialAtbIsRetrieved()
         clearRequests()
         
         assertWhenAppLaunchedAgainThenAppAtbIsUpdated()
@@ -102,7 +102,8 @@ class AtbIntegrationTests: XCTestCase {
         clearRequests()
     }
     
-    func assertWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
+    func assertWhenAppIsInstalledAndLaunchedThenExtiIsCalledAndInitialAtbIsRetrieved() throws {
+        Snapshot.waitForLoadingIndicatorToDisappear(within: 30)
         assertSearchRequestCount(count: 0)
         assertStatisticsRequestCount(count: 3)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)

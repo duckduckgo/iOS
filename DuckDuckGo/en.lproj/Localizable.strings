@@ -184,6 +184,9 @@
 "keyCommandFire" = "Clear all tabs and data";
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
+"keyCommandFindNext" = "Find next";
+"keyCommandFindNext" = "Find previous";
+"keyCommandReload" = "Reload";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";

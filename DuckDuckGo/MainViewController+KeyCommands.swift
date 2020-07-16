@@ -48,7 +48,7 @@ extension MainViewController {
                 UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab),
                              discoverabilityTitle: UserText.keyCommandCloseTab),
                 UIKeyCommand(input: "r", modifierFlags: .command, action: #selector(keyboardReload),
-                             discoverabilityTitle: "Reload")
+                             discoverabilityTitle: UserText.keyCommandReload)
             ]
         }
 
@@ -56,9 +56,9 @@ extension MainViewController {
         if findInPageView.findInPage != nil {
             findInPageCommands = [
                 UIKeyCommand(input: "g", modifierFlags: .command, action: #selector(keyboardFindNext),
-                             discoverabilityTitle: "Find next"),
+                             discoverabilityTitle: UserText.keyCommandFindNext),
                 UIKeyCommand(input: "g", modifierFlags: [.command, .shift ], action: #selector(keyboardFindPrevious),
-                             discoverabilityTitle: "Find previous")
+                             discoverabilityTitle: UserText.keyCommandFindPrevious)
             ]
         }
 
@@ -94,7 +94,7 @@ extension MainViewController {
     }
 
     @objc func keyboardReload() {
-        self.homeController?.refresh()
+        self.currentTab?.refresh()
     }
 
     @objc func keyboardFindNext() {

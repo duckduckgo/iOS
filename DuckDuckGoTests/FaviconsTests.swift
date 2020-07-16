@@ -25,6 +25,7 @@ class FaviconsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
         UserDefaults.clearStandard()
         
         Favicons.Constants.tabsCache.clearDiskCache()
@@ -95,14 +96,14 @@ class FaviconsTests: XCTestCase {
 
 struct MockSourcesProvider: FaviconSourcesProvider {
     
-    let mainSource: String
-    let additionalSources: [String]
+    let mainSource: URL
+    let additionalSources: [URL]
         
-    func mainSource(forDomain: String) -> String? {
+    func mainSource(forDomain: String) -> URL? {
         return mainSource
     }
     
-    func additionalSources(forDomain: String) -> [String] {
+    func additionalSources(forDomain: String) -> [URL] {
         return additionalSources
     }
         

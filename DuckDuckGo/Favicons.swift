@@ -28,6 +28,7 @@ public class Favicons {
         public static let standardPlaceHolder = UIImage(named: "GlobeSmall")
         
         static let salt = "DDGSalt:"
+        static let faviconsFolderName = "favicons"
         static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
@@ -46,27 +47,45 @@ public class Favicons {
         case bookmarks
 
         func create() -> ImageCache {
-
-            let imageCache: ImageCache
-
+            
+            // If unable to create cache in desired location default to Kinfisher's default location which is Library/Cache.  Images may disappear
+            //  but at least the app won't crash.  This should not happen.
+            let cache = createCacheInDesiredLocation() ?? ImageCache(name: rawValue)
+            
+            // We hash the resource key when loading the resource so don't use Kingfisher's hashing which is md5 based
+            cache.diskStorage.config.usesHashedFileName = false
+            
+            return cache
+        }
+        
+        private func createCacheInDesiredLocation() -> ImageCache? {
+            
+            guard var url = baseCacheURL()?.appendingPathComponent(Constants.faviconsFolderName) else { return nil }
+            
+            if !FileManager.default.fileExists(atPath: url.path) {
+                try? FileManager.default.createDirectory(at: url,
+                                        withIntermediateDirectories: false,
+                                        attributes: nil)
+                
+                // Exclude from backup
+                var resourceValues = URLResourceValues()
+                resourceValues.isExcludedFromBackup = true
+                try? url.setResourceValues(resourceValues)
+            }
+            
+            os_log("favicons %s location %s", type: .debug, rawValue, url.absoluteString)
+            return try? ImageCache(name: self.rawValue, cacheDirectoryURL: url)
+        }
+        
+        private func baseCacheURL() -> URL? {
             switch self {
             case .bookmarks:
                 let groupName = BookmarkUserDefaults.Constants.groupName
-                let sharedLocation = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
-                os_log("favicons bookmarks location %s", log: generalLog, type: .debug, sharedLocation?.absoluteString ?? "<none>")
-                imageCache = (try? ImageCache(name: self.rawValue, cacheDirectoryURL: sharedLocation))
-                                ?? ImageCache(name: self.rawValue)
-                            
+                return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
+                       
             case .tabs:
-                let location = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-                os_log("favicons tabs location %s", log: generalLog, type: .debug, location[0].absoluteString)
-                imageCache = ImageCache(name: self.rawValue)
+                return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             }
-
-            // We hash the resource key when loading the resource
-            imageCache.diskStorage.config.usesHashedFileName = false
-
-            return imageCache
         }
         
     }
@@ -77,18 +96,20 @@ public class Favicons {
     var needsMigration: Bool
     
     let sourcesProvider: FaviconSourcesProvider
+    let bookmarksStore: BookmarkStore
     
-    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider()) {
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
         self.sourcesProvider = sourcesProvider
+        self.bookmarksStore = bookmarksStore
     }
     
     public func migrateIfNeeded(completion: @escaping () -> Void) {
-         guard needsMigration else { return }
-        
+        guard needsMigration else { return }
+
         DispatchQueue.global(qos: .utility).async {
             ImageCache.default.clearDiskCache()
             
-            let links = ((BookmarkUserDefaults().bookmarks + BookmarkUserDefaults().favorites).compactMap { $0.url.host })
+            let links = ((self.bookmarksStore.bookmarks + self.bookmarksStore.favorites).compactMap { $0.url.host })
                 + PreserveLogins.shared.allowedDomains
             
             let group = DispatchGroup()
@@ -104,11 +125,6 @@ public class Favicons {
             completion()
         }
         
-    }
-    
-    // "not found" entries that have expired should be removed from the user settings occasionally
-    public func removeExpiredNotFoundEntries() {
-        Constants.downloader.removeExpired()
     }
 
     public func clearCache(_ cacheType: CacheType) {
@@ -129,7 +145,7 @@ public class Favicons {
 
     public func removeFireproofFavicon(forDomain domain: String) {
 
-        guard !BookmarkUserDefaults().contains(domain: domain) else { return }
+        guard !bookmarksStore.contains(domain: domain) else { return }
         removeFavicon(forDomain: domain, fromCache: .bookmarks)
 
     }
@@ -177,11 +193,10 @@ public class Favicons {
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {
         guard let domain = domain,
-            let source = sourcesProvider.mainSource(forDomain: domain),
-            let faviconUrl = URL(string: source) else { return nil }
+            let source = sourcesProvider.mainSource(forDomain: domain) else { return nil }
         
         let key = "\(Constants.salt)\(domain)".sha256()
-        return ImageResource(downloadURL: faviconUrl, cacheKey: key)
+        return ImageResource(downloadURL: source, cacheKey: key)
     }
 
     public func kfOptions(forDomain domain: String?, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
@@ -197,7 +212,7 @@ public class Favicons {
             return nil
         }
 
-        let sources = sourcesProvider.additionalSources(forDomain: domain).compactMap { URL(string: $0) }.map { Source.network($0) }
+        let sources = sourcesProvider.additionalSources(forDomain: domain).map { Source.network($0) }
 
         return [
             .downloader(Constants.downloader),

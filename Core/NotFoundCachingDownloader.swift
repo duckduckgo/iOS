@@ -42,20 +42,11 @@ class NotFoundCachingDownloader: ImageDownloader {
         return nil
     }
 
-    func removeExpired(referenceDate: Date = Date()) {
-        let cache = notFoundCache
-        cache.forEach { key, time in
-            if referenceDate.timeIntervalSince1970 - time > Self.expiry {
-                notFoundCache.removeValue(forKey: key)
-            }
-        }
-    }
-
     func noFaviconsFound(forDomain domain: String) {
         guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return }
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }
-
+    
     func shouldDownload(_ url: URL, referenceDate: Date = Date()) -> Bool {
         guard let domain = url.host else { return false }
         guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return false }
@@ -63,6 +54,7 @@ class NotFoundCachingDownloader: ImageDownloader {
             referenceDate.timeIntervalSince1970 - cacheAddTime < Self.expiry {
             return false
         }
+        notFoundCache[hashedKey] = nil
         return true
     }
 

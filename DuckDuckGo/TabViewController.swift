@@ -46,6 +46,7 @@ class TabViewController: UIViewController {
     private let instrumentation = TabInstrumentation()
 
     var openedByPage = false
+    var daxDialogsDisabled = false
     
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -814,6 +815,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
         guard let siteRating = self.siteRating,
+            !daxDialogsDisabled,
             let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return

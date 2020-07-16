@@ -14,12 +14,13 @@ class FaviconSourcesProviderTests: XCTestCase {
     func testWhenAdditionalSourcesRequestedThenFaviconsReturned() {
         let sources = DefaultFaviconSourcesProvider().additionalSources(forDomain: "www.example.com")
         XCTAssertEqual(2, sources.count)
-        XCTAssertEqual("https://www.example.com/favicon.ico", sources[0])
-        XCTAssertEqual("http://www.example.com/favicon.ico", sources[1])
+        XCTAssertEqual("https://www.example.com/favicon.ico", sources[0].absoluteString)
+        XCTAssertEqual("http://www.example.com/favicon.ico", sources[1].absoluteString)
     }
     
     func testWhenMainSourceRequestedThenAppleTouchIconReturned() {
-        XCTAssertEqual("https://www.example.com/apple-touch-icon.png", DefaultFaviconSourcesProvider().mainSource(forDomain: "www.example.com"))
+        XCTAssertEqual("https://www.example.com/apple-touch-icon.png",
+                       DefaultFaviconSourcesProvider().mainSource(forDomain: "www.example.com")?.absoluteString)
     }
 
 }

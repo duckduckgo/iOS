@@ -21,9 +21,9 @@ import Foundation
 
 protocol FaviconSourcesProvider {
     
-    func mainSource(forDomain: String) -> String?
+    func mainSource(forDomain: String) -> URL?
     
-    func additionalSources(forDomain: String) -> [String]
+    func additionalSources(forDomain: String) -> [URL]
     
 }
 
@@ -36,19 +36,19 @@ class DefaultFaviconSourcesProvider: FaviconSourcesProvider {
         
     }
     
-    func mainSource(forDomain domain: String) -> String? {
+    func mainSource(forDomain domain: String) -> URL? {
         return imageSource(forDomain: domain, imageName: ImageNames.appleTouch, secure: true)
     }
     
-    func additionalSources(forDomain domain: String) -> [String] {
+    func additionalSources(forDomain domain: String) -> [URL] {
         return [
             imageSource(forDomain: domain, imageName: .favicon, secure: true),
             imageSource(forDomain: domain, imageName: .favicon, secure: false)
         ].compactMap { $0 }
     }
     
-    private func imageSource(forDomain domain: String, imageName: ImageNames, secure: Bool) -> String? {
-        return URL(string: (secure ? "https" : "http") + "://" + domain + "/" + imageName.rawValue)?.absoluteString
+    private func imageSource(forDomain domain: String, imageName: ImageNames, secure: Bool) -> URL? {
+        return URL(string: (secure ? "https" : "http") + "://" + domain + "/" + imageName.rawValue)
     }
     
 }

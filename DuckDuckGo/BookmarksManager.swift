@@ -21,8 +21,6 @@ import Core
 
 class BookmarksManager {
 
-    static let imageCacheName = "bookmarks"
-
     private var dataStore: BookmarkStore
 
     init(dataStore: BookmarkStore = BookmarkUserDefaults()) {
@@ -52,13 +50,13 @@ class BookmarksManager {
     }
 
     func save(bookmark: Link) {
-        Favicons.shared.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks)
         dataStore.addBookmark(bookmark)
+        Favicons.shared.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks)
     }
 
     func save(favorite: Link) {
-        Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks)
         dataStore.addFavorite(favorite)
+        Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks)
     }
 
     func moveFavorite(at favoriteIndex: Int, toBookmark bookmarkIndex: Int) {
@@ -137,18 +135,26 @@ class BookmarksManager {
 
     func updateFavorite(at index: Int, with link: Link) {
         var favorites = dataStore.favorites
-        _ = favorites.remove(at: index)
+        let old = favorites.remove(at: index)
         favorites.insert(link, at: index)
         dataStore.favorites = favorites
+        updateFaviconIfNeeded(old, link)
     }
 
     func updateBookmark(at index: Int, with link: Link) {
         var bookmarks = dataStore.bookmarks
-        _ = bookmarks.remove(at: index)
+        let old = bookmarks.remove(at: index)
         bookmarks.insert(link, at: index)
         dataStore.bookmarks = bookmarks
+        updateFaviconIfNeeded(old, link)
     }
 
+    private func updateFaviconIfNeeded(_ old: Link, _ new: Link) {
+        guard old.url.host != new.url.host else { return }
+        removeFavicon(forLink: old)
+        Favicons.shared.loadFavicon(forDomain: new.url.host, intoCache: .bookmarks)
+    }
+    
     private func indexOfBookmark(url: URL) -> Int? {
         let bookmarks = dataStore.bookmarks
         return indexOf(url, in: bookmarks)

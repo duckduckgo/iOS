@@ -209,7 +209,7 @@ public class Favicons {
 
         guard let domain = domain,
             let options = kfOptions(forDomain: domain, withURL: url, usingCache: targetCache),
-            var resource = defaultResource(forDomain: domain) else {
+            let resource = defaultResource(forDomain: domain) else {
                 completion?(nil)
                 return
             }
@@ -219,12 +219,6 @@ public class Favicons {
             return
         }
         
-        // if a URL was provided use that
-        if let url = url {
-            os_log("loadFavicon overriding default url with %s", type: .debug, url.absoluteString)
-            resource = ImageResource(downloadURL: url, cacheKey: resource.cacheKey)
-        }
-
         KingfisherManager.shared.retrieveImage(with: resource, options: options) { result in
             guard let domain = resource.downloadURL.host else {
                 completion?(nil)
@@ -280,8 +274,8 @@ public class Favicons {
         var sources = sourcesProvider.additionalSources(forDomain: domain).map { Source.network($0) }
         
         // a provided URL was given so add our usual main source to the list of alteratives
-        if url != nil, let downloadURL = defaultResource(forDomain: domain)?.downloadURL {
-            sources.insert(Source.network(downloadURL), at: 0)
+        if let url = url {
+            sources.insert(Source.network(url), at: 0)
         }
 
         return [

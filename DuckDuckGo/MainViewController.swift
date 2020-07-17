@@ -99,6 +99,12 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Favicons.shared.migrateIfNeeded {
+            DispatchQueue.main.async {
+                self.homeController?.collectionView.reloadData()
+            }
+        }
+        
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
@@ -815,6 +821,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
+        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
         loadUrl(link.url)
         showHomeRowReminder()
     }
@@ -1109,13 +1116,13 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
+        Favicons.shared.clearCache(.tabs)
     }
     
     func forgetData() {
         findInPageView?.done()
         
         ServerTrustCache.shared.clear()
-        KingfisherManager.shared.cache.clearDiskCache()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {

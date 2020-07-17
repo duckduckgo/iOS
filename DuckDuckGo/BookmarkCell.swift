@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import Kingfisher
 
 class BookmarkCell: UITableViewCell {
 
@@ -35,7 +34,7 @@ class BookmarkCell: UITableViewCell {
             } else {
                 title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
             }
-            linkImage.loadFavicon(forDomain: link?.url.host)
+            linkImage.loadFavicon(forDomain: link?.url.host, usingCache: .bookmarks)
         }
     }
 

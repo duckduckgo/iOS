@@ -1,8 +1,8 @@
 //
-//  BookmarkCell.swift
-//  DuckDuckGo
+//  FaviconRequestModifierTests.swift
+//  UnitTests
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,19 +17,15 @@
 //  limitations under the License.
 //
 
-import UIKit
-import Core
+import XCTest
+@testable import Core
 
-class BookmarkCell: UITableViewCell {
+class FaviconRequestModifierTests: XCTestCase {
     
-    static let reuseIdentifier = "Bookmark"
-    
-    @IBOutlet weak var favicon: UIImageView!
-    @IBOutlet weak var title: UILabel!
-    
-    func update(withBookmark bookmark: Link) {
-        title.text = bookmark.title
-        favicon.loadFavicon(forDomain: bookmark.url.host, usingCache: .bookmarks)
+    func test() {
+        let request = URLRequest(url: URL(string: "https://www.example.com")!)
+        let result = FaviconRequestModifier().modified(for: request)
+        XCTAssertTrue(result?.allHTTPHeaderFields?["User-Agent"]?.contains("DuckDuckGo") ?? false)
     }
     
 }

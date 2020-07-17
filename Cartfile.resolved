@@ -1,7 +1,7 @@
 github "duckduckgo/Alamofire" "4.8.1"
 github "duckduckgo/CommonCrypto" "v1.1.0"
 github "duckduckgo/Device.swift" "1.2.2"
-github "duckduckgo/Kingfisher" "4.10.0"
+github "duckduckgo/Kingfisher" "5.14.1"
 github "duckduckgo/OHHTTPStubs" "7.0.0"
 github "duckduckgo/PunycodeSwift" "b5d91da73fc9770362e1d14be692a2bddc1b4e37"
 github "duckduckgo/Toast-Swift" "4.0.0"

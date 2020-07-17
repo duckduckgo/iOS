@@ -46,6 +46,7 @@ class TabViewController: UIViewController {
     private let instrumentation = TabInstrumentation()
 
     var openedByPage = false
+    var daxDialogsDisabled = false
     
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -135,6 +136,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
@@ -179,7 +181,8 @@ class TabViewController: UIViewController {
         generalScripts = [
             debugScript,
             findInPageScript,
-            contentBlockerScript
+            contentBlockerScript,
+            faviconScript
         ]
         
         ddgScripts = [
@@ -197,6 +200,7 @@ class TabViewController: UIViewController {
             ddgScripts.append(documentScript)
         }
         
+        faviconScript.webView = webView
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
@@ -709,7 +713,7 @@ extension TabViewController: WKNavigationDelegate {
         
         self.httpsForced = httpsForced
         delegate?.showBars()
-        
+
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
             self.siteRating = makeSiteRating(url: siteRating.url)
@@ -812,6 +816,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
         guard let siteRating = self.siteRating,
+            !daxDialogsDisabled,
             let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return

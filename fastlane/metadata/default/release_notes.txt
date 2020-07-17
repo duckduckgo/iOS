@@ -1,2 +1,4 @@
-• Now you can see page previews on the tab switcher screen. If you prefer the list view, you can use the toggle to switch between the two layouts.
-• Bug fixed and improvements.
+• We've improved the way we get and store website favicons for sites you browse, bookmarks and favorites.
+• Recaptcha should now work again.
+• Updated terminology for protected sites.
+• Other fixes and improvements.

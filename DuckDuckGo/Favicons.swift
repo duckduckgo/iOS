@@ -28,7 +28,7 @@ public class Favicons {
         public static let standardPlaceHolder = UIImage(named: "GlobeSmall")
         
         static let salt = "DDGSalt:"
-        static let faviconsFolderName = "favicons"
+        static let faviconsFolderName = "Favicons"
         static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
@@ -64,7 +64,7 @@ public class Favicons {
             
             if !FileManager.default.fileExists(atPath: url.path) {
                 try? FileManager.default.createDirectory(at: url,
-                                        withIntermediateDirectories: false,
+                                        withIntermediateDirectories: true,
                                         attributes: nil)
                 
                 // Exclude from backup

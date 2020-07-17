@@ -42,7 +42,11 @@ public class UserAgentManager {
             self?.userAgent = UserAgent(defaultAgent: defaultAgent)
         }
     }
-    
+
+    public func update(request: inout URLRequest, isDesktop: Bool) {
+        request.addValue(userAgent.agent(forUrl: nil, isDesktop: isDesktop), forHTTPHeaderField: "User-Agent")
+    }
+
     public func update(webView: WKWebView, isDesktop: Bool, url: URL?) {
         let agent = userAgent.agent(forUrl: url, isDesktop: isDesktop)
         webView.customUserAgent = agent
@@ -64,13 +68,14 @@ struct UserAgent {
         static let fallbackSafariComponent = "Safari/\(fallbackWekKitVersion)"
         static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Mobile/15E148"
         static let desktopPrefixComponent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)"
-        static let desktopVersionComponent = "Version/13.1.1"
+        static let fallbackVersionComponent = "Version/13.1.1"
         // swiftlint:enable line_length
     }
     
     private struct Regex {
         static let suffix = "(AppleWebKit/.*) Mobile"
         static let webKitVersion = "AppleWebKit/([^ ]+) "
+        static let osVersion = " OS ([0-9_]+)"
     }
     
     private static let sitesThatOmitApplication = [
@@ -79,12 +84,14 @@ struct UserAgent {
     
     private let baseAgent: String
     private let baseDesktopAgent: String
+    private let versionComponent: String
     private let safariComponent: String
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
     
     init(defaultAgent: String = Constants.fallbackDefaultAgent) {
-        baseAgent = defaultAgent
-        baseDesktopAgent = UserAgent.createBaseDesktopAgent(fromAgent: baseAgent)
+        versionComponent = UserAgent.createVersionComponent(fromAgent: defaultAgent)
+        baseAgent = UserAgent.createBaseAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
+        baseDesktopAgent = UserAgent.createBaseDesktopAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
@@ -107,6 +114,24 @@ struct UserAgent {
             .joined(separator: " ")
     }
     
+    private static func createVersionComponent(fromAgent agent: String) -> String {
+        let regex = try? NSRegularExpression(pattern: Regex.osVersion)
+        let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
+        
+        guard let range = match?.range(at: 1) else {
+            return Constants.fallbackVersionComponent
+        }
+        
+        let version = (agent as NSString).substring(with: range)
+        let versionComponents = version.split(separator: "_").prefix(2)
+        
+        guard versionComponents.count > 1 else {
+            return Constants.fallbackVersionComponent
+        }
+        
+        return "Version/\(versionComponents.joined(separator: "."))"
+    }
+    
     private static func createSafariComponent(fromAgent agent: String) -> String {
         let regex = try? NSRegularExpression(pattern: Regex.webKitVersion)
         let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
@@ -119,15 +144,29 @@ struct UserAgent {
         return "Safari/\(version)"
     }
     
-    private static func createBaseDesktopAgent(fromAgent agent: String) -> String {
+    private static func createBaseAgent(fromAgent agent: String,
+                                        versionComponent: String) -> String {
+        var agentComponents = agent.split(separator: " ")
+        
+        guard !agentComponents.isEmpty else {
+            return agent
+        }
+        
+        agentComponents.insert(.init(versionComponent), at: agentComponents.endIndex - 1)
+        return agentComponents.joined(separator: " ")
+    }
+    
+    private static func createBaseDesktopAgent(fromAgent agent: String,
+                                               versionComponent: String) -> String {
         let regex = try? NSRegularExpression(pattern: Regex.suffix)
         let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
         
         guard let range = match?.range(at: 1) else {
-            return createBaseDesktopAgent(fromAgent: Constants.fallbackDefaultAgent)
+            return createBaseDesktopAgent(fromAgent: Constants.fallbackDefaultAgent,
+                                          versionComponent: versionComponent)
         }
         
         let suffix = (agent as NSString).substring(with: range)
-        return "\(Constants.desktopPrefixComponent) \(suffix) \(Constants.desktopVersionComponent)"
+        return "\(Constants.desktopPrefixComponent) \(suffix) \(versionComponent)"
     }
 }

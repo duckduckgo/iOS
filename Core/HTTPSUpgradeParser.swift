@@ -21,14 +21,14 @@ import Foundation
 
 public class HTTPSUpgradeParser {
     
-    struct HTTPSWhitelistResponse: Decodable {
+    struct HTTPSExcludedDomainsResponse: Decodable {
         let data: [String]
     }
     
-    static func convertWhitelist(fromJSONData data: Data) throws -> [String] {
+    static func convertExcludedDomainsData(_ data: Data) throws -> [String] {
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(HTTPSWhitelistResponse.self, from: data).data
+            return try decoder.decode(HTTPSExcludedDomainsResponse.self, from: data).data
         } catch DecodingError.dataCorrupted {
             throw JsonError.invalidJson
         } catch {

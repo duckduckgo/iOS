@@ -460,8 +460,8 @@ _utf8_encode : function (string) {
 
     let topLevelUrl = getTopLevelURL();
 
-    let whitelisted = `
-        ${whitelist}
+    let unprotectedDomain = `
+        ${unprotectedDomains}
     `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
 
     // private
@@ -503,9 +503,9 @@ _utf8_encode : function (string) {
         }
 
         var blocked = false;
-        if (whitelisted) {
+        if (unprotectedDomain) {
             blocked = false;
-            result.reason = "whitelisted";
+            result.reason = "unprotectedDomain";
         } else if (result.action === 'block') {
             blocked = true;
         } else if (result.matchedRule && result.matchedRule.surrogate) {

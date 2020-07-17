@@ -45,10 +45,10 @@ class HTTPSUpgradeTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
-    func testWhenURLIsInWhiteListThenShouldUpgradeResultIsFalse() {
+    func testWhenURLIsExcludedThenShouldUpgradeResultIsFalse() {
         
-        let expect = expectation(description: "Http url in whitelist should not be upgraded")
-        let url = URL(string: "http://whitelisted.url")!
+        let expect = expectation(description: "Excluded http:// urls should not be upgraded")
+        let url = URL(string: "http://excluded.url")!
         
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()
@@ -160,7 +160,7 @@ class HTTPSUpgradeTests: XCTestCase {
     private func bloomFilter() -> BloomFilterWrapper {
         let filter = BloomFilterWrapper(totalItems: Int32(1000), errorRate: 0.0001)!
         filter.add("locallyUpgradable.url")
-        filter.add("whitelisted.url")
+        filter.add("excluded.url")
         return filter
     }
     
@@ -189,11 +189,11 @@ private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
         return true
     }
     
-    func hasWhitelistedDomain(_ domain: String) -> Bool {
-        return domain == "whitelisted.url"
+    func shouldUpgradeDomain(_ domain: String) -> Bool {
+        return domain != "excluded.url"
     }
     
-    func persistWhitelist(domains: [String]) -> Bool {
+    func persistExcludedDomains(_ domains: [String]) -> Bool {
         return true
     }
 }

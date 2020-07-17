@@ -198,7 +198,7 @@ open class Snapshot: NSObject {
 
 private extension XCUIElementAttributes {
     var isNetworkLoadingIndicator: Bool {
-        if hasWhiteListedIdentifier { return false }
+        if hasIgnoredIdentifier { return false }
 
         let hasOldLoadingIndicatorSize = frame.size == CGSize(width: 10, height: 20)
         let hasNewLoadingIndicatorSize = frame.size.width.isBetween(46, and: 47) && frame.size.height.isBetween(2, and: 3)
@@ -206,10 +206,10 @@ private extension XCUIElementAttributes {
         return hasOldLoadingIndicatorSize || hasNewLoadingIndicatorSize
     }
 
-    var hasWhiteListedIdentifier: Bool {
-        let whiteListedIdentifiers = ["GeofenceLocationTrackingOn", "StandardLocationTrackingOn"]
+    var hasIgnoredIdentifier: Bool {
+        let ignoredIdentifiers = ["GeofenceLocationTrackingOn", "StandardLocationTrackingOn"]
 
-        return whiteListedIdentifiers.contains(identifier)
+        return ignoredIdentifiers.contains(identifier)
     }
 
     func isStatusBar(_ deviceWidth: CGFloat) -> Bool {

@@ -54,18 +54,6 @@ class AppUrlsTests: XCTestCase {
         XCTAssertEqual("x", pixelUrl.getParam(name: "atb"))
     }
 
-    func testWhenFaviconUrlForSecureDomainRequestedThenCorrectDomainIsCreated() {
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let faviconURL = testee.faviconUrl(forDomain: "example.com", secure: true)
-        XCTAssertEqual("https://example.com/favicon.ico", faviconURL?.absoluteString)
-    }
-
-    func testWhenFaviconUrlForInsecureDomainRequestedThenCorrectDomainIsCreated() {
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let faviconURL = testee.faviconUrl(forDomain: "example.com", secure: false)
-        XCTAssertEqual("http://example.com/favicon.ico", faviconURL?.absoluteString)
-    }
-
     func testBaseUrlDoesNotHaveSubDomain() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         XCTAssertEqual(testee.base, URL(string: "https://duckduckgo.com"))

@@ -82,7 +82,7 @@ class DatabaseMigration {
         
         group.enter()
         migrate(db: LegacyStores.httpsUpgrade.rawValue, to: context,
-                with: { (source: HTTPSWhitelistedDomain, destination: HTTPSWhitelistedDomain) in
+                with: { (source: HTTPSExcludedDomain, destination: HTTPSExcludedDomain) in
                     destination.domain = source.domain
         }, completion: { result in
             group.leave()

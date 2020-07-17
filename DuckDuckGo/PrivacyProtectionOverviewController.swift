@@ -38,7 +38,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     fileprivate var popRecognizer: InteractivePopRecognizer!
     
     private var siteRating: SiteRating!
-    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
+    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
     private weak var header: PrivacyProtectionHeaderController!
     private weak var footer: PrivacyProtectionFooterController!
     
@@ -55,7 +55,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
-            displayInfo.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
+            displayInfo.using(siteRating: siteRating, protectionStore: protectionStore)
         }
         
         if let header = segue.destination as? PrivacyProtectionHeaderController {
@@ -81,8 +81,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
         
-        header.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
-        footer.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
+        header.using(siteRating: siteRating, protectionStore: protectionStore)
+        footer.using(siteRating: siteRating, protectionStore: protectionStore)
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()
@@ -110,7 +110,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func updateTrackers() {
-        trackersCell.summaryLabel.text = siteRating.networksText(configuration: contentBlockerConfiguration)
+        trackersCell.summaryLabel.text = siteRating.networksText(protectionStore: protectionStore)
         
         if protecting() || siteRating.trackersDetected.count == 0 {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
@@ -126,7 +126,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func protecting() -> Bool {
-        return contentBlockerConfiguration.protecting(domain: siteRating.domain)
+        return protectionStore.isProtected(domain: siteRating.domain)
     }
     
     // see https://stackoverflow.com/a/41248703
@@ -148,9 +148,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
 extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
     
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
-        self.contentBlockerConfiguration = configuration
+        self.protectionStore = protectionStore
         update()
     }
     

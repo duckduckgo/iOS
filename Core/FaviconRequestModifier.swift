@@ -1,8 +1,8 @@
 //
-//  BookmarkCell.swift
-//  DuckDuckGo
+//  FaviconRequestModifier.swift
+//  Core
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,19 +17,14 @@
 //  limitations under the License.
 //
 
-import UIKit
-import Core
+import Kingfisher
 
-class BookmarkCell: UITableViewCell {
-    
-    static let reuseIdentifier = "Bookmark"
-    
-    @IBOutlet weak var favicon: UIImageView!
-    @IBOutlet weak var title: UILabel!
-    
-    func update(withBookmark bookmark: Link) {
-        title.text = bookmark.title
-        favicon.loadFavicon(forDomain: bookmark.url.host, usingCache: .bookmarks)
+class FaviconRequestModifier: ImageDownloadRequestModifier {
+
+    func modified(for request: URLRequest) -> URLRequest? {
+        var r = request
+        UserAgentManager.shared.update(request: &r, isDesktop: false)
+        return r
     }
-    
+
 }

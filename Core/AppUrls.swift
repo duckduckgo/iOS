@@ -34,17 +34,16 @@ public struct AppUrls {
         static let autocomplete = "\(base)/ac/"
         
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        static let temporaryWhitelist = "\(base)/contentblocking/trackers-whitelist-temporary.txt"
+        static let temporaryUnprotectedSites = "\(base)/contentblocking/trackers-whitelist-temporary.txt"
         static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/tds.json"
 
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
-        static let faviconService = "\(externalContentBase)/ip3/%@.ico"
  
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
-        static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
+        static let httpsExcludedDomains = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
         static let httpsLookupService = "\(base)/smarter_encryption.js"
 
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
@@ -87,30 +86,14 @@ public struct AppUrls {
         return URL(string: Url.trackerDataSet)!
     }
     
-    public var temporaryWhitelist: URL {
-        return URL(string: Url.temporaryWhitelist)!
+    public var temporaryUnprotectedSites: URL {
+        return URL(string: Url.temporaryUnprotectedSites)!
     }
 
     public var feedback: URL {
         return URL(string: Url.feedback)!
     }
     
-    public func faviconUrl(forDomain domain: String, secure: Bool) -> URL? {
-        var components = URLComponents()
-        components.scheme = secure ? "https" : "http"
-        components.host = domain
-        components.path = "/favicon.ico"
-        return components.url
-    }
-    
-    public func appleTouchIcon(forDomain domain: String) -> URL? {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = domain
-        components.path = "/apple-touch-icon.png"
-        return components.url
-    }
-
     public var initialAtb: URL {
         return URL(string: Url.atb)!
     }
@@ -134,6 +117,11 @@ public struct AppUrls {
             .addParam(name: Param.setAtb, value: setAtb)
     }
 
+    public func isDuckDuckGo(domain: String?) -> Bool {
+        guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
+        return isDuckDuckGo(url: url)
+    }
+    
     public func isDuckDuckGo(url: URL) -> Bool {
         guard let searchHost = base.host else { return false }
         return url.isPart(ofDomain: searchHost)
@@ -198,8 +186,8 @@ public struct AppUrls {
         return URL(string: Url.httpsBloomFilterSpec)!
     }
 
-    public var httpsWhitelist: URL {
-        return URL(string: Url.httpsWhitelist)!
+    public var httpsExcludedDomains: URL {
+        return URL(string: Url.httpsExcludedDomains)!
     }
 
     public func httpsLookupServiceUrl(forPartialHost partialHashedHost: String) -> URL {

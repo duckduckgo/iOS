@@ -46,6 +46,7 @@ class TabViewController: UIViewController {
     private let instrumentation = TabInstrumentation()
 
     var openedByPage = false
+    var daxDialogsDisabled = false
     
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -63,7 +64,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private let contentBlockerConfiguration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -135,6 +136,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
@@ -179,7 +181,8 @@ class TabViewController: UIViewController {
         generalScripts = [
             debugScript,
             findInPageScript,
-            contentBlockerScript
+            contentBlockerScript,
+            faviconScript
         ]
         
         ddgScripts = [
@@ -197,6 +200,7 @@ class TabViewController: UIViewController {
             ddgScripts.append(documentScript)
         }
         
+        faviconScript.webView = webView
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
@@ -501,7 +505,7 @@ class TabViewController: UIViewController {
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onContentBlockerConfigurationChanged),
-                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               name: ContentBlockerProtectionChangedNotification.name,
                                                object: nil)
     }
 
@@ -709,7 +713,7 @@ extension TabViewController: WKNavigationDelegate {
         
         self.httpsForced = httpsForced
         delegate?.showBars()
-        
+
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
             self.siteRating = makeSiteRating(url: siteRating.url)
@@ -764,11 +768,17 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 13.0, *) {
             let config = WKSnapshotConfiguration()
             config.rect = webView.bounds
             let snapshotWidth = Float(webView.bounds.width / 2)
             config.snapshotWidth = NSNumber(value: snapshotWidth)
+            
+             // takeSnapshot will block if the web view is in the connecting phase of a load which may be prominent on slow connections
+            if webView.isLoading {
+                config.afterScreenUpdates = false
+            }
+            
             webView.takeSnapshot(with: config) { image, _ in
                 completion(image)
             }
@@ -806,6 +816,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
         guard let siteRating = self.siteRating,
+            !daxDialogsDisabled,
             let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return
@@ -969,7 +980,7 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        if let domain = url.host, contentBlockerConfiguration.whitelisted(domain: domain) {
+        if !contentBlockerProtection.isProtected(domain: url.host) {
             completion(allowPolicy)
             return
         }

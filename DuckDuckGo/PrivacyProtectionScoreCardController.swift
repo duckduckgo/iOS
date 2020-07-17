@@ -32,7 +32,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
+    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
     weak var header: PrivacyProtectionHeaderController!
 
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let header = segue.destination as? PrivacyProtectionHeaderController {
-            header.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
+            header.using(siteRating: siteRating, protectionStore: protectionStore)
             self.header = header
         }
 
@@ -86,13 +86,13 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     }
 
     private func updateNetworksCell() {
-        let success = siteRating.networksSuccess(configuration: contentBlockerConfiguration)
-        networksCell.update(message: siteRating.networksText(configuration: contentBlockerConfiguration), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.networksSuccess(protectionStore: protectionStore)
+        networksCell.update(message: siteRating.networksText(protectionStore: protectionStore), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updateMajorNetworksCell() {
-        let success = siteRating.majorNetworksSuccess(configuration: contentBlockerConfiguration)
-        majorNetworksCell.update(message: siteRating.majorNetworksText(configuration: contentBlockerConfiguration), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.majorNetworksSuccess(protectionStore: protectionStore)
+        majorNetworksCell.update(message: siteRating.majorNetworksText(protectionStore: protectionStore), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updatePrivacyPractices() {
@@ -104,16 +104,16 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         let gradeImages = siteRating.siteGradeImages()
         privacyGradeCell.iconImage.image = gradeImages.from
         enhancedGradeCell.iconImage.image = gradeImages.to
-        enhancedGradeCell.isHidden = !siteRating.protecting(contentBlockerConfiguration) || gradeImages.from == gradeImages.to
+        enhancedGradeCell.isHidden = !siteRating.protecting(protectionStore) || gradeImages.from == gradeImages.to
     }
 
 }
 
 extension PrivacyProtectionScoreCardController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
-        self.contentBlockerConfiguration = configuration
+        self.protectionStore = protectionStore
         update()
     }
 

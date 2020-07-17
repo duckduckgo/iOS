@@ -30,7 +30,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
+    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
 
     struct Section {
 
@@ -79,7 +79,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func trackers() -> [DetectedTracker] {
-        let protecting = siteRating.protecting(contentBlockerConfiguration)
+        let protecting = siteRating.protecting(protectionStore)
         return [DetectedTracker](protecting ? siteRating.trackersBlocked : siteRating.trackersDetected)
     }
 
@@ -88,7 +88,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateSubtitle() {
-        subtitleLabel.text = siteRating.networksText(configuration: contentBlockerConfiguration).uppercased()
+        subtitleLabel.text = siteRating.networksText(protectionStore: protectionStore).uppercased()
     }
 
     private func updateIcon() {
@@ -111,7 +111,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func protecting() -> Bool {
-        return siteRating.protecting(contentBlockerConfiguration)
+        return siteRating.protecting(protectionStore)
     }
 
 }
@@ -154,9 +154,9 @@ extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
 
 extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
         self.siteRating = siteRating
-        self.contentBlockerConfiguration = configuration
+        self.protectionStore = protectionStore
         update()
     }
 

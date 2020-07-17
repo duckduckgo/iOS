@@ -160,7 +160,7 @@ public class Favicons {
         Constants.caches[cacheType]?.clearDiskCache()
     }
 
-    public func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
+    private func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
         let key = defaultResource(forDomain: domain)?.cacheKey ?? domain
         Constants.caches[cacheType]?.removeImage(forKey: key, fromDisk: true)
     }
@@ -202,7 +202,7 @@ public class Favicons {
     // Call this when the user interacts with an entity of the specific type with a given URL,
     //  e.g. if launching a bookmark, or clicking on a tab.
     public func loadFavicon(forDomain domain: String?,
-                            withURL url: URL? = nil,
+                            fromURL url: URL? = nil,
                             intoCache targetCache: CacheType,
                             fromCache: CacheType? = nil,
                             completion: ((UIImage?) -> Void)? = nil) {

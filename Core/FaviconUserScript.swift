@@ -82,7 +82,8 @@ public class FaviconUserScript: NSObject, UserScript {
             url = nil
         }
 
-        Favicons.shared.loadFavicon(forDomain: webView?.url?.host, withURL: url, intoCache: .tabs) { image in
+        // Always call this even if URL was nil, so that tabs cache is populated
+        Favicons.shared.loadFavicon(forDomain: webView?.url?.host, fromURL: url, intoCache: .tabs) { image in
             guard let image = image else { return }
             Favicons.shared.replaceBookmarksFavicon(forDomain: self.webView?.url?.host, withImage: image)
         }

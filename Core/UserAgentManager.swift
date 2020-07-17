@@ -42,7 +42,11 @@ public class UserAgentManager {
             self?.userAgent = UserAgent(defaultAgent: defaultAgent)
         }
     }
-    
+
+    public func update(request: inout URLRequest, isDesktop: Bool) {
+        request.addValue(userAgent.agent(forUrl: nil, isDesktop: isDesktop), forHTTPHeaderField: "User-Agent")
+    }
+
     public func update(webView: WKWebView, isDesktop: Bool, url: URL?) {
         let agent = userAgent.agent(forUrl: url, isDesktop: isDesktop)
         webView.customUserAgent = agent

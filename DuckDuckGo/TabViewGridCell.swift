@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import Kingfisher
 
 class TabViewGridCell: TabViewCell {
 
@@ -160,7 +159,7 @@ class TabViewGridCell: TabViewCell {
             }
             
             removeButton.isHidden = false
-            favicon.loadFavicon(forDomain: tab.link?.url.host)
+            favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
         }
     }
     

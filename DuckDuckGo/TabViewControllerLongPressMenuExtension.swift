@@ -128,7 +128,7 @@ extension TabViewController {
         }
 
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-            return AppUserDefaults().longPressPreviews ? self.buildPreview(for: url) : nil
+            return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: url) : nil
         }, actionProvider: { elements in
 
             let provided = elements.filter({
@@ -147,9 +147,10 @@ extension TabViewController {
         load(url: url)
     }
 
-    func buildPreview(for url: URL) -> UIViewController? {
+    fileprivate func buildOpenLinkPreview(for url: URL) -> UIViewController? {
         let tab = Tab(link: Link(title: nil, url: url))
         let tabController = TabViewController.loadFromStoryboard(model: tab)
+        tabController.daxDialogsDisabled = true
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest(url: url), consumeCookies: false)

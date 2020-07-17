@@ -30,7 +30,7 @@ extension TabViewController {
                 view.showBottomToast(UserText.webBookmarkAlreadySaved)
                 return
             }
-            
+
             bookmarksManager.save(bookmark: link)
             self.view.showBottomToast(UserText.webSaveBookmarkDone)
         } else {

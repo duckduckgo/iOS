@@ -19,13 +19,13 @@
 
 import UIKit
 import Core
-import Kingfisher
 
 class FavoriteHomeCell: UICollectionViewCell {
 
     struct Constants {
         static let smallFaviconSize: CGFloat = 16
         static let largeFaviconSize: CGFloat = 40
+        static let ddgLogo = UIImage(named: "Logo")
     }
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -100,20 +100,13 @@ class FavoriteHomeCell: UICollectionViewCell {
         
         iconBackground.backgroundColor = host.color
         useImageBorder(true)
-                    
-        if Self.appUrls.isDuckDuckGo(url: link.url) {
-            iconImage.image = UIImage(named: "Logo")
-            applyFavicon(iconImage.image!)
-        } else {
-            iconImage.loadFavicon(forDomain: link.url.host, fallbackImage: nil) { faviconType in
-                guard let image = self.iconImage.image else { return }
-                
-                if faviconType == .appleTouch {
-                    self.useImageBorder(image.size.width < Constants.largeFaviconSize)
-                }
-                
-                self.applyFavicon(image)
-            }
+
+        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, fallbackImage: nil) { image in
+            guard let image = image else { return }
+
+            let useBorder = image == Constants.ddgLogo || image.size.width < Constants.largeFaviconSize
+            self.useImageBorder(useBorder)
+            self.applyFavicon(image)
         }
     }
 
@@ -203,17 +196,6 @@ fileprivate extension UIColor {
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: CGFloat(1.0)
         )
-    }
-    
-}
-
-fileprivate extension Link {
-    
-    var appleTouchIcon: URL? {
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        components?.path = "/apple-touch-icon.png"
-        components?.queryItems = nil
-        return try? components?.asURL()
     }
     
 }

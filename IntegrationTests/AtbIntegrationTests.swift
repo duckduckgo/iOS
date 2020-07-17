@@ -86,7 +86,7 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     func test() throws {
-        try assertWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved()
+        try assertWhenAppIsInstalledAndLaunchedThenExtiIsCalledAndInitialAtbIsRetrieved()
         clearRequests()
         
         assertWhenAppLaunchedAgainThenAppAtbIsUpdated()
@@ -102,7 +102,10 @@ class AtbIntegrationTests: XCTestCase {
         clearRequests()
     }
     
-    func assertWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
+    func assertWhenAppIsInstalledAndLaunchedThenExtiIsCalledAndInitialAtbIsRetrieved() throws {
+        
+        waitFor(searchRequestsCount: 0, statisticRequestsCount: 3, timeout: 30)
+        
         assertSearchRequestCount(count: 0)
         assertStatisticsRequestCount(count: 3)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
@@ -123,10 +126,12 @@ class AtbIntegrationTests: XCTestCase {
         search(forText: "lemons")
         search(forText: "pears")
 
+        waitFor(searchRequestsCount: 2, statisticRequestsCount: 0, timeout: 30)
         assertSearchRequestCount(count: 2)
         assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertSearch(text: "pears", atb: Constants.initialAtb)
-
+        
+        waitFor(searchRequestsCount: 0, statisticRequestsCount: 2, timeout: 30)
         assertStatisticsRequestCount(count: 2)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
@@ -145,6 +150,7 @@ class AtbIntegrationTests: XCTestCase {
         backgroundRelaunch() // this launch gets new atb
         backgroundRelaunch() // this launch sends it
 
+        waitFor(searchRequestsCount: 0, statisticRequestsCount: 2, timeout: 30)
         assertSearchRequestCount(count: 0)
         assertStatisticsRequestCount(count: 2)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -213,10 +219,26 @@ class AtbIntegrationTests: XCTestCase {
         
         let keyboard = app.keyboards.element
         if keyboard.waitForExistence(timeout: Constants.defaultTimeout) {
+            // Check software keyboard is enabled
             searchentrySearchField.typeText("\(text)\r")
             Snapshot.waitForLoadingIndicatorToDisappear(within: Constants.defaultTimeout)
         } else {
             XCTFail("No keyboard present after tapping search field")
+        }
+    }
+    
+    private func waitFor(searchRequestsCount: Int, statisticRequestsCount: Int, timeout: TimeInterval) {
+        let start = Date()
+        
+        while (start.timeIntervalSinceNow * -1) < timeout {
+            _ = app.buttons["_wait_"].waitForExistence(timeout: 1)
+            if searchRequests.count >= searchRequestsCount && statisticsRequests.count >= statisticRequestsCount {
+                return
+            }
+        }
+        
+        if searchRequests.count != searchRequests.count || statisticRequestsCount != statisticsRequests.count {
+            XCTFail("\(searchRequests.count) vs \(searchRequestsCount), \(statisticRequestsCount) vs \(statisticsRequests.count)")
         }
     }
 

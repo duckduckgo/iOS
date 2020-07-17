@@ -51,12 +51,12 @@ class BookmarksManager {
 
     func save(bookmark: Link) {
         dataStore.addBookmark(bookmark)
-        Favicons.shared.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks)
+        Favicons.shared.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks, fromCache: .tabs)
     }
 
     func save(favorite: Link) {
         dataStore.addFavorite(favorite)
-        Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks)
+        Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks, fromCache: .tabs)
     }
 
     func moveFavorite(at favoriteIndex: Int, toBookmark bookmarkIndex: Int) {

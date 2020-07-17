@@ -115,7 +115,7 @@ public class Favicons {
             let group = DispatchGroup()
             Set(links).forEach { domain in
                 group.enter()
-                self.loadFavicon(forDomain: domain, intoCache: .bookmarks) {
+                self.loadFavicon(forDomain: domain, intoCache: .bookmarks) { _ in
                     group.leave()
                 }
             }
@@ -126,7 +126,36 @@ public class Favicons {
         }
         
     }
+    
+    func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
+        
+        guard let domain = domain,
+            let resource = defaultResource(forDomain: domain),
+            (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
+            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
 
+        let replace = {
+            Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
+            Constants.bookmarksCache.store(image, forKey: resource.cacheKey, options: .init(options))
+        }
+        
+        // only replace if it exists and new one is bigger
+        Constants.bookmarksCache.retrieveImageInDiskCache(forKey: resource.cacheKey, options: [.onlyFromCache ]) { result in
+            switch result {
+                
+            case .success(let cachedImage):
+                if let cachedImage = cachedImage, cachedImage.size.width < image.size.width {
+                    replace()
+                } else if self.bookmarksStore.contains(domain: domain) {
+                    replace()
+                }
+                
+            default:
+                break
+            }
+        }
+    }
+ 
     public func clearCache(_ cacheType: CacheType) {
         Constants.caches[cacheType]?.clearDiskCache()
     }
@@ -149,28 +178,64 @@ public class Favicons {
         removeFavicon(forDomain: domain, fromCache: .bookmarks)
 
     }
+    
+    private func copyFavicon(forDomain domain: String, fromCache: CacheType, toCache: CacheType, completion: ((UIImage?) -> Void)? = nil) {
+        guard let resource = defaultResource(forDomain: domain),
+             let options = kfOptions(forDomain: domain, usingCache: toCache) else { return }
+        
+        Constants.caches[fromCache]?.retrieveImage(forKey: resource.cacheKey, options: [.onlyFromCache]) { result in
+            switch result {
+            case .success(let image):
+                if let image = image.image {
+                    Constants.caches[toCache]?.store(image, forKey: resource.cacheKey, options: .init(options))
+                    completion?(image)
+                } else {
+                    self.loadFavicon(forDomain: domain, intoCache: toCache, completion: completion)
+                }
+            default:
+                self.loadFavicon(forDomain: domain, intoCache: toCache, completion: completion)
+            }
+        }
+        return
+    }
 
     // Call this when the user interacts with an entity of the specific type with a given URL,
     //  e.g. if launching a bookmark, or clicking on a tab.
-    public func loadFavicon(forDomain domain: String?, intoCache cacheType: CacheType, completion: (() -> Void)? = nil) {
+    public func loadFavicon(forDomain domain: String?,
+                            withURL url: URL? = nil,
+                            intoCache targetCache: CacheType,
+                            fromCache: CacheType? = nil,
+                            completion: ((UIImage?) -> Void)? = nil) {
 
         guard let domain = domain,
-            let options = kfOptions(forDomain: domain, usingCache: cacheType),
-            let resource = defaultResource(forDomain: domain) else {
-                completion?()
+            let options = kfOptions(forDomain: domain, withURL: url, usingCache: targetCache),
+            var resource = defaultResource(forDomain: domain) else {
+                completion?(nil)
                 return
             }
+        
+        if let fromCache = fromCache, Constants.caches[fromCache]?.isCached(forKey: resource.cacheKey) ?? false {
+            copyFavicon(forDomain: domain, fromCache: fromCache, toCache: targetCache, completion: completion)
+            return
+        }
+        
+        // if a URL was provided use that
+        if let url = url {
+            os_log("loadFavicon overriding default url with %s", type: .debug, url.absoluteString)
+            resource = ImageResource(downloadURL: url, cacheKey: resource.cacheKey)
+        }
 
         KingfisherManager.shared.retrieveImage(with: resource, options: options) { result in
             guard let domain = resource.downloadURL.host else {
-                completion?()
+                completion?(nil)
                 return
             }
 
             switch result {
             case .success(let imageResult):
                 // Store it anyway - Kingfisher doesn't appear to store the image if it came from an alternative source
-                Favicons.Constants.caches[cacheType]?.store(imageResult.image, forKey: resource.cacheKey, options: .init(options))
+                Favicons.Constants.caches[targetCache]?.store(imageResult.image, forKey: resource.cacheKey, options: .init(options))
+                completion?(imageResult.image)
                 
             case .failure(let error):
                 
@@ -183,11 +248,11 @@ public class Favicons {
                     default: break
                     }
 
-                default: break
+                default:
+                    completion?(nil)
                 }
             }
             
-            completion?()
         }
     }
 
@@ -199,7 +264,7 @@ public class Favicons {
         return ImageResource(downloadURL: source, cacheKey: key)
     }
 
-    public func kfOptions(forDomain domain: String?, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
+    public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
         guard let domain = domain else {
             return nil
         }
@@ -212,7 +277,12 @@ public class Favicons {
             return nil
         }
 
-        let sources = sourcesProvider.additionalSources(forDomain: domain).map { Source.network($0) }
+        var sources = sourcesProvider.additionalSources(forDomain: domain).map { Source.network($0) }
+        
+        // a provided URL was given so add our usual main source to the list of alteratives
+        if url != nil, let downloadURL = defaultResource(forDomain: domain)?.downloadURL {
+            sources.insert(Source.network(downloadURL), at: 0)
+        }
 
         return [
             .downloader(Constants.downloader),

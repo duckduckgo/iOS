@@ -136,6 +136,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var documentScript = DocumentUserScript()
@@ -180,7 +181,8 @@ class TabViewController: UIViewController {
         generalScripts = [
             debugScript,
             findInPageScript,
-            contentBlockerScript
+            contentBlockerScript,
+            faviconScript
         ]
         
         ddgScripts = [
@@ -198,6 +200,7 @@ class TabViewController: UIViewController {
             ddgScripts.append(documentScript)
         }
         
+        faviconScript.webView = webView
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
@@ -710,8 +713,6 @@ extension TabViewController: WKNavigationDelegate {
         
         self.httpsForced = httpsForced
         delegate?.showBars()
-
-        Favicons.shared.loadFavicon(forDomain: url?.host, intoCache: .tabs)
 
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {

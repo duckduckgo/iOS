@@ -51,11 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
-            _ = UserAgentManager.shared
             Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
+
+        _ = UserAgentManager.shared
 
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
@@ -136,8 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-        _ = UserAgentManager.shared // Ensure initialised on the main thread
-        
         beginAuthentication()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)

@@ -33,6 +33,7 @@ public class Favicons {
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
         static let tabsCache = CacheType.tabs.create()
+        static let appUrls = AppUrls()
         
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
@@ -263,7 +264,7 @@ public class Favicons {
             return nil
         }
 
-        if AppUrls.isDuckDuckGo(domain: domain) {
+        if Constants.appUrls.isDuckDuckGo(domain: domain) {
             return nil
         }
 

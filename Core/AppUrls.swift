@@ -21,17 +21,15 @@ import Foundation
 
 public struct AppUrls {
 
-    public static let ddgDomain = "duckduckgo.com"
-
     private struct Url {
         
         static var devMode: String {
             return isDebugBuild ? "?test=1" : ""
         }
         
-        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://\(AppUrls.ddgDomain)"]
-        static let externalContentBase = "https://external-content.\(AppUrls.ddgDomain)"
-        static let staticBase = "https://staticcdn.\(AppUrls.ddgDomain)"
+        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+        static let externalContentBase = "https://external-content.duckduckgo.com"
+        static let staticBase = "https://staticcdn.duckduckgo.com"
         
         static let autocomplete = "\(base)/ac/"
         
@@ -119,12 +117,14 @@ public struct AppUrls {
             .addParam(name: Param.setAtb, value: setAtb)
     }
 
-    public static func isDuckDuckGo(domain: String?) -> Bool {
-        return domain == AppUrls.ddgDomain || domain?.hasSuffix(".\(AppUrls.ddgDomain)") ?? false
+    public func isDuckDuckGo(domain: String?) -> Bool {
+        guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
+        return isDuckDuckGo(url: url)
     }
     
     public func isDuckDuckGo(url: URL) -> Bool {
-        return Self.isDuckDuckGo(domain: url.host)
+        guard let searchHost = base.host else { return false }
+        return url.isPart(ofDomain: searchHost)
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {

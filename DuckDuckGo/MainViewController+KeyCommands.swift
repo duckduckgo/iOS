@@ -48,7 +48,13 @@ extension MainViewController {
                 UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab),
                              discoverabilityTitle: UserText.keyCommandCloseTab),
                 UIKeyCommand(input: "r", modifierFlags: .command, action: #selector(keyboardReload),
-                             discoverabilityTitle: UserText.keyCommandReload)
+                             discoverabilityTitle: UserText.keyCommandReload),
+                UIKeyCommand(input: "p", modifierFlags: [.command], action: #selector(keyboardPrint),
+                             discoverabilityTitle: UserText.keyCommandPrint),
+                UIKeyCommand(input: "d", modifierFlags: [.command], action: #selector(keyboardAddBookmark),
+                             discoverabilityTitle: UserText.keyCommandAddBookmark),
+                UIKeyCommand(input: "d", modifierFlags: [.command, .shift], action: #selector(keyboardAddFavorite),
+                         discoverabilityTitle: UserText.keyCommandAddFavorite)
             ]
         }
 
@@ -77,6 +83,8 @@ extension MainViewController {
                          discoverabilityTitle: UserText.keyCommandPreviousTab),
             UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs),
                          discoverabilityTitle: UserText.keyCommandShowAllTabs),
+            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [.alternate, .command], action: #selector(keyboardShowAllTabs),
+                         discoverabilityTitle: UserText.keyCommandShowAllTabs),
             UIKeyCommand(input: "\\", modifierFlags: [.shift, .command], action: #selector(keyboardShowAllTabs),
                          discoverabilityTitle: UserText.keyCommandShowAllTabs),
             UIKeyCommand(input: "l", modifierFlags: [.command], action: #selector(keyboardLocation),
@@ -85,7 +93,7 @@ extension MainViewController {
                          discoverabilityTitle: UserText.keyCommandNextTab),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [.control, .shift], action: #selector(keyboardPreviousTab),
                          discoverabilityTitle: UserText.keyCommandPreviousTab),
-            
+
             // No discoverability as these should be intuitive
             UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardArrowUp)),
             UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardArrowDown)),
@@ -205,6 +213,18 @@ extension MainViewController {
         guard tabSwitcherController == nil else { return }
         
         currentTab?.goBack()
+    }
+    
+    @objc func keyboardPrint() {
+        currentTab?.print()
+    }
+
+    @objc func keyboardAddBookmark() {
+        currentTab?.saveAsBookmark()
+    }
+
+    @objc func keyboardAddFavorite() {
+        currentTab?.saveAsBookmark(favorite: true)
     }
     
 }

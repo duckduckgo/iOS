@@ -655,6 +655,19 @@ class TabViewController: UIViewController {
                               tdsETag: TrackerDataManager.shared.etag)
     }
     
+    public func print() {
+        let printFormatter = webView.viewPrintFormatter()
+        
+        let printInfo = UIPrintInfo(dictionary: nil)
+        printInfo.jobName = Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "DuckDuckGo"
+        printInfo.outputType = .general
+        
+        let printController = UIPrintInteractionController.shared
+        printController.printInfo = printInfo
+        printController.printFormatter = printFormatter
+        printController.present(animated: true, completionHandler: nil)
+    }
+    
     deinit {
         removeMessageHandlers()
         removeObservers()

@@ -187,6 +187,9 @@
 "keyCommandFindNext" = "Find next";
 "keyCommandFindNext" = "Find previous";
 "keyCommandReload" = "Reload";
+"keyCommandPrint" = "Print";
+"keyCommandAddBookmark" = "Add Bookmark";
+"keyCommandAddFavorite" = "Add Favorite";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";

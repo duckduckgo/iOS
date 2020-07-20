@@ -18,16 +18,11 @@
 */
 
 "app.authentication.unlock" = "Unlock DuckDuckGo";
-"home.link.title" = "DuckDuckGo Home";
 "search.hint.duckduckgo" = "Search or enter address";
-"web.session.clear" = "Session cleared";
 "web.url.save.bookmark.done" = "Bookmark saved";
 "web.url.save.bookmark.exists" = "Bookmark already saved";
 "web.url.save.favorite.done" = "Favorite saved";
 "web.url.save.bookmark.none" = "No webpage to bookmark";
-
-"tabswitcher.title.tabs" = "Private Tabs";
-"tabswitcher.title.notabs" = "No Tabs";
 
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.add" = "Add";
@@ -37,9 +32,7 @@
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
 "action.title.newBackgroundTabForUrl" = "Open in Background";
-"action.title.forgetTabs" = "Close Tabs";
 "action.title.forgetAll" = "Close Tabs and Clear Data";
-"action.title.forgetTabsDone" = "Tabs closed";
 "action.title.forgetAllDone" = "Tabs and data cleared";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";
@@ -50,7 +43,6 @@
 "action.title.request.mobile.site" = "Request Mobile Site";
 "action.title.disable.protection" = "Disable Privacy Protection";
 "action.title.enable.protection" = "Enable Privacy Protection";
-"action.title.remove.bookmark" = "Remove Bookmark";
 "action.title.save.bookmark" = "Add to Bookmarks";
 "action.title.save.favorite" = "Add to Favorites";
 "action.title.reportBrokenSite" = "Report Broken Site";
@@ -75,9 +67,6 @@
 "auth.alert.login.button" = "Log In";
 
 "navigation.title.edit" = "Edit";
-
-"monitoring.connection.secure" = "Secure connection";
-"monitoring.connection.unsecured" = "Unsecured connection";
 
 "privacy.protection.tos.unknown" = "Unknown Privacy Practices";
 "privacy.protection.tos.good" = "Good Privacy Practices";
@@ -120,10 +109,7 @@
 "privacy.protection.encryption.mixed.heading" = "Mixed Encryption";
 "privacy.protection.encryption.unencrypted.heading" = "Unencrypted Connection";
 
-"privacy.protection.tracker.networks.major.message" = "Major tracker networks are more harmful because they can track and target you across more of the internet.";
-
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
-"privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
 
@@ -136,10 +122,6 @@
 "brokensite.category.login" = "I can't login";
 "brokensite.category.unsupported" = "The browser is incompatible";
 "brokensite.category.other" = "Something else";
-
-"privacy.report.trackersBlocked" = "Trackers Blocked";
-"privacy.report.sitesEncrypted" = "Sites Encrypted";
-"privacy.report.date" = "Since %@";
 
 "unknown.error.occurred" = "An unknown error occured";
 
@@ -213,8 +195,6 @@
 "tab.open.with.title.and.address" = "Open \"%@\" at %@";
 "tab.close.with.title.and.address" = "Close \"%@\" at %@";
 "favorite" = "Favorite";
-
-"privacy.features" = "Privacy Features";
 
 "siteFeedback.title" = "Report a Broken Site";
 "siteFeedback.subtitle" = "Broken site reporting is completely anonymous and helps us to improve the app!";
@@ -312,7 +292,6 @@
     
 "preserveLogins.fireproof.message" = "Would you like to Fireproof %@?";
 "preserveLogins.menu.confirm" = "Fireproof Website";
-"preserveLogins.menu.cancel" = "Cancel";
 "preserveLogins.menu.defer" = "Not Now";
 
 "preserveLogins.toast" = "%@ is now Fireproof! Visit settings to remove.";

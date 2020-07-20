@@ -21,6 +21,7 @@ import UIKit
 import Core
 import UserNotifications
 import os.log
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -54,7 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-        
+
+        _ = UserAgentManager.shared
+
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
         }

@@ -74,4 +74,11 @@ public class BookmarkUserDefaults: BookmarkStore {
         favorites = newFavorites
     }
 
+    public func contains(domain: String) -> Bool {
+        let domainMatches: (Link) -> Bool = {
+            $0.url.host == domain
+        }
+        return bookmarks.contains(where: domainMatches) || favorites.contains(where: domainMatches)
+    }
+
 }

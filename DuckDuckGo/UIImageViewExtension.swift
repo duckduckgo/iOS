@@ -23,77 +23,81 @@ import Kingfisher
 
 extension UIImageView {
     
-    enum FaviconType {
+    struct UIImageViewConstants {
         
-        case favicon
-        case appleTouch
-        
-    }
-    
-    struct FaviconConstants {
-
-        static let standardPlaceHolder = UIImage(named: "GlobeSmall")
         static let appUrls = AppUrls()
-        static let options: KingfisherOptionsInfo = [
-            .downloader(NotFoundCachingDownloader())
-        ]
-
-    }
-    
-    /// Loads a favicon for a given domain.
-    /// `fallback` only called if no icon could be found
-    /// `completion` only called when at least one image is found after all
-    func loadFavicon(forDomain domain: String?, fallbackImage: UIImage? = FaviconConstants.standardPlaceHolder,
-                     completion: ((UIImageView.FaviconType) -> Void)? = nil) {
         
-        guard let domain = domain else {
-            self.image = fallbackImage
+    }
+
+    /// Load a favicon from the cache in to this uiview.  This will not load the favicon from the network.
+    func loadFavicon(forDomain domain: String?,
+                     usingCache cacheType: Favicons.CacheType,
+                     fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
+                     completion: ((UIImage?) -> Void)? = nil) {
+        
+        DispatchQueue.global(qos: .utility).async {
+            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, fallbackImage: fallbackImage, completion: completion)
+        }
+        
+    }
+
+    private func loadFaviconSync(forDomain domain: String?,
+                                 usingCache cacheType: Favicons.CacheType,
+                                 fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
+                                 completion: ((UIImage?) -> Void)? = nil) {
+        
+        func complete(_ image: UIImage?) {
+            DispatchQueue.main.async {
+                self.image = image
+                completion?(self.image)
+            }
+        }
+        
+        if UIImageViewConstants.appUrls.isDuckDuckGo(domain: domain) {
+            complete(UIImage(named: "Logo"))
             return
         }
-    
-        let secureFaviconUrl = Self.FaviconConstants.appUrls.faviconUrl(forDomain: domain, secure: true)
-        let secureAppleTouchUrl = Self.FaviconConstants.appUrls.appleTouchIcon(forDomain: domain)
-        let insecureFaviconUrl = Self.FaviconConstants.appUrls.faviconUrl(forDomain: domain, secure: false)
-        let options = Self.FaviconConstants.options
-
-        kf.setImage(with: secureFaviconUrl, options: options) { [weak self] secureFaviconImage, _, _, _ in
-            
-            if let url = secureFaviconUrl, secureFaviconImage == nil {
-                NotFoundCachingDownloader.cacheNotFound(url)
-            }
-            
-            self?.kf.setImage(with: secureAppleTouchUrl,
-                              placeholder: secureFaviconImage,
-                              options: options) { [weak self] secureAppleTouchImage, _, _, _ in
-
-                if let url = secureAppleTouchUrl, secureAppleTouchImage == nil {
-                    NotFoundCachingDownloader.cacheNotFound(url)
-                }
-
-                if secureFaviconImage == nil && secureAppleTouchImage == nil {
-                
-                    self?.kf.setImage(with: insecureFaviconUrl, options: options) { [weak self] insecureFaviconImage, _, _, _ in
-                    
-                        if let url = insecureFaviconUrl, insecureFaviconImage == nil {
-                            NotFoundCachingDownloader.cacheNotFound(url)
-                        }
-
-                        if insecureFaviconImage == nil {
-                            self?.image = fallbackImage
-                        } else {
-                            completion?(.favicon)
-                        }
-                    
-                    }
-                    
-                } else {
-                    
-                    completion?(secureAppleTouchImage != nil ? .appleTouch : .favicon)
-                    
-                }
-            }
+        
+        guard let cache = Favicons.Constants.caches[cacheType] else {
+            complete(fallbackImage)
+            return
         }
         
+        guard let resource = Favicons.shared.defaultResource(forDomain: domain) else {
+            complete(fallbackImage)
+            return
+        }
+        
+        if let image = cache.retrieveImageInMemoryCache(forKey: resource.cacheKey) {
+            complete(image)
+        } else {
+            
+            // Not in memory, could because it's expired or we have cold started.
+            
+            // Load manually otherwise Kingfisher won't load it if the file's modification date > current date
+            let url = cache.diskStorage.cacheFileURL(forKey: resource.cacheKey)
+            guard let data = (try? Data(contentsOf: url)), let image = UIImage(data: data) else {
+                complete(fallbackImage)
+                return
+            }
+            
+            complete(image)
+
+            // Cache in memory with the original expiry date so that the image will be refreshed on user interaction.
+            
+            guard let attributes = (try? FileManager.default.attributesOfItem(atPath: url.path)),
+                let fileModificationDate = attributes[.modificationDate] as? Date else {
+                return
+            }
+            
+            cache.store(image, forKey: resource.cacheKey, options: KingfisherParsedOptionsInfo([
+                .cacheMemoryOnly,
+                .diskCacheAccessExtendingExpiration(.none),
+                .memoryCacheExpiration(.date(fileModificationDate))
+            ]), toDisk: false)
+            
+        }
+
     }
     
 }

@@ -40,6 +40,9 @@ class DaxDialogTests: XCTestCase {
     override func setUp() {
         super.setUp()
         UserDefaults.clearStandard()
+
+        // ensure we use the embedded version
+        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
     }
 
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {

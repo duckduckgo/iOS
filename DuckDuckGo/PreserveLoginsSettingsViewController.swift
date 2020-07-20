@@ -147,6 +147,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
+        Favicons.shared.removeFireproofFavicon(forDomain: domain)
         WebCacheManager.shared.removeCookies(forDomains: [domain]) { }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if self.model.isEmpty {
@@ -185,7 +186,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             fatalError()
         }
         cell.label.textColor = theme.tableCellTextColor
-        cell.faviconImage?.loadFavicon(forDomain: model[index])
+        cell.faviconImage.loadFavicon(forDomain: model[index], usingCache: .bookmarks)
         cell.label?.text = model[index].dropPrefix(prefix: wwwPrefix)
         cell.decorate(with: theme)
         return cell

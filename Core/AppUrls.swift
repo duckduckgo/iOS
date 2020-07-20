@@ -40,7 +40,6 @@ public struct AppUrls {
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
-        static let faviconService = "\(externalContentBase)/ip3/%@.ico"
  
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
@@ -95,22 +94,6 @@ public struct AppUrls {
         return URL(string: Url.feedback)!
     }
     
-    public func faviconUrl(forDomain domain: String, secure: Bool) -> URL? {
-        var components = URLComponents()
-        components.scheme = secure ? "https" : "http"
-        components.host = domain
-        components.path = "/favicon.ico"
-        return components.url
-    }
-    
-    public func appleTouchIcon(forDomain domain: String) -> URL? {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = domain
-        components.path = "/apple-touch-icon.png"
-        return components.url
-    }
-
     public var initialAtb: URL {
         return URL(string: Url.atb)!
     }
@@ -134,6 +117,11 @@ public struct AppUrls {
             .addParam(name: Param.setAtb, value: setAtb)
     }
 
+    public func isDuckDuckGo(domain: String?) -> Bool {
+        guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
+        return isDuckDuckGo(url: url)
+    }
+    
     public func isDuckDuckGo(url: URL) -> Bool {
         guard let searchHost = base.host else { return false }
         return url.isPart(ofDomain: searchHost)

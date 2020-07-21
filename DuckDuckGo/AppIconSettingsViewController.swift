@@ -69,7 +69,7 @@ class AppIconDataSource: NSObject, UICollectionViewDataSource {
         cell.decorate(with: ThemeManager.shared.currentTheme)
 
         let appIcon = appIcons[indexPath.row]
-        cell.imageView.image = appIcon.mediumImage
+        cell.appIcon = appIcon
 
         return cell
     }

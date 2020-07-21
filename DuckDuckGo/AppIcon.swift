@@ -27,6 +27,11 @@ enum AppIcon: String, CaseIterable {
     case purple
     case black
 
+    /// Returns a user facing string representation of the app icon.
+    var name: String {
+        rawValue
+    }
+
     static var defaultAppIcon: AppIcon {
         return .red
     }

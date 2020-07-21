@@ -190,6 +190,8 @@
 "keyCommandPrint" = "Print";
 "keyCommandAddBookmark" = "Add Bookmark";
 "keyCommandAddFavorite" = "Add Favorite";
+"keyCommandOpenInNewTab" = "Open Link in New Tab";
+"keyCommandOpenInNewBackgroundTab" = "Open Link in Background";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";

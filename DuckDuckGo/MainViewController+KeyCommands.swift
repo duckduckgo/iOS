@@ -54,7 +54,11 @@ extension MainViewController {
                 UIKeyCommand(input: "d", modifierFlags: [.command], action: #selector(keyboardAddBookmark),
                              discoverabilityTitle: UserText.keyCommandAddBookmark),
                 UIKeyCommand(input: "d", modifierFlags: [.command, .shift], action: #selector(keyboardAddFavorite),
-                         discoverabilityTitle: UserText.keyCommandAddFavorite)
+                         discoverabilityTitle: UserText.keyCommandAddFavorite),
+                UIKeyCommand(input: "tap link", modifierFlags: [.command, .shift], action: #selector(keyboardNoOperation),
+                     discoverabilityTitle: UserText.keyCommandOpenInNewTab),
+                UIKeyCommand(input: "tap link", modifierFlags: [.command], action: #selector(keyboardNoOperation),
+                     discoverabilityTitle: UserText.keyCommandOpenInNewBackgroundTab)
             ]
         }
 
@@ -226,5 +230,7 @@ extension MainViewController {
     @objc func keyboardAddFavorite() {
         currentTab?.saveAsBookmark(favorite: true)
     }
+    
+    @objc func keyboardNoOperation() { }
     
 }

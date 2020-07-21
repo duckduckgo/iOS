@@ -53,7 +53,7 @@ extension MainViewController {
                              discoverabilityTitle: UserText.keyCommandPrint),
                 UIKeyCommand(input: "d", modifierFlags: [.command], action: #selector(keyboardAddBookmark),
                              discoverabilityTitle: UserText.keyCommandAddBookmark),
-                UIKeyCommand(input: "d", modifierFlags: [.command, .shift], action: #selector(keyboardAddFavorite),
+                UIKeyCommand(input: "d", modifierFlags: [.command, .control], action: #selector(keyboardAddFavorite),
                          discoverabilityTitle: UserText.keyCommandAddFavorite),
                 UIKeyCommand(input: "tap link", modifierFlags: [.command, .shift], action: #selector(keyboardNoOperation),
                      discoverabilityTitle: UserText.keyCommandOpenInNewTab),

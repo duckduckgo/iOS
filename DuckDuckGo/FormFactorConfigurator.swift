@@ -9,7 +9,8 @@
 import Foundation
 import Core
 
-/// Core principle: tell, don't ask.  Other classes tell this class they want to be configured, then this class tells them how and manage their own state if needed.
+/// Core principle: tell, don't ask.  Other classes tell this class they want to be configured,
+///  then this class tells them how and manage their own state if needed.
 class FormFactorConfigurator {
     
     static let shared = FormFactorConfigurator()

@@ -43,7 +43,7 @@ class OmniBar: UIView {
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: OmniBarState = HomeNonEditingState()
+    fileprivate var state: OmniBarState = PhoneOmniBar.HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
     private(set) var trackersAnimator = TrackersAnimator()

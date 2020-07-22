@@ -1,8 +1,8 @@
 //
-//  OmniBarStateTests.swift
+//  PhoneOmniBarStateTests.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 
-class OmniBarStateTests: XCTestCase {
+class PhoneOmniBarStateTests: XCTestCase {
 
     func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShow() {
-        let testee = HomeEmptyEditingState()
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
@@ -36,42 +36,42 @@ class OmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
-        let testee = HomeEmptyEditingState()
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
         XCTAssertTrue(testee.clearTextOnStart)
     }
 
     func testWhenInHomeEmptyEditingStateThenEditingStartedMaintainsState() {
-        let testee = HomeEmptyEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
+        XCTAssertEqual(testee.onEditingStartedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeEmptyEditingStateThenEditingStoppedTrainsitionsToNonEditingState() {
-        let testee = HomeEmptyEditingState()
-        XCTAssertEqual(testee.onEditingStoppedState.name, HomeNonEditingState().name)
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
+        XCTAssertEqual(testee.onEditingStoppedState.name, PhoneOmniBar.HomeNonEditingState().name)
     }
 
     func testWhenInHomeEmptyEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = HomeEmptyEditingState()
-        XCTAssertEqual(testee.onTextEnteredState.name, HomeTextEditingState().name)
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
+        XCTAssertEqual(testee.onTextEnteredState.name, PhoneOmniBar.HomeTextEditingState().name)
     }
 
     func testWhenInHomeEmptyEditingStateThenClearingTextMaintainsState() {
-        let testee = HomeEmptyEditingState()
-        XCTAssertEqual(testee.onTextClearedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
+        XCTAssertEqual(testee.onTextClearedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeEmptyEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
-        let testee = HomeEmptyEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
+        XCTAssertEqual(testee.onBrowsingStartedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInHomeEmptyEditingStateThenBrowsingStoppedMaintainsState() {
-        let testee = HomeEmptyEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeEmptyEditingState()
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeTextEditingStateThenCorrectButtonsAreShow() {
-        let testee = HomeTextEditingState()
+        let testee = PhoneOmniBar.HomeTextEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
@@ -82,42 +82,42 @@ class OmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringHomeTextEditingStateThenTextIsNotCleared() {
-        let testee = HomeTextEditingState()
+        let testee = PhoneOmniBar.HomeTextEditingState()
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInHomeTextEditingStateThenEditingStartedMaintainsState() {
-        let testee = HomeTextEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, HomeTextEditingState().name)
+        let testee = PhoneOmniBar.HomeTextEditingState()
+        XCTAssertEqual(testee.onEditingStartedState.name, PhoneOmniBar.HomeTextEditingState().name)
     }
 
     func testWhenInHomeTextEditingStateThenEditingStoppedTrainsitionsToNonEditingState() {
-        let testee = HomeTextEditingState()
-        XCTAssertEqual(testee.onEditingStoppedState.name, HomeNonEditingState().name)
+        let testee = PhoneOmniBar.HomeTextEditingState()
+        XCTAssertEqual(testee.onEditingStoppedState.name, PhoneOmniBar.HomeNonEditingState().name)
     }
 
     func testWhenInHomeTextEditingStateThenEnteringTextMaintainstState() {
-        let testee = HomeTextEditingState()
-        XCTAssertEqual(testee.onTextEnteredState.name, HomeTextEditingState().name)
+        let testee = PhoneOmniBar.HomeTextEditingState()
+        XCTAssertEqual(testee.onTextEnteredState.name, PhoneOmniBar.HomeTextEditingState().name)
     }
 
     func testWhenInHomeTextEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = HomeTextEditingState()
-        XCTAssertEqual(testee.onTextClearedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeTextEditingState()
+        XCTAssertEqual(testee.onTextClearedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeTextEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
-        let testee = HomeTextEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.HomeTextEditingState()
+        XCTAssertEqual(testee.onBrowsingStartedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInHomeTextEditingStateThenBrowsingStoppedTransitionsToHomeTextEditingState() {
-        let testee = HomeTextEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeTextEditingState()
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeNonEditingStateThenCorrectButtonsAreShow() {
-        let testee = HomeNonEditingState()
+        let testee = PhoneOmniBar.HomeNonEditingState()
         XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
@@ -128,42 +128,42 @@ class OmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
-        let testee = HomeNonEditingState()
+        let testee = PhoneOmniBar.HomeNonEditingState()
         XCTAssertTrue(testee.clearTextOnStart)
     }
 
     func testWhenInHomeNonEditingStateThenEditingStartedTransitionsToEmptyEditingState() {
-        let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeNonEditingState()
+        XCTAssertEqual(testee.onEditingStartedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeNonEditingStateThenEditingStoppedMaintainsState() {
-        let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onEditingStoppedState.name, HomeNonEditingState().name)
+        let testee = PhoneOmniBar.HomeNonEditingState()
+        XCTAssertEqual(testee.onEditingStoppedState.name, PhoneOmniBar.HomeNonEditingState().name)
     }
 
     func testWhenInHomeNonEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onTextEnteredState.name, HomeTextEditingState().name)
+        let testee = PhoneOmniBar.HomeNonEditingState()
+        XCTAssertEqual(testee.onTextEnteredState.name, PhoneOmniBar.HomeTextEditingState().name)
     }
 
     func testWhenInHomeNonEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onTextClearedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.HomeNonEditingState()
+        XCTAssertEqual(testee.onTextClearedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInHomeNonEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
-        let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.HomeNonEditingState()
+        XCTAssertEqual(testee.onBrowsingStartedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInHomeNonEditingStateThenBrowsingStoppedTransitionsToHomeNonEditingState() {
-        let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeNonEditingState().name)
+        let testee = PhoneOmniBar.HomeNonEditingState()
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, PhoneOmniBar.HomeNonEditingState().name)
     }
 
     func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShow() {
-        let testee = BrowsingEmptyEditingState()
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
@@ -174,42 +174,42 @@ class OmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
-        let testee = BrowsingEmptyEditingState()
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
         XCTAssertTrue(testee.clearTextOnStart)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenEditingStartedMaintainsState() {
-        let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, BrowsingEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
+        XCTAssertEqual(testee.onEditingStartedState.name, PhoneOmniBar.BrowsingEmptyEditingState().name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenEditingStoppedTrainsitionsToBrowsingNonEditingState() {
-        let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onEditingStoppedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
+        XCTAssertEqual(testee.onEditingStoppedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onTextEnteredState.name, BrowsingTextEditingState().name)
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
+        XCTAssertEqual(testee.onTextEnteredState.name, PhoneOmniBar.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenClearingMaintainsState() {
-        let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onTextClearedState.name, BrowsingEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
+        XCTAssertEqual(testee.onTextClearedState.name, PhoneOmniBar.BrowsingEmptyEditingState().name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenBrowsingStartedMaintainsState() {
-        let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
+        XCTAssertEqual(testee.onBrowsingStartedState.name, PhoneOmniBar.BrowsingEmptyEditingState().name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenBrowsingStoppedTransitionsToHomeEmptyEditingState() {
-        let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingEmptyEditingState()
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShow() {
-        let testee = BrowsingTextEditingState()
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
@@ -220,42 +220,42 @@ class OmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
-        let testee = BrowsingTextEditingState()
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInBrowsingTextEditingStateThenEditingStartedMaintainsState() {
-        let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, BrowsingTextEditingState().name)
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
+        XCTAssertEqual(testee.onEditingStartedState.name, PhoneOmniBar.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingTextEditingStateThenEditingStoppedTrainsitionsToNonEditingState() {
-        let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onEditingStoppedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
+        XCTAssertEqual(testee.onEditingStoppedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInBrowsingTextEditingStateThenEnteringTextMaintainstState() {
-        let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onTextEnteredState.name, BrowsingTextEditingState().name)
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
+        XCTAssertEqual(testee.onTextEnteredState.name, PhoneOmniBar.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingTextEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onTextClearedState.name, BrowsingEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
+        XCTAssertEqual(testee.onTextClearedState.name, PhoneOmniBar.BrowsingEmptyEditingState().name)
     }
 
     func testWhenInBrowsingTextEditingStateThenBrowsingStartedMaintainsState() {
-        let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingTextEditingState().name)
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
+        XCTAssertEqual(testee.onBrowsingStartedState.name, PhoneOmniBar.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingTextEditingStateThenBrowsingStoppedTransitionsToHomeTextEditingState() {
-        let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, PhoneOmniBar.HomeEmptyEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShow() {
-        let testee = BrowsingNonEditingState()
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
         XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
@@ -266,37 +266,37 @@ class OmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {
-        let testee = BrowsingTextEditingState()
+        let testee = PhoneOmniBar.BrowsingTextEditingState()
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInBrowsingNonEditingStateThenEditingStartedTransitionsToTextEditingState() {
-        let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, BrowsingTextEditingState().name)
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
+        XCTAssertEqual(testee.onEditingStartedState.name, PhoneOmniBar.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenEditingStoppedMaintainsState() {
-        let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onEditingStoppedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
+        XCTAssertEqual(testee.onEditingStoppedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onTextEnteredState.name, BrowsingTextEditingState().name)
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
+        XCTAssertEqual(testee.onTextEnteredState.name, PhoneOmniBar.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onTextClearedState.name, BrowsingEmptyEditingState().name)
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
+        XCTAssertEqual(testee.onTextClearedState.name, PhoneOmniBar.BrowsingEmptyEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenBrowsingStartedMaintainstState() {
-        let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
+        XCTAssertEqual(testee.onBrowsingStartedState.name, PhoneOmniBar.BrowsingNonEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenBrowsingStoppedTransitionsToHomeNonEditingState() {
-        let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeNonEditingState().name)
+        let testee = PhoneOmniBar.BrowsingNonEditingState()
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, PhoneOmniBar.HomeNonEditingState().name)
     }
 }

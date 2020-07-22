@@ -23,10 +23,14 @@ import Core
 struct PhoneOmniBar {
 
     struct HomeEmptyEditingState: OmniBarState {
-        var centeredSearchField = false
-        var clearTextOnStart = true
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = true
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -46,10 +50,14 @@ struct PhoneOmniBar {
     }
 
     struct HomeTextEditingState: OmniBarState {
-        var centeredSearchField = false
-        var clearTextOnStart = false
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -69,10 +77,14 @@ struct PhoneOmniBar {
     }
 
     struct HomeNonEditingState: OmniBarState {
-        var centeredSearchField = false
-        var clearTextOnStart = true
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = true
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = true
         let showClear = false
@@ -92,10 +104,14 @@ struct PhoneOmniBar {
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
-        var centeredSearchField = false
-        var clearTextOnStart = true
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = true
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -115,10 +131,14 @@ struct PhoneOmniBar {
     }
 
     struct BrowsingTextEditingState: OmniBarState {
-        var centeredSearchField = false
-        var clearTextOnStart = false
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -138,10 +158,14 @@ struct PhoneOmniBar {
     }
 
     struct BrowsingNonEditingState: OmniBarState {
-        var centeredSearchField = false
-        var clearTextOnStart = false
-        var allowsTrackersAnimation = true
-        var showSearchLoupe = false
+        let padFormFactor: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = true
+        let showSearchLoupe = false
         let showSiteRating = true
         let showBackground = true
         let showClear = false

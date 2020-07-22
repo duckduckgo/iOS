@@ -23,6 +23,7 @@ import os.log
 
 extension OmniBar: NibLoading {}
 
+// swiftlint:disable file_length
 class OmniBar: UIView {
 
     @IBOutlet weak var searchLoupe: UIView!
@@ -33,15 +34,24 @@ class OmniBar: UIView {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
-    @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
-    
-    @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
+ 
+    @IBOutlet weak var bookmarksButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var forwardButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
+
+    // Don't use weak because adding/removing them causes them to go away
+    @IBOutlet var separatorHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var leftButtonsSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet var rightButtonsSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet var searchContainerCenterConstraint: NSLayoutConstraint!
+    @IBOutlet var omniBarLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = PhoneOmniBar.HomeNonEditingState()
@@ -161,13 +171,6 @@ class OmniBar: UIView {
             }
             state = newState
             trackersAnimator.cancelAnimations(in: self)
-            
-            // Weirdly, if this is marked as installed in the xib, it will crash.  Thankfully, that's not the initial state we want anyway.
-            if state.centeredSearchField {
-                self.addConstraint(searchBarWidthConstraint)
-            } else {
-                self.removeConstraint(searchBarWidthConstraint)
-            }            
         }
         
         if state.showSiteRating {
@@ -183,9 +186,18 @@ class OmniBar: UIView {
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
 
-        updateSearchBarBorder()
+        setVisibility(backButton, hidden: !state.showBackButton)
+        setVisibility(forwardButton, hidden: !state.showForwardButton)
+        setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
+        setVisibility(shareButton, hidden: !state.showShareButton)
         
-        print("***", state.name, state.centeredSearchField, searchBarWidthConstraint?.isActive ?? "<nil>")
+        leftButtonsSpacingConstraint.constant = state.padFormFactor ? 24 : 0
+        rightButtonsSpacingConstraint.constant = state.padFormFactor ? 24 : 14
+        searchContainerCenterConstraint.isActive = state.padFormFactor
+        omniBarLeadingConstraint.constant = state.padFormFactor ? 24 : 8
+        omniBarTrailingConstraint.constant = state.padFormFactor ? 24 : 14
+        
+        updateSearchBarBorder()        
     }
 
     private func updateSearchBarBorder() {
@@ -393,15 +405,4 @@ extension OmniBar: UIGestureRecognizerDelegate {
     }
     
 }
-
-extension String {
-    func range(from nsRange: NSRange) -> Range<String.Index>? {
-        guard
-            let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
-            let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
-            let from = from16.samePosition(in: self),
-            let to = to16.samePosition(in: self)
-            else { return nil }
-        return from ..< to
-    }
-}
+// swiftlint:enable file_length

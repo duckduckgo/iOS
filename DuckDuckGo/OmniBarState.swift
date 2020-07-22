@@ -21,7 +21,13 @@ import Foundation
 import Core
 
 protocol OmniBarState {
-    var centeredSearchField: Bool { get }
+    
+    var padFormFactor: Bool { get }
+    var showBackButton: Bool { get }
+    var showForwardButton: Bool { get }
+    var showBookmarksButton: Bool { get }
+    var showShareButton: Bool { get }
+    
     var clearTextOnStart: Bool { get }
     var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }

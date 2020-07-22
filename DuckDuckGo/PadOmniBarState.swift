@@ -12,10 +12,14 @@ import Core
 struct PadOmniBar {
     
     struct HomeEmptyEditingState: OmniBarState {
-        var centeredSearchField = true
-        var clearTextOnStart = true
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = true
+        let showBackButton: Bool = true
+        let showForwardButton: Bool = true
+        let showBookmarksButton: Bool = true
+        let showShareButton: Bool = true
+        let clearTextOnStart = true
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -35,10 +39,14 @@ struct PadOmniBar {
     }
 
     struct HomeTextEditingState: OmniBarState {
-        var centeredSearchField = true
-        var clearTextOnStart = false
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = true
+        let showBackButton: Bool = true
+        let showForwardButton: Bool = true
+        let showBookmarksButton: Bool = true
+        let showShareButton: Bool = true
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -58,10 +66,14 @@ struct PadOmniBar {
     }
 
     struct HomeNonEditingState: OmniBarState {
-        var centeredSearchField = true
-        var clearTextOnStart = true
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = true
+        let showBackButton: Bool = true
+        let showForwardButton: Bool = true
+        let showBookmarksButton: Bool = true
+        let showShareButton: Bool = true
+        let clearTextOnStart = true
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = true
         let showClear = false
@@ -81,10 +93,14 @@ struct PadOmniBar {
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
-        var centeredSearchField = true
-        var clearTextOnStart = true
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = true
+        let showBackButton: Bool = true
+        let showForwardButton: Bool = true
+        let showBookmarksButton: Bool = true
+        let showShareButton: Bool = true
+        let clearTextOnStart = true
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -104,10 +120,14 @@ struct PadOmniBar {
     }
 
     struct BrowsingTextEditingState: OmniBarState {
-        var centeredSearchField = true
-        var clearTextOnStart = false
-        var allowsTrackersAnimation = false
-        var showSearchLoupe = true
+        let padFormFactor: Bool = true
+        let showBackButton: Bool = true
+        let showForwardButton: Bool = true
+        let showBookmarksButton: Bool = true
+        let showShareButton: Bool = true
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = true
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -127,10 +147,14 @@ struct PadOmniBar {
     }
 
     struct BrowsingNonEditingState: OmniBarState {
-        var centeredSearchField = true
-        var clearTextOnStart = false
-        var allowsTrackersAnimation = true
-        var showSearchLoupe = false
+        let padFormFactor: Bool = true
+        let showBackButton: Bool = true
+        let showForwardButton: Bool = true
+        let showBookmarksButton: Bool = true
+        let showShareButton: Bool = true
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = true
+        let showSearchLoupe = false
         let showSiteRating = true
         let showBackground = true
         let showClear = false

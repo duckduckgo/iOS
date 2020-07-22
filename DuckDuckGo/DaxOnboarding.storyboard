@@ -67,7 +67,7 @@ DuckDuckGo!</string>
                                     <constraint firstAttribute="height" constant="44" id="ZX6-Se-sGe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="15"/>
-                                <state key="normal" title="Let's Do It!">
+                                <state key="normal" title="Let’s Do It!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>

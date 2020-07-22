@@ -263,7 +263,7 @@
                                                             <constraint firstAttribute="height" constant="44" id="Yze-Gt-ETV"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                        <state key="normal" title="No thanks! I'm done">
+                                                        <state key="normal" title="No thanks! I’m done">
                                                             <color key="titleColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>

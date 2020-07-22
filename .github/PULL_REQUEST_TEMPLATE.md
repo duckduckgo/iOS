@@ -19,6 +19,10 @@ Before submitting a PR, please ensure you have tested the combinations you expec
 Using a simulator where a physical device is unavailable is acceptable. 
 -->
 
+**Copy Testing**:
+
+* [ ] Use of correct apostrophes in new copy, ie `’` rather than `'`
+
 **Orientation Testing**:
 
 * [ ] Portrait

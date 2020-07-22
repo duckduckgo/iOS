@@ -46,8 +46,7 @@ class FormFactorConfigurator {
 
     func layoutSubviews(mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        guard variantManager.isSupported(feature: .iPadImprovements) else { return }
-
+        mainViewController.chromeManager.refresh()
     }
     
     private func apply(toMainViewController mainViewController: MainViewController) {
@@ -65,18 +64,12 @@ class FormFactorConfigurator {
     
     private func applyPad(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        
         mainViewController.toolbar.isHidden = true
-        mainViewController.chromeManager.refresh()
-
     }
 
     private func applyPhone(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-
         mainViewController.toolbar.isHidden = false
-        mainViewController.chromeManager.refresh()
-
     }
 
 }

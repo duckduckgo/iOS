@@ -255,6 +255,7 @@
 		85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */; };
 		85DFEDED24C7CCA500973FE7 /* FormFactorConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEC24C7CCA500973FE7 /* FormFactorConfigurator.swift */; };
 		85DFEDEF24C7EA3B00973FE7 /* PhoneOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEE24C7EA3B00973FE7 /* PhoneOmniBarState.swift */; };
+		85DFEDF124C7EEA400973FE7 /* PadOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDF024C7EEA400973FE7 /* PadOmniBarState.swift */; };
 		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
 		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
 		85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */; };
@@ -869,6 +870,7 @@
 		85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconUserScript.swift; sourceTree = "<group>"; };
 		85DFEDEC24C7CCA500973FE7 /* FormFactorConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFactorConfigurator.swift; sourceTree = "<group>"; };
 		85DFEDEE24C7EA3B00973FE7 /* PhoneOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneOmniBarState.swift; sourceTree = "<group>"; };
+		85DFEDF024C7EEA400973FE7 /* PadOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadOmniBarState.swift; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
 		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
 		85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerNavigationController.swift; sourceTree = "<group>"; };
@@ -2646,6 +2648,7 @@
 				F114C55C1E6717800018F95F /* OmniBar.xib */,
 				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
 				F1D477C51F2126CC0031ED49 /* OmniBarState.swift */,
+				85DFEDF024C7EEA400973FE7 /* PadOmniBarState.swift */,
 				85DFEDEE24C7EA3B00973FE7 /* PhoneOmniBarState.swift */,
 				98AA92B22456FBE100ED4B9E /* SearchFieldContainerView.swift */,
 				988CF20B2451A4A400B06CCD /* SiteRatingContainerView.swift */,
@@ -3581,6 +3584,7 @@
 				85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
+				85DFEDF124C7EEA400973FE7 /* PadOmniBarState.swift in Sources */,
 				850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,

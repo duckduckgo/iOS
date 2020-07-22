@@ -66,11 +66,13 @@ class FormFactorConfigurator {
     private func applyPad(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
         mainViewController.toolbar.isHidden = true
+        mainViewController.omniBar.enterPadState()
     }
 
     private func applyPhone(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
         mainViewController.toolbar.isHidden = false
+        mainViewController.omniBar.enterPhoneState()
     }
 
 }

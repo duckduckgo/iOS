@@ -39,7 +39,8 @@ class OmniBar: UIView {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
-
+    
+    @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
@@ -49,6 +50,7 @@ class OmniBar: UIView {
     private(set) var trackersAnimator = TrackersAnimator()
     
     static func loadFromXib() -> OmniBar {
+        print("***", #function)
         return OmniBar.load(nibName: "OmniBar")
     }
     
@@ -58,6 +60,7 @@ class OmniBar: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        print("***", #function)
         configureTextField()
         configureSeparator()
         configureEditingMenu()
@@ -158,6 +161,13 @@ class OmniBar: UIView {
             }
             state = newState
             trackersAnimator.cancelAnimations(in: self)
+            
+            // Weirdly, if this is marked as installed in the xib, it will crash.  Thankfully, that's not the initial state we want anyway.
+            if state.centeredSearchField {
+                self.addConstraint(searchBarWidthConstraint)
+            } else {
+                self.removeConstraint(searchBarWidthConstraint)
+            }            
         }
         
         if state.showSiteRating {
@@ -174,6 +184,8 @@ class OmniBar: UIView {
         setVisibility(refreshButton, hidden: !state.showRefresh)
 
         updateSearchBarBorder()
+        
+        print("***", state.name, state.centeredSearchField, searchBarWidthConstraint?.isActive ?? "<nil>")
     }
 
     private func updateSearchBarBorder() {
@@ -308,6 +320,15 @@ class OmniBar: UIView {
         trackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }
+    
+    func enterPhoneState() {
+        refreshState(state.onEnterPhoneState)
+    }
+    
+    func enterPadState() {
+        refreshState(state.onEnterPadState)
+    }
+    
 }
 
 extension OmniBar: UITextFieldDelegate {

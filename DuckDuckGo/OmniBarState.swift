@@ -21,6 +21,7 @@ import Foundation
 import Core
 
 protocol OmniBarState {
+    var centeredSearchField: Bool { get }
     var clearTextOnStart: Bool { get }
     var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
@@ -38,4 +39,6 @@ protocol OmniBarState {
     var onTextEnteredState: OmniBarState { get }
     var onBrowsingStartedState: OmniBarState { get }
     var onBrowsingStoppedState: OmniBarState { get }
+    var onEnterPhoneState: OmniBarState { get }
+    var onEnterPadState: OmniBarState { get }
 }

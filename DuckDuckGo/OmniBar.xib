@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -19,17 +19,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="ojX-nM-dyN" customClass="OmniBar" customModule="DuckDuckGo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="510" height="52"/>
+            <rect key="frame" x="0.0" y="0.0" width="1097" height="52"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4UQ-VY-O3E">
-                    <rect key="frame" x="7" y="6" width="496" height="40"/>
+                    <rect key="frame" x="7" y="6" width="1083" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
-                            <rect key="frame" x="0.0" y="0.0" width="360" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="947" height="40"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Atk-JN-lv8" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="360" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="947" height="40"/>
                                     <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
@@ -45,7 +45,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                                    <rect key="frame" x="6" y="0.0" width="348" height="40"/>
+                                    <rect key="frame" x="6" y="0.0" width="935" height="40"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
                                             <rect key="frame" x="0.0" y="8" width="30" height="24"/>
@@ -54,7 +54,7 @@
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="258" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="845" height="40"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
@@ -119,7 +119,7 @@
                                                     </connections>
                                                 </view>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="30" y="0.0" width="228" height="40"/>
+                                                    <rect key="frame" x="30" y="0.0" width="815" height="40"/>
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                         <accessibilityTraits key="traits" searchField="YES"/>
@@ -160,7 +160,7 @@
                                             </connections>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                            <rect key="frame" x="288" y="0.0" width="30" height="40"/>
+                                            <rect key="frame" x="875" y="0.0" width="30" height="40"/>
                                             <accessibility key="accessibilityConfiguration" label="Clear Text"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
@@ -171,7 +171,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-QY-LVl">
-                                            <rect key="frame" x="318" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="905" y="8" width="30" height="24"/>
                                             <accessibility key="accessibilityConfiguration" label="Refresh Page"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="PHR-dd-ThY"/>
@@ -188,8 +188,14 @@
                                         <constraint firstAttribute="bottom" secondItem="sek-4Y-GoT" secondAttribute="bottom" id="7iA-xr-CAz"/>
                                         <constraint firstAttribute="bottom" secondItem="Dt8-We-5tV" secondAttribute="bottom" id="HAt-7Z-AXS"/>
                                         <constraint firstItem="Dt8-We-5tV" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="Rfy-VW-i8P"/>
+                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="664" id="rv0-rb-pi4"/>
                                         <constraint firstItem="sek-4Y-GoT" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="tyl-xO-WgY"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="rv0-rb-pi4"/>
+                                        </mask>
+                                    </variation>
                                 </stackView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -206,7 +212,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
-                            <rect key="frame" x="364" y="0.0" width="30" height="40"/>
+                            <rect key="frame" x="951" y="0.0" width="30" height="40"/>
                             <accessibility key="accessibilityConfiguration" label="Settings"/>
                             <constraints>
                                 <constraint firstAttribute="width" priority="900" constant="30" id="LgT-YY-fGl"/>
@@ -217,7 +223,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
-                            <rect key="frame" x="398" y="0.0" width="30" height="40"/>
+                            <rect key="frame" x="985" y="0.0" width="30" height="40"/>
                             <accessibility key="accessibilityConfiguration" label="Browsing Menu"/>
                             <constraints>
                                 <constraint firstAttribute="width" priority="900" constant="30" id="JrJ-da-Qn3"/>
@@ -228,7 +234,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-9R-ERy">
-                            <rect key="frame" x="432" y="0.0" width="64" height="40"/>
+                            <rect key="frame" x="1019" y="0.0" width="64" height="40"/>
                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
                             <state key="normal" title="Cancel">
@@ -244,7 +250,7 @@
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-j4-fpl">
-                    <rect key="frame" x="0.0" y="52" width="510" height="1"/>
+                    <rect key="frame" x="0.0" y="52" width="1097" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -272,6 +278,7 @@
                 <outlet property="editingBackground" destination="Atk-JN-lv8" id="E2d-Lx-OrN"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="refreshButton" destination="Qea-QY-LVl" id="lwI-BW-l99"/>
+                <outlet property="searchBarWidthConstraint" destination="rv0-rb-pi4" id="v1V-4x-X7y"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
                 <outlet property="searchFieldContainer" destination="sek-4Y-GoT" id="kKS-LJ-XAo"/>
                 <outlet property="searchLoupe" destination="u6L-hZ-ptn" id="31i-ke-yHa"/>
@@ -282,7 +289,7 @@
                 <outlet property="siteRatingContainer" destination="4JV-px-Ypi" id="VRT-kc-Ijt"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
             </connections>
-            <point key="canvasLocation" x="-392" y="-72.863568215892059"/>
+            <point key="canvasLocation" x="-263.32357247437773" y="-73.2421875"/>
         </view>
         <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
             <connections>

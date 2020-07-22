@@ -1,29 +1,18 @@
 //
-//  PhoneOmniBarState.swift
+//  PadOmniBarState.swift
 //  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
+//  Created by Chris Brind on 22/07/2020.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 
 import Foundation
 import Core
 
-struct PhoneOmniBar {
-
+struct PadOmniBar {
+    
     struct HomeEmptyEditingState: OmniBarState {
-        var centeredSearchField = false
+        var centeredSearchField = true
         var clearTextOnStart = true
         var allowsTrackersAnimation = false
         var showSearchLoupe = true
@@ -34,19 +23,19 @@ struct PhoneOmniBar {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        var name: String { return "Phone" + Type.name(self) }
+        var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return self }
         var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
         var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
         var onBrowsingStoppedState: OmniBarState { return self }
-        var onEnterPadState: OmniBarState { return PadOmniBar.HomeEmptyEditingState() }
-        var onEnterPhoneState: OmniBarState { return self }
+        var onEnterPadState: OmniBarState { return self }
+        var onEnterPhoneState: OmniBarState { return PhoneOmniBar.HomeEmptyEditingState() }
     }
 
     struct HomeTextEditingState: OmniBarState {
-        var centeredSearchField = false
+        var centeredSearchField = true
         var clearTextOnStart = false
         var allowsTrackersAnimation = false
         var showSearchLoupe = true
@@ -57,19 +46,19 @@ struct PhoneOmniBar {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        var name: String { return "Phone" + Type.name(self) }
+        var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
         var onTextEnteredState: OmniBarState { return self }
         var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
-        var onEnterPadState: OmniBarState { return PadOmniBar.HomeTextEditingState() }
-        var onEnterPhoneState: OmniBarState { return self }
+        var onEnterPadState: OmniBarState { return self }
+        var onEnterPhoneState: OmniBarState { return PhoneOmniBar.HomeTextEditingState() }
     }
 
     struct HomeNonEditingState: OmniBarState {
-        var centeredSearchField = false
+        var centeredSearchField = true
         var clearTextOnStart = true
         var allowsTrackersAnimation = false
         var showSearchLoupe = true
@@ -80,19 +69,19 @@ struct PhoneOmniBar {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
-        var name: String { return "Phone" + Type.name(self) }
+        var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
         var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
         var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
         var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
-        var onEnterPadState: OmniBarState { return PadOmniBar.HomeNonEditingState() }
-        var onEnterPhoneState: OmniBarState { return self }
+        var onEnterPadState: OmniBarState { return self }
+        var onEnterPhoneState: OmniBarState { return PhoneOmniBar.HomeNonEditingState() }
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
-        var centeredSearchField = false
+        var centeredSearchField = true
         var clearTextOnStart = true
         var allowsTrackersAnimation = false
         var showSearchLoupe = true
@@ -103,19 +92,19 @@ struct PhoneOmniBar {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        var name: String { return "Phone" + Type.name(self) }
+        var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return self }
         var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
         var onBrowsingStartedState: OmniBarState { return self }
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
-        var onEnterPadState: OmniBarState { return PadOmniBar.BrowsingEmptyEditingState() }
-        var onEnterPhoneState: OmniBarState { return self }
+        var onEnterPadState: OmniBarState { return self }
+        var onEnterPhoneState: OmniBarState { return PhoneOmniBar.BrowsingEmptyEditingState() }
     }
 
     struct BrowsingTextEditingState: OmniBarState {
-        var centeredSearchField = false
+        var centeredSearchField = true
         var clearTextOnStart = false
         var allowsTrackersAnimation = false
         var showSearchLoupe = true
@@ -126,19 +115,19 @@ struct PhoneOmniBar {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        var name: String { return "Phone" + Type.name(self) }
+        var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
         var onTextEnteredState: OmniBarState { return self }
         var onBrowsingStartedState: OmniBarState { return self }
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
-        var onEnterPadState: OmniBarState { return PadOmniBar.BrowsingTextEditingState() }
-        var onEnterPhoneState: OmniBarState { return self }
+        var onEnterPadState: OmniBarState { return self }
+        var onEnterPhoneState: OmniBarState { return PhoneOmniBar.BrowsingTextEditingState() }
     }
 
     struct BrowsingNonEditingState: OmniBarState {
-        var centeredSearchField = false
+        var centeredSearchField = true
         var clearTextOnStart = false
         var allowsTrackersAnimation = true
         var showSearchLoupe = false
@@ -149,15 +138,15 @@ struct PhoneOmniBar {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
-        var name: String { return "Phone" + Type.name(self) }
+        var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return BrowsingTextEditingState() }
         var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
         var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
         var onBrowsingStartedState: OmniBarState { return self }
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
-        var onEnterPadState: OmniBarState { return PadOmniBar.BrowsingNonEditingState() }
-        var onEnterPhoneState: OmniBarState { return self }
+        var onEnterPadState: OmniBarState { return self }
+        var onEnterPhoneState: OmniBarState { return PhoneOmniBar.BrowsingNonEditingState() }
     }
 
 }

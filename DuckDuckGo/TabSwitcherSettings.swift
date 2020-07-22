@@ -35,6 +35,6 @@ class DefaultTabSwitcherSettings: TabSwitcherSettings {
     var hasSeenNewLayout: Bool
     
     private static var isGridViewDefault: Bool = {
-        return DefaultVariantManager().isSupported(feature: .tabSwitcherListLayout)
+        return !DefaultVariantManager().isSupported(feature: .tabSwitcherListLayout)
     }()
 }

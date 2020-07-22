@@ -120,6 +120,8 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
+
+        FormFactorConfigurator.shared.viewDidLoad(mainViewController: self)        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -268,6 +270,8 @@ class MainViewController: UIViewController {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
+        
+        FormFactorConfigurator.shared.traitCollectionDidChange(mainViewController: self, previousTraitCollection: previousTraitCollection)
     }
 
     private func configureTabManager() {
@@ -586,6 +590,9 @@ class MainViewController: UIViewController {
             tabSwitcherButton.layoutSubviews()
             gestureBookmarksButton.layoutSubviews()
         }
+        
+        FormFactorConfigurator.shared.layoutSubviews(mainViewController: self)
+
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -744,11 +751,12 @@ extension MainViewController: BrowserChromeDelegate {
 
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
-        var bottomHeight = self.toolbar.frame.size.height
+        var bottomHeight = toolbarHeight
         if #available(iOS 11.0, *) {
             bottomHeight += view.safeAreaInsets.bottom
         }
-        toolbarBottom.constant = bottomHeight * (1.0 - ratio)
+        let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
+        toolbarBottom.constant = bottomHeight * multiplier
     }
 
     // 1.0 - full size, 0.0 - hidden

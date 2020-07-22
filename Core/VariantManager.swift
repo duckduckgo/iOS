@@ -25,6 +25,8 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
+    case iPadImprovements
+    
 }
 
 public enum CohortFiltering {
@@ -42,7 +44,12 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: doNotAllocate, features: [])
+        Variant(name: "se", weight: doNotAllocate, features: []),
+
+        // iPad improvements
+        Variant(name: "mc", weight: 1, features: []),
+        Variant(name: "md", weight: 1, features: [.iPadImprovements])
+
     ]
     
     public let name: String

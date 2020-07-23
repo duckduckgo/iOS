@@ -45,8 +45,6 @@ extension MainViewController {
                              discoverabilityTitle: UserText.keyCommandBrowserForward),
                 UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [.command], action: #selector(keyboardBrowserBack),
                              discoverabilityTitle: UserText.keyCommandBrowserBack),
-                UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab),
-                             discoverabilityTitle: UserText.keyCommandCloseTab),
                 UIKeyCommand(input: "r", modifierFlags: .command, action: #selector(keyboardReload),
                              discoverabilityTitle: UserText.keyCommandReload),
                 UIKeyCommand(input: "p", modifierFlags: [.command], action: #selector(keyboardPrint),
@@ -73,6 +71,8 @@ extension MainViewController {
         }
 
         return alwaysAvailable + browsingCommands + findInPageCommands + [
+            UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab),
+                         discoverabilityTitle: UserText.keyCommandCloseTab),
             UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab),
                          discoverabilityTitle: UserText.keyCommandNewTab),
             UIKeyCommand(input: "n", modifierFlags: .command, action: #selector(keyboardNewTab),

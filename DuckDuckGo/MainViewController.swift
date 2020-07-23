@@ -497,6 +497,9 @@ class MainViewController: UIViewController {
     fileprivate func refreshBackForwardButtons() {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
+        
+        omniBar.backButton.isEnabled = backButton.isEnabled
+        omniBar.forwardButton.isEnabled = forwardButton.isEnabled
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -820,6 +823,9 @@ extension MainViewController: OmniBarDelegate {
     
     func onRefreshPressed() {
         currentTab?.refresh()
+    }
+    
+    func onSharePressed() {
     }
     
 }

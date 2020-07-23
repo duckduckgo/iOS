@@ -20,7 +20,7 @@ class FormFactorConfigurator {
     var currentTraitCollection: UITraitCollection?
     
     var isPadFormFactor: Bool {
-        return currentTraitCollection?.horizontalSizeClass == .regular
+        return variantManager.isSupported(feature: .iPadImprovements) && currentTraitCollection?.horizontalSizeClass == .regular
     }
         
     /// Only use constructor when testing

@@ -31,6 +31,9 @@
                                 <constraint firstAttribute="width" constant="24" id="sOw-ag-XsX"/>
                             </constraints>
                             <state key="normal" image="BrowsePrevious"/>
+                            <connections>
+                                <action selector="onBackPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="0Ft-Ct-Vig"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXg-p3-oeq" userLabel="Forwards">
                             <rect key="frame" x="48" y="0.0" width="24" height="24"/>
@@ -38,6 +41,9 @@
                                 <constraint firstAttribute="width" constant="24" id="P2e-lo-QFO"/>
                             </constraints>
                             <state key="normal" image="BrowseNext"/>
+                            <connections>
+                                <action selector="onForwardPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="mCK-q6-DCJ"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ii4-Sq-bD1" userLabel="Bookmarks">
                             <rect key="frame" x="96" y="0.0" width="24" height="24"/>
@@ -45,6 +51,9 @@
                                 <constraint firstAttribute="width" constant="24" id="I47-lV-kYz"/>
                             </constraints>
                             <state key="normal" image="Bookmarks"/>
+                            <connections>
+                                <action selector="onBookmarksPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="ozG-je-Zgk"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>
@@ -239,6 +248,9 @@
                                 <constraint firstAttribute="width" constant="30" id="QdK-eJ-q8O"/>
                             </constraints>
                             <state key="normal" image="Share"/>
+                            <connections>
+                                <action selector="onSharePressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="XwJ-D9-vKG"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
                             <rect key="frame" x="54" y="0.0" width="30" height="24"/>

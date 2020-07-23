@@ -353,6 +353,22 @@ class OmniBar: UIView {
         omniDelegate?.onRefreshPressed()
     }
     
+    @IBAction func onBackPressed(_ sender: Any) {
+        omniDelegate?.onBackPressed()
+    }
+    
+    @IBAction func onForwardPressed(_ sender: Any) {
+        omniDelegate?.onForwardPressed()
+    }
+    
+    @IBAction func onBookmarksPressed(_ sender: Any) {
+        omniDelegate?.onBookmarksPressed()
+    }
+    
+    @IBAction func onSharePressed(_ sender: Any) {
+        omniDelegate?.onSharePressed()
+    }
+    
     func enterPhoneState() {
         refreshState(state.onEnterPhoneState)
     }

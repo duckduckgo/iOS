@@ -2676,16 +2676,16 @@
 			isa = PBXGroup;
 			children = (
 				8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */,
+				9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */,
+				988F3DD2237DE8D900AEE34C /* ForgetDataAlert.swift */,
+				8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
 				85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */,
 				98EF177C21837E35006750C1 /* new_tab_dark.json */,
 				85371D232121B9D400920548 /* new_tab.json */,
-				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
-				8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */,
-				9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */,
-				988F3DD2237DE8D900AEE34C /* ForgetDataAlert.swift */,
 				8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */,
+				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";

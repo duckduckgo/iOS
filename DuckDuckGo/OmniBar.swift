@@ -24,6 +24,7 @@ import os.log
 extension OmniBar: NibLoading {}
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class OmniBar: UIView {
 
     @IBOutlet weak var searchLoupe: UIView!
@@ -76,6 +77,23 @@ class OmniBar: UIView {
         configureSeparator()
         configureEditingMenu()
         refreshState(state)
+        enableInteractionsWithPointer()
+    }
+    
+    private func enableInteractionsWithPointer() {
+        guard #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
+        backButton.isPointerInteractionEnabled = true
+        forwardButton.isPointerInteractionEnabled = true
+        settingsButton.isPointerInteractionEnabled = true
+        cancelButton.isPointerInteractionEnabled = true
+        bookmarksButton.isPointerInteractionEnabled = true
+        shareButton.isPointerInteractionEnabled = true
+        menuButton.isPointerInteractionEnabled = true
+
+        refreshButton.isPointerInteractionEnabled = true
+        refreshButton.pointerStyleProvider = { button, effect, shape -> UIPointerStyle? in
+            return .init(effect: .lift(.init(view: button)))
+        }
     }
     
     private func configureTextField() {
@@ -344,6 +362,7 @@ class OmniBar: UIView {
     }
     
 }
+// swiftlint:enable type_body_length
 
 extension OmniBar: UITextFieldDelegate {
     

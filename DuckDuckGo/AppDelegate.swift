@@ -77,7 +77,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // MARK: perform first time launch logic here
             
             DaxDialogs().primeForUse()
-            return .includeInCohort
+            
+            // We only want iPad users while testing the iPad improvements
+            return isPad ? .includeInCohort : .excludeFromCohort
         }
 
         if let main = mainViewController {

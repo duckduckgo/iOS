@@ -50,6 +50,7 @@ class OmniBar: UIView {
     @IBOutlet var leftButtonsSpacingConstraint: NSLayoutConstraint!
     @IBOutlet var rightButtonsSpacingConstraint: NSLayoutConstraint!
     @IBOutlet var searchContainerCenterConstraint: NSLayoutConstraint!
+    @IBOutlet var searchContainerMaxWidthConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
 
@@ -191,13 +192,14 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
         setVisibility(shareButton, hidden: !state.showShareButton)
         
+        searchContainerCenterConstraint.isActive = state.padFormFactor
+        searchContainerMaxWidthConstraint.isActive = state.padFormFactor
         leftButtonsSpacingConstraint.constant = state.padFormFactor ? 24 : 0
         rightButtonsSpacingConstraint.constant = state.padFormFactor ? 24 : 14
-        searchContainerCenterConstraint.isActive = state.padFormFactor
         omniBarLeadingConstraint.constant = state.padFormFactor ? 24 : 8
         omniBarTrailingConstraint.constant = state.padFormFactor ? 24 : 14
-        
-        updateSearchBarBorder()        
+
+        updateSearchBarBorder()
     }
 
     private func updateSearchBarBorder() {

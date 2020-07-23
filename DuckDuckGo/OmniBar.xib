@@ -319,6 +319,7 @@
                 <outlet property="rightButtonsSpacingConstraint" destination="4w4-aZ-P7u" id="i9f-O1-Ts9"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
                 <outlet property="searchContainerCenterConstraint" destination="G7B-Lp-iiF" id="QZh-69-mgU"/>
+                <outlet property="searchContainerMaxWidthConstraint" destination="4zd-mz-9WZ" id="d53-3G-EEd"/>
                 <outlet property="searchFieldContainer" destination="sek-4Y-GoT" id="kKS-LJ-XAo"/>
                 <outlet property="searchLoupe" destination="u6L-hZ-ptn" id="31i-ke-yHa"/>
                 <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>

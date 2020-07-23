@@ -826,6 +826,8 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onSharePressed() {
+        guard let link = currentTab?.link else { return }
+        currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton)
     }
     
 }

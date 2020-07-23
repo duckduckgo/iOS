@@ -49,7 +49,8 @@ extension TabViewController {
 
             alert.addAction(title: UserText.actionShare) { [weak self] in
                 guard let self = self else { return }
-                self.onShareAction(forLink: link, printFormatter: self.webView.viewPrintFormatter())
+                guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
+                self.onShareAction(forLink: link, fromView: menu)
             }
             
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
@@ -117,11 +118,10 @@ extension TabViewController {
         }
     }
 
-    private func onShareAction(forLink link: Link, printFormatter: UIPrintFormatter) {
+    func onShareAction(forLink link: Link, fromView view: UIView) {
         Pixel.fire(pixel: .browsingMenuShare)
-        guard let menu = chromeDelegate?.omniBar.menuButton else { return }
         let url = appUrls.removeATBAndSource(fromUrl: link.url)
-        presentShareSheet(withItems: [ url, link, printFormatter ], fromView: menu)
+        presentShareSheet(withItems: [ url, link, webView.viewPrintFormatter() ], fromView: view)
     }
     
     private func onToggleDesktopSiteAction(forUrl url: URL) {

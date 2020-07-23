@@ -46,7 +46,7 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, features: []),
         Variant(name: "se", weight: doNotAllocate, features: []),
         
-        Variant(name: "me", weight: 0, features: []),
+        Variant(name: "me", weight: 1, features: []),
         Variant(name: "mf", weight: 1, features: [.tabSwitcherListLayout])
     ]
     

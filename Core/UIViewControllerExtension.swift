@@ -31,10 +31,10 @@ extension UIViewController {
     }
 
     private func buildActivities() -> [UIActivity] {
-        var activities = [SaveBookmarkActivity()]
+        var activities = [SaveBookmarkActivity(controller: self)]
 
         if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            activities.insert(SaveBookmarkActivity(isFavorite: true), at: 0)
+            activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
             // activities.append(FindOnPageActivity())
         }
 

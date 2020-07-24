@@ -25,15 +25,17 @@ class SaveBookmarkActivity: UIActivity {
     private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private var bookmark: Link?
     
+    private weak var controller: UIViewController?
     private var isFavorite: Bool
-    
-    init(isFavorite: Bool = false) {
+
+    init(controller: UIViewController, isFavorite: Bool = false) {
+        self.controller = controller
         self.isFavorite = isFavorite
         super.init()
     }
 
     override var activityTitle: String? {
-        return isFavorite ? UserText.actionSaveBookmark : UserText.actionSaveFavorite
+        return isFavorite ? UserText.actionSaveFavorite : UserText.actionSaveBookmark
     }
 
     override var activityType: UIActivity.ActivityType? {
@@ -53,19 +55,26 @@ class SaveBookmarkActivity: UIActivity {
     }
 
     override var activityViewController: UIViewController? {
+        defer {
+            activityDidFinish(true)
+        }
+
         guard let bookmark = bookmark else {
-            activityDidFinish(false)
+            return nil
+        }
+
+        if bookmarksManager.contains(url: bookmark.url) {
+            controller?.view.showBottomToast(UserText.webBookmarkAlreadySaved)
             return nil
         }
 
         if isFavorite {
             bookmarksManager.save(favorite: bookmark)
-            // TODO notification to say bookmark saved
+            controller?.view.showBottomToast(UserText.webSaveFavoriteDone)
         } else {
             bookmarksManager.save(bookmark: bookmark)
-            // TODO notification to say bookmark saved
+            controller?.view.showBottomToast(UserText.webSaveBookmarkDone)
         }
-        activityDidFinish(true)
         return nil
     }
 

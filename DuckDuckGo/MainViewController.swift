@@ -277,10 +277,13 @@ class MainViewController: UIViewController {
     }
 
     private func configureTabManager() {
+
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+
         let tabsModel: TabsModel
         let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
         if shouldClearTabsModelOnStartup {
-            tabsModel = TabsModel()
+            tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
         } else {
@@ -289,7 +292,7 @@ class MainViewController: UIViewController {
                 storedModel.save()
                 tabsModel = storedModel
             } else {
-                tabsModel = TabsModel()
+                tabsModel = TabsModel(desktop: isPadDevice)
             }
         }
         tabManager = TabManager(model: tabsModel,

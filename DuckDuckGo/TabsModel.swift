@@ -36,9 +36,8 @@ public class TabsModel: NSObject, NSCoding {
         return tabs.contains(where: { !$0.viewed })
     }
         
-    // TODO how to set desktop mode explicitly?
-    public init(tabs: [Tab] = [Tab()], currentIndex: Int = 0) {
-        self.tabs = tabs
+    public init(tabs: [Tab] = [], currentIndex: Int = 0, desktop: Bool) {
+        self.tabs = tabs.isEmpty ? [Tab(desktop: desktop)] : tabs
         self.currentIndex = currentIndex
     }
 
@@ -66,7 +65,7 @@ public class TabsModel: NSObject, NSCoding {
         if currentIndex < 0 || currentIndex >= tabs.count {
             currentIndex = 0
         }
-        self.init(tabs: tabs, currentIndex: currentIndex)
+        self.init(tabs: tabs, currentIndex: currentIndex, desktop: UIDevice.current.userInterfaceIdiom == .pad)
     }
 
     public func encode(with coder: NSCoder) {

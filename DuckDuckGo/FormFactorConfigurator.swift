@@ -58,8 +58,11 @@ class FormFactorConfigurator {
         }
 
         // Otherwise the toolbar buttons skew to the right
+        print("***", #function, "navBarTop.constant", mainViewController.navBarTop.constant)
+
         DispatchQueue.main.async {
-            if mainViewController.navBarTop.constant > 0 {
+            print("***", #function, "navBarTop.constant", mainViewController.navBarTop.constant)
+            if mainViewController.navBarTop.constant >= 0 {
                 mainViewController.showBars()
             }
         }

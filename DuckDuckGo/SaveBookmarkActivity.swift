@@ -77,10 +77,6 @@ class SaveBookmarkActivity: UIActivity {
         }
         return nil
     }
-
-    private func onCancel() {
-        activityDidFinish(true)
-    }
 }
 
 extension UIActivity.ActivityType {

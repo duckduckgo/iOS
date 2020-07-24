@@ -30,24 +30,20 @@ class FormFactorConfigurator {
     
     func viewDidLoad(mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        guard variantManager.isSupported(feature: .iPadImprovements) else { return }
-        
         apply(toMainViewController: mainViewController)
     }
     
     func traitCollectionDidChange(mainViewController: MainViewController, previousTraitCollection: UITraitCollection?) {
         print("***", #function, mainViewController.view.frame, previousTraitCollection as Any)
-        guard variantManager.isSupported(feature: .iPadImprovements) else { return }
         
         if mainViewController.traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
             apply(toMainViewController: mainViewController)
         }
-
+        
     }
 
     func layoutSubviews(mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        // mainViewController.chromeManager.refresh()
     }
     
     private func apply(toMainViewController mainViewController: MainViewController) {
@@ -61,9 +57,11 @@ class FormFactorConfigurator {
             applyPhone(toMainViewController: mainViewController)
         }
 
-        // Update the UI to show/hide the tabs, but only if the bars are showing
-        if mainViewController.navBarTop.constant >= 0 { // TODO move this to mainViewcontroller
-            mainViewController.showBars()
+        // Otherwise the toolbar buttons skew to the right
+        DispatchQueue.main.async {
+            if mainViewController.navBarTop.constant > 0 {
+                mainViewController.showBars()
+            }
         }
     }
     

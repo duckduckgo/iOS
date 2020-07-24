@@ -26,14 +26,25 @@ extension UIViewController {
         return view.frame.height <= 568
     }
 
+    private func buildActivities() -> [UIActivity] {
+        var activities = [SaveBookmarkActivity()]
+
+        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            activities.insert(SaveBookmarkActivity(isFavorite: true), at: 0)
+            // activities.append(FindOnPageActivity())
+        }
+
+        return activities
+    }
+    
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
-        let activities = [SaveBookmarkActivity()]
+        let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
     public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
-        let activities = [SaveBookmarkActivity()]
+        let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         if #available(iOS 11.0, *) {
             shareController.excludedActivityTypes = [.markupAsPDF]

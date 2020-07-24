@@ -24,17 +24,24 @@ class SaveBookmarkActivity: UIActivity {
 
     private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private var bookmark: Link?
+    
+    private var isFavorite: Bool
+    
+    init(isFavorite: Bool = false) {
+        self.isFavorite = isFavorite
+        super.init()
+    }
 
     override var activityTitle: String? {
-        return UserText.actionSaveBookmark
+        return isFavorite ? UserText.actionSaveBookmark : UserText.actionSaveFavorite
     }
 
     override var activityType: UIActivity.ActivityType? {
-        return .saveBookmarkInDuckDuckGo
+        return isFavorite ? .saveFavoriteInDuckDuckGo : .saveBookmarkInDuckDuckGo
     }
 
     override var activityImage: UIImage {
-        return #imageLiteral(resourceName: "LogoShare")
+        return (isFavorite ? UIImage(named: "sharesheet-bookmark") : UIImage(named: "sharesheet-favorite")) ?? #imageLiteral(resourceName: "LogoShare")
     }
 
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
@@ -51,18 +58,15 @@ class SaveBookmarkActivity: UIActivity {
             return nil
         }
 
-        let alert = EditBookmarkAlert.buildAlert(
-            title: UserText.alertSaveBookmark,
-            bookmark: bookmark,
-            saveCompletion: { [weak self] (updatedBookmark) in self?.onDone(updatedBookmark: updatedBookmark) },
-            cancelCompletion: { [weak self] in self?.onCancel() }
-        )
-        return alert
-    }
-
-    private func onDone(updatedBookmark: Link) {
-        bookmarksManager.save(bookmark: updatedBookmark)
+        if isFavorite {
+            bookmarksManager.save(favorite: bookmark)
+            // TODO notification to say bookmark saved
+        } else {
+            bookmarksManager.save(bookmark: bookmark)
+            // TODO notification to say bookmark saved
+        }
         activityDidFinish(true)
+        return nil
     }
 
     private func onCancel() {
@@ -72,4 +76,5 @@ class SaveBookmarkActivity: UIActivity {
 
 extension UIActivity.ActivityType {
     public static let saveBookmarkInDuckDuckGo = UIActivity.ActivityType("com.duckduckgo.save.bookmark")
+    public static let saveFavoriteInDuckDuckGo = UIActivity.ActivityType("com.duckduckgo.save.favorite")
 }

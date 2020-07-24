@@ -160,9 +160,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private func activateSearch() {
-        guard let controller = self.controller else {
-            return
-        }
+        guard let controller = controller else { return }
         
         var offset = controller.collectionView.contentOffset
         let omniBarBottomSpacing = controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0

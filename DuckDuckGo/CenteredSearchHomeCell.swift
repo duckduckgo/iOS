@@ -27,7 +27,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
         static let searchWidth: CGFloat = 380
         static let searchWidthPad: CGFloat = 455
         static let targetSearchLeadingOffset: CGFloat = -18
-        static let targetSearchTrailingOffset: CGFloat = 16
+        static let targetSearchTrailingOffset: CGFloat = 26
         static let targetSearchLoupeOffset: CGFloat = -9
         
     }
@@ -60,9 +60,10 @@ class CenteredSearchHomeCell: UICollectionViewCell {
 
         if isPad {
             return (frame.width - Constants.searchWidthPad) / 2
+        } else {
+            return max(12, (frame.width - Constants.searchWidth) / 2)
         }
 
-        return isPortrait && !isPad ? 0 : (frame.width - Constants.searchWidth) / 2
     }
     
     var searchHeaderTransition: CGFloat = 0.0 {

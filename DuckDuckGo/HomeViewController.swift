@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
             let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
-            
+
             // hide the keyboard if transitioning away
             if oldValue == 1.0 && searchHeaderTransition != 1.0 {
                 chromeDelegate?.omniBar.resignFirstResponder()

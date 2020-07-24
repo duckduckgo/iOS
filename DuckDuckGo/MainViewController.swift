@@ -68,13 +68,12 @@ class MainViewController: UIViewController {
 
     var allowContentUnderflow = false {
         didSet {
-            let constant = allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
-            containerViewTop.constant = constant
+            containerViewTop.constant = allowContentUnderflow ? contentUnderflow : 0
         }
     }
     
     var contentUnderflow: CGFloat {
-        return allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
+        return 3 + (allowContentUnderflow ? -customNavigationBar.frame.size.height : 0)
     }
     
     var homeController: HomeViewController?

@@ -44,15 +44,19 @@ class HomePageConfiguration {
         let fixed = !settings.favorites || bookmarksManager.favoritesCount == 0
 
         var components = [Component]()
-        switch settings.layout {
-        case .navigationBar:
+
+        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
             components.append(.navigationBarSearch(fixed: fixed))
-        case .centered:
-            components.append(.centeredSearch(fixed: fixed))
+        } else {
+            switch settings.layout {
+            case .navigationBar:
+                components.append(.navigationBarSearch(fixed: fixed))
+            case .centered:
+                components.append(.centeredSearch(fixed: fixed))
+            }
         }
 
-        // Add extra content renderer here if needed
-        
+        // Add extra content renderer here if needed        
         if settings.favorites {
             components.append(.favorites)
             if settings.layout == .centered {

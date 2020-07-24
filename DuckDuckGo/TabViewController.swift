@@ -185,7 +185,18 @@ class TabViewController: UIViewController {
         super.viewDidAppear(animated)
         resetNavigationBar()
     }
-    
+
+    override func buildActivities() -> [UIActivity] {
+        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
+
+        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+            activities.append(FindInPageActivity(controller: self))
+        }
+
+        return activities
+    }
+
     func initUserScripts() {
         
         generalScripts = [

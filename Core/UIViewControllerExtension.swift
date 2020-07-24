@@ -30,17 +30,8 @@ extension UIViewController {
         return traitCollection.horizontalSizeClass == .regular
     }
 
-    private func buildActivities() -> [UIActivity] {
-        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
-
-        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
-            if let controller = self as? TabViewController {
-                activities.append(FindInPageActivity(controller: controller))
-            }
-        }
-
-        return activities
+    @objc func buildActivities() -> [UIActivity] {
+        return []
     }
     
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {

@@ -56,15 +56,25 @@ public struct UserDefaultsWrapper<T> {
 
     private let key: Key
     private let defaultValue: T
+    private let setIfEmpty: Bool
 
-    public init(key: Key, defaultValue: T) {
+    public init(key: Key, defaultValue: T, setIfEmpty: Bool = false) {
         self.key = key
         self.defaultValue = defaultValue
+        self.setIfEmpty = setIfEmpty
     }
 
     public var wrappedValue: T {
         get {
-            return UserDefaults.standard.object(forKey: key.rawValue) as? T ?? defaultValue
+            if let storedValue = UserDefaults.standard.object(forKey: key.rawValue) as? T {
+                return storedValue
+            }
+            
+            if setIfEmpty {
+                UserDefaults.standard.set(defaultValue, forKey: key.rawValue)
+            }
+            
+            return defaultValue
         }
         set {
             UserDefaults.standard.set(newValue, forKey: key.rawValue)

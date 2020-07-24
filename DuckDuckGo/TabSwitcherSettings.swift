@@ -28,9 +28,13 @@ protocol TabSwitcherSettings {
 
 class DefaultTabSwitcherSettings: TabSwitcherSettings {
 
-    @UserDefaultsWrapper(key: .gridViewEnabled, defaultValue: true)
+    @UserDefaultsWrapper(key: .gridViewEnabled, defaultValue: isGridViewDefault, setIfEmpty: true)
     var isGridViewEnabled: Bool
 
     @UserDefaultsWrapper(key: .gridViewSeen, defaultValue: false)
     var hasSeenNewLayout: Bool
+    
+    private static var isGridViewDefault: Bool = {
+        return !DefaultVariantManager().isSupported(feature: .tabSwitcherListLayout)
+    }()
 }

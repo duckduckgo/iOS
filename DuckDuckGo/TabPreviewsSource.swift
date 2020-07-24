@@ -27,7 +27,7 @@ class TabPreviewsSource {
     
     private var cache = [String: UIImage]()
     
-    private let tabSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    private lazy var tabSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     
     private var previewStoreDir: URL?
     private var legacyPreviewStoreDir: URL?

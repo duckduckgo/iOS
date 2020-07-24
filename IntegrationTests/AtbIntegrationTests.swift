@@ -63,7 +63,7 @@ class AtbIntegrationTests: XCTestCase {
             "DAXDIALOGS": "false",
             "ONBOARDING": "false",
             // usually just has to match an existing variant to prevent one being allocated
-            "VARIANT": "sa"
+            "VARIANT": "sc"
         ]
         
         addRequestHandlers()

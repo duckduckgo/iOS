@@ -514,15 +514,17 @@ class MainViewController: UIViewController {
     fileprivate func displayFavoritesOverlay() {
         guard homePageSettings.favorites else { return }
 
-        guard favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
+        guard let currentTab = currentTab, favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
         
         let controller = FavoritesOverlay()
-        controller.install(into: self)
-        controller.view.alpha = 0
         addChild(controller)
+        controller.view.frame = currentTab  .view.frame
         containerView.addSubview(controller.view)
         controller.didMove(toParent: self)
-        
+
+        controller.install(into: self)
+
+        controller.view.alpha = 0
         UIView.animate(withDuration: 0.2) {
             controller.view.alpha = 1
         }

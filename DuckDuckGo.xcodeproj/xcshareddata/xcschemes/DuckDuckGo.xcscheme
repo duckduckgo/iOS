@@ -107,7 +107,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "VARIANT"
-            value = "mc"
+            value = "md"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

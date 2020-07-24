@@ -22,19 +22,26 @@ import Core
 import os.log
 
 extension TabViewController {
-    func saveAsBookmark() {
+    func saveAsBookmark(favorite: Bool = true) {
         
-        if let link = link, !isError {
-            let bookmarksManager = BookmarksManager()
-            guard !bookmarksManager.contains(url: link.url) else {
-                view.showBottomToast(UserText.webBookmarkAlreadySaved)
-                return
-            }
+        guard let link = link, !isError else {
+            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
+            return
+        }
 
+        let bookmarksManager = BookmarksManager()
+        guard !bookmarksManager.contains(url: link.url) else {
+            view.showBottomToast(UserText.webBookmarkAlreadySaved)
+            return
+        }
+
+        if favorite {
+            bookmarksManager.save(favorite: link)
+            self.view.showBottomToast(UserText.webSaveFavoriteDone)
+        } else {
             bookmarksManager.save(bookmark: link)
             self.view.showBottomToast(UserText.webSaveBookmarkDone)
-        } else {
-            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
         }
+
     }
 }

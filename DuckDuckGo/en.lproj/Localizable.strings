@@ -172,18 +172,26 @@
 "findinpage.title" = "Find in Page";
 "findinpage.count" = "%1$d of %2$d";
 
-"keyCommandShowAllTabs" = "Show all tabs";
-"keyCommandNewTab" = "New tab";
-"keyCommandCloseTab" = "Close tab";
-"keyCommandNextTab" = "Next tab";
-"keyCommandPreviousTab" = "Previous tab";
-"keyCommandBrowserForward" = "Browse forward";
-"keyCommandBrowserBack" = "Browse back";
-"keyCommandFind" = "Find in page";
-"keyCommandLocation" = "Search or enter address";
-"keyCommandFire" = "Clear all tabs and data";
+"keyCommandShowAllTabs" = "Show All Tabs";
+"keyCommandNewTab" = "New Tab";
+"keyCommandCloseTab" = "Close Tab";
+"keyCommandNextTab" = "Next Tab";
+"keyCommandPreviousTab" = "Previous Tab";
+"keyCommandBrowserForward" = "Browse Forward";
+"keyCommandBrowserBack" = "Browse Back";
+"keyCommandFind" = "Find in Page";
+"keyCommandLocation" = "Search or Enter Address";
+"keyCommandFire" = "Clear All Tabs and Data";
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
+"keyCommandFindNext" = "Find Next";
+"keyCommandFindNext" = "Find Previous";
+"keyCommandReload" = "Reload";
+"keyCommandPrint" = "Print";
+"keyCommandAddBookmark" = "Add Bookmark";
+"keyCommandAddFavorite" = "Add Favorite";
+"keyCommandOpenInNewTab" = "Open Link in New Tab";
+"keyCommandOpenInNewBackgroundTab" = "Open Link in Background";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";
@@ -328,13 +336,13 @@
 "dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌";
 "dax.onboarding.browsing.after.search.cta" = "Phew!";
 
-"dax.onboarding.browsing.without.trackers" = "As you tap and scroll, I'll block pesky trackers.\n\nGo ahead - keep browsing!";
+"dax.onboarding.browsing.without.trackers" = "As you tap and scroll, I’ll block pesky trackers.\n\nGo ahead - keep browsing!";
 "dax.onboarding.browsing.without.trackers.cta" = "Got It";
 
-"dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don't worry!\n\nI'll block %1$@ from seeing your activity on those sites.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don’t worry!\n\nI’ll block %1$@ from seeing your activity on those sites.";
 "dax.onboarding.browsing.site.is.major.tracker.cta" =  "Got It";
 
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! %1$@ is owned by %2$@.\n\n%2$@'s trackers lurk on about %3$.0lf%% of top websites 😱 but don't worry!\n\nI'll block %2$@ from seeing your activity on those sites.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! %1$@ is owned by %2$@.\n\n%2$@’s trackers lurk on about %3$.0lf%% of top websites 😱 but don’t worry!\n\nI’ll block %2$@ from seeing your activity on those sites.";
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Got It";
 
 "dax.onboarding.browsing.one.tracker" = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";

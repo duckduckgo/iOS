@@ -149,7 +149,6 @@ public struct UserText {
     static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", comment: "Broken Site Category")
     static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", comment: "Broken Site Category")
 
-    
     public static let privacyReportTrackersBlocked = NSLocalizedString("privacy.report.trackersBlocked", comment: "Trackers Blocked")
     
     public static let privacyReportSitesEncrypted = NSLocalizedString("privacy.report.sitesEncrypted", comment: "Sites Encrypted")
@@ -202,6 +201,14 @@ public struct UserText {
     public static let keyCommandFire = NSLocalizedString("keyCommandFire", comment: "Clear all tabs and data")
     public static let keyCommandClose = NSLocalizedString("keyCommandClose", comment: "Close")
     public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", comment: "Select")
+    public static let keyCommandFindNext = NSLocalizedString("keyCommandFindNext", comment: "Find next")
+    public static let keyCommandFindPrevious = NSLocalizedString("keyCommandFindPrevious", comment: "Find previous")
+    public static let keyCommandReload = NSLocalizedString("keyCommandReload", comment: "Reload")
+    public static let keyCommandPrint = NSLocalizedString("keyCommandPrint", comment: "Print")
+    public static let keyCommandAddBookmark = NSLocalizedString("keyCommandAddBookmark", comment: "Add Bookmark")
+    public static let keyCommandAddFavorite = NSLocalizedString("keyCommandAddFavorite", comment: "Add Favorite")
+    public static let keyCommandOpenInNewTab = NSLocalizedString("keyCommandOpenInNewTab", comment: "Open in new tab")
+    public static let keyCommandOpenInNewBackgroundTab = NSLocalizedString("keyCommandOpenInNewBackgroundTab", comment: "Open in background")
 
     public static let contextualOnboardingSearchPrivately = NSLocalizedString("contextualOnboardingSearchPrivately", comment: "Searching with DuckDuckGo means your searches are never tracked. Ever.")
     public static let contextualOnboardingCustomizeTheme = NSLocalizedString("contextualOnboardingCustomizeTheme", comment: "Want a different look? Try changing current theme!")

@@ -34,6 +34,16 @@ class TabViewController: UIViewController {
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
     }
     
+    enum LinkDestination {
+        
+        case currentTab
+        case newTab
+        case backgroundTab
+        
+    }
+    
+    var tapLinkDestination: LinkDestination = .currentTab
+    
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
@@ -216,6 +226,30 @@ class TabViewController: UIViewController {
         
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
+    }
+
+    @available(iOS 13.4, *)
+    func handlePressEvent(event: UIPressesEvent?) {
+        tapLinkDestination = .currentTab
+        if event?.modifierFlags.contains(.command) ?? false {
+            if event?.modifierFlags.contains(.shift) ?? false {
+                tapLinkDestination = .newTab
+            } else {
+                tapLinkDestination = .backgroundTab
+            }
+        }
+    }
+
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesBegan(presses, with: event)
+        guard #available(iOS 13.4, *) else { return }
+        handlePressEvent(event: event)
+    }
+    
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesEnded(presses, with: event)
+        guard #available(iOS 13.4, *) else { return }
+        handlePressEvent(event: event)
     }
     
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
@@ -655,6 +689,19 @@ class TabViewController: UIViewController {
                               tdsETag: TrackerDataManager.shared.etag)
     }
     
+    public func print() {
+        let printFormatter = webView.viewPrintFormatter()
+        
+        let printInfo = UIPrintInfo(dictionary: nil)
+        printInfo.jobName = Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "DuckDuckGo"
+        printInfo.outputType = .general
+        
+        let printController = UIPrintInteractionController.shared
+        printController.printInfo = printInfo
+        printController.printFormatter = printFormatter
+        printController.present(animated: true, completionHandler: nil)
+    }
+    
     deinit {
         removeMessageHandlers()
         removeObservers()
@@ -903,6 +950,22 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
                 
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
+            switch tapLinkDestination {
+            case .newTab:
+                decisionHandler(.cancel)
+                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+                return
+
+            case .backgroundTab:
+                decisionHandler(.cancel)
+                delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+                return
+                
+            default: break
+            }
+        }
+        
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let url = navigationAction.request.url, decision != .cancel {
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {

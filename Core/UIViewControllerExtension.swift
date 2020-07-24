@@ -25,6 +25,10 @@ extension UIViewController {
     var isSmall: Bool {
         return view.frame.height <= 568
     }
+    
+    var isPad: Bool {
+        return traitCollection.horizontalSizeClass == .regular
+    }
 
     private func buildActivities() -> [UIActivity] {
         var activities = [SaveBookmarkActivity()]

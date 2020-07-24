@@ -48,9 +48,9 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
         return cell
     }
     
-    static func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
+    func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
         let margin: CGFloat
-        if isPad {
+        if controller?.isPad ?? false {
             margin = (collectionView.frame.width - CenteredSearchHomeCell.Constants.searchWidthPad) / 2
         } else {
             let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
@@ -61,14 +61,14 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
         return margin
     }
     
-    static func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
+    func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
         return sectionMargin(in: collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets? {
-        let margin = type(of: self).sectionMargin(in: collectionView)
+        let margin = sectionMargin(in: collectionView)
         
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
@@ -79,6 +79,7 @@ class ExtraContentHomeSectionRenderer: HomeViewSectionRenderer {
 
         let preferredWidth = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
         
+        let isPad = controller?.isPad ?? false
         let maxWidth = isPad ? CenteredSearchHomeCell.Constants.searchWidthPad : CenteredSearchHomeCell.Constants.searchWidth
         let width: CGFloat = min(preferredWidth, maxWidth)
         return CGSize(width: width, height: 56)

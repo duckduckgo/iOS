@@ -26,6 +26,7 @@ public enum FeatureName: String {
     case dummy
     
     case iPadImprovements
+    case tabSwitcherListLayout
     
 }
 

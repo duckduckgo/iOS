@@ -63,7 +63,7 @@ public class Tab: NSObject, NSCoding {
     public init(uid: String? = nil,
                 link: Link? = nil,
                 viewed: Bool = true,
-                desktop: Bool = isPad) {
+                desktop: Bool = false) {
         self.uid = uid ?? UUID().uuidString
         self.link = link
         self.viewed = viewed

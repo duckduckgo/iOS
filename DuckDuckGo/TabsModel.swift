@@ -35,7 +35,8 @@ public class TabsModel: NSObject, NSCoding {
     var hasUnread: Bool {
         return tabs.contains(where: { !$0.viewed })
     }
-    
+        
+    // TODO how to set desktop mode explicitly?
     public init(tabs: [Tab] = [Tab()], currentIndex: Int = 0) {
         self.tabs = tabs
         self.currentIndex = currentIndex

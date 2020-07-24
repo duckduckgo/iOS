@@ -51,6 +51,10 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     var defaultSearchLoupeOffset: CGFloat!
     var defaultSearchHeight: CGFloat!
     var defaultSearchRadius: CGFloat!
+    
+    var isPad: Bool {
+        return traitCollection.horizontalSizeClass == .regular
+    }
 
     var defaultSearchBackgroundMargin: CGFloat {
 

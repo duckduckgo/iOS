@@ -27,6 +27,10 @@ class PaddingHomeViewSectionRenderer: HomeViewSectionRenderer {
     var controller: HomeViewController?
 
     let cellHeight: CGFloat
+    
+    var isPad: Bool {
+        return controller?.traitCollection.horizontalSizeClass == .regular
+    }
 
     init() {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {

@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs().primeForUse()
             
             // We only want iPad users while testing the iPad improvements
-            return isPad ? .includeInCohort : .excludeFromCohort
+            return UIDevice.current.userInterfaceIdiom == .pad ? .includeInCohort : .excludeFromCohort
         }
 
         if let main = mainViewController {

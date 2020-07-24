@@ -37,7 +37,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     weak var siteRating: SiteRating?
     var omniBarText: String?
     var errorText: String?
-
+  
     private var storageCache = AppDependencyProvider.shared.storageCache.current
 
     override func viewDidLoad() {

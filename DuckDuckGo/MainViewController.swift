@@ -45,6 +45,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
     @IBOutlet weak var containerViewTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var browserTabs: UIView!
+    @IBOutlet weak var browserTabsTop: NSLayoutConstraint!
 
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
@@ -764,7 +767,17 @@ extension MainViewController: BrowserChromeDelegate {
 
     // 1.0 - full size, 0.0 - hidden
     private func updateNavBarConstant(_ ratio: CGFloat) {
-        navBarTop.constant = -self.customNavigationBar.frame.size.height * (1.0 - ratio)
+
+        let browserTabsOffset = (browserTabs.isHidden ? 0 : browserTabs.frame.size.height)
+        let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
+        
+        print("***", #function, browserTabsOffset, navBarTopOffset)
+        
+        if !browserTabs.isHidden {
+            browserTabsTop.constant = -browserTabsOffset * (1.0 - ratio)
+        }
+        
+        navBarTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)
     }
 
 }

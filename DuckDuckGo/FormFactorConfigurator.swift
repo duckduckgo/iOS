@@ -47,7 +47,7 @@ class FormFactorConfigurator {
 
     func layoutSubviews(mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        mainViewController.chromeManager.refresh()
+        // mainViewController.chromeManager.refresh()
     }
     
     private func apply(toMainViewController mainViewController: MainViewController) {
@@ -55,22 +55,28 @@ class FormFactorConfigurator {
 
         currentTraitCollection = mainViewController.traitCollection
         
-        // Form factor specific
         if isPadFormFactor {
             applyPad(toMainViewController: mainViewController)
         } else {
             applyPhone(toMainViewController: mainViewController)
         }
+
+        // Update the UI to show/hide the tabs, but only if the bars are showing
+        if mainViewController.navBarTop.constant >= 0 { // TODO move this to mainViewcontroller
+            mainViewController.showBars()
+        }
     }
     
     private func applyPad(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
+        mainViewController.browserTabs.isHidden = false
         mainViewController.toolbar.isHidden = true
         mainViewController.omniBar.enterPadState()
     }
 
     private func applyPhone(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
+        mainViewController.browserTabs.isHidden = true
         mainViewController.toolbar.isHidden = false
         mainViewController.omniBar.enterPhoneState()
     }

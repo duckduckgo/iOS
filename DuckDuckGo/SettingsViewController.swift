@@ -37,6 +37,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
     @IBOutlet weak var rememberLoginsCell: UITableViewCell!
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
+    @IBOutlet weak var newTabSettingsCell: UITableViewCell!
 
     @IBOutlet weak var longPressCell: UITableViewCell!
 
@@ -64,7 +65,8 @@ class SettingsViewController: UITableViewController {
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
         configureRememberLogins()
-        
+        configureNewTabCell()
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -119,6 +121,10 @@ class SettingsViewController: UITableViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
+    }
+
+    private func configureNewTabCell() {
+        newTabSettingsCell.isHidden = DefaultVariantManager().isSupported(feature: .iPadImprovements)
     }
 
     private func configureMargins() {

@@ -75,6 +75,7 @@ class SettingsViewController: UITableViewController {
         
         configureAutoClearCellAccessory()
         configureRememberLogins()
+        configureNewTabCell()
         configureHomePageCellAccessory()
         configureIconViews()
     }
@@ -188,7 +189,7 @@ class SettingsViewController: UITableViewController {
             rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
         } else {
             rememberLoginsCell.isHidden = true
-        }        
+        }
     }
 
     private func configureVersionText() {

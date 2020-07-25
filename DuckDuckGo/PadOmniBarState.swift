@@ -16,7 +16,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -43,7 +43,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -70,7 +70,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -97,7 +97,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -124,7 +124,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = true

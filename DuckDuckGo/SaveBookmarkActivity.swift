@@ -43,7 +43,7 @@ class SaveBookmarkActivity: UIActivity {
     }
 
     override var activityImage: UIImage {
-        return (isFavorite ? UIImage(named: "sharesheet-bookmark") : UIImage(named: "sharesheet-favorite")) ?? #imageLiteral(resourceName: "LogoShare")
+        return (isFavorite ? UIImage(named: "sharesheet-favorite") : UIImage(named: "sharesheet-bookmark")) ?? #imageLiteral(resourceName: "LogoShare")
     }
 
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {

@@ -46,8 +46,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
     @IBOutlet weak var containerViewTop: NSLayoutConstraint!
     
-    @IBOutlet weak var browserTabs: UIView!
-    @IBOutlet weak var browserTabsTop: NSLayoutConstraint!
+    @IBOutlet weak var tabsBar: UIView!
+    @IBOutlet weak var tabsBarTop: NSLayoutConstraint!
 
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
@@ -79,6 +79,7 @@ class MainViewController: UIViewController {
     var homeController: HomeViewController?
     var favoritesOverlay: FavoritesOverlay?
     var autocompleteController: AutocompleteViewController?
+    var tabsBarController: TabsBarViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -123,9 +124,15 @@ class MainViewController: UIViewController {
 
         applyTheme(ThemeManager.shared.currentTheme)
 
-        FormFactorConfigurator.shared.viewDidLoad(mainViewController: self)        
+        FormFactorConfigurator.shared.viewDidLoad(mainViewController: self)
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabsBarController?.delegate = self
+        tabsBarController?.refresh()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -228,6 +235,10 @@ class MainViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let controller = segue.destination as? TabsBarViewController {
+            self.tabsBarController = controller
+        }
 
         if segue.destination.children.count > 0,
             let controller = segue.destination.children[0] as? BookmarksViewController {
@@ -731,6 +742,7 @@ extension MainViewController: BrowserChromeDelegate {
             self.view.layoutIfNeeded()
             
             self.omniBar.alpha = percent
+            self.tabsBar.alpha = percent
             self.toolbar.alpha = percent
         }
         
@@ -746,6 +758,7 @@ extension MainViewController: BrowserChromeDelegate {
         
         updateNavBarConstant(hidden ? 0 : 1.0)
         omniBar.alpha = hidden ? 0 : 1
+        tabsBar.alpha = hidden ? 0 : 1
         statusBarBackground.alpha = hidden ? 0 : 1
     }
 
@@ -774,13 +787,13 @@ extension MainViewController: BrowserChromeDelegate {
     // 1.0 - full size, 0.0 - hidden
     private func updateNavBarConstant(_ ratio: CGFloat) {
 
-        let browserTabsOffset = (browserTabs.isHidden ? 0 : browserTabs.frame.size.height)
+        let browserTabsOffset = (tabsBar.isHidden ? 0 : tabsBar.frame.size.height)
         let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
         
         print("***", #function, browserTabsOffset, navBarTopOffset)
         
-        if !browserTabs.isHidden {
-            browserTabsTop.constant = -browserTabsOffset * (1.0 - ratio)
+        if !tabsBar.isHidden {
+            tabsBarTop.constant = -browserTabsOffset * (1.0 - ratio)
         }
         
         navBarTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)
@@ -1189,9 +1202,14 @@ extension MainViewController: Themable {
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
 
+        if FormFactorConfigurator.shared.isPadFormFactor {
+            statusBarBackground.backgroundColor = theme.padBackgroundColor
+        } else {
+            statusBarBackground.backgroundColor = theme.barBackgroundColor
+        }
+
         view.backgroundColor = theme.backgroundColor
-  
-        statusBarBackground.backgroundColor = theme.barBackgroundColor
+
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
         

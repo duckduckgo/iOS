@@ -47,6 +47,7 @@ class HomeViewController: UIViewController {
             
             delegate?.home(self, searchTransitionUpdated: percent)
             chromeDelegate?.omniBar.alpha = percent
+            chromeDelegate?.tabsBar.alpha = percent
         }
     }
     

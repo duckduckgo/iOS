@@ -27,9 +27,11 @@ protocol BrowserChromeDelegate: class {
     func setBarsVisibility(_ percent: CGFloat, animated: Bool)
 
     var isToolbarHidden: Bool { get }
-    var omniBar: OmniBar! { get }
     var toolbarHeight: CGFloat { get }
     var barsMaxHeight: CGFloat { get }
+
+    var omniBar: OmniBar! { get }
+    var tabsBar: UIView! { get }
 }
 
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {

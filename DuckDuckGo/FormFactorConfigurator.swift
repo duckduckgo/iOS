@@ -57,6 +57,8 @@ class FormFactorConfigurator {
             applyPhone(toMainViewController: mainViewController)
         }
 
+        mainViewController.applyTheme(ThemeManager.shared.currentTheme)
+
         // Otherwise the toolbar buttons skew to the right
         print("***", #function, "navBarTop.constant", mainViewController.navBarTop.constant)
 
@@ -70,14 +72,14 @@ class FormFactorConfigurator {
     
     private func applyPad(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        mainViewController.browserTabs.isHidden = false
+        mainViewController.tabsBar.isHidden = false
         mainViewController.toolbar.isHidden = true
         mainViewController.omniBar.enterPadState()
     }
 
     private func applyPhone(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame)
-        mainViewController.browserTabs.isHidden = true
+        mainViewController.tabsBar.isHidden = true
         mainViewController.toolbar.isHidden = false
         mainViewController.omniBar.enterPhoneState()
     }

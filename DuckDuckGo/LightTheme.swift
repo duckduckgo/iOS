@@ -30,7 +30,8 @@ struct LightTheme: Theme {
     }
     
     var keyboardAppearance: UIKeyboardAppearance = .light
-    
+
+    var padBackgroundColor = UIColor.lightGreyish
     var backgroundColor = UIColor.nearlyWhite
     
     var barBackgroundColor = UIColor.nearlyWhiteLight

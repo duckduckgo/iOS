@@ -692,6 +692,7 @@ class MainViewController: UIViewController {
         tabManager.addHomeTab()
         attachHomeScreen()
         homeController?.openedAsNewTab()
+        tabsBarController?.refresh()
     }
     
     func updateFindInPage() {

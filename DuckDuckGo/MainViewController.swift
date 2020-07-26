@@ -130,14 +130,14 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabsBarController?.delegate = self
-        tabsBarController?.refresh()
+        tabsBarController?.tabManager = tabManager
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         startOnboardingFlowIfNotSeenBefore()
-        
+        tabsBarController?.refresh()
     }
     
     func startOnboardingFlowIfNotSeenBefore() {
@@ -436,6 +436,7 @@ class MainViewController: UIViewController {
     }
 
     func select(tabAt index: Int) {
+        tabsBarController?.tabManager = self.tabManager
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
         let tab = tabManager.select(tabAt: index)
@@ -476,6 +477,7 @@ class MainViewController: UIViewController {
         } else {
             attachHomeScreen()
         }
+        tabsBarController?.tabManager = tabManager
     }
 
     fileprivate func refreshControls() {

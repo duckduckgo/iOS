@@ -18,6 +18,7 @@ class FormFactorConfigurator {
     let variantManager: VariantManager
     
     var currentTraitCollection: UITraitCollection?
+    var currentWidth: CGFloat?
     
     var isPadFormFactor: Bool {
         return variantManager.isSupported(feature: .iPadImprovements) && currentTraitCollection?.horizontalSizeClass == .regular
@@ -43,13 +44,25 @@ class FormFactorConfigurator {
     }
 
     func layoutSubviews(mainViewController: MainViewController) {
-        print("***", #function, mainViewController.view.frame)
+        print("***", #function, mainViewController.view.frame, mainViewController.view.traitCollection)
+
+        // we're interested in the state after the layout
+        DispatchQueue.main.async {
+            let newWidth = mainViewController.view.frame.width
+            if self.currentWidth != newWidth {
+                print("***", #function, mainViewController.view.frame)
+                self.currentWidth = newWidth
+                mainViewController.tabsBarController?.refresh()
+            }
+        }
+
     }
     
     private func apply(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame, mainViewController.traitCollection.horizontalSizeClass == .regular ? "pad" : "phone")
 
         currentTraitCollection = mainViewController.traitCollection
+        currentWidth = mainViewController.view.frame.width
         
         if isPadFormFactor {
             applyPad(toMainViewController: mainViewController)
@@ -59,14 +72,17 @@ class FormFactorConfigurator {
 
         mainViewController.applyTheme(ThemeManager.shared.currentTheme)
 
-        // Otherwise the toolbar buttons skew to the right
         print("***", #function, "navBarTop.constant", mainViewController.navBarTop.constant)
-
         DispatchQueue.main.async {
             print("***", #function, "navBarTop.constant", mainViewController.navBarTop.constant)
+            // Do this async otherwise the toolbar buttons skew to the right
             if mainViewController.navBarTop.constant >= 0 {
                 mainViewController.showBars()
             }
+
+            // If tabs have been udpated, do this async to make sure size calcs are current
+            mainViewController.tabsBarController?.refresh()
+
         }
     }
     

@@ -472,11 +472,12 @@
                             </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="1wM-Ln-7ly" firstAttribute="top" secondItem="Glx-L8-VF7" secondAttribute="top" id="28V-cD-7Ty"/>
+                            <constraint firstItem="Glx-L8-VF7" firstAttribute="bottom" secondItem="1wM-Ln-7ly" secondAttribute="bottom" id="Ign-CF-bTN"/>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="leading" secondItem="Glx-L8-VF7" secondAttribute="leading" constant="8" id="RGE-7m-yXx"/>
-                            <constraint firstItem="1wM-Ln-7ly" firstAttribute="centerY" secondItem="Glx-L8-VF7" secondAttribute="centerY" id="Ri6-xr-6xt"/>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="height" secondItem="8BH-do-lHc" secondAttribute="height" id="c2u-Ow-7wx"/>
                             <constraint firstItem="Glx-L8-VF7" firstAttribute="trailing" secondItem="aDD-d2-KuN" secondAttribute="trailing" constant="24" id="drm-rF-cl7"/>
-                            <constraint firstItem="aDD-d2-KuN" firstAttribute="centerY" secondItem="Glx-L8-VF7" secondAttribute="centerY" id="tlh-Uh-NYg"/>
+                            <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="Glx-L8-VF7" secondAttribute="top" id="gao-OH-EED"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="8" id="z6F-x8-cQ6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Glx-L8-VF7"/>

@@ -793,10 +793,12 @@ extension MainViewController: BrowserChromeDelegate {
         let browserTabsOffset = (tabsBar.isHidden ? 0 : tabsBar.frame.size.height)
         let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
         
-        print("***", #function, browserTabsOffset, navBarTopOffset)
+        print("***", #function, browserTabsOffset, navBarTopOffset, ratio)
         
         if !tabsBar.isHidden {
-            tabsBarTop.constant = -browserTabsOffset * (1.0 - ratio)
+            let topBarsConstant = -browserTabsOffset * (1.0 - ratio)
+            print("***", #function, topBarsConstant)
+            tabsBarTop.constant = topBarsConstant
         }
         
         navBarTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)

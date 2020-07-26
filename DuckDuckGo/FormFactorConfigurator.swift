@@ -46,16 +46,18 @@ class FormFactorConfigurator {
     func layoutSubviews(mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame, mainViewController.view.traitCollection)
 
-        // we're interested in the state after the layout
+        // we're interested in the state after the layout has completed
         DispatchQueue.main.async {
             let newWidth = mainViewController.view.frame.width
-            if self.currentWidth != newWidth {
-                print("***", #function, mainViewController.view.frame)
-                self.currentWidth = newWidth
-                mainViewController.tabsBarController?.refresh()
-            }
-        }
+            print("***", #function, "main.async", newWidth)
 
+            guard self.currentWidth != newWidth else { return }
+            self.currentWidth = newWidth
+
+            // to-do don't use traits, but use screen width throughout
+
+            mainViewController.tabsBarController?.refresh()
+        }
     }
     
     private func apply(toMainViewController mainViewController: MainViewController) {

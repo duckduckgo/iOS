@@ -87,6 +87,10 @@ class TabsBarViewController: UIViewController {
 
 extension TabsBarViewController: UICollectionViewDelegate {
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.tabsBarDidSelectTab(self, atIndex: indexPath.row)
+    }
+
 }
 
 extension TabsBarViewController: UICollectionViewDataSource {
@@ -124,7 +128,8 @@ extension TabsBarViewController: Themable {
 
 extension MainViewController: TabsBarDelegate {
 
-    func tabsBarDidSelectTab(_ tabsBarViewController: TabsBarViewController, atIndex: Int) {
+    func tabsBarDidSelectTab(_ tabsBarViewController: TabsBarViewController, atIndex index: Int) {
+        select(tabAt: index)
     }
 
 }

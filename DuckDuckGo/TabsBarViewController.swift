@@ -52,7 +52,7 @@ class TabsBarViewController: UIViewController {
     }
 
     var numberOfItems: Int {
-        // (WIP) return min(tabsCount, maxItems)
+        // (WIP - show all tabs with scrolling) return min(tabsCount, maxItems)
         return tabsCount
     }
 
@@ -211,67 +211,4 @@ extension MainViewController: TabsBarDelegate {
         showTabSwitcher()
     }
     
-}
-
-class TabBarCell: UICollectionViewCell {
-    
-    static let appUrls = AppUrls()
-    
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var removeButton: UIButton!
-    @IBOutlet weak var faviconImage: UIImageView!
-    
-    var onRemove: (() -> Void)?
-    
-    private let gradientLayer = CAGradientLayer()
-    private var model: Tab?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        // setup the basic gradient (WIP)
-        label.layer.addSublayer(gradientLayer)
-     
-    }
-    
-    @IBAction func onRemovePressed() {
-        onRemove?()
-    }
-
-    func update(model: Tab, isCurrent: Bool, withTheme theme: Theme) {
-        self.model?.removeObserver(self)
-        self.model = model
-        model.addObserver(self)
-
-        if isCurrent {
-            // update gradient colour (WIP)
-            contentView.backgroundColor = theme.barBackgroundColor
-        } else {
-            // update gradient colour (WIP)
-            contentView.backgroundColor = .clear
-        }
-
-        removeButton.isHidden = !isCurrent
-        
-        applyModel(model)
-    }
-    
-    private func applyModel(_ model: Tab) {
-        
-        if model.link == nil {
-            label.text = UserText.homeTabTitle
-            faviconImage.loadFavicon(forDomain: Self.appUrls.base.host, usingCache: .tabs)
-        } else {
-            label.text = model.link?.displayTitle ?? model.link?.url.host?.dropPrefix(prefix: "www.")
-            faviconImage.loadFavicon(forDomain: model.link?.url.host, usingCache: .tabs)
-        }
-
-    }
-    
-}
-
-extension TabBarCell: TabObserver {
-    func didChange(tab: Tab) {
-        applyModel(tab)
-    }
 }

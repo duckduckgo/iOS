@@ -400,6 +400,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gw0-u8-5aN">
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+                                                    <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="alN-nB-cJU">
+                                                    <rect key="frame" x="0.0" y="10" width="200" height="30"/>
+                                                    <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="LwM-2c-pnd">
                                                     <rect key="frame" x="12" y="0.0" width="180" height="40"/>
                                                     <subviews>
@@ -429,19 +442,34 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="alN-nB-cJU" secondAttribute="bottom" id="6Sa-p4-HFX"/>
+                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" multiplier="0.5" id="Bl9-4V-c3M">
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </constraint>
+                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" id="C4I-35-4Co"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" constant="12" id="Cn9-AA-Hzr"/>
+                                                <constraint firstItem="alN-nB-cJU" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" multiplier="0.75" id="DUM-PI-q90"/>
+                                                <constraint firstAttribute="trailing" secondItem="gw0-u8-5aN" secondAttribute="trailing" id="LOg-Au-jeR"/>
+                                                <constraint firstItem="alN-nB-cJU" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" id="Yve-hs-e8a"/>
                                                 <constraint firstAttribute="trailing" secondItem="LwM-2c-pnd" secondAttribute="trailing" constant="8" id="f96-Mh-RPc"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="centerY" secondItem="37U-Jd-wxr" secondAttribute="centerY" id="gcj-pR-iuS"/>
+                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="top" secondItem="37U-Jd-wxr" secondAttribute="top" id="rdU-P4-OHY"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="sbm-wv-Bak"/>
+                                                <constraint firstAttribute="trailing" secondItem="alN-nB-cJU" secondAttribute="trailing" id="wpo-cI-HGB"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="200" height="40"/>
                                         <connections>
+                                            <outlet property="bottomBackgroundView" destination="alN-nB-cJU" id="pmO-Kv-QOq"/>
                                             <outlet property="faviconImage" destination="uOh-0G-QVj" id="qHg-ow-rkF"/>
                                             <outlet property="label" destination="Uu4-yR-9tN" id="3IR-5W-ff0"/>
                                             <outlet property="removeButton" destination="xto-EI-h22" id="lic-UB-lba"/>
+                                            <outlet property="topBackgroundView" destination="gw0-u8-5aN" id="Zyh-0G-tI4"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

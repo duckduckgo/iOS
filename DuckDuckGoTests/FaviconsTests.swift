@@ -72,7 +72,7 @@ class FaviconsTests: XCTestCase {
             XCTFail("Unexpected option")
         }
 
-        // release builds will set an explicit 7 day, test builds set to 30 seconds, just make sure it's set
+        // release builds will set an explicit 7 day, test builds use a smaller expiry
         switch options?[3] {
         case .diskCacheExpiration: break
 

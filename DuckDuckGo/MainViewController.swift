@@ -396,7 +396,7 @@ class MainViewController: UIViewController {
     }
 
     func loadQueryInNewTab(_ query: String) {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
     }
@@ -430,12 +430,12 @@ class MainViewController: UIViewController {
         currentTab?.load(url: url)
         guard let tab = currentTab else { fatalError("no tab") }
         select(tab: tab)
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
     }
 
     private func addTab(url: URL?) {
         let tab = tabManager.add(url: url)
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         addToView(tab: tab)
     }
 
@@ -511,7 +511,7 @@ class MainViewController: UIViewController {
         omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
     }
 
-    fileprivate func dismissOmniBar() {
+    func dismissOmniBar() {
         omniBar.resignFirstResponder()
         dismissFavoritesOverlay()
         dismissAutcompleteSuggestions()
@@ -729,7 +729,7 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     private func hideKeyboard() {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         _ = findInPageView.resignFirstResponder()
     }
 
@@ -920,7 +920,7 @@ extension MainViewController: HomeControllerDelegate {
     func homeDidDeactivateOmniBar(home: HomeViewController) {
         dismissFavoritesOverlay()
         dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
     }
     
     func showSettings(_ home: HomeViewController) {
@@ -953,7 +953,7 @@ extension MainViewController: TabDelegate {
         let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
         newTab.openedByPage = true
         newTabAnimation {
-            self.omniBar.resignFirstResponder()
+            self.dismissOmniBar()
             self.addToView(tab: newTab)
             self.refreshOmniBar()
         }
@@ -1100,7 +1100,7 @@ extension MainViewController: TabSwitcherDelegate {
 
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(link: Link) {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         loadUrl(link.url)
     }
     

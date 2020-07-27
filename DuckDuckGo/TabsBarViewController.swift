@@ -143,7 +143,7 @@ extension TabsBarViewController: Themable {
 extension MainViewController: TabsBarDelegate {
 
     func tabsBarDidSelectTab(_ tabsBarViewController: TabsBarViewController, atIndex index: Int) {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         select(tabAt: index)
     }
 

@@ -143,6 +143,7 @@ extension TabsBarViewController: Themable {
 extension MainViewController: TabsBarDelegate {
 
     func tabsBarDidSelectTab(_ tabsBarViewController: TabsBarViewController, atIndex index: Int) {
+        omniBar.resignFirstResponder()
         select(tabAt: index)
     }
 
@@ -192,9 +193,7 @@ class TabBarCell: UICollectionViewCell {
 extension TabsBarViewController: TabObserver {
     
     func didChange(tab: Tab) {
-        if let index = tabManager?.model.indexOf(tab: tab) {
-            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-        }
+        collectionView.reloadData()
     }
     
 }

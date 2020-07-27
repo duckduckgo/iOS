@@ -108,6 +108,9 @@ class MainViewController: UIViewController {
             }
         }
         
+        customNavigationBar.clipsToBounds = true
+        tabsBar.clipsToBounds = true
+        
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
@@ -406,6 +409,7 @@ class MainViewController: UIViewController {
         refreshOmniBar()
         refreshTabIcon()
         refreshControls()
+        tabsBarController?.refresh()
     }
     
     func enterSearch() {

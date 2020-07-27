@@ -1,3 +1,4 @@
+# If this is updated then check remove observers in Favicons.swift doesn't break anything
 github "duckduckgo/Kingfisher" ~> 5.14.1
 
 github "duckduckgo/Device.swift" ~> 1.1.2

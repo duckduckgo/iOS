@@ -102,6 +102,10 @@ public class Favicons {
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
+
+        // Prevents the caches being cleaned up
+        NotificationCenter.default.removeObserver(Constants.bookmarksCache)
+        NotificationCenter.default.removeObserver(Constants.tabsCache)
     }
     
     public func migrateIfNeeded(completion: @escaping () -> Void) {
@@ -279,10 +283,18 @@ public class Favicons {
             sources.insert(Source.network(url), at: 0)
         }
 
+        // Explicity set the expiry
+        #if DEBUG
+        let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(.seconds(60))
+        #else
+        let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(.days(7))
+        #endif
+
         return [
             .downloader(Constants.downloader),
             .requestModifier(Constants.requestModifier),
             .targetCache(cache),
+            expiry,
             .alternativeSources(sources)
         ]
     }

@@ -383,11 +383,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="875" height="40"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1wM-Ln-7ly">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1wM-Ln-7ly">
                                 <rect key="frame" x="8" y="0.0" width="697" height="40"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="1" id="9gq-qV-GY3">
-                                    <size key="itemSize" width="161" height="40"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="4DC-C5-QHY">
+                                    <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -422,6 +422,9 @@
                                                                 <constraint firstAttribute="width" constant="24" id="VnH-Yc-5vx"/>
                                                             </constraints>
                                                             <state key="normal" image="Remove"/>
+                                                            <connections>
+                                                                <action selector="onRemovePressed" destination="sXq-vg-lf2" eventType="touchUpInside" id="76r-66-qxK"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -452,6 +455,9 @@
                                             <constraint firstAttribute="width" constant="30" id="nob-CW-zXt"/>
                                         </constraints>
                                         <state key="normal" image="Add"/>
+                                        <connections>
+                                            <action selector="onNewTabPressed" destination="LNa-Pc-RyW" eventType="touchUpInside" id="nKg-dF-UQL"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-F2-HgO">
                                         <rect key="frame" x="54" y="0.0" width="30" height="40"/>
@@ -459,6 +465,9 @@
                                             <constraint firstAttribute="width" constant="30" id="VVN-wr-Trj"/>
                                         </constraints>
                                         <state key="normal" image="sharesheet-burndata"/>
+                                        <connections>
+                                            <action selector="onFireButtonPressed" destination="LNa-Pc-RyW" eventType="touchUpInside" id="Sqt-ap-yN7"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eS-1F-EgF">
                                         <rect key="frame" x="108" y="0.0" width="30" height="40"/>

@@ -10,49 +10,74 @@ import UIKit
 import Core
 
 protocol TabsBarDelegate: NSObjectProtocol {
-
-    func tabsBarDidSelectTab(_ tabsBarViewController: TabsBarViewController, atIndex: Int)
+    
+    func tabsBar(_ controller: TabsBarViewController, didSelectTabAtIndex index: Int)
+    func tabsBar(_ controller: TabsBarViewController, didRemoveTabAtIndex index: Int)
+    func tabsBarDidRequestNewTab(_ controller: TabsBarViewController)
+    func tabsBarDidRequestForgetAll(_ controller: TabsBarViewController)
+    func tabsBarDidRequestTabSwitcher(_ controller: TabsBarViewController)
 
 }
 
 class TabsBarViewController: UIViewController {
 
+    struct Constants {
+        
+        static let minItemWidth: CGFloat = 68
+        static let maxItemWidth: CGFloat = 400
+
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var buttonsStack: UIStackView!
     @IBOutlet weak var fireButton: UIButton!
     @IBOutlet weak var addTabButton: UIButton!
     @IBOutlet weak var tabSwitcherContainer: UIView!
 
-    var tabManager: TabManager? {
-        didSet {
-            refresh()
-        }
-    }
-
     weak var delegate: TabsBarDelegate?
+    weak var tabsModel: TabsModel?
 
-    let tabSwitcherButton = TabSwitcherButton()
-    let flowLayout = TabsBarFlowLayout()
-
+    private let tabSwitcherButton = TabSwitcherButton()
+    
     var tabsCount: Int {
-        return tabManager?.count ?? 0
+        return tabsModel?.count ?? 0
+    }
+    
+    var currentIndex: Int {
+        return tabsModel?.currentIndex ?? 0
     }
 
     var maxItems: Int {
-        return Int(collectionView.frame.size.width / 110)
+        return Int(collectionView.frame.size.width / Constants.minItemWidth)
     }
 
     var numberOfItems: Int {
-        return min(tabsCount, maxItems)
+        // (WIP) return min(tabsCount, maxItems)
+        return tabsCount
     }
 
+    @IBAction func onFireButtonPressed() {
+        
+        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.tabsBarDidRequestForgetAll(self)
+        })
+        self.present(controller: alert, fromView: fireButton)
+
+    }
+
+    @IBAction func onNewTabPressed() {
+        requestNewTab()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("***", #function)
+
         applyTheme(ThemeManager.shared.currentTheme)
 
+        tabSwitcherButton.delegate = self
         tabSwitcherContainer.addSubview(tabSwitcherButton)
-
-        collectionView.collectionViewLayout = flowLayout
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -66,39 +91,59 @@ class TabsBarViewController: UIViewController {
         refresh()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-
     func refresh() {
         let availableWidth = collectionView.frame.size.width
-        var itemWidth = availableWidth / CGFloat(numberOfItems)
-        if itemWidth < 110 {
-            itemWidth = 110
-        } else if itemWidth > 400 {
-            itemWidth = 400
-        }
+        let maxVisibleItems = min(maxItems, numberOfItems)
+        
+        var itemWidth = availableWidth / CGFloat(maxVisibleItems)
+        itemWidth = max(itemWidth, Constants.minItemWidth)
+        itemWidth = min(itemWidth, Constants.maxItemWidth)
 
-        flowLayout.itemSize = CGSize(width: itemWidth, height: 40)
-        flowLayout.minimumInteritemSpacing = 0.0
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.itemSize = CGSize(width: itemWidth, height: view.frame.size.height)
+        }
 
         collectionView.reloadData()
         tabSwitcherButton.tabCount = tabsCount
     }
 
+    func backgroundTabAdded() {
+        tabSwitcherButton.incrementAnimated()
+        refresh()
+    }
+    
     private func enableInteractionsWithPointer() {
         guard #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
         fireButton.isPointerInteractionEnabled = true
         addTabButton.isPointerInteractionEnabled = true
         tabSwitcherButton.pointerView.frame.size.width = 34
     }
+    
+    private func requestNewTab() {
+        delegate?.tabsBarDidRequestNewTab(self)
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: IndexPath(row: self.currentIndex, section: 0), at: .right, animated: true)
+        }
+    }
 
+}
+
+extension TabsBarViewController: TabSwitcherButtonDelegate {
+    
+    func showTabSwitcher(_ button: TabSwitcherButton) {
+        delegate?.tabsBarDidRequestTabSwitcher(self)
+    }
+    
+    func launchNewTab(_ button: TabSwitcherButton) {
+        requestNewTab()
+    }
+        
 }
 
 extension TabsBarViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.tabsBarDidSelectTab(self, atIndex: indexPath.row)
+        delegate?.tabsBar(self, didSelectTabAtIndex: indexPath.row)
     }
 
 }
@@ -115,14 +160,16 @@ extension TabsBarViewController: UICollectionViewDataSource {
             fatalError("Unable to create TabBarCell")
         }
         
-        guard let model = tabManager?.model.get(tabAt: indexPath.row) else {
-            fatalError("Failed to load tab")
+        guard let model = tabsModel?.get(tabAt: indexPath.row) else {
+            fatalError("Failed to load tab at \(indexPath.row)")
         }
         
-        model.addObserver(self)
-        
-        let selected = indexPath.row == tabManager?.model.currentIndex ?? 0
-        cell.update(model: model, isSelected: selected, withTheme: ThemeManager.shared.currentTheme)
+        let isCurrent = indexPath.row == currentIndex
+        cell.update(model: model, isCurrent: isCurrent, withTheme: ThemeManager.shared.currentTheme)
+        cell.onRemove = { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.tabsBar(self, didRemoveTabAtIndex: indexPath.row)
+        }
         return cell
     }
 
@@ -141,12 +188,29 @@ extension TabsBarViewController: Themable {
 }
 
 extension MainViewController: TabsBarDelegate {
-
-    func tabsBarDidSelectTab(_ tabsBarViewController: TabsBarViewController, atIndex index: Int) {
+  
+    func tabsBar(_ controller: TabsBarViewController, didSelectTabAtIndex index: Int) {
         dismissOmniBar()
         select(tabAt: index)
     }
-
+    
+    func tabsBar(_ controller: TabsBarViewController, didRemoveTabAtIndex index: Int) {
+        let tab = tabManager.model.get(tabAt: index)
+        closeTab(tab)
+    }
+    
+    func tabsBarDidRequestNewTab(_ controller: TabsBarViewController) {
+        newTab()
+    }
+    
+    func tabsBarDidRequestForgetAll(_ controller: TabsBarViewController) {
+        forgetAllWithAnimation()
+    }
+    
+    func tabsBarDidRequestTabSwitcher(_ controller: TabsBarViewController) {
+        showTabSwitcher()
+    }
+    
 }
 
 class TabBarCell: UICollectionViewCell {
@@ -157,25 +221,42 @@ class TabBarCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var faviconImage: UIImageView!
     
-    let gradientLayer = CAGradientLayer()
+    var onRemove: (() -> Void)?
+    
+    private let gradientLayer = CAGradientLayer()
+    private var model: Tab?
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        // setup the basic gradient
+        // setup the basic gradient (WIP)
         label.layer.addSublayer(gradientLayer)
-        
+     
     }
     
-    func update(model: Tab, isSelected: Bool, withTheme theme: Theme) {
-                
-        if isSelected {
-            // update gradient colour
+    @IBAction func onRemovePressed() {
+        onRemove?()
+    }
+
+    func update(model: Tab, isCurrent: Bool, withTheme theme: Theme) {
+        self.model?.removeObserver(self)
+        self.model = model
+        model.addObserver(self)
+
+        if isCurrent {
+            // update gradient colour (WIP)
             contentView.backgroundColor = theme.barBackgroundColor
         } else {
-            // update gradient colour
+            // update gradient colour (WIP)
             contentView.backgroundColor = .clear
         }
+
+        removeButton.isHidden = !isCurrent
+        
+        applyModel(model)
+    }
+    
+    private func applyModel(_ model: Tab) {
         
         if model.link == nil {
             label.text = UserText.homeTabTitle
@@ -185,52 +266,12 @@ class TabBarCell: UICollectionViewCell {
             faviconImage.loadFavicon(forDomain: model.link?.url.host, usingCache: .tabs)
         }
 
-        removeButton.isHidden = !isSelected
     }
     
 }
 
-extension TabsBarViewController: TabObserver {
-    
+extension TabBarCell: TabObserver {
     func didChange(tab: Tab) {
-        collectionView.reloadData()
-    }
-    
-}
-
-class TabsBarFlowLayout: UICollectionViewFlowLayout {
-    
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
-
-        var updatedAttributes = [UICollectionViewLayoutAttributes]()
-        attributes.forEach({ (originalAttributes) in
-            guard originalAttributes.representedElementKind == nil else {
-                updatedAttributes.append(originalAttributes)
-                return
-            }
-
-            if let updatedAttribute = layoutAttributesForItem(at: originalAttributes.indexPath) {
-                updatedAttributes.append(updatedAttribute)
-            }
-        })
-
-        return updatedAttributes
-    }
-
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let attributes = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes else { return nil }
-
-        if indexPath.item == 0 {
-            attributes.frame.origin.x = sectionInset.left
-            return attributes
-        }
-        
-        let previousAttributes = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: indexPath.section))
-        let previousFrame: CGRect = previousAttributes?.frame ?? CGRect()
-
-        let x = previousFrame.origin.x + previousFrame.width + minimumInteritemSpacing
-        attributes.frame = CGRect(x: x, y: attributes.frame.origin.y, width: attributes.frame.width, height: attributes.frame.height)
-        return attributes
+        applyModel(tab)
     }
 }

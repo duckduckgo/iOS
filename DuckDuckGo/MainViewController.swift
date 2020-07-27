@@ -101,6 +101,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Swift.print("***", Self.Type.self, #function)
         
         Favicons.shared.migrateIfNeeded {
             DispatchQueue.main.async {
@@ -127,13 +128,10 @@ class MainViewController: UIViewController {
 
         applyTheme(ThemeManager.shared.currentTheme)
 
-        FormFactorConfigurator.shared.viewDidLoad(mainViewController: self)
-    }
+        tabsBarController?.tabsModel = tabManager.model
+        tabsBarController?.refresh()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabsBarController?.delegate = self
-        tabsBarController?.tabManager = tabManager
+        FormFactorConfigurator.shared.viewDidLoad(mainViewController: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -240,7 +238,10 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let controller = segue.destination as? TabsBarViewController {
-            self.tabsBarController = controller
+            print("***", #function, controller)
+            controller.delegate = self
+            tabsBarController = controller
+            return
         }
 
         if segue.destination.children.count > 0,
@@ -440,7 +441,6 @@ class MainViewController: UIViewController {
     }
 
     func select(tabAt index: Int) {
-        tabsBarController?.tabManager = self.tabManager
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
         let tab = tabManager.select(tabAt: index)
@@ -454,6 +454,7 @@ class MainViewController: UIViewController {
             addToView(tab: tab)
             refreshControls()
         }
+        tabsBarController?.refresh()
     }
 
     private func addToView(tab: TabViewController) {
@@ -481,7 +482,6 @@ class MainViewController: UIViewController {
         } else {
             attachHomeScreen()
         }
-        tabsBarController?.tabManager = tabManager
     }
 
     fileprivate func refreshControls() {
@@ -679,6 +679,7 @@ class MainViewController: UIViewController {
     func animateBackgroundTab() {
         showBars()
         tabSwitcherButton.incrementAnimated()
+        tabsBarController?.backgroundTabAdded()
     }
 
     func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
@@ -1171,6 +1172,7 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
+        tabsBarController?.refresh()
         Favicons.shared.clearCache(.tabs)
     }
     
@@ -1185,13 +1187,13 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
+    func forgetAllWithAnimation(completion: (() -> Void)? = nil) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()
-            completion()
+            completion?()
             Instruments.shared.endTimedEvent(for: spid)
 
             if KeyboardSettings().onNewTab {

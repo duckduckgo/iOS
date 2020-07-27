@@ -42,7 +42,11 @@ class TabViewController: UIViewController {
         
     }
     
-    var tapLinkDestination: LinkDestination = .currentTab
+    var tapLinkDestination: LinkDestination = .currentTab {
+        didSet {
+            Swift.print("***", #function, tapLinkDestination)
+        }
+    }
     
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!

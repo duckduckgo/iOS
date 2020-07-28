@@ -248,6 +248,9 @@ public struct UserText {
         return message.format(arguments: title, address)
     }
 
+    public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Open home tab")
+    public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Close home tab")
+
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", comment: "Close tab with address")
         return message.format(arguments: title, address)

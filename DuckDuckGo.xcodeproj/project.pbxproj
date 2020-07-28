@@ -260,7 +260,7 @@
 		85DFEDEF24C7EA3B00973FE7 /* PhoneOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEE24C7EA3B00973FE7 /* PhoneOmniBarState.swift */; };
 		85DFEDF124C7EEA400973FE7 /* PadOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDF024C7EEA400973FE7 /* PadOmniBarState.swift */; };
 		85DFEDF724CB1CAB00973FE7 /* ShareSheet.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DFEDF624CB1CAB00973FE7 /* ShareSheet.xcassets */; };
-		85DFEDF924CF3D0E00973FE7 /* TabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDF824CF3D0E00973FE7 /* TabBarCell.swift */; };
+		85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDF824CF3D0E00973FE7 /* TabsBarCell.swift */; };
 		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
 		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
 		85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */; };
@@ -879,7 +879,7 @@
 		85DFEDEE24C7EA3B00973FE7 /* PhoneOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneOmniBarState.swift; sourceTree = "<group>"; };
 		85DFEDF024C7EEA400973FE7 /* PadOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadOmniBarState.swift; sourceTree = "<group>"; };
 		85DFEDF624CB1CAB00973FE7 /* ShareSheet.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ShareSheet.xcassets; sourceTree = "<group>"; };
-		85DFEDF824CF3D0E00973FE7 /* TabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCell.swift; sourceTree = "<group>"; };
+		85DFEDF824CF3D0E00973FE7 /* TabsBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBarCell.swift; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
 		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
 		85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerNavigationController.swift; sourceTree = "<group>"; };
@@ -2241,7 +2241,7 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
-				85DFEDF824CF3D0E00973FE7 /* TabBarCell.swift */,
+				85DFEDF824CF3D0E00973FE7 /* TabsBarCell.swift */,
 				9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */,
 				8586A10F24CCCD040049720E /* TabsBarViewController.swift */,
 				F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */,
@@ -3665,7 +3665,7 @@
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
-				85DFEDF924CF3D0E00973FE7 /* TabBarCell.swift in Sources */,
+				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,

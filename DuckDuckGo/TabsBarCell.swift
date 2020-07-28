@@ -44,6 +44,8 @@ class TabsBarCell: UICollectionViewCell {
     }
 
     func update(model: Tab, isCurrent: Bool, withTheme theme: Theme) {
+        accessibilityElements = [label as Any, removeButton as Any]
+        
         self.model?.removeObserver(self)
         self.model = model
         model.addObserver(self)
@@ -58,7 +60,6 @@ class TabsBarCell: UICollectionViewCell {
             bottomBackgroundView.backgroundColor = .clear
         }
 
-        removeButton.accessibilityLabel = UserText.closeTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
         removeButton.isHidden = !isCurrent
         
         applyModel(model)
@@ -69,9 +70,13 @@ class TabsBarCell: UICollectionViewCell {
         if model.link == nil {
             label.text = UserText.homeTabTitle
             faviconImage.loadFavicon(forDomain: Self.appUrls.base.host, usingCache: .tabs)
+            label.accessibilityLabel = UserText.openHomeTab
+            removeButton.accessibilityLabel = UserText.closeHomeTab
         } else {
             label.text = model.link?.displayTitle ?? model.link?.url.host?.dropPrefix(prefix: "www.")
             faviconImage.loadFavicon(forDomain: model.link?.url.host, usingCache: .tabs)
+            label.accessibilityLabel = UserText.openTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
+            removeButton.accessibilityLabel = UserText.closeTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
         }
 
     }

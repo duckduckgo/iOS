@@ -393,7 +393,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Tab" id="sXq-vg-lf2" customClass="TabBarCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Tab" id="sXq-vg-lf2" customClass="TabsBarCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="37U-Jd-wxr">
@@ -425,12 +425,16 @@
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website -- Long Title" textAlignment="natural" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uu4-yR-9tN">
                                                             <rect key="frame" x="20" y="0.0" width="132" height="40"/>
+                                                            <accessibility key="accessibilityConfiguration">
+                                                                <accessibilityTraits key="traits" button="YES" staticText="YES"/>
+                                                            </accessibility>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xto-EI-h22">
                                                             <rect key="frame" x="156" y="0.0" width="24" height="40"/>
+                                                            <accessibility key="accessibilityConfiguration" hint="Close"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="24" id="VnH-Yc-5vx"/>
                                                             </constraints>

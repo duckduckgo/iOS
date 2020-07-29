@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -19,11 +19,11 @@
             <objects>
                 <viewController storyboardIdentifier="TabSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G9p-Sf-e96" customClass="TabSwitcherViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WJ0-lP-E4v">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-Lb-veV">
-                                <rect key="frame" x="190.33333333333334" y="18" width="33.666666666666657" height="16"/>
+                                <rect key="frame" x="170.5" y="18" width="34" height="16"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" header="YES"/>
                                 </accessibility>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-vl-rDZ">
-                                <rect key="frame" x="355" y="9" width="50" height="34"/>
+                                <rect key="frame" x="316" y="9" width="50" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="3is-x4-uWE"/>
                                     <constraint firstAttribute="height" constant="34" id="XXt-3T-rvh"/>
@@ -43,8 +43,11 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
-                                <rect key="frame" x="0.0" y="52" width="414" height="640"/>
+                                <rect key="frame" x="0.0" y="52" width="375" height="571"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="664" id="Ebu-rn-pgR"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="206"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -53,7 +56,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabViewGridCell" id="Mdh-yg-dRH" customClass="TabViewGridCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="43.666666666666664" y="14" width="327" height="206"/>
+                                        <rect key="frame" x="24" y="14" width="327" height="206"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="327" height="206"/>
@@ -95,7 +98,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TabUnread" translatesAutoresizingMaskIntoConstraints="NO" id="Gyy-py-IOg">
-                                                            <rect key="frame" x="22.666666666666668" y="21.666666666666668" width="9" height="9"/>
+                                                            <rect key="frame" x="22.5" y="21.5" width="9" height="9"/>
                                                             <accessibility key="accessibilityConfiguration" label="Tab Unread">
                                                                 <bool key="isElement" value="NO"/>
                                                             </accessibility>
@@ -180,7 +183,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabViewListCell" id="Ml9-Ia-4eU" customClass="TabViewListCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="43.666666666666664" y="234" width="327" height="70"/>
+                                        <rect key="frame" x="24" y="234" width="327" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
@@ -212,7 +215,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="ARc-nQ-K4S">
-                                                            <rect key="frame" x="14" y="26.666666666666671" width="17" height="17"/>
+                                                            <rect key="frame" x="14" y="26.5" width="17" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="17" id="9Z9-N6-wrb"/>
                                                                 <constraint firstAttribute="height" constant="17" id="vXM-m8-YnJ"/>
@@ -297,7 +300,7 @@
                                 </connections>
                             </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="BUt-3S-Yua"/>
                                 </constraints>
@@ -345,17 +348,17 @@
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="bottom" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
-                            <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="Nqt-nV-6p2" secondAttribute="leading" id="2c3-VD-tFG"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="B4L-BE-vvi"/>
                             <constraint firstAttribute="trailing" secondItem="PrD-ff-flI" secondAttribute="trailing" id="BaM-0l-RFS"/>
                             <constraint firstItem="Cy7-Lb-veV" firstAttribute="centerX" secondItem="Nqt-nV-6p2" secondAttribute="centerX" id="CZo-Zg-g4J"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="leading" secondItem="Nqt-nV-6p2" secondAttribute="leading" constant="10" id="IuL-gt-D87"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="XZT-ek-lrC" secondAttribute="bottom" id="J8G-Xc-ZM0"/>
+                            <constraint firstItem="XZT-ek-lrC" firstAttribute="centerX" secondItem="Nqt-nV-6p2" secondAttribute="centerX" id="SmA-Z9-yAN"/>
+                            <constraint firstItem="XZT-ek-lrC" firstAttribute="width" secondItem="Nqt-nV-6p2" secondAttribute="width" priority="999" id="XCa-fk-cv9"/>
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="ceJ-FA-nQB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="gF9-g1-aML"/>
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="9" id="moD-HB-CMD"/>
-                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="9" id="tuE-z4-kMM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nqt-nV-6p2"/>
@@ -366,6 +369,7 @@
                         <outlet property="displayModeButton" destination="L7l-vl-rDZ" id="F9o-yf-XT6"/>
                         <outlet property="doneButton" destination="S1O-aT-Bgw" id="8I7-gH-bhZ"/>
                         <outlet property="fireButton" destination="h1S-c2-Spf" id="VfW-9h-WGv"/>
+                        <outlet property="maxWidthConstraint" destination="Ebu-rn-pgR" id="1XO-kj-TUK"/>
                         <outlet property="plusButton" destination="nYf-xs-PE7" id="9pP-uN-hsa"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
                         <outlet property="toolbar" destination="PrD-ff-flI" id="6c2-zx-gsM"/>

@@ -44,6 +44,8 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
+    
+    @IBOutlet var maxWidthConstraint: NSLayoutConstraint!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -70,6 +72,13 @@ class TabSwitcherViewController: UIViewController {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
             tabSwitcherSettings.hasSeenNewLayout = true
         }
+        
+        refreshCollectionViewWidth()
+        
+    }
+    
+    private func refreshCollectionViewWidth() {
+        maxWidthConstraint.isActive = FormFactorConfigurator.shared.isPadFormFactor && !tabSwitcherSettings.isGridViewEnabled
     }
     
     private func setupBackgroundView() {
@@ -216,6 +225,7 @@ class TabSwitcherViewController: UIViewController {
         UIView.transition(with: view,
                           duration: 0.3,
                           options: .transitionCrossDissolve, animations: {
+                            self.refreshCollectionViewWidth()
                             self.collectionView.reloadData()
         }, completion: nil)
     }

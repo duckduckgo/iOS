@@ -13,23 +13,20 @@ class TabsBarCell: UICollectionViewCell {
     
     static let appUrls = AppUrls()
     
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var label: FadeOutLabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var faviconImage: UIImageView!
     @IBOutlet weak var topBackgroundView: UIView!
     @IBOutlet weak var bottomBackgroundView: UIView!
+    @IBOutlet var labelRemoveButtonConstraint: NSLayoutConstraint!
     
     var onRemove: (() -> Void)?
-    
-    private let gradientLayer = CAGradientLayer()
+
     private var model: Tab?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        // setup the basic gradient (WIP)
-        label.layer.addSublayer(gradientLayer)
-     
+        
         if #available(iOS 13.4, *) {
             removeButton.isPointerInteractionEnabled = true
             removeButton.pointerStyleProvider = { button, effect, shape -> UIPointerStyle? in
@@ -50,16 +47,16 @@ class TabsBarCell: UICollectionViewCell {
         self.model = model
         model.addObserver(self)
 
+        label.primaryColor = theme.barTintColor
         if isCurrent {
-            // update gradient colour (WIP)
             topBackgroundView.backgroundColor = theme.barBackgroundColor
             bottomBackgroundView.backgroundColor = theme.barBackgroundColor
         } else {
-            // update gradient colour (WIP)
             topBackgroundView.backgroundColor = .clear
             bottomBackgroundView.backgroundColor = .clear
         }
 
+        labelRemoveButtonConstraint.isActive = isCurrent
         removeButton.isHidden = !isCurrent
         
         applyModel(model)
@@ -87,4 +84,41 @@ extension TabsBarCell: TabObserver {
     func didChange(tab: Tab) {
         applyModel(tab)
     }
+}
+
+// Based on https://stackoverflow.com/a/53847223/73479
+class FadeOutLabel: UILabel {
+    
+    var primaryColor: UIColor = .black
+        
+    override func drawText(in rect: CGRect) {
+        let gradientColors = [primaryColor.cgColor, UIColor.clear.cgColor]
+        if let gradientColor = drawGradientColor(in: rect, colors: gradientColors) {
+            self.textColor = gradientColor
+        }
+        super.drawText(in: rect)
+    }
+
+    private func drawGradientColor(in rect: CGRect, colors: [CGColor]) -> UIColor? {
+        let currentContext = UIGraphicsGetCurrentContext()
+        currentContext?.saveGState()
+        defer { currentContext?.restoreGState() }
+
+        let size = rect.size
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                                        colors: colors as CFArray,
+                                        locations: [0.5, 1]) else { return nil }
+
+        let context = UIGraphicsGetCurrentContext()
+        context?.drawLinearGradient(gradient,
+                                    start: .zero,
+                                    end: CGPoint(x: size.width, y: 0),
+                                    options: [])
+        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        guard let image = gradientImage else { return nil }
+        return UIColor(patternImage: image)
+    }
+    
 }

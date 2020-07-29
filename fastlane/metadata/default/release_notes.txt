@@ -1,4 +1,3 @@
-• We've improved the way we get and store website favicons for sites you browse, bookmarks and favorites.
-• Recaptcha should now work again.
-• Updated terminology for protected sites.
+• Better external keyboard support on the iPad.
+• Improved accessibility labels (thanks to a community contribution).
 • Other fixes and improvements.

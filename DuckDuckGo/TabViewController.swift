@@ -242,30 +242,6 @@ class TabViewController: UIViewController {
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
-
-    @available(iOS 13.4, *)
-    func handlePressEvent(event: UIPressesEvent?) {
-        tapLinkDestination = .currentTab
-        if event?.modifierFlags.contains(.command) ?? false {
-            if event?.modifierFlags.contains(.shift) ?? false {
-                tapLinkDestination = .newTab
-            } else {
-                tapLinkDestination = .backgroundTab
-            }
-        }
-    }
-
-    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        super.pressesBegan(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
-        handlePressEvent(event: event)
-    }
-    
-    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        super.pressesEnded(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
-        handlePressEvent(event: event)
-    }
     
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()

@@ -332,6 +332,31 @@ class MainViewController: UIViewController {
         }
     }
 
+    @available(iOS 13.4, *)
+    func handlePressEvent(event: UIPressesEvent?) {
+        print("***", #function, event as Any)
+        currentTab?.tapLinkDestination = .currentTab
+        if event?.modifierFlags.contains(.command) ?? false {
+            if event?.modifierFlags.contains(.shift) ?? false {
+                currentTab?.tapLinkDestination = .newTab
+            } else {
+                currentTab?.tapLinkDestination = .backgroundTab
+            }
+        }
+    }
+
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesBegan(presses, with: event)
+        guard #available(iOS 13.4, *) else { return }
+        handlePressEvent(event: event)
+    }
+    
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesEnded(presses, with: event)
+        guard #available(iOS 13.4, *) else { return }
+        handlePressEvent(event: event)
+    }
+
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self

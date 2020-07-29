@@ -449,7 +449,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gw0-u8-5aN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="20"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
                                                     <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -497,7 +497,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="alN-nB-cJU" secondAttribute="bottom" id="6Sa-p4-HFX"/>
                                                 <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="37U-Jd-wxr" secondAttribute="trailing" constant="-8" id="90I-9Z-JeZ"/>
-                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" multiplier="0.5" id="Bl9-4V-c3M">
+                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="Bl9-4V-c3M">
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="8"/>

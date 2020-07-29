@@ -13,6 +13,7 @@ protocol TabsBarDelegate: NSObjectProtocol {
     
     func tabsBar(_ controller: TabsBarViewController, didSelectTabAtIndex index: Int)
     func tabsBar(_ controller: TabsBarViewController, didRemoveTabAtIndex index: Int)
+    func tabsBar(_ controller: TabsBarViewController, didRequestMoveTabFromIndex fromIndex: Int, toIndex: Int)
     func tabsBarDidRequestNewTab(_ controller: TabsBarViewController)
     func tabsBarDidRequestForgetAll(_ controller: TabsBarViewController)
     func tabsBarDidRequestTabSwitcher(_ controller: TabsBarViewController)
@@ -37,6 +38,7 @@ class TabsBarViewController: UIViewController {
     weak var tabsModel: TabsModel?
 
     private let tabSwitcherButton = TabSwitcherButton()
+    private let longPressTabGesture = UILongPressGestureRecognizer()
     
     var tabsCount: Int {
         return tabsModel?.count ?? 0
@@ -54,20 +56,6 @@ class TabsBarViewController: UIViewController {
         // (WIP - show all tabs with scrolling) return min(tabsCount, maxItems)
         return tabsCount
     }
-
-    @IBAction func onFireButtonPressed() {
-        
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.tabsBarDidRequestForgetAll(self)
-        })
-        self.present(controller: alert, fromView: fireButton)
-
-    }
-
-    @IBAction func onNewTabPressed() {
-        requestNewTab()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,13 +69,30 @@ class TabsBarViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        configureGestures()
+        
         enableInteractionsWithPointer()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabSwitcherButton.layoutSubviews()
         refresh()
+    }
+
+    @IBAction func onFireButtonPressed() {
+        
+        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.tabsBarDidRequestForgetAll(self)
+        })
+        self.present(controller: alert, fromView: fireButton)
+
+    }
+
+    @IBAction func onNewTabPressed() {
+        requestNewTab()
     }
 
     func refresh() {
@@ -111,6 +116,42 @@ class TabsBarViewController: UIViewController {
         refresh()
     }
     
+    private func configureGestures() {
+        print("***", #function, collectionView.gestureRecognizers as Any)
+        longPressTabGesture.addTarget(self, action: #selector(handleLongPressTabGesture))
+        collectionView.addGestureRecognizer(longPressTabGesture)
+    }
+    
+    var pressedCell: TabsBarCell?
+    
+    @objc func handleLongPressTabGesture(gesture: UILongPressGestureRecognizer) {
+        print("***", #function, gesture)
+        switch gesture.state {
+        case .began:
+            guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
+            delegate?.tabsBar(self, didSelectTabAtIndex: path.row)
+
+        case .changed:
+            guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
+            if pressedCell == nil {
+                pressedCell = collectionView.cellForItem(at: path) as? TabsBarCell
+                pressedCell?.isPressed = true
+                collectionView.beginInteractiveMovementForItem(at: path)
+            }
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
+            
+        case .ended:
+            collectionView.endInteractiveMovement()
+            pressedCell?.isPressed = false
+            pressedCell = nil
+
+        default:
+            collectionView.cancelInteractiveMovement()
+            pressedCell?.isPressed = false
+            pressedCell = nil
+        }
+    }
+     
     private func enableInteractionsWithPointer() {
         guard #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
         fireButton.isPointerInteractionEnabled = true
@@ -145,10 +186,27 @@ extension TabsBarViewController: UICollectionViewDelegate {
         delegate?.tabsBar(self, didSelectTabAtIndex: indexPath.row)
     }
 
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        return proposedIndexPath
+    }
+
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        delegate?.tabsBar(self, didRequestMoveTabFromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
+    }
+    
 }
 
 extension TabsBarViewController: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("***", #function, numberOfItems, tabsCount, maxItems)
         return numberOfItems
@@ -196,6 +254,11 @@ extension MainViewController: TabsBarDelegate {
     func tabsBar(_ controller: TabsBarViewController, didRemoveTabAtIndex index: Int) {
         let tab = tabManager.model.get(tabAt: index)
         closeTab(tab)
+    }
+    
+    func tabsBar(_ controller: TabsBarViewController, didRequestMoveTabFromIndex fromIndex: Int, toIndex: Int) {
+        tabManager.model.moveTab(from: fromIndex, to: toIndex)
+        select(tabAt: toIndex)
     }
     
     func tabsBarDidRequestNewTab(_ controller: TabsBarViewController) {

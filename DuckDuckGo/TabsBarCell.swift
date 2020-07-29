@@ -20,6 +20,12 @@ class TabsBarCell: UICollectionViewCell {
     @IBOutlet weak var bottomBackgroundView: UIView!
     @IBOutlet var labelRemoveButtonConstraint: NSLayoutConstraint!
     
+    var isPressed = false {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     var onRemove: (() -> Void)?
 
     private var model: Tab?
@@ -38,6 +44,16 @@ class TabsBarCell: UICollectionViewCell {
     
     @IBAction func onRemovePressed() {
         onRemove?()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        bottomBackgroundView.isHidden = isPressed
+        contentView.layer.cornerRadius = isPressed ? 8 : 0
+        contentView.layer.borderColor = isPressed ? ThemeManager.shared.currentTheme.barTintColor.cgColor : UIColor.clear.cgColor
+        contentView.layer.borderWidth = isPressed ? 1 : 0
+        
     }
 
     func update(model: Tab, isCurrent: Bool, withTheme theme: Theme) {

@@ -45,7 +45,12 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     
+    @IBOutlet weak var padFireButton: UIButton!
+    @IBOutlet weak var padPlusButton: UIButton!
+    @IBOutlet weak var padDoneButton: UIButton!
+
     @IBOutlet var maxWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -73,8 +78,16 @@ class TabSwitcherViewController: UIViewController {
             tabSwitcherSettings.hasSeenNewLayout = true
         }
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         refreshCollectionViewWidth()
-        
+        toolbar.isHidden = FormFactorConfigurator.shared.isPadFormFactor
+        displayModeTrailingConstraint.isActive = !FormFactorConfigurator.shared.isPadFormFactor
+        padFireButton.isHidden = !FormFactorConfigurator.shared.isPadFormFactor
+        padDoneButton.isHidden = !FormFactorConfigurator.shared.isPadFormFactor
+        padPlusButton.isHidden = !FormFactorConfigurator.shared.isPadFormFactor
     }
     
     private func refreshCollectionViewWidth() {
@@ -253,14 +266,18 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
 
-    @IBAction func onFirePressed() {
+    @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
             self?.forgetAll()
         })
-        self.present(controller: alert, fromView: self.toolbar)
         
+        if let anchor = sender as? UIView {
+            self.present(controller: alert, fromView: anchor)
+        } else {
+            self.present(controller: alert, fromView: toolbar)
+        }
     }
 
     private func forgetAll() {
@@ -427,6 +444,9 @@ extension TabSwitcherViewController: Themable {
         
         titleView.textColor = theme.barTintColor
         bookmarkAllButton.tintColor = theme.barTintColor
+        padDoneButton.tintColor = theme.barTintColor
+        padPlusButton.tintColor = theme.barTintColor
+        padFireButton.tintColor = theme.barTintColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

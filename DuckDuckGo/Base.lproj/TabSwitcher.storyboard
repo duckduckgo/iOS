@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-Lb-veV">
-                                <rect key="frame" x="170.5" y="18" width="34" height="16"/>
+                                <rect key="frame" x="171" y="14" width="33.5" height="16"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" header="YES"/>
                                 </accessibility>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-vl-rDZ">
-                                <rect key="frame" x="316" y="9" width="50" height="34"/>
+                                <rect key="frame" x="316" y="5" width="50" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="3is-x4-uWE"/>
                                     <constraint firstAttribute="height" constant="34" id="XXt-3T-rvh"/>
@@ -43,7 +43,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
-                                <rect key="frame" x="0.0" y="52" width="375" height="571"/>
+                                <rect key="frame" x="0.0" y="48" width="375" height="575"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="664" id="Ebu-rn-pgR"/>
@@ -314,7 +314,7 @@
                                     <barButtonItem title="Erase Tabs and Data" image="Fire" id="h1S-c2-Spf">
                                         <inset key="imageInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <action selector="onFirePressed" destination="G9p-Sf-e96" id="nP6-t4-jHf"/>
+                                            <action selector="onFirePressedWithSender:" destination="G9p-Sf-e96" id="N2s-jE-SXY"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
@@ -332,7 +332,7 @@
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aH-nO-H3f">
-                                <rect key="frame" x="10" y="9" width="34" height="34"/>
+                                <rect key="frame" x="10" y="5" width="34" height="34"/>
                                 <accessibility key="accessibilityConfiguration" label="Add all tabs as bookmarks"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="6Q4-Ue-lyF"/>
@@ -343,6 +343,40 @@
                                     <action selector="onBookmarkAllOpenTabsPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="VLs-tA-h7a"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="0Ot-ck-ucS">
+                                <rect key="frame" x="213" y="10" width="84" height="24"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIV-4q-5mj">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="83v-Fw-cql"/>
+                                        </constraints>
+                                        <state key="normal" image="Add"/>
+                                        <connections>
+                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="DLC-dl-WIe"/>
+                                            <action selector="onNewTabPressed" destination="LNa-Pc-RyW" eventType="touchUpInside" id="rxt-3n-88f"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nO-MZ-vSY">
+                                        <rect key="frame" x="54" y="0.0" width="30" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="YgM-K3-6ca"/>
+                                        </constraints>
+                                        <state key="normal" image="sharesheet-burndata"/>
+                                        <connections>
+                                            <action selector="onFirePressedWithSender:" destination="G9p-Sf-e96" eventType="touchUpInside" id="B2J-tC-4vR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kW3-ZC-Axl">
+                                <rect key="frame" x="310" y="5.5" width="41" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="onDonePressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="Lbt-3n-c0c"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -351,15 +385,21 @@
                             <constraint firstItem="PrD-ff-flI" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="B4L-BE-vvi"/>
                             <constraint firstAttribute="trailing" secondItem="PrD-ff-flI" secondAttribute="trailing" id="BaM-0l-RFS"/>
                             <constraint firstItem="Cy7-Lb-veV" firstAttribute="centerX" secondItem="Nqt-nV-6p2" secondAttribute="centerX" id="CZo-Zg-g4J"/>
+                            <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="2aH-nO-H3f" secondAttribute="centerY" id="EBw-Lz-g90"/>
+                            <constraint firstItem="2aH-nO-H3f" firstAttribute="centerY" secondItem="uIV-4q-5mj" secondAttribute="centerY" id="FqY-pH-wqc"/>
+                            <constraint firstItem="L7l-vl-rDZ" firstAttribute="leading" secondItem="2aH-nO-H3f" secondAttribute="trailing" priority="999" constant="32" id="IIG-5E-55V"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="leading" secondItem="Nqt-nV-6p2" secondAttribute="leading" constant="10" id="IuL-gt-D87"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="XZT-ek-lrC" secondAttribute="bottom" id="J8G-Xc-ZM0"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="centerX" secondItem="Nqt-nV-6p2" secondAttribute="centerX" id="SmA-Z9-yAN"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="width" secondItem="Nqt-nV-6p2" secondAttribute="width" priority="999" id="XCa-fk-cv9"/>
-                            <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="ceJ-FA-nQB"/>
+                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="kW3-ZC-Axl" secondAttribute="trailing" constant="24" id="bgO-Am-XdB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
+                            <constraint firstItem="kW3-ZC-Axl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0Ot-ck-ucS" secondAttribute="trailing" id="g3D-GF-VHM"/>
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="gF9-g1-aML"/>
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="9" id="moD-HB-CMD"/>
-                            <constraint firstItem="2aH-nO-H3f" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="9" id="tuE-z4-kMM"/>
+                            <constraint firstItem="kW3-ZC-Axl" firstAttribute="centerY" secondItem="2aH-nO-H3f" secondAttribute="centerY" id="nEe-Fk-lIy"/>
+                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="0Ot-ck-ucS" secondAttribute="trailing" constant="78" id="pXs-zp-2nK"/>
+                            <constraint firstItem="Cy7-Lb-veV" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="14" id="pXw-xW-sAg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nqt-nV-6p2"/>
                     </view>
@@ -367,9 +407,13 @@
                         <outlet property="bookmarkAllButton" destination="2aH-nO-H3f" id="KSo-gy-fGA"/>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
                         <outlet property="displayModeButton" destination="L7l-vl-rDZ" id="F9o-yf-XT6"/>
+                        <outlet property="displayModeTrailingConstraint" destination="moD-HB-CMD" id="E8h-Fv-6Md"/>
                         <outlet property="doneButton" destination="S1O-aT-Bgw" id="8I7-gH-bhZ"/>
                         <outlet property="fireButton" destination="h1S-c2-Spf" id="VfW-9h-WGv"/>
                         <outlet property="maxWidthConstraint" destination="Ebu-rn-pgR" id="1XO-kj-TUK"/>
+                        <outlet property="padDoneButton" destination="kW3-ZC-Axl" id="cZJ-RO-Boo"/>
+                        <outlet property="padFireButton" destination="5nO-MZ-vSY" id="FfV-uD-cYB"/>
+                        <outlet property="padPlusButton" destination="uIV-4q-5mj" id="JoC-2j-xg2"/>
                         <outlet property="plusButton" destination="nYf-xs-PE7" id="9pP-uN-hsa"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
                         <outlet property="toolbar" destination="PrD-ff-flI" id="6c2-zx-gsM"/>
@@ -377,7 +421,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1163.768115942029" y="-7.3369565217391308"/>
+            <point key="canvasLocation" x="1162.4000000000001" y="-7.6461769115442282"/>
         </scene>
         <!--Tabs Bar View Controller-->
         <scene sceneID="nhp-4b-p7e">
@@ -487,10 +531,10 @@
                                 </cells>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="aDD-d2-KuN">
-                                <rect key="frame" x="638" y="0.0" width="138" height="40"/>
+                                <rect key="frame" x="638" y="0.0" width="138" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYd-YU-sSj">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="nob-CW-zXt"/>
                                         </constraints>
@@ -500,7 +544,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-F2-HgO">
-                                        <rect key="frame" x="54" y="0.0" width="30" height="40"/>
+                                        <rect key="frame" x="54" y="0.0" width="30" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="VVN-wr-Trj"/>
                                         </constraints>
@@ -510,11 +554,11 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eS-1F-EgF">
-                                        <rect key="frame" x="108" y="0.0" width="30" height="40"/>
+                                        <rect key="frame" x="108" y="0.0" width="30" height="44"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="hLu-Tm-uj6"/>
-                                            <constraint firstAttribute="height" constant="40" id="hlc-iN-dB9"/>
+                                            <constraint firstAttribute="height" constant="44" id="hlc-iN-dB9"/>
                                         </constraints>
                                     </view>
                                 </subviews>

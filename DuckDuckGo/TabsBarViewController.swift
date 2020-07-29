@@ -24,7 +24,6 @@ class TabsBarViewController: UIViewController {
     struct Constants {
         
         static let minItemWidth: CGFloat = 68
-        static let maxItemWidth: CGFloat = 400
 
     }
     
@@ -97,7 +96,7 @@ class TabsBarViewController: UIViewController {
         
         var itemWidth = availableWidth / CGFloat(maxVisibleItems)
         itemWidth = max(itemWidth, Constants.minItemWidth)
-        itemWidth = min(itemWidth, Constants.maxItemWidth)
+        itemWidth = min(itemWidth, availableWidth / 2)
 
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: itemWidth, height: view.frame.size.height)

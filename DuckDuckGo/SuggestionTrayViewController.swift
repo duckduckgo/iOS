@@ -63,19 +63,8 @@ class SuggestionTrayViewController: UIViewController {
 
         if favoritesOverlay == nil {
             let controller = FavoritesOverlay()
-            addChild(controller)
-            controller.view.frame = view.frame
-            view.addSubview(controller.view)
-            controller.didMove(toParent: self)
-
-            if let delegate = favoritesOverlayDelegate {
-                controller.install(into: delegate)
-            }
-
-            controller.view.alpha = 0
-            UIView.animate(withDuration: 0.2) {
-                controller.view.alpha = 1
-            }
+            controller.delegate = favoritesOverlayDelegate
+            install(controller: controller)
             favoritesOverlay = controller
         }
         
@@ -87,10 +76,8 @@ class SuggestionTrayViewController: UIViewController {
         
         if autocompleteController == nil {
             let controller = AutocompleteViewController.loadFromStoryboard()
+            install(controller: controller)
             controller.delegate = autocompleteDelegate
-            addChild(controller)
-            view.addSubview(controller.view)
-            controller.didMove(toParent: self)
             autocompleteController = controller
         }
         
@@ -110,6 +97,16 @@ class SuggestionTrayViewController: UIViewController {
         controller.removeFromParent()
         controller.view.removeFromSuperview()
         favoritesOverlay = nil
+    }
+    
+    private func install(controller: UIViewController) {
+        addChild(controller)
+        view.addSubview(controller.view)
+        controller.didMove(toParent: self)
+        controller.view.alpha = 0
+        UIView.animate(withDuration: 0.2) {
+            controller.view.alpha = 1
+        }
     }
     
 }

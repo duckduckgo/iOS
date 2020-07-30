@@ -37,7 +37,7 @@ class FavoritesOverlay: UIViewController {
     
     private var theme: Theme!
     
-    private weak var delegate: FavoritesOverlayDelegate?
+    weak var delegate: FavoritesOverlayDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +56,6 @@ class FavoritesOverlay: UIViewController {
         registerForKeyboardNotifications()
         
         applyTheme(ThemeManager.shared.currentTheme)
-    }
-    
-    func install(into controller: FavoritesOverlayDelegate) {
-        loadViewIfNeeded()
-        
-        delegate = controller
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
     }
     
     private func registerForKeyboardNotifications() {

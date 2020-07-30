@@ -9,12 +9,12 @@
 import UIKit
 import Core
 
-// (WIP) bottom omnibar shadow bad
 // (WIP) spacer between tabs
 // (WIP) increase to 8 above address bar
 // (WIP) align tab bar icons vertically with close button
 // (WIP) highlight tabs for pointer
 // (WIP) use width > 375 then use ipad view
+// (WIP) new tab + keyboard, home screen non-responsive
 
 class TabsBarCell: UICollectionViewCell {
     

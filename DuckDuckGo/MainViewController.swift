@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
 
+    @IBOutlet weak var suggestionTrayContainer: UIView!
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
@@ -77,9 +78,8 @@ class MainViewController: UIViewController {
     }
     
     var homeController: HomeViewController?
-    var favoritesOverlay: FavoritesOverlay?
-    var autocompleteController: AutocompleteViewController?
     var tabsBarController: TabsBarViewController?
+    var suggestionTrayController: SuggestionTrayViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -237,6 +237,13 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+        if let controller = segue.destination as? SuggestionTrayViewController {
+            controller.autocompleteDelegate = self
+            controller.favoritesOverlayDelegate = self
+            suggestionTrayController = controller
+            return
+        }
+        
         if let controller = segue.destination as? TabsBarViewController {
             print("***", #function, controller)
             controller.delegate = self
@@ -538,8 +545,7 @@ class MainViewController: UIViewController {
 
     func dismissOmniBar() {
         omniBar.resignFirstResponder()
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
+        hideSuggestionTray()
         refreshOmniBar()
     }
 
@@ -556,63 +562,28 @@ class MainViewController: UIViewController {
         dismissOmniBar()
     }
     
-    fileprivate func displayFavoritesOverlay() {
-        guard homePageSettings.favorites else { return }
-
-        guard let currentTab = currentTab, favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
+    func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
+        print("***", #function, type)
         
-        let controller = FavoritesOverlay()
-        addChild(controller)
-        controller.view.frame = currentTab  .view.frame
-        containerView.addSubview(controller.view)
-        controller.didMove(toParent: self)
-
-        controller.install(into: self)
-
-        controller.view.alpha = 0
-        UIView.animate(withDuration: 0.2) {
-            controller.view.alpha = 1
-        }
-        favoritesOverlay = controller
-    }
-    
-    fileprivate func dismissFavoritesOverlay() {
-        guard let controller = favoritesOverlay else { return }
-        favoritesOverlay = nil
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            controller.view.alpha = 0
-        }, completion: { _ in
-            controller.willMove(toParent: nil)
-            controller.view.removeFromSuperview()
-            controller.removeFromParent()
-        })
-    }
-
-    fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil && appSettings.autocomplete && !query.isEmpty {
-            let controller = AutocompleteViewController.loadFromStoryboard()
-            controller.shouldOffsetY = allowContentUnderflow
-            controller.delegate = self
-            addChild(controller)
-            containerView.addSubview(controller.view)
-            controller.didMove(toParent: self)
-            autocompleteController = controller
+        if FormFactorConfigurator.shared.isPadFormFactor {
             omniBar.hideSeparator()
         }
-        guard let autocompleteController = autocompleteController else { return }
-        autocompleteController.updateQuery(query: query)
+        
+        if suggestionTrayController?.willShow(for: type) ?? false {
+            suggestionTrayContainer.isHidden = false
+        }
+        
     }
-
-    fileprivate func dismissAutcompleteSuggestions() {
-        guard let controller = autocompleteController else { return }
+    
+    func hideSuggestionTray() {
+        print("***", #function)
+        
         omniBar.showSeparator()
-        autocompleteController = nil
-        controller.willMove(toParent: nil)
-        controller.view.removeFromSuperview()
-        controller.removeFromParent()
-    }
+        suggestionTrayContainer.isHidden = true
+        suggestionTrayController?.didHide()
 
+    }
+    
     fileprivate func launchBrowsingMenu() {
         currentTab?.launchBrowsingMenu()
     }
@@ -839,13 +810,16 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        displayAutocompleteSuggestions(forQuery: updatedQuery)
+        // displayAutocompleteSuggestions(forQuery: updatedQuery)
+        
+        if !updatedQuery.trimWhitespace().isEmpty {
+            showSuggestionTray(.autocomplete(query: updatedQuery))
+        }
     }
 
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
+        hideSuggestionTray()
         showHomeRowReminder()
     }
 
@@ -871,20 +845,17 @@ extension MainViewController: OmniBarDelegate {
     
     func onCancelPressed() {
         dismissOmniBar()
-        dismissFavoritesOverlay()
-        autocompleteController?.keyboardEscape()
+        hideSuggestionTray()
         homeController?.omniBarCancelPressed()
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
-        
-        displayFavoritesOverlay()
+        showSuggestionTray(.favorites)
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
         guard let homeController = homeController else { return }
-        
         homeController.launchNewSearch()
     }
     
@@ -944,8 +915,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func homeDidDeactivateOmniBar(home: HomeViewController) {
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
+        hideSuggestionTray()
         dismissOmniBar()
     }
     

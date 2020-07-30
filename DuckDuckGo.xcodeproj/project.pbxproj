@@ -186,6 +186,7 @@
 		8577B0AE2225CA4F009CCC71 /* OnboardingPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577B0AD2225CA4F009CCC71 /* OnboardingPadViewController.swift */; };
 		857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DC8223A9E7D00833940 /* MockAppSettings.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
+		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
 		858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D02469BCDE00C36F8A /* DaxDialogs.swift */; };
 		858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxDialogTests.swift */; };
 		858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */; };
@@ -808,6 +809,7 @@
 		8577B0AD2225CA4F009CCC71 /* OnboardingPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPadViewController.swift; sourceTree = "<group>"; };
 		857D1DC8223A9E7D00833940 /* MockAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppSettings.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
+		85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTrayViewController.swift; sourceTree = "<group>"; };
 		858650D02469BCDE00C36F8A /* DaxDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogs.swift; sourceTree = "<group>"; };
 		858650D22469BFAD00C36F8A /* DaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogTests.swift; sourceTree = "<group>"; };
 		858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DaxOnboarding.storyboard; sourceTree = "<group>"; };
@@ -2700,6 +2702,7 @@
 				85371D232121B9D400920548 /* new_tab.json */,
 				8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */,
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
+				85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -3678,6 +3681,7 @@
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
+				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,

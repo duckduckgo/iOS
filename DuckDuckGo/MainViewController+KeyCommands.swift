@@ -139,25 +139,25 @@ extension MainViewController {
     @objc func keyboardEscape() {
         guard tabSwitcherController == nil else { return }
         findInPageView.done()
-        autocompleteController?.keyboardEscape()
+        hideSuggestionTray()
         onCancelPressed()
     }
     
     @objc func keyboardArrowDown() {
         guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardMoveSelectionDown()
+
+        if !suggestionTrayContainer.isHidden {
+            suggestionTrayController?.keyboardMoveSelectionDown()
         } else {
             currentTab?.webView.becomeFirstResponder()
         }
     }
-    
+
     @objc func keyboardArrowUp() {
         guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardMoveSelectionUp()
+
+        if !suggestionTrayContainer.isHidden {
+            suggestionTrayController?.keyboardMoveSelectionUp()
         } else {
             currentTab?.webView.becomeFirstResponder()
         }

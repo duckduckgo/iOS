@@ -39,7 +39,7 @@ class TabsBarViewController: UIViewController {
 
     private let tabSwitcherButton = TabSwitcherButton()
     private let longPressTabGesture = UILongPressGestureRecognizer()
-    
+
     var tabsCount: Int {
         return tabsModel?.count ?? 0
     }
@@ -53,7 +53,6 @@ class TabsBarViewController: UIViewController {
     }
 
     var numberOfItems: Int {
-        // (WIP - show all tabs with scrolling) return min(tabsCount, maxItems)
         return tabsCount
     }
     
@@ -119,13 +118,14 @@ class TabsBarViewController: UIViewController {
     private func configureGestures() {
         print("***", #function, collectionView.gestureRecognizers as Any)
         longPressTabGesture.addTarget(self, action: #selector(handleLongPressTabGesture))
+        longPressTabGesture.minimumPressDuration = 0.1
         collectionView.addGestureRecognizer(longPressTabGesture)
     }
     
     var pressedCell: TabsBarCell?
     
     @objc func handleLongPressTabGesture(gesture: UILongPressGestureRecognizer) {
-        print("***", #function, gesture)
+        // print("***", #function, gesture)
         switch gesture.state {
         case .began:
             guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
@@ -133,25 +133,29 @@ class TabsBarViewController: UIViewController {
 
         case .changed:
             guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
-            if pressedCell == nil {
-                pressedCell = collectionView.cellForItem(at: path) as? TabsBarCell
-                pressedCell?.isPressed = true
+            if pressedCell == nil, let cell = collectionView.cellForItem(at: path) as? TabsBarCell {
+                cell.isPressed = true
+                pressedCell = cell
                 collectionView.beginInteractiveMovementForItem(at: path)
             }
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
+            let location = CGPoint(x: gesture.location(in: collectionView).x, y: collectionView.center.y)
+            collectionView.updateInteractiveMovementTargetPosition(location)
             
         case .ended:
             collectionView.endInteractiveMovement()
-            pressedCell?.isPressed = false
-            pressedCell = nil
+            releasePressedCell()
 
         default:
             collectionView.cancelInteractiveMovement()
-            pressedCell?.isPressed = false
-            pressedCell = nil
+            releasePressedCell()
         }
     }
-     
+
+    private func releasePressedCell() {
+        pressedCell?.isPressed = false
+        pressedCell = nil
+    }
+    
     private func enableInteractionsWithPointer() {
         guard #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
         fireButton.isPointerInteractionEnabled = true
@@ -208,7 +212,7 @@ extension TabsBarViewController: UICollectionViewDelegate {
 extension TabsBarViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("***", #function, numberOfItems, tabsCount, maxItems)
+        print("***", #function, Date(), numberOfItems, tabsCount, maxItems)
         return numberOfItems
     }
 

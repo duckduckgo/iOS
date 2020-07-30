@@ -560,7 +560,8 @@ class MainViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         FormFactorConfigurator.shared.willResize(mainViewController: self, toWidth: size.width)
-        
+    
+        // Default behaviour was to keep dismiss the omnibar, continue that for the experiment
         if !DefaultVariantManager().isSupported(feature: .iPadImprovements) {
             dismissOmniBar()
         }
@@ -570,16 +571,14 @@ class MainViewController: UIViewController {
         print("***", #function, type)
 
         if suggestionTrayController?.willShow(for: type) ?? false {
-            if FormFactorConfigurator.shared.isPadFormFactor {
-                suggestionTrayController?.float(withWidth: omniBar.searchStackContainer.frame.width)
-            } else {
-                
+            FormFactorConfigurator.shared.configure(suggestionTrayViewController: suggestionTrayController, usingMainViewController: self)
+            
+            if !FormFactorConfigurator.shared.isPadFormFactor {
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()
                 }
-                
-                suggestionTrayController?.fill()
             }
+            
             suggestionTrayContainer.isHidden = false
         }
         

@@ -86,6 +86,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
+        if FormFactorConfigurator.shared.isPadFormFactor {
+            // (WIP) extract to constant
+            return 24
+        }
+        
         let margin: CGFloat
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2

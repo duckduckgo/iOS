@@ -401,8 +401,31 @@
                     <view key="view" contentMode="scaleToFill" id="jEf-yR-5Dz">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="908"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFZ-vQ-cny">
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="908"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="908" id="Jcf-as-Vyd"/>
+                                    <constraint firstAttribute="width" priority="999" constant="1366" id="WZ3-ov-mqO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="centerX" secondItem="jEf-yR-5Dz" secondAttribute="centerX" id="CJK-qB-84i"/>
+                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="height" secondItem="jEf-yR-5Dz" secondAttribute="height" id="gKT-Zt-2zV"/>
+                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="top" secondItem="jEf-yR-5Dz" secondAttribute="top" id="hvs-HM-K9E"/>
+                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="width" secondItem="jEf-yR-5Dz" secondAttribute="width" id="jpO-aL-TY6"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="containerView" destination="TFZ-vQ-cny" id="4LO-aD-chc"/>
+                        <outlet property="fullHeightConstraint" destination="gKT-Zt-2zV" id="nd3-q7-WXU"/>
+                        <outlet property="fullWidthConstraint" destination="jpO-aL-TY6" id="FTs-AN-EbR"/>
+                        <outlet property="topConstraint" destination="hvs-HM-K9E" id="6py-Of-EXG"/>
+                        <outlet property="variableHeightConstraint" destination="Jcf-as-Vyd" id="T4u-Od-GpQ"/>
+                        <outlet property="variableWidthConstraint" destination="WZ3-ov-mqO" id="hYf-8N-rhM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wGS-tb-jWH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

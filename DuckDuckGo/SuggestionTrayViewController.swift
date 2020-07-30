@@ -11,13 +11,20 @@ import Core
 
 class SuggestionTrayViewController: UIViewController {
     
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet var variableWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var fullWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var topConstraint: NSLayoutConstraint!
+    @IBOutlet var variableHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var fullHeightConstraint: NSLayoutConstraint!
+    
+    weak var autocompleteDelegate: AutocompleteViewControllerDelegate?
+    weak var favoritesOverlayDelegate: FavoritesOverlayDelegate?
+    
     private let appSettings = AppUserDefaults()
     private let homePageSettings = DefaultHomePageSettings()
     private let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
 
-    weak var autocompleteDelegate: AutocompleteViewControllerDelegate?
-    weak var favoritesOverlayDelegate: FavoritesOverlayDelegate?
-    
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     
@@ -66,12 +73,32 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func float(withWidth width: CGFloat) {
-        view.frame = CGRect(x: 20, y: 20, width: width, height: 300)
+        containerView.clipsToBounds = false
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOffset = .zero
+        containerView.layer.shadowOpacity = 1
+        containerView.layer.shadowRadius = 64
+
+        containerView.subviews.first?.layer.masksToBounds = true
+        containerView.subviews.first?.layer.cornerRadius = 16
+
+        topConstraint.constant = 15
+        variableHeightConstraint.constant = 276
+        variableWidthConstraint.constant = width
+        fullWidthConstraint.isActive = false
+        fullHeightConstraint.isActive = false
     }
     
     func fill() {
-        guard let frame = view.superview?.bounds else { return }
-        view.frame = frame
+        containerView.layer.shadowColor = UIColor.clear.cgColor
+        containerView.layer.cornerRadius = 0
+
+        containerView.subviews.first?.layer.masksToBounds = false
+        containerView.subviews.first?.layer.cornerRadius = 0
+
+        topConstraint.constant = 0
+        fullWidthConstraint.isActive = true
+        fullHeightConstraint.isActive = true
     }
     
     private func displayFavorites() -> Bool {
@@ -117,7 +144,8 @@ class SuggestionTrayViewController: UIViewController {
     
     private func install(controller: UIViewController) {
         addChild(controller)
-        view.addSubview(controller.view)
+        controller.view.frame = containerView.bounds
+        containerView.addSubview(controller.view)
         controller.didMove(toParent: self)
         controller.view.alpha = 0
         UIView.animate(withDuration: 0.2) {

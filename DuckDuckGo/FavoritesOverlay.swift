@@ -32,6 +32,7 @@ class FavoritesOverlay: UIViewController {
         static let footerPadding: CGFloat = 50
     }
     
+    private let layout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
     
@@ -41,8 +42,8 @@ class FavoritesOverlay: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         
         collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
         collectionView.delegate = self
@@ -60,6 +61,13 @@ class FavoritesOverlay: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        if FormFactorConfigurator.shared.isPadFormFactor {
+            layout.minimumInteritemSpacing = 32
+        } else {
+            layout.minimumInteritemSpacing = 10
+        }
+        
         collectionView.frame = view.bounds
         collectionView.reloadData()
     }

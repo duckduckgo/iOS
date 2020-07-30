@@ -48,6 +48,19 @@ class FormFactorConfigurator {
         print("***", #function, mainViewController.view.frame)
         willResize(mainViewController: mainViewController, toWidth: mainViewController.view.frame.width)
     }
+    
+    func configure(suggestionTrayViewController: SuggestionTrayViewController?, usingMainViewController mainViewController: MainViewController) {
+        
+        // Do this on the next pass so we definitely have the right width
+        DispatchQueue.main.async {
+            if self.isPadFormFactor {
+                suggestionTrayViewController?.float(withWidth: mainViewController.omniBar.searchStackContainer.frame.width + 24)
+            } else {
+                suggestionTrayViewController?.fill()
+            }
+        }
+        
+    }
         
     private func apply(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame, mainViewController.traitCollection.horizontalSizeClass == .regular ? "pad" : "phone")
@@ -58,6 +71,7 @@ class FormFactorConfigurator {
             applyPhone(toMainViewController: mainViewController)
         }
 
+        configure(suggestionTrayViewController: mainViewController.suggestionTrayController, usingMainViewController: mainViewController)
         mainViewController.applyTheme(ThemeManager.shared.currentTheme)
 
         print("***", #function, "navBarTop.constant", mainViewController.navBarTop.constant)
@@ -78,7 +92,6 @@ class FormFactorConfigurator {
         mainViewController.tabsBar.isHidden = false
         mainViewController.toolbar.isHidden = true
         mainViewController.omniBar.enterPadState()
-        mainViewController.suggestionTrayController?.float(withWidth: mainViewController.omniBar.searchStackContainer.frame.width)
     }
 
     private func applyPhone(toMainViewController mainViewController: MainViewController) {
@@ -86,7 +99,6 @@ class FormFactorConfigurator {
         mainViewController.tabsBar.isHidden = true
         mainViewController.toolbar.isHidden = false
         mainViewController.omniBar.enterPhoneState()
-        mainViewController.suggestionTrayController?.fill()
     }
 
 }

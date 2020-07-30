@@ -23,7 +23,19 @@ class AppIconSettingsCell: UICollectionViewCell {
 
     static let reuseIdentifier = "AppIconSettingsCell"
 
+    var appIcon: AppIcon! {
+        didSet {
+            imageView.image = appIcon.mediumImage
+            accessibilityLabel = appIcon.name
+        }
+    }
     @IBOutlet weak var imageView: UIImageView!
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        isAccessibilityElement = true
+        accessibilityTraits.insert(.button)
+    }
 
     override var isSelected: Bool {
         didSet {

@@ -102,7 +102,7 @@
 "privacy.protection.encryption.bits" = "%d bits";
 "privacy.protection.encryption.standard.message" = "An encrypted connection prevents eavesdropping of any personal information you send to a website.";
 "privacy.protection.encryption.mixed.message" = "This site has mixed encryption because some content is being served over unencrypted connections.";
-"privacy.protection.encryption.forced.message" = "We've forced this site to use an encrypted connection, preventing eavesdropping of any personal information you send to it.";
+"privacy.protection.encryption.forced.message" = "We’ve forced this site to use an encrypted connection, preventing eavesdropping of any personal information you send to it.";
 
 "privacy.protection.encryption.encrypted.heading" = "Encrypted Connection";
 "privacy.protection.encryption.forced.heading" = "Forced Encryption";
@@ -113,13 +113,13 @@
 
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
 
-"brokensite.category.images" = "Images didn't load";
+"brokensite.category.images" = "Images didn’t load";
 "brokensite.category.paywall" = "The site asked me to disable";
-"brokensite.category.comments" = "Comments didn't load";
-"brokensite.category.videos" = "Video didn't play";
-"brokensite.category.links" = "Links or buttons don't work";
+"brokensite.category.comments" = "Comments didn’t load";
+"brokensite.category.videos" = "Video didn’t play";
+"brokensite.category.links" = "Links or buttons don’t work";
 "brokensite.category.content" = "Content is missing";
-"brokensite.category.login" = "I can't login";
+"brokensite.category.login" = "I can’t login";
 "brokensite.category.unsupported" = "The browser is incompatible";
 "brokensite.category.other" = "Something else";
 
@@ -154,18 +154,26 @@
 "findinpage.title" = "Find in Page";
 "findinpage.count" = "%1$d of %2$d";
 
-"keyCommandShowAllTabs" = "Show all tabs";
-"keyCommandNewTab" = "New tab";
-"keyCommandCloseTab" = "Close tab";
-"keyCommandNextTab" = "Next tab";
-"keyCommandPreviousTab" = "Previous tab";
-"keyCommandBrowserForward" = "Browse forward";
-"keyCommandBrowserBack" = "Browse back";
-"keyCommandFind" = "Find in page";
-"keyCommandLocation" = "Search or enter address";
-"keyCommandFire" = "Clear all tabs and data";
+"keyCommandShowAllTabs" = "Show All Tabs";
+"keyCommandNewTab" = "New Tab";
+"keyCommandCloseTab" = "Close Tab";
+"keyCommandNextTab" = "Next Tab";
+"keyCommandPreviousTab" = "Previous Tab";
+"keyCommandBrowserForward" = "Browse Forward";
+"keyCommandBrowserBack" = "Browse Back";
+"keyCommandFind" = "Find in Page";
+"keyCommandLocation" = "Search or Enter Address";
+"keyCommandFire" = "Clear All Tabs and Data";
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
+"keyCommandFindNext" = "Find Next";
+"keyCommandFindNext" = "Find Previous";
+"keyCommandReload" = "Reload";
+"keyCommandPrint" = "Print";
+"keyCommandAddBookmark" = "Add Bookmark";
+"keyCommandAddFavorite" = "Add Favorite";
+"keyCommandOpenInNewTab" = "Open Link in New Tab";
+"keyCommandOpenInNewBackgroundTab" = "Open Link in Background";
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";
@@ -203,7 +211,7 @@
 "siteFeedback.messagePlaceholder" = "Which content or functionality is breaking?";
 "siteFeedback.buttonText" = "Submit Report";
 
-"feedback.start.header" = "Let's get started!";
+"feedback.start.header" = "Let’s get started!";
 "feedback.start.supplementary" = "How would you categorize your feedback?";
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
 
@@ -211,7 +219,7 @@
 "feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
 "feedback.positive.rate" = "Rate the App";
 "feedback.positive.submit" = "Share Details";
-"feedback.positive.noThanks" = "No thanks! I'm done";
+"feedback.positive.noThanks" = "No thanks! I’m done";
 
 "feedback.form.submit" = "Submit Feedback";
 
@@ -235,13 +243,13 @@
 "feedback.browserFeatures.bookmarks" = "Creating and managing bookmarks";
 "feedback.browserFeatures.other" = "None of these";
 
-"feedback.websiteLoading.entry" = "Certain websites don't load correctly";
+"feedback.websiteLoading.entry" = "Certain websites don’t load correctly";
 "feedback.websiteLoading.description" = "Website Loading Issues";
 "feedback.websiteLoading.form.supplementary" = "Where are you seeing these issues?";
 "feedback.websiteLoading.form.urlPlaceholder" = "Which website has issues?";
 "feedback.websiteLoading.form.placeholder" = "What content seems to be affected?";
 
-"feedback.ddgSearch.entry" = "DuckDuckGo search isn't good enough";
+"feedback.ddgSearch.entry" = "DuckDuckGo search isn’t good enough";
 "feedback.ddgSearch.description" = "DuckDuckGo Search Issues";
 "feedback.ddgSearch.caption" = "Which search feature can we add or improve?";
 "feedback.ddgSearch.technical" = "Programming/technical search";
@@ -251,7 +259,7 @@
 "feedback.ddgSearch.autocomplete" = "Better autocomplete";
 "feedback.ddgSearch.other" = "None of these";
 
-"feedback.customization.entry" = "There aren't enough ways to customize the app";
+"feedback.customization.entry" = "There aren’t enough ways to customize the app";
 "feedback.customization.description" = "Customization Issues";
 "feedback.customization.caption" = "Which customization option can we add or improve?";
 "feedback.customization.homeScreen" = "The home screen configuration";
@@ -286,7 +294,7 @@
 "preserveLogins.switch.title" = "Ask to Fireproof Websites";
 
 "preserveLogins.domain.list.title" = "Websites";
-"preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won't be erased and you'll stay signed in, even after using the Fire Button.";
+"preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button.";
 "preserveLogins.remove.all" = "Remove All";
 "preserveLogins.remove.all.ok" = "OK";
     
@@ -307,13 +315,13 @@
 "dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌";
 "dax.onboarding.browsing.after.search.cta" = "Phew!";
 
-"dax.onboarding.browsing.without.trackers" = "As you tap and scroll, I'll block pesky trackers.\n\nGo ahead - keep browsing!";
+"dax.onboarding.browsing.without.trackers" = "As you tap and scroll, I’ll block pesky trackers.\n\nGo ahead - keep browsing!";
 "dax.onboarding.browsing.without.trackers.cta" = "Got It";
 
-"dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don't worry!\n\nI'll block %1$@ from seeing your activity on those sites.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don’t worry!\n\nI’ll block %1$@ from seeing your activity on those sites.";
 "dax.onboarding.browsing.site.is.major.tracker.cta" =  "Got It";
 
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! %1$@ is owned by %2$@.\n\n%2$@'s trackers lurk on about %3$.0lf%% of top websites 😱 but don't worry!\n\nI'll block %2$@ from seeing your activity on those sites.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! %1$@ is owned by %2$@.\n\n%2$@’s trackers lurk on about %3$.0lf%% of top websites 😱 but don’t worry!\n\nI’ll block %2$@ from seeing your activity on those sites.";
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Got It";
 
 "dax.onboarding.browsing.one.tracker" = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";

@@ -71,8 +71,16 @@ class FaviconsTests: XCTestCase {
         default:
             XCTFail("Unexpected option")
         }
-        
+
+        // release builds will set an explicit 7 day, test builds use a smaller expiry
         switch options?[3] {
+        case .diskCacheExpiration: break
+
+        default:
+            XCTFail("Unexpected option")
+        }
+        
+        switch options?[4] {
         case .alternativeSources(let sources):
             XCTAssertEqual(2, sources.count)
             XCTAssertEqual(sources[0].url, URL(string: "https://example.com/favicon.ico"))

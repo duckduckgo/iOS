@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -58,15 +58,15 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
-                    <rect key="frame" x="266" y="6" width="477" height="40"/>
+                    <rect key="frame" x="266" y="8" width="477" height="36"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Atk-JN-lv8" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="477" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="477" height="36"/>
                             <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="20"/>
+                                    <integer key="value" value="18"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                     <color key="value" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -77,40 +77,40 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                            <rect key="frame" x="6" y="0.0" width="465" height="40"/>
+                            <rect key="frame" x="6" y="0.0" width="465" height="36"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
-                                    <rect key="frame" x="0.0" y="8" width="30" height="24"/>
+                                    <rect key="frame" x="0.0" y="6" width="30" height="24"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="WCw-cm-dCl"/>
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="375" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="375" height="36"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="36"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon more" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
-                                                    <rect key="frame" x="91" y="0.0" width="44" height="40"/>
+                                                    <rect key="frame" x="91" y="0.0" width="44" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" priority="999" constant="44" id="tni-MT-xSK"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon yahoo!" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
-                                                    <rect key="frame" x="60" y="0.0" width="26" height="40"/>
+                                                    <rect key="frame" x="60" y="0.0" width="26" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" priority="999" constant="26" id="Apc-Zx-Y0T"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
-                                                    <rect key="frame" x="31" y="0.0" width="26" height="40"/>
+                                                    <rect key="frame" x="31" y="0.0" width="26" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" priority="999" constant="26" id="bIP-ra-VYG"/>
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="36"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="siteRating">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                         <bool key="isElement" value="NO"/>
@@ -151,7 +151,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="345" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="345" height="36"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -192,7 +192,7 @@
                                     </connections>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                    <rect key="frame" x="405" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="405" y="0.0" width="30" height="36"/>
                                     <accessibility key="accessibilityConfiguration" label="Clear Text"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
@@ -203,7 +203,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-QY-LVl">
-                                    <rect key="frame" x="435" y="8" width="30" height="24"/>
+                                    <rect key="frame" x="435" y="6" width="30" height="24"/>
                                     <accessibility key="accessibilityConfiguration" label="Refresh Page"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="PHR-dd-ThY"/>
@@ -232,7 +232,6 @@
                         <constraint firstAttribute="bottom" secondItem="Atk-JN-lv8" secondAttribute="bottom" id="9Vy-sw-am3"/>
                         <constraint firstItem="N6K-Lj-Fn6" firstAttribute="top" secondItem="5D5-iT-bUk" secondAttribute="top" id="HJ5-s0-Q5X"/>
                         <constraint firstItem="Atk-JN-lv8" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" id="Ykr-2D-nXh"/>
-                        <constraint firstAttribute="height" constant="40" id="Ym7-YH-nQI"/>
                         <constraint firstAttribute="trailing" secondItem="N6K-Lj-Fn6" secondAttribute="trailing" constant="6" id="glC-XI-Ji8"/>
                         <constraint firstItem="N6K-Lj-Fn6" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" constant="6" id="h6T-pO-Lc3"/>
                         <constraint firstItem="Atk-JN-lv8" firstAttribute="top" secondItem="5D5-iT-bUk" secondAttribute="top" id="yG5-th-424"/>
@@ -288,7 +287,7 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-j4-fpl">
-                    <rect key="frame" x="0.0" y="52" width="1009" height="1"/>
+                    <rect key="frame" x="0.0" y="51" width="1009" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -300,6 +299,7 @@
             <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
+                <constraint firstItem="RdS-eI-aOp" firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="8" id="0Dd-A4-H8W"/>
                 <constraint firstItem="Xrl-6Y-ll0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="24" id="4w4-aZ-P7u"/>
                 <constraint firstItem="pg8-E6-C14" firstAttribute="leading" secondItem="RdS-eI-aOp" secondAttribute="leading" constant="16" id="D0r-SA-Vnj"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="centerX" secondItem="RdS-eI-aOp" secondAttribute="centerX" id="G7B-Lp-iiF"/>
@@ -308,7 +308,8 @@
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="centerY" secondItem="pg8-E6-C14" secondAttribute="centerY" id="cpt-g4-EIi"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="width" secondItem="ojX-nM-dyN" secondAttribute="width" priority="985" id="fsh-Of-De2"/>
                 <constraint firstItem="hD7-j4-fpl" firstAttribute="width" secondItem="ojX-nM-dyN" secondAttribute="width" id="j1n-Dg-LKz"/>
-                <constraint firstAttribute="bottom" secondItem="hD7-j4-fpl" secondAttribute="top" id="nfs-pA-DD4"/>
+                <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="RdS-eI-aOp" secondAttribute="top" constant="8" id="ndA-qm-eeF"/>
+                <constraint firstAttribute="bottom" secondItem="hD7-j4-fpl" secondAttribute="top" constant="1" id="nfs-pA-DD4"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pg8-E6-C14" secondAttribute="trailing" constant="24" id="qCb-MN-wKZ"/>
                 <constraint firstItem="hD7-j4-fpl" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" id="xxj-zc-Sw3"/>
                 <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="Xrl-6Y-ll0" secondAttribute="trailing" constant="16" id="yKn-ev-mu1"/>

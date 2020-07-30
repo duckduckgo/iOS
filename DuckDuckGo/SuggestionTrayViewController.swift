@@ -21,10 +21,17 @@ class SuggestionTrayViewController: UIViewController {
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     
-    enum SuggestionType {
+    enum SuggestionType: Equatable {
         
         case autocomplete(query: String)
         case favorites
+        
+        func hideOmnibarSeparator() -> Bool {
+            switch self {
+            case .autocomplete: return true
+            case .favorites: return false
+            }
+        }
         
     }
 
@@ -57,7 +64,16 @@ class SuggestionTrayViewController: UIViewController {
         print("***", #function)
         autocompleteController?.keyboardMoveSelectionUp()
     }
-
+    
+    func float(withWidth width: CGFloat) {
+        view.frame = CGRect(x: 20, y: 20, width: width, height: 300)
+    }
+    
+    func fill() {
+        guard let frame = view.superview?.bounds else { return }
+        view.frame = frame
+    }
+    
     private func displayFavorites() -> Bool {
         guard homePageSettings.favorites, !bookmarkStore.favorites.isEmpty else { return false }
 
@@ -107,6 +123,7 @@ class SuggestionTrayViewController: UIViewController {
         UIView.animate(withDuration: 0.2) {
             controller.view.alpha = 1
         }
+        
     }
     
 }

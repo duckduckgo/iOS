@@ -295,7 +295,7 @@ class MainViewController: UIViewController {
             ThemeManager.shared.refreshSystemTheme()
         }
         
-        FormFactorConfigurator.shared.traitCollectionDidChange(mainViewController: self, previousTraitCollection: previousTraitCollection)
+        // FormFactorConfigurator.shared.traitCollectionDidChange(mainViewController: self, previousTraitCollection: previousTraitCollection)
     }
 
     private func configureTabManager() {
@@ -559,15 +559,26 @@ class MainViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        dismissOmniBar()
+        FormFactorConfigurator.shared.willResize(mainViewController: self, toWidth: size.width)
+        
+        if !DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            dismissOmniBar()
+        }
     }
     
     func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
         print("***", #function, type)
-        
+
         if suggestionTrayController?.willShow(for: type) ?? false {
             if FormFactorConfigurator.shared.isPadFormFactor {
-                omniBar.hideSeparator()
+                suggestionTrayController?.float(withWidth: omniBar.searchStackContainer.frame.width)
+            } else {
+                
+                if type.hideOmnibarSeparator() {
+                    omniBar.hideSeparator()
+                }
+                
+                suggestionTrayController?.fill()
             }
             suggestionTrayContainer.isHidden = false
         }
@@ -615,8 +626,7 @@ class MainViewController: UIViewController {
             gestureBookmarksButton.layoutSubviews()
         }
         
-        FormFactorConfigurator.shared.layoutSubviews(mainViewController: self)
-
+        // FormFactorConfigurator.shared.layoutSubviews(mainViewController: self)
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {

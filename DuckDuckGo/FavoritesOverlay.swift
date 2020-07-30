@@ -58,6 +58,12 @@ class FavoritesOverlay: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.bounds
+        collectionView.reloadData()
+    }
+    
     private func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardDidShow),

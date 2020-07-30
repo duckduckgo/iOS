@@ -13,15 +13,20 @@ import Core
 ///  then this class tells them how and manage their own state if needed.
 class FormFactorConfigurator {
     
+    struct Constants {
+        
+        static let minPadWidth: CGFloat = 678
+        
+    }
+    
     static let shared = FormFactorConfigurator()
     
     let variantManager: VariantManager
     
-    var currentTraitCollection: UITraitCollection?
-    var currentWidth: CGFloat?
+    var currentWidth: CGFloat = 0
     
     var isPadFormFactor: Bool {
-        return variantManager.isSupported(feature: .iPadImprovements) && currentTraitCollection?.horizontalSizeClass == .regular
+        return variantManager.isSupported(feature: .iPadImprovements) && currentWidth >= Constants.minPadWidth
     }
         
     /// Only use constructor when testing
@@ -29,43 +34,24 @@ class FormFactorConfigurator {
         self.variantManager = variantManager
     }
     
-    func viewDidLoad(mainViewController: MainViewController) {
-        print("***", #function, mainViewController.view.frame)
-        apply(toMainViewController: mainViewController)
-    }
-    
-    func traitCollectionDidChange(mainViewController: MainViewController, previousTraitCollection: UITraitCollection?) {
-        print("***", #function, mainViewController.view.frame, previousTraitCollection as Any)
+    func willResize(mainViewController: MainViewController, toWidth width: CGFloat) {
+        print("***", #function, width)
         
-        if mainViewController.traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+        if width != currentWidth {
+            currentWidth = width
             apply(toMainViewController: mainViewController)
         }
         
     }
-
-    func layoutSubviews(mainViewController: MainViewController) {
-        print("***", #function, mainViewController.view.frame, mainViewController.view.traitCollection)
-
-        // we're interested in the state after the layout has completed
-        DispatchQueue.main.async {
-            let newWidth = mainViewController.view.frame.width
-            print("***", #function, "main.async", newWidth)
-
-            guard self.currentWidth != newWidth else { return }
-            self.currentWidth = newWidth
-
-            // to-do don't use traits, but use screen width throughout
-
-            mainViewController.tabsBarController?.refresh()
-        }
-    }
     
+    func viewDidLoad(mainViewController: MainViewController) {
+        print("***", #function, mainViewController.view.frame)
+        willResize(mainViewController: mainViewController, toWidth: mainViewController.view.frame.width)
+    }
+        
     private func apply(toMainViewController mainViewController: MainViewController) {
         print("***", #function, mainViewController.view.frame, mainViewController.traitCollection.horizontalSizeClass == .regular ? "pad" : "phone")
 
-        currentTraitCollection = mainViewController.traitCollection
-        currentWidth = mainViewController.view.frame.width
-        
         if isPadFormFactor {
             applyPad(toMainViewController: mainViewController)
         } else {
@@ -84,7 +70,6 @@ class FormFactorConfigurator {
 
             // If tabs have been udpated, do this async to make sure size calcs are current
             mainViewController.tabsBarController?.refresh()
-
         }
     }
     
@@ -93,6 +78,7 @@ class FormFactorConfigurator {
         mainViewController.tabsBar.isHidden = false
         mainViewController.toolbar.isHidden = true
         mainViewController.omniBar.enterPadState()
+        mainViewController.suggestionTrayController?.float(withWidth: mainViewController.omniBar.searchStackContainer.frame.width)
     }
 
     private func applyPhone(toMainViewController mainViewController: MainViewController) {
@@ -100,6 +86,7 @@ class FormFactorConfigurator {
         mainViewController.tabsBar.isHidden = true
         mainViewController.toolbar.isHidden = false
         mainViewController.omniBar.enterPhoneState()
+        mainViewController.suggestionTrayController?.fill()
     }
 
 }

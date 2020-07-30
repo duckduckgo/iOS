@@ -102,7 +102,7 @@ class SuggestionTrayViewController: UIViewController {
         guard let controller = autocompleteController else { return }
         controller.removeFromParent()
         controller.view.removeFromSuperview()
-        autocompleteDelegate = nil
+        autocompleteController = nil
     }
     
     private func removeFavorites() {

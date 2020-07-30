@@ -21,6 +21,8 @@ class SuggestionTrayViewController: UIViewController {
     weak var autocompleteDelegate: AutocompleteViewControllerDelegate?
     weak var favoritesOverlayDelegate: FavoritesOverlayDelegate?
     
+    var dismissHandler: (() -> Void)?
+    
     private let appSettings = AppUserDefaults()
     private let homePageSettings = DefaultHomePageSettings()
     private let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
@@ -41,7 +43,16 @@ class SuggestionTrayViewController: UIViewController {
         }
         
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        installDismissHandler()
+    }
 
+    @IBAction func onDismiss() {
+        dismissHandler?()
+    }
+    
     func willShow(for type: SuggestionType) -> Bool {
         print("***", #function, type)
         
@@ -99,6 +110,19 @@ class SuggestionTrayViewController: UIViewController {
         topConstraint.constant = 0
         fullWidthConstraint.isActive = true
         fullHeightConstraint.isActive = true
+    }
+    
+    private func installDismissHandler() {
+        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(onDismiss))
+        backgroundTap.cancelsTouchesInView = false
+        
+        let foregroundTap = UITapGestureRecognizer()
+        foregroundTap.cancelsTouchesInView = false
+        
+        backgroundTap.require(toFail: foregroundTap)
+        
+        view.addGestureRecognizer(backgroundTap)
+        containerView.addGestureRecognizer(foregroundTap)
     }
     
     private func displayFavorites() -> Bool {

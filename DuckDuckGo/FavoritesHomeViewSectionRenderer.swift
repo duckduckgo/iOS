@@ -86,7 +86,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
-        if FormFactorConfigurator.shared.isPadFormFactor {
+        if controller is FavoritesOverlay { // (WIP) too hacky?
             // (WIP) extract to constant
             return 24
         }

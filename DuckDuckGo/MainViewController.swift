@@ -238,6 +238,7 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let controller = segue.destination as? SuggestionTrayViewController {
+            controller.dismissHandler = dismissSuggestionTray
             controller.autocompleteDelegate = self
             controller.favoritesOverlayDelegate = self
             suggestionTrayController = controller
@@ -294,8 +295,11 @@ class MainViewController: UIViewController {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
-        
-        // FormFactorConfigurator.shared.traitCollectionDidChange(mainViewController: self, previousTraitCollection: previousTraitCollection)
+
+    }
+    
+    @objc func dismissSuggestionTray() {
+        dismissOmniBar()
     }
 
     private func configureTabManager() {
@@ -828,14 +832,17 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
+        hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
+        hideSuggestionTray()
         launchBrowsingMenu()
     }
 
     func onBookmarksPressed() {
+        hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
 
@@ -864,10 +871,12 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onRefreshPressed() {
+        hideSuggestionTray()
         currentTab?.refresh()
     }
     
     func onSharePressed() {
+        hideSuggestionTray()
         guard let link = currentTab?.link else { return }
         currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton)
     }

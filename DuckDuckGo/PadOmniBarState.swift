@@ -25,8 +25,8 @@ struct PadOmniBar {
         let showClear = false
         let showRefresh = false
         let showMenu = false
-        let showSettings = false
-        let showCancel: Bool = true
+        let showSettings = true
+        let showCancel: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -52,8 +52,8 @@ struct PadOmniBar {
         let showClear = true
         let showRefresh = false
         let showMenu = false
-        let showSettings = false
-        let showCancel: Bool = true
+        let showSettings = true
+        let showCancel: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -97,7 +97,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = false
+        let showShareButton: Bool = true
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -105,9 +105,9 @@ struct PadOmniBar {
         let showBackground = false
         let showClear = false
         let showRefresh = false
-        let showMenu = false
+        let showMenu = true
         let showSettings = false
-        let showCancel: Bool = true
+        let showCancel: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -124,7 +124,7 @@ struct PadOmniBar {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = false
+        let showShareButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -132,9 +132,9 @@ struct PadOmniBar {
         let showBackground = false
         let showClear = true
         let showRefresh = false
-        let showMenu = false
+        let showMenu = true
         let showSettings = false
-        let showCancel: Bool = true
+        let showCancel: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }

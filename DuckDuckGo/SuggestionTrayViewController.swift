@@ -93,6 +93,7 @@ class SuggestionTrayViewController: UIViewController {
             controller.didMove(toParent: self)
             autocompleteController = controller
         }
+        
         autocompleteController?.updateQuery(query: query)
         return true
     }

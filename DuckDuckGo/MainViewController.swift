@@ -565,11 +565,10 @@ class MainViewController: UIViewController {
     func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
         print("***", #function, type)
         
-        if FormFactorConfigurator.shared.isPadFormFactor {
-            omniBar.hideSeparator()
-        }
-        
         if suggestionTrayController?.willShow(for: type) ?? false {
+            if FormFactorConfigurator.shared.isPadFormFactor {
+                omniBar.hideSeparator()
+            }
             suggestionTrayContainer.isHidden = false
         }
         
@@ -810,11 +809,7 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        // displayAutocompleteSuggestions(forQuery: updatedQuery)
-        
-        if !updatedQuery.trimWhitespace().isEmpty {
-            showSuggestionTray(.autocomplete(query: updatedQuery))
-        }
+        showSuggestionTray(.autocomplete(query: updatedQuery))
     }
 
     func onOmniQuerySubmitted(_ query: String) {

@@ -73,6 +73,11 @@ public struct UserText {
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Navbar Edit button title")
     
+    public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
+    public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
+    public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
+    public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
+    
     public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", value: "Unknown Privacy Practices", comment: "Unknown Privacy Practices")
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", value: "Good Privacy Practices", comment: "Good Privacy Practices")
     public static let privacyProtectionTOSMixed = NSLocalizedString("privacy.protection.tos.mixed", value: "Mixed Privacy Practices", comment: "Mixed Privacy Practices")
@@ -137,7 +142,10 @@ public struct UserText {
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", value: "Thank You! Feedback submitted.", comment: "Feedback submitted confirmation")
     
     public static let customUrlSchemeTitle = NSLocalizedString("prompt.custom.url.scheme.title", value: "Open in Another App?", comment: "Switch apps?")
-    
+    public static func forCustomUrlSchemePrompt(url: URL) -> String {
+        let message = NSLocalizedString("prompt.custom.url.scheme.prompt", comment: "Would you like to open this URL... ")
+        return message.format(arguments: url.absoluteString)
+    }
     public static let customUrlSchemeOpen = NSLocalizedString("prompt.custom.url.scheme.open", value: "Yes", comment: "Open custom url button")
     public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", value: "No", comment: "Don't open custom url button")
     
@@ -202,6 +210,26 @@ public struct UserText {
     public static let homePageNavigationBar = NSLocalizedString("homepage.navigationBar", value: "Top", comment: "Navigation Bar Search")
     public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", value: "Center", comment: "Center Search")
     
+    public static func privacyGrade(_ grade: String) -> String {
+        let message = NSLocalizedString("privacy.protection.site.grade", comment: "Privacy grade %@")
+        return message.format(arguments: grade)
+    }
+    
+    public static func numberOfTabs(_ number: Int) -> String {
+        let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
+        return message.format(arguments: number)
+    }
+    
+    public static func openTab(withTitle title: String, atAddress address: String) -> String {
+        let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")
+        return message.format(arguments: title, address)
+    }
+    
+    public static func closeTab(withTitle title: String, atAddress address: String) -> String {
+        let message = NSLocalizedString("tab.close.with.title.and.address", comment: "Close tab with address")
+        return message.format(arguments: title, address)
+    }
+    
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "Favorite")
     
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "Welcome to DuckDuckGo!")
@@ -260,35 +288,4 @@ public struct UserText {
     public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", value: "There are only a few, and we tried to make them informative.", comment: "There are only a few, and we tried to make them informative.")
     public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", value: "Hide tips forever", comment: "Hide tips forever")
     public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", value: "Cancel", comment: "Cancel")
-    
-    // Plurals
-    public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
-    public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
-    public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
-    public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
-    
-    public static func forCustomUrlSchemePrompt(url: URL) -> String {
-        let message = NSLocalizedString("prompt.custom.url.scheme.prompt", comment: "Would you like to open this URL... ")
-        return message.format(arguments: url.absoluteString)
-    }
-    
-    public static func privacyGrade(_ grade: String) -> String {
-        let message = NSLocalizedString("privacy.protection.site.grade", comment: "Privacy grade %@")
-        return message.format(arguments: grade)
-    }
-    
-    public static func numberOfTabs(_ number: Int) -> String {
-        let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
-        return message.format(arguments: number)
-    }
-    
-    public static func openTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")
-        return message.format(arguments: title, address)
-    }
-    
-    public static func closeTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("tab.close.with.title.and.address", comment: "Close tab with address")
-        return message.format(arguments: title, address)
-    }
 }

@@ -98,6 +98,10 @@ public class Tab: NSObject, NSCoding {
         notifyObservers()
     }
     
+    func didUpdateFavicon() {
+        notifyObservers()
+    }
+    
     func addObserver(_ observer: TabObserver) {
         guard indexOf(observer) == nil else { return }
         observersHolder.append(WeaklyHeldTabObserver(observer: observer))

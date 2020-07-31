@@ -225,7 +225,7 @@ class TabViewController: UIViewController {
             ddgScripts.append(documentScript)
         }
         
-        faviconScript.webView = webView
+        faviconScript.delegate = self
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
@@ -1219,6 +1219,18 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
     func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
         siteRating?.surrogateInstalled(host)
         contentBlockerUserScript(script, detectedTracker: tracker)
+    }
+    
+}
+
+extension TabViewController: FaviconUserScriptDelegate {
+    
+    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
+        return webView.url?.host
+    }
+    
+    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage) {
+        tabModel.didUpdateFavicon()
     }
     
 }

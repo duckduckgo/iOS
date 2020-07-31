@@ -9,10 +9,6 @@
 import UIKit
 import Core
 
-// (WIP) spacer between tabs
-// (WIP) align tab bar icons vertically with close button
-// (WIP) highlight tabs for pointer
-
 class TabsBarCell: UICollectionViewCell {
     
     static let appUrls = AppUrls()
@@ -43,6 +39,8 @@ class TabsBarCell: UICollectionViewCell {
             removeButton.pointerStyleProvider = { button, effect, shape -> UIPointerStyle? in
                 return .init(effect: .lift(.init(view: button)))
             }
+            
+            contentView.addInteraction(UIPointerInteraction(delegate: self))
         }
         
     }
@@ -107,6 +105,15 @@ extension TabsBarCell: TabObserver {
     func didChange(tab: Tab) {
         applyModel(tab)
     }
+}
+
+@available(iOS 13.4, *)
+extension TabsBarCell: UIPointerInteractionDelegate {
+    
+    func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        return .init(effect: .highlight(.init(view: contentView)))
+    }
+    
 }
 
 // Based on https://stackoverflow.com/a/53847223/73479

@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-Lb-veV">
-                                <rect key="frame" x="171" y="14" width="33.5" height="16"/>
+                                <rect key="frame" x="171" y="12" width="33.5" height="16"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" header="YES"/>
                                 </accessibility>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-vl-rDZ">
-                                <rect key="frame" x="316" y="5" width="50" height="34"/>
+                                <rect key="frame" x="316" y="3" width="50" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="3is-x4-uWE"/>
                                     <constraint firstAttribute="height" constant="34" id="XXt-3T-rvh"/>
@@ -43,7 +43,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
-                                <rect key="frame" x="0.0" y="48" width="375" height="575"/>
+                                <rect key="frame" x="0.0" y="46" width="375" height="577"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="664" id="Ebu-rn-pgR"/>
@@ -332,7 +332,7 @@
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aH-nO-H3f">
-                                <rect key="frame" x="10" y="5" width="34" height="34"/>
+                                <rect key="frame" x="10" y="3" width="34" height="34"/>
                                 <accessibility key="accessibilityConfiguration" label="Add all tabs as bookmarks"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="6Q4-Ue-lyF"/>
@@ -344,7 +344,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="0Ot-ck-ucS">
-                                <rect key="frame" x="213" y="10" width="84" height="24"/>
+                                <rect key="frame" x="213" y="8" width="84" height="24"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIV-4q-5mj">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="24"/>
@@ -370,7 +370,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kW3-ZC-Axl">
-                                <rect key="frame" x="310" y="5.5" width="41" height="33"/>
+                                <rect key="frame" x="310" y="3.5" width="41" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
@@ -399,7 +399,7 @@
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="9" id="moD-HB-CMD"/>
                             <constraint firstItem="kW3-ZC-Axl" firstAttribute="centerY" secondItem="2aH-nO-H3f" secondAttribute="centerY" id="nEe-Fk-lIy"/>
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="0Ot-ck-ucS" secondAttribute="trailing" constant="78" id="pXs-zp-2nK"/>
-                            <constraint firstItem="Cy7-Lb-veV" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="14" id="pXw-xW-sAg"/>
+                            <constraint firstItem="Cy7-Lb-veV" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="12" id="pXw-xW-sAg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nqt-nV-6p2"/>
                     </view>
@@ -542,7 +542,7 @@
                                 </cells>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="aDD-d2-KuN">
-                                <rect key="frame" x="638" y="0.0" width="138" height="44"/>
+                                <rect key="frame" x="638" y="-2" width="138" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYd-YU-sSj">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="44"/>
@@ -581,7 +581,7 @@
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="leading" secondItem="Glx-L8-VF7" secondAttribute="leading" constant="8" id="RGE-7m-yXx"/>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="height" secondItem="8BH-do-lHc" secondAttribute="height" id="c2u-Ow-7wx"/>
                             <constraint firstItem="Glx-L8-VF7" firstAttribute="trailing" secondItem="aDD-d2-KuN" secondAttribute="trailing" constant="24" id="drm-rF-cl7"/>
-                            <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="Glx-L8-VF7" secondAttribute="top" id="gao-OH-EED"/>
+                            <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="Glx-L8-VF7" secondAttribute="top" constant="-2" id="gao-OH-EED"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="8" id="z6F-x8-cQ6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Glx-L8-VF7"/>

@@ -22,6 +22,7 @@ class TabsBarCell: UICollectionViewCell {
     @IBOutlet weak var faviconImage: UIImageView!
     @IBOutlet weak var topBackgroundView: UIView!
     @IBOutlet weak var bottomBackgroundView: UIView!
+    @IBOutlet weak var separatorView: UIView!
     @IBOutlet var labelRemoveButtonConstraint: NSLayoutConstraint!
     
     var isPressed = false {
@@ -60,7 +61,7 @@ class TabsBarCell: UICollectionViewCell {
         
     }
 
-    func update(model: Tab, isCurrent: Bool, withTheme theme: Theme) {
+    func update(model: Tab, isCurrent: Bool, nextIsCurrent: Bool, withTheme theme: Theme) {
         accessibilityElements = [label as Any, removeButton as Any]
         
         self.model?.removeObserver(self)
@@ -74,9 +75,11 @@ class TabsBarCell: UICollectionViewCell {
         } else {
             topBackgroundView.backgroundColor = .clear
             bottomBackgroundView.backgroundColor = .clear
+            separatorView.backgroundColor = theme.tabsBarSeparatorColor
         }
 
         labelRemoveButtonConstraint.isActive = isCurrent
+        separatorView.isHidden = isCurrent || nextIsCurrent
         removeButton.isHidden = !isCurrent
         
         applyModel(model)

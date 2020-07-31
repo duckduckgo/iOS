@@ -33,6 +33,8 @@ protocol Theme {
     var keyboardAppearance: UIKeyboardAppearance { get }
 
     var padBackgroundColor: UIColor { get }
+    var tabsBarSeparatorColor: UIColor { get } 
+    
     var backgroundColor: UIColor { get }
     
     var barBackgroundColor: UIColor { get }

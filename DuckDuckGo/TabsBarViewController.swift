@@ -226,7 +226,8 @@ extension TabsBarViewController: UICollectionViewDataSource {
         }
         
         let isCurrent = indexPath.row == currentIndex
-        cell.update(model: model, isCurrent: isCurrent, withTheme: ThemeManager.shared.currentTheme)
+        let nextIsCurrent = indexPath.row + 1 == currentIndex
+        cell.update(model: model, isCurrent: isCurrent, nextIsCurrent: nextIsCurrent, withTheme: ThemeManager.shared.currentTheme)
         cell.onRemove = { [weak self] in
             guard let self = self else { return }
             self.delegate?.tabsBar(self, didRemoveTabAtIndex: indexPath.row)

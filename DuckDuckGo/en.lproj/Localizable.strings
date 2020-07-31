@@ -167,7 +167,7 @@
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
 "keyCommandFindNext" = "Find Next";
-"keyCommandFindNext" = "Find Previous";
+"keyCommandFindPrevious" = "Find Previous";
 "keyCommandReload" = "Reload";
 "keyCommandPrint" = "Print";
 "keyCommandAddBookmark" = "Add Bookmark";

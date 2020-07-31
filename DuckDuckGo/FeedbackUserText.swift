@@ -22,148 +22,213 @@ import Foundation
 extension UserText {
     
     public static let siteFeedbackTitle = NSLocalizedString("siteFeedback.title",
-                                                              comment: "Report a Broken Site")
+                                                            value: "Report a Broken Site",
+                                                            comment: "This is a form title")
     public static let siteFeedbackSubtitle = NSLocalizedString("siteFeedback.subtitle",
-                                                            comment: "Broken site reporting is completely anonymous and helps us to improve the app!")
+                                                               value: "Broken site reporting is completely anonymous and helps us to improve the app!",
+                                                               comment: "")
     public static let siteFeedbackDomainInfo = NSLocalizedString("siteFeedback.domainInfo",
-                                                                         comment: "Domain of Broken Site:")
+                                                                 value: "Domain of Broken Site:",
+                                                                 comment: "Domain is an URL address")
     public static let siteFeedbackURLPlaceholder = NSLocalizedString("siteFeedback.urlPlaceholder",
-                                                               comment: "Which website is broken?")
+                                                                     value: "Which website is broken?",
+                                                                     comment: "")
     public static let siteFeedbackMessagePlaceholder = NSLocalizedString("siteFeedback.messagePlaceholder",
-                                                                     comment: "Which content or functionality is breaking?")
+                                                                         value: "Which content or functionality is breaking?",
+                                                                         comment: "")
     public static let siteFeedbackButtonText = NSLocalizedString("siteFeedback.buttonText",
-                                                                         comment: "Submit Report")
+                                                                 value: "Submit Report",
+                                                                 comment: "Report a Broken Site screen confirmation button")
     
     public static let feedbackStartHeader = NSLocalizedString("feedback.start.header",
-                                                              comment: "Let's get started!")
+                                                              value: "Let’s get started!",
+                                                              comment: "")
     public static let feedbackStartSupplementary = NSLocalizedString("feedback.start.supplementary",
-                                                                     comment: "How would you categorize your feedback?")
+                                                                     value: "How would you categorize your feedback?",
+                                                                     comment: "")
     public static let feedbackStartFooter = NSLocalizedString("feedback.start.footer",
-                                                              comment: "Your anonymous feedback is important to us.")
+                                                              value: "Your anonymous feedback is important to us.",
+                                                              comment: "")
     
     public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
-                                                                 comment: "Awesome to hear!")
+                                                                 value: "Awesome to hear!",
+                                                                 comment: "")
     public static let feedbackPositiveSupplementary = NSLocalizedString("feedback.positive.supplementary",
-                                                                        comment: "Please share the love by rating the app on the App Store")
+                                                                        value: "Please share the love by rating the app on the App Store",
+                                                                        comment: "")
     public static let feedbackPositiveRate = NSLocalizedString("feedback.positive.rate",
-                                                               comment: "Rate the App")
+                                                               value: "Rate the App",
+                                                               comment: "")
     public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
-                                                                comment: "Share Details")
+                                                                value: "Share Details",
+                                                                comment: "Button encouraging uses to share details aboout their feedback")
     public static let feedbackPositiveNoThanks = NSLocalizedString("feedback.positive.noThanks",
-                                                                   comment: "No thanks! I'm done")
+                                                                   value: "No thanks! I’m done",
+                                                                   comment: "")
     
     public static let feedbackFormSubmit = NSLocalizedString("feedback.form.submit",
-                                                             comment: "Submit Feedback")
+                                                             value: "Submit Feedback",
+                                                             comment: "Confirmation button")
     
     public static let feedbackPositiveFormHeader = NSLocalizedString("feedback.positive.form.header",
-                                                                     comment: "Share Details")
+                                                                     value: "Share Details",
+                                                                     comment: "Header above input field")
     public static let feedbackPositiveFormSupplementary = NSLocalizedString("feedback.positive.form.supplementary",
-                                                                            comment: "Is there anything specific you’d like to share with the team?")
+                                                                            value: "Are there any details you’d like to share with the team?",
+                                                                            comment: "")
     public static let feedbackPositiveFormPlaceholder = NSLocalizedString("feedback.positive.form.placeholder",
-                                                                          comment: "What have you been enjoying?")
+                                                                          value: "What have you been enjoying?",
+                                                                          comment: "")
     
     public static let feedbackNegativeHeader = NSLocalizedString("feedback.negative.header",
-                                                                 comment: "We’re sorry to hear that.")
+                                                                 value: "We’re sorry to hear that.",
+                                                                 comment: "")
     public static let feedbackNegativeSupplementary = NSLocalizedString("feedback.negative.supplementary",
-                                                                            comment: "What is your frustration most related to?")
+                                                                        value: "What is your frustration most related to?",
+                                                                        comment: "")
     public static let feedbackNegativeFormPlaceholder = NSLocalizedString("feedback.negative.form.placeholder",
-                                                                          comment: "Are there any specifics you’d like to include?")
+                                                                          value: "Are there any specifics you’d like to include?",
+                                                                          comment: "")
     public static let feedbackNegativeFormGenericPlaceholder = NSLocalizedString("feedback.negative.form.genericPlaceholder",
-                                                                        comment: "Please be as specific as possible")
+                                                                                 value: "Please be as specific as possible",
+                                                                                 comment: "")
     
     public static let browserFeatureIssuesEntry = NSLocalizedString("feedback.browserFeatures.entry",
-                                                                    comment: "Browsing features are missing or frustrating")
+                                                                    value: "Browsing features are missing or frustrating",
+                                                                    comment: "")
     public static let browserFeatureIssuesDescription = NSLocalizedString("feedback.browserFeatures.description",
-                                                                          comment: "Browser feature issues")
+                                                                          value: "Browser Feature Issues",
+                                                                          comment: "")
     public static let browserFeatureIssuesCaption = NSLocalizedString("feedback.browserFeatures.caption",
-                                                                      comment: "Which browsing feature can we add or improve?")
+                                                                      value: "Which browsing feature can we add or improve?",
+                                                                      comment: "")
     public static let browserFeatureIssuesNavigation = NSLocalizedString("feedback.browserFeatures.navigation",
-                                                                         comment: "Navigating forward, backward, and/or refreshing")
+                                                                         value: "Navigating forward, backward, and/or refreshing",
+                                                                         comment: "")
     public static let browserFeatureIssuesTabs = NSLocalizedString("feedback.browserFeatures.tabs",
-                                                                   comment: "Creating and managing tabs")
+                                                                   value: "Creating and managing tabs",
+                                                                   comment: "")
     public static let browserFeatureIssuesAds = NSLocalizedString("feedback.browserFeatures.ads",
-                                                                  comment: "Ad and pop-up blocking")
+                                                                  value: "Ad and pop-up blocking",
+                                                                  comment: "")
     public static let browserFeatureIssuesVideos = NSLocalizedString("feedback.browserFeatures.videos",
-                                                                     comment: "Watching videos")
+                                                                     value: "Watching videos",
+                                                                     comment: "")
     public static let browserFeatureIssuesImages = NSLocalizedString("feedback.browserFeatures.images",
-                                                                     comment: "Interacting with images")
+                                                                     value: "Interacting with images",
+                                                                     comment: "")
     public static let browserFeatureIssuesBookmarks = NSLocalizedString("feedback.browserFeatures.bookmarks",
-                                                                        comment: "Creating and managing bookmarks")
+                                                                        value: "Creating and managing bookmarks",
+                                                                        comment: "")
     public static let browserFeatureIssuesOther = NSLocalizedString("feedback.browserFeatures.other",
-                                                                    comment: "None of these")
+                                                                    value: "None of these",
+                                                                    comment: "")
     
     public static let websiteLoadingIssuesEntry = NSLocalizedString("feedback.websiteLoading.entry",
-                                                                    comment: "Certain websites don't load correctly")
+                                                                    value: "Certain websites don’t load correctly",
+                                                                    comment: "")
     public static let websiteLoadingIssuesDescription = NSLocalizedString("feedback.websiteLoading.description",
-                                                                          comment: "Website loading issues")
+                                                                          value: "Website Loading Issues",
+                                                                          comment: "")
     public static let websiteLoadingIssuesFormSupplementary = NSLocalizedString("feedback.websiteLoading.form.supplementary",
-                                                                          comment: "Where are you seeing these issues?")
+                                                                                value: "Where are you seeing these issues?",
+                                                                                comment: "")
     public static let websiteLoadingIssuesFormURLPlaceholder = NSLocalizedString("feedback.websiteLoading.form.urlPlaceholder",
-                                                                              comment: "Which website has issues?")
+                                                                                 value: "Which website has issues?",
+                                                                                 comment: "")
     public static let websiteLoadingIssuesFormPlaceholder = NSLocalizedString("feedback.websiteLoading.form.placeholder",
-                                                                                comment: "What content seems to be affected?")
+                                                                              value: "What content seems to be affected?",
+                                                                              comment: "")
     
     public static let ddgSearchIssuesEntry = NSLocalizedString("feedback.ddgSearch.entry",
-                                                               comment: "DuckDuckGo search isn't good enough")
+                                                               value: "DuckDuckGo search isn’t good enough",
+                                                               comment: "")
     public static let ddgSearchIssuesDescription = NSLocalizedString("feedback.ddgSearch.description",
-                                                                     comment: "DuckDuckGo search issues")
+                                                                     value: "DuckDuckGo Search Issues",
+                                                                     comment: "")
     public static let ddgSearchIssuesCaption = NSLocalizedString("feedback.ddgSearch.caption",
-                                                                 comment: "Which search feature can we add or improve?")
+                                                                 value: "Which search feature can we add or improve?",
+                                                                 comment: "")
     public static let ddgSearchIssuesTechnical = NSLocalizedString("feedback.ddgSearch.technical",
-                                                                   comment: "Programming/technical search")
+                                                                   value: "Programming/technical search",
+                                                                   comment: "")
     public static let ddgSearchIssuesLayout = NSLocalizedString("feedback.ddgSearch.layout",
-                                                                comment: "The layout should be more like Google")
+                                                                value: "The layout should be more like Google",
+                                                                comment: "")
     public static let ddgSearchIssuesSpeed = NSLocalizedString("feedback.ddgSearch.loadTime",
-                                                                  comment: "Faster load time")
+                                                               value: "Faster load time",
+                                                               comment: "")
     public static let ddgSearchIssuesLanguageOrRegion = NSLocalizedString("feedback.ddgSearch.languageOrRegion",
-                                                                          comment: "Searching in a specific language or reason")
+                                                                          value: "Searching in a specific language or region",
+                                                                          comment: "")
     public static let ddgSearchIssuesAutocomplete = NSLocalizedString("feedback.ddgSearch.autocomplete",
-                                                                      comment: "Better autocomplete")
+                                                                      value: "Better autocomplete",
+                                                                      comment: "")
     public static let ddgSearchIssuesOther = NSLocalizedString("feedback.ddgSearch.other",
-                                                               comment: "None of these")
+                                                               value: "None of these",
+                                                               comment: "")
     
     public static let customizationIssuesEntry = NSLocalizedString("feedback.customization.entry",
-                                                                   comment: "There aren't enough ways to customize the app")
+                                                                   value: "There aren’t enough ways to customize the app",
+                                                                   comment: "")
     public static let customizationIssuesDescription = NSLocalizedString("feedback.customization.description",
-                                                                         comment: "Customization issues")
+                                                                         value: "Customization Issues",
+                                                                         comment: "")
     public static let customizationIssuesCaption = NSLocalizedString("feedback.customization.caption",
-                                                                     comment: "Which customization option can we add or improve?")
+                                                                     value: "Which customization option can we add or improve?",
+                                                                     comment: "")
     public static let customizationIssuesHomeScreen = NSLocalizedString("feedback.customization.homeScreen",
-                                                                        comment: "The home screen configuration")
+                                                                        value: "The home screen configuration",
+                                                                        comment: "")
     public static let customizationIssuesTabs = NSLocalizedString("feedback.customization.tabs",
-                                                                  comment: "How tabs are displayed")
+                                                                  value: "How tabs are displayed",
+                                                                  comment: "")
     public static let customizationIssuesUI = NSLocalizedString("feedback.customization.ui",
-                                                                comment: "How the app looks")
+                                                                value: "How the app looks",
+                                                                comment: "")
     public static let customizationIssuesWhatIsCleared = NSLocalizedString("feedback.customization.whatIsCleared",
-                                                                           comment: "Which data is cleared")
-    public static let customizationIssuesWhenIsCleared = NSLocalizedString("feedback.customization.whenIsCleared",
-                                                                           comment: "When data is cleared")
+                                                                           value: "Which data is cleared",
+                                                                           comment: "")
+    public static let customizationIssuesWhenIsCleared = NSLocalizedString("feedback.customization.whenIsCleared", value: "When data is cleared",
+                                                                           comment: "")
     public static let customizationIssuesBookmarks = NSLocalizedString("feedback.customization.bookmarks",
-                                                                       comment: "How bookmarks are displayed")
+                                                                       value: "How bookmarks are displayed",
+                                                                       comment: "")
     public static let customizationIssuesOther = NSLocalizedString("feedback.customization.other",
-                                                                   comment: "None of these")
+                                                                   value: "None of these",
+                                                                   comment: "")
     
     public static let performanceIssuesEntry = NSLocalizedString("feedback.performance.entry",
-                                                                 comment: "The app is slow, buggy, or crashes")
+                                                                 value: "The app is slow, buggy, or crashes",
+                                                                 comment: "")
     public static let performanceIssuesDescription = NSLocalizedString("feedback.performance.description",
-                                                                       comment: "Performance issues")
+                                                                       value: "Performance Issues",
+                                                                       comment: "")
     public static let performanceIssuesCaption = NSLocalizedString("feedback.performance.caption",
-                                                                   comment: "Which issue are you experiencing?")
+                                                                   value: "Which issue are you experiencing?",
+                                                                   comment: "")
     public static let performanceIssuesSlowLoading = NSLocalizedString("feedback.performance.slowLoading",
-                                                                       comment: "Web pages or search results load slowly")
+                                                                       value: "Web pages or search results load slowly",
+                                                                       comment: "")
     public static let performanceIssuesCrashes = NSLocalizedString("feedback.performance.crashes",
-                                                                   comment: "The app crashes or freezes")
+                                                                   value: "The app crashes or freezes",
+                                                                   comment: "")
     public static let performanceIssuesPlayback = NSLocalizedString("feedback.performance.playback",
-                                                                    comment: "Video or media playback bugs")
+                                                                    value: "Video or media playback bugs",
+                                                                    comment: "")
     public static let performanceIssuesOther = NSLocalizedString("feedback.performance.other",
-                                                                 comment: "None of these")
+                                                                 value: "None of these",
+                                                                 comment: "")
     
     public static let otherIssuesEntry = NSLocalizedString("feedback.other.entry",
-                                                           comment: "None of these")
+                                                           value: "None of these",
+                                                           comment: "")
     public static let otherIssuesDescription = NSLocalizedString("feedback.other.description",
-                                                                 comment: "Other issues")
+                                                                 value: "Other Issues",
+                                                                 comment: "")
     
     public static let feedbackFormCaption = NSLocalizedString("feedback.form.caption",
-                                                              comment: "Please tell us what we can improve")
+                                                              value: "Please tell us what we can improve",
+                                                              comment: "")
     
 }

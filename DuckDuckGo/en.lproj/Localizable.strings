@@ -236,8 +236,6 @@
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
 
 "feedback.positive.header" = "Awesome to hear!";
-"feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
-"feedback.positive.rate" = "Rate the App";
 "feedback.positive.submit" = "Share Details";
 "feedback.positive.noThanks" = "No thanks! I’m done";
 

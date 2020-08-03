@@ -43,10 +43,6 @@ extension UserText {
     
     public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
                                                                  comment: "Awesome to hear!")
-    public static let feedbackPositiveSupplementary = NSLocalizedString("feedback.positive.supplementary",
-                                                                        comment: "Please share the love by rating the app on the App Store")
-    public static let feedbackPositiveRate = NSLocalizedString("feedback.positive.rate",
-                                                               comment: "Rate the App")
     public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
                                                                 comment: "Share Details")
     public static let feedbackPositiveNoThanks = NSLocalizedString("feedback.positive.noThanks",

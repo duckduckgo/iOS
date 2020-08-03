@@ -909,11 +909,6 @@ extension MainViewController: OmniBarDelegate {
         launchBrowsingMenu()
     }
 
-    @objc func onBookmarksPressed() {
-        hideSuggestionTray()
-        performSegue(withIdentifier: "Bookmarks", sender: self)
-    }
-
     func onDismissed() {
         dismissOmniBar()
     }

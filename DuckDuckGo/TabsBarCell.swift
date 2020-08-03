@@ -9,13 +9,9 @@
 import UIKit
 import Core
 
-// (WIP) long press bookmark
 // (WIP) shadow on tray is glitchy
 // (WIP) scroll bars on tray
 // (WIP) list view tab switcher centering looks dodgy
-// (WIP) FormFactor... name -> Wide vs Thin screen
-// (WIP) encapsulate size logic in main view controller
-// (WIP) remove rate app button
 
 class TabsBarCell: UICollectionViewCell {
     

@@ -131,7 +131,8 @@ class MainViewController: UIViewController {
         tabsBarController?.tabsModel = tabManager.model
         tabsBarController?.refresh()
 
-        FormFactorConfigurator.shared.viewDidLoad(mainViewController: self)
+        _ = FormFactorConfigurator.shared.willResize(toWidth: view.frame.width)
+        applyWidth()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -563,7 +564,10 @@ class MainViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        FormFactorConfigurator.shared.willResize(mainViewController: self, toWidth: size.width)
+        
+        if FormFactorConfigurator.shared.willResize(toWidth: size.width) {
+            applyWidth()
+        }
     
         // Default behaviour was to keep dismiss the omnibar, continue that for the experiment
         if !DefaultVariantManager().isSupported(feature: .iPadImprovements) {
@@ -571,12 +575,56 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func applyWidth() {
+        guard DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
+
+        if FormFactorConfigurator.shared.isPadFormFactor {
+            applyLargeWidth()
+        } else {
+            applySmallWidth()
+        }
+
+        applyTheme(ThemeManager.shared.currentTheme)
+
+        DispatchQueue.main.async {
+            // Do this async otherwise the toolbar buttons skew to the right
+            if self.navBarTop.constant >= 0 {
+                self.showBars()
+            }
+            // If tabs have been udpated, do this async to make sure size calcs are current
+            self.tabsBarController?.refresh()
+            
+            // Do this on the next UI thread pass so we definitely have the right width
+            self.applyWidthToTrayController()
+        }
+    }
+    
+    private func applyWidthToTrayController() {
+        if FormFactorConfigurator.shared.isPadFormFactor {
+            self.suggestionTrayController?.float(withWidth: self.omniBar.searchStackContainer.frame.width + 24)
+        } else {
+            self.suggestionTrayController?.fill()
+        }
+    }
+    
+    private func applyLargeWidth() {
+        tabsBar.isHidden = false
+        toolbar.isHidden = true
+        omniBar.enterPadState()
+    }
+
+    private func applySmallWidth() {
+        tabsBar.isHidden = true
+        toolbar.isHidden = false
+        omniBar.enterPhoneState()
+    }
+
     func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
         print("***", #function, type)
 
         if suggestionTrayController?.willShow(for: type) ?? false {
-            FormFactorConfigurator.shared.configure(suggestionTrayViewController: suggestionTrayController, usingMainViewController: self)
-            
+            applyWidthToTrayController()
+
             if !FormFactorConfigurator.shared.isPadFormFactor {
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()

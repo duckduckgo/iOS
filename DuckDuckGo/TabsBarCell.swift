@@ -141,7 +141,7 @@ class FadeOutLabel: UILabel {
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
                                         colors: colors as CFArray,
-                                        locations: [0.5, 1]) else { return nil }
+                                        locations: [0.8, 1]) else { return nil }
 
         let context = UIGraphicsGetCurrentContext()
         context?.drawLinearGradient(gradient,

@@ -45,9 +45,6 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
                                 <rect key="frame" x="0.0" y="46" width="375" height="577"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="664" id="Ebu-rn-pgR"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="206"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -391,7 +388,7 @@
                             <constraint firstItem="2aH-nO-H3f" firstAttribute="leading" secondItem="Nqt-nV-6p2" secondAttribute="leading" constant="10" id="IuL-gt-D87"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="XZT-ek-lrC" secondAttribute="bottom" id="J8G-Xc-ZM0"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="centerX" secondItem="Nqt-nV-6p2" secondAttribute="centerX" id="SmA-Z9-yAN"/>
-                            <constraint firstItem="XZT-ek-lrC" firstAttribute="width" secondItem="Nqt-nV-6p2" secondAttribute="width" priority="999" id="XCa-fk-cv9"/>
+                            <constraint firstItem="XZT-ek-lrC" firstAttribute="width" secondItem="Nqt-nV-6p2" secondAttribute="width" id="XCa-fk-cv9"/>
                             <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="kW3-ZC-Axl" secondAttribute="trailing" constant="24" id="bgO-Am-XdB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
                             <constraint firstItem="kW3-ZC-Axl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0Ot-ck-ucS" secondAttribute="trailing" id="g3D-GF-VHM"/>
@@ -410,7 +407,6 @@
                         <outlet property="displayModeTrailingConstraint" destination="moD-HB-CMD" id="E8h-Fv-6Md"/>
                         <outlet property="doneButton" destination="S1O-aT-Bgw" id="8I7-gH-bhZ"/>
                         <outlet property="fireButton" destination="h1S-c2-Spf" id="VfW-9h-WGv"/>
-                        <outlet property="maxWidthConstraint" destination="Ebu-rn-pgR" id="1XO-kj-TUK"/>
                         <outlet property="padDoneButton" destination="kW3-ZC-Axl" id="cZJ-RO-Boo"/>
                         <outlet property="padFireButton" destination="5nO-MZ-vSY" id="FfV-uD-cYB"/>
                         <outlet property="padPlusButton" destination="uIV-4q-5mj" id="JoC-2j-xg2"/>

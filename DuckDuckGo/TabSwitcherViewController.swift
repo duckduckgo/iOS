@@ -49,7 +49,6 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var padPlusButton: UIButton!
     @IBOutlet weak var padDoneButton: UIButton!
 
-    @IBOutlet var maxWidthConstraint: NSLayoutConstraint!
     @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
 
     weak var delegate: TabSwitcherDelegate!
@@ -82,16 +81,11 @@ class TabSwitcherViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        refreshCollectionViewWidth()
         toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
         displayModeTrailingConstraint.isActive = !AppWidthObserver.shared.isLargeWidth
         padFireButton.isHidden = !AppWidthObserver.shared.isLargeWidth
         padDoneButton.isHidden = !AppWidthObserver.shared.isLargeWidth
         padPlusButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-    }
-    
-    private func refreshCollectionViewWidth() {
-        maxWidthConstraint.isActive = AppWidthObserver.shared.isLargeWidth && !tabSwitcherSettings.isGridViewEnabled
     }
     
     private func setupBackgroundView() {
@@ -238,7 +232,6 @@ class TabSwitcherViewController: UIViewController {
         UIView.transition(with: view,
                           duration: 0.3,
                           options: .transitionCrossDissolve, animations: {
-                            self.refreshCollectionViewWidth()
                             self.collectionView.reloadData()
         }, completion: nil)
     }
@@ -417,7 +410,9 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
             let spacing = layout?.sectionInset.left ?? 0.0
             
-            return CGSize(width: collectionView.bounds.size.width - 2 * spacing, height: 70)
+            let width = min(664, collectionView.bounds.size.width - 2 * spacing)
+            
+            return CGSize(width: width, height: 70)
         }
     }
     

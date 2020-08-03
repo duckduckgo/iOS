@@ -11,7 +11,6 @@ import Core
 
 // (WIP) shadow on tray is glitchy
 // (WIP) scroll bars on tray
-// (WIP) list view tab switcher centering looks dodgy
 
 class TabsBarCell: UICollectionViewCell {
     

@@ -253,7 +253,8 @@ class MainViewController: UIViewController {
         }
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        currentTab!.saveAsBookmark()
+        
+        currentTab!.saveAsBookmark(favorite: DefaultVariantManager().isSupported(feature: .iPadImprovements))
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -907,6 +908,11 @@ extension MainViewController: OmniBarDelegate {
     func onMenuPressed() {
         hideSuggestionTray()
         launchBrowsingMenu()
+    }
+
+    @objc func onBookmarksPressed() {
+        hideSuggestionTray()
+        performSegue(withIdentifier: "Bookmarks", sender: self)
     }
 
     func onDismissed() {

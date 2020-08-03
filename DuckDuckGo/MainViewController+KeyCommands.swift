@@ -224,7 +224,7 @@ extension MainViewController {
     }
 
     @objc func keyboardAddBookmark() {
-        currentTab?.saveAsBookmark()
+        currentTab?.saveAsBookmark(favorite: false)
     }
 
     @objc func keyboardAddFavorite() {

@@ -62,7 +62,7 @@ class FavoritesOverlay: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if FormFactorConfigurator.shared.isPadFormFactor {
+        if AppWidthObserver.shared.isLargeWidth {
             layout.minimumInteritemSpacing = 32
         } else {
             layout.minimumInteritemSpacing = 10

@@ -32,7 +32,7 @@ protocol Theme {
     var statusBarStyle: UIStatusBarStyle { get }
     var keyboardAppearance: UIKeyboardAppearance { get }
 
-    var padBackgroundColor: UIColor { get }
+    var tabsBarBackgroundColor: UIColor { get }
     var tabsBarSeparatorColor: UIColor { get } 
     
     var backgroundColor: UIColor { get }

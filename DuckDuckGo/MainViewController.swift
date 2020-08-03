@@ -131,7 +131,7 @@ class MainViewController: UIViewController {
         tabsBarController?.tabsModel = tabManager.model
         tabsBarController?.refresh()
 
-        _ = FormFactorConfigurator.shared.willResize(toWidth: view.frame.width)
+        _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
     }
 
@@ -565,7 +565,7 @@ class MainViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        if FormFactorConfigurator.shared.willResize(toWidth: size.width) {
+        if AppWidthObserver.shared.willResize(toWidth: size.width) {
             applyWidth()
         }
     
@@ -578,7 +578,7 @@ class MainViewController: UIViewController {
     private func applyWidth() {
         guard DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
 
-        if FormFactorConfigurator.shared.isPadFormFactor {
+        if AppWidthObserver.shared.isLargeWidth {
             applyLargeWidth()
         } else {
             applySmallWidth()
@@ -600,7 +600,7 @@ class MainViewController: UIViewController {
     }
     
     private func applyWidthToTrayController() {
-        if FormFactorConfigurator.shared.isPadFormFactor {
+        if AppWidthObserver.shared.isLargeWidth {
             self.suggestionTrayController?.float(withWidth: self.omniBar.searchStackContainer.frame.width + 24)
         } else {
             self.suggestionTrayController?.fill()
@@ -625,7 +625,7 @@ class MainViewController: UIViewController {
         if suggestionTrayController?.willShow(for: type) ?? false {
             applyWidthToTrayController()
 
-            if !FormFactorConfigurator.shared.isPadFormFactor {
+            if !AppWidthObserver.shared.isLargeWidth {
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()
                 }
@@ -1269,8 +1269,8 @@ extension MainViewController: Themable {
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
 
-        if FormFactorConfigurator.shared.isPadFormFactor {
-            statusBarBackground.backgroundColor = theme.padBackgroundColor
+        if AppWidthObserver.shared.isLargeWidth {
+            statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {
             statusBarBackground.backgroundColor = theme.barBackgroundColor
         }

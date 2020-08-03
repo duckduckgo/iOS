@@ -1,5 +1,5 @@
 //
-//  FormFactorConfigurator.swift
+//  AppWidthObserver.swift
 //  DuckDuckGo
 //
 //  Created by Chris Brind on 22/07/2020.
@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-class FormFactorConfigurator {
+class AppWidthObserver {
     
     struct Constants {
         
@@ -17,13 +17,13 @@ class FormFactorConfigurator {
         
     }
     
-    static let shared = FormFactorConfigurator()
+    static let shared = AppWidthObserver()
     
     let variantManager: VariantManager
     
     var currentWidth: CGFloat = 0
     
-    var isPadFormFactor: Bool {
+    var isLargeWidth: Bool {
         return variantManager.isSupported(feature: .iPadImprovements) && currentWidth >= Constants.minPadWidth
     }
         

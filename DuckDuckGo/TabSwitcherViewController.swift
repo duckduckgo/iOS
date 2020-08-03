@@ -83,15 +83,15 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         refreshCollectionViewWidth()
-        toolbar.isHidden = FormFactorConfigurator.shared.isPadFormFactor
-        displayModeTrailingConstraint.isActive = !FormFactorConfigurator.shared.isPadFormFactor
-        padFireButton.isHidden = !FormFactorConfigurator.shared.isPadFormFactor
-        padDoneButton.isHidden = !FormFactorConfigurator.shared.isPadFormFactor
-        padPlusButton.isHidden = !FormFactorConfigurator.shared.isPadFormFactor
+        toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
+        displayModeTrailingConstraint.isActive = !AppWidthObserver.shared.isLargeWidth
+        padFireButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        padDoneButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        padPlusButton.isHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func refreshCollectionViewWidth() {
-        maxWidthConstraint.isActive = FormFactorConfigurator.shared.isPadFormFactor && !tabSwitcherSettings.isGridViewEnabled
+        maxWidthConstraint.isActive = AppWidthObserver.shared.isLargeWidth && !tabSwitcherSettings.isGridViewEnabled
     }
     
     private func setupBackgroundView() {

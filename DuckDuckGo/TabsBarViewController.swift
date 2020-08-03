@@ -240,11 +240,11 @@ extension TabsBarViewController: UICollectionViewDataSource {
 extension TabsBarViewController: Themable {
 
     func decorate(with theme: Theme) {
-        view.backgroundColor = theme.padBackgroundColor
+        view.backgroundColor = theme.tabsBarBackgroundColor
         view.tintColor = theme.barTintColor
-        collectionView.backgroundColor = theme.padBackgroundColor
+        collectionView.backgroundColor = theme.tabsBarBackgroundColor
         collectionView.reloadData()
-        tabSwitcherContainer.backgroundColor = theme.padBackgroundColor
+        tabSwitcherContainer.backgroundColor = theme.tabsBarBackgroundColor
         tabSwitcherButton.decorate(with: theme)
     }
 

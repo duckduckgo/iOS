@@ -112,11 +112,12 @@ class MainViewController: UIViewController {
         customNavigationBar.clipsToBounds = true
         tabsBar.clipsToBounds = true
         
+        attachOmniBar()
+
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
         initBookmarksButton()
-        attachOmniBar()
         configureTabManager()
         loadInitialView()
         previewsSource.prepare()
@@ -229,11 +230,30 @@ class MainViewController: UIViewController {
     }
     
     private func initBookmarksButton() {
+        omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+                                                                                  action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
         bookmarksButton.customView = gestureBookmarksButton
         bookmarksButton.isAccessibilityElement = true
         bookmarksButton.accessibilityTraits = .button
+    }
+    
+    @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            quickSaveBookmark()
+        }
+    }
+    
+    @objc func quickSaveBookmark() {
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        guard currentTab != nil else {
+            view.showBottomToast(UserText.webSaveBookmarkNone)
+            return
+        }
+        
+        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
+        currentTab!.saveAsBookmark()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -889,7 +909,7 @@ extension MainViewController: OmniBarDelegate {
         launchBrowsingMenu()
     }
 
-    func onBookmarksPressed() {
+    @objc func onBookmarksPressed() {
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
@@ -1199,14 +1219,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
     }
     
     func longPressDetected(in sender: GestureToolbarButton) {
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-        guard currentTab != nil else {
-            view.showBottomToast(UserText.webSaveBookmarkNone)
-            return
-        }
-        
-        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        currentTab!.saveAsBookmark()
+        quickSaveBookmark()
     }
     
 }

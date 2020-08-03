@@ -806,29 +806,13 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
-        if #available(iOS 13.0, *) {
-            let config = WKSnapshotConfiguration()
-            config.rect = webView.bounds
-            let snapshotWidth = Float(webView.bounds.width / 2)
-            config.snapshotWidth = NSNumber(value: snapshotWidth)
-            
-             // takeSnapshot will block if the web view is in the connecting phase of a load which may be prominent on slow connections
-            if webView.isLoading {
-                config.afterScreenUpdates = false
-            }
-            
-            webView.takeSnapshot(with: config) { image, _ in
-                completion(image)
-            }
-        } else {
-            DispatchQueue.main.async { [weak self] in
-                guard let webView = self?.webView else { completion(nil); return }
-                UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
-                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
-                let image = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                completion(image)
-            }
+        DispatchQueue.main.async { [weak self] in
+            guard let webView = self?.webView else { completion(nil); return }
+            UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+            webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            completion(image)
         }
     }
     

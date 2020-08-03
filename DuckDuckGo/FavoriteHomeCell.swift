@@ -100,7 +100,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconBackground.backgroundColor = host.color
         useImageBorder(true)
 
-        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, fallbackImage: nil) { image in
+        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks) { image in
             guard let image = image else { return }
 
             let useBorder = Self.appUrls.isDuckDuckGo(domain: link.url.host) || image.size.width < Constants.largeFaviconSize

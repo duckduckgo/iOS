@@ -32,23 +32,25 @@ extension UIImageView {
     /// Load a favicon from the cache in to this uiview.  This will not load the favicon from the network.
     func loadFavicon(forDomain domain: String?,
                      usingCache cacheType: Favicons.CacheType,
-                     fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
                      completion: ((UIImage?) -> Void)? = nil) {
         
         DispatchQueue.global(qos: .utility).async {
-            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, fallbackImage: fallbackImage, completion: completion)
+            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, completion: completion)
         }
         
     }
 
     private func loadFaviconSync(forDomain domain: String?,
                                  usingCache cacheType: Favicons.CacheType,
-                                 fallbackImage: UIImage? = Favicons.Constants.standardPlaceHolder,
                                  completion: ((UIImage?) -> Void)? = nil) {
-        
+   
         func complete(_ image: UIImage?) {
             DispatchQueue.main.async {
-                self.image = image
+                if image != nil {
+                    self.image = image
+                } else if let domain = domain {
+                    self.image = self.assignFakeFavicon(forDomain: domain)
+                }
                 completion?(self.image)
             }
         }
@@ -59,25 +61,23 @@ extension UIImageView {
         }
         
         guard let cache = Favicons.Constants.caches[cacheType] else {
-            complete(fallbackImage)
+            complete(nil)
             return
         }
         
         guard let resource = Favicons.shared.defaultResource(forDomain: domain) else {
-            complete(fallbackImage)
+            complete(nil)
             return
         }
         
         if let image = cache.retrieveImageInMemoryCache(forKey: resource.cacheKey) {
             complete(image)
         } else {
-            
-            // Not in memory, could because it's expired or we have cold started.
-            
+                        
             // Load manually otherwise Kingfisher won't load it if the file's modification date > current date
             let url = cache.diskStorage.cacheFileURL(forKey: resource.cacheKey)
             guard let data = (try? Data(contentsOf: url)), let image = UIImage(data: data) else {
-                complete(fallbackImage)
+                complete(nil)
                 return
             }
             
@@ -98,6 +98,37 @@ extension UIImageView {
             
         }
 
+    }
+    
+    private func assignFakeFavicon(forDomain domain: String, size: CGFloat = 192) -> UIImage? {
+        let cornerRadius = size * 0.125
+        let fontSize = size * 0.76
+        
+        let imageRect = CGRect(x: 0, y: 0, width: size, height: size)
+
+        let renderer = UIGraphicsImageRenderer(size: imageRect.size)
+        let icon = renderer.image { imageContext in
+            let context = imageContext.cgContext
+                            
+            context.setFillColor(UIColor.greyish.cgColor)
+            context.addPath(CGPath(roundedRect: imageRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil))
+            context.fillPath()
+             
+            let label = UILabel(frame: imageRect)
+            label.font = UIFont.boldAppFont(ofSize: fontSize)
+            label.textColor = UIColor.white
+            label.textAlignment = .center
+            label.text = String(domain.dropPrefix(prefix: "www.").prefix(1).uppercased())
+            label.sizeToFit()
+             
+            context.translateBy(x: (imageRect.width - label.bounds.width) / 2,
+                                y: (imageRect.height - label.font.ascender) / 2 - (label.font.ascender - label.font.capHeight) / 2)
+             
+            context.setBlendMode(.destinationOut)
+            label.layer.draw(in: context)
+        }
+         
+        return icon.withRenderingMode(.alwaysOriginal)
     }
     
 }

@@ -187,6 +187,8 @@
 		857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DC8223A9E7D00833940 /* MockAppSettings.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
+		85864FBF24D8386B00E756FF /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
+		85864FC024D8388600E756FF /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194FAEC1F14E2B3009B4DF8 /* UIFontExtension.swift */; };
 		858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D02469BCDE00C36F8A /* DaxDialogs.swift */; };
 		858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxDialogTests.swift */; };
 		858650D5246AB51000C36F8A /* DaxOnboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858650D4246AB51000C36F8A /* DaxOnboarding.storyboard */; };
@@ -3500,7 +3502,9 @@
 			files = (
 				85CA53A624BB238500A6288C /* BookmarksManager.swift in Sources */,
 				8349118B217F491200610F35 /* TodayViewController.swift in Sources */,
+				85864FBF24D8386B00E756FF /* UIColorExtension.swift in Sources */,
 				83491197217F49AF00610F35 /* BookmarkCell.swift in Sources */,
+				85864FC024D8388600E756FF /* UIFontExtension.swift in Sources */,
 				8589CF2624AE075F006C6457 /* UIImageViewExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

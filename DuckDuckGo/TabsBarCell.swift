@@ -9,6 +9,14 @@
 import UIKit
 import Core
 
+// (WIP) long press bookmark
+// (WIP) shadow on tray is glitchy
+// (WIP) scroll bars on tray
+// (WIP) list view tab switcher centering looks dodgy
+// (WIP) FormFactor... name -> Wide vs Thin screen
+// (WIP) encapsulate size logic in main view controller
+// (WIP) remove rate app button
+
 class TabsBarCell: UICollectionViewCell {
     
     static let appUrls = AppUrls()
@@ -50,13 +58,7 @@ class TabsBarCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        bottomBackgroundView.isHidden = isPressed
-        contentView.layer.cornerRadius = isPressed ? 8 : 0
-        contentView.layer.borderColor = isPressed ? ThemeManager.shared.currentTheme.barTintColor.cgColor : UIColor.clear.cgColor
-        contentView.layer.borderWidth = isPressed ? 1 : 0
-        
+        super.layoutSubviews()                
     }
 
     func update(model: Tab, isCurrent: Bool, nextIsCurrent: Bool, withTheme theme: Theme) {
@@ -87,12 +89,13 @@ class TabsBarCell: UICollectionViewCell {
         
         if model.link == nil {
             label.text = UserText.homeTabTitle
-            faviconImage.loadFavicon(forDomain: Self.appUrls.base.host, usingCache: .tabs)
+            faviconImage.image = UIImage(named: "Logo")
             label.accessibilityLabel = UserText.openHomeTab
             removeButton.accessibilityLabel = UserText.closeHomeTab
         } else {
-            label.text = model.link?.displayTitle ?? model.link?.url.host?.dropPrefix(prefix: "www.")
             faviconImage.loadFavicon(forDomain: model.link?.url.host, usingCache: .tabs)
+            
+            label.text = model.link?.displayTitle ?? model.link?.url.host?.dropPrefix(prefix: "www.")
             label.accessibilityLabel = UserText.openTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
         }

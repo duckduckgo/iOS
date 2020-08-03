@@ -25,8 +25,6 @@ public class Favicons {
 
     public struct Constants {
 
-        public static let standardPlaceHolder = UIImage(named: "GlobeSmall")
-        
         static let salt = "DDGSalt:"
         static let faviconsFolderName = "Favicons"
         static let downloader = NotFoundCachingDownloader()

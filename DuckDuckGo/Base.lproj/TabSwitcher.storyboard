@@ -464,7 +464,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="LwM-2c-pnd">
                                                     <rect key="frame" x="12" y="0.0" width="56" height="40"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="uOh-0G-QVj">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WarningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="uOh-0G-QVj">
                                                             <rect key="frame" x="0.0" y="0.0" width="16" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="16" id="bXc-Lb-63L"/>
@@ -609,6 +609,7 @@
         <image name="Remove" width="24" height="24"/>
         <image name="TabUnread" width="24" height="24"/>
         <image name="TabsToggleGrid" width="43" height="16"/>
+        <image name="WarningIcon" width="52" height="45"/>
         <image name="sharesheet-burndata" width="24" height="24"/>
     </resources>
 </document>

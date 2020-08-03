@@ -10,7 +10,6 @@ import UIKit
 import Core
 
 // (WIP) shadow on tray is glitchy
-// (WIP) scroll bars on tray
 
 class TabsBarCell: UICollectionViewCell {
     

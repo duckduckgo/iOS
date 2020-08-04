@@ -28,7 +28,6 @@ class FavoriteHomeCell: UICollectionViewCell {
     }
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var highlightMask: UIView!
@@ -87,23 +86,20 @@ class FavoriteHomeCell: UICollectionViewCell {
         self.link = link
         
         let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
-        iconLabel.text = "\(host.capitalized.first ?? " ")"
         
         isAccessibilityElement = true
         accessibilityTraits = .button
-        accessibilityLabel = "\(link.title ?? "")). \(UserText.favorite)"
+        accessibilityLabel = "\(link.displayTitle ?? "")). \(UserText.favorite)"
         
-        titleLabel.text = link.title
-        
-        iconImage.isHidden = true
-        iconLabel.isHidden = false
-        
+        titleLabel.text = link.displayTitle
         iconBackground.backgroundColor = host.color
-        useImageBorder(true)
-
-        let useFakeFavicon = DefaultVariantManager().isSupported(feature: .iPadImprovements)
         
-        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, useFakeFavicon: useFakeFavicon) { image in
+        if let domain = link.url.host?.dropPrefix(prefix: "www."),
+            let fakeFavicon = UIImageView.createFakeFavicon(forDomain: link.url.host ?? "", backgroundColor: domain.color, bold: false) {
+            iconImage.image = fakeFavicon
+        }
+
+        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, useFakeFavicon: false) { image in
             guard let image = image else { return }
 
             let useBorder = Self.appUrls.isDuckDuckGo(domain: link.url.host) || image.size.width < Constants.largeFaviconSize
@@ -120,8 +116,6 @@ class FavoriteHomeCell: UICollectionViewCell {
   
     private func applyFavicon(_ image: UIImage) {
 
-        iconLabel.isHidden = true
-        iconImage.isHidden = false
         iconImage.contentMode = image.size.width < Constants.largeFaviconSize ? .center : .scaleAspectFit
 
         guard let theme = theme else { return }

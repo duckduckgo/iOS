@@ -51,7 +51,7 @@ extension UIImageView {
                 if image != nil {
                     self.image = image
                 } else if useFakeFavicon, let domain = domain {
-                    self.image = self.assignFakeFavicon(forDomain: domain)
+                    self.image = Self.createFakeFavicon(forDomain: domain)
                 }
                 completion?(self.image)
             }
@@ -102,7 +102,11 @@ extension UIImageView {
 
     }
     
-    private func assignFakeFavicon(forDomain domain: String, size: CGFloat = 192) -> UIImage? {
+    static func createFakeFavicon(forDomain domain: String,
+                                  size: CGFloat = 192,
+                                  backgroundColor: UIColor = UIColor.greyish,
+                                  bold: Bool = true) -> UIImage? {
+        
         let cornerRadius = size * 0.125
         let fontSize = size * 0.76
         
@@ -112,12 +116,12 @@ extension UIImageView {
         let icon = renderer.image { imageContext in
             let context = imageContext.cgContext
                             
-            context.setFillColor(UIColor.greyish.cgColor)
+            context.setFillColor(backgroundColor.cgColor)
             context.addPath(CGPath(roundedRect: imageRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil))
             context.fillPath()
              
             let label = UILabel(frame: imageRect)
-            label.font = UIFont.boldAppFont(ofSize: fontSize)
+            label.font = bold ? UIFont.boldAppFont(ofSize: fontSize) : UIFont.appFont(ofSize: fontSize)
             label.textColor = UIColor.white
             label.textAlignment = .center
             label.text = String(domain.dropPrefix(prefix: "www.").prefix(1).uppercased())

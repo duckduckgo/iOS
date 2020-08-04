@@ -51,10 +51,6 @@ class TabsBarViewController: UIViewController {
     var maxItems: Int {
         return Int(collectionView.frame.size.width / Constants.minItemWidth)
     }
-
-    var numberOfItems: Int {
-        return tabsCount
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +92,7 @@ class TabsBarViewController: UIViewController {
 
     func refresh() {
         let availableWidth = collectionView.frame.size.width
-        let maxVisibleItems = min(maxItems, numberOfItems)
+        let maxVisibleItems = min(maxItems, tabsCount)
         
         var itemWidth = availableWidth / CGFloat(maxVisibleItems)
         itemWidth = max(itemWidth, Constants.minItemWidth)
@@ -212,8 +208,7 @@ extension TabsBarViewController: UICollectionViewDelegate {
 extension TabsBarViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("***", #function, Date(), numberOfItems, tabsCount, maxItems)
-        return numberOfItems
+        return tabsCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

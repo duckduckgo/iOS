@@ -32,23 +32,25 @@ extension UIImageView {
     /// Load a favicon from the cache in to this uiview.  This will not load the favicon from the network.
     func loadFavicon(forDomain domain: String?,
                      usingCache cacheType: Favicons.CacheType,
+                     useFakeFavicon: Bool = true,
                      completion: ((UIImage?) -> Void)? = nil) {
         
         DispatchQueue.global(qos: .utility).async {
-            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, completion: completion)
+            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, useFakeFavicon: useFakeFavicon, completion: completion)
         }
         
     }
 
     private func loadFaviconSync(forDomain domain: String?,
                                  usingCache cacheType: Favicons.CacheType,
+                                 useFakeFavicon: Bool,
                                  completion: ((UIImage?) -> Void)? = nil) {
    
         func complete(_ image: UIImage?) {
             DispatchQueue.main.async {
                 if image != nil {
                     self.image = image
-                } else if let domain = domain {
+                } else if useFakeFavicon, let domain = domain {
                     self.image = self.assignFakeFavicon(forDomain: domain)
                 }
                 completion?(self.image)

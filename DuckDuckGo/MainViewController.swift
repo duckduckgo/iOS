@@ -597,7 +597,6 @@ class MainViewController: UIViewController {
     }
     
     private func applyWidth() {
-        guard DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
 
         if AppWidthObserver.shared.isLargeWidth {
             applyLargeWidth()

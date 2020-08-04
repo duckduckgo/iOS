@@ -82,6 +82,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
+    // (WIP) update to use drawing method for colours too
     func updateFor(link: Link) {
         self.link = link
         
@@ -100,7 +101,9 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconBackground.backgroundColor = host.color
         useImageBorder(true)
 
-        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks) { image in
+        let useFakeFavicon = DefaultVariantManager().isSupported(feature: .iPadImprovements)
+        
+        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, useFakeFavicon: useFakeFavicon) { image in
             guard let image = image else { return }
 
             let useBorder = Self.appUrls.isDuckDuckGo(domain: link.url.host) || image.size.width < Constants.largeFaviconSize

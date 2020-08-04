@@ -63,7 +63,20 @@ class TabsBarCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()                
+        super.layoutSubviews()
+        
+        if isPressed {
+            layer.masksToBounds = false
+            layer.shadowColor = UIColor.darkGray.cgColor
+            layer.shadowOffset = CGSize(width: 0, height: 0)
+            layer.shadowOpacity = 0.2
+            layer.shadowRadius = 5
+        } else {
+            layer.masksToBounds = true
+            layer.shadowColor = nil
+            layer.shadowRadius = 0
+        }
+        
     }
 
     func update(model: Tab, isCurrent: Bool, nextIsCurrent: Bool, withTheme theme: Theme) {

@@ -56,6 +56,8 @@ class TabsBarViewController: UIViewController {
         super.viewDidLoad()
         print("***", #function)
 
+        collectionView.clipsToBounds = false
+        
         applyTheme(ThemeManager.shared.currentTheme)
 
         tabSwitcherButton.delegate = self

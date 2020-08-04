@@ -84,8 +84,12 @@ class AppUserDefaultsTests: XCTestCase {
     func testWhenReadingCurrentThemeDefaultThenSystemDefaultIsReturned() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
         
+        if #available(iOS 13.0, *) {
+            XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
+        } else {
+            XCTAssertEqual(appUserDefaults.currentThemeName, .dark)
+        }
     }
     
     func testWhenNewThenDefaultHomePageIsNil() {

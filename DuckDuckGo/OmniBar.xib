@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -287,7 +286,7 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-j4-fpl">
-                    <rect key="frame" x="0.0" y="51" width="1009" height="1"/>
+                    <rect key="frame" x="0.0" y="52" width="1009" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -299,24 +298,23 @@
             <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="RdS-eI-aOp" firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="8" id="0Dd-A4-H8W"/>
+                <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="8" id="0Dd-A4-H8W"/>
                 <constraint firstItem="Xrl-6Y-ll0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="24" id="4w4-aZ-P7u"/>
-                <constraint firstItem="pg8-E6-C14" firstAttribute="leading" secondItem="RdS-eI-aOp" secondAttribute="leading" constant="16" id="D0r-SA-Vnj"/>
-                <constraint firstItem="5D5-iT-bUk" firstAttribute="centerX" secondItem="RdS-eI-aOp" secondAttribute="centerX" id="G7B-Lp-iiF"/>
-                <constraint firstItem="Xrl-6Y-ll0" firstAttribute="centerY" secondItem="RdS-eI-aOp" secondAttribute="centerY" id="LCm-Yc-6uf"/>
-                <constraint firstItem="pg8-E6-C14" firstAttribute="centerY" secondItem="RdS-eI-aOp" secondAttribute="centerY" id="MT8-di-IJA"/>
+                <constraint firstItem="pg8-E6-C14" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" constant="16" id="D0r-SA-Vnj"/>
+                <constraint firstItem="5D5-iT-bUk" firstAttribute="centerX" secondItem="ojX-nM-dyN" secondAttribute="centerX" id="G7B-Lp-iiF"/>
+                <constraint firstItem="Xrl-6Y-ll0" firstAttribute="centerY" secondItem="ojX-nM-dyN" secondAttribute="centerY" id="LCm-Yc-6uf"/>
+                <constraint firstItem="pg8-E6-C14" firstAttribute="centerY" secondItem="ojX-nM-dyN" secondAttribute="centerY" id="MT8-di-IJA"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="centerY" secondItem="pg8-E6-C14" secondAttribute="centerY" id="cpt-g4-EIi"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="width" secondItem="ojX-nM-dyN" secondAttribute="width" priority="985" id="fsh-Of-De2"/>
                 <constraint firstItem="hD7-j4-fpl" firstAttribute="width" secondItem="ojX-nM-dyN" secondAttribute="width" id="j1n-Dg-LKz"/>
-                <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="RdS-eI-aOp" secondAttribute="top" constant="8" id="ndA-qm-eeF"/>
-                <constraint firstAttribute="bottom" secondItem="hD7-j4-fpl" secondAttribute="top" constant="1" id="nfs-pA-DD4"/>
+                <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" constant="8" id="ndA-qm-eeF"/>
+                <constraint firstAttribute="bottom" secondItem="hD7-j4-fpl" secondAttribute="top" id="nfs-pA-DD4"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pg8-E6-C14" secondAttribute="trailing" constant="24" id="qCb-MN-wKZ"/>
                 <constraint firstItem="hD7-j4-fpl" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" id="xxj-zc-Sw3"/>
-                <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="Xrl-6Y-ll0" secondAttribute="trailing" constant="16" id="yKn-ev-mu1"/>
+                <constraint firstAttribute="trailing" secondItem="Xrl-6Y-ll0" secondAttribute="trailing" constant="16" id="yKn-ev-mu1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="RdS-eI-aOp"/>
             <connections>
                 <outlet property="backButton" destination="i9n-fD-ncJ" id="5sk-Ld-2Pq"/>
                 <outlet property="bookmarksButton" destination="ii4-Sq-bD1" id="XN8-Yb-eXK"/>

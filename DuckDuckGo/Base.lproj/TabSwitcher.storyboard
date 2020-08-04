@@ -460,7 +460,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="LwM-2c-pnd">
                                                     <rect key="frame" x="12" y="0.0" width="56" height="40"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WarningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="uOh-0G-QVj">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="uOh-0G-QVj">
                                                             <rect key="frame" x="0.0" y="0.0" width="16" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="16" id="bXc-Lb-63L"/>
@@ -572,15 +572,14 @@
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="1wM-Ln-7ly" firstAttribute="top" secondItem="Glx-L8-VF7" secondAttribute="top" id="28V-cD-7Ty"/>
-                            <constraint firstItem="Glx-L8-VF7" firstAttribute="bottom" secondItem="1wM-Ln-7ly" secondAttribute="bottom" id="Ign-CF-bTN"/>
-                            <constraint firstItem="1wM-Ln-7ly" firstAttribute="leading" secondItem="Glx-L8-VF7" secondAttribute="leading" constant="8" id="RGE-7m-yXx"/>
+                            <constraint firstItem="1wM-Ln-7ly" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" id="28V-cD-7Ty"/>
+                            <constraint firstAttribute="bottom" secondItem="1wM-Ln-7ly" secondAttribute="bottom" id="Ign-CF-bTN"/>
+                            <constraint firstItem="1wM-Ln-7ly" firstAttribute="leading" secondItem="8BH-do-lHc" secondAttribute="leading" constant="8" id="RGE-7m-yXx"/>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="height" secondItem="8BH-do-lHc" secondAttribute="height" id="c2u-Ow-7wx"/>
-                            <constraint firstItem="Glx-L8-VF7" firstAttribute="trailing" secondItem="aDD-d2-KuN" secondAttribute="trailing" constant="24" id="drm-rF-cl7"/>
-                            <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="Glx-L8-VF7" secondAttribute="top" constant="-2" id="gao-OH-EED"/>
+                            <constraint firstAttribute="trailing" secondItem="aDD-d2-KuN" secondAttribute="trailing" constant="24" id="drm-rF-cl7"/>
+                            <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" constant="-2" id="gao-OH-EED"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="8" id="z6F-x8-cQ6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Glx-L8-VF7"/>
                     </view>
                     <size key="freeformSize" width="800" height="40"/>
                     <connections>
@@ -605,7 +604,6 @@
         <image name="Remove" width="24" height="24"/>
         <image name="TabUnread" width="24" height="24"/>
         <image name="TabsToggleGrid" width="43" height="16"/>
-        <image name="WarningIcon" width="52" height="45"/>
         <image name="sharesheet-burndata" width="24" height="24"/>
     </resources>
 </document>

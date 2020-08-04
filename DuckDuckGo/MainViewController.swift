@@ -108,10 +108,7 @@ class MainViewController: UIViewController {
                 self.homeController?.collectionView.reloadData()
             }
         }
-        
-        customNavigationBar.clipsToBounds = true
-        tabsBar.clipsToBounds = true
-        
+         
         attachOmniBar()
 
         chromeManager = BrowserChromeManager()
@@ -696,8 +693,6 @@ class MainViewController: UIViewController {
             tabSwitcherButton.layoutSubviews()
             gestureBookmarksButton.layoutSubviews()
         }
-        
-        // FormFactorConfigurator.shared.layoutSubviews(mainViewController: self)
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -870,11 +865,11 @@ extension MainViewController: BrowserChromeDelegate {
 
     // 1.0 - full size, 0.0 - hidden
     private func updateNavBarConstant(_ ratio: CGFloat) {
-
+        
         let browserTabsOffset = (tabsBar.isHidden ? 0 : tabsBar.frame.size.height)
         let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
         
-        print("***", #function, browserTabsOffset, navBarTopOffset, ratio)
+        print("***", #function, browserTabsOffset, navBarTopOffset, ratio, omniBar.frame.height)
         
         if !tabsBar.isHidden {
             let topBarsConstant = -browserTabsOffset * (1.0 - ratio)

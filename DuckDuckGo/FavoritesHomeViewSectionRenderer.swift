@@ -35,6 +35,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
         static let defaultHeaderHeight: CGFloat = 20
         static let horizontalMargin: CGFloat = 2
+        static let largeModeMargin: CGFloat = 24
         
     }
     
@@ -86,9 +87,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
-        if controller is FavoritesOverlay { // (WIP) too hacky?
-            // (WIP) extract to constant
-            return 24
+        if controller is FavoritesOverlay {
+            return Constants.largeModeMargin
         }
         
         let margin: CGFloat

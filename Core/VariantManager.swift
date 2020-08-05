@@ -47,7 +47,6 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, features: []),
         Variant(name: "se", weight: doNotAllocate, features: []),
 
-        // iPad improvements (WIP)
         Variant(name: "mc", weight: 1, features: []),
         Variant(name: "md", weight: 1, features: [.iPadImprovements])
 

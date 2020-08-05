@@ -81,7 +81,6 @@ class FavoriteHomeCell: UICollectionViewCell {
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
-    // (WIP) update to use drawing method for colours too
     func updateFor(link: Link) {
         self.link = link
         

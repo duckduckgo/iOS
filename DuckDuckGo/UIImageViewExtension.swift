@@ -130,7 +130,6 @@ extension UIImageView {
             context.translateBy(x: (imageRect.width - label.bounds.width) / 2,
                                 y: (imageRect.height - label.font.ascender) / 2 - (label.font.ascender - label.font.capHeight) / 2)
              
-            context.setBlendMode(.destinationOut)
             label.layer.draw(in: context)
         }
          

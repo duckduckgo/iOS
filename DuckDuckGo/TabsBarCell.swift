@@ -20,8 +20,6 @@
 import UIKit
 import Core
 
-// (WIP) shadow on tray is glitchy
-
 class TabsBarCell: UICollectionViewCell {
     
     static let appUrls = AppUrls()

@@ -36,13 +36,20 @@ class AutocompleteViewController: UIViewController {
 
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
-
+    private var firstResponse = true
+    
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
     fileprivate let minItems = 1
     fileprivate let maxItems = 6
     fileprivate var selectedItem = -1
 
+    var showBackground = true {
+        didSet {
+            view.backgroundColor = showBackground ? UIColor.black.withAlphaComponent(0.2) : UIColor.clear
+        }
+    }
+    
     private var hidesBarsOnSwipeDefault = true
     
     private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
@@ -63,7 +70,7 @@ class AutocompleteViewController: UIViewController {
         configureTableView()
         applyTheme(ThemeManager.shared.currentTheme)
     }
-
+    
     private func configureTableView() {
         tableView.backgroundColor = UIColor.clear
         tableView.tableFooterView = UIView()
@@ -129,6 +136,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {
+        firstResponse = false
         suggestions = newSuggestions
         tableView.reloadData()
     }
@@ -140,17 +148,6 @@ class AutocompleteViewController: UIViewController {
 
 extension AutocompleteViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UITableViewHeaderFooterView()
-        
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor.clear
-        footer.backgroundView = backgroundView
-        
-        footer.contentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-        return footer
-    }
-
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if suggestions.isEmpty {
             return noSuggestionsCell(forIndexPath: indexPath)
@@ -195,7 +192,7 @@ extension AutocompleteViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if suggestions.isEmpty {
-            return minItems
+            return firstResponse ? 0 : minItems
         }
         if suggestions.count > maxItems {
             return maxItems

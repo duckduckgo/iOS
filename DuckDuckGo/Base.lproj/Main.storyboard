@@ -160,13 +160,13 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-zZ-iud">
-                                                        <rect key="frame" x="585" y="11" width="37" height="14"/>
+                                                        <rect key="frame" x="578.5" y="10" width="43.5" height="16.5"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="IBB-TQ-d5c">
-                                                        <rect key="frame" x="38" y="0.0" width="539" height="36"/>
+                                                        <rect key="frame" x="38" y="0.0" width="532.5" height="36"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -402,6 +402,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="908"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IT2-Wd-hHA" userLabel="Background View">
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="908"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFZ-vQ-cny">
                                 <rect key="frame" x="0.0" y="0.0" width="1366" height="908"/>
                                 <constraints>
@@ -413,12 +417,18 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="TFZ-vQ-cny" firstAttribute="centerX" secondItem="jEf-yR-5Dz" secondAttribute="centerX" id="CJK-qB-84i"/>
+                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="centerY" secondItem="TFZ-vQ-cny" secondAttribute="centerY" id="IG8-Ea-7XE"/>
+                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="height" secondItem="TFZ-vQ-cny" secondAttribute="height" id="NZg-Po-gRb"/>
+                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="centerX" secondItem="TFZ-vQ-cny" secondAttribute="centerX" id="X4c-Xk-iK7"/>
+                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="width" secondItem="TFZ-vQ-cny" secondAttribute="width" id="aDy-rO-vTf"/>
                             <constraint firstItem="TFZ-vQ-cny" firstAttribute="height" secondItem="jEf-yR-5Dz" secondAttribute="height" id="gKT-Zt-2zV"/>
                             <constraint firstItem="TFZ-vQ-cny" firstAttribute="top" secondItem="jEf-yR-5Dz" secondAttribute="top" id="hvs-HM-K9E"/>
                             <constraint firstItem="TFZ-vQ-cny" firstAttribute="width" secondItem="jEf-yR-5Dz" secondAttribute="width" id="jpO-aL-TY6"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="wcx-Zr-iiL"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundView" destination="IT2-Wd-hHA" id="Trh-LE-XRH"/>
                         <outlet property="containerView" destination="TFZ-vQ-cny" id="4LO-aD-chc"/>
                         <outlet property="fullHeightConstraint" destination="gKT-Zt-2zV" id="nd3-q7-WXU"/>
                         <outlet property="fullWidthConstraint" destination="jpO-aL-TY6" id="FTs-AN-EbR"/>

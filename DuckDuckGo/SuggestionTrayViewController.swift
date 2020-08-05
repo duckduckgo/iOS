@@ -22,6 +22,7 @@ import Core
 
 class SuggestionTrayViewController: UIViewController {
     
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet var variableWidthConstraint: NSLayoutConstraint!
     @IBOutlet var fullWidthConstraint: NSLayoutConstraint!
@@ -95,14 +96,19 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func float(withWidth width: CGFloat) {
-        containerView.clipsToBounds = false
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOffset = .zero
-        containerView.layer.shadowOpacity = 1
-        containerView.layer.shadowRadius = 64
-
-        containerView.subviews.first?.layer.masksToBounds = true
-        containerView.subviews.first?.layer.cornerRadius = 16
+        
+        autocompleteController?.showBackground = false
+        
+        containerView.layer.cornerRadius = 16
+        containerView.layer.masksToBounds = true
+ 
+        backgroundView.layer.cornerRadius = 16
+        backgroundView.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+        backgroundView.clipsToBounds = false
+        backgroundView.layer.shadowColor = UIColor.black.cgColor
+        backgroundView.layer.shadowOffset = .init(width: 0, height: 10)
+        backgroundView.layer.shadowOpacity = 0.3
+        backgroundView.layer.shadowRadius = 120
 
         topConstraint.constant = 15
         variableHeightConstraint.constant = 276
@@ -112,11 +118,16 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func fill() {
+        autocompleteController?.showBackground = true
+
         containerView.layer.shadowColor = UIColor.clear.cgColor
         containerView.layer.cornerRadius = 0
 
         containerView.subviews.first?.layer.masksToBounds = false
         containerView.subviews.first?.layer.cornerRadius = 0
+        backgroundView.layer.masksToBounds = false
+        backgroundView.layer.cornerRadius = 0
+        backgroundView.backgroundColor = UIColor.clear
 
         topConstraint.constant = 0
         fullWidthConstraint.isActive = true
@@ -187,6 +198,18 @@ class SuggestionTrayViewController: UIViewController {
             controller.view.alpha = 1
         }
         
+    }
+    
+}
+
+extension SuggestionTrayViewController: Themable {
+    
+    // Only gets called if system theme changes while tray is open
+    func decorate(with theme: Theme) {
+        // only update the color if one has been set
+        if backgroundView.backgroundColor != nil {
+            backgroundView.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+        }
     }
     
 }

@@ -48,7 +48,8 @@ class FavoritesOverlay: UIViewController {
         collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        collectionView.backgroundColor = .clear
+
         view.addSubview(collectionView)
         
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false)
@@ -158,8 +159,6 @@ extension FavoritesOverlay: Themable {
     
     func decorate(with theme: Theme) {
         self.theme = theme
-        
         view.backgroundColor = theme.backgroundColor
-        collectionView.backgroundColor = .clear
     }
 }

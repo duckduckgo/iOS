@@ -31,15 +31,13 @@ extension String {
         }
         
         func attributedString(color: UIColor, lineHeightMultiple: CGFloat, fontSize: CGFloat) -> NSAttributedString {
-            let boldModifier = bold ? "-Bold" : "-Regular"
-            
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineHeightMultiple = lineHeightMultiple// 1.17
 
             return NSMutableAttributedString(string: string, attributes: [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
                 NSAttributedString.Key.foregroundColor: color,
-                NSAttributedString.Key.font: UIFont(name: "ProximaNova" + boldModifier, size: fontSize)!
+                NSAttributedString.Key.font: bold ? UIFont.boldAppFont(ofSize: fontSize) : UIFont.appFont(ofSize: fontSize)
             ])
         }
     }

@@ -39,7 +39,9 @@ class TabsBarViewController: UIViewController {
 
     private let tabSwitcherButton = TabSwitcherButton()
     private let longPressTabGesture = UILongPressGestureRecognizer()
-
+    
+    private weak var pressedCell: TabsBarCell?
+    
     var tabsCount: Int {
         return tabsModel?.count ?? 0
     }
@@ -109,34 +111,35 @@ class TabsBarViewController: UIViewController {
     }
 
     func backgroundTabAdded() {
-        tabSwitcherButton.incrementAnimated()
         refresh()
+        tabSwitcherButton.tabCount = tabsCount - 1
+        tabSwitcherButton.incrementAnimated()
     }
     
     private func configureGestures() {
         print("***", #function, collectionView.gestureRecognizers as Any)
         longPressTabGesture.addTarget(self, action: #selector(handleLongPressTabGesture))
-        longPressTabGesture.minimumPressDuration = 0.1
+        longPressTabGesture.minimumPressDuration = 0.2
         collectionView.addGestureRecognizer(longPressTabGesture)
     }
     
-    var pressedCell: TabsBarCell?
-    
     @objc func handleLongPressTabGesture(gesture: UILongPressGestureRecognizer) {
         // print("***", #function, gesture)
+        let locationInCollectionView = gesture.location(in: collectionView)
+        
         switch gesture.state {
         case .began:
-            guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
+            guard let path = collectionView.indexPathForItem(at: locationInCollectionView) else { return }
             delegate?.tabsBar(self, didSelectTabAtIndex: path.row)
 
         case .changed:
-            guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
+            guard let path = collectionView.indexPathForItem(at: locationInCollectionView) else { return }
             if pressedCell == nil, let cell = collectionView.cellForItem(at: path) as? TabsBarCell {
                 cell.isPressed = true
                 pressedCell = cell
                 collectionView.beginInteractiveMovementForItem(at: path)
             }
-            let location = CGPoint(x: gesture.location(in: collectionView).x, y: collectionView.center.y)
+            let location = CGPoint(x: locationInCollectionView.x, y: collectionView.center.y)
             collectionView.updateInteractiveMovementTargetPosition(location)
             
         case .ended:
@@ -217,21 +220,34 @@ extension TabsBarViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tab", for: indexPath) as? TabsBarCell else {
             fatalError("Unable to create TabBarCell")
         }
+        print("***", #function, indexPath, cell)
         
         guard let model = tabsModel?.get(tabAt: indexPath.row) else {
             fatalError("Failed to load tab at \(indexPath.row)")
         }
+        model.addObserver(self)
         
         let isCurrent = indexPath.row == currentIndex
         let nextIsCurrent = indexPath.row + 1 == currentIndex
         cell.update(model: model, isCurrent: isCurrent, nextIsCurrent: nextIsCurrent, withTheme: ThemeManager.shared.currentTheme)
         cell.onRemove = { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.tabsBar(self, didRemoveTabAtIndex: indexPath.row)
+            guard let self = self,
+                let tabIndex = self.tabsModel?.indexOf(tab: model)
+                else { return }
+            self.delegate?.tabsBar(self, didRemoveTabAtIndex: tabIndex)
         }
         return cell
     }
 
+}
+
+extension TabsBarViewController: TabObserver {
+    
+    func didChange(tab: Tab) {
+        guard let index = tabsModel?.indexOf(tab: tab) else { return }
+        collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+    }
+    
 }
 
 extension TabsBarViewController: Themable {

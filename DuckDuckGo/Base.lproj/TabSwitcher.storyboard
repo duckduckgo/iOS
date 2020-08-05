@@ -485,11 +485,11 @@
                                                         <constraint firstAttribute="width" constant="1" id="K7x-ei-NPt"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xto-EI-h22">
-                                                    <rect key="frame" x="68" y="8" width="24" height="24"/>
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xto-EI-h22">
+                                                    <rect key="frame" x="68" y="0.0" width="32" height="40"/>
                                                     <accessibility key="accessibilityConfiguration" hint="Close"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="24" id="VnH-Yc-5vx"/>
+                                                        <constraint firstAttribute="width" constant="32" id="VnH-Yc-5vx"/>
                                                     </constraints>
                                                     <state key="normal" image="Remove"/>
                                                     <connections>
@@ -499,7 +499,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="alN-nB-cJU" secondAttribute="bottom" id="6Sa-p4-HFX"/>
-                                                <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="37U-Jd-wxr" secondAttribute="trailing" constant="-8" id="90I-9Z-JeZ"/>
+                                                <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="37U-Jd-wxr" secondAttribute="trailing" id="90I-9Z-JeZ"/>
                                                 <constraint firstItem="gw0-u8-5aN" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="Bl9-4V-c3M">
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -514,9 +514,10 @@
                                                 <constraint firstItem="xto-EI-h22" firstAttribute="centerY" secondItem="37U-Jd-wxr" secondAttribute="centerY" id="KRp-jO-mLd"/>
                                                 <constraint firstAttribute="trailing" secondItem="gw0-u8-5aN" secondAttribute="trailing" id="LOg-Au-jeR"/>
                                                 <constraint firstAttribute="trailing" secondItem="LwM-2c-pnd" secondAttribute="trailing" priority="999" constant="8" id="RrV-ak-lc8"/>
+                                                <constraint firstItem="xto-EI-h22" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="Y7J-w7-cbP"/>
                                                 <constraint firstItem="alN-nB-cJU" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" id="Yve-hs-e8a"/>
                                                 <constraint firstItem="cBG-3F-dhe" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" constant="-8" id="aEl-mk-Fkw"/>
-                                                <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="LwM-2c-pnd" secondAttribute="trailing" constant="24" id="f96-Mh-RPc"/>
+                                                <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="LwM-2c-pnd" secondAttribute="trailing" constant="32" id="f96-Mh-RPc"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="centerY" secondItem="37U-Jd-wxr" secondAttribute="centerY" id="gcj-pR-iuS"/>
                                                 <constraint firstItem="gw0-u8-5aN" firstAttribute="top" secondItem="37U-Jd-wxr" secondAttribute="top" id="rdU-P4-OHY"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="sbm-wv-Bak"/>
@@ -580,6 +581,7 @@
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" constant="-2" id="gao-OH-EED"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="8" id="z6F-x8-cQ6"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="piu-0G-Uth"/>
                     </view>
                     <size key="freeformSize" width="800" height="40"/>
                     <connections>

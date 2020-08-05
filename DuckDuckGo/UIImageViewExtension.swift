@@ -104,7 +104,7 @@ extension UIImageView {
     
     static func createFakeFavicon(forDomain domain: String,
                                   size: CGFloat = 192,
-                                  backgroundColor: UIColor = UIColor.greyish,
+                                  backgroundColor: UIColor = UIColor.greyishBrown2,
                                   bold: Bool = true) -> UIImage? {
         
         let cornerRadius = size * 0.125

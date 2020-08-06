@@ -32,39 +32,17 @@ class HomePageConfiguration {
     
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
-        case centeredSearch(fixed: Bool)
-        case extraContent
         case favorites
         case padding
     }
     
-    let settings: HomePageSettings
-    
     func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
-        let fixed = !settings.favorites || bookmarksManager.favoritesCount == 0
+        let fixed = bookmarksManager.favoritesCount == 0
 
-        var components = [Component]()
-        switch settings.layout {
-        case .navigationBar:
-            components.append(.navigationBarSearch(fixed: fixed))
-        case .centered:
-            components.append(.centeredSearch(fixed: fixed))
-        }
-
-        // Add extra content renderer here if needed
-        
-        if settings.favorites {
-            components.append(.favorites)
-            if settings.layout == .centered {
-                components.append(.padding)
-            }
-        }
-
-        return components
-    }
-    
-    init(settings: HomePageSettings = DefaultHomePageSettings()) {
-        self.settings = settings
+        return [
+            .navigationBarSearch(fixed: fixed),
+            .favorites
+        ]
     }
     
 }

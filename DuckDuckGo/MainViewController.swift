@@ -941,10 +941,12 @@ extension MainViewController: TabDelegate {
             newTabAnimation {
                 self.loadUrlInNewTab(url)
                 self.tabManager.current?.openedByPage = true
+                self.tabManager.current?.openingTab = tab
             }
             tabSwitcherButton.incrementAnimated()
         } else {
             loadUrlInNewTab(url)
+            self.tabManager.current?.openingTab = tab
         }
 
     }

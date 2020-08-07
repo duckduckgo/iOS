@@ -32,7 +32,7 @@ struct LightTheme: Theme {
     var keyboardAppearance: UIKeyboardAppearance = .light
 
     var tabsBarBackgroundColor = UIColor.lightGreyish
-    var tabsBarSeparatorColor = UIColor.greyish2
+    var tabsBarSeparatorColor = UIColor.greyish
     
     var backgroundColor = UIColor.nearlyWhite
     

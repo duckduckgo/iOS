@@ -479,7 +479,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBG-3F-dhe" userLabel="Separator">
-                                                    <rect key="frame" x="99" y="4" width="1" height="32"/>
+                                                    <rect key="frame" x="99" y="8" width="1" height="24"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="K7x-ei-NPt"/>
@@ -516,7 +516,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="LwM-2c-pnd" secondAttribute="trailing" priority="999" constant="8" id="RrV-ak-lc8"/>
                                                 <constraint firstItem="xto-EI-h22" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="Y7J-w7-cbP"/>
                                                 <constraint firstItem="alN-nB-cJU" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" id="Yve-hs-e8a"/>
-                                                <constraint firstItem="cBG-3F-dhe" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" constant="-8" id="aEl-mk-Fkw"/>
+                                                <constraint firstItem="cBG-3F-dhe" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" constant="-16" id="aEl-mk-Fkw"/>
                                                 <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="LwM-2c-pnd" secondAttribute="trailing" constant="32" id="f96-Mh-RPc"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="centerY" secondItem="37U-Jd-wxr" secondAttribute="centerY" id="gcj-pR-iuS"/>
                                                 <constraint firstItem="gw0-u8-5aN" firstAttribute="top" secondItem="37U-Jd-wxr" secondAttribute="top" id="rdU-P4-OHY"/>

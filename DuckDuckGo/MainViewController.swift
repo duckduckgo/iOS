@@ -885,7 +885,13 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        showSuggestionTray(.autocomplete(query: updatedQuery))
+        
+        if updatedQuery.isEmpty && DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            showSuggestionTray(.favorites)
+        } else {
+            showSuggestionTray(.autocomplete(query: updatedQuery))
+        }
+        
     }
 
     func onOmniQuerySubmitted(_ query: String) {

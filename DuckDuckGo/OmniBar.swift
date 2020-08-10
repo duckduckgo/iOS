@@ -62,7 +62,6 @@ class OmniBar: UIView {
     private(set) var trackersAnimator = TrackersAnimator()
     
     static func loadFromXib() -> OmniBar {
-        print("***", #function)
         return OmniBar.load(nibName: "OmniBar")
     }
     
@@ -72,7 +71,6 @@ class OmniBar: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("***", #function)
         configureTextField()
         configureSeparator()
         configureEditingMenu()

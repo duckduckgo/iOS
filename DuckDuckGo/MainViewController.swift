@@ -101,7 +101,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Swift.print("***", Self.Type.self, #function)
         
         Favicons.shared.migrateIfNeeded {
             DispatchQueue.main.async {
@@ -126,8 +125,7 @@ class MainViewController: UIViewController {
 
         applyTheme(ThemeManager.shared.currentTheme)
 
-        tabsBarController?.tabsModel = tabManager.model
-        tabsBarController?.refresh()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
 
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
@@ -137,7 +135,7 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         
         startOnboardingFlowIfNotSeenBefore()
-        tabsBarController?.refresh()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func startOnboardingFlowIfNotSeenBefore() {
@@ -265,7 +263,6 @@ class MainViewController: UIViewController {
         }
         
         if let controller = segue.destination as? TabsBarViewController {
-            print("***", #function, controller)
             controller.delegate = self
             tabsBarController = controller
             return
@@ -364,7 +361,6 @@ class MainViewController: UIViewController {
 
     @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
-        print("***", #function, event as Any)
         currentTab?.tapLinkDestination = .currentTab
         if event?.modifierFlags.contains(.command) ?? false {
             if event?.modifierFlags.contains(.shift) ?? false {
@@ -465,7 +461,7 @@ class MainViewController: UIViewController {
         refreshOmniBar()
         refreshTabIcon()
         refreshControls()
-        tabsBarController?.refresh()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func enterSearch() {
@@ -509,7 +505,7 @@ class MainViewController: UIViewController {
             addToView(tab: tab)
             refreshControls()
         }
-        tabsBarController?.refresh()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
 
     private func addToView(tab: TabViewController) {
@@ -609,7 +605,7 @@ class MainViewController: UIViewController {
                 self.showBars()
             }
             // If tabs have been udpated, do this async to make sure size calcs are current
-            self.tabsBarController?.refresh()
+            self.tabsBarController?.refresh(tabsModel: self.tabManager.model)
             
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
@@ -637,8 +633,6 @@ class MainViewController: UIViewController {
     }
 
     func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
-        print("***", #function, type)
-
         guard homeController == nil else { return }
         
         if suggestionTrayController?.willShow(for: type) ?? false {
@@ -656,12 +650,9 @@ class MainViewController: UIViewController {
     }
     
     func hideSuggestionTray() {
-        print("***", #function)
-        
         omniBar.showSeparator()
         suggestionTrayContainer.isHidden = true
         suggestionTrayController?.didHide()
-
     }
     
     fileprivate func launchBrowsingMenu() {
@@ -770,7 +761,7 @@ class MainViewController: UIViewController {
         tabManager.addHomeTab()
         attachHomeScreen()
         homeController?.openedAsNewTab()
-        tabsBarController?.refresh()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func updateFindInPage() {
@@ -867,18 +858,12 @@ extension MainViewController: BrowserChromeDelegate {
 
     // 1.0 - full size, 0.0 - hidden
     private func updateNavBarConstant(_ ratio: CGFloat) {
-        
         let browserTabsOffset = (tabsBar.isHidden ? 0 : tabsBar.frame.size.height)
         let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
-        
-        print("***", #function, browserTabsOffset, navBarTopOffset, ratio, omniBar.frame.height)
-        
         if !tabsBar.isHidden {
             let topBarsConstant = -browserTabsOffset * (1.0 - ratio)
-            print("***", #function, topBarsConstant)
             tabsBarTop.constant = topBarsConstant
         }
-        
         navBarTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)
     }
 
@@ -1052,6 +1037,7 @@ extension MainViewController: TabDelegate {
             refreshControls()
         }
         tabManager?.save()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
@@ -1166,6 +1152,7 @@ extension MainViewController: TabSwitcherDelegate {
     
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        hideSuggestionTray()
         tabManager.remove(at: index)
         updateCurrentTab()
     }
@@ -1244,7 +1231,7 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
-        tabsBarController?.refresh()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
     

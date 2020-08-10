@@ -66,8 +66,6 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func willShow(for type: SuggestionType) -> Bool {
-        print("***", #function, type)
-        
         switch type {
         case .autocomplete(let query):
             removeFavorites()
@@ -86,12 +84,10 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func keyboardMoveSelectionDown() {
-        print("***", #function)
         autocompleteController?.keyboardMoveSelectionDown()
     }
 
     func keyboardMoveSelectionUp() {
-        print("***", #function)
         autocompleteController?.keyboardMoveSelectionUp()
     }
     

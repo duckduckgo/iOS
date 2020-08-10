@@ -35,7 +35,7 @@ class TabsBarViewController: UIViewController {
     @IBOutlet weak var tabSwitcherContainer: UIView!
 
     weak var delegate: TabsBarDelegate?
-    weak var tabsModel: TabsModel?
+    private weak var tabsModel: TabsModel?
 
     private let tabSwitcherButton = TabSwitcherButton()
     private let longPressTabGesture = UILongPressGestureRecognizer()
@@ -56,7 +56,6 @@ class TabsBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("***", #function)
 
         collectionView.clipsToBounds = false
         
@@ -77,7 +76,7 @@ class TabsBarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabSwitcherButton.layoutSubviews()
-        refresh()
+        reloadData()
     }
 
     @IBAction func onFireButtonPressed() {
@@ -94,7 +93,9 @@ class TabsBarViewController: UIViewController {
         requestNewTab()
     }
 
-    func refresh() {
+    func refresh(tabsModel: TabsModel?) {
+        self.tabsModel = tabsModel
+        
         let availableWidth = collectionView.frame.size.width
         let maxVisibleItems = min(maxItems, tabsCount)
         
@@ -105,26 +106,28 @@ class TabsBarViewController: UIViewController {
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: itemWidth, height: view.frame.size.height)
         }
-
+        
+        reloadData()
+    }
+    
+    private func reloadData() {
         collectionView.reloadData()
         tabSwitcherButton.tabCount = tabsCount
     }
 
     func backgroundTabAdded() {
-        refresh()
+        reloadData()
         tabSwitcherButton.tabCount = tabsCount - 1
         tabSwitcherButton.incrementAnimated()
     }
     
     private func configureGestures() {
-        print("***", #function, collectionView.gestureRecognizers as Any)
         longPressTabGesture.addTarget(self, action: #selector(handleLongPressTabGesture))
         longPressTabGesture.minimumPressDuration = 0.2
         collectionView.addGestureRecognizer(longPressTabGesture)
     }
     
     @objc func handleLongPressTabGesture(gesture: UILongPressGestureRecognizer) {
-        // print("***", #function, gesture)
         let locationInCollectionView = gesture.location(in: collectionView)
         
         switch gesture.state {
@@ -220,16 +223,14 @@ extension TabsBarViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tab", for: indexPath) as? TabsBarCell else {
             fatalError("Unable to create TabBarCell")
         }
-        print("***", #function, indexPath, cell)
+        print("***", #function, indexPath, currentIndex, tabsCount)
         
         guard let model = tabsModel?.get(tabAt: indexPath.row) else {
             fatalError("Failed to load tab at \(indexPath.row)")
         }
-        model.addObserver(self)
-        
         let isCurrent = indexPath.row == currentIndex
-        let nextIsCurrent = indexPath.row + 1 == currentIndex
-        cell.update(model: model, isCurrent: isCurrent, nextIsCurrent: nextIsCurrent, withTheme: ThemeManager.shared.currentTheme)
+        let isNextCurrent = indexPath.row + 1 == currentIndex
+        cell.update(model: model, isCurrent: isCurrent, isNextCurrent: isNextCurrent, withTheme: ThemeManager.shared.currentTheme)
         cell.onRemove = { [weak self] in
             guard let self = self,
                 let tabIndex = self.tabsModel?.indexOf(tab: model)
@@ -239,15 +240,6 @@ extension TabsBarViewController: UICollectionViewDataSource {
         return cell
     }
 
-}
-
-extension TabsBarViewController: TabObserver {
-    
-    func didChange(tab: Tab) {
-        guard let index = tabsModel?.indexOf(tab: tab) else { return }
-        collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-    }
-    
 }
 
 extension TabsBarViewController: Themable {

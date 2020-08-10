@@ -77,10 +77,14 @@ class TabsBarCell: UICollectionViewCell {
         
     }
 
-    func update(model: Tab, isCurrent: Bool, nextIsCurrent: Bool, withTheme theme: Theme) {
+    func update(model: Tab, isCurrent: Bool, isNextCurrent: Bool, withTheme theme: Theme) {
+        
         accessibilityElements = [label as Any, removeButton as Any]
         
+        self.model?.removeObserver(self)
+        
         self.model = model
+        model.addObserver(self)
 
         label.primaryColor = theme.barTintColor
         if isCurrent {
@@ -93,7 +97,7 @@ class TabsBarCell: UICollectionViewCell {
         }
 
         labelRemoveButtonConstraint.isActive = isCurrent
-        separatorView.isHidden = isCurrent || nextIsCurrent
+        separatorView.isHidden = isCurrent || isNextCurrent
         removeButton.isHidden = !isCurrent
         
         applyModel(model)
@@ -116,6 +120,13 @@ class TabsBarCell: UICollectionViewCell {
 
     }
     
+}
+
+extension TabsBarCell: TabObserver {
+    func didChange(tab: Tab) {
+        guard tab != self.model else { return }
+        applyModel(tab)
+    }
 }
 
 @available(iOS 13.4, *)

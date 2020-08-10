@@ -44,7 +44,6 @@ class AppWidthObserver {
     }
     
     func willResize(toWidth width: CGFloat) -> Bool {
-        print("***", #function, width)
         if width != currentWidth {
             currentWidth = width
             return true

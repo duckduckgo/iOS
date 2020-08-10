@@ -103,14 +103,12 @@ public class Tab: NSObject, NSCoding {
     }
     
     func addObserver(_ observer: TabObserver) {
-        print("***", #function, observer)
         guard indexOf(observer) == nil else { return }
         observersHolder.append(WeaklyHeldTabObserver(observer: observer))
     }
     
     func removeObserver(_ observer: TabObserver) {
         guard let index = indexOf(observer) else { return }
-        print("***", #function, observer, index)
         observersHolder.remove(at: index)
     }
     
@@ -120,7 +118,6 @@ public class Tab: NSObject, NSCoding {
     }
     
     private func notifyObservers() {
-        print("***", #function, observersHolder)
         observersHolder.forEach { $0.observer?.didChange(tab: self) }
         pruneHolders()
     }

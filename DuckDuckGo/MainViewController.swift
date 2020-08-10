@@ -109,6 +109,10 @@ class MainViewController: UIViewController {
          
         attachOmniBar()
 
+        if #available(iOS 11.0, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            view.addInteraction(UIDropInteraction(delegate: self))
+        }
+        
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
@@ -1309,6 +1313,35 @@ extension MainViewController: OnboardingDelegate {
         settings.hasSeenOnboarding = true
     }
     
+}
+
+@available(iOS 11.0, *)
+extension MainViewController: UIDropInteractionDelegate {
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: URL.self) || session.canLoadObjects(ofClass: String.self)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+
+    // won't drop on to a web view - only works by dropping on to the tabs bar or home screen
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        
+        if session.canLoadObjects(ofClass: URL.self) {
+            _ = session.loadObjects(ofClass: URL.self) { urls in
+                urls.forEach { self.loadUrlInNewTab($0) }
+            }
+            
+        } else if session.canLoadObjects(ofClass: String.self) {
+            _ = session.loadObjects(ofClass: String.self) { strings in
+                self.loadQuery(strings[0])
+            }
+            
+        }
+        
+    }
 }
 
 // swiftlint:enable file_length

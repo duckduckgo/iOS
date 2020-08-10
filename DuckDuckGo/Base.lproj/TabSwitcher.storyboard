@@ -428,7 +428,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1wM-Ln-7ly">
-                                <rect key="frame" x="8" y="0.0" width="622" height="40"/>
+                                <rect key="frame" x="8" y="0.0" width="618" height="40"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="4DC-C5-QHY">
                                     <size key="itemSize" width="128" height="128"/>
@@ -579,7 +579,7 @@
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="height" secondItem="8BH-do-lHc" secondAttribute="height" id="c2u-Ow-7wx"/>
                             <constraint firstAttribute="trailing" secondItem="aDD-d2-KuN" secondAttribute="trailing" constant="24" id="drm-rF-cl7"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" constant="-2" id="gao-OH-EED"/>
-                            <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="8" id="z6F-x8-cQ6"/>
+                            <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="12" id="z6F-x8-cQ6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="piu-0G-Uth"/>
                     </view>

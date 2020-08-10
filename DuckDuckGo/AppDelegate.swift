@@ -65,8 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
         }
-
-        migrateHomePageSettings()
         
         HTTPSUpgrade.shared.loadDataAsync()
         
@@ -98,10 +96,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             os_log("Removed cookies for %d legacy allowed domains", domains.count)
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })
-    }
-
-    private func migrateHomePageSettings(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
-        homePageSettings.migrate(from: AppDependencyProvider.shared.appSettings)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

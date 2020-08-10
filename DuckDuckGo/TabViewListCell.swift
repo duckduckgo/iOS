@@ -46,7 +46,6 @@ class TabViewListCell: TabViewCell {
                          reorderRecognizer: UIGestureRecognizer?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
-        let homePageSettings: HomePageSettings = DefaultHomePageSettings()
         self.tab = tab
 
         if !isDeleting {
@@ -64,7 +63,7 @@ class TabViewListCell: TabViewCell {
         unread.isHidden = tab.viewed
 
         if tab.link == nil {
-            let linkText = homePageSettings.favorites ? UserText.homeTabSearchAndFavorites : UserText.homeTabSearchOnly
+            let linkText = UserText.homeTabSearchAndFavorites
             title.text = UserText.homeTabTitle
             link.text = linkText
             favicon.image = UIImage(named: "Logo")

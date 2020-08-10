@@ -23,8 +23,7 @@ import Core
 public class AtbAndVariantCleanup {
 
     static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(),
-                        variantManager: VariantManager = DefaultVariantManager(),
-                        homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
+                        variantManager: VariantManager = DefaultVariantManager()) {
         
         guard let variant = statisticsStorage.variant else { return }
 
@@ -33,26 +32,6 @@ public class AtbAndVariantCleanup {
             statisticsStorage.atb = String(atb.dropLast(variant.count))
         }
         
-        // Home page experiment migration
-        var settings = homePageSettings
-        switch variant {
-
-        case "mn":
-            settings.layout = .centered
-            settings.favorites = false
-
-        case "ml", "mm":
-            settings.layout = .centered
-            settings.favorites = true
-
-        case "mk":
-            settings.layout = .navigationBar
-            settings.favorites = false
-
-        default: break
-
-        }
-
         // remove existing variant if not in an active experiment
         if variantManager.currentVariant == nil {
             statisticsStorage.variant = nil

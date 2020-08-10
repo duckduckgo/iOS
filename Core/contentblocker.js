@@ -504,11 +504,10 @@ _utf8_encode : function (string) {
 
         var blocked = false;
         if (unprotectedDomain) {
-            blocked = false;
             result.reason = "unprotectedDomain";
-        } else if (result.action === 'block') {
-            blocked = true;
-        } else if (result.matchedRule && result.matchedRule.surrogate) {
+        } else if (result.action !== 'ignore') {
+            // other actions are "block" or "redirect" - anything that is not ignored should be blocked. Surrogates are handled below since
+            //  we can't do a redirect.
             blocked = true;
         }
 

@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-class AppWidthObserver {
+public class AppWidthObserver {
     
     struct Constants {
         
@@ -28,13 +28,13 @@ class AppWidthObserver {
         
     }
     
-    static let shared = AppWidthObserver()
+    public static let shared = AppWidthObserver()
     
-    let variantManager: VariantManager
+    private let variantManager: VariantManager
     
-    var currentWidth: CGFloat = 0
+    private var currentWidth: CGFloat = 0
     
-    var isLargeWidth: Bool {
+    public var isLargeWidth: Bool {
         return variantManager.isSupported(feature: .iPadImprovements) && currentWidth >= Constants.minPadWidth
     }
         

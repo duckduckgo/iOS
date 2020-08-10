@@ -106,13 +106,12 @@ class TabsBarCell: UICollectionViewCell {
     private func applyModel(_ model: Tab) {
         
         if model.link == nil {
+            faviconImage.loadFavicon(forDomain: Self.appUrls.base.host, usingCache: .tabs)            
             label.text = UserText.homeTabTitle
-            faviconImage.image = UIImage(named: "Logo")
             label.accessibilityLabel = UserText.openHomeTab
             removeButton.accessibilityLabel = UserText.closeHomeTab
         } else {
             faviconImage.loadFavicon(forDomain: model.link?.url.host, usingCache: .tabs)
-            
             label.text = model.link?.displayTitle ?? model.link?.url.host?.dropPrefix(prefix: "www.")
             label.accessibilityLabel = UserText.openTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")

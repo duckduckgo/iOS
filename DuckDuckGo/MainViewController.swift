@@ -633,7 +633,6 @@ class MainViewController: UIViewController {
     }
 
     func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
-        guard homeController == nil else { return }
         
         if suggestionTrayController?.willShow(for: type) ?? false {
             applyWidthToTrayController()
@@ -873,7 +872,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
         
-        if updatedQuery.isEmpty && DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+        if updatedQuery.isEmpty && DefaultVariantManager().isSupported(feature: .iPadImprovements) && homeController == nil {
             showSuggestionTray(.favorites)
         } else {
             showSuggestionTray(.autocomplete(query: updatedQuery))

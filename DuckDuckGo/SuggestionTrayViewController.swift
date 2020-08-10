@@ -36,7 +36,6 @@ class SuggestionTrayViewController: UIViewController {
     var dismissHandler: (() -> Void)?
     
     private let appSettings = AppUserDefaults()
-    private let homePageSettings = DefaultHomePageSettings()
     private let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
 
     private var autocompleteController: AutocompleteViewController?
@@ -160,7 +159,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func displayFavorites() -> Bool {
-        guard homePageSettings.favorites, !bookmarkStore.favorites.isEmpty else { return false }
+        guard !bookmarkStore.favorites.isEmpty else { return false }
 
         if favoritesOverlay == nil {
             let controller = FavoritesOverlay()

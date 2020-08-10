@@ -45,9 +45,9 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     
-    @IBOutlet weak var padFireButton: UIButton!
-    @IBOutlet weak var padPlusButton: UIButton!
-    @IBOutlet weak var padDoneButton: UIButton!
+    @IBOutlet weak var topFireButton: UIButton!
+    @IBOutlet weak var topPlusButton: UIButton!
+    @IBOutlet weak var topDoneButton: UIButton!
 
     @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
 
@@ -77,15 +77,23 @@ class TabSwitcherViewController: UIViewController {
             tabSwitcherSettings.hasSeenNewLayout = true
         }
         
+        if #available(iOS 13.4, *) {
+            displayModeButton.isPointerInteractionEnabled = true
+            bookmarkAllButton.isPointerInteractionEnabled = true
+            topFireButton.isPointerInteractionEnabled = true
+            topPlusButton.isPointerInteractionEnabled = true
+            topDoneButton.isPointerInteractionEnabled = true
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
         displayModeTrailingConstraint.isActive = !AppWidthObserver.shared.isLargeWidth
-        padFireButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-        padDoneButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-        padPlusButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        topFireButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        topDoneButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        topPlusButton.isHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func setupBackgroundView() {
@@ -439,9 +447,9 @@ extension TabSwitcherViewController: Themable {
         
         titleView.textColor = theme.barTintColor
         bookmarkAllButton.tintColor = theme.barTintColor
-        padDoneButton.tintColor = theme.barTintColor
-        padPlusButton.tintColor = theme.barTintColor
-        padFireButton.tintColor = theme.barTintColor
+        topDoneButton.tintColor = theme.barTintColor
+        topPlusButton.tintColor = theme.barTintColor
+        topFireButton.tintColor = theme.barTintColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

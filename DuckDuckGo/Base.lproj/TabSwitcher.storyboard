@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -407,12 +407,12 @@
                         <outlet property="displayModeTrailingConstraint" destination="moD-HB-CMD" id="E8h-Fv-6Md"/>
                         <outlet property="doneButton" destination="S1O-aT-Bgw" id="8I7-gH-bhZ"/>
                         <outlet property="fireButton" destination="h1S-c2-Spf" id="VfW-9h-WGv"/>
-                        <outlet property="padDoneButton" destination="kW3-ZC-Axl" id="cZJ-RO-Boo"/>
-                        <outlet property="padFireButton" destination="5nO-MZ-vSY" id="FfV-uD-cYB"/>
-                        <outlet property="padPlusButton" destination="uIV-4q-5mj" id="JoC-2j-xg2"/>
                         <outlet property="plusButton" destination="nYf-xs-PE7" id="9pP-uN-hsa"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
                         <outlet property="toolbar" destination="PrD-ff-flI" id="6c2-zx-gsM"/>
+                        <outlet property="topDoneButton" destination="kW3-ZC-Axl" id="zsi-5z-PHb"/>
+                        <outlet property="topFireButton" destination="5nO-MZ-vSY" id="7Ab-ye-3JK"/>
+                        <outlet property="topPlusButton" destination="uIV-4q-5mj" id="KDp-Ls-wWU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

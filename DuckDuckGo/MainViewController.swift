@@ -84,7 +84,6 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
-    fileprivate lazy var homePageSettings: HomePageSettings = DefaultHomePageSettings()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -247,12 +246,6 @@ class MainViewController: UIViewController {
             }
             
             brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-        }
-        
-        if let navigationController = segue.destination as? UINavigationController,
-            let controller = navigationController.topViewController as? SettingsViewController {
-            controller.homePageSettingsDelegate = self
-            return
         }
 
         if var onboarding = segue.destination as? Onboarding {
@@ -503,8 +496,6 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        guard homePageSettings.favorites else { return }
-
         guard favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
         
         let controller = FavoritesOverlay()
@@ -1050,7 +1041,8 @@ extension MainViewController: BookmarksDelegate {
     }
     
     func bookmarksUpdated() {
-        homePageChanged()
+        removeHomeScreen()
+        attachHomeScreen()
     }
 }
 
@@ -1177,16 +1169,6 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         logoText.tintColor = theme.ddgTextTintColor
-    }
-    
-}
-
-extension MainViewController: HomePageSettingsDelegate {
-    
-    func homePageChanged() {
-        guard homeController != nil else { return }
-        removeHomeScreen()
-        attachHomeScreen()
     }
     
 }

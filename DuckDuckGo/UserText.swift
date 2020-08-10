@@ -208,7 +208,6 @@ public struct UserText {
     public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", value: "Off", comment: "Off")
     
     public static let homePageNavigationBar = NSLocalizedString("homepage.navigationBar", value: "Top", comment: "Navigation Bar Search")
-    public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", value: "Center", comment: "Center Search")
     
     public static func privacyGrade(_ grade: String) -> String {
         let message = NSLocalizedString("privacy.protection.site.grade", comment: "Privacy grade %@")
@@ -253,7 +252,6 @@ public struct UserText {
     
     public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", value: "%@ is now Fireproof! Visit settings to remove.", comment: "%@ is now Fireproof! Visit settings to remove.")
     
-    public static let homeTabSearchOnly = NSLocalizedString("homeTab.searchOnly", value: "Search in a new tab", comment: "Home tab search only")
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", value: "Search and favorites in a new tab", comment: "Home tab search and favorites")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", value: "Home", comment: "Home tab title")
     

@@ -31,8 +31,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     struct Constants {
         
-        static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
-        static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
+        static let searchWidth: CGFloat = 380
+        static let searchWidthPad: CGFloat = 455
         static let defaultHeaderHeight: CGFloat = 20
         static let horizontalMargin: CGFloat = 2
         

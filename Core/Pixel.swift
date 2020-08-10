@@ -88,12 +88,6 @@ public enum PixelName: String {
     case settingsAppIconChangedPurple = "ms_aic_purple"
     case settingsAppIconChangedBlack = "ms_aic_black"
 
-    case settingsNewTabShown = "ms_nt"
-    case settingsNewTabDefaultSelected = "ms_nt_d"
-    case settingsNewTabCenteredSelected = "ms_nt_c"
-    case settingsNewTabFavoritesOn = "ms_nt_f_on"
-    case settingsNewTabFavoritesOff = "ms_nt_f_off"
-
     case settingsKeyboardShown = "ms_ks"
     case settingsKeyboardNewTabOn = "ms_ks_nt_on"
     case settingsKeyboardNewTabOff = "ms_ks_nt_off"

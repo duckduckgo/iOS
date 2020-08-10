@@ -159,6 +159,6 @@ extension FavoritesOverlay: Themable {
     
     func decorate(with theme: Theme) {
         self.theme = theme
-        view.backgroundColor = theme.backgroundColor
+        view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
     }
 }

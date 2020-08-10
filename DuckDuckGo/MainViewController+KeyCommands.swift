@@ -99,8 +99,6 @@ extension MainViewController {
                          discoverabilityTitle: UserText.keyCommandPreviousTab),
 
             // No discoverability as these should be intuitive
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardArrowUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardArrowDown)),
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
     }
@@ -141,26 +139,6 @@ extension MainViewController {
         findInPageView.done()
         hideSuggestionTray()
         onCancelPressed()
-    }
-    
-    @objc func keyboardArrowDown() {
-        guard tabSwitcherController == nil else { return }
-
-        if !suggestionTrayContainer.isHidden {
-            suggestionTrayController?.keyboardMoveSelectionDown()
-        } else {
-            currentTab?.webView.becomeFirstResponder()
-        }
-    }
-
-    @objc func keyboardArrowUp() {
-        guard tabSwitcherController == nil else { return }
-
-        if !suggestionTrayContainer.isHidden {
-            suggestionTrayController?.keyboardMoveSelectionUp()
-        } else {
-            currentTab?.webView.becomeFirstResponder()
-        }
     }
     
     @objc func keyboardNewTab() {

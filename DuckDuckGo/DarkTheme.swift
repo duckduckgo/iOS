@@ -25,7 +25,7 @@ struct DarkTheme: Theme {
     var statusBarStyle: UIStatusBarStyle = .lightContent
     var keyboardAppearance: UIKeyboardAppearance = .dark
 
-    var tabsBarBackgroundColor = UIColor.charcoalGrey
+    var tabsBarBackgroundColor = UIColor.nearlyBlack
     var tabsBarSeparatorColor = UIColor.darkGreyish
     
     var backgroundColor = UIColor.nearlyBlack

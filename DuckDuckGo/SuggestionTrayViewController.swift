@@ -56,6 +56,13 @@ class SuggestionTrayViewController: UIViewController {
         
     }
     
+    override var keyCommands: [UIKeyCommand] {
+        [
+            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown))
+        ]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         installDismissHandler()
@@ -65,17 +72,26 @@ class SuggestionTrayViewController: UIViewController {
         dismissHandler?()
     }
     
+    override var canBecomeFirstResponder: Bool { return true }
+    
     func willShow(for type: SuggestionType) -> Bool {
+        var canShow = false
+        
         switch type {
         case .autocomplete(let query):
             removeFavorites()
-            return displayAutocompleteSuggestions(forQuery: query)
+            canShow = displayAutocompleteSuggestions(forQuery: query)
             
         case.favorites:
             removeAutocomplete()
-            return displayFavorites()
+            canShow = displayFavorites()
         }
         
+        if canShow {
+            _ = becomeFirstResponder()
+        }
+        
+        return canShow
     }
     
     func didHide() {
@@ -83,11 +99,11 @@ class SuggestionTrayViewController: UIViewController {
         removeFavorites()
     }
     
-    func keyboardMoveSelectionDown() {
+    @objc func keyboardMoveSelectionDown() {
         autocompleteController?.keyboardMoveSelectionDown()
     }
 
-    func keyboardMoveSelectionUp() {
+    @objc func keyboardMoveSelectionUp() {
         autocompleteController?.keyboardMoveSelectionUp()
     }
     
@@ -99,7 +115,7 @@ class SuggestionTrayViewController: UIViewController {
         containerView.layer.masksToBounds = true
  
         backgroundView.layer.cornerRadius = 16
-        backgroundView.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+        backgroundView.backgroundColor = ThemeManager.shared.currentTheme.tableCellBackgroundColor
         backgroundView.clipsToBounds = false
         backgroundView.layer.shadowColor = UIColor.black.cgColor
         backgroundView.layer.shadowOffset = .init(width: 0, height: 10)
@@ -204,7 +220,7 @@ extension SuggestionTrayViewController: Themable {
     func decorate(with theme: Theme) {
         // only update the color if one has been set
         if backgroundView.backgroundColor != nil {
-            backgroundView.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+            backgroundView.backgroundColor = theme.tableCellBackgroundColor
         }
     }
     

@@ -73,9 +73,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            
             DaxDialogs().primeForUse()
-            return .includeInCohort
+            
+            // current SERP experiment does not include tablet
+            return isPad ? .excludeFromCohort : .includeInCohort
         }
 
         if let main = mainViewController {

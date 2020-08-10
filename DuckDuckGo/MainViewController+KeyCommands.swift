@@ -70,7 +70,15 @@ extension MainViewController {
             ]
         }
 
-        return alwaysAvailable + browsingCommands + findInPageCommands + [
+        var arrowKeys = [UIKeyCommand]()
+        if omniBar.textField.isFirstResponder {
+            arrowKeys = [
+                UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
+                UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown))
+            ]
+        }
+
+        return alwaysAvailable + browsingCommands + findInPageCommands + arrowKeys + [
             UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab),
                          discoverabilityTitle: UserText.keyCommandCloseTab),
             UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab),
@@ -101,6 +109,14 @@ extension MainViewController {
             // No discoverability as these should be intuitive
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
+    }
+
+    @objc func keyboardMoveSelectionUp() {
+        suggestionTrayController?.keyboardMoveSelectionUp()
+    }
+
+    @objc func keyboardMoveSelectionDown() {
+        suggestionTrayController?.keyboardMoveSelectionDown()
     }
 
     @objc func keyboardReload() {

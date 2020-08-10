@@ -54,14 +54,7 @@ class SuggestionTrayViewController: UIViewController {
         }
         
     }
-    
-    override var keyCommands: [UIKeyCommand] {
-        [
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown))
-        ]
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         installDismissHandler()
@@ -74,23 +67,15 @@ class SuggestionTrayViewController: UIViewController {
     override var canBecomeFirstResponder: Bool { return true }
     
     func willShow(for type: SuggestionType) -> Bool {
-        var canShow = false
-        
         switch type {
         case .autocomplete(let query):
             removeFavorites()
-            canShow = displayAutocompleteSuggestions(forQuery: query)
+            return displayAutocompleteSuggestions(forQuery: query)
             
         case.favorites:
             removeAutocomplete()
-            canShow = displayFavorites()
+            return displayFavorites()
         }
-        
-        if canShow {
-            _ = becomeFirstResponder()
-        }
-        
-        return canShow
     }
     
     func didHide() {

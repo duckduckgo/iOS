@@ -78,10 +78,6 @@ class HomeCollectionView: UICollectionView {
                 
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())
-
-            case .padding:
-                renderers.install(renderer: PaddingHomeViewSectionRenderer())
-
             }
 
         }

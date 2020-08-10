@@ -22,18 +22,9 @@ import Core
 
 class HomePageConfiguration {
     
-    enum ConfigName: Int {
-
-        case simple
-        case centerSearch
-        case centerSearchAndFavorites
-
-    }
-    
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
         case favorites
-        case padding
     }
     
     func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {

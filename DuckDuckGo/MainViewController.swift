@@ -639,6 +639,8 @@ class MainViewController: UIViewController {
     func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
         print("***", #function, type)
 
+        guard homeController == nil else { return }
+        
         if suggestionTrayController?.willShow(for: type) ?? false {
             applyWidthToTrayController()
 

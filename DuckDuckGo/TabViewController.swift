@@ -57,6 +57,11 @@ class TabViewController: UIViewController {
 
     var openedByPage = false
     var daxDialogsDisabled = false
+    weak var openingTab: TabViewController? {
+        didSet {
+            delegate?.tabLoadingStateDidChange(tab: self)
+        }
+    }
     
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -111,7 +116,7 @@ class TabViewController: UIViewController {
     public var canGoBack: Bool {
         let webViewCanGoBack = webView.canGoBack
         let navigatedToError = webView.url != nil && isError
-        return webViewCanGoBack || navigatedToError
+        return webViewCanGoBack || navigatedToError || openingTab != nil
     }
     
     public var canGoForward: Bool {
@@ -432,8 +437,10 @@ class TabViewController: UIViewController {
             url = webView.url
             onWebpageDidStartLoading(httpsForced: false)
             onWebpageDidFinishLoading()
-        } else {
+        } else if webView.canGoBack {
             webView.goBack()
+        } else if openingTab != nil {
+            delegate?.tabDidRequestClose(self)
         }
     }
     

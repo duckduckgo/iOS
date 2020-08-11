@@ -1,3 +1,2 @@
-• Better external keyboard support on the iPad.
-• Improved accessibility labels (thanks to a community contribution).
-• Other fixes and improvements.
+• You can now use the back button to close the current tab after opening a link in a new tab.
+• Bug fixes and improvements.

@@ -43,8 +43,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
-
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -73,7 +71,6 @@ class SettingsViewController: UITableViewController {
         
         configureAutoClearCellAccessory()
         configureRememberLogins()
-        configureHomePageCellAccessory()
         configureIconViews()
     }
 
@@ -92,13 +89,7 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsAppIconShown)
             return
         }
-        
-        if let controller = segue.destination as? HomePageSettingsViewController {
-            Pixel.fire(pixel: .settingsNewTabShown)
-            controller.delegate = homePageSettingsDelegate
-            return
-        }
-
+ 
         if segue.destination is KeyboardSettingsViewController {
             Pixel.fire(pixel: .settingsKeyboardShown)
             return
@@ -162,21 +153,7 @@ class SettingsViewController: UITableViewController {
             autoClearAccessoryText.text = UserText.autoClearAccessoryOff
         }
     }
-    
-    private func configureHomePageCellAccessory(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
-
-        switch homePageSettings.layout {
-
-        case .centered:
-            homePageAccessoryText.text = UserText.homePageCenterSearch
-
-        case .navigationBar:
-            homePageAccessoryText.text = UserText.homePageNavigationBar
-
-        }
-        
-    }
-    
+     
     private func configureRememberLogins() {
         if #available(iOS 13, *) {
             rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"

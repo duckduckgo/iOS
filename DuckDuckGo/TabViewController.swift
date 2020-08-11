@@ -424,15 +424,17 @@ class TabViewController: UIViewController {
             url = webView.url
             onWebpageDidStartLoading(httpsForced: false)
             onWebpageDidFinishLoading()
-        } else if webView.canGoBack {
-            webView.goBack()
+        } else if webView.canGoBack && webView.goBack() != nil {
+            chromeDelegate?.omniBar.resignFirstResponder()
         } else if openingTab != nil {
             delegate?.tabDidRequestClose(self)
         }
     }
     
     func goForward() {
-        webView.goForward()
+        if webView.goForward() != nil {
+            chromeDelegate?.omniBar.resignFirstResponder()
+        }
     }
     
     @objc func onLongPress(sender: UILongPressGestureRecognizer) {

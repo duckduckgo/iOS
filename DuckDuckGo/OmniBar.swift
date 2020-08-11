@@ -394,9 +394,7 @@ extension OmniBar: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text.isEmpty {
-            omniDelegate?.onDismissed()
-        }
+        omniDelegate?.onDismissed()
         refreshState(state.onEditingStoppedState)
     }
 }

@@ -319,7 +319,7 @@
 "dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don’t worry!\n\nI’ll block %1$@ from seeing your activity on those sites.";
 "dax.onboarding.browsing.site.is.major.tracker.cta" =  "Got It";
 
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! %1$@ is owned by %2$@.\n\n%2$@’s trackers lurk on about %3$.0lf%% of top websites 😱 but don’t worry!\n\nI’ll block %2$@ from seeing your activity on those sites.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! Since %2$@ owns %1$@, I can't stop them from seeing your activity here.\n\nBut browse with me, and I can reduce what %2$@ knows about you overall by blocking their trackers on lots of other sites.";
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Got It";
 
 "dax.onboarding.browsing.one.tracker" = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";

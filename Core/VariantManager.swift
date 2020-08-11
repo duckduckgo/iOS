@@ -45,7 +45,7 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: 1, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: doNotAllocate, features: []),
+        Variant(name: "se", weight: 1, features: []),
 
         // Tab switcher list experiment
         Variant(name: "me", weight: doNotAllocate, features: []),

@@ -43,13 +43,18 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // SERP testing
-        Variant(name: "sc", weight: doNotAllocate, features: []),
+        Variant(name: "sc", weight: 1, features: []),
         Variant(name: "sd", weight: doNotAllocate, features: []),
         Variant(name: "se", weight: doNotAllocate, features: []),
 
+        // Tab switcher list experiment
+        Variant(name: "me", weight: doNotAllocate, features: []),
+        Variant(name: "mf", weight: doNotAllocate, features: [.tabSwitcherListLayout]),
+        
+        // iPad improvement experiment
         Variant(name: "mc", weight: 1, features: []),
         Variant(name: "md", weight: 1, features: [.iPadImprovements])
-
+            
     ]
     
     public let name: String

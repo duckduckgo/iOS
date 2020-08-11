@@ -73,9 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            
             DaxDialogs().primeForUse()
-            
+
+            // (WIP) move to a filtering approach
             // We only want iPad users while testing the iPad improvements
             return UIDevice.current.userInterfaceIdiom == .pad ? .includeInCohort : .excludeFromCohort
         }

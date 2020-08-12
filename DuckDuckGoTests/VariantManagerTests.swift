@@ -27,7 +27,7 @@ class VariantManagerTests: XCTestCase {
         Variant(name: "mc", weight: 25, features: [], isIncluded: .always),
         Variant(name: "mt", weight: Variant.doNotAllocate, features: [], isIncluded: .always),
         Variant(name: "md", weight: 25, features: [], isIncluded: .always),
-        Variant(name: "excluded", weight: 1000, features: [.dummy], isIncluded: .when(filter: { return false }))
+        Variant(name: "excluded", weight: 1000, features: [.dummy], isIncluded: .when({ return false }))
     ]
 
     func testWhenVariantIsExcludedThenItIsNotInVariantList() {

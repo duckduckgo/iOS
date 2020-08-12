@@ -33,33 +33,35 @@ public enum FeatureName: String {
 public enum VariantInclusion {
     
     case always
-    case when(filter: () -> Bool)
+    case when(_ filter: () -> Bool)
     
 }
 
 public struct Variant {
     
-    static let isPadDevice = { return UIDevice.current.userInterfaceIdiom == .pad }
-    static let isNotPadDevice = { return !Self.isPadDevice() }
-
+    struct Is {
+        static let padDevice = { return UIDevice.current.userInterfaceIdiom == .pad }
+        static let notPadDevice = { return !Is.padDevice() }
+    }
+    
     static let doNotAllocate = 0
     
     // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
         
         // SERP testing
-        Variant(name: "sc", weight: 1, features: [], isIncluded: .when(filter: Self.isNotPadDevice)),
+        Variant(name: "sc", weight: 1, features: [], isIncluded: .when(Is.notPadDevice)),
         Variant(name: "sd", weight: doNotAllocate, features: [], isIncluded: .always),
-        Variant(name: "se", weight: 1, features: [], isIncluded: .when(filter: Self.isNotPadDevice)),
+        Variant(name: "se", weight: 1, features: [], isIncluded: .when(Is.notPadDevice)),
 
         // Tab switcher list experiment
         Variant(name: "me", weight: doNotAllocate, features: [], isIncluded: .always),
         Variant(name: "mf", weight: doNotAllocate, features: [.tabSwitcherListLayout], isIncluded: .always),
         
         // iPad improvement experiment
-        Variant(name: "mc", weight: 1, features: [], isIncluded: .when(filter: Self.isPadDevice)),
-        Variant(name: "md", weight: 1, features: [.iPadImprovements], isIncluded: .when(filter: Self.isPadDevice))
-            
+        Variant(name: "mc", weight: 1, features: [], isIncluded: .when(Is.padDevice)),
+        Variant(name: "md", weight: 1, features: [.iPadImprovements], isIncluded: .when(Is.padDevice))
+
     ]
     
     public let name: String

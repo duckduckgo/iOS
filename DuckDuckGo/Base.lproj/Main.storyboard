@@ -109,7 +109,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
-                                    <barButtonItem title="Erase Tabs and Data" image="Fire" id="ntb-c7-mjV">
+                                    <barButtonItem title="Close all tabs and clear data" image="Fire" id="ntb-c7-mjV">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Fire"/>
                                         </userDefinedRuntimeAttributes>

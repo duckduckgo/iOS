@@ -68,13 +68,12 @@ class TabsBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView.clipsToBounds = false
-        
         applyTheme(ThemeManager.shared.currentTheme)
 
         tabSwitcherButton.delegate = self
         tabSwitcherContainer.addSubview(tabSwitcherButton)
 
+        collectionView.clipsToBounds = false
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -107,6 +106,10 @@ class TabsBarViewController: UIViewController {
     func refresh(tabsModel: TabsModel?) {
         self.tabsModel = tabsModel
         
+        tabSwitcherContainer.isAccessibilityElement = true
+        tabSwitcherContainer.accessibilityLabel = UserText.tabSwitcherAccessibilityLabel
+        tabSwitcherContainer.accessibilityHint = UserText.numberOfTabs(tabsCount)
+
         let availableWidth = collectionView.frame.size.width
         let maxVisibleItems = min(maxItems, tabsCount)
         

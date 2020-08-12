@@ -288,4 +288,6 @@ public struct UserText {
     public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", value: "There are only a few, and we tried to make them informative.", comment: "There are only a few, and we tried to make them informative.")
     public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", value: "Hide tips forever", comment: "Hide tips forever")
     public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", value: "Cancel", comment: "Cancel")
+    
+    public static let tabSwitcherAccessibilityLabel = NSLocalizedString("tab.switcher.accessibility.label", value: "Tab Switcher", comment: "Tab Switcher Accessibility Label")
 }

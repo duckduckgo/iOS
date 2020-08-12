@@ -192,7 +192,6 @@ public struct UserText {
     public static let contextualOnboardingPrivacyGrade = NSLocalizedString("contextualOnboardingPrivacyGrade", value: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.", comment: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.")
     public static let contextualOnboardingFireButton = NSLocalizedString("contextualOnboardingFireButton", value: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.", comment: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.")
     
-    public static let bookmarkAllTabsNotFound = NSLocalizedString("bookmarkAll.tabs.notfound", value: "No tabs to bookmark", comment: "No open tabs found to bookmark")
     public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", value: "All tabs bookmarked", comment: "All open tabs are bookmarked")
     public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", value: "Unable to bookmark some tabs", comment: "Failed to bookmark %lu out of %lu tabs")
     

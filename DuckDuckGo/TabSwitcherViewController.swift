@@ -175,7 +175,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {
-        if openTabsCount == results.newBookmarksCount + results.existingBookmarksCount {
+        if results.newBookmarksCount == openTabsCount {
             view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
@@ -207,12 +207,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
-        
-        guard tabsModel.tabs.count > 0 else {
-            view.showBottomToast(UserText.bookmarkAllTabsNotFound)
-            return
-        }
-        
+         
         let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
                                       message: UserText.alertBookmarkAllMessage,
                                       preferredStyle: .alert)

@@ -37,7 +37,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
     @IBOutlet weak var rememberLoginsCell: UITableViewCell!
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
-    @IBOutlet weak var newTabSettingsCell: UITableViewCell!
 
     @IBOutlet weak var longPressCell: UITableViewCell!
 

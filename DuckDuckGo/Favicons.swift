@@ -106,7 +106,7 @@ public class Favicons {
         NotificationCenter.default.removeObserver(Constants.tabsCache)
     }
     
-    public func migrateIfNeeded(completion: @escaping () -> Void) {
+    public func migrateIfNeeded(afterMigrationHandler: @escaping () -> Void) {
         guard needsMigration else { return }
 
         DispatchQueue.global(qos: .utility).async {
@@ -125,7 +125,7 @@ public class Favicons {
             group.wait()
 
             self.needsMigration = false
-            completion()
+            afterMigrationHandler()
         }
         
     }

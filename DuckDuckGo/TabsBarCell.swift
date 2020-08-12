@@ -1,5 +1,5 @@
 //
-//  TabBarCell.swift
+//  TabsBarCell.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.

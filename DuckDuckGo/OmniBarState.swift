@@ -22,7 +22,7 @@ import Core
 
 protocol OmniBarState {
     
-    var padFormFactor: Bool { get }
+    var hasLargeWidth: Bool { get }
     var showBackButton: Bool { get }
     var showForwardButton: Bool { get }
     var showBookmarksButton: Bool { get }

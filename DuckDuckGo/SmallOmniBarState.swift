@@ -23,7 +23,7 @@ import Core
 struct SmallOmniBarState {
 
     struct HomeEmptyEditingState: OmniBarState {
-        let padFormFactor: Bool = false
+        let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
@@ -50,7 +50,7 @@ struct SmallOmniBarState {
     }
 
     struct HomeTextEditingState: OmniBarState {
-        let padFormFactor: Bool = false
+        let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
@@ -77,7 +77,7 @@ struct SmallOmniBarState {
     }
 
     struct HomeNonEditingState: OmniBarState {
-        let padFormFactor: Bool = false
+        let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
@@ -104,7 +104,7 @@ struct SmallOmniBarState {
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
-        let padFormFactor: Bool = false
+        let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
@@ -131,7 +131,7 @@ struct SmallOmniBarState {
     }
 
     struct BrowsingTextEditingState: OmniBarState {
-        let padFormFactor: Bool = false
+        let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
@@ -158,7 +158,7 @@ struct SmallOmniBarState {
     }
 
     struct BrowsingNonEditingState: OmniBarState {
-        let padFormFactor: Bool = false
+        let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false

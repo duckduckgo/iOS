@@ -24,7 +24,7 @@ import XCTest
 
 class SmallOmniBarStateTests: XCTestCase {
 
-    func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShow() {
+    func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShown() {
         let testee = SmallOmniBarState.HomeEmptyEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -33,6 +33,12 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+        
+        XCTAssertFalse(testee.hasLargeWidth)
+        XCTAssertFalse(testee.showBackButton)
+        XCTAssertFalse(testee.showForwardButton)
+        XCTAssertFalse(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
     }
 
     func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
@@ -70,7 +76,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInHomeTextEditingStateThenCorrectButtonsAreShow() {
+    func testWhenInHomeTextEditingStateThenCorrectButtonsAreShown() {
         let testee = SmallOmniBarState.HomeTextEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -79,6 +85,12 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+        
+        XCTAssertFalse(testee.hasLargeWidth)
+        XCTAssertFalse(testee.showBackButton)
+        XCTAssertFalse(testee.showForwardButton)
+        XCTAssertFalse(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
     }
 
     func testWhenEnteringHomeTextEditingStateThenTextIsNotCleared() {
@@ -116,7 +128,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInHomeNonEditingStateThenCorrectButtonsAreShow() {
+    func testWhenInHomeNonEditingStateThenCorrectButtonsAreShown() {
         let testee = SmallOmniBarState.HomeNonEditingState()
         XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -125,6 +137,12 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+
+        XCTAssertFalse(testee.hasLargeWidth)
+        XCTAssertFalse(testee.showBackButton)
+        XCTAssertFalse(testee.showForwardButton)
+        XCTAssertFalse(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
     }
 
     func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
@@ -162,7 +180,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeNonEditingState().name)
     }
 
-    func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShow() {
+    func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShown() {
         let testee = SmallOmniBarState.BrowsingEmptyEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -171,6 +189,12 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+
+        XCTAssertFalse(testee.hasLargeWidth)
+        XCTAssertFalse(testee.showBackButton)
+        XCTAssertFalse(testee.showForwardButton)
+        XCTAssertFalse(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
     }
 
     func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
@@ -208,7 +232,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShow() {
+    func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShown() {
         let testee = SmallOmniBarState.BrowsingTextEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -217,6 +241,12 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+
+        XCTAssertFalse(testee.hasLargeWidth)
+        XCTAssertFalse(testee.showBackButton)
+        XCTAssertFalse(testee.showForwardButton)
+        XCTAssertFalse(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
     }
 
     func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
@@ -254,7 +284,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShow() {
+    func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShown() {
         let testee = SmallOmniBarState.BrowsingNonEditingState()
         XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
@@ -263,6 +293,12 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
+
+        XCTAssertFalse(testee.hasLargeWidth)
+        XCTAssertFalse(testee.showBackButton)
+        XCTAssertFalse(testee.showForwardButton)
+        XCTAssertFalse(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
     }
 
     func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {

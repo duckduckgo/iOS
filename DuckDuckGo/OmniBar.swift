@@ -208,12 +208,12 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
         setVisibility(shareButton, hidden: !state.showShareButton)
         
-        searchContainerCenterConstraint.isActive = state.padFormFactor
-        searchContainerMaxWidthConstraint.isActive = state.padFormFactor
-        leftButtonsSpacingConstraint.constant = state.padFormFactor ? 24 : 0
-        rightButtonsSpacingConstraint.constant = state.padFormFactor ? 24 : 14
-        omniBarLeadingConstraint.constant = state.padFormFactor ? 24 : 8
-        omniBarTrailingConstraint.constant = state.padFormFactor ? 24 : 14
+        searchContainerCenterConstraint.isActive = state.hasLargeWidth
+        searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
+        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
+        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
+        omniBarLeadingConstraint.constant = state.hasLargeWidth ? 24 : 8
+        omniBarTrailingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
         updateSearchBarBorder()
     }

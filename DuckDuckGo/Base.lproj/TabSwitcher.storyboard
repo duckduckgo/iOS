@@ -541,6 +541,25 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRo-Z1-BzV">
+                                <rect key="frame" x="626" y="0.0" width="174" height="40"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pk4-Xi-vWk">
+                                        <rect key="frame" x="0.0" y="0.0" width="174" height="40"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="z6K-0f-J1V">
+                                            <rect key="frame" x="0.0" y="0.0" width="174" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <blurEffect style="regular"/>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="centerX" secondItem="eRo-Z1-BzV" secondAttribute="centerX" id="6Sd-VH-EiL"/>
+                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="width" secondItem="eRo-Z1-BzV" secondAttribute="width" id="IE8-El-5R3"/>
+                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="centerY" secondItem="eRo-Z1-BzV" secondAttribute="centerY" id="abb-eW-XeG"/>
+                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="height" secondItem="eRo-Z1-BzV" secondAttribute="height" id="qCj-VN-PUl"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="aDD-d2-KuN">
                                 <rect key="frame" x="638" y="-2" width="138" height="44"/>
                                 <subviews>
@@ -568,7 +587,6 @@
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eS-1F-EgF">
                                         <rect key="frame" x="108" y="0.0" width="30" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                             <bool key="isElement" value="YES"/>
@@ -583,18 +601,22 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" id="28V-cD-7Ty"/>
+                            <constraint firstAttribute="trailing" secondItem="eRo-Z1-BzV" secondAttribute="trailing" id="AXl-ER-GiJ"/>
                             <constraint firstAttribute="bottom" secondItem="1wM-Ln-7ly" secondAttribute="bottom" id="Ign-CF-bTN"/>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="leading" secondItem="8BH-do-lHc" secondAttribute="leading" constant="8" id="RGE-7m-yXx"/>
                             <constraint firstItem="1wM-Ln-7ly" firstAttribute="height" secondItem="8BH-do-lHc" secondAttribute="height" id="c2u-Ow-7wx"/>
+                            <constraint firstItem="eRo-Z1-BzV" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" id="cOB-V5-0Al"/>
                             <constraint firstAttribute="trailing" secondItem="aDD-d2-KuN" secondAttribute="trailing" constant="24" id="drm-rF-cl7"/>
+                            <constraint firstAttribute="bottom" secondItem="eRo-Z1-BzV" secondAttribute="bottom" id="ehD-xW-kb9"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="top" secondItem="8BH-do-lHc" secondAttribute="top" constant="-2" id="gao-OH-EED"/>
+                            <constraint firstItem="eRo-Z1-BzV" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" id="owJ-aY-lUW"/>
                             <constraint firstItem="aDD-d2-KuN" firstAttribute="leading" secondItem="1wM-Ln-7ly" secondAttribute="trailing" constant="12" id="z6F-x8-cQ6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="piu-0G-Uth"/>
                     </view>
                     <size key="freeformSize" width="800" height="40"/>
                     <connections>
                         <outlet property="addTabButton" destination="cYd-YU-sSj" id="Esy-Fe-JSs"/>
+                        <outlet property="buttonsBackground" destination="eRo-Z1-BzV" id="X83-Xq-Aup"/>
                         <outlet property="buttonsStack" destination="aDD-d2-KuN" id="5zW-Qb-KIe"/>
                         <outlet property="collectionView" destination="1wM-Ln-7ly" id="cCP-cW-HWP"/>
                         <outlet property="fireButton" destination="Hcx-F2-HgO" id="JuZ-vT-v3y"/>

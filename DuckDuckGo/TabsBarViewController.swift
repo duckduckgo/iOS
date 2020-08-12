@@ -44,6 +44,7 @@ class TabsBarViewController: UIViewController {
     @IBOutlet weak var fireButton: UIButton!
     @IBOutlet weak var addTabButton: UIButton!
     @IBOutlet weak var tabSwitcherContainer: UIView!
+    @IBOutlet weak var buttonsBackground: UIView!
 
     weak var delegate: TabsBarDelegate?
     private weak var tabsModel: TabsModel?
@@ -263,7 +264,6 @@ extension TabsBarViewController: Themable {
         view.tintColor = theme.barTintColor
         collectionView.backgroundColor = theme.tabsBarBackgroundColor
         collectionView.reloadData()
-        tabSwitcherContainer.backgroundColor = theme.tabsBarBackgroundColor
         tabSwitcherButton.decorate(with: theme)
     }
 

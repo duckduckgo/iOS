@@ -30,36 +30,42 @@ public enum FeatureName: String {
     
 }
 
-public enum CohortFiltering {
+public enum VariantInclusion {
     
-    case includeInCohort
-    case excludeFromCohort
+    case always
+    case when(filter: () -> Bool)
     
 }
 
 public struct Variant {
     
+    static let isPadDevice = { return UIDevice.current.userInterfaceIdiom == .pad }
+    static let isNotPadDevice = { return !Self.isPadDevice() }
+
     static let doNotAllocate = 0
     
+    // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
+        
         // SERP testing
-        Variant(name: "sc", weight: 1, features: []),
-        Variant(name: "sd", weight: doNotAllocate, features: []),
-        Variant(name: "se", weight: 1, features: []),
+        Variant(name: "sc", weight: 1, features: [], isIncluded: .when(filter: Self.isNotPadDevice)),
+        Variant(name: "sd", weight: doNotAllocate, features: [], isIncluded: .always),
+        Variant(name: "se", weight: 1, features: [], isIncluded: .when(filter: Self.isNotPadDevice)),
 
         // Tab switcher list experiment
-        Variant(name: "me", weight: doNotAllocate, features: []),
-        Variant(name: "mf", weight: doNotAllocate, features: [.tabSwitcherListLayout]),
+        Variant(name: "me", weight: doNotAllocate, features: [], isIncluded: .always),
+        Variant(name: "mf", weight: doNotAllocate, features: [.tabSwitcherListLayout], isIncluded: .always),
         
         // iPad improvement experiment
-        Variant(name: "mc", weight: 1, features: []),
-        Variant(name: "md", weight: 1, features: [.iPadImprovements])
+        Variant(name: "mc", weight: 1, features: [], isIncluded: .when(filter: Self.isPadDevice)),
+        Variant(name: "md", weight: 1, features: [.iPadImprovements], isIncluded: .when(filter: Self.isPadDevice))
             
     ]
     
     public let name: String
     public let weight: Int
     public let features: [FeatureName]
+    public let isIncluded: VariantInclusion
 
 }
 
@@ -72,7 +78,7 @@ public protocol VariantRNG {
 public protocol VariantManager {
     
     var currentVariant: Variant? { get }
-    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> CohortFiltering)
+    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void)
     func isSupported(feature: FeatureName) -> Bool
     
 }
@@ -87,23 +93,30 @@ public class DefaultVariantManager: VariantManager {
     private let variants: [Variant]
     private let storage: StatisticsStore
     private let rng: VariantRNG
-    private let uiIdiom: UIUserInterfaceIdiom
     
     public init(variants: [Variant] = Variant.defaultVariants,
                 storage: StatisticsStore = StatisticsUserDefaults(),
-                rng: VariantRNG = Arc4RandomUniformVariantRNG(),
-                uiIdiom: UIUserInterfaceIdiom = UI_USER_INTERFACE_IDIOM()) {
-        self.variants = variants
+                rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+        
+        self.variants = variants.filter {            
+            switch $0.isIncluded {
+            case .always:
+                return true
+                
+            case .when(let filter):
+                return filter()
+            }
+        }
+        
         self.storage = storage
         self.rng = rng
-        self.uiIdiom = uiIdiom
     }
 
     public func isSupported(feature: FeatureName) -> Bool {
         return currentVariant?.features.contains(feature) ?? false
     }
     
-    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> CohortFiltering) {
+    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
             os_log("no new variant needed for existing user", log: generalLog, type: .debug)
             return
@@ -123,9 +136,7 @@ public class DefaultVariantManager: VariantManager {
         }
         
         storage.variant = variant.name
-        if newInstallCompletion(self) == .excludeFromCohort {
-            storage.variant = nil
-        }
+        newInstallCompletion(self)
     }
     
     private func selectVariant() -> Variant? {

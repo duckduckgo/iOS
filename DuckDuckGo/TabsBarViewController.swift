@@ -263,8 +263,10 @@ extension TabsBarViewController: Themable {
         view.backgroundColor = theme.tabsBarBackgroundColor
         view.tintColor = theme.barTintColor
         collectionView.backgroundColor = theme.tabsBarBackgroundColor
-        collectionView.reloadData()
+        buttonsBackground.backgroundColor = theme.tabsBarBackgroundColor
         tabSwitcherButton.decorate(with: theme)
+        
+        collectionView.reloadData()
     }
 
 }

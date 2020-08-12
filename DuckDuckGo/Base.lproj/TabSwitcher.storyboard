@@ -543,22 +543,6 @@
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRo-Z1-BzV">
                                 <rect key="frame" x="626" y="0.0" width="174" height="40"/>
-                                <subviews>
-                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pk4-Xi-vWk">
-                                        <rect key="frame" x="0.0" y="0.0" width="174" height="40"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="z6K-0f-J1V">
-                                            <rect key="frame" x="0.0" y="0.0" width="174" height="40"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                        <blurEffect style="regular"/>
-                                    </visualEffectView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="centerX" secondItem="eRo-Z1-BzV" secondAttribute="centerX" id="6Sd-VH-EiL"/>
-                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="width" secondItem="eRo-Z1-BzV" secondAttribute="width" id="IE8-El-5R3"/>
-                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="centerY" secondItem="eRo-Z1-BzV" secondAttribute="centerY" id="abb-eW-XeG"/>
-                                    <constraint firstItem="Pk4-Xi-vWk" firstAttribute="height" secondItem="eRo-Z1-BzV" secondAttribute="height" id="qCj-VN-PUl"/>
-                                </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="aDD-d2-KuN">
                                 <rect key="frame" x="638" y="-2" width="138" height="44"/>

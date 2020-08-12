@@ -35,24 +35,27 @@ class CookieStorageTests: XCTestCase {
         testee = CookieStorage(userDefaults: userDefaults)
     }
 
-    @available(iOS 13, *)
     func testWhenCookieWithStrictSameSitePolicyIsAddedThenItRemainsStrict() {
-        let cookie = HTTPCookie.make(name: "name", value: "value", policy: .sameSiteStrict)
-        testee.setCookie(cookie)
-        XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteStrict)
+        if #available(iOS 13.0, *) {
+            let cookie = HTTPCookie.make(name: "name", value: "value", policy: .sameSiteStrict)
+            testee.setCookie(cookie)
+            XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteStrict)
+        }
     }
 
-    @available(iOS 13, *)
     func testWhenCookieWithLaxSameSitePolicyIsAddedThenItRemainsLax() {
-        let cookie = HTTPCookie.make(name: "name", value: "value", policy: .sameSiteLax)
-        testee.setCookie(cookie)
-        XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteLax)
+        if #available(iOS 13.0, *) {
+            let cookie = HTTPCookie.make(name: "name", value: "value", policy: .sameSiteLax)
+            testee.setCookie(cookie)
+            XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteLax)
+        }
     }
 
-    @available(iOS 13, *)
     func testWhenCookieWithNoSameSitePolicyIsAddedThenItIsSetToLax() {
-        testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
-        XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteLax)
+        if #available(iOS 13.0, *) {
+            testee.setCookie(HTTPCookie.make(name: "name", value: "value"))
+            XCTAssertEqual(testee.cookies[0].sameSitePolicy, HTTPCookieStringPolicy.sameSiteLax)
+        }
     }
     
     func testWhenMultipleCookiesAreSetThenClearCookiesOnNewInstanceClearsAll() {

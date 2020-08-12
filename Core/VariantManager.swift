@@ -30,18 +30,12 @@ public enum FeatureName: String {
     
 }
 
-public enum VariantInclusion {
-    
-    case always
-    case when(_ filter: () -> Bool)
-    
-}
-
 public struct Variant {
     
-    struct Is {
+    struct When {
+        static let always = { return true }
         static let padDevice = { return UIDevice.current.userInterfaceIdiom == .pad }
-        static let notPadDevice = { return !Is.padDevice() }
+        static let notPadDevice = { return !Self.padDevice() }
     }
     
     static let doNotAllocate = 0
@@ -50,24 +44,24 @@ public struct Variant {
     public static let defaultVariants: [Variant] = [
         
         // SERP testing
-        Variant(name: "sc", weight: 1, features: [], isIncluded: .when(Is.notPadDevice)),
-        Variant(name: "sd", weight: doNotAllocate, features: [], isIncluded: .always),
-        Variant(name: "se", weight: 1, features: [], isIncluded: .when(Is.notPadDevice)),
+        Variant(name: "sc", weight: 1, isIncluded: When.notPadDevice, features: []),
+        Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
+        Variant(name: "se", weight: 1, isIncluded: When.notPadDevice, features: []),
 
         // Tab switcher list experiment
-        Variant(name: "me", weight: doNotAllocate, features: [], isIncluded: .always),
-        Variant(name: "mf", weight: doNotAllocate, features: [.tabSwitcherListLayout], isIncluded: .always),
+        Variant(name: "me", weight: doNotAllocate, isIncluded: When.always, features: []),
+        Variant(name: "mf", weight: doNotAllocate, isIncluded: When.always, features: [.tabSwitcherListLayout]),
         
         // iPad improvement experiment
-        Variant(name: "mc", weight: 1, features: [], isIncluded: .when(Is.padDevice)),
-        Variant(name: "md", weight: 1, features: [.iPadImprovements], isIncluded: .when(Is.padDevice))
+        Variant(name: "mc", weight: 1, isIncluded: When.padDevice, features: []),
+        Variant(name: "md", weight: 1, isIncluded: When.padDevice, features: [.iPadImprovements])
 
     ]
     
     public let name: String
     public let weight: Int
+    public let isIncluded: () -> Bool
     public let features: [FeatureName]
-    public let isIncluded: VariantInclusion
 
 }
 
@@ -99,17 +93,7 @@ public class DefaultVariantManager: VariantManager {
     public init(variants: [Variant] = Variant.defaultVariants,
                 storage: StatisticsStore = StatisticsUserDefaults(),
                 rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
-        
-        self.variants = variants.filter {            
-            switch $0.isIncluded {
-            case .always:
-                return true
-                
-            case .when(let filter):
-                return filter()
-            }
-        }
-        
+        self.variants = variants
         self.storage = storage
         self.rng = rng
     }
@@ -149,7 +133,7 @@ public class DefaultVariantManager: VariantManager {
         for variant in variants {
             runningTotal += variant.weight
             if randomPercent < runningTotal {
-                return variant
+                return variant.isIncluded() ? variant : nil
             }
         }
         

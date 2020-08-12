@@ -23,11 +23,11 @@ import XCTest
 class VariantManagerTests: XCTestCase {
 
     let testVariants = [
-        Variant(name: "mb", weight: 50, features: [], isIncluded: .always),
-        Variant(name: "mc", weight: 25, features: [], isIncluded: .always),
-        Variant(name: "mt", weight: Variant.doNotAllocate, features: [], isIncluded: .always),
-        Variant(name: "md", weight: 25, features: [], isIncluded: .always),
-        Variant(name: "excluded", weight: 1000, features: [.dummy], isIncluded: .when({ return false }))
+        Variant(name: "mb", weight: 50, isIncluded: Variant.When.always, features: []),
+        Variant(name: "mc", weight: 25, isIncluded: Variant.When.always, features: []),
+        Variant(name: "mt", weight: Variant.doNotAllocate, isIncluded: Variant.When.always, features: []),
+        Variant(name: "md", weight: 25, isIncluded: Variant.When.always, features: []),
+        Variant(name: "excluded", weight: 1000, isIncluded: { return false }, features: [.dummy])
     ]
 
     func testWhenVariantIsExcludedThenItIsNotInVariantList() {
@@ -40,7 +40,7 @@ class VariantManagerTests: XCTestCase {
     func testWhenCurrentVariantSupportsFeatureThenIsSupportedReturnsTrue() {
 
         let testVariants = [
-            Variant(name: "test", weight: 50, features: [ .dummy ], isIncluded: .always)
+            Variant(name: "test", weight: 50, isIncluded: Variant.When.always, features: [ .dummy ])
         ]
 
         let mockStore = MockStatisticsStore()
@@ -82,7 +82,7 @@ class VariantManagerTests: XCTestCase {
 
     func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
 
-        let variant = Variant(name: "anything", weight: 100, features: [], isIncluded: .always)
+        let variant = Variant(name: "anything", weight: 100, isIncluded: Variant.When.always, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
         subject.assignVariantIfNeeded {  _ in }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)

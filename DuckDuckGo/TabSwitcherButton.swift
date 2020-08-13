@@ -38,7 +38,10 @@ class TabSwitcherButton: UIView {
         static let labelFadeDuration = 0.3
         static let buttonTouchDuration = 0.2
         static let tintAlpha: CGFloat = 0.5
-        
+
+        static let pointerViewWidth: CGFloat = 48
+        static let pointerViewHeight: CGFloat = 36
+
     }
     
     weak var delegate: TabSwitcherButtonDelegate?
@@ -49,8 +52,8 @@ class TabSwitcherButton: UIView {
     let label = UILabel()
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
-                                                   width: 48,
-                                                   height: 36))
+                                                   width: Constants.pointerViewWidth,
+                                                   height: Constants.pointerViewHeight))
 
     var tabCount: Int = 0 {
         didSet {

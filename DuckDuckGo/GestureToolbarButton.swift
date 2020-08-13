@@ -41,6 +41,9 @@ class GestureToolbarButton: UIView {
         static let height = 44.0
         static let imageWidth = 24.0
         static let imageHeight = 24.0
+        
+        static let pointerViewWidth = 48.0
+        static let pointerViewHeight = 36.0
     }
     
     weak var delegate: GestureToolbarButtonDelegate?
@@ -55,8 +58,8 @@ class GestureToolbarButton: UIView {
     
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
-                                                   width: 48,
-                                                   height: 36))
+                                                   width: ToolbarButtonConstants.pointerViewWidth,
+                                                   height: ToolbarButtonConstants.pointerViewHeight))
     
     override init(frame: CGRect) {
         super.init(frame: frame)

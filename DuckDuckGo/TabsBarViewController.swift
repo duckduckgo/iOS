@@ -238,7 +238,6 @@ extension TabsBarViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tab", for: indexPath) as? TabsBarCell else {
             fatalError("Unable to create TabBarCell")
         }
-        print("***", #function, indexPath, currentIndex, tabsCount)
         
         guard let model = tabsModel?.get(tabAt: indexPath.row) else {
             fatalError("Failed to load tab at \(indexPath.row)")

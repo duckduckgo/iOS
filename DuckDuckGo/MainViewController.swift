@@ -753,6 +753,7 @@ class MainViewController: UIViewController {
     }
 
     func newTab() {
+        hideSuggestionTray()
         currentTab?.dismiss()
         tabManager.addHomeTab()
         attachHomeScreen()

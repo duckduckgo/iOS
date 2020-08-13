@@ -299,7 +299,6 @@
 
 "preserveLogins.toast" = "%@ is now Fireproof! Visit settings to remove.";
 
-"homeTab.searchOnly" = "Search in a new tab";
 "homeTab.searchAndFavorites" = "Search and favorites in a new tab";
 "homeTab.title" = "Home";
 

@@ -104,7 +104,7 @@ class TabsBarViewController: UIViewController {
         requestNewTab()
     }
 
-    func refresh(tabsModel: TabsModel?) {
+    func refresh(tabsModel: TabsModel?, scrollToSelected: Bool = false) {
         self.tabsModel = tabsModel
         
         tabSwitcherContainer.isAccessibilityElement = true
@@ -123,8 +123,15 @@ class TabsBarViewController: UIViewController {
         }
         
         reloadData()
+
+        if scrollToSelected {
+            DispatchQueue.main.async {
+                self.collectionView.scrollToItem(at: IndexPath(row: self.currentIndex, section: 0), at: .right, animated: true)
+            }
+        }
+
     }
-    
+
     private func reloadData() {
         collectionView.reloadData()
         tabSwitcherButton.tabCount = tabsCount

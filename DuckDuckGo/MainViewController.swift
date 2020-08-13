@@ -128,7 +128,7 @@ class MainViewController: UIViewController {
 
         applyTheme(ThemeManager.shared.currentTheme)
 
-        tabsBarController?.refresh(tabsModel: tabManager.model)
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
 
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
@@ -502,7 +502,7 @@ class MainViewController: UIViewController {
             addToView(tab: tab)
             refreshControls()
         }
-        tabsBarController?.refresh(tabsModel: tabManager.model)
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
     }
 
     private func addToView(tab: TabViewController) {

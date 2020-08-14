@@ -73,8 +73,6 @@
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";
 "privacy.protection.tos.poor" = "Poor Privacy Practices";
 
-"privacy.protection.reload.blocker.lists" = "This can be caused by a loss of internet connection when loading the content blocking rules.";
-
 "privacy.protection.encryption.cert.error" = "Error extracting certificate";
 "privacy.protection.encryption.subject.name" = "Subject Name";
 "privacy.protection.encryption.public.key" = "Public Key";
@@ -180,7 +178,6 @@
 "contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.";
 "contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.";
 
-"bookmarkAll.tabs.notfound" = "No tabs to bookmark";
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
 
@@ -216,8 +213,6 @@
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
 
 "feedback.positive.header" = "Awesome to hear!";
-"feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
-"feedback.positive.rate" = "Rate the App";
 "feedback.positive.submit" = "Share Details";
 "feedback.positive.noThanks" = "No thanks! I’m done";
 
@@ -304,7 +299,6 @@
 
 "preserveLogins.toast" = "%@ is now Fireproof! Visit settings to remove.";
 
-"homeTab.searchOnly" = "Search in a new tab";
 "homeTab.searchAndFavorites" = "Search and favorites in a new tab";
 "homeTab.title" = "Home";
 
@@ -321,7 +315,7 @@
 "dax.onboarding.browsing.site.is.major.tracker" = "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don’t worry!\n\nI’ll block %1$@ from seeing your activity on those sites.";
 "dax.onboarding.browsing.site.is.major.tracker.cta" =  "Got It";
 
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! %1$@ is owned by %2$@.\n\n%2$@’s trackers lurk on about %3$.0lf%% of top websites 😱 but don’t worry!\n\nI’ll block %2$@ from seeing your activity on those sites.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Heads up! Since %2$@ owns %1$@, I can't stop them from seeing your activity here.\n\nBut browse with me, and I can reduce what %2$@ knows about you overall by blocking their trackers on lots of other sites.";
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Got It";
 
 "dax.onboarding.browsing.one.tracker" = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";

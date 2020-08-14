@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -308,7 +308,6 @@ DuckDuckGo!</string>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4hN-QW-QID" firstAttribute="width" secondItem="Ica-YY-s5f" secondAttribute="width" id="04f-c6-SAb"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="leading" secondItem="Ica-YY-s5f" secondAttribute="leading" id="0TY-9i-a7Z"/>
@@ -338,6 +337,7 @@ DuckDuckGo!</string>
                         <outlet property="containerHeight" destination="V8D-Hc-dLK" id="mNj-Zf-ZTG"/>
                         <outlet property="fullScreen" destination="RsO-pv-xjm" id="8Th-zb-zQD"/>
                         <outlet property="highlightBar" destination="4hN-QW-QID" id="5xf-h4-YBF"/>
+                        <outlet property="highlightBarBottom" destination="qq4-L9-ia1" id="VtI-5J-frD"/>
                         <outlet property="showAddressBar" destination="2W5-ID-JWT" id="WKG-DX-nRL"/>
                     </connections>
                 </viewController>

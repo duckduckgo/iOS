@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 protocol GestureToolbarButtonDelegate: NSObjectProtocol {
     
@@ -34,17 +35,20 @@ class GestureToolbarButton: UIView {
         static let animationDuration = 0.3
     }
     
-    // UIToolBarButton size would be 29X44 and it's imageview size would be 24X24
-    struct ToolbarButton {
-        static let Width = 29.0
-        static let Height = 44.0
-        static let ImageWidth = 24.0
-        static let ImageHeight = 24.0
+    // UIToolBarButton size would be 29X44 and its imageview size would be 24X24
+    struct ToolbarButtonConstants {
+        static let width = 29.0
+        static let height = 44.0
+        static let imageWidth = 24.0
+        static let imageHeight = 24.0
+        
+        static let pointerViewWidth = 48.0
+        static let pointerViewHeight = 36.0
     }
     
     weak var delegate: GestureToolbarButtonDelegate?
 
-    let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: ToolbarButton.ImageWidth, height: ToolbarButton.ImageHeight))
+    let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: ToolbarButtonConstants.imageWidth, height: ToolbarButtonConstants.imageHeight))
     
     var image: UIImage? {
         didSet {
@@ -52,18 +56,27 @@ class GestureToolbarButton: UIView {
         }
     }
     
+    let pointerView: UIView = UIView(frame: CGRect(x: 0,
+                                                   y: 0,
+                                                   width: ToolbarButtonConstants.pointerViewWidth,
+                                                   height: ToolbarButtonConstants.pointerViewHeight))
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        addSubview(pointerView)
         addSubview(iconImageView)
-        
+                
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressHandler(_:)))
         longPressRecognizer.minimumPressDuration = Constants.minLongPressDuration
         longPressRecognizer.allowableMovement = CGFloat(Constants.maxTouchDeviationPoints)
         addGestureRecognizer(longPressRecognizer)
-
+        
+        if #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            addInteraction(UIPointerInteraction(delegate: self))
+        }
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -80,6 +93,7 @@ class GestureToolbarButton: UIView {
         
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         iconImageView.center = center
+        pointerView.center = center
     }
 
     @objc func longPressHandler(_ sender: UIGestureRecognizer) {
@@ -90,7 +104,7 @@ class GestureToolbarButton: UIView {
     }
     
     convenience init() {
-        self.init(frame: CGRect(x: 0, y: 0, width: ToolbarButton.Width, height: ToolbarButton.Height))
+        self.init(frame: CGRect(x: 0, y: 0, width: ToolbarButtonConstants.width, height: ToolbarButtonConstants.height))
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -135,7 +149,15 @@ class GestureToolbarButton: UIView {
 extension GestureToolbarButton: Themable {
     
     func decorate(with theme: Theme) {
-        backgroundColor = theme.barBackgroundColor
         tintColor = theme.barTintColor
     }
+}
+
+@available(iOS 13.4, *)
+extension GestureToolbarButton: UIPointerInteractionDelegate {
+    
+    func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        return .init(effect: .highlight(.init(view: pointerView)))
+    }
+    
 }

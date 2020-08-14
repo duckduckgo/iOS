@@ -35,6 +35,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         static let searchWidthPad: CGFloat = 455
         static let defaultHeaderHeight: CGFloat = 20
         static let horizontalMargin: CGFloat = 2
+        static let largeModeMargin: CGFloat = 24
         
     }
     
@@ -47,6 +48,10 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private let allowsEditing: Bool
     private let cellWidth: CGFloat
     private let cellHeight: CGFloat
+    
+    var isPad: Bool {
+        return controller?.traitCollection.horizontalSizeClass == .regular
+    }
 
     init(allowsEditing: Bool = true) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
@@ -81,7 +86,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
     }
     
-    static func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
+    func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
+        if controller is FavoritesOverlay {
+            return Constants.largeModeMargin
+        }
+        
         let margin: CGFloat
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
@@ -95,14 +104,14 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     // Visible margin is adjusted for offset inside Favorite Cells
-    static func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
+    func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
         return sectionMargin(in: collectionView) + Constants.horizontalMargin
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets? {
-        let margin = type(of: self).sectionMargin(in: collectionView)
+        let margin = sectionMargin(in: collectionView)
         
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }

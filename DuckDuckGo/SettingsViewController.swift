@@ -62,7 +62,7 @@ class SettingsViewController: UITableViewController {
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
         configureRememberLogins()
-        
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -159,7 +159,7 @@ class SettingsViewController: UITableViewController {
             rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
         } else {
             rememberLoginsCell.isHidden = true
-        }        
+        }
     }
 
     private func configureVersionText() {

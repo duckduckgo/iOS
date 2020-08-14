@@ -23,6 +23,10 @@ import XCTest
 
 class TabTests: XCTestCase {
 
+    var isPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
     struct Constants {
         static let title = "A title"
         static let url = URL(string: "https://example.com")!

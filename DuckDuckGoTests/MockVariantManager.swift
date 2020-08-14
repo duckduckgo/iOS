@@ -39,7 +39,7 @@ struct MockVariantManager: VariantManager {
         self.currentVariant = currentVariant
     }
 
-    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> CohortFiltering) {
+    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
     }
     
     func isSupported(feature: FeatureName) -> Bool {

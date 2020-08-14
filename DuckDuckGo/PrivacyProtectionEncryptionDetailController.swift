@@ -43,7 +43,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private let serverTrustCache = ServerTrustCache.shared
     private var sections = [Section]()
-
+ 
     override func viewDidLoad() {
 
         Pixel.fire(pixel: .privacyDashboardEncryption)

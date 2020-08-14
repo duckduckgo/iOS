@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -159,7 +159,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-YB-mZi">
-                                <rect key="frame" x="375" y="53" width="34" height="34"/>
+                                <rect key="frame" x="368" y="50" width="34" height="34"/>
                                 <accessibility key="accessibilityConfiguration" label="Settings"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="fcV-Gc-jkH"/>
@@ -187,13 +187,13 @@
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="height" secondItem="klK-ZJ-wmA" secondAttribute="height" id="1lu-2N-IOp"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="ijV-Vn-w9w" secondAttribute="width" id="BjB-Gh-zsj"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
-                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="5" id="R0H-sl-aBO"/>
+                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="12" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
                             <constraint firstItem="3ms-eB-DjL" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="eW6-mG-0bM"/>
                             <constraint firstItem="3ms-eB-DjL" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="44" id="gcJ-UD-uID">
                                 <variation key="heightClass=compact-widthClass=compact" constant="4"/>
                             </constraint>
-                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="9" id="h6x-yo-1bE"/>
+                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="6" id="h6x-yo-1bE"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="vdx-nG-nrB"/>

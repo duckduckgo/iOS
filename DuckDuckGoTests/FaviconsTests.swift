@@ -27,11 +27,15 @@ class FaviconsTests: XCTestCase {
         super.setUp()
         
         UserDefaults.clearStandard()
+        BookmarkUserDefaults().bookmarks = []
+        BookmarkUserDefaults().favorites = []
         
         Favicons.Constants.tabsCache.clearDiskCache()
         Favicons.Constants.tabsCache.clearMemoryCache()
         Favicons.Constants.bookmarksCache.clearDiskCache()
         Favicons.Constants.bookmarksCache.clearMemoryCache()
+        
+        _ = UserAgentManager.shared
     }
     
     func testWhenFreshInstallThenNeedsMigration() {

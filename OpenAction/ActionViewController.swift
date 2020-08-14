@@ -19,41 +19,54 @@
 
 import UIKit
 import MobileCoreServices
+import Core
+import os
 
 class ActionViewController: UIViewController {
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         for item in extensionContext?.inputItems as? [NSExtensionItem] ?? [] {
             for provider in item.attachments ?? [] {
-                if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { url, _ in
-                        guard let url = url as? URL else { return }
-                        DispatchQueue.main.async {
-                            self.launchBrowser(withUrl: url)
-                            self.done()
-                        }
-                    })
+
+                if provider.hasItemConformingToTypeIdentifier(kUTTypeText as String) {
+                    provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil) { text, _ in
+                        guard let text = text as? String else { return }
+                        self.launchBrowser(withUrl: AppUrls().url(forQuery: text))
+                    }
                     break
                 }
+
+                if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
+                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil) { url, _ in
+                        guard let url = url as? URL else { return }
+                        self.launchBrowser(withUrl: url)
+                    }
+                    break
+                }
+
             }
         }
     }
 
     func launchBrowser(withUrl url: URL) {
 
-        let path = "\(AppDeepLinks.quickLink)\(url.absoluteString)"
-        guard let url = URL(string: path) else { return }
-        var responder = self as UIResponder?
-        let selectorOpenURL = sel_registerName("openURL:")
-        while let current = responder {
-            if current.responds(to: selectorOpenURL) {
-                current.perform(selectorOpenURL, with: url, afterDelay: 0)
-                break
+        DispatchQueue.main.async {
+            let path = "\(AppDeepLinks.quickLink)\(url.absoluteString)"
+            guard let url = URL(string: path) else { return }
+            var responder = self as UIResponder?
+            let selectorOpenURL = sel_registerName("openURL:")
+            while let current = responder {
+                if current.responds(to: selectorOpenURL) {
+                    current.perform(selectorOpenURL, with: url, afterDelay: 0)
+                    break
+                }
+                responder = current.next
             }
-            responder = current.next
+            self.done()
         }
+
     }
 
     func done() {

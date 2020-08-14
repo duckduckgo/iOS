@@ -23,16 +23,24 @@ import XCTest
 class VariantManagerTests: XCTestCase {
 
     let testVariants = [
-        Variant(name: "mb", weight: 50, features: []),
-        Variant(name: "mc", weight: 25, features: []),
-        Variant(name: "mt", weight: Variant.doNotAllocate, features: []),
-        Variant(name: "md", weight: 25, features: [])
+        Variant(name: "mb", weight: 50, isIncluded: Variant.When.always, features: []),
+        Variant(name: "mc", weight: 25, isIncluded: Variant.When.always, features: []),
+        Variant(name: "mt", weight: Variant.doNotAllocate, isIncluded: Variant.When.always, features: []),
+        Variant(name: "md", weight: 25, isIncluded: Variant.When.always, features: []),
+        Variant(name: "excluded", weight: 1000, isIncluded: { return false }, features: [.dummy])
     ]
 
+    func testWhenVariantIsExcludedThenItIsNotInVariantList() {
+        
+        let subject = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 500))
+        XCTAssertTrue(!subject.isSupported(feature: .dummy))
+        
+    }
+    
     func testWhenCurrentVariantSupportsFeatureThenIsSupportedReturnsTrue() {
 
         let testVariants = [
-            Variant(name: "test", weight: 50, features: [ .dummy ])
+            Variant(name: "test", weight: 50, isIncluded: Variant.When.always, features: [ .dummy ])
         ]
 
         let mockStore = MockStatisticsStore()
@@ -54,7 +62,7 @@ class VariantManagerTests: XCTestCase {
         for i in 0 ..< 100 {
             
             let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i))
-            subject.assignVariantIfNeeded { _ in return .includeInCohort }
+            subject.assignVariantIfNeeded { _ in  }
             XCTAssertNotEqual("mt", subject.currentVariant?.name)
 
         }
@@ -67,16 +75,16 @@ class VariantManagerTests: XCTestCase {
         mockStore.atb = "atb"
 
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
-        subject.assignVariantIfNeeded { _ in return .includeInCohort }
+        subject.assignVariantIfNeeded {  _ in  }
         XCTAssertNil(subject.currentVariant)
 
     }
 
     func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
 
-        let variant = Variant(name: "anything", weight: 100, features: [])
+        let variant = Variant(name: "anything", weight: 100, isIncluded: Variant.When.always, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
-        subject.assignVariantIfNeeded { _ in return .includeInCohort }
+        subject.assignVariantIfNeeded {  _ in }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)
 
     }
@@ -104,7 +112,7 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
-        subject.assignVariantIfNeeded { _ in return .includeInCohort }
+        subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual("mb", subject.currentVariant?.name)
         XCTAssertEqual("mb", mockStore.variant)
 
@@ -125,7 +133,7 @@ class VariantManagerTests: XCTestCase {
 
     private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
         let variantManager = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: rng)
-        variantManager.assignVariantIfNeeded { _ in return .includeInCohort }
+        variantManager.assignVariantIfNeeded { _ in }
         return variantManager
     }
 

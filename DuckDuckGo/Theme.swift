@@ -31,6 +31,9 @@ protocol Theme {
     var currentImageSet: ThemeManager.ImageSet { get }
     var statusBarStyle: UIStatusBarStyle { get }
     var keyboardAppearance: UIKeyboardAppearance { get }
+
+    var tabsBarBackgroundColor: UIColor { get }
+    var tabsBarSeparatorColor: UIColor { get } 
     
     var backgroundColor: UIColor { get }
     

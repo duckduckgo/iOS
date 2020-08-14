@@ -29,7 +29,19 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
 class FullscreenDaxDialogViewController: UIViewController {
 
+    struct Constants {
+        
+        static let defaultCTAHeight: CGFloat = 100
+        
+        static let largeHighlightBottom: CGFloat = -40
+        static let defaultHighlightBottom: CGFloat = 0
+        static let largeAddressBarOffset: CGFloat = -90
+        static let defaultAddressBarOffset: CGFloat = -50
+        
+    }
+    
     @IBOutlet weak var highlightBar: UIView!
+    @IBOutlet weak var highlightBarBottom: NSLayoutConstraint!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     @IBOutlet weak var fullScreen: NSLayoutConstraint!
     @IBOutlet weak var showAddressBar: NSLayoutConstraint!
@@ -45,12 +57,14 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.cta = spec?.cta
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta
-        containerHeight.constant = spec?.height ?? 100.0
+        containerHeight.constant = spec?.height ?? Constants.defaultCTAHeight
         
         if spec?.highlightAddressBar ?? false {
             fullScreen.isActive = false
             showAddressBar.isActive = true
             highlightBar.isHidden = false
+            highlightBarBottom.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeHighlightBottom : Constants.defaultHighlightBottom
+            showAddressBar.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeAddressBarOffset : Constants.defaultAddressBarOffset
         } else {
             showAddressBar.isActive = false
             fullScreen.isActive = true

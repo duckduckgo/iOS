@@ -23,6 +23,8 @@ import os.log
 
 extension OmniBar: NibLoading {}
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class OmniBar: UIView {
 
     @IBOutlet weak var searchLoupe: UIView!
@@ -33,17 +35,28 @@ class OmniBar: UIView {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
-    @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
+ 
+    @IBOutlet weak var bookmarksButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var forwardButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
 
-    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
+    // Don't use weak because adding/removing them causes them to go away
+    @IBOutlet var separatorHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var leftButtonsSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet var rightButtonsSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet var searchContainerCenterConstraint: NSLayoutConstraint!
+    @IBOutlet var searchContainerMaxWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var omniBarLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: OmniBarState = HomeNonEditingState()
+    fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
     private(set) var trackersAnimator = TrackersAnimator()
@@ -62,6 +75,23 @@ class OmniBar: UIView {
         configureSeparator()
         configureEditingMenu()
         refreshState(state)
+        enableInteractionsWithPointer()
+    }
+    
+    private func enableInteractionsWithPointer() {
+        guard #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) else { return }
+        backButton.isPointerInteractionEnabled = true
+        forwardButton.isPointerInteractionEnabled = true
+        settingsButton.isPointerInteractionEnabled = true
+        cancelButton.isPointerInteractionEnabled = true
+        bookmarksButton.isPointerInteractionEnabled = true
+        shareButton.isPointerInteractionEnabled = true
+        menuButton.isPointerInteractionEnabled = true
+
+        refreshButton.isPointerInteractionEnabled = true
+        refreshButton.pointerStyleProvider = { button, effect, shape -> UIPointerStyle? in
+            return .init(effect: .lift(.init(view: button)))
+        }
     }
     
     private func configureTextField() {
@@ -172,6 +202,18 @@ class OmniBar: UIView {
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
+
+        setVisibility(backButton, hidden: !state.showBackButton)
+        setVisibility(forwardButton, hidden: !state.showForwardButton)
+        setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
+        setVisibility(shareButton, hidden: !state.showShareButton)
+        
+        searchContainerCenterConstraint.isActive = state.hasLargeWidth
+        searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
+        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
+        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
+        omniBarLeadingConstraint.constant = state.hasLargeWidth ? 24 : 8
+        omniBarTrailingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
         updateSearchBarBorder()
     }
@@ -308,7 +350,33 @@ class OmniBar: UIView {
         trackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }
+    
+    @IBAction func onBackPressed(_ sender: Any) {
+        omniDelegate?.onBackPressed()
+    }
+    
+    @IBAction func onForwardPressed(_ sender: Any) {
+        omniDelegate?.onForwardPressed()
+    }
+    
+    @IBAction func onBookmarksPressed(_ sender: Any) {
+        omniDelegate?.onBookmarksPressed()
+    }
+    
+    @IBAction func onSharePressed(_ sender: Any) {
+        omniDelegate?.onSharePressed()
+    }
+    
+    func enterPhoneState() {
+        refreshState(state.onEnterPhoneState)
+    }
+    
+    func enterPadState() {
+        refreshState(state.onEnterPadState)
+    }
+    
 }
+// swiftlint:enable type_body_length
 
 extension OmniBar: UITextFieldDelegate {
     
@@ -326,9 +394,7 @@ extension OmniBar: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text.isEmpty {
-            omniDelegate?.onDismissed()
-        }
+        omniDelegate?.onDismissed()
         refreshState(state.onEditingStoppedState)
     }
 }
@@ -372,15 +438,4 @@ extension OmniBar: UIGestureRecognizerDelegate {
     }
     
 }
-
-extension String {
-    func range(from nsRange: NSRange) -> Range<String.Index>? {
-        guard
-            let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
-            let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
-            let from = from16.samePosition(in: self),
-            let to = to16.samePosition(in: self)
-            else { return nil }
-        return from ..< to
-    }
-}
+// swiftlint:enable file_length

@@ -19,6 +19,7 @@
 
 import UIKit
 import Lottie
+import Core
 
 protocol TabSwitcherButtonDelegate: NSObjectProtocol {
     
@@ -37,7 +38,10 @@ class TabSwitcherButton: UIView {
         static let labelFadeDuration = 0.3
         static let buttonTouchDuration = 0.2
         static let tintAlpha: CGFloat = 0.5
-        
+
+        static let pointerViewWidth: CGFloat = 48
+        static let pointerViewHeight: CGFloat = 36
+
     }
     
     weak var delegate: TabSwitcherButtonDelegate?
@@ -45,9 +49,12 @@ class TabSwitcherButton: UIView {
     var workItem: DispatchWorkItem?
 
     let anim = LOTAnimationView(name: "new_tab")
-    let tint = UIView(frame: .zero)
     let label = UILabel()
-    
+    let pointerView: UIView = UIView(frame: CGRect(x: 0,
+                                                   y: 0,
+                                                   width: Constants.pointerViewWidth,
+                                                   height: Constants.pointerViewHeight))
+
     var tabCount: Int = 0 {
         didSet {
             refresh()
@@ -73,19 +80,19 @@ class TabSwitcherButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        tint.frame = frame
         label.frame = frame
-        
-        tint.alpha = 0.0
-        tint.isUserInteractionEnabled = false
         
         label.isUserInteractionEnabled = false
         
+        addSubview(pointerView)
         addSubview(anim)
         addSubview(label)
-        addSubview(tint)
         
         configureAnimationView()
+        
+        if #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            addInteraction(UIPointerInteraction(delegate: self))
+        }
     }
 
     override func layoutSubviews() {
@@ -105,6 +112,7 @@ class TabSwitcherButton: UIView {
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         anim.center = center
         label.center = center
+        pointerView.center = center
     }
 
     private func configureAnimationView() {
@@ -114,14 +122,7 @@ class TabSwitcherButton: UIView {
         
         anim.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
-    
-    override var backgroundColor: UIColor? {
-        didSet {
-            tint.backgroundColor = backgroundColor
-            refresh()
-        }
-    }
-    
+        
     override var tintColor: UIColor! {
         didSet {
             refresh()
@@ -150,7 +151,7 @@ class TabSwitcherButton: UIView {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        tint(alpha: 0)
+        tint(alpha: 1)
 
         workItem?.cancel()
         guard workItem != nil else { return }
@@ -163,11 +164,11 @@ class TabSwitcherButton: UIView {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let inside = point(inside: touch.location(in: self), with: event)
-        tint(alpha: inside ? Constants.tintAlpha : 0)
+        tint(alpha: inside ? Constants.tintAlpha : 1)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        tint.alpha = 0
+        tint(alpha: 1, animated: false)
     }
     
     func incrementAnimated() {
@@ -193,9 +194,17 @@ class TabSwitcherButton: UIView {
                  NSAttributedString.Key.paragraphStyle: paragraphStyle ]
     }
     
-    private func tint(alpha: CGFloat) {
-        UIView.animate(withDuration: Constants.buttonTouchDuration) {
-            self.tint.alpha = alpha
+    private func tint(alpha: CGFloat, animated: Bool = true) {
+    
+        let setAlpha = {
+            self.anim.alpha = alpha
+            self.label.alpha = alpha
+        }
+        
+        if animated {
+            UIView.animate(withDuration: Constants.buttonTouchDuration, animations: setAlpha)
+        } else {
+            setAlpha()
         }
     }
 }
@@ -203,7 +212,6 @@ class TabSwitcherButton: UIView {
 extension TabSwitcherButton: Themable {
     
     func decorate(with theme: Theme) {
-        backgroundColor = theme.barBackgroundColor
         tintColor = theme.barTintColor
 
         switch theme.currentImageSet {
@@ -216,4 +224,13 @@ extension TabSwitcherButton: Themable {
         addSubview(anim)
         configureAnimationView()
     }
+}
+
+@available(iOS 13.4, *)
+extension TabSwitcherButton: UIPointerInteractionDelegate {
+    
+    func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        return .init(effect: .highlight(.init(view: pointerView)))
+    }
+    
 }

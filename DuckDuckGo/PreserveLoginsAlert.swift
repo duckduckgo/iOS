@@ -33,7 +33,7 @@ class PreserveLoginsAlert {
                                             onConfirmHandler: @escaping () -> Void) {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
-                                       preferredStyle: isPad ? .alert : .actionSheet)
+                                       preferredStyle: controller.isPad ? .alert : .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsFireproofConfirm, style: .default) {
             onConfirmHandler()
         }
@@ -46,7 +46,7 @@ class PreserveLoginsAlert {
                                            onConfirmHandler: @escaping () -> Void) {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
-                                       preferredStyle: isPad ? .alert : .actionSheet)
+                                       preferredStyle: controller.isPad ? .alert : .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsFireproofConfirm) {
             onConfirmHandler()
         }
@@ -56,7 +56,7 @@ class PreserveLoginsAlert {
     
     static func showClearAllAlert(usingController controller: UIViewController, cancelled: @escaping () -> Void, confirmed: @escaping () -> Void) {
         
-        if isPad {
+        if controller.isPad {
             let alert = UIAlertController(title: UserText.preserveLoginsRemoveAll, message: nil, preferredStyle: .alert)
             alert.addAction(title: UserText.preserveLoginsRemoveAllOk, style: .destructive) {
                 confirmed()

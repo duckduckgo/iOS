@@ -25,8 +25,6 @@ public class Favicons {
 
     public struct Constants {
 
-        public static let standardPlaceHolder = UIImage(named: "GlobeSmall")
-        
         static let salt = "DDGSalt:"
         static let faviconsFolderName = "Favicons"
         static let downloader = NotFoundCachingDownloader()
@@ -108,7 +106,7 @@ public class Favicons {
         NotificationCenter.default.removeObserver(Constants.tabsCache)
     }
     
-    public func migrateIfNeeded(completion: @escaping () -> Void) {
+    public func migrateIfNeeded(afterMigrationHandler: @escaping () -> Void) {
         guard needsMigration else { return }
 
         DispatchQueue.global(qos: .utility).async {
@@ -127,7 +125,7 @@ public class Favicons {
             group.wait()
 
             self.needsMigration = false
-            completion()
+            afterMigrationHandler()
         }
         
     }

@@ -26,13 +26,13 @@ class TabsModelTests: XCTestCase {
     private let exampleLink = Link(title: nil, url: URL(string: "https://example.com")!)
 
     private var emptyModel: TabsModel {
-        return TabsModel()
+        return TabsModel(desktop: false)
     }
 
     private var singleModel: TabsModel {
         let model = TabsModel(tabs: [
             Tab(link: exampleLink)
-        ])
+        ], desktop: false)
         return model
     }
 
@@ -41,7 +41,7 @@ class TabsModelTests: XCTestCase {
             Tab(link: Link(title: "url1", url: URL(string: "https://ur1l.com")!)),
             Tab(link: Link(title: "url2", url: URL(string: "https://ur12.com")!)),
             Tab(link: Link(title: "url3", url: URL(string: "https://ur13.com")!))
-        ])
+        ], desktop: false)
         return model
     }
     
@@ -71,9 +71,9 @@ class TabsModelTests: XCTestCase {
     }
 
     func testWhenModelIsNewThenContainsHomeTab() {
-        XCTAssertEqual(TabsModel().count, 1)
-        XCTAssertNil(TabsModel().get(tabAt: 0).link)
-        XCTAssertEqual(TabsModel().currentIndex, 0)
+        XCTAssertEqual(TabsModel(desktop: false).count, 1)
+        XCTAssertNil(TabsModel(desktop: false).get(tabAt: 0).link)
+        XCTAssertEqual(TabsModel(desktop: false).currentIndex, 0)
     }
 
     func testWhenTabMovedToInvalidPositionNoChangeMadeToCurrentIndex() {

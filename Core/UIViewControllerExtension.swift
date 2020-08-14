@@ -33,16 +33,28 @@ extension UIViewController {
     @objc func buildActivities() -> [UIActivity] {
         return []
     }
-    
+
+    func overrideUserInterfaceStyle() {
+        if #available(iOS 13.0, *) {
+            if ThemeManager.shared.currentTheme.currentImageSet == .dark {
+                overrideUserInterfaceStyle = .dark
+            } else {
+                overrideUserInterfaceStyle = .light
+            }
+        }
+    }
+
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+        shareController.overrideUserInterfaceStyle()
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
     public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+        shareController.overrideUserInterfaceStyle()
         if #available(iOS 11.0, *) {
             shareController.excludedActivityTypes = [.markupAsPDF]
         }

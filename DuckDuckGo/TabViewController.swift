@@ -190,7 +190,18 @@ class TabViewController: UIViewController {
         super.viewDidAppear(animated)
         resetNavigationBar()
     }
-    
+
+    override func buildActivities() -> [UIActivity] {
+        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
+
+        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+            activities.append(FindInPageActivity(controller: self))
+        }
+
+        return activities
+    }
+
     func initUserScripts() {
         
         generalScripts = [
@@ -215,7 +226,7 @@ class TabViewController: UIViewController {
             ddgScripts.append(documentScript)
         }
         
-        faviconScript.webView = webView
+        faviconScript.delegate = self
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
@@ -231,30 +242,6 @@ class TabViewController: UIViewController {
         
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
-    }
-
-    @available(iOS 13.4, *)
-    func handlePressEvent(event: UIPressesEvent?) {
-        tapLinkDestination = .currentTab
-        if event?.modifierFlags.contains(.command) ?? false {
-            if event?.modifierFlags.contains(.shift) ?? false {
-                tapLinkDestination = .newTab
-            } else {
-                tapLinkDestination = .backgroundTab
-            }
-        }
-    }
-
-    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        super.pressesBegan(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
-        handlePressEvent(event: event)
-    }
-    
-    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        super.pressesEnded(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
-        handlePressEvent(event: event)
     }
     
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
@@ -437,15 +424,17 @@ class TabViewController: UIViewController {
             url = webView.url
             onWebpageDidStartLoading(httpsForced: false)
             onWebpageDidFinishLoading()
-        } else if webView.canGoBack {
-            webView.goBack()
+        } else if webView.canGoBack && webView.goBack() != nil {
+            chromeDelegate?.omniBar.resignFirstResponder()
         } else if openingTab != nil {
             delegate?.tabDidRequestClose(self)
         }
     }
     
     func goForward() {
-        webView.goForward()
+        if webView.goForward() != nil {
+            chromeDelegate?.omniBar.resignFirstResponder()
+        }
     }
     
     @objc func onLongPress(sender: UILongPressGestureRecognizer) {
@@ -822,29 +811,13 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
-        if #available(iOS 13.0, *) {
-            let config = WKSnapshotConfiguration()
-            config.rect = webView.bounds
-            let snapshotWidth = Float(webView.bounds.width / 2)
-            config.snapshotWidth = NSNumber(value: snapshotWidth)
-            
-             // takeSnapshot will block if the web view is in the connecting phase of a load which may be prominent on slow connections
-            if webView.isLoading {
-                config.afterScreenUpdates = false
-            }
-            
-            webView.takeSnapshot(with: config) { image, _ in
-                completion(image)
-            }
-        } else {
-            DispatchQueue.main.async { [weak self] in
-                guard let webView = self?.webView else { completion(nil); return }
-                UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
-                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
-                let image = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                completion(image)
-            }
+        DispatchQueue.main.async { [weak self] in
+            guard let webView = self?.webView else { completion(nil); return }
+            UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+            webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            completion(image)
         }
     }
     
@@ -1235,6 +1208,18 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
     func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
         siteRating?.surrogateInstalled(host)
         contentBlockerUserScript(script, detectedTracker: tracker)
+    }
+    
+}
+
+extension TabViewController: FaviconUserScriptDelegate {
+    
+    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
+        return webView.url?.host
+    }
+    
+    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage) {
+        tabModel.didUpdateFavicon()
     }
     
 }

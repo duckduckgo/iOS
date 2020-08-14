@@ -19,6 +19,14 @@
 
 import WebKit
 
+public protocol FaviconUserScriptDelegate: NSObjectProtocol {
+    
+    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String?
+    
+    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage)
+    
+}
+
 public class FaviconUserScript: NSObject, UserScript {
     
     public var source: String = """
@@ -71,7 +79,7 @@ public class FaviconUserScript: NSObject, UserScript {
     
     public var messageNames: [String] = ["faviconFound"]
     
-    public weak var webView: WKWebView?
+    public weak var delegate: FaviconUserScriptDelegate?
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
@@ -83,9 +91,11 @@ public class FaviconUserScript: NSObject, UserScript {
         }
 
         // Always call this even if URL was nil, so that tabs cache is populated
-        Favicons.shared.loadFavicon(forDomain: webView?.url?.host, fromURL: url, intoCache: .tabs) { image in
-            guard let image = image else { return }
-            Favicons.shared.replaceBookmarksFavicon(forDomain: self.webView?.url?.host, withImage: image)
+        let host = delegate?.faviconUserScriptDidRequestCurrentHost(self)
+        Favicons.shared.loadFavicon(forDomain: host, fromURL: url, intoCache: .tabs) { [weak self] image in
+            guard let self = self, let image = image else { return }
+            Favicons.shared.replaceBookmarksFavicon(forDomain: host, withImage: image)
+            self.delegate?.faviconUserScript(self, didFinishLoadingFavicon: image)
         }
 
     }

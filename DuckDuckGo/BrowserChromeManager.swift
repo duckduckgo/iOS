@@ -1,5 +1,5 @@
 //
-//  BrowserChromeDelegate.swift
+//  BrowserChromeManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -27,9 +27,11 @@ protocol BrowserChromeDelegate: class {
     func setBarsVisibility(_ percent: CGFloat, animated: Bool)
 
     var isToolbarHidden: Bool { get }
-    var omniBar: OmniBar! { get }
     var toolbarHeight: CGFloat { get }
     var barsMaxHeight: CGFloat { get }
+
+    var omniBar: OmniBar! { get }
+    var tabsBar: UIView! { get }
 }
 
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {
@@ -139,6 +141,10 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     func reset() {
         animator.revealBars(animated: true)
+    }
+    
+    func refresh() {
+        animator.refresh()
     }
 }
 
@@ -301,12 +307,12 @@ private class BarsAnimator {
     }
     
     func revealBars(animated: Bool) {
-        guard barsState != .revealed else { return }
+        let alreadyRevealed = barsState == .revealed
         
         barsState = .revealed
         transitionProgress = 0
         
-        delegate?.setBarsVisibility(1, animated: animated)
+        delegate?.setBarsVisibility(1, animated: animated && !alreadyRevealed)
     }
     
     func hideBars(animated: Bool) {
@@ -316,6 +322,12 @@ private class BarsAnimator {
         transitionProgress = 1.0
         
         delegate?.setBarsVisibility(0, animated: animated)
+    }
+    
+    func refresh() {
+        guard barsState != .transitioning else { return }
+        let percent: CGFloat = barsState == .hidden ? 0 : 1
+        delegate?.setBarsVisibility(percent, animated: false)
     }
 }
 

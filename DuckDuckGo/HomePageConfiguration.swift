@@ -29,7 +29,6 @@ class HomePageConfiguration {
     
     func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
         let fixed = bookmarksManager.favoritesCount == 0
-
         return [
             .navigationBarSearch(fixed: fixed),
             .favorites

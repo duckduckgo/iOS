@@ -28,7 +28,7 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     
     func update(withBookmark bookmark: Link) {
-        title.text = bookmark.title
+        title.text = bookmark.displayTitle
         favicon.loadFavicon(forDomain: bookmark.url.host, usingCache: .bookmarks)
     }
     

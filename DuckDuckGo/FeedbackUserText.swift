@@ -54,12 +54,6 @@ extension UserText {
     public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
                                                                  value: "Awesome to hear!",
                                                                  comment: "")
-    public static let feedbackPositiveSupplementary = NSLocalizedString("feedback.positive.supplementary",
-                                                                        value: "Please share the love by rating the app on the App Store",
-                                                                        comment: "")
-    public static let feedbackPositiveRate = NSLocalizedString("feedback.positive.rate",
-                                                               value: "Rate the App",
-                                                               comment: "")
     public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
                                                                 value: "Share Details",
                                                                 comment: "Button encouraging uses to share details aboout their feedback")

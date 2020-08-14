@@ -32,22 +32,24 @@ class FavoritesOverlay: UIViewController {
         static let footerPadding: CGFloat = 50
     }
     
+    private let layout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
     
     private var theme: Theme!
     
-    private weak var delegate: FavoritesOverlayDelegate?
+    weak var delegate: FavoritesOverlayDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         
         collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        collectionView.backgroundColor = .clear
+
         view.addSubview(collectionView)
         
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false)
@@ -58,12 +60,17 @@ class FavoritesOverlay: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    func install(into controller: FavoritesOverlayDelegate) {
-        loadViewIfNeeded()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        delegate = controller
+        if AppWidthObserver.shared.isLargeWidth {
+            layout.minimumInteritemSpacing = 32
+        } else {
+            layout.minimumInteritemSpacing = 10
+        }
+        
+        collectionView.frame = view.bounds
         collectionView.reloadData()
-        collectionView.layoutIfNeeded()
     }
     
     private func registerForKeyboardNotifications() {
@@ -79,6 +86,7 @@ class FavoritesOverlay: UIViewController {
     }
     
     @objc private func keyboardDidShow(notification: NSNotification) {
+        guard !AppWidthObserver.shared.isLargeWidth else { return }        
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardSize = keyboardFrame.size
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height + Constants.margin * 2, right: 0.0)
@@ -151,8 +159,6 @@ extension FavoritesOverlay: Themable {
     
     func decorate(with theme: Theme) {
         self.theme = theme
-        
-        view.backgroundColor = theme.backgroundColor
-        collectionView.backgroundColor = .clear
+        view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
     }
 }

@@ -70,7 +70,15 @@ extension MainViewController {
             ]
         }
 
-        return alwaysAvailable + browsingCommands + findInPageCommands + [
+        var arrowKeys = [UIKeyCommand]()
+        if omniBar.textField.isFirstResponder {
+            arrowKeys = [
+                UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
+                UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown))
+            ]
+        }
+
+        return alwaysAvailable + browsingCommands + findInPageCommands + arrowKeys + [
             UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab),
                          discoverabilityTitle: UserText.keyCommandCloseTab),
             UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab),
@@ -99,10 +107,16 @@ extension MainViewController {
                          discoverabilityTitle: UserText.keyCommandPreviousTab),
 
             // No discoverability as these should be intuitive
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardArrowUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardArrowDown)),
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
+    }
+
+    @objc func keyboardMoveSelectionUp() {
+        suggestionTrayController?.keyboardMoveSelectionUp()
+    }
+
+    @objc func keyboardMoveSelectionDown() {
+        suggestionTrayController?.keyboardMoveSelectionDown()
     }
 
     @objc func keyboardReload() {
@@ -139,28 +153,8 @@ extension MainViewController {
     @objc func keyboardEscape() {
         guard tabSwitcherController == nil else { return }
         findInPageView.done()
-        autocompleteController?.keyboardEscape()
+        hideSuggestionTray()
         onCancelPressed()
-    }
-    
-    @objc func keyboardArrowDown() {
-        guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardMoveSelectionDown()
-        } else {
-            currentTab?.webView.becomeFirstResponder()
-        }
-    }
-    
-    @objc func keyboardArrowUp() {
-        guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardMoveSelectionUp()
-        } else {
-            currentTab?.webView.becomeFirstResponder()
-        }
     }
     
     @objc func keyboardNewTab() {
@@ -224,7 +218,7 @@ extension MainViewController {
     }
 
     @objc func keyboardAddBookmark() {
-        currentTab?.saveAsBookmark()
+        currentTab?.saveAsBookmark(favorite: false)
     }
 
     @objc func keyboardAddFavorite() {

@@ -172,8 +172,6 @@
 	<string>Allows you to share your location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allows you to share recordings</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allows you to save images to your device</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>proximanova-extrabold.otf</string>

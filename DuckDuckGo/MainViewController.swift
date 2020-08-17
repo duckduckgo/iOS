@@ -1171,8 +1171,10 @@ extension MainViewController: BookmarksDelegate {
     }
     
     func bookmarksUpdated() {
-        removeHomeScreen()
-        attachHomeScreen()
+        if homeController != nil {
+            removeHomeScreen()
+            attachHomeScreen()
+        }
     }
 }
 

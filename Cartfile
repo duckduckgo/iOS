@@ -11,7 +11,7 @@ github "duckduckgo/OHHTTPStubs" ~> 7.0.0
 
 github "duckduckgo/CommonCrypto" ~> 1.1.0
 
-github "duckduckgo/swifter" == 1.4.3
+github "duckduckgo/swifter" "stable"
 
 github "duckduckgo/lottie-ios" "tags/2.5.0"
 

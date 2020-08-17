@@ -63,7 +63,8 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     func testWhenVariantIsInCurrentExperimentThenVariantIsNotRemovedFromStorage() {
 
-        let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant, weight: 100, features: []))
+        let variant = Variant(name: Constants.variant, weight: 100, isIncluded: Variant.When.always, features: [])
+        let mockVariantManager = MockVariantManager(currentVariant: variant)
 
         mockStorage.atb = "\(Constants.atb)\(Constants.variant)"
         mockStorage.variant = Constants.variant

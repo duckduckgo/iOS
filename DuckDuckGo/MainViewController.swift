@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
 
+    @IBOutlet weak var suggestionTrayContainer: UIView!
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
@@ -45,6 +46,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
     @IBOutlet weak var containerViewTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var tabsBar: UIView!
+    @IBOutlet weak var tabsBarTop: NSLayoutConstraint!
 
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
@@ -65,18 +69,17 @@ class MainViewController: UIViewController {
 
     var allowContentUnderflow = false {
         didSet {
-            let constant = allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
-            containerViewTop.constant = constant
+            containerViewTop.constant = allowContentUnderflow ? contentUnderflow : 0
         }
     }
     
     var contentUnderflow: CGFloat {
-        return allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
+        return 3 + (allowContentUnderflow ? -customNavigationBar.frame.size.height : 0)
     }
     
     var homeController: HomeViewController?
-    var favoritesOverlay: FavoritesOverlay?
-    var autocompleteController: AutocompleteViewController?
+    var tabsBarController: TabsBarViewController?
+    var suggestionTrayController: SuggestionTrayViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -103,12 +106,17 @@ class MainViewController: UIViewController {
                 self.homeController?.collectionView.reloadData()
             }
         }
+         
+        attachOmniBar()
+
+        if #available(iOS 11.0, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            view.addInteraction(UIDropInteraction(delegate: self))
+        }
         
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
         initBookmarksButton()
-        attachOmniBar()
         configureTabManager()
         loadInitialView()
         previewsSource.prepare()
@@ -119,13 +127,18 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
+
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+
+        _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
+        applyWidth()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         startOnboardingFlowIfNotSeenBefore()
-        
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func startOnboardingFlowIfNotSeenBefore() {
@@ -215,6 +228,8 @@ class MainViewController: UIViewController {
     }
     
     private func initBookmarksButton() {
+        omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+                                                                                  action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
         bookmarksButton.customView = gestureBookmarksButton
@@ -222,7 +237,39 @@ class MainViewController: UIViewController {
         bookmarksButton.accessibilityTraits = .button
     }
     
+    @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            quickSaveBookmark()
+        }
+    }
+    
+    @objc func quickSaveBookmark() {
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        guard currentTab != nil else {
+            view.showBottomToast(UserText.webSaveBookmarkNone)
+            return
+        }
+        
+        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
+        
+        currentTab!.saveAsBookmark(favorite: DefaultVariantManager().isSupported(feature: .iPadImprovements))
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let controller = segue.destination as? SuggestionTrayViewController {
+            controller.dismissHandler = dismissSuggestionTray
+            controller.autocompleteDelegate = self
+            controller.favoritesOverlayDelegate = self
+            suggestionTrayController = controller
+            return
+        }
+        
+        if let controller = segue.destination as? TabsBarViewController {
+            controller.delegate = self
+            tabsBarController = controller
+            return
+        }
 
         if segue.destination.children.count > 0,
             let controller = segue.destination.children[0] as? BookmarksViewController {
@@ -261,13 +308,21 @@ class MainViewController: UIViewController {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
+
+    }
+    
+    @objc func dismissSuggestionTray() {
+        dismissOmniBar()
     }
 
     private func configureTabManager() {
+
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+
         let tabsModel: TabsModel
         let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
         if shouldClearTabsModelOnStartup {
-            tabsModel = TabsModel()
+            tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
         } else {
@@ -276,7 +331,7 @@ class MainViewController: UIViewController {
                 storedModel.save()
                 tabsModel = storedModel
             } else {
-                tabsModel = TabsModel()
+                tabsModel = TabsModel(desktop: isPadDevice)
             }
         }
         tabManager = TabManager(model: tabsModel,
@@ -299,6 +354,30 @@ class MainViewController: UIViewController {
         } else {
             attachHomeScreen()
         }
+    }
+
+    @available(iOS 13.4, *)
+    func handlePressEvent(event: UIPressesEvent?) {
+        currentTab?.tapLinkDestination = .currentTab
+        if event?.modifierFlags.contains(.command) ?? false {
+            if event?.modifierFlags.contains(.shift) ?? false {
+                currentTab?.tapLinkDestination = .newTab
+            } else {
+                currentTab?.tapLinkDestination = .backgroundTab
+            }
+        }
+    }
+
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesBegan(presses, with: event)
+        guard #available(iOS 13.4, *) else { return }
+        handlePressEvent(event: event)
+    }
+    
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesEnded(presses, with: event)
+        guard #available(iOS 13.4, *) else { return }
+        handlePressEvent(event: event)
     }
 
     private func attachOmniBar() {
@@ -366,7 +445,7 @@ class MainViewController: UIViewController {
     }
 
     func loadQueryInNewTab(_ query: String) {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
     }
@@ -379,6 +458,7 @@ class MainViewController: UIViewController {
         refreshOmniBar()
         refreshTabIcon()
         refreshControls()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func enterSearch() {
@@ -399,12 +479,12 @@ class MainViewController: UIViewController {
         currentTab?.load(url: url)
         guard let tab = currentTab else { fatalError("no tab") }
         select(tab: tab)
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
     }
 
     private func addTab(url: URL?) {
         let tab = tabManager.add(url: url)
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         addToView(tab: tab)
     }
 
@@ -422,6 +502,7 @@ class MainViewController: UIViewController {
             addToView(tab: tab)
             refreshControls()
         }
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
     }
 
     private func addToView(tab: TabViewController) {
@@ -478,76 +559,98 @@ class MainViewController: UIViewController {
         omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
     }
 
-    fileprivate func dismissOmniBar() {
+    func dismissOmniBar() {
         omniBar.resignFirstResponder()
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
+        hideSuggestionTray()
         refreshOmniBar()
     }
 
     fileprivate func refreshBackForwardButtons() {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
+        
+        omniBar.backButton.isEnabled = backButton.isEnabled
+        omniBar.forwardButton.isEnabled = forwardButton.isEnabled
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        dismissOmniBar()
+        
+        if AppWidthObserver.shared.willResize(toWidth: size.width) {
+            applyWidth()
+        }
+    
+        // Default behaviour was to keep dismiss the omnibar, continue that for the experiment
+        if !DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+            dismissOmniBar()
+        }
     }
     
-    fileprivate func displayFavoritesOverlay() {
-        guard favoritesOverlay == nil, !bookmarkStore.favorites.isEmpty else { return }
-        
-        let controller = FavoritesOverlay()
-        controller.install(into: self)
-        controller.view.alpha = 0
-        addChild(controller)
-        containerView.addSubview(controller.view)
-        controller.didMove(toParent: self)
-        
-        UIView.animate(withDuration: 0.2) {
-            controller.view.alpha = 1
+    private func applyWidth() {
+
+        if AppWidthObserver.shared.isLargeWidth {
+            applyLargeWidth()
+        } else {
+            applySmallWidth()
         }
-        favoritesOverlay = controller
+
+        applyTheme(ThemeManager.shared.currentTheme)
+
+        DispatchQueue.main.async {
+            // Do this async otherwise the toolbar buttons skew to the right
+            if self.navBarTop.constant >= 0 {
+                self.showBars()
+            }
+            // If tabs have been udpated, do this async to make sure size calcs are current
+            self.tabsBarController?.refresh(tabsModel: self.tabManager.model)
+            
+            // Do this on the next UI thread pass so we definitely have the right width
+            self.applyWidthToTrayController()
+        }
     }
     
-    fileprivate func dismissFavoritesOverlay() {
-        guard let controller = favoritesOverlay else { return }
-        favoritesOverlay = nil
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            controller.view.alpha = 0
-        }, completion: { _ in
-            controller.willMove(toParent: nil)
-            controller.view.removeFromSuperview()
-            controller.removeFromParent()
-        })
-    }
-
-    fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil && appSettings.autocomplete && !query.isEmpty {
-            let controller = AutocompleteViewController.loadFromStoryboard()
-            controller.shouldOffsetY = allowContentUnderflow
-            controller.delegate = self
-            addChild(controller)
-            containerView.addSubview(controller.view)
-            controller.didMove(toParent: self)
-            autocompleteController = controller
-            omniBar.hideSeparator()
+    private func applyWidthToTrayController() {
+        if AppWidthObserver.shared.isLargeWidth {
+            self.suggestionTrayController?.float(withWidth: self.omniBar.searchStackContainer.frame.width + 24)
+        } else {
+            self.suggestionTrayController?.fill()
         }
-        guard let autocompleteController = autocompleteController else { return }
-        autocompleteController.updateQuery(query: query)
+    }
+    
+    private func applyLargeWidth() {
+        tabsBar.isHidden = false
+        toolbar.isHidden = true
+        omniBar.enterPadState()
     }
 
-    fileprivate func dismissAutcompleteSuggestions() {
-        guard let controller = autocompleteController else { return }
+    private func applySmallWidth() {
+        tabsBar.isHidden = true
+        toolbar.isHidden = false
+        omniBar.enterPhoneState()
+    }
+
+    func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
+        
+        if suggestionTrayController?.willShow(for: type) ?? false {
+            applyWidthToTrayController()
+
+            if !AppWidthObserver.shared.isLargeWidth {
+                if type.hideOmnibarSeparator() {
+                    omniBar.hideSeparator()
+                }
+            }
+            
+            suggestionTrayContainer.isHidden = false
+        }
+        
+    }
+    
+    func hideSuggestionTray() {
         omniBar.showSeparator()
-        autocompleteController = nil
-        controller.willMove(toParent: nil)
-        controller.view.removeFromSuperview()
-        controller.removeFromParent()
+        suggestionTrayContainer.isHidden = true
+        suggestionTrayController?.didHide()
     }
-
+    
     fileprivate func launchBrowsingMenu() {
         currentTab?.launchBrowsingMenu()
     }
@@ -636,6 +739,7 @@ class MainViewController: UIViewController {
     func animateBackgroundTab() {
         showBars()
         tabSwitcherButton.incrementAnimated()
+        tabsBarController?.backgroundTabAdded()
     }
 
     func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
@@ -649,10 +753,12 @@ class MainViewController: UIViewController {
     }
 
     func newTab() {
+        hideSuggestionTray()
         currentTab?.dismiss()
         tabManager.addHomeTab()
         attachHomeScreen()
         homeController?.openedAsNewTab()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func updateFindInPage() {
@@ -685,7 +791,7 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     private func hideKeyboard() {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         _ = findInPageView.resignFirstResponder()
     }
 
@@ -705,6 +811,7 @@ extension MainViewController: BrowserChromeDelegate {
             self.view.layoutIfNeeded()
             
             self.omniBar.alpha = percent
+            self.tabsBar.alpha = percent
             self.toolbar.alpha = percent
         }
         
@@ -720,6 +827,7 @@ extension MainViewController: BrowserChromeDelegate {
         
         updateNavBarConstant(hidden ? 0 : 1.0)
         omniBar.alpha = hidden ? 0 : 1
+        tabsBar.alpha = hidden ? 0 : 1
         statusBarBackground.alpha = hidden ? 0 : 1
     }
 
@@ -737,16 +845,23 @@ extension MainViewController: BrowserChromeDelegate {
 
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
-        var bottomHeight = self.toolbar.frame.size.height
+        var bottomHeight = toolbarHeight
         if #available(iOS 11.0, *) {
             bottomHeight += view.safeAreaInsets.bottom
         }
-        toolbarBottom.constant = bottomHeight * (1.0 - ratio)
+        let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
+        toolbarBottom.constant = bottomHeight * multiplier
     }
 
     // 1.0 - full size, 0.0 - hidden
     private func updateNavBarConstant(_ ratio: CGFloat) {
-        navBarTop.constant = -self.customNavigationBar.frame.size.height * (1.0 - ratio)
+        let browserTabsOffset = (tabsBar.isHidden ? 0 : tabsBar.frame.size.height)
+        let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
+        if !tabsBar.isHidden {
+            let topBarsConstant = -browserTabsOffset * (1.0 - ratio)
+            tabsBarTop.constant = topBarsConstant
+        }
+        navBarTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)
     }
 
 }
@@ -754,25 +869,33 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        displayAutocompleteSuggestions(forQuery: updatedQuery)
+        
+        if updatedQuery.isEmpty && DefaultVariantManager().isSupported(feature: .iPadImprovements) && homeController == nil {
+            showSuggestionTray(.favorites)
+        } else {
+            showSuggestionTray(.autocomplete(query: updatedQuery))
+        }
+        
     }
 
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
+        hideSuggestionTray()
         showHomeRowReminder()
     }
 
     func onSiteRatingPressed() {
+        hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
+        hideSuggestionTray()
         launchBrowsingMenu()
     }
 
-    func onBookmarksPressed() {
+    @objc func onBookmarksPressed() {
+        hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
 
@@ -786,25 +909,29 @@ extension MainViewController: OmniBarDelegate {
     
     func onCancelPressed() {
         dismissOmniBar()
-        dismissFavoritesOverlay()
-        autocompleteController?.keyboardEscape()
+        hideSuggestionTray()
         homeController?.omniBarCancelPressed()
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
-        
-        displayFavoritesOverlay()
+        showSuggestionTray(.favorites)
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
         guard let homeController = homeController else { return }
-        
         homeController.launchNewSearch()
     }
     
     func onRefreshPressed() {
+        hideSuggestionTray()
         currentTab?.refresh()
+    }
+    
+    func onSharePressed() {
+        hideSuggestionTray()
+        guard let link = currentTab?.link else { return }
+        currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton)
     }
     
 }
@@ -854,9 +981,8 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func homeDidDeactivateOmniBar(home: HomeViewController) {
-        dismissFavoritesOverlay()
-        dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
+        hideSuggestionTray()
+        dismissOmniBar()
     }
     
     func showSettings(_ home: HomeViewController) {
@@ -889,7 +1015,7 @@ extension MainViewController: TabDelegate {
         let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
         newTab.openedByPage = true
         newTabAnimation {
-            self.omniBar.resignFirstResponder()
+            self.dismissOmniBar()
             self.addToView(tab: newTab)
             self.refreshOmniBar()
         }
@@ -908,6 +1034,7 @@ extension MainViewController: TabDelegate {
             refreshControls()
         }
         tabManager?.save()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
@@ -1024,6 +1151,7 @@ extension MainViewController: TabSwitcherDelegate {
     
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        hideSuggestionTray()
         tabManager.remove(at: index)
         updateCurrentTab()
     }
@@ -1038,7 +1166,7 @@ extension MainViewController: TabSwitcherDelegate {
 
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(link: Link) {
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
         loadUrl(link.url)
     }
     
@@ -1081,14 +1209,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
     }
     
     func longPressDetected(in sender: GestureToolbarButton) {
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-        guard currentTab != nil else {
-            view.showBottomToast(UserText.webSaveBookmarkNone)
-            return
-        }
-        
-        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        currentTab!.saveAsBookmark()
+        quickSaveBookmark()
     }
     
 }
@@ -1110,6 +1231,7 @@ extension MainViewController: AutoClearWorker {
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
     
@@ -1124,13 +1246,13 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    fileprivate func forgetAllWithAnimation(completion: @escaping () -> Void) {
+    func forgetAllWithAnimation(completion: (() -> Void)? = nil) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()
-            completion()
+            completion?()
             Instruments.shared.endTimedEvent(for: spid)
 
             if KeyboardSettings().onNewTab {
@@ -1150,9 +1272,14 @@ extension MainViewController: Themable {
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
 
+        if AppWidthObserver.shared.isLargeWidth {
+            statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
+        } else {
+            statusBarBackground.backgroundColor = theme.barBackgroundColor
+        }
+
         view.backgroundColor = theme.backgroundColor
-  
-        statusBarBackground.backgroundColor = theme.barBackgroundColor
+
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
         
@@ -1189,6 +1316,35 @@ extension MainViewController: OnboardingDelegate {
         settings.hasSeenOnboarding = true
     }
     
+}
+
+@available(iOS 11.0, *)
+extension MainViewController: UIDropInteractionDelegate {
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: URL.self) || session.canLoadObjects(ofClass: String.self)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+
+    // won't drop on to a web view - only works by dropping on to the tabs bar or home screen
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        
+        if session.canLoadObjects(ofClass: URL.self) {
+            _ = session.loadObjects(ofClass: URL.self) { urls in
+                urls.forEach { self.loadUrlInNewTab($0) }
+            }
+            
+        } else if session.canLoadObjects(ofClass: String.self) {
+            _ = session.loadObjects(ofClass: String.self) { strings in
+                self.loadQuery(strings[0])
+            }
+            
+        }
+        
+    }
 }
 
 // swiftlint:enable file_length

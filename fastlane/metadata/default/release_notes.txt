@@ -1,2 +1,1 @@
-• You can now use the back button to close the current tab after opening a link in a new tab.
 • Bug fixes and improvements.

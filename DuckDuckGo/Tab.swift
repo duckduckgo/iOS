@@ -63,7 +63,7 @@ public class Tab: NSObject, NSCoding {
     public init(uid: String? = nil,
                 link: Link? = nil,
                 viewed: Bool = true,
-                desktop: Bool = isPad) {
+                desktop: Bool = AppWidthObserver.shared.isLargeWidth) {
         self.uid = uid ?? UUID().uuidString
         self.link = link
         self.viewed = viewed
@@ -98,6 +98,10 @@ public class Tab: NSObject, NSCoding {
         notifyObservers()
     }
     
+    func didUpdateFavicon() {
+        notifyObservers()
+    }
+    
     func addObserver(_ observer: TabObserver) {
         guard indexOf(observer) == nil else { return }
         observersHolder.append(WeaklyHeldTabObserver(observer: observer))
@@ -114,8 +118,8 @@ public class Tab: NSObject, NSCoding {
     }
     
     private func notifyObservers() {
-        pruneHolders()
         observersHolder.forEach { $0.observer?.didChange(tab: self) }
+        pruneHolders()
     }
 
     private func pruneHolders() {

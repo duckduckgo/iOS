@@ -163,17 +163,17 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VKd-6G-N6H" userLabel="Header Container">
-                                                <rect key="frame" x="66.666666666666686" y="10" width="281" height="190"/>
+                                                <rect key="frame" x="57" y="10" width="300" height="190"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="happyFace" translatesAutoresizingMaskIntoConstraints="NO" id="eqG-8P-M9E">
-                                                        <rect key="frame" x="90.333333333333314" y="20" width="100" height="60"/>
+                                                        <rect key="frame" x="100" y="20" width="100" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="aLK-4h-fCG"/>
                                                             <constraint firstAttribute="height" constant="60" id="j7Q-89-xeA"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7v-x2-wc1">
-                                                        <rect key="frame" x="58.666666666666643" y="99" width="163.33333333333337" height="20"/>
+                                                        <rect key="frame" x="68.333333333333329" y="99" width="163.33333333333337" height="20"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                                         </accessibility>
@@ -188,57 +188,20 @@
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTz-AA-F85">
-                                                        <rect key="frame" x="0.0" y="130" width="281" height="33"/>
-                                                        <accessibility key="accessibilityConfiguration">
-                                                            <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
-                                                        </accessibility>
-                                                        <attributedString key="attributedText">
-                                                            <fragment content="Please share the love by rating the app on the App Store.">
-                                                                <attributes>
-                                                                    <font key="NSFont" size="15" name="ProximaNova-Regular"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="eqG-8P-M9E" firstAttribute="centerX" secondItem="VKd-6G-N6H" secondAttribute="centerX" id="87t-2C-7fF"/>
                                                     <constraint firstItem="m7v-x2-wc1" firstAttribute="top" secondItem="eqG-8P-M9E" secondAttribute="bottom" constant="19" id="NB9-DM-SZE"/>
-                                                    <constraint firstItem="YTz-AA-F85" firstAttribute="top" secondItem="m7v-x2-wc1" secondAttribute="bottom" constant="11" id="PwS-SK-UnU"/>
-                                                    <constraint firstItem="YTz-AA-F85" firstAttribute="width" secondItem="VKd-6G-N6H" secondAttribute="width" id="T05-23-0m2"/>
                                                     <constraint firstAttribute="height" constant="190" id="Y0W-ow-kUV"/>
                                                     <constraint firstItem="eqG-8P-M9E" firstAttribute="top" secondItem="VKd-6G-N6H" secondAttribute="top" constant="20" id="Z6B-Gi-1K4"/>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="bYc-Ex-KBT"/>
-                                                    <constraint firstItem="YTz-AA-F85" firstAttribute="centerX" secondItem="VKd-6G-N6H" secondAttribute="centerX" id="ce5-bd-ulK"/>
+                                                    <constraint firstAttribute="width" constant="300" id="bYc-Ex-KBT"/>
                                                     <constraint firstItem="m7v-x2-wc1" firstAttribute="centerX" secondItem="VKd-6G-N6H" secondAttribute="centerX" id="nha-VW-b4Z"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Elk-FL-6tl" userLabel="Buttons Container">
                                                 <rect key="frame" x="37" y="484" width="340" height="128"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APU-da-5BY">
-                                                        <rect key="frame" x="0.0" y="0.0" width="340" height="0.0"/>
-                                                        <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" id="wdh-YQ-Ir7"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                        <state key="normal" title="Rate the App">
-                                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                <integer key="value" value="5"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="rateAppButtonPressed" destination="rAY-cv-mjl" eventType="touchUpInside" id="RVR-76-LYT"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zN-Xh-yYi">
                                                         <rect key="frame" x="0.0" y="20" width="340" height="44"/>
                                                         <constraints>
@@ -280,14 +243,11 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="340" id="5Mc-XC-Uff"/>
                                                     <constraint firstItem="A1s-GY-hbq" firstAttribute="top" secondItem="7zN-Xh-yYi" secondAttribute="bottom" constant="20" id="9RS-ui-NIu"/>
-                                                    <constraint firstItem="APU-da-5BY" firstAttribute="top" secondItem="Elk-FL-6tl" secondAttribute="top" id="RXU-9e-OW9"/>
-                                                    <constraint firstItem="7zN-Xh-yYi" firstAttribute="top" secondItem="APU-da-5BY" secondAttribute="bottom" constant="20" id="SCV-Qh-eLM"/>
-                                                    <constraint firstItem="APU-da-5BY" firstAttribute="width" secondItem="Elk-FL-6tl" secondAttribute="width" id="SPU-k2-FNL"/>
                                                     <constraint firstItem="A1s-GY-hbq" firstAttribute="centerX" secondItem="Elk-FL-6tl" secondAttribute="centerX" id="UEy-MG-KKT"/>
+                                                    <constraint firstItem="7zN-Xh-yYi" firstAttribute="top" secondItem="Elk-FL-6tl" secondAttribute="top" constant="20" id="cZG-j4-MQz"/>
                                                     <constraint firstItem="7zN-Xh-yYi" firstAttribute="centerX" secondItem="Elk-FL-6tl" secondAttribute="centerX" id="ggy-uV-LA0"/>
                                                     <constraint firstItem="A1s-GY-hbq" firstAttribute="width" secondItem="Elk-FL-6tl" secondAttribute="width" id="k44-pu-R34"/>
                                                     <constraint firstItem="7zN-Xh-yYi" firstAttribute="width" secondItem="Elk-FL-6tl" secondAttribute="width" id="uhi-Sy-JtM"/>
-                                                    <constraint firstItem="APU-da-5BY" firstAttribute="centerX" secondItem="Elk-FL-6tl" secondAttribute="centerX" id="v9M-8a-vsO"/>
                                                     <constraint firstAttribute="bottom" secondItem="A1s-GY-hbq" secondAttribute="bottom" id="w5I-4S-kLI"/>
                                                 </constraints>
                                             </view>
@@ -335,8 +295,6 @@
                         <outlet property="doneButton" destination="A1s-GY-hbq" id="gEy-8P-RRE"/>
                         <outlet property="headerText" destination="m7v-x2-wc1" id="d5s-hc-rqj"/>
                         <outlet property="leaveFeedbackButton" destination="7zN-Xh-yYi" id="w3r-6v-mc6"/>
-                        <outlet property="rateAppButton" destination="APU-da-5BY" id="EgD-2A-lbl"/>
-                        <outlet property="supplementaryText" destination="YTz-AA-F85" id="rQp-Au-0EW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ija-3d-La0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -367,7 +325,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDx-jp-OoH">
-                                    <rect key="frame" x="100.66666666666669" y="98" width="213" height="20"/>
+                                    <rect key="frame" x="102.33333333333333" y="98" width="209.33333333333337" height="23.333333333333329"/>
                                     <attributedString key="attributedText">
                                         <fragment content="We’re sorry to hear that">
                                             <attributes>
@@ -380,7 +338,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mR-xp-efA">
-                                    <rect key="frame" x="76.666666666666657" y="129" width="260.66666666666674" height="21"/>
+                                    <rect key="frame" x="72.333333333333343" y="132.33333333333334" width="269.66666666666663" height="17.666666666666657"/>
                                     <accessibility key="accessibilityConfiguration">
                                         <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                     </accessibility>

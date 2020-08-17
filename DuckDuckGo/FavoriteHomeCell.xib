@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="proximanova-light.otf">
-            <string>ProximaNova-Light</string>
-        </array>
         <array key="proximanova-regular.otf">
             <string>ProximaNova-Regular</string>
         </array>
@@ -64,12 +61,6 @@
                         <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9L-x7-zPq">
-                        <rect key="frame" x="25.5" y="18.5" width="17" height="30"/>
-                        <fontDescription key="fontDescription" name="ProximaNova-Light" family="Proxima Nova" pointSize="30"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bW3-He-Unt" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                         <rect key="frame" x="2" y="0.0" width="64" height="64"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="0.3983304794520548" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -95,10 +86,8 @@
                 <constraint firstItem="0FF-Ic-U0T" firstAttribute="centerX" secondItem="ico-ty-UiT" secondAttribute="centerX" id="HBE-64-SHx"/>
                 <constraint firstItem="bW3-He-Unt" firstAttribute="top" secondItem="0FF-Ic-U0T" secondAttribute="top" id="Rhd-cr-2JX"/>
                 <constraint firstItem="0FF-Ic-U0T" firstAttribute="top" secondItem="ico-ty-UiT" secondAttribute="top" id="RzA-6W-flZ"/>
-                <constraint firstItem="k9L-x7-zPq" firstAttribute="centerY" secondItem="0FF-Ic-U0T" secondAttribute="centerY" constant="1.5" id="Tcw-YD-3Kr"/>
                 <constraint firstItem="bW3-He-Unt" firstAttribute="leading" secondItem="0FF-Ic-U0T" secondAttribute="leading" id="W1u-6F-xWR"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="top" secondItem="0FF-Ic-U0T" secondAttribute="bottom" constant="8" id="bb8-RC-f4d"/>
-                <constraint firstItem="k9L-x7-zPq" firstAttribute="centerX" secondItem="0FF-Ic-U0T" secondAttribute="centerX" id="c6B-NM-xBL"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="centerX" secondItem="ico-ty-UiT" secondAttribute="centerX" id="liy-lM-Qld"/>
             </constraints>
             <size key="customSize" width="134" height="110"/>
@@ -106,7 +95,6 @@
                 <outlet property="highlightMask" destination="bW3-He-Unt" id="S8k-yC-G19"/>
                 <outlet property="iconBackground" destination="0FF-Ic-U0T" id="NZd-EV-VJL"/>
                 <outlet property="iconImage" destination="SnK-Bc-1oh" id="YCV-0I-sqI"/>
-                <outlet property="iconLabel" destination="k9L-x7-zPq" id="9sN-5H-csC"/>
                 <outlet property="iconSize" destination="7cy-wR-boG" id="Ipf-Of-G81"/>
                 <outlet property="titleLabel" destination="igl-3v-DMO" id="wNh-Jl-GUm"/>
             </connections>

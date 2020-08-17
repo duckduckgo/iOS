@@ -192,7 +192,6 @@ public struct UserText {
     public static let contextualOnboardingPrivacyGrade = NSLocalizedString("contextualOnboardingPrivacyGrade", value: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.", comment: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.")
     public static let contextualOnboardingFireButton = NSLocalizedString("contextualOnboardingFireButton", value: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.", comment: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.")
     
-    public static let bookmarkAllTabsNotFound = NSLocalizedString("bookmarkAll.tabs.notfound", value: "No tabs to bookmark", comment: "No open tabs found to bookmark")
     public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", value: "All tabs bookmarked", comment: "All open tabs are bookmarked")
     public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", value: "Unable to bookmark some tabs", comment: "Failed to bookmark %lu out of %lu tabs")
     
@@ -223,7 +222,10 @@ public struct UserText {
         let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")
         return message.format(arguments: title, address)
     }
-    
+
+    public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Open home tab")
+    public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Close home tab")
+
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", comment: "Close tab with address")
         return message.format(arguments: title, address)
@@ -286,4 +288,6 @@ public struct UserText {
     public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", value: "There are only a few, and we tried to make them informative.", comment: "There are only a few, and we tried to make them informative.")
     public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", value: "Hide tips forever", comment: "Hide tips forever")
     public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", value: "Cancel", comment: "Cancel")
+    
+    public static let tabSwitcherAccessibilityLabel = NSLocalizedString("tab.switcher.accessibility.label", value: "Tab Switcher", comment: "Tab Switcher Accessibility Label")
 }

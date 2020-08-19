@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */; };
+		0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */; };
+		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
@@ -620,6 +623,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRule.swift; sourceTree = "<group>"; };
+		0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesBuilder.swift; sourceTree = "<group>"; };
+		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -1237,6 +1243,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0201A44D24ED81F000C6641C /* ContentBlockerRules */ = {
+			isa = PBXGroup;
+			children = (
+				0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */,
+				0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */,
+				0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */,
+			);
+			name = ContentBlockerRules;
+			sourceTree = "<group>";
+		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2360,6 +2376,7 @@
 		F143C3311E4A9A6A00CFDE3A /* Web */ = {
 			isa = PBXGroup;
 			children = (
+				0201A44D24ED81F000C6641C /* ContentBlockerRules */,
 				85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */,
 				F1A886771F29394E0096251E /* WebCacheManager.swift */,
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
@@ -3003,7 +3020,7 @@
 				TargetAttributes = {
 					83491186217F491200610F35 = {
 						CreatedOnToolsVersion = 10.0;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3014,7 +3031,7 @@
 					};
 					8370942E2142C4C200A58838 = {
 						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3025,13 +3042,13 @@
 					};
 					8390446B20BDCE10006461CD = {
 						CreatedOnToolsVersion = 9.3.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					84E341911E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3045,31 +3062,31 @@
 					};
 					84E341A51E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
 					85482D872462DCD100EDEDD1 = {
 						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						ProvisioningStyle = Automatic;
 					};
 					85F21DAC210F5E32002631A6 = {
 						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
 					98A54A8022AFCB2C00E541F4 = {
 						CreatedOnToolsVersion = 10.2;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						ProvisioningStyle = Automatic;
 					};
 					F143C2E31E4A4CD400CFDE3A = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = Z67LVNYQSE;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
@@ -3825,6 +3842,7 @@
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				85BDC31224339E080053DB07 /* DocumentUserScript.swift in Sources */,
+				0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* FileStore.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
@@ -3859,6 +3877,7 @@
 				F14513571F46388F00710C46 /* SiteRating.swift in Sources */,
 				F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */,
 				8521FDEC238DA9E600A44CC3 /* TrackerDataManager.swift in Sources */,
+				0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */,
 				85C743902154E981005CF998 /* GradeCache.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */,
@@ -3869,6 +3888,7 @@
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
+				0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				8521FDE3238C0D0D00A44CC3 /* TrackerData.swift in Sources */,
@@ -4062,7 +4082,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BookmarksTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4092,7 +4112,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BookmarksTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).BookmarksTodayExtension";
@@ -4117,7 +4137,7 @@
 				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).QuickActionsTodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4141,7 +4161,7 @@
 				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).QuickActionsTodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4164,7 +4184,7 @@
 				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4187,7 +4207,7 @@
 				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4247,7 +4267,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -4302,7 +4322,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -4327,7 +4347,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4350,7 +4370,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4369,7 +4389,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4388,7 +4408,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4411,7 +4431,7 @@
 				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4437,7 +4457,7 @@
 				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID).OpenAction";
@@ -4540,7 +4560,7 @@
 				);
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.Core;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4569,7 +4589,7 @@
 				);
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.Core;
 				PRODUCT_NAME = "$(TARGET_NAME)";

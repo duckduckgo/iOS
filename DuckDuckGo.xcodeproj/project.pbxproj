@@ -10,6 +10,8 @@
 		0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */; };
 		0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */; };
 		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
+		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
+		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
@@ -626,6 +628,8 @@
 		0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRule.swift; sourceTree = "<group>"; };
 		0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesBuilder.swift; sourceTree = "<group>"; };
 		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
+		0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesUserScript.swift; sourceTree = "<group>"; };
+		0254AC2324EDACDE004855DF /* contentblockerrules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = contentblockerrules.js; sourceTree = "<group>"; };
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -1249,6 +1253,8 @@
 				0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */,
 				0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */,
 				0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */,
+				0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */,
+				0254AC2324EDACDE004855DF /* contentblockerrules.js */,
 			);
 			name = ContentBlockerRules;
 			sourceTree = "<group>";
@@ -3305,6 +3311,7 @@
 				856D57C5206568BE000170B5 /* tlds.json in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
+				0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
 				8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */,
 			);
@@ -3879,6 +3886,7 @@
 				8521FDEC238DA9E600A44CC3 /* TrackerDataManager.swift in Sources */,
 				0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */,
 				85C743902154E981005CF998 /* GradeCache.swift in Sources */,
+				0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */,
 				85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */,

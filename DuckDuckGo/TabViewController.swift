@@ -154,6 +154,7 @@ class TabViewController: UIViewController {
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
+    private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var debugScript = DebugUserScript()
@@ -208,6 +209,7 @@ class TabViewController: UIViewController {
             debugScript,
             findInPageScript,
             contentBlockerScript,
+            contentBlockerRulesScript,
             faviconScript
         ]
         
@@ -230,6 +232,7 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
+        contentBlockerRulesScript.delegate = self
     }
     
     func updateTabModel() {
@@ -1183,11 +1186,11 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
 extension TabViewController: ContentBlockerUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerUserScript) -> Bool {
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker) {
+    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
         siteRating?.trackerDetected(tracker)
         onSiteRatingChanged()
 

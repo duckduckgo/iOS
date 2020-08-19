@@ -39,7 +39,7 @@ extension WKWebViewConfiguration {
         }
 
         configuration.installHideAtbModals()
-        
+        configuration.installContentBlockingRules()
 
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true

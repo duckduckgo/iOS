@@ -184,6 +184,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+        return true
+    }
+
     // MARK: private
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {

@@ -46,20 +46,46 @@ struct WidgetsEntryView : View {
 
     var body: some View {
         Text(entry.date, style: .time)
+            .widgetURL(URL(string: "ddgNewSearch://"))
     }
 }
 
-@main
-struct Widgets: Widget {
-    let kind: String = "Widgets"
+struct SearchWidget: Widget {
+    let kind: String = "SearchWidget"
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             WidgetsEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Search")
+        .description("Quickly launch a search in DuckDuckGo")
+        .supportedFamilies([.systemSmall, .systemMedium])        
     }
+
+}
+
+struct FavoritesWidget: Widget {
+    let kind: String = "FavoritesWidget"
+
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            WidgetsEntryView(entry: entry)
+        }
+        .configurationDisplayName("Favorites")
+        .description("Show your top favorites on your home screen")
+        .supportedFamilies([.systemMedium])
+    }
+}
+
+@main
+struct Widgets: WidgetBundle {
+
+    @WidgetBundleBuilder
+    var body: some Widget {
+        SearchWidget()
+        FavoritesWidget()
+    }
+
 }
 
 struct Widgets_Previews: PreviewProvider {

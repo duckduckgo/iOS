@@ -34,9 +34,7 @@ extension WKWebViewConfiguration {
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
-        if #available(iOSApplicationExtension 10.0, *) {
-            configuration.dataDetectorTypes = [.link, .phoneNumber]
-        }
+        configuration.dataDetectorTypes = [.link, .phoneNumber]
 
         configuration.installHideAtbModals()
         configuration.installContentBlockingRules()
@@ -85,6 +83,13 @@ extension WKWebViewConfiguration {
                     addRulesToController(rules: rulesList)
                 }
             }
+        }
+    }
+    
+    public func installContentRules(trackerProtection: Bool) {
+        self.installHideAtbModals()
+        if trackerProtection {
+            self.installContentBlockingRules()
         }
     }
 }

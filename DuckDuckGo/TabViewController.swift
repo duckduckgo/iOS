@@ -782,6 +782,15 @@ extension TabViewController: WKNavigationDelegate {
                 appRatingPrompt.shown()
             }
         }
+        
+        // If site is unprotected we need to remove the content blocking rules
+        if let ruleList = ContentBlockerRulesManager.shared.blockingRules {
+            if !contentBlockerProtection.isProtected(domain: url?.host) {
+                webView.configuration.userContentController.remove(ruleList)
+            } else {
+                webView.configuration.userContentController.add(ruleList)
+            }
+        }
     }
     
     func webView(_ webView: WKWebView,

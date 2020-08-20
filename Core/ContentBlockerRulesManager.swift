@@ -24,7 +24,7 @@ import os.log
 
 public class ContentBlockerRulesManager {
     
-    static let shared = ContentBlockerRulesManager()
+    public static let shared = ContentBlockerRulesManager()
     
     private var trackerData: TrackerData!
     
@@ -32,6 +32,20 @@ public class ContentBlockerRulesManager {
     
     init() {
         trackerData = TrackerDataManager.shared.trackerData
+        
+        NotificationCenter.default.addObserver(self,
+                                                selector: #selector(onContentBlockerConfigurationChanged),
+                                                name: ContentBlockerProtectionChangedNotification.name,
+                                                object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: ContentBlockerProtectionChangedNotification.name, object: nil)
+    }
+    
+    @objc func onContentBlockerConfigurationChanged() {
+        // Recompile rules if a site has been added to/removed from the unprotected list
+        compileRules(completion: nil)
     }
     
     func compileRules(completion: ((WKContentRuleList?) -> Void)?) {

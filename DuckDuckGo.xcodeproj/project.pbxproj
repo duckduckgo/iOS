@@ -3026,7 +3026,7 @@
 				TargetAttributes = {
 					83491186217F491200610F35 = {
 						CreatedOnToolsVersion = 10.0;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3037,7 +3037,7 @@
 					};
 					8370942E2142C4C200A58838 = {
 						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3048,13 +3048,13 @@
 					};
 					8390446B20BDCE10006461CD = {
 						CreatedOnToolsVersion = 9.3.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					84E341911E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3068,31 +3068,31 @@
 					};
 					84E341A51E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
 					85482D872462DCD100EDEDD1 = {
 						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						ProvisioningStyle = Automatic;
 					};
 					85F21DAC210F5E32002631A6 = {
 						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
 					98A54A8022AFCB2C00E541F4 = {
 						CreatedOnToolsVersion = 10.2;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						ProvisioningStyle = Automatic;
 					};
 					F143C2E31E4A4CD400CFDE3A = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = Z67LVNYQSE;
+						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};

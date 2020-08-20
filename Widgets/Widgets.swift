@@ -10,43 +10,84 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct Provider: IntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+struct Provider: TimelineProvider {
+
+    typealias Entry = SimpleEntry
+
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        completion(SimpleEntry(date: Date(),
+                               displayTitle: "displayTitle",
+                               url: URL(string: "https://example.com")!,
+                               image: UIImage(systemName: "safari")!,
+                               placeholder: true))
     }
 
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
-        completion(entry)
-    }
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        // First one is always a place holder so that iOS doesn't redact our widget
+        let  entries = [
+            SimpleEntry(date: Date(),
+                        displayTitle: "displayTitle",
+                        url: URL(string: "https://example.com")!,
+                        image: UIImage(systemName: "safari")!,
+                        placeholder: true)
+        ]
 
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
+        // TODO load favorites
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
+
 }
 
 struct SimpleEntry: TimelineEntry {
+
     let date: Date
-    let configuration: ConfigurationIntent
+    let displayTitle: String
+    let url: URL
+    let image: UIImage
+    let placeholder: Bool
+
 }
 
-struct WidgetsEntryView : View {
+struct WidgetsEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date, style: .time)
-            .widgetURL(URL(string: "ddgNewSearch://"))
+        VStack{
+            Image(uiImage: entry.image)
+            Text(entry.displayTitle)
+        }
+        .widgetURL(URL(string: "ddgNewSearch://"))
+        .cornerRadius(3.0)
+    }
+}
+
+struct SearchWidgetView: View {
+    var entry: Provider.Entry
+
+    var body: some View {
+        ZStack {
+            Rectangle().fill(Color("IconColorDefault"))
+
+            VStack(alignment: .center, spacing: 15) {
+
+                Image("Dax")
+                    .resizable()
+                    .frame(width: 46, height: 46, alignment: .center)
+
+                ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
+                    RoundedRectangle(cornerRadius: 21)
+                        .fill(Color.white)
+                        .frame(width: 123, height: 46)
+                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0.0, y: 2.0)
+
+                    Image("WidgetSearchLoupe")
+                        .padding(.trailing)
+
+                }
+            }
+        }
     }
 }
 
@@ -54,12 +95,12 @@ struct SearchWidget: Widget {
     let kind: String = "SearchWidget"
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            WidgetsEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            return SearchWidgetView(entry: entry).widgetURL(URL(string: AppDeepLinks.newSearch))
         }
         .configurationDisplayName("Search")
         .description("Quickly launch a search in DuckDuckGo")
-        .supportedFamilies([.systemSmall, .systemMedium])        
+        .supportedFamilies([.systemSmall])
     }
 
 }
@@ -68,12 +109,12 @@ struct FavoritesWidget: Widget {
     let kind: String = "FavoritesWidget"
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             WidgetsEntryView(entry: entry)
         }
         .configurationDisplayName("Favorites")
         .description("Show your top favorites on your home screen")
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 
@@ -88,9 +129,14 @@ struct Widgets: WidgetBundle {
 
 }
 
-struct Widgets_Previews: PreviewProvider {
-    static var previews: some View {
-        WidgetsEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-    }
-}
+// Previews don't work yet anyway
+//struct Widgets_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WidgetsEntryView(entry: SimpleEntry(date: Date(),
+//                                            displayTitle: "Example",
+//                                            url: URL(string: "https://example.com")!,
+//                                            image: UIImage(systemName: "safari")!,
+//                                            placeholder: true))
+//            .previewContext(WidgetPreviewContext(family: .systemSmall))
+//    }
+//}

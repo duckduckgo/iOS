@@ -98,6 +98,8 @@
 		8512EA5924ED30D30073EE19 /* Widgets.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8512EA5524ED30D20073EE19 /* Widgets.intentdefinition */; };
 		8512EA5A24ED30D30073EE19 /* Widgets.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8512EA5524ED30D20073EE19 /* Widgets.intentdefinition */; };
 		8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8512EA9D24EEA6820073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
+		8512EA9E24EEC50C0073EE19 /* AppDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
@@ -3335,6 +3337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8512EA9D24EEA6820073EE19 /* Assets.xcassets in Resources */,
 				8512EA5724ED30D30073EE19 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3862,6 +3865,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8512EA5924ED30D30073EE19 /* Widgets.intentdefinition in Sources */,
+				8512EA9E24EEC50C0073EE19 /* AppDeepLinks.swift in Sources */,
 				8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

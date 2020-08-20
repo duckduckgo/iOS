@@ -107,7 +107,7 @@
 "privacy.protection.encryption.mixed.heading" = "Mixed Encryption";
 "privacy.protection.encryption.unencrypted.heading" = "Unencrypted Connection";
 
-"privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
+"privacy.protection.network.leaderboard" = "Tracker networks were found on %@%% of web sites you’ve visited since %@.";
 
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
 
@@ -173,11 +173,6 @@
 "keyCommandOpenInNewTab" = "Open Link in New Tab";
 "keyCommandOpenInNewBackgroundTab" = "Open Link in Background";
 
-"contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
-"contextualOnboardingCustomizeTheme" = "Want a different look? Try changing the theme!";
-"contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.";
-"contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.";
-
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
 
@@ -191,9 +186,6 @@
 
 "autoclear.on" = "On";
 "autoclear.off" = "Off";
-
-"homepage.navigationBar" = "Top";
-"homepage.centerSearch" = "Center";
 
 "privacy.protection.site.grade" = "Privacy grade %@";
 
@@ -282,9 +274,6 @@
 "onboardingContinue" = "Continue";
 "onboardingSkip" = "Skip";
 "onboardingStartBrowsing" = "Start Browsing";
-"onboardingSetAppIcon" = "Set App Icon";
-"onboardingNotificationsAccept" = "Turn on Notifications";
-"onboardingNotificationsDeny" = "Not now";
 
 "preserveLogins.switch.title" = "Ask to Fireproof Websites";
 
@@ -320,12 +309,6 @@
 
 "dax.onboarding.browsing.one.tracker" = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
 "dax.onboarding.browsing.one.tracker.cta" = "High Five!";
-
-"dax.onboarding.browsing.two.trackers" = "*%1$@ and %2$@* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
-"dax.onboarding.browsing.two.trackers.cta" = "High Five!";
-
-"dax.onboarding.browsing.multiple.trackers" = "*%1$@, %2$@* and *1 other* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
-"dax.onboarding.browsing.multiple.trackers.plural" = "*%1$@, %2$@* and *%3$d others* were trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.";
 "dax.onboarding.browsing.multiple.trackers.cta"  = "High Five!";
 
 "dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";

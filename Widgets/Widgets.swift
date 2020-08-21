@@ -9,33 +9,36 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Core
+import os
 
 struct Provider: TimelineProvider {
 
     typealias Entry = SimpleEntry
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        completion(SimpleEntry(date: Date(),
-                               displayTitle: "displayTitle",
-                               url: URL(string: "https://example.com")!,
-                               image: UIImage(systemName: "safari")!,
-                               placeholder: true))
+        os_log("appIconName %s", #function)
+        completion(SimpleEntry(date: Date(), backgroundColorName: backgroundColorName()))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        // First one is always a place holder so that iOS doesn't redact our widget
-        let  entries = [
-            SimpleEntry(date: Date(),
-                        displayTitle: "displayTitle",
-                        url: URL(string: "https://example.com")!,
-                        image: UIImage(systemName: "safari")!,
-                        placeholder: true)
+        os_log("appIconName %s", #function)
+        let entries = [
+            SimpleEntry(date: Date(), backgroundColorName: backgroundColorName())
         ]
-
-        // TODO load favorites
-
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
+    }
+
+    private func backgroundColorName() -> String {
+        os_log("appIconName: bookmark count %d", BookmarkUserDefaults().bookmarks.count)
+        os_log("appIconName: %s", SharedSettings.shared.appIconName ?? "<nil>")
+
+        guard let appIconName = SharedSettings.shared.appIconName else {
+            return "WidgetBackgroundColor_red"
+        }
+
+        return "WidgetBackgroundColor_" + appIconName
     }
 
 }
@@ -43,10 +46,7 @@ struct Provider: TimelineProvider {
 struct SimpleEntry: TimelineEntry {
 
     let date: Date
-    let displayTitle: String
-    let url: URL
-    let image: UIImage
-    let placeholder: Bool
+    let backgroundColorName: String
 
 }
 
@@ -55,20 +55,19 @@ struct WidgetsEntryView: View {
 
     var body: some View {
         VStack{
-            Image(uiImage: entry.image)
-            Text(entry.displayTitle)
+            Text("WidgetsEntryView")
         }
-        .widgetURL(URL(string: "ddgNewSearch://"))
         .cornerRadius(3.0)
     }
 }
 
 struct SearchWidgetView: View {
+
     var entry: Provider.Entry
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color("IconColorDefault"))
+            Rectangle().fill(Color(entry.backgroundColorName))
 
             VStack(alignment: .center, spacing: 15) {
 
@@ -96,7 +95,8 @@ struct SearchWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            return SearchWidgetView(entry: entry).widgetURL(URL(string: AppDeepLinks.newSearch))
+            return SearchWidgetView(entry: entry)
+                .widgetURL(URL(string: AppDeepLinks.newSearch))
         }
         .configurationDisplayName("Search")
         .description("Quickly launch a search in DuckDuckGo")

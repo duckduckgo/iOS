@@ -52,32 +52,49 @@ public struct UserDefaultsWrapper<T> {
         case faviconsNeedMigration = "com.duckduckgo.ios.favicons.needsMigration"
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
+
+        case sharedAppIconName = "com.duckduckgo.ios.shared.appIconName"
+    }
+
+    public enum Group: String {
+
+        case shared = "sharedsettings"
+
     }
 
     private let key: Key
     private let defaultValue: T
     private let setIfEmpty: Bool
+    private let group: Group?
 
-    public init(key: Key, defaultValue: T, setIfEmpty: Bool = false) {
+    var userDefaults: UserDefaults? {
+        if let group = group {
+            return UserDefaults(suiteName: "\(Global.groupIdPrefix).\(group.rawValue)")
+        }
+        return UserDefaults.standard
+    }
+
+    public init(key: Key, defaultValue: T, setIfEmpty: Bool = false, group: Group? = nil) {
         self.key = key
         self.defaultValue = defaultValue
         self.setIfEmpty = setIfEmpty
+        self.group = group
     }
 
     public var wrappedValue: T {
         get {
-            if let storedValue = UserDefaults.standard.object(forKey: key.rawValue) as? T {
+            if let storedValue = userDefaults?.object(forKey: key.rawValue) as? T {
                 return storedValue
             }
             
             if setIfEmpty {
-                UserDefaults.standard.set(defaultValue, forKey: key.rawValue)
+                userDefaults?.set(defaultValue, forKey: key.rawValue)
             }
             
             return defaultValue
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: key.rawValue)
+            userDefaults?.set(newValue, forKey: key.rawValue)
         }
     }
 }

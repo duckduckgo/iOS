@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import os.log
+import WidgetKit
 
 class AppIconManager {
 
@@ -37,6 +38,22 @@ class AppIconManager {
         case changeNotSupported
     }
 
+    @available(iOS 10.3, *)
+    fileprivate func changeAppIconWhereSupported(_ appIcon: AppIcon, _ completionHandler: ((Error?) -> Void)?) {
+        let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
+        UIApplication.shared.setAlternateIconName(alternateIconName) { error in
+            if let error = error {
+                Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
+                os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
+                completionHandler?(error)
+            } else {
+                completionHandler?(nil)
+                SharedSettings.shared.appIconName = appIcon.rawValue
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
+    }
+
     func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
         if self.appIcon == appIcon {
             completionHandler?(nil)
@@ -44,16 +61,7 @@ class AppIconManager {
         }
 
         if #available(iOS 10.3, *), isAppIconChangeSupported {
-            let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
-            UIApplication.shared.setAlternateIconName(alternateIconName) { error in
-                if let error = error {
-                    Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
-                    os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
-                    completionHandler?(error)
-                } else {
-                    completionHandler?(nil)
-                }
-            }
+            changeAppIconWhereSupported(appIcon, completionHandler)
         } else {
             let error = AppIconManagerError.changeNotSupported
             Pixel.fire(pixel: .settingsAppIconChangeNotSupported, error: error)

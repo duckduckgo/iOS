@@ -41,6 +41,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var footerLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
@@ -54,6 +55,7 @@ class PrivacyProtectionPracticesController: UIViewController {
         
         initTable()
         initBackButton()
+        initLabels()
         update()
     }
 
@@ -101,6 +103,23 @@ class PrivacyProtectionPracticesController: UIViewController {
 
     private func initBackButton() {
         backButton.isHidden = !isPad
+    }
+    
+    private func initLabels() {
+        messageLabel.setAttributedTextString(UserText.ppPracticesHeaderInfo)
+        
+        let footerText = UserText.ppPracticesFooterInfo
+        let range = (footerText as NSString).range(of: "ToS;DR")
+        
+        footerLabel.setAttributedTextString(UserText.ppPracticesFooterInfo)
+        let mutableFooter = NSMutableAttributedString(attributedString: footerLabel.attributedText!)
+        mutableFooter.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+        
+        if let font = mutableFooter.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont {
+            let boldFont = UIFont.boldAppFont(ofSize: font.pointSize)
+            mutableFooter.addAttribute(.font, value: boldFont, range: range)
+        }
+        footerLabel.attributedText = mutableFooter
     }
 }
 
@@ -154,7 +173,7 @@ extension PrivacyProtectionPracticesController: PrivacyProtectionInfoDisplaying 
 }
 
 class PrivacyProtectionPracticesCell: UITableViewCell {
-
+    
     func update(row: PrivacyProtectionPracticesController.Row) {
         imageView?.image = row.good ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail")
         textLabel?.text = row.text
@@ -165,6 +184,12 @@ class PrivacyProtectionPracticesCell: UITableViewCell {
 class PrivacyProtectionNoPracticesCell: UITableViewCell {
 
     @IBOutlet weak var message: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        message.setAttributedTextString(UserText.ppPracticesUnknownInfo)
+    }
 
 }
 

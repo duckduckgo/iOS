@@ -34,6 +34,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var hoveringResetContainer: UIView!
     @IBOutlet weak var hoveringView: UIView!
     @IBOutlet weak var resetView: UIView!
+    @IBOutlet weak var resetViewInfo: UILabel!
 
     private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
     private var siteRating: SiteRating!
@@ -81,6 +82,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
             hoveringResetContainer.addSubview(resetView)
         }
 
+        resetViewInfo.setAttributedTextString(UserText.ppTopOffendersInfo)
     }
 
     private func initHeroIcon() {

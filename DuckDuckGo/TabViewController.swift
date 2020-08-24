@@ -232,6 +232,7 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
+        ContentBlockerRulesManager.shared.storageCache = storageCache
         contentBlockerRulesScript.delegate = self
     }
     
@@ -554,12 +555,21 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        reload(scripts: true)
+        // Recompile and add the content rules list
+        ContentBlockerRulesManager.shared.compileRules { [weak self] rulesList in
+            if let rulesList = rulesList {
+                self?.webView.configuration.userContentController.remove(rulesList)
+                self?.webView.configuration.userContentController.add(rulesList)
+            }
+            
+            self?.reload(scripts: true)
+        }
     }
 
     @objc func onStorageCacheChange() {
         DispatchQueue.main.async {
             self.storageCache = AppDependencyProvider.shared.storageCache.current
+            ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
     }

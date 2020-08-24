@@ -30,6 +30,8 @@ public class ContentBlockerRulesManager {
     
     public var blockingRules: WKContentRuleList?
     
+    public weak var storageCache: StorageCache?
+    
     init() {
         trackerData = TrackerDataManager.shared.trackerData
         
@@ -48,11 +50,12 @@ public class ContentBlockerRulesManager {
         compileRules(completion: nil)
     }
     
-    func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
+    public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
         let unprotectedSites = UnprotectedSitesManager().domains
+        let tempUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
         
-        let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: nil,
-                                                                                    andTemporaryUnprotectedDomains: unprotectedSites)
+        let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
+                                                                                    andTemporaryUnprotectedDomains: tempUnprotectedDomains)
         
         guard let data = try? JSONEncoder().encode(rules) else {
             os_log("Failed to encode content blocking rules", log: generalLog, type: .error)

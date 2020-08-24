@@ -32,7 +32,7 @@ extension String {
         
         func attributedString(color: UIColor, lineHeightMultiple: CGFloat, fontSize: CGFloat) -> NSAttributedString {
             let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineHeightMultiple = lineHeightMultiple// 1.17
+            paragraphStyle.lineHeightMultiple = lineHeightMultiple
 
             return NSMutableAttributedString(string: string, attributes: [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,

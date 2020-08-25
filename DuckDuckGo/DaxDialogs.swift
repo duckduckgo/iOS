@@ -72,12 +72,6 @@ class DaxDialogs {
                                                       cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers)
-
-        static let withTwoTrackers = BrowsingSpec(height: 345,
-                                                       message: UserText.daxDialogBrowsingWithTwoTrackers,
-                                                       cta: UserText.daxDialogBrowsingWithTwoTrackersCTA,
-                                                       highlightAddressBar: true,
-                                                       pixelName: .daxDialogsWithTrackers)
         
         static let withMutipleTrackers = BrowsingSpec(height: 345,
                                                                message: UserText.daxDialogBrowsingWithMultipleTrackers,
@@ -85,11 +79,6 @@ class DaxDialogs {
                                                                highlightAddressBar: true,
                                                                pixelName: .daxDialogsWithTrackers)
 
-        static let withMutipleTrackersPlural = BrowsingSpec(height: 345,
-                                                               message: UserText.daxDialogBrowsingWithMultipleTrackersPlural,
-                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
-                                                               highlightAddressBar: true,
-                                                               pixelName: .daxDialogsWithTrackers)
 
         let height: CGFloat
         let message: String
@@ -225,20 +214,9 @@ class DaxDialogs {
             settings.browsingWithTrackersShown = true
             return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0].displayName ?? "")
             
-        case 2:
-            settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withTwoTrackers.format(args: entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
-            
         default:
             settings.browsingWithTrackersShown = true
-            
-            if entitiesBlocked.count - 2 > 1 {
-                return BrowsingSpec.withMutipleTrackersPlural.format(args:
-                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
-            } else {
-                return BrowsingSpec.withMutipleTrackers.format(args:
-                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
-            }
+            return BrowsingSpec.withMutipleTrackers.format(args: entitiesBlocked.count - 2, entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
         }
 
     }

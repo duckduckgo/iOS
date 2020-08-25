@@ -109,6 +109,7 @@ extension PrivacyProtectionFooterController: PrivacyProtectionInfoDisplaying {
 class TrackerNetworkLeaderboardView: UIView {
 
     @IBOutlet weak var gatheringView: UIView!
+    @IBOutlet weak var gatheringInfoLabel: UILabel!
     @IBOutlet weak var scoresView: UIView!
 
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
@@ -127,6 +128,7 @@ class TrackerNetworkLeaderboardView: UIView {
         let networksDetected = leaderboard.networksDetected()
         let shouldShow = leaderboard.shouldShow()
         gatheringView.isHidden = shouldShow
+        gatheringInfoLabel.setAttributedTextString(UserText.ppNetworkLeaderboardGatheringData)
         scoresView.isHidden = !shouldShow
 
         if shouldShow {

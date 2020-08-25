@@ -29,6 +29,7 @@ class DaxDialogsBrowsingSpecTests: XCTestCase {
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(domain))
         XCTAssertEqual(2, message.countInstances(of: majorTracker1))
+        XCTAssertTrue(message.contains("\n"))
     }
     
     func testWhenSiteIsMajorTrackerIsFormattedThenContainsNameAndPercentage() {
@@ -38,34 +39,44 @@ class DaxDialogsBrowsingSpecTests: XCTestCase {
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains("34%"))
         XCTAssertEqual(2, message.countInstances(of: majorTracker1))
+        XCTAssertTrue(message.contains("\n"))
     }
 
     func testWhenTwoTrackersAndCountOfOneThenMessageContainsTrackersAndCount() {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
         let count = 1
-        let message = DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: majorTracker1, majorTracker2, count).message
+        let message = DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: count, majorTracker1, majorTracker2).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
         XCTAssertTrue(message.contains("\(count)"))
+        
+        // Ensure new line character is properly encoded and included in the string.
+        // For the plural localizable strings created using stringsdict, we have to embed new lines directly in the plist file - '\n' chars are escaped and don't work.
+        XCTAssertTrue(message.contains("\n"))
+        XCTAssertFalse(message.contains("\\n"))
     }
 
     func testWhenTwoTrackersAndCountOfMoreThanOneThenMessageContainsTrackersAndCount() {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
         let count = 6
-        let message = DaxDialogs.BrowsingSpec.withMutipleTrackersPlural.format(args: majorTracker1, majorTracker2, count).message
+        let message = DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: count, majorTracker1, majorTracker2).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
         XCTAssertTrue(message.contains("\(count)"))
+        XCTAssertTrue(message.contains("\n"))
+        XCTAssertFalse(message.contains("\\n"))
     }
 
     func testWhenTwoTrackersThenMessageContainsBothTrackers() {
         let majorTracker1 = "TestTracker1"
         let majorTracker2 = "TestTracker2"
-        let message = DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: majorTracker1, majorTracker2).message
+        let message = DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: 0, majorTracker1, majorTracker2).message
         XCTAssertTrue(message.contains(majorTracker1))
         XCTAssertTrue(message.contains(majorTracker2))
+        XCTAssertTrue(message.contains("\n"))
+        XCTAssertFalse(message.contains("\\n"))
     }
 
     func testWhenSingleTrackerThenMessageContainsTracker() {

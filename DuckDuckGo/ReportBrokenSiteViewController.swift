@@ -48,6 +48,7 @@ class ReportBrokenSiteViewController: UIViewController {
         super.viewDidLoad()
         
         submitButton.isEnabled = false
+        headerLabel.setAttributedTextString(UserText.reportBrokenSiteHeader)
         applyTheme(ThemeManager.shared.currentTheme)
     }
     

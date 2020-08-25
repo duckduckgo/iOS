@@ -34,6 +34,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var headerInfoLabel: UILabel!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
@@ -74,6 +75,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
+        headerInfoLabel.setAttributedTextString(UserText.ppEncryptionHeaderInfo)
 
         var message: String!
 
@@ -191,6 +193,18 @@ class PrivacyProtectionEncryptionDetailCell: UITableViewCell {
     func update(name: String, value: String) {
         nameLabel.text = name
         valueLabel.text = value
+    }
+
+}
+
+class PrivacyProtectionEncryptionUnencrytedCell: UITableViewCell {
+
+    @IBOutlet weak var detailLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        detailLabel.setAttributedTextString(UserText.ppEncryptionUnencryptedDetailInfo)
     }
 
 }

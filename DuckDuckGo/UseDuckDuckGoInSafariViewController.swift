@@ -21,6 +21,11 @@ import UIKit
 import Core
 
 class UseDuckDuckGoInSafariViewController: UIViewController {
+    
+    @IBOutlet var headerInfoLabel: UILabel!
+    @IBOutlet var firstStepLabel: UILabel!
+    @IBOutlet var secondStepLabel: UILabel!
+    @IBOutlet var thirdStepLabel: UILabel!
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
@@ -31,6 +36,24 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
         modalPresentationCapturesStatusBarAppearance = true
         
         view.blur(style: .dark)
+        
+        headerInfoLabel.setAttributedTextString(UserText.settingTutorialInfo)
+        
+        if let attributes = firstStepLabel.attributedText?.attributes(at: 0, effectiveRange: nil),
+            let font = attributes[.font] as? UIFont,
+            let color = attributes[.foregroundColor] as? UIColor,
+            let style = attributes[.paragraphStyle] as? NSParagraphStyle {
+            
+            let firstStepText = UserText.settingTutorialOpenStep.attributedStringFromMarkdown(color:color, lineHeightMultiple: style.lineHeightMultiple, fontSize: font.pointSize)
+            firstStepLabel.attributedText = firstStepText
+            
+            let secondStepText = UserText.settingTutorialNavigateStep.attributedStringFromMarkdown(color:color, lineHeightMultiple: style.lineHeightMultiple, fontSize: font.pointSize)
+            secondStepLabel.attributedText = secondStepText
+            
+            let thirdStepText = UserText.settingTutorialSelectStep.attributedStringFromMarkdown(color:color, lineHeightMultiple: style.lineHeightMultiple, fontSize: font.pointSize)
+            thirdStepLabel.attributedText = thirdStepText
+        }
+        
     }
 
     @IBAction func onDonePressed(_ sender: UIButton) {

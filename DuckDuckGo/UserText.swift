@@ -119,7 +119,7 @@ public struct UserText {
     public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", value: "Unencrypted Connection", comment: "")
     
     public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", value: "Tracker networks were found on %@%% of web sites you’ve visited since %@.", comment: "First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date")
-    public static let ppNetworkLeaderboardGatheringData = NSLocalizedString("privacy.protection.network.leaderboard.gathering", value: "We're still collecting data to show how\nmany trackers we've blocked.", comment: "")
+    public static let ppNetworkLeaderboardGatheringData = NSLocalizedString("privacy.protection.network.leaderboard.gathering", value: "We’re still collecting data to show how\nmany trackers we’ve blocked.", comment: "")
     
     public static let ppEncryptionHeaderInfo = NSLocalizedString("privacy.protection.encryption.header", value: "An encrypted connection prevents eavesdropping of any personal information you send to a website.", comment: "")
     
@@ -165,7 +165,7 @@ public struct UserText {
     public static let customUrlSchemeOpen = NSLocalizedString("prompt.custom.url.scheme.open", value: "Yes", comment: "Confirm action")
     public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", value: "No", comment: "Deny action")
     
-    public static let failedToOpenExternally = NSLocalizedString("open.externally.failed", value: "Sorry, no app can handle that link.", comment: "'Link' is link on a website")
+    public static let failedToOpenExternally = NSLocalizedString("open.externally.failed", value: "Sorry, no app can handle that link.", comment: "’Link’ is link on a website")
     
     public static let sectionTitleBookmarks = NSLocalizedString("section.title.bookmarks", value: "Bookmarks", comment: "")
     public static let sectionTitleFavorites = NSLocalizedString("section.title.favorites", value: "Favorites", comment: "")
@@ -280,7 +280,7 @@ public struct UserText {
     public static let daxDialogBrowsingSiteIsMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker", value: "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don’t worry!\n\nI’ll block %1$@ from seeing your activity on those sites.", comment: "First paramter is a string - domain name, second is a number %")
     public static let daxDialogBrowsingSiteIsMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker.cta", value:  "Got It", comment: "")
     
-    public static let daxDialogBrowsingSiteOwnedByMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker", value: "Heads up! Since %2$@ owns %1$@, I can't stop them from seeing your activity here.\n\nBut browse with me, and I can reduce what %2$@ knows about you overall by blocking their trackers on lots of other sites.", comment: "Parameters are domain names (strings)")
+    public static let daxDialogBrowsingSiteOwnedByMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker", value: "Heads up! Since %2$@ owns %1$@, I can’t stop them from seeing your activity here.\n\nBut browse with me, and I can reduce what %2$@ knows about you overall by blocking their trackers on lots of other sites.", comment: "Parameters are domain names (strings)")
     public static let daxDialogBrowsingSiteOwnedByMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker.cta", value: "Got It", comment: "Got It")
     
     public static let daxDialogBrowsingWithOneTracker = NSLocalizedString("dax.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", comment: "Parameter is domain name (string)")

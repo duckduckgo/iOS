@@ -22,8 +22,8 @@ function isSensitiveFile(filename) {
 }
 
 (function() {
-     const oldShare = navigator.share;
-     navigator.share = function(data) {
+    const oldShare = Navigator.prototype.share;
+    Navigator.prototype.share = function(data) {
          if (data.url && isSensitiveFile(data.url)) {
              return Promise.reject(new Error('System file sharing is not supported in this browser'));
          } else if (data.files) {
@@ -34,6 +34,6 @@ function isSensitiveFile(filename) {
              }
          }
          
-         return oldShare(data);
+        return oldShare.call(this, data);
      }
  })();

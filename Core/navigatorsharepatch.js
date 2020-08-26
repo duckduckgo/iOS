@@ -17,11 +17,21 @@
  //  limitations under the License.
  //
 
+function isSensitiveFile(filename) {
+    return /^file:\/\/\/(private|var|etc|usr)/i.test(filename);
+}
+
 (function() {
      const oldShare = navigator.share;
      navigator.share = function(data) {
-         if (data.url && data.url.includes('file://')) {
-             return Promise.reject(new Error('File sharing is not supported in this browser'));
+         if (data.url && isSensitiveFile(data.url)) {
+             return Promise.reject(new Error('System file sharing is not supported in this browser'));
+         } else if (data.files) {
+             for (var i in data.files) {
+                 if (isSensitiveFile(data.files[i])) {
+                     return Promise.reject(new Error('System file sharing is not supported in this browser'));
+                 }
+             }
          }
          
          return oldShare(data);

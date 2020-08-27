@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,13 +34,13 @@
                                                         <rect key="frame" x="148" y="36" width="24" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-jo-PSC">
-                                                        <rect key="frame" x="16" y="79" width="288" height="21"/>
+                                                        <rect key="frame" x="16" y="79" width="288" height="24.5"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="21"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EnL-Xg-Mjg">
-                                                        <rect key="frame" x="25" y="112" width="270" height="52.5"/>
+                                                        <rect key="frame" x="25" y="115.5" width="270" height="61.5"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.">
                                                                 <attributes>
@@ -82,7 +82,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ge0-t0-Gaw">
-                                                        <rect key="frame" x="62" y="16" width="178" height="18"/>
+                                                        <rect key="frame" x="62" y="14.5" width="178" height="21"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Open ">
                                                                 <attributes>
@@ -124,7 +124,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdu-Pe-dKZ">
-                                                        <rect key="frame" x="62" y="7" width="178" height="36"/>
+                                                        <rect key="frame" x="62" y="4" width="178" height="42"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Navigate to ">
                                                                 <attributes>
@@ -173,7 +173,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="liH-37-vc5">
-                                                        <rect key="frame" x="65" y="17.5" width="175" height="18"/>
+                                                        <rect key="frame" x="65" y="16" width="175" height="21"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Select ">
                                                                 <attributes>
@@ -279,6 +279,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SWy-vd-hl3"/>
                     </view>
+                    <connections>
+                        <outlet property="firstStepLabel" destination="ge0-t0-Gaw" id="2kb-Hg-zNu"/>
+                        <outlet property="headerInfoLabel" destination="EnL-Xg-Mjg" id="RiO-m6-QdZ"/>
+                        <outlet property="secondStepLabel" destination="Sdu-Pe-dKZ" id="QcK-SG-G9N"/>
+                        <outlet property="thirdStepLabel" destination="liH-37-vc5" id="myc-S0-miD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAe-8z-Fpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

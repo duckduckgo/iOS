@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */; };
+		02CA904B24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */; };
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
@@ -620,6 +622,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = navigatorsharepatch.js; sourceTree = "<group>"; };
+		02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorSharePatchUserScript.swift; sourceTree = "<group>"; };
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -1325,6 +1329,7 @@
 				987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */,
 				9833FD7122BCE44C00E95CD8 /* debug-messaging-disabled.js */,
 				850559C823C61B5D0055C0D5 /* login-form-detection.js */,
+				02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */,
 			);
 			name = contentblocking;
 			sourceTree = "<group>";
@@ -1751,6 +1756,7 @@
 			isa = PBXGroup;
 			children = (
 				85BDC3162434E55D0053DB07 /* ContentBlockerUserScript.swift */,
+				02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3290,6 +3296,7 @@
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
 				8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */,
+				02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3828,6 +3835,7 @@
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* FileStore.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
+				02CA904B24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift in Sources */,
 				85BDC3192436161C0053DB07 /* LoginFormDetectionUserScript.swift in Sources */,
 				8328AAB9212A3DF200293140 /* BloomFilterWrapper.mm in Sources */,
 				98982B3422F8D8E400578AC9 /* Debounce.swift in Sources */,

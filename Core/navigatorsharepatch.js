@@ -18,7 +18,14 @@
  //
 
 function isSensitiveFile(filename) {
-    return /^file:\/\/\/(private|var|etc|usr)/i.test(filename);
+    let uriObj = null;
+    try {
+       uriObj = new URL(filename);
+    } catch (e) {
+       return true;
+    }
+    
+    return uriObj.protocol === 'file:';
 }
 
 (function() {

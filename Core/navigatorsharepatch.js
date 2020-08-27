@@ -17,18 +17,18 @@
  //  limitations under the License.
  //
 
-function isSensitiveFile(filename) {
-    let uriObj = null;
-    try {
-       uriObj = new URL(filename);
-    } catch (e) {
-       return true;
+(function() {
+    function isSensitiveFile(filename) {
+        let uriObj = null;
+        try {
+           uriObj = new URL(filename);
+        } catch (e) {
+           return true;
+        }
+        
+        return uriObj.protocol === 'file:';
     }
     
-    return uriObj.protocol === 'file:';
-}
-
-(function() {
     const oldShare = Navigator.prototype.share;
     Navigator.prototype.share = function(data) {
          if (data.url && isSensitiveFile(data.url)) {

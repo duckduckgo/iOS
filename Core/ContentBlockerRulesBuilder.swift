@@ -1,6 +1,6 @@
 //
 //  ContentBlockerRulesBuilder.swift
-//  DuckDuckGo Privacy Essentials
+//  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
 //

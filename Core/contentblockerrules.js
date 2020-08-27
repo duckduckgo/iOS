@@ -107,6 +107,7 @@ function install() {
   let originalOpen = null;
   let originalSend = null;
   let originalImageSrc = null;
+  let originalFetch = null;
   let mutationObserver = null;
 
   function injectStatsTracking(enabled) {
@@ -185,6 +186,23 @@ function install() {
         originalImageSrc.set.call(this, value);
       }
     });
+
+    // -------------------------------------------------
+    // Detect when fetch is called and pass the resource to the host application
+    // -------------------------------------------------
+    if (!originalFetch) {
+      originalFetch = window.fetch;
+    }
+    window.fetch = function() {
+      if (typeof arguments[0] === 'string') {
+        sendMessage(arguments[0], 'fetch');
+      } else if (arguments[0].url) {
+        // Argument is a Request object
+        sendMessage(arguments[0].url, 'fetch');
+      }
+
+      return originalFetch.apply(window, arguments);
+    }
 
     // -------------------------------------------------
     // Listen to when new <script> elements get added to the DOM

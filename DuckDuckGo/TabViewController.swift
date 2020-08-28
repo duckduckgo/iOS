@@ -236,6 +236,7 @@ class TabViewController: UIViewController {
         contentBlockerScript.delegate = self
         ContentBlockerRulesManager.shared.storageCache = storageCache
         contentBlockerRulesScript.delegate = self
+        contentBlockerRulesScript.storageCache = storageCache
     }
     
     func updateTabModel() {

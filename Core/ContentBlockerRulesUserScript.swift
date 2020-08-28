@@ -25,10 +25,17 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     struct ContentBlockerKey {
         static let url = "url"
         static let resourceType = "resourceType"
+        static let blocked = "blocked"
     }
     
     public var source: String {
-        return loadJS("contentblockerrules")
+        let unprotectedDomains = (UnprotectedSitesManager().domains?.joined(separator: "\n") ?? "")
+            + "\n"
+            + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
+        
+        return loadJS("contentblockerrules", withReplacements: [
+            "${unprotectedDomains}": unprotectedDomains,
+        ])
     }
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
@@ -38,24 +45,25 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public var messageNames: [String] = [ "processRule" ]
     
     public weak var delegate: ContentBlockerUserScriptDelegate?
+    public weak var storageCache: StorageCache?
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let delegate = delegate else { return }
         guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
         
         guard let dict = message.body as? [String: Any] else { return }
-//        guard let resourceType = dict[ContentBlockerKey.resourceType] as? String else { return }
+        guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let urlString = dict[ContentBlockerKey.url] as? String else { return }
         
-        if let tracker = trackerFromUrl(urlString) {
+        if let tracker = trackerFromUrl(urlString, blocked: blocked) {
             delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
     }
     
-    private func trackerFromUrl(_ urlString: String) -> DetectedTracker? {
+    private func trackerFromUrl(_ urlString: String, blocked: Bool) -> DetectedTracker? {
         let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
         if let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "") {
-            return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: true)
+            return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
         }
         
         return nil

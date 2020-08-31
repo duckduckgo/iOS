@@ -34,20 +34,6 @@ public class ContentBlockerRulesManager {
     
     init() {
         trackerData = TrackerDataManager.shared.trackerData
-        
-        NotificationCenter.default.addObserver(self,
-                                                selector: #selector(onContentBlockerConfigurationChanged),
-                                                name: ContentBlockerProtectionChangedNotification.name,
-                                                object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: ContentBlockerProtectionChangedNotification.name, object: nil)
-    }
-    
-    @objc func onContentBlockerConfigurationChanged() {
-        // Recompile rules if a site has been added to/removed from the unprotected list
-        compileRules(completion: nil)
     }
     
     public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
@@ -63,7 +49,7 @@ public class ContentBlockerRulesManager {
         }
         
         if let store = WKContentRuleListStore.default() {
-            store.compileContentRuleList(forIdentifier: "XXX", encodedContentRuleList: String(data: data, encoding: .utf8)!) { [weak self] ruleList, error in
+            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: String(data: data, encoding: .utf8)!) { [weak self] ruleList, error in
                 self?.blockingRules = ruleList
                 completion?(ruleList)
                 if let error = error {

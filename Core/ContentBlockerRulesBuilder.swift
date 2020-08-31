@@ -45,7 +45,7 @@ public struct ContentBlockerRulesBuilder {
             buildRules(from: $0)
         }.flatMap { $0 }
         
-        return trackerRules + buildExceptions(from: exceptions, andUnprotectedDomains: tempUnprotectedDomains) + buildInstallButtonHider()
+        return trackerRules + buildExceptions(from: exceptions, andUnprotectedDomains: tempUnprotectedDomains)
     }
     
     /// Build the rules for a specific tracker.
@@ -62,13 +62,6 @@ public struct ContentBlockerRulesBuilder {
         let dedupedRules = sortedRules.flatMap { $0 }.removeDuplicates()
         
         return blockingRules + dedupedRules
-    }
-    
-    private func buildInstallButtonHider() -> [ContentBlockerRule] {
-        let duckduckgoSites = Constants.subDomainPrefix + "duckduckgo\\.com" + Constants.domainMatchSuffix
-        let rule = ContentBlockerRule(trigger: .trigger(urlFilter: duckduckgoSites, loadType: nil),
-                                      action: .cssDisplayNone(selector: ".ddg-extension-hide"))
-        return [ rule ]
     }
     
     private func buildExceptions(from exceptions: [String]?, andUnprotectedDomains unprotectedDomains: [String]?) -> [ContentBlockerRule] {
@@ -191,8 +184,7 @@ fileprivate extension String {
 fileprivate extension Array where Element: Hashable {
     
     func removeDuplicates() -> [Element] {
-        var unique = Set<Element>()
-        return compactMap { unique.insert($0).inserted ? $0 : nil }
+        return Array(Set(self))
     }
     
 }

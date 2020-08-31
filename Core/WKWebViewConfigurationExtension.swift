@@ -74,7 +74,7 @@ extension WKWebViewConfiguration {
             self.userContentController.add(rules)
         }
         
-        // Get rules list from manadger and add to userContentController
+        // Get rules list from manager and add to userContentController
         if let rulesList = ContentBlockerRulesManager.shared.blockingRules {
             addRulesToController(rules: rulesList)
         } else {

@@ -3,6 +3,16 @@
     {
       "filename" : "loupe.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "loupe-3.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

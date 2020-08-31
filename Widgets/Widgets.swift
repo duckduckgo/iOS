@@ -9,6 +9,7 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Core
 
 struct Provider: TimelineProvider {
 
@@ -23,7 +24,11 @@ struct Provider: TimelineProvider {
     }
 
     func placeholder(in context: Context) -> SimpleEntry {
-        return SimpleEntry(date: Date(), backgroundColorName: backgroundColorName())
+        return SimpleEntry(date: Date(),
+                           displayTitle: "displayTitle",
+                           url: URL(string: "https://example.com")!,
+                           image: UIImage(systemName: "safari")!,
+                           placeholder: true)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
@@ -72,17 +77,17 @@ struct SearchWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color("IconColorDefault"))
+            Rectangle().fill(Color("WidgetBackgroundColor"))
 
             VStack(alignment: .center, spacing: 15) {
 
-                Image("Dax")
+                Image("WidgetDaxLogo")
                     .resizable()
                     .frame(width: 46, height: 46, alignment: .center)
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
                     RoundedRectangle(cornerRadius: 21)
-                        .fill(Color.white)
+                        .fill(Color("WidgetSearchFieldColor"))
                         .frame(width: 123, height: 46)
                         .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0.0, y: 2.0)
 

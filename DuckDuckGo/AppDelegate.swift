@@ -56,10 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        // Make the app icon name available to extensions
-        SharedSettings.shared.appIconName = AppIconManager.shared.appIcon.name
-
-        // Do this as soon as possible on a UI thread, ie now
         _ = UserAgentManager.shared
 
         DispatchQueue.global(qos: .background).async {

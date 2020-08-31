@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Core
 
 enum AppIcon: String, CaseIterable {
     case red

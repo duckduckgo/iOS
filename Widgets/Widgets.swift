@@ -21,6 +21,10 @@ struct Provider: TimelineProvider {
         completion(SimpleEntry(date: Date(), backgroundColorName: backgroundColorName()))
     }
 
+    func placeholder(in context: Context) -> SimpleEntry {
+        return SimpleEntry(date: Date(), backgroundColorName: backgroundColorName())
+    }
+
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         os_log("appIconName %s", #function)
         let entries = [

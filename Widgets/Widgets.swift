@@ -89,7 +89,6 @@ struct SearchWidgetView: View {
                     RoundedRectangle(cornerRadius: 21)
                         .fill(Color("WidgetSearchFieldColor"))
                         .frame(width: 123, height: 46)
-                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0.0, y: 2.0)
 
                     Image("WidgetSearchLoupe")
                         .padding(.trailing)

@@ -104,7 +104,7 @@ struct SearchWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            return SearchWidgetView(entry: entry).widgetURL(URL(string: DeepLinks.newSearch))
+            return SearchWidgetView(entry: entry).widgetURL(DeepLinks.newSearch)
         }
         .configurationDisplayName("Search")
         .description("Quickly launch a search in DuckDuckGo")

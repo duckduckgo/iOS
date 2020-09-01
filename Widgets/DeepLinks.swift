@@ -10,7 +10,7 @@ import Core
 
 struct DeepLinks {
 
-    static let newSearch = AppDeepLinks.newSearch
+    static let newSearch = URL(string: AppDeepLinks.newSearch + "?w=1")!
 
     static func createFavoriteLauncher(forUrl url: URL) -> URL {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)

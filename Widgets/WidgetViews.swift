@@ -57,7 +57,7 @@ struct LargeSearchFieldView: View {
     var placeholder: Bool
 
     var body: some View {
-        Link(destination: URL(string: DeepLinks.newSearch)!) {
+        Link(destination: DeepLinks.newSearch) {
             ZStack {
 
                 RoundedRectangle(cornerRadius: 21)

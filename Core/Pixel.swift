@@ -196,6 +196,9 @@ public enum PixelName: String {
     case daxDialogsSiteIsMajor = "m_dx_sm"
     case daxDialogsSiteOwnedByMajor = "m_dx_so"
     case daxDialogsHidden = "m_dx_h"
+
+    case widgetFavoriteLaunch = "m_w_fl"
+    case widgetNewSearch = "m_w_ns"
         
     // debug pixels:
     

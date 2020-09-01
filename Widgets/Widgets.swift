@@ -8,95 +8,95 @@
 
 import WidgetKit
 import SwiftUI
-import Intents
 import Core
+import Kingfisher
+
+struct Favorite {
+
+    let url: URL
+    let domain: String
+    let favicon: UIImage?
+
+}
 
 struct Provider: TimelineProvider {
 
-    typealias Entry = SimpleEntry
+    typealias Entry = FavoritesEntry
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        completion(SimpleEntry(date: Date(),
-                               displayTitle: "displayTitle",
-                               url: URL(string: "https://example.com")!,
-                               image: UIImage(systemName: "safari")!,
-                               placeholder: true))
+    func getSnapshot(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
+        completion(FavoritesEntry(date: Date(), placeholder: true, favorites: []))
     }
 
-    func placeholder(in context: Context) -> SimpleEntry {
-        return SimpleEntry(date: Date(),
-                           displayTitle: "displayTitle",
-                           url: URL(string: "https://example.com")!,
-                           image: UIImage(systemName: "safari")!,
-                           placeholder: true)
+    func placeholder(in context: Context) -> FavoritesEntry {
+        return FavoritesEntry(date: Date(), placeholder: true, favorites: [])
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        // First one is always a place holder so that iOS doesn't redact our widget
-        let  entries = [
-            SimpleEntry(date: Date(),
-                        displayTitle: "displayTitle",
-                        url: URL(string: "https://example.com")!,
-                        image: UIImage(systemName: "safari")!,
-                        placeholder: true)
-        ]
+    func getTimeline(in context: Context, completion: @escaping (Timeline<FavoritesEntry>) -> Void) {
+        let favorites: [Favorite]
 
-        // TODO load favorites
+        switch context.family {
 
+        case .systemMedium:
+            favorites = getFavorites(returningNoMoreThan: 4)
+
+        case .systemLarge:
+            favorites = getFavorites(returningNoMoreThan: 8)
+
+        default:
+            favorites = []
+        }
+
+        NSLog("*** favorites %@", favorites)
+
+        let entries = [FavoritesEntry(date: Date(), placeholder: false, favorites: favorites)]
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
 
+    private func getFavorites(returningNoMoreThan maxLength: Int) -> [Favorite] {
+        return BookmarkUserDefaults().favorites.prefix(maxLength)
+            .map {
+                return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: $0.url),
+                                domain: $0.url.host?.dropPrefix(prefix: "www.") ?? "",
+                                favicon: loadImageFromCache(forDomain: $0.url.host) )
+            }
+    }
+
+    private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
+        NSLog("*** load image for domain %@", domain ?? "<nil>")
+        guard let domain = domain else { return nil }
+
+        let key = Favicons.createHash(ofDomain: domain)
+        guard let cacheUrl = Favicons.CacheType.bookmarks.cacheLocation() else { return nil }
+
+        // Slight leap here to avoid loading Kingisher as a library for the widgets.
+        // Once dependency management is fixed, link it and use Favicons directly.
+        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
+        NSLog("*** imageUrl %@", imageUrl.absoluteString)
+
+        guard let data = (try? Data(contentsOf: imageUrl)) else {
+            NSLog("*** data is nil for url %@", imageUrl.absoluteString)
+            return nil
+        }
+
+        let image = UIImage(data: data)
+        NSLog("*** image is size %@", String(describing: image?.size))
+        return image
+    }
+
 }
 
-struct SimpleEntry: TimelineEntry {
+struct FavoritesEntry: TimelineEntry {
 
     let date: Date
-    let displayTitle: String
-    let url: URL
-    let image: UIImage
     let placeholder: Bool
+    let favorites: [Favorite]
 
-}
-
-struct WidgetsEntryView: View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        VStack{
-            Image(uiImage: entry.image)
-            Text(entry.displayTitle)
-        }
-        .widgetURL(URL(string: "ddgNewSearch://"))
-        .cornerRadius(3.0)
+    func favoriteAt(index: Int) -> Favorite? {
+        guard index < favorites.count else { return nil }
+        return favorites[index]
     }
-}
 
-struct SearchWidgetView: View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        ZStack {
-            Rectangle().fill(Color("WidgetBackgroundColor"))
-
-            VStack(alignment: .center, spacing: 15) {
-
-                Image("WidgetDaxLogo")
-                    .resizable()
-                    .frame(width: 46, height: 46, alignment: .center)
-
-                ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
-                    RoundedRectangle(cornerRadius: 21)
-                        .fill(Color("WidgetSearchFieldColor"))
-                        .frame(width: 123, height: 46)
-
-                    Image("WidgetSearchLoupe")
-                        .padding(.trailing)
-
-                }
-            }
-        }
-    }
 }
 
 struct SearchWidget: Widget {
@@ -104,7 +104,7 @@ struct SearchWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            return SearchWidgetView(entry: entry).widgetURL(URL(string: AppDeepLinks.newSearch))
+            return SearchWidgetView(entry: entry).widgetURL(URL(string: DeepLinks.newSearch))
         }
         .configurationDisplayName("Search")
         .description("Quickly launch a search in DuckDuckGo")
@@ -118,7 +118,7 @@ struct FavoritesWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            WidgetsEntryView(entry: entry)
+            FavoritesWidgetView(entry: entry)
         }
         .configurationDisplayName("Favorites")
         .description("Show your top favorites on your home screen")
@@ -137,14 +137,3 @@ struct Widgets: WidgetBundle {
 
 }
 
-// Previews don't work yet anyway
-//struct Widgets_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WidgetsEntryView(entry: SimpleEntry(date: Date(),
-//                                            displayTitle: "Example",
-//                                            url: URL(string: "https://example.com")!,
-//                                            image: UIImage(systemName: "safari")!,
-//                                            placeholder: true))
-//            .previewContext(WidgetPreviewContext(family: .systemSmall))
-//    }
-//}

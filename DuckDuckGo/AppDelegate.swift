@@ -158,6 +158,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab()
+        } else if AppDeepLinks.isLaunchFavorite(url: url) {
+            let query = AppDeepLinks.query(fromLaunchFavorite: url)
+            mainViewController?.loadQueryInNewTab(query)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)

@@ -18,6 +18,7 @@
 //
 
 import Core
+import WidgetKit
 
 class BookmarksManager {
 
@@ -57,6 +58,7 @@ class BookmarksManager {
     func save(favorite: Link) {
         dataStore.addFavorite(favorite)
         Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks, fromCache: .tabs)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func moveFavorite(at favoriteIndex: Int, toBookmark bookmarkIndex: Int) {
@@ -73,6 +75,7 @@ class BookmarksManager {
         
         dataStore.bookmarks = bookmarks
         dataStore.favorites = favorites
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func moveFavorite(at fromIndex: Int, to toIndex: Int) {
@@ -96,6 +99,7 @@ class BookmarksManager {
         
         dataStore.bookmarks = bookmarks
         dataStore.favorites = favorites
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func moveBookmark(at fromIndex: Int, to toIndex: Int) {
@@ -119,6 +123,7 @@ class BookmarksManager {
         favorites.remove(at: index)
         dataStore.favorites = favorites
         removeFavicon(forLink: link)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func removeFavicon(forLink link: Link?) {
@@ -139,6 +144,7 @@ class BookmarksManager {
         favorites.insert(link, at: index)
         dataStore.favorites = favorites
         updateFaviconIfNeeded(old, link)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func updateBookmark(at index: Int, with link: Link) {

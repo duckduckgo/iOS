@@ -146,6 +146,7 @@
 				<string>ddgQuickLink</string>
 				<string>ddgBookmarks</string>
 				<string>ddgFire</string>
+				<string>ddgFavorite</string>
 				<string>http</string>
 				<string>https</string>
 			</array>

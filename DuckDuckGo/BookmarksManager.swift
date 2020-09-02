@@ -83,6 +83,7 @@ class BookmarksManager {
         let link = favorites.remove(at: fromIndex)
         favorites.insert(link, at: toIndex)
         dataStore.favorites = favorites
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func moveBookmark(at bookmarkIndex: Int, toFavorite favoriteIndex: Int) {

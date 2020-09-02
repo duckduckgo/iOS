@@ -8,25 +8,25 @@
 
 import WidgetKit
 import SwiftUI
-// import Core
 
 struct FavoriteView: View {
 
     var favorite: Favorite?
-    var placeholder: Bool
+    var isPreview: Bool
 
     var body: some View {
 
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.widgetFavoritesBackground)
-                .isHidden(!placeholder)
+                .isVisible(isPreview)
 
-            if let favorite = favorite, !placeholder {
+            if let favorite = favorite, !isPreview {
 
                 Link(destination: favorite.url) {
+
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.widgetFavoritesBackground)
+                        .fill(favorite.favicon != nil ? Color.widgetFavoritesBackground : Color.forDomain(favorite.domain))
                         .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
 
                     if let image = favorite.favicon {
@@ -34,12 +34,13 @@ struct FavoriteView: View {
                         Image(uiImage: image)
                             .scaleDown(image.size.width > 60)
                             .cornerRadius(10)
-                            // .frame(maxWidth: 60, maxHeight: 60)
 
                     } else {
+
                         Text(favorite.domain.first?.uppercased() ?? "")
-                            .foregroundColor(Color.widgetSearchFieldText)
-                            .font(.largeTitle)
+                            .foregroundColor(Color.widgetFavoriteLetter)
+                            .font(.system(size: 42))
+
                     }
                 }
 
@@ -53,8 +54,6 @@ struct FavoriteView: View {
 }
 
 struct LargeSearchFieldView: View {
-
-    var placeholder: Bool
 
     var body: some View {
         Link(destination: DeepLinks.newSearch) {
@@ -70,19 +69,32 @@ struct LargeSearchFieldView: View {
                     Image("WidgetDaxLogo")
                         .resizable()
                         .frame(width: 24, height: 24, alignment: .leading)
-                        .isHidden(placeholder)
 
                     Text("Search DuckDuckGo")
                         .foregroundColor(Color.widgetSearchFieldText)
-                        .isHidden(placeholder)
 
                     Spacer()
 
                     Image("WidgetSearchLoupe")
-                        .isHidden(placeholder)
 
                 }.padding(EdgeInsets(top: 0, leading: 27, bottom: 0, trailing: 27))
 
+            }
+        }
+    }
+
+}
+
+struct FavoritesRowView: View {
+
+    var entry: Provider.Entry
+    var start: Int
+    var end: Int
+
+    var body: some View {
+        HStack(spacing: 16) {
+            ForEach(start...end, id: \.self) {
+                FavoriteView(favorite: entry.favoriteAt(index: $0), isPreview: entry.isPreview)
             }
         }
     }
@@ -101,37 +113,19 @@ struct FavoritesWidgetView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                LargeSearchFieldView(placeholder: entry.placeholder)
+                LargeSearchFieldView()
 
-                HStack(spacing: 16) {
-
-                    ForEach(0...3, id: \.self) {
-                        FavoriteView(favorite: entry.favoriteAt(index: $0), placeholder: entry.placeholder)
-                    }
-
-                }
+                FavoritesRowView(entry: entry, start: 0, end: 3)
 
                 Spacer()
 
                 if widgetFamily == .systemLarge {
 
-                    HStack(spacing: 16) {
-
-                        ForEach(4...7, id: \.self) {
-                            FavoriteView(favorite: entry.favoriteAt(index: $0), placeholder: entry.placeholder)
-                        }
-
-                    }
+                    FavoritesRowView(entry: entry, start: 4, end: 7)
 
                     Spacer()
 
-                    HStack(spacing: 16) {
-
-                        ForEach(8...11, id: \.self) {
-                            FavoriteView(favorite: entry.favoriteAt(index: $0), placeholder: entry.placeholder)
-                        }
-
-                    }
+                    FavoritesRowView(entry: entry, start: 8, end: 11)
 
                     Spacer()
 
@@ -154,7 +148,7 @@ struct SearchWidgetView: View {
                 Image("WidgetDaxLogo")
                     .resizable()
                     .frame(width: 46, height: 46, alignment: .center)
-                    .isHidden(entry.placeholder)
+                    .isHidden(false)
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
@@ -164,7 +158,7 @@ struct SearchWidgetView: View {
 
                     Image("WidgetSearchLoupe")
                         .padding(.trailing)
-                        .isHidden(entry.placeholder)
+                        .isHidden(false)
 
                 }
             }
@@ -201,6 +195,11 @@ extension View {
         } else {
             self
         }
+    }
+
+    /// Logically inverse of `isHidden`
+    @ViewBuilder func isVisible(_ visible: Bool, remove: Bool = false) -> some View {
+        self.isHidden(!visible, remove: remove)
     }
 
 }

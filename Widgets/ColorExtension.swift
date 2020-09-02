@@ -14,5 +14,10 @@ extension Color {
     static let widgetFavoritesBackground = Color("WidgetFavoritesBackgroundColor")
     static let widgetSearchFieldBackground = Color("WidgetSearchFieldBackgroundColor")
     static let widgetSearchFieldText = Color("WidgetSearchFieldTextColor")
+    static let widgetFavoriteLetter = Color("WidgetFavoriteLetterColor")
+
+    static func forDomain(_ domain: String) -> Color {
+        return Color(UIColor.forDomain(domain))
+    }
 
 }

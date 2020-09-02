@@ -24,14 +24,28 @@ struct Provider: TimelineProvider {
     typealias Entry = FavoritesEntry
 
     func getSnapshot(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
-        completion(FavoritesEntry(date: Date(), placeholder: true, favorites: []))
+        completion(createEntry(in: context))
     }
 
     func placeholder(in context: Context) -> FavoritesEntry {
-        return FavoritesEntry(date: Date(), placeholder: true, favorites: [])
+        return createEntry(in: context)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<FavoritesEntry>) -> Void) {
+        let timeline = Timeline(entries: [createEntry(in: context)], policy: .atEnd)
+        completion(timeline)
+    }
+
+    private func getFavorites(returningNoMoreThan maxLength: Int) -> [Favorite] {
+        return BookmarkUserDefaults().favorites.prefix(maxLength)
+            .map {
+                return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: $0.url),
+                                domain: $0.url.host?.dropPrefix(prefix: "www.") ?? "",
+                                favicon: loadImageFromCache(forDomain: $0.url.host) )
+            }
+    }
+
+    private func createEntry(in context: Context) -> FavoritesEntry {
         let favorites: [Favorite]
 
         switch context.family {
@@ -48,18 +62,7 @@ struct Provider: TimelineProvider {
 
         NSLog("*** favorites %@", favorites)
 
-        let entries = [FavoritesEntry(date: Date(), placeholder: false, favorites: favorites)]
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
-
-    private func getFavorites(returningNoMoreThan maxLength: Int) -> [Favorite] {
-        return BookmarkUserDefaults().favorites.prefix(maxLength)
-            .map {
-                return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: $0.url),
-                                domain: $0.url.host?.dropPrefix(prefix: "www.") ?? "",
-                                favicon: loadImageFromCache(forDomain: $0.url.host) )
-            }
+        return FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
     }
 
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
@@ -89,8 +92,8 @@ struct Provider: TimelineProvider {
 struct FavoritesEntry: TimelineEntry {
 
     let date: Date
-    let placeholder: Bool
     let favorites: [Favorite]
+    let isPreview: Bool
 
     func favoriteAt(index: Int) -> Favorite? {
         guard index < favorites.count else { return nil }

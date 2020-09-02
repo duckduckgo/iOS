@@ -110,7 +110,7 @@ struct SearchWidget: Widget {
             return SearchWidgetView(entry: entry).widgetURL(DeepLinks.newSearch)
         }
         .configurationDisplayName("Search")
-        .description("Quickly launch a search in DuckDuckGo")
+        .description("Quickly launch a private search in DuckDuckGo.")
         .supportedFamilies([.systemSmall])
     }
 
@@ -123,8 +123,8 @@ struct FavoritesWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             FavoritesWidgetView(entry: entry)
         }
-        .configurationDisplayName("Favorites")
-        .description("Show your top favorites on your home screen")
+        .configurationDisplayName("Search and Favorites")
+        .description("Search or visit your favorite sites privately with just one tap.")
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }

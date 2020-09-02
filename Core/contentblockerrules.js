@@ -21,9 +21,22 @@
 
 (function() {
 
+  let topLevelUrl = getTopLevelURL();
+    
   let unprotectedDomain = `
         ${unprotectedDomains}
     `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
+    
+  // private
+  function getTopLevelURL() {
+      try {
+          // FROM: https://stackoverflow.com/a/7739035/73479
+          // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+          return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
+      } catch(error) {
+          return new URL(location.href)
+      }
+  }
 
   if (!window.__firefox__) {
       Object.defineProperty(window, "__firefox__", {
@@ -244,4 +257,4 @@
     injectStatsTracking(true);
   }
 
-}();
+})();

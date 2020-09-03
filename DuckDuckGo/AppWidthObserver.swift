@@ -35,7 +35,7 @@ public class AppWidthObserver {
     private var currentWidth: CGFloat = 0
     
     public var isLargeWidth: Bool {
-        return variantManager.isSupported(feature: .iPadImprovements) && currentWidth >= Constants.minPadWidth
+        return currentWidth >= Constants.minPadWidth
     }
         
     /// Only use constructor when testing

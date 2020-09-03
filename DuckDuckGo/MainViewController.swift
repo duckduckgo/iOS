@@ -109,7 +109,7 @@ class MainViewController: UIViewController {
          
         attachOmniBar()
 
-        if #available(iOS 11.0, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+        if #available(iOS 11.0, *) {
             view.addInteraction(UIDropInteraction(delegate: self))
         }
         
@@ -252,7 +252,7 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         
-        currentTab!.saveAsBookmark(favorite: DefaultVariantManager().isSupported(feature: .iPadImprovements))
+        currentTab!.saveAsBookmark(favorite: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -580,10 +580,6 @@ class MainViewController: UIViewController {
             applyWidth()
         }
     
-        // Default behaviour was to keep dismiss the omnibar, continue that for the experiment
-        if !DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            dismissOmniBar()
-        }
     }
     
     private func applyWidth() {
@@ -870,7 +866,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
         
-        if updatedQuery.isEmpty && DefaultVariantManager().isSupported(feature: .iPadImprovements) && homeController == nil {
+        if updatedQuery.isEmpty && homeController == nil {
             showSuggestionTray(.favorites)
         } else {
             showSuggestionTray(.autocomplete(query: updatedQuery))

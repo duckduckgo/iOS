@@ -47,11 +47,7 @@ class PrivacyProtectionController: ThemableNavigationController {
             overrideUserInterfaceStyle = .light
         }
 
-        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            navigationBar.isHidden = AppWidthObserver.shared.isLargeWidth
-        } else {
-            navigationBar.isHidden = UIDevice.current.userInterfaceIdiom == .pad
-        }
+        navigationBar.isHidden = AppWidthObserver.shared.isLargeWidth
         
         popoverPresentationController?.backgroundColor = UIColor.nearlyWhite
 

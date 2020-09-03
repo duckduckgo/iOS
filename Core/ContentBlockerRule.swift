@@ -1,5 +1,5 @@
 //
-//  ContentBlocker.swift
+//  ContentBlockerRule.swift
 //  DuckDuckGo
 //
 //

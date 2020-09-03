@@ -22,9 +22,9 @@ import os
 
 public protocol ContentBlockerUserScriptDelegate: NSObjectProtocol {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerUserScript) -> Bool
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool
     func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String)
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker)
+    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker)
 
 }
 

@@ -51,7 +51,6 @@ class BookmarksViewController: UITableViewController {
         }
     }
     
-    @available(iOS 11.0, *)
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let shareContextualAction = UIContextualAction(style: .normal, title: UserText.actionShare) { (_, _, completionHandler) in
             self.showShareSheet(for: indexPath)

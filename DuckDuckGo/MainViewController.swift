@@ -109,9 +109,7 @@ class MainViewController: UIViewController {
          
         attachOmniBar()
 
-        if #available(iOS 11.0, *) {
-            view.addInteraction(UIDropInteraction(delegate: self))
-        }
+        view.addInteraction(UIDropInteraction(delegate: self))
         
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
@@ -194,13 +192,10 @@ class MainViewController: UIViewController {
 
         var height = keyboardFrame.size.height
 
-        if #available(iOS 11, *) {
-            let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
-            let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
-            let intersection = safeAreaFrame.intersection(keyboardFrameInView)
-            height = intersection.height
-            
-        }
+        let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
+        let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
+        let intersection = safeAreaFrame.intersection(keyboardFrameInView)
+        height = intersection.height
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
@@ -1316,7 +1311,6 @@ extension MainViewController: OnboardingDelegate {
     
 }
 
-@available(iOS 11.0, *)
 extension MainViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {

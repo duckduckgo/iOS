@@ -30,19 +30,14 @@ public class AppWidthObserver {
     
     public static let shared = AppWidthObserver()
     
-    private let variantManager: VariantManager
-    
     private var currentWidth: CGFloat = 0
     
     public var isLargeWidth: Bool {
         return currentWidth >= Constants.minPadWidth
     }
-        
-    /// Only use constructor when testing
-    init(variantManager: VariantManager = DefaultVariantManager()) {
-        self.variantManager = variantManager
-    }
-    
+
+    private init() {}
+
     func willResize(toWidth width: CGFloat) -> Bool {
         if width != currentWidth {
             currentWidth = width

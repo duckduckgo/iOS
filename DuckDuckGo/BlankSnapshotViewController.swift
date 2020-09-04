@@ -71,7 +71,7 @@ class BlankSnapshotViewController: UIViewController {
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabsBar") as? TabsBarViewController else {
             fatalError("Failed to instantiate tabs bar controller")
         }
-        controller.view.frame = CGRect(x: 0, y: 24, width: view.frame.width, height: 45)
+        controller.view.frame = CGRect(x: 0, y: 24, width: view.frame.width, height: 40)
         view.addSubview(controller.view)
     }
     

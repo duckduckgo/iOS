@@ -109,9 +109,7 @@ class MainViewController: UIViewController {
          
         attachOmniBar()
 
-        if #available(iOS 11.0, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            view.addInteraction(UIDropInteraction(delegate: self))
-        }
+        view.addInteraction(UIDropInteraction(delegate: self))
         
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
@@ -194,13 +192,10 @@ class MainViewController: UIViewController {
 
         var height = keyboardFrame.size.height
 
-        if #available(iOS 11, *) {
-            let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
-            let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
-            let intersection = safeAreaFrame.intersection(keyboardFrameInView)
-            height = intersection.height
-            
-        }
+        let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
+        let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
+        let intersection = safeAreaFrame.intersection(keyboardFrameInView)
+        height = intersection.height
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
@@ -252,7 +247,7 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         
-        currentTab!.saveAsBookmark(favorite: DefaultVariantManager().isSupported(feature: .iPadImprovements))
+        currentTab!.saveAsBookmark(favorite: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -580,10 +575,6 @@ class MainViewController: UIViewController {
             applyWidth()
         }
     
-        // Default behaviour was to keep dismiss the omnibar, continue that for the experiment
-        if !DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            dismissOmniBar()
-        }
     }
     
     private func applyWidth() {
@@ -870,7 +861,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
         
-        if updatedQuery.isEmpty && DefaultVariantManager().isSupported(feature: .iPadImprovements) && homeController == nil {
+        if updatedQuery.isEmpty && homeController == nil {
             showSuggestionTray(.favorites)
         } else {
             showSuggestionTray(.autocomplete(query: updatedQuery))
@@ -1320,7 +1311,6 @@ extension MainViewController: OnboardingDelegate {
     
 }
 
-@available(iOS 11.0, *)
 extension MainViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {

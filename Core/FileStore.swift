@@ -40,6 +40,14 @@ public class FileStore {
         return try? String(contentsOf: persistenceLocation(forConfiguration: config))
     }
     
+    func loadAsArray(forConfiguration config: ContentBlockerRequest.Configuration) -> [String] {
+        if let fileStr = try? String(contentsOf: persistenceLocation(forConfiguration: config)) {
+            return fileStr.components(separatedBy: "\n")
+        }
+        
+        return []
+    }
+    
     func loadAsData(forConfiguration config: ContentBlockerRequest.Configuration) -> Data? {
         do {
             return try Data(contentsOf: persistenceLocation(forConfiguration: config))

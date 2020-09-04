@@ -153,7 +153,6 @@ public class WebCacheManager {
 
 }
 
-@available(iOS 11, *)
 extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         
 }

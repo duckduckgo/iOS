@@ -1,5 +1,5 @@
 //
-//  TabSwitcherSettings.swift
+//  NavigatorSharePatchUserScript.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -17,21 +17,23 @@
 //  limitations under the License.
 //
 
-import Core
+import UIKit
+import WebKit
 
-protocol TabSwitcherSettings {
- 
-    var isGridViewEnabled: Bool { get set }
-    var hasSeenNewLayout: Bool { get set }
+public class NavigatorSharePatchUserScript: NSObject, UserScript {
+    public var source: String {
+        return loadJS("navigatorsharepatch")
+    }
     
-}
-
-class DefaultTabSwitcherSettings: TabSwitcherSettings {
-
-    @UserDefaultsWrapper(key: .gridViewEnabled, defaultValue: true)
-    var isGridViewEnabled: Bool
-
-    @UserDefaultsWrapper(key: .gridViewSeen, defaultValue: false)
-    var hasSeenNewLayout: Bool
+    public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
+    
+    public var forMainFrameOnly: Bool = false
+    
+    public var messageNames: [String] = []
+    
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+    }
+    
 
 }

@@ -24,10 +24,7 @@ public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
-    
-    case iPadImprovements
-    case tabSwitcherListLayout
-    
+     
 }
 
 public struct Variant {
@@ -36,6 +33,9 @@ public struct Variant {
         static let always = { return true }
         static let padDevice = { return UIDevice.current.userInterfaceIdiom == .pad }
         static let notPadDevice = { return !Self.padDevice() }
+
+        static let inRequiredCountry = { return ["AU", "AT", "DK", "FI", "FR", "DE", "IT", "IE", "NZ", "NO", "ES", "SE", "GB"]
+                .contains(where: { Locale.current.regionCode == $0 } ) }
     }
     
     static let doNotAllocate = 0
@@ -44,17 +44,9 @@ public struct Variant {
     public static let defaultVariants: [Variant] = [
         
         // SERP testing
-        Variant(name: "sc", weight: 1, isIncluded: When.notPadDevice, features: []),
+        Variant(name: "sc", weight: 1, isIncluded: When.inRequiredCountry, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: 1, isIncluded: When.notPadDevice, features: []),
-
-        // Tab switcher list experiment
-        Variant(name: "me", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "mf", weight: doNotAllocate, isIncluded: When.always, features: [.tabSwitcherListLayout]),
-        
-        // iPad improvement experiment
-        Variant(name: "mc", weight: 1, isIncluded: When.padDevice, features: []),
-        Variant(name: "md", weight: 1, isIncluded: When.padDevice, features: [.iPadImprovements])
+        Variant(name: "se", weight: 1, isIncluded: When.inRequiredCountry, features: []),
 
     ]
     

@@ -60,7 +60,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         Pixel.fire(pixel: .privacyDashboardNetworks)
         
         initTableView()
-        initBackButton()
+        initUI()
         update()
     }
 
@@ -106,7 +106,8 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         tableView.dataSource = self
     }
 
-    private func initBackButton() {
+    private func initUI() {
+        messageLabel.setAttributedTextString(UserText.ppTrackerNetworksInfo)
         backButton.isHidden = !isPad
     }
 

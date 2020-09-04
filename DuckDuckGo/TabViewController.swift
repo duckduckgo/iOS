@@ -154,6 +154,8 @@ class TabViewController: UIViewController {
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
+    private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
+    private var navigatorPatchScript = NavigatorSharePatchUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var debugScript = DebugUserScript()
@@ -194,10 +196,8 @@ class TabViewController: UIViewController {
     override func buildActivities() -> [UIActivity] {
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
 
-        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
-            activities.append(FindInPageActivity(controller: self))
-        }
+        activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+        activities.append(FindInPageActivity(controller: self))
 
         return activities
     }
@@ -207,7 +207,9 @@ class TabViewController: UIViewController {
         generalScripts = [
             debugScript,
             findInPageScript,
+            navigatorPatchScript,
             contentBlockerScript,
+            contentBlockerRulesScript,
             faviconScript
         ]
         
@@ -230,6 +232,9 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
+        ContentBlockerRulesManager.shared.storageCache = storageCache
+        contentBlockerRulesScript.delegate = self
+        contentBlockerRulesScript.storageCache = storageCache
     }
     
     func updateTabModel() {
@@ -551,12 +556,22 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        reload(scripts: true)
+        // Recompile and add the content rules list
+        ContentBlockerRulesManager.shared.compileRules { [weak self] rulesList in
+            guard let self = self else { return }
+            if let rulesList = rulesList {
+                self.webView.configuration.userContentController.remove(rulesList)
+                self.webView.configuration.userContentController.add(rulesList)
+            }
+            
+            self.reload(scripts: true)
+        }
     }
 
     @objc func onStorageCacheChange() {
         DispatchQueue.main.async {
             self.storageCache = AppDependencyProvider.shared.storageCache.current
+            ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
     }
@@ -777,6 +792,15 @@ extension TabViewController: WKNavigationDelegate {
             if appRatingPrompt.shouldPrompt() {
                 SKStoreReviewController.requestReview()
                 appRatingPrompt.shown()
+            }
+        }
+        
+        // If site is unprotected we need to remove the content blocking rules
+        if let ruleList = ContentBlockerRulesManager.shared.blockingRules {
+            if !contentBlockerProtection.isProtected(domain: url?.host) {
+                webView.configuration.userContentController.remove(ruleList)
+            } else {
+                webView.configuration.userContentController.add(ruleList)
             }
         }
     }
@@ -1183,11 +1207,11 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
 extension TabViewController: ContentBlockerUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerUserScript) -> Bool {
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker) {
+    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
         siteRating?.trackerDetected(tracker)
         onSiteRatingChanged()
 

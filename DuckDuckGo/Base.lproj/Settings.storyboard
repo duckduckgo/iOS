@@ -1014,10 +1014,8 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="60" y="22" width="294" height="28"/>
-                                    <string key="text">These unprotected sites will not be
-enhanced by Privacy Protection.</string>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These unprotected sites will not be enhanced by Privacy Protection." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
+                                    <rect key="frame" x="60" y="20" width="294" height="32"/>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                     <color key="textColor" red="0.7434888482093811" green="0.76165848970413208" blue="0.79455751180648804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -1037,9 +1035,11 @@ enhanced by Privacy Protection.</string>
                             <constraints>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="centerX" secondItem="FGH-RR-RSf" secondAttribute="centerX" id="B2p-OU-KbG"/>
                                 <constraint firstItem="SWM-CB-n4U" firstAttribute="leading" secondItem="FGH-RR-RSf" secondAttribute="leading" constant="20" id="Npr-t4-BQD"/>
+                                <constraint firstItem="zvh-2e-Wmz" firstAttribute="top" secondItem="FGH-RR-RSf" secondAttribute="top" constant="20" id="Par-CR-KGe"/>
                                 <constraint firstItem="SWM-CB-n4U" firstAttribute="centerY" secondItem="zvh-2e-Wmz" secondAttribute="centerY" id="TRo-Q2-km7"/>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="leading" secondItem="FGH-RR-RSf" secondAttribute="leading" constant="60" id="ZH9-3Z-aj9"/>
                                 <constraint firstItem="zvh-2e-Wmz" firstAttribute="centerY" secondItem="FGH-RR-RSf" secondAttribute="centerY" id="dJp-bP-2uG"/>
+                                <constraint firstAttribute="bottom" secondItem="zvh-2e-Wmz" secondAttribute="bottom" constant="20" id="jjy-tG-y8L"/>
                                 <constraint firstAttribute="trailing" secondItem="zvh-2e-Wmz" secondAttribute="trailing" constant="60" id="wIM-zS-nwU"/>
                             </constraints>
                         </view>

@@ -72,7 +72,7 @@ class GestureToolbarButton: UIView {
         longPressRecognizer.allowableMovement = CGFloat(Constants.maxTouchDeviationPoints)
         addGestureRecognizer(longPressRecognizer)
         
-        if #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+        if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
         }
     }

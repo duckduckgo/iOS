@@ -52,7 +52,7 @@ public class SiteRatingView: UIView {
         self.addSubview(view)
         view.frame = self.bounds
         
-        if #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+        if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
         }
         

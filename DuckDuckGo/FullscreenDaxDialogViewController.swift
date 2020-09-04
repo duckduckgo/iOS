@@ -66,11 +66,11 @@ class FullscreenDaxDialogViewController: UIViewController {
             highlightBarBottom.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeHighlightBottom : Constants.defaultHighlightBottom
             showAddressBar.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeAddressBarOffset : Constants.defaultAddressBarOffset
         } else {
-            showAddressBar.isActive = false
             fullScreen.isActive = true
+            showAddressBar.isActive = false
             highlightBar.isHidden = true
         }
-        
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

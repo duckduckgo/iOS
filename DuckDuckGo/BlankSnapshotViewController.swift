@@ -31,6 +31,7 @@ class BlankSnapshotViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     
     @IBOutlet weak var statusBarBackground: UIView!
+    @IBOutlet weak var navigationBarTop: NSLayoutConstraint!
     
     var omniBar: OmniBar!
     let tabSwitcherButton = TabSwitcherButton()
@@ -47,14 +48,41 @@ class BlankSnapshotViewController: UIViewController {
         super.viewDidLoad()
 
         configureOmniBar()
-        tabsButton.customView = tabSwitcherButton
+
+        if AppWidthObserver.shared.isLargeWidth {
+            toolbar.isHidden = true
+            navigationBarTop.constant = 40
+            configureTabBar()
+        } else {
+            tabsButton.customView = tabSwitcherButton
+        }
+
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    // Need to do this at this phase to support split screen on iPad
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
+    }
+
+    private func configureTabBar() {
+        let storyboard = UIStoryboard(name: "TabSwitcher", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "TabsBar") as? TabsBarViewController else {
+            fatalError("Failed to instantiate tabs bar controller")
+        }
+        controller.view.frame = CGRect(x: 0, y: 24, width: view.frame.width, height: 40)
+        view.addSubview(controller.view)
     }
     
     private func configureOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
+
+        if AppWidthObserver.shared.isLargeWidth {
+            omniBar.enterPadState()
+        }
     }
 }
 
@@ -65,7 +93,11 @@ extension BlankSnapshotViewController: Themable {
         
         view.backgroundColor = theme.backgroundColor
         
-        statusBarBackground.backgroundColor = theme.barBackgroundColor
+        if AppWidthObserver.shared.isLargeWidth {
+            statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
+        } else {
+            statusBarBackground.backgroundColor = theme.barBackgroundColor
+        }
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
         

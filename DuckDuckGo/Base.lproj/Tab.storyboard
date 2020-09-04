@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <edgeInsets key="layoutMargins" top="-50" left="0.0" bottom="0.0" right="0.0"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypz-s2-KJB">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypz-s2-KJB" userLabel="OtherVIew">
                                 <rect key="frame" x="0.0" y="-80" width="768" height="80"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -66,7 +66,7 @@
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
                                                         <rect key="frame" x="0.0" y="31" width="400" height="48"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="400" id="H7S-WF-So0"/>
@@ -115,26 +115,22 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="t0t-53-xVf"/>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerY" secondItem="t0t-53-xVf" secondAttribute="centerY" id="3qe-NM-ikO"/>
+                            <constraint firstItem="t0t-53-xVf" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="top" constant="80" id="Hdu-Wc-sCB"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="WgD-oO-Ds7"/>
-                            <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-80" id="Zyh-vQ-fMz"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerX" secondItem="t0t-53-xVf" secondAttribute="centerX" id="oFL-Ft-NQV"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="t0t-53-xVf"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Y72-bH-DMy" appends="YES" id="U3N-ac-3lN"/>
                         </connections>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
-                    <fixedSimulatedSizeMetrics key="simulatedDestinationMetrics">
-                        <size key="portraitSize" width="375" height="559"/>
-                        <size key="landscapeSize" width="559" height="375"/>
-                    </fixedSimulatedSizeMetrics>
                     <connections>
                         <outlet property="error" destination="Kd4-Oi-JP2" id="zBn-cG-pfQ"/>
                         <outlet property="errorHeader" destination="6P7-7R-riV" id="IkB-Tc-Eat"/>

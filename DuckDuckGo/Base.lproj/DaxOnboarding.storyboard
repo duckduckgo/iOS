@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
+    <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -18,25 +19,25 @@
             <objects>
                 <viewController id="YXw-O5-LLS" customClass="DaxOnboardingViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IfD-pB-0T8">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9R-nE-CaL">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lighthouse" translatesAutoresizingMaskIntoConstraints="NO" id="77H-Rq-H5D">
-                                <rect key="frame" x="0.0" y="0.0" width="416" height="863"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1026" height="769"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="67b-it-r0B">
-                                <rect key="frame" x="164" y="124" width="86" height="86"/>
+                                <rect key="frame" x="469" y="80" width="86" height="86"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="86" id="i0s-SN-jAq"/>
                                     <constraint firstAttribute="width" secondItem="67b-it-r0B" secondAttribute="height" multiplier="1:1" id="kdw-WN-QfN"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lvy-9G-3gr">
-                                <rect key="frame" x="107.5" y="226" width="199" height="70"/>
+                                <rect key="frame" x="412.5" y="182" width="199" height="70"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Welcome to
@@ -51,7 +52,7 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNL-CF-WGF">
-                                <rect key="frame" x="19.5" y="104" width="375" height="195"/>
+                                <rect key="frame" x="324.5" y="60" width="375" height="195"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="195" id="8wI-2U-C5o"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="x9B-xN-xqH"/>
@@ -60,8 +61,8 @@ DuckDuckGo!</string>
                                     <segue destination="UUS-R7-a2i" kind="embed" id="Z8u-vf-YsD"/>
                                 </connections>
                             </containerView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAv-Zt-uIt">
-                                <rect key="frame" x="30.5" y="323" width="355" height="44"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAv-Zt-uIt">
+                                <rect key="frame" x="335.5" y="279" width="355" height="44"/>
                                 <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="ZX6-Se-sGe"/>
@@ -81,25 +82,26 @@ DuckDuckGo!</string>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f5N-oh-abb">
-                                <rect key="frame" x="0.0" y="861" width="414" height="35"/>
+                                <rect key="frame" x="0.0" y="767" width="1024" height="1"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.61176470589999998" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XSv-kV-jRp">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
-                                <rect key="frame" x="149.5" y="321.5" width="115" height="115"/>
+                                <rect key="frame" x="454.5" y="257.5" width="115" height="115"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
-                                <rect key="frame" x="159" y="328" width="96" height="96"/>
+                                <rect key="frame" x="464" y="264" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="oo7-26-ciN"/>
                                     <constraint firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1:1" id="pjk-YG-kx9"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="ASL-d6-ybT"/>
+                        <color key="backgroundColor" systemColor="systemRedColor"/>
                         <constraints>
                             <constraint firstItem="77H-Rq-H5D" firstAttribute="leading" secondItem="IfD-pB-0T8" secondAttribute="leading" id="1ME-C8-Vm2"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" id="2dC-da-5Wd"/>
@@ -134,7 +136,6 @@ DuckDuckGo!</string>
                             <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerY" secondItem="DD1-q3-GlA" secondAttribute="centerY" constant="3" id="uJC-CM-mkB"/>
                             <constraint firstItem="DD1-q3-GlA" firstAttribute="centerX" secondItem="IfD-pB-0T8" secondAttribute="centerX" id="wOb-am-IrD"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ASL-d6-ybT"/>
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="XSv-kV-jRp" id="hrm-wQ-uxP"/>
@@ -184,7 +185,7 @@ DuckDuckGo!</string>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
                                         <rect key="frame" x="16" y="250" width="323" height="44"/>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -204,7 +205,7 @@ DuckDuckGo!</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="zJt-F9-L48" secondAttribute="bottom" constant="24" id="1XZ-4V-bSQ"/>
                                     <constraint firstItem="UDm-rv-vek" firstAttribute="width" secondItem="Ix6-dq-RAh" secondAttribute="width" constant="-32" id="BYH-hh-Ejl"/>
@@ -224,7 +225,7 @@ DuckDuckGo!</string>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh6-ce-Ivv" userLabel="Pointer">
                                 <rect key="frame" x="56.5" y="77" width="10" height="10"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="54C-Dg-mBH"/>
                                     <constraint firstAttribute="width" constant="10" id="Y2a-Be-jH1"/>
@@ -236,6 +237,7 @@ DuckDuckGo!</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="qUW-ue-c2U"/>
                         <constraints>
                             <constraint firstItem="eh6-ce-Ivv" firstAttribute="top" secondItem="UzU-6y-Vfa" secondAttribute="bottom" constant="6" id="9dF-DC-NsS"/>
                             <constraint firstItem="UzU-6y-Vfa" firstAttribute="leading" secondItem="im0-JF-Sin" secondAttribute="leading" constant="26" id="AAX-XH-wXz"/>
@@ -246,7 +248,6 @@ DuckDuckGo!</string>
                             <constraint firstItem="Ix6-dq-RAh" firstAttribute="width" secondItem="im0-JF-Sin" secondAttribute="width" constant="-20" id="ifK-1a-KrV"/>
                             <constraint firstItem="Ix6-dq-RAh" firstAttribute="centerX" secondItem="im0-JF-Sin" secondAttribute="centerX" id="sl4-7u-0ho"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="qUW-ue-c2U"/>
                     </view>
                     <connections>
                         <outlet property="bottomSpacing" destination="1XZ-4V-bSQ" id="KVZ-qW-ch6"/>
@@ -277,19 +278,19 @@ DuckDuckGo!</string>
             <objects>
                 <viewController storyboardIdentifier="FullscreenDaxDialog" id="yGQ-WA-daz" customClass="FullscreenDaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ica-YY-s5f">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G3-x9-wwM">
-                                <rect key="frame" x="0.0" y="94" width="414" height="802"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.60217786815068497" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hN-QW-QID">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="0.0"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.60217786819999997" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmT-SX-w7H">
-                                <rect key="frame" x="19.5" y="438" width="375" height="400"/>
+                                <rect key="frame" x="324.5" y="344" width="375" height="400"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="V8D-Hc-dLK"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="eK0-5h-FDJ"/>
@@ -298,8 +299,8 @@ DuckDuckGo!</string>
                                     <segue destination="UUS-R7-a2i" kind="embed" id="WM8-Xy-pab"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgy-75-OvJ">
-                                <rect key="frame" x="356" y="116" width="34" height="28"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgy-75-OvJ">
+                                <rect key="frame" x="966" y="72" width="34" height="28"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Hide"/>
@@ -308,10 +309,11 @@ DuckDuckGo!</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="yHc-FK-kfn"/>
                         <constraints>
                             <constraint firstItem="4hN-QW-QID" firstAttribute="width" secondItem="Ica-YY-s5f" secondAttribute="width" id="04f-c6-SAb"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="leading" secondItem="Ica-YY-s5f" secondAttribute="leading" id="0TY-9i-a7Z"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="7G3-x9-wwM" secondAttribute="top" constant="-50" id="2W5-ID-JWT"/>
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="7G3-x9-wwM" secondAttribute="top" id="2W5-ID-JWT"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="EYf-zh-Pqq"/>
                             <constraint firstItem="4hN-QW-QID" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="NHP-BS-w7e"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="RsO-pv-xjm"/>
@@ -326,7 +328,6 @@ DuckDuckGo!</string>
                                 <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                             </constraint>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="yHc-FK-kfn"/>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="RsO-pv-xjm"/>
@@ -358,11 +359,11 @@ DuckDuckGo!</string>
             <objects>
                 <viewController id="V3g-Ms-vCf" customClass="DaxOnboardingPadViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Np-n8-WVJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jk-eV-fMX">
-                                <rect key="frame" x="19.5" y="85" width="375" height="736"/>
+                                <rect key="frame" x="324.5" y="16" width="375" height="736"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="736" id="Yau-va-Ro7"/>
                                     <constraint firstAttribute="width" constant="375" id="g5m-KJ-8Py"/>
@@ -372,12 +373,12 @@ DuckDuckGo!</string>
                                 </connections>
                             </containerView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="WZJ-Pp-XrR"/>
                         <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4jk-eV-fMX" firstAttribute="centerY" secondItem="WZJ-Pp-XrR" secondAttribute="centerY" id="2Dz-WN-oS3"/>
                             <constraint firstItem="4jk-eV-fMX" firstAttribute="centerX" secondItem="WZJ-Pp-XrR" secondAttribute="centerX" id="DOH-o6-zJI"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="WZJ-Pp-XrR"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FLI-YH-gVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -398,7 +399,13 @@ DuckDuckGo!</string>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>
-        <image name="Lighthouse" width="360" height="724"/>
+        <image name="Lighthouse" width="721" height="741"/>
         <image name="Logo" width="128" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

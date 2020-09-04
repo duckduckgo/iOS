@@ -22,32 +22,19 @@ import XCTest
 
 class AppWidthObserverTests: XCTestCase {
 
-    func testWhenNotInExperimentAndInitialWidthIsLargeThenReportsAsSmall() {
-        let variantManager = MockVariantManager(isSupportedReturns: false, currentVariant: nil)
-        let observer = AppWidthObserver(variantManager: variantManager)
-        XCTAssertTrue(observer.willResize(toWidth: 10000))
-        XCTAssertFalse(observer.isLargeWidth)
+    func testWhenResizesToSameSizeThenWillNotResize() {
+        XCTAssertTrue(AppWidthObserver.shared.willResize(toWidth: 10000))
+        XCTAssertFalse(AppWidthObserver.shared.willResize(toWidth: 10000))
     }
 
-    func testWhenInExperimentAndResizesToSameSizeThenWillNotResize() {
-        let variantManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
-        let observer = AppWidthObserver(variantManager: variantManager)
-        XCTAssertTrue(observer.willResize(toWidth: 10000))
-        XCTAssertFalse(observer.willResize(toWidth: 10000))
+    func testWhenInitialWidthIsLargeThenReportsAsLarge() {
+        XCTAssertTrue(AppWidthObserver.shared.willResize(toWidth: 10000))
+        XCTAssertTrue(AppWidthObserver.shared.isLargeWidth)
     }
 
-    func testWhenInExperimentAndInitialWidthIsLargeThenReportsAsLarge() {
-        let variantManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
-        let observer = AppWidthObserver(variantManager: variantManager)
-        XCTAssertTrue(observer.willResize(toWidth: 10000))
-        XCTAssertTrue(observer.isLargeWidth)
-    }
-
-    func testWhenInExperimentAndInitialWidthIsSmallThenReportsAsSmall() {
-        let variantManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
-        let observer = AppWidthObserver(variantManager: variantManager)
-        XCTAssertTrue(observer.willResize(toWidth: 100))
-        XCTAssertFalse(observer.isLargeWidth)
+    func testWhenInitialWidthIsSmallThenReportsAsSmall() {
+        XCTAssertTrue(AppWidthObserver.shared.willResize(toWidth: 100))
+        XCTAssertFalse(AppWidthObserver.shared.isLargeWidth)
     }
     
 }

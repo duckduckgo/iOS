@@ -61,11 +61,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     }
 
     private func initBackButton() {
-        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-        } else {
-            backButton.isHidden = UIDevice.current.userInterfaceIdiom != .pad
-        }
+        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
     }
 
     private func update() {

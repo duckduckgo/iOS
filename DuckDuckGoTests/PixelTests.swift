@@ -20,7 +20,6 @@
 import XCTest
 import OHHTTPStubs
 @testable import Core
-import Alamofire
 
 class PixelTests: XCTestCase {
     
@@ -66,7 +65,7 @@ class PixelTests: XCTestCase {
             return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        var headers = Alamofire.SessionManager.defaultHTTPHeaders
+        var headers = APIHeaders().defaultHeaders
         headers[userAgentName] = testAgent
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withHeaders: headers)
         

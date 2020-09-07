@@ -37,13 +37,14 @@ class APIRequestTests: XCTestCase {
         }
 
         let expect = expectation(description: "testWhenRequestMadeThenUserAgentIsAdded")
-        let request = APIRequest.request(url: url) { (_, _) in
+        let dataTask = APIRequest.request(url: url) { (_, _) in
             expect.fulfill()
         }
 
         waitForExpectations(timeout: 1.0, handler: nil)
-        let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        let userAgent = dataTask.currentRequest!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
+
     }
 
     func testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded() {
@@ -52,12 +53,12 @@ class APIRequestTests: XCTestCase {
         }
 
         let expect = expectation(description: "testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded")
-        let request = APIRequest.request(url: url) { (_, _) in
+        let dataTask = APIRequest.request(url: url) { (_, _) in
             expect.fulfill()
         }
 
         waitForExpectations(timeout: 1.0, handler: nil)
-        let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        let userAgent = dataTask.currentRequest!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
     }
 
@@ -117,30 +118,30 @@ class APIRequestTests: XCTestCase {
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
-    
+
     func testWhenMultipleRequestsAreFiredThenCallbacksAreProcessedOnSerialQueue() {
-        
+
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
-        
+
         let expectFirst = expectation(description: "first request has been processed")
         let expectLast = expectation(description: "second request has been processed")
-        
+
         APIRequest.request(url: url) { (_, error) in
             // Give second request a chance to execute the callback
             Thread.sleep(forTimeInterval: 0.4)
             XCTAssertNil(error)
             expectFirst.fulfill()
         }
-        
+
         Thread.sleep(forTimeInterval: 0.1)
-        
+
         APIRequest.request(url: url) { (_, error) in
             XCTAssertNil(error)
             expectLast.fulfill()
         }
-        
+
         wait(for: [expectFirst, expectLast], timeout: 1.0, enforceOrder: true)
     }
 

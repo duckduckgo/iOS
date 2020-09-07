@@ -23,10 +23,6 @@ import XCTest
 
 class TabTests: XCTestCase {
 
-    var isPad: Bool {
-        return UIDevice.current.userInterfaceIdiom == .pad
-    }
-    
     struct Constants {
         static let title = "A title"
         static let url = URL(string: "https://example.com")!
@@ -45,9 +41,12 @@ class TabTests: XCTestCase {
     }
 
     func testWhenDesktopModeToggledThenPropertyIsUpdated() {
+        _ = AppWidthObserver.shared.willResize(toWidth: UIScreen.main.bounds.width)
+
+
         let tab = Tab(link: link())
-        
-        if isPad {
+
+        if AppWidthObserver.shared.isLargeWidth {
             XCTAssertTrue(tab.isDesktop)
             tab.toggleDesktopMode()
             XCTAssertFalse(tab.isDesktop)

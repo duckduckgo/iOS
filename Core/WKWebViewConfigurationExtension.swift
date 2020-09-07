@@ -34,13 +34,10 @@ extension WKWebViewConfiguration {
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
-        if #available(iOSApplicationExtension 10.0, *) {
-            configuration.dataDetectorTypes = [.link, .phoneNumber]
-        }
+        configuration.dataDetectorTypes = [.link, .phoneNumber]
 
-        if #available(iOS 11, *) {
-            configuration.installHideAtbModals()
-        }
+        configuration.installHideAtbModals()
+        configuration.installContentBlockingRules()
 
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true
@@ -50,7 +47,6 @@ extension WKWebViewConfiguration {
         return configuration
     }
 
-    @available(iOS 11, *)
     private func installHideAtbModals() {
         guard let store = WKContentRuleListStore.default() else { return }
         let rules = """
@@ -70,6 +66,30 @@ extension WKWebViewConfiguration {
         store.compileContentRuleList(forIdentifier: "hide-extension-css", encodedContentRuleList: rules) { rulesList, _ in
             guard let rulesList = rulesList else { return }
             self.userContentController.add(rulesList)
+        }
+    }
+    
+    private func installContentBlockingRules() {
+        func addRulesToController(rules: WKContentRuleList) {
+            self.userContentController.add(rules)
+        }
+        
+        // Get rules list from manager and add to userContentController
+        if let rulesList = ContentBlockerRulesManager.shared.blockingRules {
+            addRulesToController(rules: rulesList)
+        } else {
+            ContentBlockerRulesManager.shared.compileRules { rulesList in
+                if let rulesList = rulesList {
+                    addRulesToController(rules: rulesList)
+                }
+            }
+        }
+    }
+    
+    public func installContentRules(trackerProtection: Bool) {
+        self.installHideAtbModals()
+        if trackerProtection {
+            self.installContentBlockingRules()
         }
     }
 }

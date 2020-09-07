@@ -484,7 +484,6 @@
 		F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */; };
 		F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DF1E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift */; };
 		F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */; };
-		F17BA43D1F1CD99800460FFA /* Device.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA4391F1CD99800460FFA /* Device.framework */; };
 		F17BA43E1F1CD99800460FFA /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA43A1F1CD99800460FFA /* Kingfisher.framework */; };
 		F17BA4401F1CD99800460FFA /* ToastSwiftFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA43C1F1CD99800460FFA /* ToastSwiftFramework.framework */; };
 		F17D72391E8B35C6003E8B0E /* AppUrlsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D72381E8B35C6003E8B0E /* AppUrlsTests.swift */; };
@@ -1103,7 +1102,6 @@
 		F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionTableViewCell.swift; sourceTree = "<group>"; };
 		F17922DF1E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewControllerDelegate.swift; sourceTree = "<group>"; };
 		F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSuggestionsTableViewCell.swift; sourceTree = "<group>"; };
-		F17BA4391F1CD99800460FFA /* Device.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Device.framework; path = Carthage/Build/iOS/Device.framework; sourceTree = "<group>"; };
 		F17BA43A1F1CD99800460FFA /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		F17BA43C1F1CD99800460FFA /* ToastSwiftFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ToastSwiftFramework.framework; path = Carthage/Build/iOS/ToastSwiftFramework.framework; sourceTree = "<group>"; };
 		F17D72381E8B35C6003E8B0E /* AppUrlsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUrlsTests.swift; sourceTree = "<group>"; };
@@ -1194,7 +1192,6 @@
 			files = (
 				85371D262121BA2800920548 /* Lottie.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
-				F17BA43D1F1CD99800460FFA /* Device.framework in Frameworks */,
 				F17BA43E1F1CD99800460FFA /* Kingfisher.framework in Frameworks */,
 				F17BA4401F1CD99800460FFA /* ToastSwiftFramework.framework in Frameworks */,
 			);
@@ -2593,7 +2590,6 @@
 				85F21DB721107F46002631A6 /* Swifter.framework */,
 				F17843E41F361AC900390DCD /* OHHTTPStubs.framework */,
 				F1C81A731F33873800241DE6 /* Alamofire.framework */,
-				F17BA4391F1CD99800460FFA /* Device.framework */,
 				F17BA43A1F1CD99800460FFA /* Kingfisher.framework */,
 				F17BA43C1F1CD99800460FFA /* ToastSwiftFramework.framework */,
 				F1AA54601E48D90700223211 /* NotificationCenter.framework */,
@@ -3449,7 +3445,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Device.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ToastSwiftFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
@@ -3459,7 +3454,6 @@
 			);
 			name = "Cathage Copy Frameworks";
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Device.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)//Kingfisher.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ToastSwiftFramework.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",

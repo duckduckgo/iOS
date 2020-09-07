@@ -19,6 +19,7 @@
 
 import XCTest
 import OHHTTPStubs
+import OHHTTPStubsSwift
 @testable import Core
 
 class APIRequestTests: XCTestCase {
@@ -27,7 +28,7 @@ class APIRequestTests: XCTestCase {
     let url = AppUrls().surrogates
 
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
 

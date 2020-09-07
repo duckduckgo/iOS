@@ -273,7 +273,7 @@ public class Pixel {
         
         let session = URLSession.shared
         var urlRequest = URLRequest(url: url)
-        urlRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        urlRequest.allHTTPHeaderFields = headers
 
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in

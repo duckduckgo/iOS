@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Alamofire
 import os.log
 
 public enum PixelName: String {
@@ -272,10 +271,20 @@ public class Pixel {
             .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
             .addParams(newParams)
         
-        Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
+        let session = URLSession.shared
+        var urlRequest = URLRequest(url: url)
+        urlRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
+
+        let task = session.dataTask(with: urlRequest) {
+            (data, response, error) in
+
+            let httpResponse = response as? HTTPURLResponse
+            let err = error != nil ? error : httpResponse?.validateStatusCode(statusCode: 200..<300)
+            
             os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
-            onComplete(response.error)
+            onComplete(err)
         }
+        task.resume()
     }
     
 }

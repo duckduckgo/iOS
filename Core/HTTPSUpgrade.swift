@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Alamofire
 import os.log
 
 public class HTTPSUpgrade {
@@ -95,17 +94,27 @@ public class HTTPSUpgrade {
         serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
         serviceRequest.timeoutInterval = 10
 
+        let session = URLSession.shared
         let cachedResponse = URLCache.shared.cachedResponse(for: serviceRequest)?.response as? HTTPURLResponse
-        Alamofire.request(serviceRequest).validate(statusCode: 200..<300).response { response in
-            if let data = response.data {
+
+        let task = session.dataTask(with: serviceRequest) {
+            (data, response, error) in
+
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.validateStatusCode(statusCode: 200..<300) == nil else {
+                completion((isInList: false, isCached: false))
+                return
+            }
+            
+            if let data = data {
                 let result = try? JSONDecoder().decode([String].self, from: data)
-                let isCached = isResponseFromCache(response.response, cachedResponse: cachedResponse)
+                let isCached = isResponseFromCache(httpResponse, cachedResponse: cachedResponse)
                 let isInList = result?.contains(sha1Host) ?? false
                 completion((isInList: isInList, isCached: isCached))
             } else {
                 completion((isInList: false, isCached: false))
             }
         }
+        task.resume()
     }
     
     private func isLocalListReloading() -> Bool {

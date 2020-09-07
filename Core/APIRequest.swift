@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Alamofire
 import os.log
 
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
@@ -34,43 +33,73 @@ public class APIRequest {
         
     }
     
+    public enum HTTPMethod: String {
+        case get = "GET"
+        case head = "HEAD"
+        case post = "POST"
+        case put = "PUT"
+        case delete = "DELETE"
+        case connect = "CONNECT"
+        case options = "OPTIONS"
+        case trace = "TRACE"
+        case patch = "PATCH"
+    }
+    
     @discardableResult
     public static func request(url: URL,
                                method: HTTPMethod = .get,
-                               parameters: [String: Any]? = nil,
-                               completion: @escaping APIRequestCompletion) -> Request {
+                               parameters: [String: String]? = nil,
+                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask {
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
-        
-        return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
-            .validate(statusCode: 200..<300)
-            .responseData(queue: callbackQueue) { response in
-
-                os_log("Request for %s completed with response code: %s and headers %s",
-                       log: generalLog,
-                       type: .debug,
-                       url.absoluteString,
-                       String(describing: response.response?.statusCode),
-                       String(describing: response.response?.allHeaderFields))
                 
-                if let error = response.error {
-                    completion(nil, error)
-                } else {
-                    var etag = response.response?.headerValue(for: APIHeaders.Name.etag)
-                    
-                    // Handle weak etags
-                    etag = etag?.dropPrefix(prefix: "W/")
-                    completion(Response(data: response.data, etag: etag), nil)
-                }
+        let session = URLSession.shared
+        
+        let url = url.addParams(parameters ?? [:])
+        var urlRequest = URLRequest(url: url)
+        urlRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        urlRequest.httpMethod = method.rawValue
+
+        let task = session.dataTask(with: urlRequest) {
+            (data, response, error) in
+            
+            let httpResponse = response as? HTTPURLResponse
+            
+            os_log("Request for %s completed with response code: %s and headers %s",
+                   log: generalLog,
+                   type: .debug,
+                   url.absoluteString,
+                   String(describing: httpResponse?.statusCode),
+                   String(describing: httpResponse?.allHeaderFields))
+            
+            if let error = error {
+                completion(nil, error)
+            } else if let error = httpResponse?.validateStatusCode(statusCode: 200..<300) { 
+                completion(nil, error)
+            } else {
+                var etag = httpResponse?.headerValue(for: APIHeaders.Name.etag)
+                
+                // Handle weak etags
+                etag = etag?.dropPrefix(prefix: "W/")
+                completion(Response(data: data, etag: etag), nil)
+            }
         }
+        task.resume()
+        return task
     }
-    
 }
 
-fileprivate extension HTTPURLResponse {
+public extension HTTPURLResponse {
+        
+    enum HTTPURLResponseError: Error {
+        case invalidStatusCode
+    }
     
-    func headerValue(for name: String) -> String? {
+    func validateStatusCode<S: Sequence>(statusCode acceptedStatusCodes: S) -> Error? where S.Iterator.Element == Int {
+        return acceptedStatusCodes.contains(statusCode) ? nil : HTTPURLResponseError.invalidStatusCode
+    }
+    
+    fileprivate func headerValue(for name: String) -> String? {
         let lname = name.lowercased()
         return allHeaderFields.filter { ($0.key as? String)?.lowercased() == lname }.first?.value as? String
     }
-    
 }

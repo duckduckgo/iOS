@@ -163,3 +163,15 @@ extension URL {
         return host == domain || host.hasSuffix(".\(domain)")
     }
 }
+
+extension URLComponents {
+    
+    enum URLComponentsError: Error {
+        case invalidURL(url: String?)
+    }
+
+    public func asURL() throws -> URL {
+        guard let url = self.url else { throw URLComponentsError.invalidURL(url: self.string) }
+        return url
+    }
+}

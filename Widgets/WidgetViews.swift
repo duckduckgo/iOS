@@ -11,6 +11,8 @@ import SwiftUI
 
 struct FavoriteView: View {
 
+    let ddgDomain = "duckduckgo.com"
+
     var favorite: Favorite?
     var isPreview: Bool
 
@@ -23,17 +25,23 @@ struct FavoriteView: View {
 
             if let favorite = favorite, !isPreview {
 
-                Link(destination: favorite.url) {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
+                    .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
 
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(favorite.favicon != nil ? Color.widgetFavoritesBackground : Color.forDomain(favorite.domain))
-                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
+                Link(destination: favorite.url) {
 
                     if let image = favorite.favicon {
 
                         Image(uiImage: image)
                             .scaleDown(image.size.width > 60)
                             .cornerRadius(10)
+
+                    } else if favorite.isDuckDuckGo {
+
+                        Image("WidgetDaxLogo")
+                            .resizable()
+                            .frame(width: 45, height: 45, alignment: .center)
 
                     } else {
 
@@ -42,6 +50,7 @@ struct FavoriteView: View {
                             .font(.system(size: 42))
 
                     }
+
                 }
 
             }

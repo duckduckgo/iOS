@@ -13,9 +13,19 @@ import Kingfisher
 
 struct Favorite {
 
+    static let ddgDomain = "duckduckgo.com"
+
     let url: URL
     let domain: String
     let favicon: UIImage?
+
+    var isDuckDuckGo: Bool {
+        return domain == Self.ddgDomain
+    }
+
+    var needsColorBackground: Bool {
+        return favicon == nil && domain != Self.ddgDomain
+    }
 
 }
 

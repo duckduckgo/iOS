@@ -37,7 +37,7 @@ public class APIHeaders {
     }
 
     public var defaultHeaders: HTTPHeaders {
-        let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
+        let acceptEncoding = "gzip;q=1.0, compress;q=0.5"
         let languages = Locale.preferredLanguages.prefix(6)
         let acceptLanguage = languages.enumerated().map { index, language in
             let q = 1.0 - (Double(index) * 0.1)

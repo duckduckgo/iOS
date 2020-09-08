@@ -42,6 +42,7 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<FavoritesEntry>) -> Void) {
+        NSLog("getTimeline for %@", String(describing: context.family))
         let timeline = Timeline(entries: [createEntry(in: context)], policy: .atEnd)
         completion(timeline)
     }

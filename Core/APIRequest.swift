@@ -24,7 +24,15 @@ public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 
 public class APIRequest {
     
-    private static let callbackQueue = DispatchQueue(label: "APIRequest callback queue", qos: .utility)
+    private static var defaultCallbackQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.name = "APIRequest default callback queue"
+        queue.qualityOfService = .utility
+        return queue
+    }()
+    
+    private static let defaultSession = URLSession(configuration: .default, delegate: nil, delegateQueue: defaultCallbackQueue)
+    private static let mainThreadCallbackSession = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
     
     public struct Response {
         
@@ -49,6 +57,7 @@ public class APIRequest {
     public static func request(url: URL,
                                method: HTTPMethod = .get,
                                parameters: [String: String]? = nil,
+                               callBackOnMainThread: Bool = false,
                                completion: @escaping APIRequestCompletion) -> URLSessionDataTask {
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
                 
@@ -58,6 +67,7 @@ public class APIRequest {
         var urlRequest = URLRequest(url: url)
         urlRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
         urlRequest.httpMethod = method.rawValue
+        let session = callBackOnMainThread ? mainThreadCallbackSession : defaultSession
 
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in

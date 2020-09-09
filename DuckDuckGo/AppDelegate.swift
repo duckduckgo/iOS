@@ -22,6 +22,7 @@ import Core
 import UserNotifications
 import os.log
 import Kingfisher
+import WidgetKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -105,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
-            Pixel.fire(pixel: .appLaunch)
+            self.fireAppLaunchPixel()
         }
         
         if appIsLaunching {
@@ -116,6 +117,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !privacyStore.authenticationEnabled {
             showKeyboardOnLaunch()
         }
+    }
+
+    private func fireAppLaunchPixel() {
+
+        if #available(iOS 14, *) {
+            WidgetCenter.shared.getCurrentConfigurations { result in
+
+                let paramKeys: [WidgetFamily: String] = [
+                    .systemSmall: "ws",
+                    .systemMedium: "wm",
+                    .systemLarge: "wl"
+                ]
+
+                switch result {
+                case .failure:
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: ["we": "1"])
+
+                case .success(let widgetInfo):
+                    let params = widgetInfo.reduce([String: String]()) {
+                        var result = $0
+                        if let key = paramKeys[$1.family] {
+                            result[key] = "1"
+                        }
+                        return result
+                    }
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                }
+
+            }
+        } else {
+            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: ["wx": "1"])
+        }
+
     }
 
     private func showKeyboardOnLaunch() {

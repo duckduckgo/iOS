@@ -256,7 +256,7 @@ public class Pixel {
     
     public static func fire(pixel: PixelName,
                             forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
-                            withAdditionalParameters params: [String: String?] = [:],
+                            withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         

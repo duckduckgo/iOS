@@ -38,6 +38,7 @@ public class APIRequest {
         
         var data: Data?
         var etag: String?
+        var urlResponse: URLResponse?
         
     }
     
@@ -90,7 +91,7 @@ public class APIRequest {
                 
                 // Handle weak etags
                 etag = etag?.dropPrefix(prefix: "W/")
-                completion(Response(data: data, etag: etag), nil)
+                completion(Response(data: data, etag: etag, urlResponse: response), nil)
             }
         }
         task.resume()

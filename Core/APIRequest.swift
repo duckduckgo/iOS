@@ -28,6 +28,7 @@ public class APIRequest {
         let queue = OperationQueue()
         queue.name = "APIRequest default callback queue"
         queue.qualityOfService = .utility
+        queue.maxConcurrentOperationCount = 1
         return queue
     }()
     

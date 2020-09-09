@@ -90,31 +90,23 @@ public class HTTPSUpgrade {
     private func isInServiceUpgradeList(host: String, completion: @escaping ServiceCompletion) {
         let sha1Host = host.sha1
         let partialSha1Host = String(sha1Host.prefix(4))
-        var serviceRequest = URLRequest(url: appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host))
-        serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
-        serviceRequest.timeoutInterval = 10
-
-        let session = URLSession.shared
+        let url = appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host)
+        let serviceRequest = APIRequest.urlRequestFor(url: url, timeoutInterval: 10.0)
         let cachedResponse = URLCache.shared.cachedResponse(for: serviceRequest)?.response as? HTTPURLResponse
-
-        let task = session.dataTask(with: serviceRequest) {
-            (data, response, error) in
-
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.validateStatusCode(statusCode: 200..<300) == nil else {
+        
+        APIRequest.request(url: url, timeoutInterval: 10, callBackOnMainThread: true) {
+            (response, error) in
+            
+            guard let httpResponse = response?.urlResponse as? HTTPURLResponse, let data = response?.data else {
                 completion((isInList: false, isCached: false))
                 return
             }
             
-            if let data = data {
-                let result = try? JSONDecoder().decode([String].self, from: data)
-                let isCached = isResponseFromCache(httpResponse, cachedResponse: cachedResponse)
-                let isInList = result?.contains(sha1Host) ?? false
-                completion((isInList: isInList, isCached: isCached))
-            } else {
-                completion((isInList: false, isCached: false))
-            }
+            let result = try? JSONDecoder().decode([String].self, from: data)
+            let isCached = isResponseFromCache(httpResponse, cachedResponse: cachedResponse)
+            let isInList = result?.contains(sha1Host) ?? false
+            completion((isInList: isInList, isCached: isCached))
         }
-        task.resume()
     }
     
     private func isLocalListReloading() -> Bool {

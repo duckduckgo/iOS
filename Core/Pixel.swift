@@ -267,31 +267,21 @@ public class Pixel {
         }
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-        let url = appUrls
-            .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
-            .addParams(newParams)
+        let url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
         
-        let session = URLSession.shared
-        var urlRequest = URLRequest(url: url)
-        urlRequest.allHTTPHeaderFields = headers
-
-        let task = session.dataTask(with: urlRequest) {
-            (data, response, error) in
-
-            let httpResponse = response as? HTTPURLResponse
-            let err = error != nil ? error : httpResponse?.validateStatusCode(statusCode: 200..<300)
+        APIRequest.request(url: url, parameters: newParams, headers:headers, callBackOnMainThread: true) {
+            (_, error) in
             
             os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
-            onComplete(err)
+            onComplete(error)
         }
-        task.resume()
     }
     
 }
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:], isCounted: Bool = false) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
@@ -320,7 +310,7 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String?] = [:]) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
         var newParams = params
         newParams[PixelParameters.duration] = duration

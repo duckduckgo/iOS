@@ -174,10 +174,3 @@ extension URL {
         return host == domain || host.hasSuffix(".\(domain)")
     }
 }
-
-extension URLComponents {
-    
-    enum URLComponentsError: Error {
-        case invalidURL(url: String?)
-    }
-}

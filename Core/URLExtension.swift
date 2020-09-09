@@ -49,14 +49,14 @@ extension URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         guard components.scheme == URLProtocol.http.rawValue else { return self }
         components.scheme = URLProtocol.https.rawValue
-        return try? components.asURL()
+        return components.url
     }
 
     public func toDesktopUrl() -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         components.host = components.host?.dropPrefix(prefix: "m.")
         components.host = components.host?.dropPrefix(prefix: "mobile.")
-        return (try? components.asURL()) ?? self
+        return components.url ?? self
     }
 
     public func getParam(name: String) -> String? {
@@ -179,10 +179,5 @@ extension URLComponents {
     
     enum URLComponentsError: Error {
         case invalidURL(url: String?)
-    }
-
-    public func asURL() throws -> URL {
-        guard let url = self.url else { throw URLComponentsError.invalidURL(url: self.string) }
-        return url
     }
 }

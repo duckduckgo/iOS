@@ -95,7 +95,8 @@ public class WebCacheManager {
             let group = DispatchGroup()
             cookies.forEach { cookie in
                 domains.forEach { domain in
-                    if cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain)) {
+
+                    if self.isDuckDuckGoOrAllowedDomain(cookie: cookie, domain: domain) {
                         group.enter()
                         cookieStore.delete(cookie) {
                             group.leave()
@@ -115,6 +116,14 @@ public class WebCacheManager {
             }
         }
         
+    }
+
+    /// We preserve DuckDuckGo cookies when the fire button is used to keep the previously DuckDuckGo Search Engine Result Pages settings set by the user. Removing these cookies would reset
+    ///  them and have undesired consequences, i.e. changing the theme, default language, etc. At DuckDuckGo, no cookies are used by default. If you have changed any settings, then cookies are
+    ///  used to store those changes. However, in that case, they are not stored in a personally identifiable way. For example, the large size setting is stored as 's=l'; no unique identifier is in there.
+    ///  More info in https://duckduckgo.com/privacy
+    private func isDuckDuckGoOrAllowedDomain(cookie: HTTPCookie, domain: String) -> Bool {
+        return cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain))
     }
 
     public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),

@@ -18,11 +18,14 @@
 //
 
 import Foundation
-import Alamofire
+
+public typealias HTTPHeaders = [String: String]
 
 public class APIHeaders {
 
     struct Name {
+        static let acceptEncoding = "Accept-Encoding"
+        static let acceptLanguage = "Accept-Language"
         static let userAgent = "User-Agent"
         static let etag = "ETag"
     }
@@ -34,9 +37,18 @@ public class APIHeaders {
     }
 
     public var defaultHeaders: HTTPHeaders {
-        var headers = Alamofire.SessionManager.defaultHTTPHeaders
-        headers[Name.userAgent] = userAgent
-        return headers
+        let acceptEncoding = "gzip;q=1.0, compress;q=0.5"
+        let languages = Locale.preferredLanguages.prefix(6)
+        let acceptLanguage = languages.enumerated().map { index, language in
+            let q = 1.0 - (Double(index) * 0.1)
+            return "\(language);q=\(q)"
+        }.joined(separator: ", ")
+        
+        return [
+            Name.acceptEncoding: acceptEncoding,
+            Name.acceptLanguage: acceptLanguage,
+            Name.userAgent: userAgent
+        ]
     }
 
     public var userAgent: String {

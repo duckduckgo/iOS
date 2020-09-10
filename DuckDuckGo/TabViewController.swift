@@ -19,7 +19,6 @@
 
 import WebKit
 import Core
-import Device
 import StoreKit
 import os.log
 

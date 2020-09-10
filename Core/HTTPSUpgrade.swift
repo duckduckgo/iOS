@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Alamofire
 import os.log
 
 public class HTTPSUpgrade {
@@ -91,20 +90,22 @@ public class HTTPSUpgrade {
     private func isInServiceUpgradeList(host: String, completion: @escaping ServiceCompletion) {
         let sha1Host = host.sha1
         let partialSha1Host = String(sha1Host.prefix(4))
-        var serviceRequest = URLRequest(url: appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host))
-        serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
-        serviceRequest.timeoutInterval = 10
-
+        let url = appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host)
+        let serviceRequest = APIRequest.urlRequestFor(url: url, timeoutInterval: 10.0)
         let cachedResponse = URLCache.shared.cachedResponse(for: serviceRequest)?.response as? HTTPURLResponse
-        Alamofire.request(serviceRequest).validate(statusCode: 200..<300).response { response in
-            if let data = response.data {
-                let result = try? JSONDecoder().decode([String].self, from: data)
-                let isCached = isResponseFromCache(response.response, cachedResponse: cachedResponse)
-                let isInList = result?.contains(sha1Host) ?? false
-                completion((isInList: isInList, isCached: isCached))
-            } else {
+        
+        APIRequest.request(url: url, timeoutInterval: 10, callBackOnMainThread: true) {
+            (response, error) in
+            
+            guard let httpResponse = response?.urlResponse as? HTTPURLResponse, let data = response?.data else {
                 completion((isInList: false, isCached: false))
+                return
             }
+            
+            let result = try? JSONDecoder().decode([String].self, from: data)
+            let isCached = isResponseFromCache(httpResponse, cachedResponse: cachedResponse)
+            let isInList = result?.contains(sha1Host) ?? false
+            completion((isInList: isInList, isCached: isCached))
         }
     }
     

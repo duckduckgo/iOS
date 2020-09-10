@@ -19,8 +19,8 @@
 
 import XCTest
 import OHHTTPStubs
+import OHHTTPStubsSwift
 @testable import Core
-import Alamofire
 
 class PixelTests: XCTestCase {
     
@@ -29,7 +29,7 @@ class PixelTests: XCTestCase {
     let userAgentName = "User-Agent"
     
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
@@ -47,9 +47,9 @@ class PixelTests: XCTestCase {
             
             XCTFail("Did not found param dur")
             return true
-        }, response: { _ -> OHHTTPStubsResponse in
+        }, response: { _ -> HTTPStubsResponse in
             expectation.fulfill()
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         })
         
         let pixel = TimedPixel(.appLaunch, date: date)
@@ -61,12 +61,12 @@ class PixelTests: XCTestCase {
     func testWhenPixelFiredThenAPIHeadersAreAdded() {
         let expectation = XCTestExpectation()
         
-        stub(condition: hasHeaderNamed(userAgentName, value: testAgent)) { _ -> OHHTTPStubsResponse in
+        stub(condition: hasHeaderNamed(userAgentName, value: testAgent)) { _ -> HTTPStubsResponse in
             expectation.fulfill()
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        var headers = Alamofire.SessionManager.defaultHTTPHeaders
+        var headers = APIHeaders().defaultHeaders
         headers[userAgentName] = testAgent
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withHeaders: headers)
         
@@ -78,11 +78,11 @@ class PixelTests: XCTestCase {
         let expectation = XCTestExpectation()
         let params = ["param1": "value1", "param2": "value2"]
         
-        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { request -> OHHTTPStubsResponse in
+        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { request -> HTTPStubsResponse in
             XCTAssertEqual("value1", request.url?.getParam(name: "param1"))
             XCTAssertEqual("value2", request.url?.getParam(name: "param2"))
             expectation.fulfill()
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withAdditionalParameters: params)
@@ -93,9 +93,9 @@ class PixelTests: XCTestCase {
     func testWhenAppLaunchPixelIsFiredFromPhoneThenCorrectURLRequestIsMade() {
         let expectation = XCTestExpectation()
         
-        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { _ -> OHHTTPStubsResponse in
+        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { _ -> HTTPStubsResponse in
             expectation.fulfill()
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone)
@@ -106,9 +106,9 @@ class PixelTests: XCTestCase {
     func testWhenAppLaunchPixelIsFiredFromTabletThenCorrectURLRequestIsMade() {
         let expectation = XCTestExpectation()
         
-        stub(condition: isHost(host) && isPath("/t/ml_ios_tablet")) { _ -> OHHTTPStubsResponse in
+        stub(condition: isHost(host) && isPath("/t/ml_ios_tablet")) { _ -> HTTPStubsResponse in
             expectation.fulfill()
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .pad)
@@ -119,9 +119,9 @@ class PixelTests: XCTestCase {
     func testWhenAppLaunchPixelIsFiredFromUnspecifiedThenCorrectURLRequestIsMadeAsPhone() {
         let expectation = XCTestExpectation()
         
-        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { _ -> OHHTTPStubsResponse in
+        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { _ -> HTTPStubsResponse in
             expectation.fulfill()
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .unspecified)
@@ -132,8 +132,8 @@ class PixelTests: XCTestCase {
     func testWhenPixelFiresSuccessfullyThenCompletesWithNoError() {
         let expectation = XCTestExpectation()
         
-        stub(condition: isHost(host)) { _ -> OHHTTPStubsResponse in
-            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone) { error in
@@ -147,8 +147,8 @@ class PixelTests: XCTestCase {
     func testWhenPixelFiresUnsuccessfullyThenCompletesWithError() {
         let expectation = XCTestExpectation()
         
-        stub(condition: isHost(host)) { _ -> OHHTTPStubsResponse in
-            return OHHTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone) { error in

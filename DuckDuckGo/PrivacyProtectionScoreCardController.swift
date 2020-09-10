@@ -48,7 +48,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+        return cell.isHidden ? 0 : UITableView.automaticDimension
     }
 
     private func update() {
@@ -114,7 +114,6 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         
         return cell
     }
-
 }
 
 extension PrivacyProtectionScoreCardController: PrivacyProtectionInfoDisplaying {

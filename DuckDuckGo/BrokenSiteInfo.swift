@@ -64,7 +64,7 @@ public struct BrokenSiteInfo {
                           Keys.atb: StatisticsUserDefaults().atb ?? "",
                           Keys.os: UIDevice.current.systemVersion,
                           Keys.manufacturer: "Apple",
-                          Keys.model: UIDevice.current.deviceType.displayName]
+                          Keys.model: UIDevice.current.model]
         
         Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }

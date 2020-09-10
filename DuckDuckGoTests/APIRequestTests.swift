@@ -19,45 +19,59 @@
 
 import XCTest
 import OHHTTPStubs
+import OHHTTPStubsSwift
 @testable import Core
 
 class APIRequestTests: XCTestCase {
 
     let host = AppUrls().surrogates.host!
     let url = AppUrls().surrogates
+    
+    override func setUp() {
+        swizzlePreferredLanguagesMethod()
+    }
 
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        swizzlePreferredLanguagesMethod()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
-    func testWhenRequestMadeThenUserAgentIsAdded() {
+    func testWhenRequestMadeThenCorrectHeadersAreAdded() {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
 
-        let expect = expectation(description: "testWhenRequestMadeThenUserAgentIsAdded")
-        let request = APIRequest.request(url: url) { (_, _) in
+        let expect = expectation(description: "testWhenRequestMadeThenCorrectHeadersAreAdded")
+        let dataTask = APIRequest.request(url: url) { (_, _) in
             expect.fulfill()
         }
 
         waitForExpectations(timeout: 1.0, handler: nil)
-        let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        
+        let headerFields = dataTask.currentRequest!.allHTTPHeaderFields!
+        let userAgent = headerFields[APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
+
+        let acceptEncoding = headerFields[APIHeaders.Name.acceptEncoding]!
+        XCTAssertEqual(acceptEncoding, "gzip;q=1.0, compress;q=0.5")
+
+        let acceptLanguage = headerFields[APIHeaders.Name.acceptLanguage]!
+        XCTAssertEqual(acceptLanguage, "en-GB;q=1.0, fr-FR;q=0.9, fr-CA;q=0.8, en-US;q=0.7, de-AT;q=0.6, de-CH;q=0.5")
     }
 
-    func testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded() {
+    func testWhenRequestWithUserAgentMadeThenUserAgentIsUpdated() {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: [ APIHeaders.Name.userAgent: "old ua"])
         }
 
-        let expect = expectation(description: "testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded")
-        let request = APIRequest.request(url: url) { (_, _) in
+        let expect = expectation(description: "testWhenRequestWithUserAgentMadeThenUserAgentIsUpdated")
+        let dataTask = APIRequest.request(url: url) { (_, _) in
             expect.fulfill()
         }
 
         waitForExpectations(timeout: 1.0, handler: nil)
-        let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        let userAgent = dataTask.currentRequest!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
     }
 
@@ -117,35 +131,44 @@ class APIRequestTests: XCTestCase {
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
-    
+
     func testWhenMultipleRequestsAreFiredThenCallbacksAreProcessedOnSerialQueue() {
-        
+
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
-        
+
         let expectFirst = expectation(description: "first request has been processed")
         let expectLast = expectation(description: "second request has been processed")
-        
+
         APIRequest.request(url: url) { (_, error) in
             // Give second request a chance to execute the callback
             Thread.sleep(forTimeInterval: 0.4)
             XCTAssertNil(error)
             expectFirst.fulfill()
         }
-        
+
         Thread.sleep(forTimeInterval: 0.1)
-        
+
         APIRequest.request(url: url) { (_, error) in
             XCTAssertNil(error)
             expectLast.fulfill()
         }
-        
+
         wait(for: [expectFirst, expectLast], timeout: 1.0, enforceOrder: true)
     }
 
     func validJson() -> String {
         return OHPathForFile("MockFiles/disconnect.json", type(of: self))!
     }
+    
+    static func mockedPreferredLangauges() -> [String] {
+        return ["en-GB", "fr-FR", "fr-CA", "en-US", "de-AT", "de-CH", "zh_HK"]
+    }
 
+    func swizzlePreferredLanguagesMethod() {
+        let original = class_getClassMethod(NSLocale.classForCoder(), #selector(getter: NSLocale.preferredLanguages))
+        let mocked = class_getClassMethod(APIRequestTests.classForCoder(), #selector(APIRequestTests.mockedPreferredLangauges))
+        method_exchangeImplementations(original!, mocked!)
+    }
 }

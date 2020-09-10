@@ -22,11 +22,7 @@ If you're not part of the DuckDuckGo team, you should provide your Apple develop
  3. Clean and rebuild the project
 
 ### Dependencies
-We use Carthage for dependency management. If you don't have Carthage installed refer to [Installing Carthage](https://github.com/Carthage/Carthage#installing-carthage).
-
-Run `carthage bootstrap --platform iOS` before opening the project in Xcode
-
-You can also run the unit tests to do the above and ensure everything seems in order: `./run_tests.sh`
+We use Swift Package Manager for dependency management, which shouldn't require any additional set up.
 
 ### SwiftLint
 We use [SwifLint](https://github.com/realm/SwiftLint) for enforcing Swift style and conventions, so you'll need to [install it](https://github.com/realm/SwiftLint#installation).

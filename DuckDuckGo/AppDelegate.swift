@@ -125,14 +125,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WidgetCenter.shared.getCurrentConfigurations { result in
 
                 let paramKeys: [WidgetFamily: String] = [
-                    .systemSmall: "ws",
-                    .systemMedium: "wm",
-                    .systemLarge: "wl"
+                    .systemSmall: PixelParameters.widgetSmall,
+                    .systemMedium: PixelParameters.widgetMedium,
+                    .systemLarge: PixelParameters.widgetLarge
                 ]
 
                 switch result {
                 case .failure:
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: ["we": "1"])
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetError: "1"])
 
                 case .success(let widgetInfo):
                     let params = widgetInfo.reduce([String: String]()) {
@@ -147,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             }
         } else {
-            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: ["wx": "1"])
+            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
         }
 
     }

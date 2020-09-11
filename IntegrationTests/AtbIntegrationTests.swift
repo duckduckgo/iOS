@@ -74,7 +74,6 @@ class AtbIntegrationTests: XCTestCase {
             fatalError("Could not start server")
         }
         
-        Springboard.deleteMyApp()
         app.launch()
     }
     
@@ -84,7 +83,7 @@ class AtbIntegrationTests: XCTestCase {
         statisticsRequests.removeAll()
         searchRequests.removeAll()
     }
-    
+
     func test() throws {
         try assertWhenAppIsInstalledAndLaunchedThenExtiIsCalledAndInitialAtbIsRetrieved()
         clearRequests()

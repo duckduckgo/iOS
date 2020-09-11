@@ -22,8 +22,6 @@ import SwiftUI
 
 struct FavoriteView: View {
 
-    let ddgDomain = "duckduckgo.com"
-
     var favorite: Favorite?
     var isPreview: Bool
 
@@ -90,7 +88,7 @@ struct LargeSearchFieldView: View {
                         .resizable()
                         .frame(width: 24, height: 24, alignment: .leading)
 
-                    Text("Search DuckDuckGo")
+                    Text(UserText.searchDuckDuckGo)
                         .foregroundColor(Color.widgetSearchFieldText)
 
                     Spacer()

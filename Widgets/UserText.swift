@@ -30,11 +30,15 @@ struct UserText {
                                                                      comment: "Description of search and favorites widget in widget gallery")
 
     static let searchWidgetGalleryDisplayName = NSLocalizedString("widget.gallery.search.display.name",
-                                     value: "Search",
-                                     comment: "Display name for search only widget in widget gallery")
+                                                                  value: "Search",
+                                                                  comment: "Display name for search only widget in widget gallery")
 
     static let searchWidgetGalleryDescription = NSLocalizedString("widget.gallery.search.description",
-                                     value: "Quickly launch a private search in DuckDuckGo.",
-                                     comment: "Description of search only widget in widget gallery")
+                                                                  value: "Quickly launch a private search in DuckDuckGo.",
+                                                                  comment: "Description of search only widget in widget gallery")
+
+    static let searchDuckDuckGo = NSLocalizedString("widget.search.duckduckgo",
+                                                    value: "Search DuckDuckGo",
+                                                    comment: "Placeholder text in search field on the search and favorites widget")
 
 }

@@ -710,7 +710,6 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
 
-        if #available(iOS 14.0, *) { return }
         let feature = HomeRowReminder()
         guard feature.showNow() else { return }
 

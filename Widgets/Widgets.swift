@@ -133,7 +133,7 @@ struct FavoritesWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            FavoritesWidgetView(entry: entry)
+            FavoritesWidgetView(entry: entry).widgetURL(DeepLinks.newSearch)
         }
         .configurationDisplayName(UserText.favoritesWidgetGalleryDisplayName)
         .description(UserText.favoritesWidgetGalleryDescription)

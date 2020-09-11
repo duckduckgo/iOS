@@ -5029,8 +5029,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/httpswift/swifter.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.4.3;
+				branch = "xcode12-swift5";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -24,6 +24,7 @@ import Core
 class SettingsViewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
+    @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
@@ -42,13 +43,21 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    private let defaultBroswerCellTag = 1
+    private let defaultBroswerSectionIndex = 0
     
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
 
+    private static var shouldShowDefaultBrowserSection: Bool {
+        if #available(iOS 14, *) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -56,6 +65,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMargins()
+        configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
@@ -120,6 +130,10 @@ class SettingsViewController: UITableViewController {
         }
     }
     
+    private func configureDefaultBroswerCell() {
+        defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
+    }
+    
     private func configureThemeCellAccessory() {
         switch appSettings.currentThemeName {
         case .systemDefault:
@@ -181,8 +195,7 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let cell = tableView.cellForRow(at: indexPath),
-              cell.tag == defaultBroswerCellTag,
+        guard tableView.cellForRow(at: indexPath) == defaultBrowserCell,
               let url = URL(string: UIApplication.openSettingsURLString) else { return }
         
         UIApplication.shared.open(url)
@@ -219,6 +232,33 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return 22.0
+        } else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return CGFloat.leastNonzeroMagnitude
+        } else {
+            return super.tableView(tableView, heightForFooterInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return nil
+        } else {
+            return super.tableView(tableView, titleForFooterInSection: section)
+        }
     }
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

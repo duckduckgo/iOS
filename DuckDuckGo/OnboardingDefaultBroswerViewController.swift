@@ -38,6 +38,4 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
         }
         super.onContinuePressed(navigationHandler: navigationHandler)
     }
-    
-    //TODO home row reminder?
 }

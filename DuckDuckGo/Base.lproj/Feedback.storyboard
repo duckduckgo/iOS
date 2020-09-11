@@ -677,7 +677,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s11-T2-I4J">
-                                            <rect key="frame" x="20" y="143" width="374" height="72"/>
+                                            <rect key="frame" x="16" y="143" width="382" height="72"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Submitting an anonymous broken site report helps us debug these issues and improve the extension.">
                                                     <attributes>
@@ -694,8 +694,8 @@
                                         <constraint firstAttribute="bottom" secondItem="s11-T2-I4J" secondAttribute="bottom" constant="5" id="6gq-Dk-d0z"/>
                                         <constraint firstItem="RNo-8b-yyt" firstAttribute="top" secondItem="lo0-tD-41u" secondAttribute="top" constant="10" id="9mH-Ou-zPW"/>
                                         <constraint firstItem="RNo-8b-yyt" firstAttribute="centerX" secondItem="lo0-tD-41u" secondAttribute="centerX" id="cek-JA-rlB"/>
-                                        <constraint firstAttribute="trailing" secondItem="s11-T2-I4J" secondAttribute="trailing" constant="20" id="mbM-hS-pGW"/>
-                                        <constraint firstItem="s11-T2-I4J" firstAttribute="leading" secondItem="lo0-tD-41u" secondAttribute="leading" constant="20" id="nVX-EJ-g5Z"/>
+                                        <constraint firstAttribute="trailing" secondItem="s11-T2-I4J" secondAttribute="trailing" constant="16" id="mbM-hS-pGW"/>
+                                        <constraint firstItem="s11-T2-I4J" firstAttribute="leading" secondItem="lo0-tD-41u" secondAttribute="leading" constant="16" id="nVX-EJ-g5Z"/>
                                         <constraint firstItem="s11-T2-I4J" firstAttribute="top" secondItem="RNo-8b-yyt" secondAttribute="bottom" constant="5" id="qki-cb-3ha"/>
                                         <constraint firstItem="s11-T2-I4J" firstAttribute="centerX" secondItem="RNo-8b-yyt" secondAttribute="centerX" id="wqR-Sa-5NL"/>
                                     </constraints>
@@ -708,7 +708,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Broken Site Reason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wx3-Vb-ItS">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Broken Site Reason" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wx3-Vb-ItS">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>

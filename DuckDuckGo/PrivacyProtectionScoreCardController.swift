@@ -51,10 +51,6 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         return cell.isHidden ? 0 : UITableView.automaticDimension
     }
 
-    private func initBackButton() {
-        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-    }
-
     private func update() {
         guard isViewLoaded else { return }
 
@@ -109,12 +105,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         
         PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, protectionStore: protectionStore)
         cell.disclosureImage.isHidden = true
-        
-        if DefaultVariantManager().isSupported(feature: .iPadImprovements) {
-            cell.backImage.isHidden = !AppWidthObserver.shared.isLargeWidth
-        } else {
-            cell.backImage.isHidden = UIDevice.current.userInterfaceIdiom != .pad
-        }
+        cell.backImage.isHidden = !AppWidthObserver.shared.isLargeWidth
         
         return cell
     }

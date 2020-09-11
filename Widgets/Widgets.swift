@@ -2,8 +2,19 @@
 //  Widgets.swift
 //  Widgets
 //
-//  Created by Chris Brind on 19/08/2020.
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import WidgetKit
@@ -42,7 +53,6 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<FavoritesEntry>) -> Void) {
-        NSLog("getTimeline for %@", String(describing: context.family))
         let timeline = Timeline(entries: [createEntry(in: context)], policy: .atEnd)
         completion(timeline)
     }
@@ -71,13 +81,10 @@ struct Provider: TimelineProvider {
             favorites = []
         }
 
-        NSLog("*** favorites %@", favorites)
-
         return FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
     }
 
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
-        NSLog("*** load image for domain %@", domain ?? "<nil>")
         guard let domain = domain else { return nil }
 
         let key = Favicons.createHash(ofDomain: domain)
@@ -86,16 +93,10 @@ struct Provider: TimelineProvider {
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.
         let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
-        NSLog("*** imageUrl %@", imageUrl.absoluteString)
 
-        guard let data = (try? Data(contentsOf: imageUrl)) else {
-            NSLog("*** data is nil for url %@", imageUrl.absoluteString)
-            return nil
-        }
+        guard let data = (try? Data(contentsOf: imageUrl)) else { return nil }
 
-        let image = UIImage(data: data)
-        NSLog("*** image is size %@", String(describing: image?.size))
-        return image
+        return UIImage(data: data)
     }
 
 }
@@ -120,8 +121,8 @@ struct SearchWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             return SearchWidgetView(entry: entry).widgetURL(DeepLinks.newSearch)
         }
-        .configurationDisplayName("Search")
-        .description("Quickly launch a private search in DuckDuckGo.")
+        .configurationDisplayName(UserText.searchWidgetGalleryDisplayName)
+        .description(UserText.searchWidgetGalleryDescription)
         .supportedFamilies([.systemSmall])
     }
 
@@ -134,8 +135,8 @@ struct FavoritesWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             FavoritesWidgetView(entry: entry)
         }
-        .configurationDisplayName("Search and Favorites")
-        .description("Search or visit your favorite sites privately with just one tap.")
+        .configurationDisplayName(UserText.favoritesWidgetGalleryDisplayName)
+        .description(UserText.favoritesWidgetGalleryDescription)
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }

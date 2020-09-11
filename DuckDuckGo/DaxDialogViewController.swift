@@ -21,7 +21,8 @@ import UIKit
 
 class DaxDialogViewController: UIViewController {
     
-    @IBOutlet weak var bottomSpacing: NSLayoutConstraint!
+    @IBOutlet weak var bottomSpacingFromButton: NSLayoutConstraint!
+    @IBOutlet weak var bottomSpacingFromLabel: NSLayoutConstraint!
     @IBOutlet weak var topSpacing: NSLayoutConstraint!
 
     @IBOutlet weak var icon: UIView!
@@ -29,6 +30,7 @@ class DaxDialogViewController: UIViewController {
     @IBOutlet weak var textArea: UIView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var sizingLabel: UILabel!
     
     var message: String? {
         didSet {
@@ -70,6 +72,7 @@ class DaxDialogViewController: UIViewController {
     
     private func initLabel() {
         label?.text = nil
+        sizingLabel?.text = message
         chars = Array(message ?? "")
     }
     
@@ -80,9 +83,13 @@ class DaxDialogViewController: UIViewController {
     
     private func initCTA() {
         if let title = cta {
+            bottomSpacingFromLabel?.isActive = false
+            bottomSpacingFromButton?.isActive = true
             button?.isHidden = false
             button?.setTitle(title, for: .normal)
         } else {
+            bottomSpacingFromButton?.isActive = false
+            bottomSpacingFromLabel?.isActive = true
             button?.isHidden = true
         }
     }
@@ -140,6 +147,11 @@ class DaxDialogViewController: UIViewController {
         combined.append(baseText)
         combined.append(invisible)
         label.attributedText = combined
+        
+        if label.bounds.height == 0 {
+            label.setNeedsLayout()
+            label.layoutIfNeeded()
+        }
     }
     
     private func attributedString(from string: String, color: UIColor) -> NSAttributedString {

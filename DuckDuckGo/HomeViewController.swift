@@ -133,7 +133,9 @@ class HomeViewController: UIViewController {
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
         daxDialogViewController?.message = spec.message
-        daxDialogContainerHeight.constant = spec.height
+        daxDialogContainerHeight.constant = daxDialogViewController?.view.systemLayoutSizeFitting(CGSize(width: daxDialogViewController?.view.bounds.width ?? 375, height: 1000),
+                                                                                    withHorizontalFittingPriority: .required,
+                                                                                    verticalFittingPriority: .fittingSizeLevel).height ?? 0
         hideLogo()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

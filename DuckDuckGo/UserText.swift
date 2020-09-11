@@ -104,7 +104,7 @@ public struct UserText {
     public static let ppEncryptionUsageSign = NSLocalizedString("privacy.protection.encryption.usage.sign", value: "Sign", comment: "Usage of a certificate")
     public static let ppEncryptionUsageVerify = NSLocalizedString("privacy.protection.encryption.usage.verify", value: "Verify", comment: "Usage of a certificate")
     public static let ppEncryptionUsage = NSLocalizedString("privacy.protection.encryption.usage", value: "Usage", comment: "Part of certificate info")
-    public static let ppEncryptionPermanent = NSLocalizedString("privacy.protection.encryption.permanent", value: "Permanent", comment: "Part of certificate info")
+    public static let ppEncryptionPermanent = NSLocalizedString("privacy.protection.encryption.permanent", value: "Permanent", comment: "Part of certificate info - Permanent in this context means that certificate is stored on the device (so it's not temporary one).")
     public static let ppEncryptionId = NSLocalizedString("privacy.protection.encryption.id", value: "Subject Key Identifier", comment: "Part of certificate info")
     public static let ppEncryptionKey = NSLocalizedString("privacy.protection.encryption.key", value: "Public Key", comment: "Part of certificate info")
     public static let ppEncryptionYes = NSLocalizedString("privacy.protection.encryption.yes", value: "Yes", comment: "Confirmation that certificate is permanent")
@@ -226,7 +226,7 @@ public struct UserText {
     }
     
     public static func numberOfTabs(_ number: Int) -> String {
-        let message = NSLocalizedString("number.of.tabs", comment: "")
+        let message = NSLocalizedString("number.of.tabs", comment: "Do not translate - stringsdict entry")
         return message.format(arguments: number)
     }
     
@@ -248,7 +248,7 @@ public struct UserText {
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "")
     public static let onboardingContinue = NSLocalizedString("onboardingContinue", value: "Continue", comment: "")
     public static let onboardingSkip = NSLocalizedString("onboardingSkip", value: "Skip", comment: "")
-    public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", value: "Start Browsing", comment: "")
+    public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", value: "Start Browsing", comment: "This is on a button presented on the last of the onboarding screens.")
     
     public static let preserveLoginsSwitchTitle = NSLocalizedString("preserveLogins.switch.title", value: "Ask to Fireproof Websites", comment: "Ask to Fireproof Websites")
     
@@ -267,7 +267,7 @@ public struct UserText {
     public static let homeTabTitle = NSLocalizedString("homeTab.title", value: "Home", comment: "Home tab title")
     
     public static let settingTutorialInfo = NSLocalizedString("settings.tutorial.info", value: "Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.", comment: "")
-    public static let settingTutorialOpenStep = NSLocalizedString("settings.tutorial.open", value: "Open *Settings* App", comment: "Asterix is an indicator of a bold text")
+    public static let settingTutorialOpenStep = NSLocalizedString("settings.tutorial.open", value: "Open *Settings* App", comment: "Asterix is an indicator of a bold text. Settings is a native iOS app.")
     public static let settingTutorialNavigateStep = NSLocalizedString("settings.tutorial.navigate", value: "Navigate to *Safari*, then *Search Engine*", comment: "")
     public static let settingTutorialSelectStep = NSLocalizedString("settings.tutorial.select", value: "Select *DuckDuckGo*", comment: "")
     

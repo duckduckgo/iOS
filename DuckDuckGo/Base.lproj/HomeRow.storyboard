@@ -105,6 +105,9 @@
                                         <state key="normal" title="Got it!">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <attributedString key="userComments">
+                                            <fragment content="In a sense of &quot;I understand&quot;"/>
+                                        </attributedString>
                                         <connections>
                                             <action selector="dismiss" destination="A5s-B8-hd1" eventType="touchUpInside" id="1v6-Uy-jdj"/>
                                         </connections>

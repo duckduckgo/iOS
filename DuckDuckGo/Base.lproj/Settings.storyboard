@@ -389,6 +389,9 @@
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="This is on a button leading to a screen with instructions about how to enable DuckDuckGo in Safari"/>
+                                                    </attributedString>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -912,6 +915,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                 </cells>
+                                <attributedString key="userComments">
+                                    <fragment content="Timing setting for automatic data clearing function"/>
+                                </attributedString>
                             </tableViewSection>
                         </sections>
                         <connections>

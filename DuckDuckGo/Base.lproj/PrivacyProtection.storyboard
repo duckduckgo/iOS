@@ -1319,7 +1319,7 @@ many trackers we've blocked.</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Offenders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPS-SD-65t">
-                                            <rect key="frame" x="40" y="86" width="334" height="20"/>
+                                            <rect key="frame" x="20" y="86" width="374" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1387,7 +1387,7 @@ many trackers we've blocked.</string>
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-40" id="4ky-h3-4Hu"/>
                                         <constraint firstItem="4ye-uJ-wqw" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="BVe-K7-7L5"/>
                                         <constraint firstItem="2vQ-S5-Xxv" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="CUn-bm-XRn"/>
-                                        <constraint firstItem="IPS-SD-65t" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-80" id="GGd-LH-Oo9"/>
+                                        <constraint firstItem="IPS-SD-65t" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-40" id="GGd-LH-Oo9"/>
                                         <constraint firstItem="4ye-uJ-wqw" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="HsO-hc-aBG"/>
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="OZB-Xz-T7R"/>
                                         <constraint firstItem="HGe-jW-qhx" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="PcO-KV-Iw4"/>
@@ -1495,16 +1495,16 @@ many trackers we've blocked.</string>
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKA-e0-nkA" userLabel="Hovering Reset">
-                                <rect key="frame" x="0.0" y="588" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="576" width="414" height="140"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFB-0r-HZW" userLabel="Hovering Reset Container">
-                                        <rect key="frame" x="20" y="0.0" width="374" height="128"/>
+                                        <rect key="frame" x="20" y="0.0" width="374" height="140"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXB-sW-rn4" userLabel="Reset View">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="128"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="140"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="953-jn-tmN">
-                                                        <rect key="frame" x="40" y="20" width="294" height="40"/>
+                                                        <rect key="frame" x="40" y="8" width="294" height="40"/>
                                                         <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="H5c-Kh-6Xs"/>
@@ -1523,7 +1523,7 @@ many trackers we've blocked.</string>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="Cs1-DU-13K">
-                                                        <rect key="frame" x="20" y="75" width="334" height="33"/>
+                                                        <rect key="frame" x="4" y="52" width="366" height="76"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="These stats are only stored on your device, and are not sent anywhere. Ever.">
                                                                 <attributes>
@@ -1537,12 +1537,12 @@ many trackers we've blocked.</string>
                                                     </label>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="Cs1-DU-13K" secondAttribute="bottom" constant="20" id="IR4-h6-ieL"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Cs1-DU-13K" secondAttribute="bottom" constant="12" id="IR4-h6-ieL"/>
                                                     <constraint firstItem="953-jn-tmN" firstAttribute="left" secondItem="dXB-sW-rn4" secondAttribute="left" constant="40" id="OTM-GG-jcq"/>
-                                                    <constraint firstItem="Cs1-DU-13K" firstAttribute="top" secondItem="953-jn-tmN" secondAttribute="bottom" constant="15" id="Shh-eb-41A"/>
-                                                    <constraint firstItem="953-jn-tmN" firstAttribute="top" secondItem="dXB-sW-rn4" secondAttribute="top" constant="20" id="ZSL-LZ-djM"/>
+                                                    <constraint firstItem="Cs1-DU-13K" firstAttribute="top" secondItem="953-jn-tmN" secondAttribute="bottom" constant="4" id="Shh-eb-41A"/>
+                                                    <constraint firstItem="953-jn-tmN" firstAttribute="top" secondItem="dXB-sW-rn4" secondAttribute="top" constant="8" id="ZSL-LZ-djM"/>
                                                     <constraint firstItem="Cs1-DU-13K" firstAttribute="centerX" secondItem="dXB-sW-rn4" secondAttribute="centerX" id="fIN-YF-roA"/>
-                                                    <constraint firstItem="Cs1-DU-13K" firstAttribute="width" secondItem="dXB-sW-rn4" secondAttribute="width" constant="-40" id="ga8-Xr-lga"/>
+                                                    <constraint firstItem="Cs1-DU-13K" firstAttribute="width" secondItem="dXB-sW-rn4" secondAttribute="width" constant="-8" id="ga8-Xr-lga"/>
                                                     <constraint firstItem="953-jn-tmN" firstAttribute="centerX" secondItem="dXB-sW-rn4" secondAttribute="centerX" id="isK-pS-nQl"/>
                                                     <constraint firstAttribute="trailing" secondItem="953-jn-tmN" secondAttribute="trailing" constant="40" id="mgC-OY-Q5S"/>
                                                 </constraints>
@@ -1556,7 +1556,7 @@ many trackers we've blocked.</string>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMn-17-7Oz" userLabel="Dismiss">
-                                        <rect key="frame" x="378" y="20" width="16" height="22"/>
+                                        <rect key="frame" x="378" y="17" width="16" height="22"/>
                                         <state key="normal" image="PP Dismiss"/>
                                         <connections>
                                             <action selector="onDismiss" destination="3wX-Uf-JRU" eventType="touchUpInside" id="30n-Bp-GwL"/>
@@ -1566,10 +1566,10 @@ many trackers we've blocked.</string>
                                 <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="nFB-0r-HZW" firstAttribute="centerY" secondItem="zKA-e0-nkA" secondAttribute="centerY" id="Gik-vR-JKJ"/>
-                                    <constraint firstItem="AMn-17-7Oz" firstAttribute="top" secondItem="zKA-e0-nkA" secondAttribute="top" constant="20" id="I6X-BZ-9Gz"/>
-                                    <constraint firstAttribute="height" constant="128" id="OVC-vH-cBE"/>
+                                    <constraint firstAttribute="height" constant="140" id="OVC-vH-cBE"/>
                                     <constraint firstItem="nFB-0r-HZW" firstAttribute="centerX" secondItem="zKA-e0-nkA" secondAttribute="centerX" id="bbX-Sm-i39"/>
                                     <constraint firstItem="nFB-0r-HZW" firstAttribute="height" secondItem="zKA-e0-nkA" secondAttribute="height" id="bpu-fz-iQi"/>
+                                    <constraint firstItem="AMn-17-7Oz" firstAttribute="centerY" secondItem="953-jn-tmN" secondAttribute="centerY" id="eAU-Yx-z2w"/>
                                     <constraint firstItem="nFB-0r-HZW" firstAttribute="width" secondItem="zKA-e0-nkA" secondAttribute="width" constant="-40" id="khI-Vs-nQf"/>
                                     <constraint firstAttribute="trailing" secondItem="AMn-17-7Oz" secondAttribute="trailing" constant="20" id="xd0-c4-1N5"/>
                                 </constraints>
@@ -2225,11 +2225,11 @@ many trackers we've blocked.</string>
                                             <constraints>
                                                 <constraint firstItem="wf1-HZ-e7d" firstAttribute="leading" secondItem="hIo-y5-j4R" secondAttribute="leading" constant="20" id="DZs-ir-KSd"/>
                                                 <constraint firstItem="MVd-zg-FeX" firstAttribute="centerY" secondItem="hIo-y5-j4R" secondAttribute="centerY" id="Gmf-yX-EY6"/>
-                                                <constraint firstItem="wf1-HZ-e7d" firstAttribute="top" secondItem="hIo-y5-j4R" secondAttribute="top" constant="11" id="QXl-bK-MPg"/>
+                                                <constraint firstItem="wf1-HZ-e7d" firstAttribute="top" secondItem="hIo-y5-j4R" secondAttribute="top" priority="750" constant="11" id="QXl-bK-MPg"/>
                                                 <constraint firstItem="wf1-HZ-e7d" firstAttribute="centerY" secondItem="hIo-y5-j4R" secondAttribute="centerY" id="T4E-PC-oyd"/>
                                                 <constraint firstItem="MVd-zg-FeX" firstAttribute="leading" secondItem="wf1-HZ-e7d" secondAttribute="trailing" constant="10" id="V2U-hz-EE1"/>
                                                 <constraint firstAttribute="trailing" secondItem="MVd-zg-FeX" secondAttribute="trailing" constant="20" id="pHt-ys-DGK"/>
-                                                <constraint firstAttribute="bottom" secondItem="wf1-HZ-e7d" secondAttribute="bottom" constant="11" id="s7f-8t-S40"/>
+                                                <constraint firstAttribute="bottom" secondItem="wf1-HZ-e7d" secondAttribute="bottom" priority="750" constant="11" id="s7f-8t-S40"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -2262,9 +2262,9 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="trailing" secondItem="eyf-W7-aAW" secondAttribute="trailing" constant="20" id="18k-Zh-T0G"/>
                                                 <constraint firstItem="Ge6-9h-2z5" firstAttribute="centerY" secondItem="DO1-wT-u3l" secondAttribute="centerY" id="O9t-c9-mop"/>
                                                 <constraint firstItem="eyf-W7-aAW" firstAttribute="centerY" secondItem="DO1-wT-u3l" secondAttribute="centerY" id="SUS-c7-H6v"/>
-                                                <constraint firstItem="Ge6-9h-2z5" firstAttribute="top" secondItem="DO1-wT-u3l" secondAttribute="top" constant="11" id="X01-HB-DpI"/>
+                                                <constraint firstItem="Ge6-9h-2z5" firstAttribute="top" secondItem="DO1-wT-u3l" secondAttribute="top" priority="750" constant="11" id="X01-HB-DpI"/>
                                                 <constraint firstItem="Ge6-9h-2z5" firstAttribute="leading" secondItem="DO1-wT-u3l" secondAttribute="leading" constant="20" id="d4f-Lp-pPs"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ge6-9h-2z5" secondAttribute="bottom" constant="11" id="iyp-ep-0xi"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ge6-9h-2z5" secondAttribute="bottom" priority="750" constant="11" id="iyp-ep-0xi"/>
                                                 <constraint firstItem="eyf-W7-aAW" firstAttribute="leading" secondItem="Ge6-9h-2z5" secondAttribute="trailing" constant="10" id="xbD-G9-rNC"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2299,8 +2299,8 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="trailing" secondItem="J4m-6Y-OeO" secondAttribute="trailing" constant="20" id="5Y5-n3-3Nb"/>
                                                 <constraint firstItem="XzQ-fW-tzk" firstAttribute="centerY" secondItem="fwt-6q-cSP" secondAttribute="centerY" id="dVE-2t-z23"/>
                                                 <constraint firstItem="J4m-6Y-OeO" firstAttribute="centerY" secondItem="fwt-6q-cSP" secondAttribute="centerY" id="fbj-1f-bX3"/>
-                                                <constraint firstItem="XzQ-fW-tzk" firstAttribute="top" secondItem="fwt-6q-cSP" secondAttribute="top" constant="11" id="kAR-eb-wtx"/>
-                                                <constraint firstAttribute="bottom" secondItem="XzQ-fW-tzk" secondAttribute="bottom" constant="11" id="kIU-8t-Uh6"/>
+                                                <constraint firstItem="XzQ-fW-tzk" firstAttribute="top" secondItem="fwt-6q-cSP" secondAttribute="top" priority="750" constant="11" id="kAR-eb-wtx"/>
+                                                <constraint firstAttribute="bottom" secondItem="XzQ-fW-tzk" secondAttribute="bottom" priority="750" constant="11" id="kIU-8t-Uh6"/>
                                                 <constraint firstItem="J4m-6Y-OeO" firstAttribute="leading" secondItem="XzQ-fW-tzk" secondAttribute="trailing" constant="10" id="wWO-3i-2n2"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2335,9 +2335,9 @@ many trackers we've blocked.</string>
                                                 <constraint firstItem="0ax-Nd-tDU" firstAttribute="leading" secondItem="AYe-df-fbR" secondAttribute="leading" constant="20" id="B1s-8G-S5H"/>
                                                 <constraint firstItem="ovR-q9-grK" firstAttribute="leading" secondItem="0ax-Nd-tDU" secondAttribute="trailing" constant="10" id="H1k-ym-YKy"/>
                                                 <constraint firstItem="ovR-q9-grK" firstAttribute="centerY" secondItem="AYe-df-fbR" secondAttribute="centerY" id="O6Z-TQ-aTw"/>
-                                                <constraint firstItem="0ax-Nd-tDU" firstAttribute="top" secondItem="AYe-df-fbR" secondAttribute="top" constant="11" id="iJk-vn-0yJ"/>
+                                                <constraint firstItem="0ax-Nd-tDU" firstAttribute="top" secondItem="AYe-df-fbR" secondAttribute="top" priority="750" constant="11" id="iJk-vn-0yJ"/>
                                                 <constraint firstItem="0ax-Nd-tDU" firstAttribute="centerY" secondItem="AYe-df-fbR" secondAttribute="centerY" id="juT-gq-r1i"/>
-                                                <constraint firstAttribute="bottom" secondItem="0ax-Nd-tDU" secondAttribute="bottom" constant="11" id="z8a-3W-2Lb"/>
+                                                <constraint firstAttribute="bottom" secondItem="0ax-Nd-tDU" secondAttribute="bottom" priority="750" constant="11" id="z8a-3W-2Lb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -2367,12 +2367,12 @@ many trackers we've blocked.</string>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="iF1-sO-WXk" firstAttribute="top" secondItem="osH-0E-8uO" secondAttribute="top" constant="11" id="2mm-Qg-46b"/>
+                                                <constraint firstItem="iF1-sO-WXk" firstAttribute="top" secondItem="osH-0E-8uO" secondAttribute="top" priority="750" constant="11" id="2mm-Qg-46b"/>
                                                 <constraint firstItem="WTC-5x-hhx" firstAttribute="centerY" secondItem="osH-0E-8uO" secondAttribute="centerY" id="A9w-B2-NvL"/>
                                                 <constraint firstItem="WTC-5x-hhx" firstAttribute="leading" secondItem="iF1-sO-WXk" secondAttribute="trailing" constant="10" id="HJp-ji-rfa"/>
                                                 <constraint firstAttribute="trailing" secondItem="WTC-5x-hhx" secondAttribute="trailing" constant="20" id="iaQ-Kd-Jtx"/>
                                                 <constraint firstItem="iF1-sO-WXk" firstAttribute="centerY" secondItem="osH-0E-8uO" secondAttribute="centerY" id="mAR-Tm-wbT"/>
-                                                <constraint firstAttribute="bottom" secondItem="iF1-sO-WXk" secondAttribute="bottom" constant="11" id="rSz-9b-F6u"/>
+                                                <constraint firstAttribute="bottom" secondItem="iF1-sO-WXk" secondAttribute="bottom" priority="750" constant="11" id="rSz-9b-F6u"/>
                                                 <constraint firstItem="iF1-sO-WXk" firstAttribute="leading" secondItem="osH-0E-8uO" secondAttribute="leading" constant="20" id="wuI-e1-wNE"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2427,9 +2427,9 @@ many trackers we've blocked.</string>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7xH-3L-wpf" firstAttribute="top" secondItem="lbt-f1-TYY" secondAttribute="top" constant="11" id="7N7-e9-fjM"/>
+                                                <constraint firstItem="7xH-3L-wpf" firstAttribute="top" secondItem="lbt-f1-TYY" secondAttribute="top" priority="750" constant="11" id="7N7-e9-fjM"/>
                                                 <constraint firstItem="7xH-3L-wpf" firstAttribute="leading" secondItem="lbt-f1-TYY" secondAttribute="leading" constant="20" id="IDY-aC-50V"/>
-                                                <constraint firstAttribute="bottom" secondItem="7xH-3L-wpf" secondAttribute="bottom" constant="11" id="KeA-4h-6Ee"/>
+                                                <constraint firstAttribute="bottom" secondItem="7xH-3L-wpf" secondAttribute="bottom" priority="750" constant="11" id="KeA-4h-6Ee"/>
                                                 <constraint firstAttribute="trailing" secondItem="mhR-mO-h2h" secondAttribute="trailing" constant="20" id="bLl-QQ-QhN"/>
                                                 <constraint firstItem="7xH-3L-wpf" firstAttribute="centerY" secondItem="lbt-f1-TYY" secondAttribute="centerY" id="dDc-Yd-tLf"/>
                                                 <constraint firstItem="mhR-mO-h2h" firstAttribute="leading" secondItem="7xH-3L-wpf" secondAttribute="trailing" constant="10" id="uOB-c2-JEO"/>
@@ -2466,9 +2466,9 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="trailing" secondItem="fok-Cs-VUj" secondAttribute="trailing" constant="20" id="Rfn-bH-oJz"/>
                                                 <constraint firstItem="5dV-qp-Hz5" firstAttribute="centerY" secondItem="bvX-oz-Oip" secondAttribute="centerY" id="VE9-N3-Rdb"/>
                                                 <constraint firstItem="fok-Cs-VUj" firstAttribute="leading" secondItem="5dV-qp-Hz5" secondAttribute="trailing" constant="10" id="VGl-5C-hgy"/>
-                                                <constraint firstItem="5dV-qp-Hz5" firstAttribute="top" secondItem="bvX-oz-Oip" secondAttribute="top" constant="11" id="Vhm-gM-mkp"/>
+                                                <constraint firstItem="5dV-qp-Hz5" firstAttribute="top" secondItem="bvX-oz-Oip" secondAttribute="top" priority="750" constant="11" id="Vhm-gM-mkp"/>
                                                 <constraint firstItem="5dV-qp-Hz5" firstAttribute="leading" secondItem="bvX-oz-Oip" secondAttribute="leading" constant="20" id="Xei-J8-J7M"/>
-                                                <constraint firstAttribute="bottom" secondItem="5dV-qp-Hz5" secondAttribute="bottom" constant="11" id="Y5J-Vo-8Ze"/>
+                                                <constraint firstAttribute="bottom" secondItem="5dV-qp-Hz5" secondAttribute="bottom" priority="750" constant="11" id="Y5J-Vo-8Ze"/>
                                                 <constraint firstItem="fok-Cs-VUj" firstAttribute="centerY" secondItem="bvX-oz-Oip" secondAttribute="centerY" id="azF-h0-xua"/>
                                             </constraints>
                                         </tableViewCellContentView>

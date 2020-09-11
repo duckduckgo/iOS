@@ -34,18 +34,29 @@ extension URL {
         case localhost
     }
     
+    public var hostVariations: [String]? {
+        guard var parts = host?.components(separatedBy: ".") else { return nil }
+        var domains = [String]()
+        while parts.count > 1 {
+            let domain = parts.joined(separator: ".")
+            domains.append(domain)
+            parts.removeFirst()
+        }
+        return domains
+    }
+    
     public func toHttps() -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         guard components.scheme == URLProtocol.http.rawValue else { return self }
         components.scheme = URLProtocol.https.rawValue
-        return try? components.asURL()
+        return components.url
     }
 
     public func toDesktopUrl() -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         components.host = components.host?.dropPrefix(prefix: "m.")
         components.host = components.host?.dropPrefix(prefix: "mobile.")
-        return (try? components.asURL()) ?? self
+        return components.url ?? self
     }
 
     public func getParam(name: String) -> String? {

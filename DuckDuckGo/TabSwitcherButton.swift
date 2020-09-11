@@ -48,7 +48,7 @@ class TabSwitcherButton: UIView {
 
     var workItem: DispatchWorkItem?
 
-    let anim = LOTAnimationView(name: "new_tab")
+    let anim = AnimationView(name: "new_tab")
     let label = UILabel()
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
@@ -73,7 +73,7 @@ class TabSwitcherButton: UIView {
     
     var hasUnread: Bool = false {
         didSet {
-            anim.animationProgress = hasUnread ? 1.0 : 0.0
+            anim.currentProgress = hasUnread ? 1.0 : 0.0
         }
     }
     
@@ -90,7 +90,7 @@ class TabSwitcherButton: UIView {
         
         configureAnimationView()
         
-        if #available(iOS 13.4, *), DefaultVariantManager().isSupported(feature: .iPadImprovements) {
+        if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
         }
     }
@@ -216,9 +216,9 @@ extension TabSwitcherButton: Themable {
 
         switch theme.currentImageSet {
         case .light:
-            anim.setAnimation(named: "new_tab_dark")
+            anim.animation = Animation.named("new_tab_dark")
         case .dark:
-            anim.setAnimation(named: "new_tab")
+            anim.animation = Animation.named("new_tab")
         }
 
         addSubview(anim)

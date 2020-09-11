@@ -19,6 +19,7 @@
 
 import XCTest
 import OHHTTPStubs
+import OHHTTPStubsSwift
 
 @testable import Core
 
@@ -27,7 +28,8 @@ class HTTPSUpgradeTests: XCTestCase {
     let host = AppUrls().httpsLookupServiceUrl(forPartialHost: "").host!
 
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
+        HTTPStubs.allStubs()
         super.tearDown()
     }
 
@@ -112,7 +114,7 @@ class HTTPSUpgradeTests: XCTestCase {
         let expect = expectation(description: "When service request fails http url should not be upgraded")
         let url = URL(string: "http://service.url")!
         stub(condition: isHost(host)) { _ in
-            return OHHTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
+            return HTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
         }
         
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))

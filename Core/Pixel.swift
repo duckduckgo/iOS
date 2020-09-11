@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Alamofire
 import os.log
 
 public enum PixelName: String {
@@ -257,7 +256,7 @@ public class Pixel {
     
     public static func fire(pixel: PixelName,
                             forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
-                            withAdditionalParameters params: [String: String?] = [:],
+                            withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
@@ -268,13 +267,13 @@ public class Pixel {
         }
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-        let url = appUrls
-            .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
-            .addParams(newParams)
+        let url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
         
-        Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
+        APIRequest.request(url: url, parameters: newParams, headers:headers, callBackOnMainThread: true) {
+            (_, error) in
+            
             os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
-            onComplete(response.error)
+            onComplete(error)
         }
     }
     
@@ -282,7 +281,7 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:], isCounted: Bool = false) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
@@ -311,7 +310,7 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String?] = [:]) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
         var newParams = params
         newParams[PixelParameters.duration] = duration

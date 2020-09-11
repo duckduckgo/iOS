@@ -51,6 +51,10 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         return cell.isHidden ? 0 : UITableView.automaticDimension
     }
 
+    private func initBackButton() {
+        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+    }
+
     private func update() {
         guard isViewLoaded else { return }
 

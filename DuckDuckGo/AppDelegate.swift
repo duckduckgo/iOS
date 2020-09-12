@@ -210,6 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             mainViewController?.onQuickFirePressed()
         } else {
+            Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url)
         }
         

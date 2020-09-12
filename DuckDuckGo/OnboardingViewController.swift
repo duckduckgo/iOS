@@ -26,6 +26,8 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
+    @IBOutlet weak var headerContainer: UIView!
+    @IBOutlet weak var subheaderContainer: UIView!
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var skipButton: UIButton!
@@ -59,6 +61,27 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     private func updateForSmallerScreens() {
         contentWidth.constant = isSmall ? -52 : -72
+    }
+    
+    private func adjustHeight(label: UILabel, toMaxHeight maxHeight: CGFloat) -> CGFloat {
+        guard var fontSize = label.attributedText?.font?.pointSize else { return label.bounds.height }
+        
+        var requiredHeight = label.sizeThatFits(CGSize(width: header.bounds.width, height: 1000)).height
+        
+        while requiredHeight > maxHeight, fontSize > 10 {
+            fontSize -= 1.0
+            label.attributedText = label.attributedText?.stringWithFontSize(fontSize)
+            requiredHeight = label.sizeThatFits(CGSize(width: label.bounds.width, height: 1000)).height
+        }
+        
+        return requiredHeight
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        _ = adjustHeight(label: header, toMaxHeight: headerContainer.bounds.height - 10)
+        _ = adjustHeight(label: subheader, toMaxHeight: subheaderContainer.bounds.height - 10)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

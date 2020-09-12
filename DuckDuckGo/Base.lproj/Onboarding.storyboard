@@ -24,37 +24,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="19" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                <rect key="frame" x="30" y="74" width="354" height="64"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" staticText="YES" header="YES"/>
-                                </accessibility>
-                                <string key="text">Welcome to
-DuckDuckGo!</string>
-                                <fontDescription key="fontDescription" name="ProximaNova-Extrabld" family="Proxima Nova" pointSize="32"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                <rect key="frame" x="30" y="150" width="354" height="44"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
-                                </accessibility>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">This is a generic subheading 
-example.</string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="17" name="ProximaNova-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ubS-NY-rcT" userLabel="Header Container">
+                                <rect key="frame" x="0.0" y="44" width="414" height="141.33333333333334"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Welcome to DuckDuckGo!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
+                                        <rect key="frame" x="20" y="74.333333333333329" width="374" height="63.999999999999986"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" staticText="YES" header="YES"/>
+                                        </accessibility>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Extrabld" family="Proxima Nova" pointSize="32"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="u7Q-MU-drX" secondAttribute="trailing" constant="20" id="BNZ-vf-4rf"/>
+                                    <constraint firstItem="u7Q-MU-drX" firstAttribute="leading" secondItem="ubS-NY-rcT" secondAttribute="leading" constant="20" id="Whm-rq-gHk"/>
+                                    <constraint firstAttribute="bottom" secondItem="u7Q-MU-drX" secondAttribute="bottom" constant="3" id="Wy4-C1-Wqz"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oPA-w3-V6b" userLabel="Subheader Container">
+                                <rect key="frame" x="0.0" y="185.33333333333334" width="414" height="94.000000000000028"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
+                                        <rect key="frame" x="20" y="3" width="374" height="22"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
+                                        </accessibility>
+                                        <attributedString key="attributedText">
+                                            <fragment content="This is a generic subheading example.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="JgA-Kx-QGf" secondAttribute="trailing" constant="20" id="5Gw-Nn-8ja"/>
+                                    <constraint firstItem="JgA-Kx-QGf" firstAttribute="leading" secondItem="oPA-w3-V6b" secondAttribute="leading" constant="20" id="XS8-yZ-LEn"/>
+                                    <constraint firstItem="JgA-Kx-QGf" firstAttribute="top" secondItem="oPA-w3-V6b" secondAttribute="top" constant="3" id="aa7-UU-iXF"/>
+                                </constraints>
+                            </view>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bos-sp-j80">
-                                <rect key="frame" x="30" y="206" width="354" height="544"/>
+                                <rect key="frame" x="30" y="279.33333333333326" width="354" height="470.66666666666674"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="276" id="poA-Sb-4vN"/>
                                 </constraints>
@@ -102,17 +120,19 @@ example.</string>
                         </subviews>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="u7Q-MU-drX" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="30" id="1kb-S0-TR2"/>
-                            <constraint firstItem="JgA-Kx-QGf" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="3Ew-Hn-SZd"/>
+                            <constraint firstItem="oPA-w3-V6b" firstAttribute="top" secondItem="ubS-NY-rcT" secondAttribute="bottom" id="6lE-HW-2zS"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="trailing" secondItem="oPA-w3-V6b" secondAttribute="trailing" id="Ajy-Uq-sd1"/>
                             <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="E7x-g7-gBV"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="EKI-h0-VR8"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="50" id="IjJ-lD-c8z"/>
                             <constraint firstItem="ciS-pA-ovS" firstAttribute="top" secondItem="bos-sp-j80" secondAttribute="bottom" constant="12" id="MxJ-BY-JmD"/>
-                            <constraint firstItem="JgA-Kx-QGf" firstAttribute="width" secondItem="bos-sp-j80" secondAttribute="width" id="Rkq-j0-8Vj"/>
-                            <constraint firstItem="u7Q-MU-drX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="XYS-AE-H61"/>
-                            <constraint firstItem="JgA-Kx-QGf" firstAttribute="top" secondItem="u7Q-MU-drX" secondAttribute="bottom" constant="12" id="ak1-iU-HLF"/>
-                            <constraint firstItem="u7Q-MU-drX" firstAttribute="width" secondItem="bos-sp-j80" secondAttribute="width" id="jfq-ld-Pnh"/>
-                            <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="JgA-Kx-QGf" secondAttribute="bottom" constant="12" id="oZq-Ob-EQd"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="top" secondItem="ubS-NY-rcT" secondAttribute="top" id="OGs-ay-qep"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="trailing" secondItem="ubS-NY-rcT" secondAttribute="trailing" id="bHq-2P-wAN"/>
+                            <constraint firstItem="oPA-w3-V6b" firstAttribute="height" secondItem="ubS-NY-rcT" secondAttribute="height" multiplier="2/3" id="dBk-Am-1cX"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="leading" secondItem="ubS-NY-rcT" secondAttribute="leading" id="flP-zb-FYM"/>
+                            <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="oPA-w3-V6b" secondAttribute="bottom" id="iPu-7U-BMh"/>
+                            <constraint firstItem="oPA-w3-V6b" firstAttribute="leading" secondItem="2Fp-cs-AKH" secondAttribute="leading" id="jHz-Eb-9hb"/>
+                            <constraint firstItem="bos-sp-j80" firstAttribute="height" secondItem="oPA-w3-V6b" secondAttribute="height" multiplier="5" id="kf8-bq-C9J"/>
                             <constraint firstItem="J1y-Qk-FSX" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="piD-VT-cUm"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="tQ7-Ks-K18"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="J1y-Qk-FSX" secondAttribute="bottom" constant="8" id="tck-5q-i12"/>
@@ -126,8 +146,10 @@ example.</string>
                         <outlet property="contentWidth" destination="EKI-h0-VR8" id="4gz-Z4-U2l"/>
                         <outlet property="continueButton" destination="ciS-pA-ovS" id="fli-79-bAt"/>
                         <outlet property="header" destination="u7Q-MU-drX" id="sqo-IJ-qev"/>
+                        <outlet property="headerContainer" destination="ubS-NY-rcT" id="KQM-mM-pVE"/>
                         <outlet property="skipButton" destination="J1y-Qk-FSX" id="ScB-tm-3Uc"/>
                         <outlet property="subheader" destination="JgA-Kx-QGf" id="eGR-Va-uhA"/>
+                        <outlet property="subheaderContainer" destination="oPA-w3-V6b" id="sXN-ME-vPf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>

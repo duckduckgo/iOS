@@ -85,7 +85,7 @@ class PrivacyProtectionHeaderConfigurator {
         
         let fullString = NSMutableAttributedString(string: firstPart)
         fullString.setAttributes(fromText.attributes(at: 0, effectiveRange: nil),
-                                 range: NSRangeFromString(firstPart))
+                                 range: firstPart.fullRange)
         
         let image1Attachment = NSTextAttachment()
         image1Attachment.image = siteGradeImages.from

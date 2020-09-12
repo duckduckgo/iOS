@@ -23,7 +23,6 @@ import Core
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
@@ -52,7 +51,6 @@ class SettingsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMargins()
         configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
@@ -110,13 +108,6 @@ class SettingsViewController: UITableViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
-    }
-
-    private func configureMargins() {
-        guard #available(iOS 11, *) else { return }
-//        for margin in margins {
-//            margin.constant = 0
-//        }
     }
     
     private func configureThemeCellAccessory() {

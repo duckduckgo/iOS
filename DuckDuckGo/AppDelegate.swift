@@ -198,6 +198,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.newTab()
             if url.getParam(name: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)

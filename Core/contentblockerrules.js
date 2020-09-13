@@ -217,7 +217,7 @@
         originalFetch = window.fetch;
       }
       window.fetch = function() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
           return originalFetch.apply(window, arguments);
         }
 

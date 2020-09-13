@@ -77,7 +77,7 @@ struct LargeSearchFieldView: View {
         Link(destination: DeepLinks.newSearch) {
             ZStack {
 
-                RoundedRectangle(cornerRadius: 21)
+                Capsule(style: .circular)
                     .fill(Color.widgetSearchFieldBackground)
                     .frame(minHeight: 46, maxHeight: 46)
                     .padding(16)
@@ -170,7 +170,7 @@ struct SearchWidgetView: View {
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
-                    RoundedRectangle(cornerRadius: 21)
+                    Capsule(style: .circular)
                         .fill(Color.widgetSearchFieldBackground)
                         .frame(width: 123, height: 46)
 

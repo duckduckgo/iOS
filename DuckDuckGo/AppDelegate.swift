@@ -131,8 +131,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ]
 
                 switch result {
-                case .failure:
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetError: "1"])
+                case .failure(let error):
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                        PixelParameters.widgetError: "1",
+                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                        PixelParameters.widgetErrorDomain: (error as NSError).domain
+                    ])
 
                 case .success(let widgetInfo):
                     let params = widgetInfo.reduce([String: String]()) {

@@ -53,7 +53,7 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<FavoritesEntry>) -> Void) {
-        let timeline = Timeline(entries: [createEntry(in: context)], policy: .atEnd)
+        let timeline = Timeline(entries: [createEntry(in: context)], policy: .never)
         completion(timeline)
     }
 
@@ -75,7 +75,7 @@ struct Provider: TimelineProvider {
             favorites = getFavorites(returningNoMoreThan: 4)
 
         case .systemLarge:
-            favorites = getFavorites(returningNoMoreThan: 8)
+            favorites = getFavorites(returningNoMoreThan: 12)
 
         default:
             favorites = []

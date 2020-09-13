@@ -140,8 +140,12 @@ extension TabsBarCell: UIPointerInteractionDelegate {
 // Based on https://stackoverflow.com/a/53847223/73479
 class FadeOutLabel: UILabel {
     
-    var primaryColor: UIColor = .black
-        
+    var primaryColor: UIColor = .black {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+
     override func drawText(in rect: CGRect) {
         let gradientColors = [primaryColor.cgColor, UIColor.clear.cgColor]
         if let gradientColor = drawGradientColor(in: rect, colors: gradientColors) {

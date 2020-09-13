@@ -217,6 +217,10 @@
         originalFetch = window.fetch;
       }
       window.fetch = function() {
+        if (arguments.length == 0) {
+          return originalFetch.apply(window, arguments);
+        }
+
         if (typeof arguments[0] === 'string') {
           sendMessage(arguments[0], 'fetch');
         } else if (arguments[0].url) {

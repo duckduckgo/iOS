@@ -18,7 +18,7 @@
 //
 
 import Core
-import WidgetKit
+// import WidgetKit
 
 class BookmarksManager {
 
@@ -194,9 +194,10 @@ class BookmarksManager {
     }
 
     func reloadWidgets() {
-        if #available(iOS 14, *) {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+//        if #available(iOS 14, *) {
+//            WidgetCenter.shared.reloadAllTimelines()
+//        }
+//  no-op
     }
 
 }

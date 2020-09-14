@@ -22,7 +22,7 @@ import Core
 import UserNotifications
 import os.log
 import Kingfisher
-// import WidgetKit
+import WidgetKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -121,39 +121,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func fireAppLaunchPixel() {
 
-//        if #available(iOS 14, *) {
-//            WidgetCenter.shared.getCurrentConfigurations { result in
-//
-//                let paramKeys: [WidgetFamily: String] = [
-//                    .systemSmall: PixelParameters.widgetSmall,
-//                    .systemMedium: PixelParameters.widgetMedium,
-//                    .systemLarge: PixelParameters.widgetLarge
-//                ]
-//
-//                switch result {
-//                case .failure(let error):
-//                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
-//                        PixelParameters.widgetError: "1",
-//                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
-//                        PixelParameters.widgetErrorDomain: (error as NSError).domain
-//                    ])
-//
-//                case .success(let widgetInfo):
-//                    let params = widgetInfo.reduce([String: String]()) {
-//                        var result = $0
-//                        if let key = paramKeys[$1.family] {
-//                            result[key] = "1"
-//                        }
-//                        return result
-//                    }
-//                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
-//                }
-//
-//            }
-//        } else {
-//            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
-//        }
-        Pixel.fire(pixel: .appLaunch)
+        if #available(iOS 14, *) {
+            WidgetCenter.shared.getCurrentConfigurations { result in
+
+                let paramKeys: [WidgetFamily: String] = [
+                    .systemSmall: PixelParameters.widgetSmall,
+                    .systemMedium: PixelParameters.widgetMedium,
+                    .systemLarge: PixelParameters.widgetLarge
+                ]
+
+                switch result {
+                case .failure(let error):
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                        PixelParameters.widgetError: "1",
+                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                        PixelParameters.widgetErrorDomain: (error as NSError).domain
+                    ])
+
+                case .success(let widgetInfo):
+                    let params = widgetInfo.reduce([String: String]()) {
+                        var result = $0
+                        if let key = paramKeys[$1.family] {
+                            result[key] = "1"
+                        }
+                        return result
+                    }
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                }
+
+            }
+        } else {
+            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
+        }
 
     }
 

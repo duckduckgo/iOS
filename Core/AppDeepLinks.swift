@@ -29,7 +29,13 @@ public struct AppDeepLinks {
     
     public static let fire = "ddgFire://"
 
+    public static let launchFavorite = "ddgFavorite://"
+
     public static let aboutLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/about")!
+
+    public static func isLaunchFavorite(url: URL) -> Bool {
+        return isUrl(url, deepLink: launchFavorite)
+    }
 
     public static func isNewSearch(url: URL) -> Bool {
         return isUrl(url, deepLink: AppDeepLinks.newSearch)
@@ -56,5 +62,9 @@ public struct AppDeepLinks {
 
     public static func query(fromQuickLink url: URL) -> String {
         return url.absoluteString.replacingOccurrences(of: quickLink, with: "", options: .caseInsensitive)
+    }
+
+    public static func query(fromLaunchFavorite url: URL) -> String {
+        return url.absoluteString.replacingOccurrences(of: launchFavorite, with: "", options: .caseInsensitive)
     }
 }

@@ -146,6 +146,7 @@
 				<string>ddgQuickLink</string>
 				<string>ddgBookmarks</string>
 				<string>ddgFire</string>
+				<string>ddgFavorite</string>
 				<string>http</string>
 				<string>https</string>
 			</array>
@@ -174,6 +175,10 @@
 	<string>Allows you to share recordings</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allows you to save images to your device</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>ConfigurationIntent</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>proximanova-extrabold.otf</string>

@@ -74,7 +74,6 @@ class AtbIntegrationTests: XCTestCase {
             fatalError("Could not start server")
         }
         
-        Springboard.deleteMyApp()
         app.launch()
     }
     
@@ -84,7 +83,7 @@ class AtbIntegrationTests: XCTestCase {
         statisticsRequests.removeAll()
         searchRequests.removeAll()
     }
-    
+
     func test() throws {
         try assertWhenAppIsInstalledAndLaunchedThenExtiIsCalledAndInitialAtbIsRetrieved()
         clearRequests()
@@ -202,29 +201,15 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertEqual(text, request.queryParam("q"), file: file, line: line)
         XCTAssertEqual(atb, request.queryParam(Constants.atbParam), file: file, line: line)
     }
-    
+
     private func search(forText text: String) {
-        let searchentrySearchField = app.searchFields["searchEntry"]
-        
-        if !searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout) {
-            // Centered home screen variant
-            app.collectionViews.otherElements["activateSearch"].tap()
-            
-            if !searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout) {
-                fatalError("Search field could not be activated")
-            }
-        } else {
-            searchentrySearchField.tap()
-        }
-        
-        let keyboard = app.keyboards.element
-        if keyboard.waitForExistence(timeout: Constants.defaultTimeout) {
-            // Check software keyboard is enabled
-            searchentrySearchField.typeText("\(text)\r")
-            Snapshot.waitForLoadingIndicatorToDisappear(within: Constants.defaultTimeout)
-        } else {
-            XCTFail("No keyboard present after tapping search field")
-        }
+
+        let searchentrySearchField = app.searchFields.element
+        XCTAssertTrue(searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout))
+        searchentrySearchField.tap()
+        searchentrySearchField.typeText("\(text)\r")
+        Snapshot.waitForLoadingIndicatorToDisappear(within: Constants.defaultTimeout)
+
     }
     
     private func waitFor(searchRequestsCount: Int, statisticRequestsCount: Int, timeout: TimeInterval) {

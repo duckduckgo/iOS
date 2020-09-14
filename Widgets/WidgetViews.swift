@@ -154,7 +154,7 @@ struct FavoritesWidgetView: View {
 
                 }
 
-            }
+            }.padding(.bottom, 8)
         }
     }
 }

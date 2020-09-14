@@ -50,7 +50,7 @@ class FileStoreTests: XCTestCase {
         XCTAssertNil(store.loadAsString(forConfiguration: .temporaryUnprotectedSites))
     }
 
-    private func assertDeleted(_ url: URL, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertDeleted(_ url: URL, file: StaticString = #file, line: UInt = #line) {
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.absoluteString), file: file, line: line)
     }
     

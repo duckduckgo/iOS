@@ -1,3 +1,2 @@
-• iPad users are getting a substantial interface upgrade, including a tab bar!
-• Patched a vulnerability in the web view related to sharing from a web page
-• Other bug fixes and improvements
+• iOS 14 users can now set DuckDuckGo as their default browser and add search and favorites to their home screen.
+• Bug fixes and improvements.

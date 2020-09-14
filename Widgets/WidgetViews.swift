@@ -110,11 +110,16 @@ struct FavoritesRowView: View {
     var end: Int
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack() {
             ForEach(start...end, id: \.self) {
                 FavoriteView(favorite: entry.favoriteAt(index: $0), isPreview: entry.isPreview)
+
+                if $0 < end {
+                    Spacer()
+                }
+
             }
-        }
+        }.padding(.horizontal, 16)
     }
 
 }

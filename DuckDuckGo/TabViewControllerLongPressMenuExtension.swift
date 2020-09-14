@@ -119,8 +119,8 @@ extension TabViewController {
         nil // hide/show link previews on some versions of ios
     ]
 
-    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
-                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
+        func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+                     completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
 
         guard let url = elementInfo.linkURL else {
             completionHandler(nil)

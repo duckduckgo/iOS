@@ -41,9 +41,9 @@
         "package": "Swifter",
         "repositoryURL": "https://github.com/httpswift/swifter.git",
         "state": {
-          "branch": null,
-          "revision": "6fccec52374d5799e303c3c7b808ce48ceaf5c94",
-          "version": "1.4.3"
+          "branch": "xcode12-swift5",
+          "revision": "14334e0318a919fec72d3adc85aff66b80c31a73",
+          "version": null
         }
       },
       {

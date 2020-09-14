@@ -23,6 +23,7 @@ import os.log
 public enum PixelName: String {
     
     case appLaunch = "ml"
+    case defaultBrowserLaunch = "m_dl"
     case navigationDetected = "m_n"
 
     case forgetAllPressedBrowsing = "mf_bp"
@@ -195,6 +196,9 @@ public enum PixelName: String {
     case daxDialogsSiteIsMajor = "m_dx_sm"
     case daxDialogsSiteOwnedByMajor = "m_dx_so"
     case daxDialogsHidden = "m_dx_h"
+
+    case widgetFavoriteLaunch = "m_w_fl"
+    case widgetNewSearch = "m_w_ns"
         
     // debug pixels:
     
@@ -236,6 +240,14 @@ public struct PixelParameters {
     static let underlyingErrorDesc = "ud"
 
     public static let tabCount = "tc"
+
+    public static let widgetSmall = "ws"
+    public static let widgetMedium = "wm"
+    public static let widgetLarge = "wl"
+    public static let widgetError = "we"
+    public static let widgetErrorCode = "ec"
+    public static let widgetErrorDomain = "ed"
+    public static let widgetUnavailable = "wx"
 }
 
 public struct PixelValues {

@@ -48,6 +48,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet weak var privacyProtectionView: UIView!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     
+    @IBOutlet weak var collectingDataInfo: UILabel!
+    
     // Leaderboard
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
@@ -67,10 +69,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
                            forCellReuseIdentifier: "PPHeaderCell")
         
         initPopRecognizer()
-        
-        firstPill.didLoad()
-        secondPill.didLoad()
-        thirdPill.didLoad()
+        prepareUI()
         
         update()
         
@@ -113,6 +112,15 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateTrackers()
         updatePrivacyPractices()
         updateProtectionToggle()
+    }
+    
+    private func prepareUI() {
+        firstPill.didLoad()
+        secondPill.didLoad()
+        thirdPill.didLoad()
+        
+        collectingDataInfo.setAttributedTextString(UserText.ppNetworkLeaderboardGatheringData)
+        tableView.tableFooterView = UIView()
     }
         
     private func updateEncryption() {

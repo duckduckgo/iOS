@@ -208,7 +208,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site Privacy Protection" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sr7-Qg-P74">
-                                                            <rect key="frame" x="20" y="19.666666666666668" width="305" height="17.000000000000004"/>
+                                                            <rect key="frame" x="20" y="18" width="305" height="20"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -315,13 +315,13 @@
                                                         <constraint firstAttribute="height" constant="48" id="8ZA-DJ-9OY"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpT-I9-kDk">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpT-I9-kDk">
                                                     <rect key="frame" x="20" y="72" width="374" height="12"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SmL-Y0-oTc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SmL-Y0-oTc">
                                                     <rect key="frame" x="20" y="92" width="374" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment>
@@ -391,7 +391,7 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="6.6666666666666714" width="8" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="pvT-Xx-v4r">
-                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
+                                                                    <rect key="frame" x="28" y="4.6666666666666714" width="41" height="18.666666666666668"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
@@ -436,7 +436,7 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="6.6666666666666714" width="14" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="vrU-Il-Qe2">
-                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
+                                                                    <rect key="frame" x="28" y="4.6666666666666714" width="41" height="18.666666666666668"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
@@ -481,7 +481,7 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="7" width="13" height="14"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="jwd-nT-Gh9">
-                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
+                                                                    <rect key="frame" x="28" y="4.6666666666666714" width="41" height="18.666666666666668"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
@@ -550,6 +550,7 @@ many trackers we've blocked.</string>
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="collectingDataInfo" destination="SmL-Y0-oTc" id="frU-qf-8Pk"/>
                         <outlet property="encryptionCell" destination="goO-wb-Nup" id="oyA-Bs-y4l"/>
                         <outlet property="firstPill" destination="i3y-HD-l11" id="kUP-Fe-AJC"/>
                         <outlet property="privacyPracticesCell" destination="7tG-Dt-rZf" id="bRZ-1X-bt7"/>
@@ -574,8 +575,7 @@ many trackers we've blocked.</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ssV-SA-05f">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="sectionIndexBackgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="AdE-kb-aJk">
                                 <cells>
@@ -590,6 +590,7 @@ many trackers we've blocked.</string>
                                                     <rect key="frame" x="127" y="18.666666666666671" width="160" height="120.00000000000001"/>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="2eo-3t-asZ" firstAttribute="centerX" secondItem="mZf-rW-9qr" secondAttribute="centerX" id="HbQ-6L-LsE"/>
                                                 <constraint firstItem="2eo-3t-asZ" firstAttribute="centerY" secondItem="mZf-rW-9qr" secondAttribute="centerY" id="cy6-sb-6ls"/>
@@ -611,6 +612,7 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="3uo-s0-uRc" style="IBUITableViewCellStyleDefault" id="iZV-7A-J2y">
@@ -628,6 +630,7 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="6ld-N9-NRF">
@@ -654,6 +657,7 @@ many trackers we've blocked.</string>
                                                     <rect key="frame" x="197" y="25" width="20" height="20"/>
                                                 </activityIndicatorView>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="2KC-47-FBo" firstAttribute="centerX" secondItem="ksZ-bY-p96" secondAttribute="centerX" id="85n-xe-NUs"/>
                                                 <constraint firstItem="r6M-CJ-eec" firstAttribute="centerY" secondItem="ksZ-bY-p96" secondAttribute="centerY" id="EGg-A3-oJR"/>
@@ -674,7 +678,7 @@ many trackers we've blocked.</string>
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site Privacy Protection" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pW9-ic-ro9">
-                                                            <rect key="frame" x="20" y="19.666666666666668" width="305" height="17.000000000000004"/>
+                                                            <rect key="frame" x="20" y="18" width="305" height="20"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -781,13 +785,13 @@ many trackers we've blocked.</string>
                                                         <constraint firstAttribute="height" constant="48" id="1XC-8l-iah"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3UG-EO-bt5">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3UG-EO-bt5">
                                                     <rect key="frame" x="20" y="72" width="374" height="12"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwL-NN-A0K">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwL-NN-A0K">
                                                     <rect key="frame" x="20" y="92" width="374" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment>
@@ -857,7 +861,7 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="6.6666666666666714" width="8" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1kC-k0-6in">
-                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
+                                                                    <rect key="frame" x="28" y="4.6666666666666714" width="41" height="18.666666666666668"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
@@ -902,7 +906,7 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="6.6666666666666714" width="14" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="NsY-U6-vXG">
-                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
+                                                                    <rect key="frame" x="28" y="4.6666666666666714" width="41" height="18.666666666666668"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
@@ -947,7 +951,7 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="7" width="13" height="14"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1lh-td-W7c">
-                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
+                                                                    <rect key="frame" x="28" y="4.6666666666666714" width="41" height="18.666666666666668"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
@@ -1019,6 +1023,7 @@ many trackers we've blocked.</string>
                         <outlet property="activity" destination="r6M-CJ-eec" id="IWV-qT-fqi"/>
                         <outlet property="button" destination="2KC-47-FBo" id="cfN-nq-toN"/>
                         <outlet property="buttonCell" destination="6ld-N9-NRF" id="5pZ-g5-gOJ"/>
+                        <outlet property="collectingDataInfo" destination="zwL-NN-A0K" id="tDa-fS-7nY"/>
                         <outlet property="errorLabel" destination="3uo-s0-uRc" id="RJu-Ly-zvM"/>
                         <outlet property="firstPill" destination="tfW-aL-tz5" id="udf-5B-Dhz"/>
                         <outlet property="secondPill" destination="tre-kN-hal" id="PTR-d0-4WK"/>
@@ -1052,7 +1057,7 @@ many trackers we've blocked.</string>
                                             </constraints>
                                             <state key="normal" image="PP Arrow Back"/>
                                         </button>
-                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
+                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
                                             <rect key="frame" x="0.0" y="148" width="414" height="52"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ps0-H9-esy">
@@ -1062,7 +1067,7 @@ many trackers we've blocked.</string>
                                                         <constraint firstAttribute="height" constant="1" id="maQ-hS-Dkh"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
                                                     <rect key="frame" x="24" y="8" width="366" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="An encrypted connection prevents eavesdropping of any personal information you send to a website.">
@@ -1075,7 +1080,7 @@ many trackers we've blocked.</string>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35G-VL-OEY" userLabel="Custom Divider">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="35G-VL-OEY" userLabel="Custom Divider">
                                                     <rect key="frame" x="20" y="50" width="374" height="2"/>
                                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1105,19 +1110,19 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="height" constant="65" id="lZQ-VG-WoB"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5w-e3-JfY">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5w-e3-JfY">
                                             <rect key="frame" x="20" y="90" width="374" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
                                             <rect key="frame" x="20" y="116" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-Zr-WkQ" userLabel="Tap View">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-Zr-WkQ" userLabel="Tap View">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="T2j-bE-D9r" appends="YES" id="fil-e9-tQ3"/>
@@ -1230,13 +1235,13 @@ many trackers we've blocked.</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Your Data is Vulnerable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T4-dB-Wu0">
-                                                    <rect key="frame" x="23.666666666666657" y="85" width="367" height="16"/>
+                                                    <rect key="frame" x="23.666666666666657" y="85" width="367" height="10"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-HR-hpn">
-                                                    <rect key="frame" x="23.666666666666657" y="106" width="367" height="36"/>
+                                                    <rect key="frame" x="23.666666666666657" y="100" width="367" height="42"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="This connection is not encrypted, so be careful what you send.">
                                                             <attributes>
@@ -1633,20 +1638,20 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="width" constant="58" id="ffJ-d1-AFH"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nh-8f-M2e">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nh-8f-M2e">
                                             <rect key="frame" x="40" y="90" width="334" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n TRACKER NETWORKS BLOCKED" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHN-Tz-cdk" userLabel="Mixed Encryption Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="n TRACKER NETWORKS BLOCKED" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHN-Tz-cdk" userLabel="Mixed Encryption Label">
                                             <rect key="frame" x="20" y="116" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwM-eP-cbc" userLabel="Description View">
-                                            <rect key="frame" x="0.0" y="148" width="414" height="86.666666666666686"/>
+                                            <rect key="frame" x="0.0" y="136.33333333333334" width="414" height="98.333333333333343"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hx0-Fc-Kk1">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
@@ -1656,7 +1661,7 @@ many trackers we've blocked.</string>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYv-1m-cZo">
-                                                    <rect key="frame" x="16" y="8" width="382" height="70.666666666666671"/>
+                                                    <rect key="frame" x="16" y="8" width="382" height="82.333333333333329"/>
                                                     <attributedString key="attributedText">
                                                         <fragment>
                                                             <string key="content">Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the internet.</string>
@@ -1670,7 +1675,7 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhE-Km-i1S">
-                                                    <rect key="frame" x="20" y="85.666666666666657" width="374" height="1"/>
+                                                    <rect key="frame" x="20" y="97.333333333333314" width="374" height="1"/>
                                                     <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="OnF-aa-04X"/>
@@ -1706,7 +1711,7 @@ many trackers we've blocked.</string>
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIf-0g-TkK" userLabel="Tap View">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="136.33333333333334"/>
                                             <gestureRecognizers/>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="XGe-f4-wQn" appends="YES" id="R6n-gL-zQ3"/>
@@ -1878,19 +1883,19 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="height" constant="65" id="fLg-yP-pQD"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SO-8y-5QH">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SO-8y-5QH">
                                             <rect key="frame" x="20" y="90" width="374" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY PRACTICES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25V-p3-wsn" userLabel="Mixed Encryption Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PRIVACY PRACTICES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25V-p3-wsn" userLabel="Mixed Encryption Label">
                                             <rect key="frame" x="20" y="116" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-BI-Cm8">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-BI-Cm8">
                                             <rect key="frame" x="0.0" y="148" width="414" height="52"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvj-uQ-WZu">
@@ -1900,7 +1905,7 @@ many trackers we've blocked.</string>
                                                         <constraint firstAttribute="height" constant="1" id="SXf-WE-VSl"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
                                                     <rect key="frame" x="24" y="8" width="366" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Privacy practices indicate how much the  personal information that you share with a website is protected.">
@@ -1913,7 +1918,7 @@ many trackers we've blocked.</string>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKS-ZX-vAo">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xKS-ZX-vAo">
                                                     <rect key="frame" x="20" y="51" width="374" height="1"/>
                                                     <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -1946,7 +1951,7 @@ many trackers we've blocked.</string>
                                                 <action selector="onBack" destination="3wX-Uf-JRU" eventType="touchUpInside" id="FoO-Kq-0Mq"/>
                                             </connections>
                                         </button>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OWk-Mj-6oF" userLabel="Tap View">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OWk-Mj-6oF" userLabel="Tap View">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                             <gestureRecognizers/>
                                             <connections>
@@ -1978,14 +1983,14 @@ many trackers we've blocked.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="72t-tQ-5SV" imageView="WRK-Wt-JyD" style="IBUITableViewCellStyleDefault" id="LK0-gl-KUB" customClass="PrivacyProtectionPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="228" width="414" height="79"/>
+                                        <rect key="frame" x="0.0" y="228" width="414" height="93"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LK0-gl-KUB" id="2Vq-On-UQN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="72t-tQ-5SV">
-                                                    <rect key="frame" x="57" y="0.0" width="337" height="79"/>
+                                                    <rect key="frame" x="57" y="0.0" width="337" height="93"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="This website will notify you before transferring your information in the event of a merger or acquisition">
@@ -1998,14 +2003,14 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Result Success" id="WRK-Wt-JyD">
-                                                    <rect key="frame" x="20" y="28.333333333333329" width="22" height="22"/>
+                                                    <rect key="frame" x="20" y="35.333333333333336" width="22" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPractices" rowHeight="300" id="dTH-6q-tGo" customClass="PrivacyProtectionNoPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="307" width="414" height="300"/>
+                                        <rect key="frame" x="0.0" y="321" width="414" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dTH-6q-tGo" id="9KP-Lk-xIX">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
@@ -2015,13 +2020,13 @@ many trackers we've blocked.</string>
                                                     <rect key="frame" x="180.66666666666666" y="35" width="53" height="53"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Privacy Practices Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0S-dU-EUe">
-                                                    <rect key="frame" x="23.666666666666657" y="108" width="367" height="18"/>
+                                                    <rect key="frame" x="23.666666666666657" y="108" width="367" height="21"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATi-1t-ByQ">
-                                                    <rect key="frame" x="23.666666666666657" y="131" width="367" height="36"/>
+                                                    <rect key="frame" x="23.666666666666657" y="134" width="367" height="42"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="The privacy practices of this website have not been reviewed.">
                                                             <attributes>
@@ -2055,7 +2060,7 @@ many trackers we've blocked.</string>
                                 <rect key="frame" x="0.0" y="646" width="414" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLZ-Bg-d8p">
-                                        <rect key="frame" x="26" y="28" width="362" height="14"/>
+                                        <rect key="frame" x="26" y="27" width="362" height="16.333333333333329"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Using privacy practices info from ">
                                                 <attributes>
@@ -2550,9 +2555,9 @@ many trackers we've blocked.</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1cA-Cx-SSt"/>
-        <segue reference="jX9-jm-y61"/>
-        <segue reference="k9S-bK-6Pw"/>
+        <segue reference="AR5-Ji-FRL"/>
+        <segue reference="dc6-2A-QHk"/>
+        <segue reference="nKN-Vd-77f"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="PP Arrow Back" width="10" height="16"/>

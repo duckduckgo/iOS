@@ -29,7 +29,6 @@ protocol PrivacyProtectionErrorDelegate: class {
 
 }
 
-// TODO
 class PrivacyProtectionErrorController: UITableViewController {
     
     private enum Cells: Int {
@@ -46,6 +45,8 @@ class PrivacyProtectionErrorController: UITableViewController {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var buttonCell: UITableViewCell!
+    
+    @IBOutlet weak var collectingDataInfo: UILabel!
 
     var errorText: String?
     
@@ -61,15 +62,24 @@ class PrivacyProtectionErrorController: UITableViewController {
     weak var delegate: PrivacyProtectionErrorDelegate?
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        prepareUI()
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    private func prepareUI() {
         button.layer.cornerRadius = 5
         errorLabel.text = errorText
         resetTryAgain()
         buttonCell.isHidden = !canRetry()
-        applyTheme(ThemeManager.shared.currentTheme)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
+        firstPill.didLoad()
+        secondPill.didLoad()
+        thirdPill.didLoad()
+        
+        collectingDataInfo.setAttributedTextString(UserText.ppNetworkLeaderboardGatheringData)
+        tableView.tableFooterView = UIView()
     }
     
     @IBAction func onTapTryAgain() {

@@ -20,6 +20,13 @@
 import UIKit
 import Core
 
+protocol HomeMessageViewSectionRendererDelegate: class {
+    
+    func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer,
+                           didDismissHomeMessage homeMessage: HomeMessage)
+    
+}
+
 class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     struct Constants {
@@ -29,11 +36,21 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
+    private weak var controller: (UIViewController & HomeMessageViewSectionRendererDelegate)?
+    
     private let homePageConfiguration: HomePageConfiguration
     
     init(homePageConfiguration: HomePageConfiguration) {
         self.homePageConfiguration = homePageConfiguration
         super.init()
+    }
+    
+    func install(into controller: HomeViewController) {
+        self.controller = controller
+    }
+    
+    func install(into controller: UIViewController & HomeMessageViewSectionRendererDelegate) {
+        self.controller = controller
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -84,6 +101,7 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
     
     func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell) {
         setCellDismissed(forHomeMessage: cell.homeMessage)
+        controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
     }
     
     func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {
@@ -94,7 +112,7 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
             }
         }
         setCellDismissed(forHomeMessage: cell.homeMessage)
-        //TODO reload collectionview how?
+        controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
     }
     
     private func setCellDismissed(forHomeMessage homeMessage: HomeMessage) {

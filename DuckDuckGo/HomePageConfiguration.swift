@@ -25,14 +25,31 @@ class HomePageConfiguration {
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
         case favorites
+        case homeMessage
     }
     
     func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
         let fixed = bookmarksManager.favoritesCount == 0
         return [
             .navigationBarSearch(fixed: fixed),
+            .homeMessage,
             .favorites
         ]
     }
     
+    //TODO put conditional logic about if should show message
+
+    func homeMessages() -> [HomeMessageModel] {
+        let defaultBrowserMessage = HomeMessageModel(header: UserText.defaultBrowserHomeMessageHeader,
+                                       subheader: UserText.defaultBrowserHomeMessageSubheader,
+                                       topText: UserText.defaultBrowserHomeMessageTopText,
+                                       buttonText: UserText.defaultBrowserHomeMessageButtonText) {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+            return
+        }
+        
+        return [defaultBrowserMessage]
+    }
 }

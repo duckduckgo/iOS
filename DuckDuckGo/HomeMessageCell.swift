@@ -20,7 +20,8 @@
 import UIKit
 
 protocol HomeMessageCellDelegate: class {
-    func homeMessageCellDismissButtonWasPressed(_ controller: HomeMessageCell)
+    func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell)
+    func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell)
 }
 
 class HomeMessageCell: UICollectionViewCell {
@@ -28,6 +29,7 @@ class HomeMessageCell: UICollectionViewCell {
     static let reuseIdentifier = "homeMessageCell"
     
     weak var delegate: HomeMessageCellDelegate?
+    var homeMessage: HomeMessage = .defaultBrowserPrompt
     //TODO card shadow
     //TODO check x touchable area
     //todo home row integration stuff
@@ -65,6 +67,7 @@ class HomeMessageCell: UICollectionViewCell {
     }
     
     func configure(withModel model: HomeMessageModel) {
+        homeMessage = model.homeMessage
         headerLabel.text = model.header
         subheaderLabel.text = model.subheader
         topLabel.text = model.topText
@@ -77,7 +80,8 @@ class HomeMessageCell: UICollectionViewCell {
     }
     
     @IBAction func mainButtonPressed(_ sender: Any) {
-        buttonPressedHandler?()
+        //buttonPressedHandler?()
+        delegate?.homeMessageCellMainButtonWaspressed(self)
     }
     
     private func setShadowPath() {

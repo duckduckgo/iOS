@@ -16,12 +16,32 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-import Foundation
+import UIKit
+
+enum HomeMessage: String {
+    case defaultBrowserPrompt
+}
 
 struct HomeMessageModel {
+    var homeMessage: HomeMessage
     var header: String
     var subheader: String
     var topText: String
     var buttonText: String
     var buttonPressedAction: (() -> ())?
+    
+    static func homeMessageModel(forHomeMessage homeMessage: HomeMessage) -> HomeMessageModel {
+        switch homeMessage {
+        case .defaultBrowserPrompt:
+            return HomeMessageModel(homeMessage: .defaultBrowserPrompt,
+                                    header: UserText.defaultBrowserHomeMessageHeader,
+                                    subheader: UserText.defaultBrowserHomeMessageSubheader,
+                                    topText: UserText.defaultBrowserHomeMessageTopText,
+                                    buttonText: UserText.defaultBrowserHomeMessageButtonText) {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+    }
 }

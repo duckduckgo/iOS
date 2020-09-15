@@ -67,6 +67,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
 
         cell.configure(withModel: homePageConfiguration.homeMessages()[indexPath.row])
+        cell.delegate = self
         return cell
 
     }
@@ -77,4 +78,27 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return CGSize(width: 343, height: 190) //TODO dynamically sized
     }
 
+}
+
+extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
+    
+    func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell) {
+        setCellDismissed(forHomeMessage: cell.homeMessage)
+    }
+    
+    func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {
+        switch cell.homeMessage {
+        case .defaultBrowserPrompt:
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        }
+        setCellDismissed(forHomeMessage: cell.homeMessage)
+        //TODO reload collectionview how?
+    }
+    
+    private func setCellDismissed(forHomeMessage homeMessage: HomeMessage) {
+        let storage = homePageConfiguration.homeMessageStorage
+        storage.setDateDismissed(forHomeMessage: homeMessage)
+    }
 }

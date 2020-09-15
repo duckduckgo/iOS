@@ -548,6 +548,7 @@
 		F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3352506A037002D07D7 /* OHHTTPStubs */; };
 		F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3372506A225002D07D7 /* OHHTTPStubsSwift */; };
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
+		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1215,6 +1216,7 @@
 		F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDefaultBroswerViewController.swift; sourceTree = "<group>"; };
 		F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
+		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2336,11 +2338,11 @@
 		F13B4BF31F18C73A00814661 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				F4D9C4F8251179CC00814B71 /* HomeMessages */,
 				984147B324F0264300362052 /* Home.storyboard */,
 				853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */,
 				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
 				85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */,
-				F4D9C4F62511711800814B71 /* HomeMessageModel.swift */,
 				F16390811E648B7A005B4550 /* HomeViewController.swift */,
 				85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */,
 				85B9CB8321AEBD72009001F1 /* Cells */,
@@ -2899,6 +2901,15 @@
 				F1EEAC4C1EAFC708006128D9 /* readme.txt */,
 			);
 			name = Licensed;
+			sourceTree = "<group>";
+		};
+		F4D9C4F8251179CC00814B71 /* HomeMessages */ = {
+			isa = PBXGroup;
+			children = (
+				F4D9C4F62511711800814B71 /* HomeMessageModel.swift */,
+				F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */,
+			);
+			name = HomeMessages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3625,6 +3636,7 @@
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
+				F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				85C297042476C1FD0063A335 /* DaxDialogsSettings.swift in Sources */,

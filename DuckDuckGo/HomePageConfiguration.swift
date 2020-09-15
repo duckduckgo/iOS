@@ -37,19 +37,15 @@ class HomePageConfiguration {
         ]
     }
     
-    //TODO put conditional logic about if should show message
-
+    let homeMessageStorage = HomeMessageStorage()
+    
+    //TODO shouldn't be shown for first time users
     func homeMessages() -> [HomeMessageModel] {
-        let defaultBrowserMessage = HomeMessageModel(header: UserText.defaultBrowserHomeMessageHeader,
-                                       subheader: UserText.defaultBrowserHomeMessageSubheader,
-                                       topText: UserText.defaultBrowserHomeMessageTopText,
-                                       buttonText: UserText.defaultBrowserHomeMessageButtonText) {
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url)
-            }
-            return
+        var messages = [HomeMessageModel]()
+        if homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) == nil {
+            messages.append(HomeMessageModel.homeMessageModel(forHomeMessage: .defaultBrowserPrompt))
         }
         
-        return [defaultBrowserMessage]
+        return messages
     }
 }

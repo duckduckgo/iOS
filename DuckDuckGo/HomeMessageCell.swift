@@ -30,15 +30,9 @@ class HomeMessageCell: UICollectionViewCell {
     
     weak var delegate: HomeMessageCellDelegate?
     var homeMessage: HomeMessage = .defaultBrowserPrompt
-    //TODO card shadow
     //TODO check x touchable area
     //todo home row integration stuff
-    //todo when to show this/keeping track of if it's been dismissed/interacted with
     //todo tracking pixels
-    
-    //how are we going to generalise keeping track of dismissing stuff?
-    //Do we want to tightly couple it to this view controller?
-    //okay, so this should be a header on the collection view, and then nothing is in storyboard, which probably makes this easier to generalise
     
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var mainButton: UIButton!

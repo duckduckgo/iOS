@@ -39,7 +39,6 @@ class HomePageConfiguration {
     
     let homeMessageStorage = HomeMessageStorage()
     
-    //TODO shouldn't be shown for first time users
     func homeMessages() -> [HomeMessageModel] {
         var messages = [HomeMessageModel]()
         if homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) == nil {

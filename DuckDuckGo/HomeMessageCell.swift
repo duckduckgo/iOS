@@ -31,8 +31,6 @@ class HomeMessageCell: UICollectionViewCell {
     
     weak var delegate: HomeMessageCellDelegate?
     var homeMessage: HomeMessage = .defaultBrowserPrompt
-    //todo home row integration stuff
-    //todo tracking pixels
     
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var mainButton: UIButton!

@@ -163,6 +163,7 @@
 		85449EF523FDA02800512AAF /* KeyboardSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */; };
 		85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */; };
 		85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */; };
+		8544C37C250B827300A0FE73 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8544C37A250B823600A0FE73 /* UserText.swift */; };
 		85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */; };
 		85482D902462DCD100EDEDD1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */; };
 		85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 85482D882462DCD100EDEDD1 /* OpenAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -826,6 +827,7 @@
 		85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPropertyWrapper.swift; sourceTree = "<group>"; };
 		85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
 		85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
+		8544C37A250B823600A0FE73 /* UserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		85482D882462DCD100EDEDD1 /* OpenAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
 		85482D8F2462DCD100EDEDD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -1663,6 +1665,7 @@
 				8512EA5324ED30D20073EE19 /* Widgets.swift */,
 				853273AF24FEFE4600E3C778 /* WidgetsExtension.entitlements */,
 				853273A924FEF24300E3C778 /* WidgetViews.swift */,
+				8544C37A250B823600A0FE73 /* UserText.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -3895,6 +3898,7 @@
 				853273B424FFB36100E3C778 /* UIColorExtension.swift in Sources */,
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
 				8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */,
+				8544C37C250B827300A0FE73 /* UserText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5061,8 +5065,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/httpswift/swifter.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.4.3;
+				branch = "xcode12-swift5";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

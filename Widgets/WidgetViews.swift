@@ -2,16 +2,25 @@
 //  WidgetViews.swift
 //  DuckDuckGo
 //
-//  Created by Chris Brind on 01/09/2020.
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import WidgetKit
 import SwiftUI
 
 struct FavoriteView: View {
-
-    let ddgDomain = "duckduckgo.com"
 
     var favorite: Favorite?
     var isPreview: Bool
@@ -68,7 +77,7 @@ struct LargeSearchFieldView: View {
         Link(destination: DeepLinks.newSearch) {
             ZStack {
 
-                RoundedRectangle(cornerRadius: 21)
+                Capsule(style: .circular)
                     .fill(Color.widgetSearchFieldBackground)
                     .frame(minHeight: 46, maxHeight: 46)
                     .padding(16)
@@ -79,7 +88,7 @@ struct LargeSearchFieldView: View {
                         .resizable()
                         .frame(width: 24, height: 24, alignment: .leading)
 
-                    Text("Search DuckDuckGo")
+                    Text(UserText.searchDuckDuckGo)
                         .foregroundColor(Color.widgetSearchFieldText)
 
                     Spacer()
@@ -101,11 +110,16 @@ struct FavoritesRowView: View {
     var end: Int
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack() {
             ForEach(start...end, id: \.self) {
                 FavoriteView(favorite: entry.favoriteAt(index: $0), isPreview: entry.isPreview)
+
+                if $0 < end {
+                    Spacer()
+                }
+
             }
-        }
+        }.padding(.horizontal, 16)
     }
 
 }
@@ -140,7 +154,7 @@ struct FavoritesWidgetView: View {
 
                 }
 
-            }
+            }.padding(.bottom, 8)
         }
     }
 }
@@ -161,7 +175,7 @@ struct SearchWidgetView: View {
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
-                    RoundedRectangle(cornerRadius: 21)
+                    Capsule(style: .circular)
                         .fill(Color.widgetSearchFieldBackground)
                         .frame(width: 123, height: 46)
 

@@ -125,14 +125,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WidgetCenter.shared.getCurrentConfigurations { result in
 
                 let paramKeys: [WidgetFamily: String] = [
-                    .systemSmall: "ws",
-                    .systemMedium: "wm",
-                    .systemLarge: "wl"
+                    .systemSmall: PixelParameters.widgetSmall,
+                    .systemMedium: PixelParameters.widgetMedium,
+                    .systemLarge: PixelParameters.widgetLarge
                 ]
 
                 switch result {
-                case .failure:
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: ["we": "1"])
+                case .failure(let error):
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                        PixelParameters.widgetError: "1",
+                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                        PixelParameters.widgetErrorDomain: (error as NSError).domain
+                    ])
 
                 case .success(let widgetInfo):
                     let params = widgetInfo.reduce([String: String]()) {
@@ -147,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             }
         } else {
-            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: ["wx": "1"])
+            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
         }
 
     }
@@ -194,6 +198,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.newTab()
             if url.getParam(name: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
@@ -210,6 +215,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             mainViewController?.onQuickFirePressed()
         } else {
+            Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url)
         }
         

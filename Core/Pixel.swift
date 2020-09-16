@@ -23,6 +23,7 @@ import os.log
 public enum PixelName: String {
     
     case appLaunch = "ml"
+    case defaultBrowserLaunch = "m_dl"
     case navigationDetected = "m_n"
 
     case forgetAllPressedBrowsing = "mf_bp"
@@ -239,6 +240,14 @@ public struct PixelParameters {
     static let underlyingErrorDesc = "ud"
 
     public static let tabCount = "tc"
+
+    public static let widgetSmall = "ws"
+    public static let widgetMedium = "wm"
+    public static let widgetLarge = "wl"
+    public static let widgetError = "we"
+    public static let widgetErrorCode = "ec"
+    public static let widgetErrorDomain = "ed"
+    public static let widgetUnavailable = "wx"
 }
 
 public struct PixelValues {

@@ -86,10 +86,6 @@ class HomeMessageCell: UICollectionViewCell {
     private func setShadowPath() {
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
-    
-    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
-    }
 }
 
 extension HomeMessageCell: Themable {

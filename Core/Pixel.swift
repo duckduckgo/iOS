@@ -287,8 +287,7 @@ public class Pixel {
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
         
-        APIRequest.request(url: url, parameters: newParams, headers:headers, callBackOnMainThread: true) {
-            (_, error) in
+        APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
             
             os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
             onComplete(error)

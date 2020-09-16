@@ -23,7 +23,7 @@ import Core
 protocol HomeMessageViewSectionRendererDelegate: class {
     
     func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer,
-                           didDismissHomeMessage homeMessage: HomeMessage)
+                             didDismissHomeMessage homeMessage: HomeMessage)
     
 }
 
@@ -42,7 +42,9 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private lazy var cellForSizing: HomeMessageCell = {
         let nib = Bundle.main.loadNibNamed("HomeMessageCell", owner: HomeMessageCell.self, options: nil)
+        // swiftlint:disable force_cast
         return nib!.first as! HomeMessageCell
+        // swiftlint:enable force_cast
     }()
     
     init(homePageConfiguration: HomePageConfiguration) {
@@ -84,7 +86,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMessageCell.reuseIdentifier, for: indexPath) as? HomeMessageCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMessageCell.reuseIdentifier,
+                                                            for: indexPath) as? HomeMessageCell else {
             fatalError("not a HomeMessageCell")
         }
 
@@ -127,9 +130,9 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
         setCellDismissed(forHomeMessage: cell.homeMessage)
         UIView.animate(withDuration: 0.3, animations: {
             cell.alpha = 0
-        }) { _ in
+        }, completion: { _ in
             self.controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
-        }
+        })
     }
     
     func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {

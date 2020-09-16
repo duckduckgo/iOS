@@ -155,7 +155,7 @@ class HomeCollectionView: UICollectionView {
     }
     
     func isShowingHomeMessage(_ homeMessage: HomeMessage) -> Bool {
-        return homePageConfiguration.homeMessages().contains() { $0.homeMessage == homeMessage }
+        return homePageConfiguration.homeMessages().contains { $0.homeMessage == homeMessage }
     }
 }
 

@@ -27,19 +27,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="347" height="176"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Open links with peace of mind, every time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0j-qV-cF4">
-                        <rect key="frame" x="8" y="94" width="327" height="15"/>
+                        <rect key="frame" x="8" y="103.5" width="327" height="17.5"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                         <color key="textColor" name="WidgetSearchFieldTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Make DuckDuckGo your default browser." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh6-HD-bG9">
-                        <rect key="frame" x="18" y="48" width="307" height="40"/>
+                        <rect key="frame" x="18" y="50.5" width="307" height="47"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0L-dl-avX">
-                        <rect key="frame" x="79.5" y="125" width="184" height="31"/>
+                        <rect key="frame" x="80.5" y="137" width="182" height="31"/>
                         <color key="backgroundColor" name="AccentColor"/>
                         <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                         <constraints>
@@ -72,7 +72,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="NEW IN IOS 14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLE-Fv-A9p">
-                        <rect key="frame" x="128.5" y="16" width="86.5" height="13"/>
+                        <rect key="frame" x="127" y="16" width="89.5" height="15.5"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="13"/>
                         <color key="textColor" name="AccentColor"/>
                         <nil key="highlightedColor"/>
@@ -101,8 +101,8 @@
                 </constraints>
             </collectionViewCellContentView>
             <constraints>
-                <constraint firstItem="A9x-hQ-tLp" firstAttribute="top" secondItem="Oa2-t5-HU2" secondAttribute="top" id="02f-vM-Dqk"/>
-                <constraint firstItem="A9x-hQ-tLp" firstAttribute="leading" secondItem="Oa2-t5-HU2" secondAttribute="leading" id="bmb-wr-IyK"/>
+                <constraint firstItem="A9x-hQ-tLp" firstAttribute="top" secondItem="Oa2-t5-HU2" secondAttribute="top" id="bu3-kl-zwQ"/>
+                <constraint firstItem="A9x-hQ-tLp" firstAttribute="leading" secondItem="Oa2-t5-HU2" secondAttribute="leading" id="gEx-NK-Ak1"/>
             </constraints>
             <size key="customSize" width="347" height="176"/>
             <connections>

@@ -41,7 +41,7 @@ class HomePageConfiguration {
     
     func homeMessages() -> [HomeMessageModel] {
         var messages = [HomeMessageModel]()
-        if homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) == nil {
+        if #available(iOS 14, *), homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) == nil {
             messages.append(HomeMessageModel.homeMessageModel(forHomeMessage: .defaultBrowserPrompt))
         }
         

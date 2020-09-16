@@ -30,7 +30,6 @@ class HomeMessageCell: UICollectionViewCell {
     
     weak var delegate: HomeMessageCellDelegate?
     var homeMessage: HomeMessage = .defaultBrowserPrompt
-    //TODO check x touchable area
     //todo home row integration stuff
     //todo tracking pixels
     

@@ -59,12 +59,13 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-DQ-0n5">
-                        <rect key="frame" x="223" y="14" width="24" height="24"/>
+                        <rect key="frame" x="209" y="0.0" width="52" height="52"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="24" id="PeG-Sf-Zjg"/>
-                            <constraint firstAttribute="height" constant="24" id="kzB-0Z-hgR"/>
+                            <constraint firstAttribute="width" constant="52" id="PeG-Sf-Zjg"/>
+                            <constraint firstAttribute="height" constant="52" id="kzB-0Z-hgR"/>
                         </constraints>
                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="contentEdgeInsets" minX="14" minY="14" maxX="14" maxY="14"/>
                         <state key="normal" image="Remove"/>
                         <connections>
                             <action selector="dismissButtonPressed:" destination="Oa2-t5-HU2" eventType="touchUpInside" id="Z9t-8o-4g3"/>
@@ -88,10 +89,10 @@
                     <constraint firstItem="fh6-HD-bG9" firstAttribute="leading" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="18" id="H6w-WL-hfM"/>
                     <constraint firstItem="h0j-qV-cF4" firstAttribute="leading" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="8" id="JNP-Ap-7oR"/>
                     <constraint firstItem="w0L-dl-avX" firstAttribute="centerX" secondItem="A9x-hQ-tLp" secondAttribute="centerX" id="L9O-66-mXF"/>
-                    <constraint firstAttribute="trailing" secondItem="7vJ-DQ-0n5" secondAttribute="trailing" constant="14" id="PFL-u6-J7u"/>
+                    <constraint firstAttribute="trailing" secondItem="7vJ-DQ-0n5" secondAttribute="trailing" id="PFL-u6-J7u"/>
                     <constraint firstItem="w0L-dl-avX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="8" id="RyR-xR-Ybd"/>
-                    <constraint firstItem="7vJ-DQ-0n5" firstAttribute="top" secondItem="A9x-hQ-tLp" secondAttribute="top" constant="14" id="V5x-xh-BLE"/>
-                    <constraint firstItem="7vJ-DQ-0n5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PLE-Fv-A9p" secondAttribute="trailing" constant="14" id="apV-5w-72J"/>
+                    <constraint firstItem="7vJ-DQ-0n5" firstAttribute="top" secondItem="A9x-hQ-tLp" secondAttribute="top" id="V5x-xh-BLE"/>
+                    <constraint firstItem="7vJ-DQ-0n5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PLE-Fv-A9p" secondAttribute="trailing" id="apV-5w-72J"/>
                     <constraint firstItem="PLE-Fv-A9p" firstAttribute="centerX" secondItem="A9x-hQ-tLp" secondAttribute="centerX" id="fz6-zG-gko"/>
                     <constraint firstAttribute="trailing" secondItem="h0j-qV-cF4" secondAttribute="trailing" constant="8" id="icN-zD-imL"/>
                     <constraint firstItem="fh6-HD-bG9" firstAttribute="top" secondItem="PLE-Fv-A9p" secondAttribute="bottom" constant="19" id="v74-fm-09H"/>

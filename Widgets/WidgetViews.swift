@@ -240,6 +240,7 @@ extension Image {
 }
 
 struct WidgetViews_Previews: PreviewProvider {
+
     static let mockFavorites: [Favorite] = {
         let duckDuckGoFavorite = Favorite(url: URL(string: "https://duckduckgo.com/")!, domain: "duckduckgo.com", favicon: nil)
 

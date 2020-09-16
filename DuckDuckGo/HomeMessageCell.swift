@@ -39,7 +39,6 @@ class HomeMessageCell: UICollectionViewCell {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var subheaderLabel: UILabel!
-    private var buttonPressedHandler: (() -> ())? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,7 +65,6 @@ class HomeMessageCell: UICollectionViewCell {
         subheaderLabel.text = model.subheader
         topLabel.text = model.topText
         mainButton.setTitle(model.buttonText, for: .normal)
-        buttonPressedHandler = model.buttonPressedAction
     }
     
     @IBAction func dismissButtonPressed(_ sender: Any) {
@@ -74,7 +72,6 @@ class HomeMessageCell: UICollectionViewCell {
     }
     
     @IBAction func mainButtonPressed(_ sender: Any) {
-        //buttonPressedHandler?()
         delegate?.homeMessageCellMainButtonWaspressed(self)
     }
     

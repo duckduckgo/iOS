@@ -28,7 +28,6 @@ struct HomeMessageModel {
     var subheader: String
     var topText: String
     var buttonText: String
-    var buttonPressedAction: (() -> ())?
     
     static func homeMessageModel(forHomeMessage homeMessage: HomeMessage) -> HomeMessageModel {
         switch homeMessage {
@@ -37,11 +36,7 @@ struct HomeMessageModel {
                                     header: UserText.defaultBrowserHomeMessageHeader,
                                     subheader: UserText.defaultBrowserHomeMessageSubheader,
                                     topText: UserText.defaultBrowserHomeMessageTopText,
-                                    buttonText: UserText.defaultBrowserHomeMessageButtonText) {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url)
-                }
-            }
+                                    buttonText: UserText.defaultBrowserHomeMessageButtonText)
         }
     }
 }

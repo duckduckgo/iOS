@@ -88,6 +88,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             fatalError("not a HomeMessageCell")
         }
 
+        cell.alpha = 1.0
         cell.setWidth(collectionViewCellWidth(collectionView))
         cell.configure(withModel: homeMessageModel(forIndexPath: indexPath))
         cell.delegate = self
@@ -124,7 +125,11 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
     func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell) {
         Pixel.fire(pixel: .defaultBrowserHomeMessageDismissed)
         setCellDismissed(forHomeMessage: cell.homeMessage)
-        controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
+        UIView.animate(withDuration: 0.3, animations: {
+            cell.alpha = 0
+        }) { _ in
+            self.controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
+        }
     }
     
     func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {

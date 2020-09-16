@@ -61,13 +61,13 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets? {
-        let width = collectionViewCellWidth(collectionView)
-        let inset = Constants.horizontalMargin + (width / 2.0)
+        let widthNotTakenByCell = collectionView.frame.width - collectionViewCellWidth(collectionView)
+        let horizontalInset = widthNotTakenByCell / 2.0
         
         let isEmpty = collectionView.numberOfItems(inSection: section) == 0
         let top = isEmpty ? 0 : Constants.topMargin
         
-        return UIEdgeInsets(top: top, left: inset, bottom: 0, right: inset)
+        return UIEdgeInsets(top: top, left: horizontalInset, bottom: 0, right: horizontalInset)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

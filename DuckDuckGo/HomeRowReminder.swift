@@ -44,11 +44,11 @@ class HomeRowReminder {
         self.homeMessageStorage = homeMessageStorage
     }
 
-    func showNow() -> Bool {
+    func showNow(isDefaultBrowserSupported: Bool) -> Bool {
         // Note this is also depedent on when the Default browser home message was dismissed
         // we should bare this depedency in mind when experimenting in the future
         guard !hasShownBefore() else { return false }
-        guard hasReminderTimeElapsed() else { return false }
+        guard hasReminderTimeElapsed(isDefaultBrowserSupported: isDefaultBrowserSupported) else { return false }
         return true
     }
 
@@ -60,8 +60,8 @@ class HomeRowReminder {
         return storage.shown
     }
 
-    private func hasReminderTimeElapsed() -> Bool {
-        if #available(iOS 14, *) {
+    private func hasReminderTimeElapsed(isDefaultBrowserSupported: Bool) -> Bool {
+        if isDefaultBrowserSupported {
             guard let date = homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) else {
                 return false
             }

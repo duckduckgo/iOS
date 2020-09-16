@@ -95,7 +95,8 @@ public class WebCacheManager {
             let group = DispatchGroup()
             cookies.forEach { cookie in
                 domains.forEach { domain in
-                    if cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain)) {
+
+                    if self.isDuckDuckGoOrAllowedDomain(cookie: cookie, domain: domain) {
                         group.enter()
                         cookieStore.delete(cookie) {
                             group.leave()
@@ -115,6 +116,13 @@ public class WebCacheManager {
             }
         }
         
+    }
+
+    /// The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired
+    ///  consequences, i.e. changing the theme, default language, etc.  These cookies are not stored in a personally identifiable way. For example, the large size setting
+    ///  is stored as 's=l.' More info in https://duckduckgo.com/privacy
+    private func isDuckDuckGoOrAllowedDomain(cookie: HTTPCookie, domain: String) -> Bool {
+        return cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain))
     }
 
     public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),

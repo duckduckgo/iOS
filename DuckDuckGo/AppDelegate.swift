@@ -22,6 +22,7 @@ import Core
 import UserNotifications
 import os.log
 import Kingfisher
+import WidgetKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -105,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
-            Pixel.fire(pixel: .appLaunch)
+            self.fireAppLaunchPixel()
         }
         
         if appIsLaunching {
@@ -116,6 +117,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !privacyStore.authenticationEnabled {
             showKeyboardOnLaunch()
         }
+    }
+
+    private func fireAppLaunchPixel() {
+
+        if #available(iOS 14, *) {
+            WidgetCenter.shared.getCurrentConfigurations { result in
+
+                let paramKeys: [WidgetFamily: String] = [
+                    .systemSmall: PixelParameters.widgetSmall,
+                    .systemMedium: PixelParameters.widgetMedium,
+                    .systemLarge: PixelParameters.widgetLarge
+                ]
+
+                switch result {
+                case .failure(let error):
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                        PixelParameters.widgetError: "1",
+                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                        PixelParameters.widgetErrorDomain: (error as NSError).domain
+                    ])
+
+                case .success(let widgetInfo):
+                    let params = widgetInfo.reduce([String: String]()) {
+                        var result = $0
+                        if let key = paramKeys[$1.family] {
+                            result[key] = "1"
+                        }
+                        return result
+                    }
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                }
+
+            }
+        } else {
+            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
+        }
+
     }
 
     private func showKeyboardOnLaunch() {
@@ -163,6 +201,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab()
+            if url.getParam(name: "w") != nil {
+                Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
+            }
+        } else if AppDeepLinks.isLaunchFavorite(url: url) {
+            let query = AppDeepLinks.query(fromLaunchFavorite: url)
+            mainViewController?.loadQueryInNewTab(query)
+            Pixel.fire(pixel: .widgetFavoriteLaunch)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
@@ -174,6 +220,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             mainViewController?.onQuickFirePressed()
         } else {
+            Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url)
         }
         
@@ -187,6 +234,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
             completionHandler(newData ? .newData : .noData)
         }
+    }
+
+    func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+        return true
     }
 
     // MARK: private

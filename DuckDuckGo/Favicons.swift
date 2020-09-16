@@ -56,10 +56,14 @@ public class Favicons {
             
             return cache
         }
-        
+
+        public func cacheLocation() -> URL? {
+            return baseCacheURL()?.appendingPathComponent(Constants.faviconsFolderName)
+        }
+
         private func createCacheInDesiredLocation() -> ImageCache? {
             
-            guard var url = baseCacheURL()?.appendingPathComponent(Constants.faviconsFolderName) else { return nil }
+            guard var url = cacheLocation() else { return nil }
             
             if !FileManager.default.fileExists(atPath: url.path) {
                 try? FileManager.default.createDirectory(at: url,
@@ -75,7 +79,7 @@ public class Favicons {
             os_log("favicons %s location %s", type: .debug, rawValue, url.absoluteString)
             return try? ImageCache(name: self.rawValue, cacheDirectoryURL: url)
         }
-        
+
         private func baseCacheURL() -> URL? {
             switch self {
             case .bookmarks:
@@ -257,7 +261,7 @@ public class Favicons {
         guard let domain = domain,
             let source = sourcesProvider.mainSource(forDomain: domain) else { return nil }
         
-        let key = "\(Constants.salt)\(domain)".sha256()
+        let key = Self.createHash(ofDomain: domain)
         return ImageResource(downloadURL: source, cacheKey: key)
     }
 
@@ -295,6 +299,10 @@ public class Favicons {
             expiry,
             .alternativeSources(sources)
         ]
+    }
+
+    public static func createHash(ofDomain domain: String) -> String {
+        return "\(Constants.salt)\(domain)".sha256()
     }
 
 }

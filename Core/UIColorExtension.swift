@@ -116,6 +116,19 @@ extension UIColor {
 }
 
 extension UIColor {
+
+    convenience init(hex: String) {
+        var rgbValue: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&rgbValue)
+
+        self.init(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+
     public func combine(withColor other: UIColor, ratio: CGFloat) -> UIColor {
         let otherRatio = 1 - ratio
         let red = (redComponent * ratio) + (other.redComponent * otherRatio)
@@ -148,4 +161,40 @@ extension UIColor {
         getRed(nil, green: nil, blue: nil, alpha: &alphaComponent)
         return alphaComponent
     }
+
+}
+
+extension UIColor {
+
+    public static func forDomain(_ domain: String) -> UIColor {
+        var consistentHash: Int {
+            return domain.utf8
+                .map { return $0 }
+                .reduce(5381) { ($0 << 5) &+ $0 &+ Int($1) }
+        }
+
+        let palette = [
+            UIColor(hex: "94B3AF"),
+            UIColor(hex: "727998"),
+            UIColor(hex: "645468"),
+            UIColor(hex: "4D5F7F"),
+            UIColor(hex: "855DB6"),
+            UIColor(hex: "5E5ADB"),
+            UIColor(hex: "678FFF"),
+            UIColor(hex: "6BB4EF"),
+            UIColor(hex: "4A9BAE"),
+            UIColor(hex: "66C4C6"),
+            UIColor(hex: "55D388"),
+            UIColor(hex: "99DB7A"),
+            UIColor(hex: "ECCC7B"),
+            UIColor(hex: "E7A538"),
+            UIColor(hex: "DD6B4C"),
+            UIColor(hex: "D65D62")
+        ]
+
+        let hash = consistentHash
+        let index = hash % palette.count
+        return palette[abs(index)]
+    }
+
 }

@@ -154,6 +154,9 @@ class HomeCollectionView: UICollectionView {
         controller.collectionView.reloadData()
     }
     
+    func isShowingHomeMessage(_ homeMessage: HomeMessage) -> Bool {
+        return homePageConfiguration.homeMessages().contains() { $0.homeMessage == homeMessage }
+    }
 }
 
 extension HomeCollectionView: Themable {

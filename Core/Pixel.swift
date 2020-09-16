@@ -222,6 +222,12 @@ public enum PixelName: String {
 
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"
+    
+    case defaultBrowserButtonPressedOnboarding = "m_db_o"
+    case defaultBrowserButtonPressedSettings = "m_db_s"
+    case defaultBrowserButtonPressedHome = "m_db_h"
+    case defaultBrowserHomeMessageShown = "m_db_h_s"
+    case defaultBrowserHomeMessageDismissed = "m_db_h_d"
 }
 
 public struct PixelParameters {

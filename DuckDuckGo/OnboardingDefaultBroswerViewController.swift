@@ -17,6 +17,7 @@
 //  limitations under the License.
 
 import UIKit
+import Core
 
 class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
     
@@ -38,6 +39,7 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
     }
     
     override func onContinuePressed(navigationHandler: @escaping () -> Void) {
+        Pixel.fire(pixel: .defaultBrowserButtonPressedOnboarding)
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }

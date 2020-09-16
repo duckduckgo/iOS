@@ -195,10 +195,12 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard tableView.cellForRow(at: indexPath) == defaultBrowserCell,
-              let url = URL(string: UIApplication.openSettingsURLString) else { return }
-        
-        UIApplication.shared.open(url)
+        if tableView.cellForRow(at: indexPath) == defaultBrowserCell {
+            Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
+            
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

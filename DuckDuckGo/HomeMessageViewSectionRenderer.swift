@@ -122,6 +122,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
     
     func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell) {
+        Pixel.fire(pixel: .defaultBrowserHomeMessageDismissed)
         setCellDismissed(forHomeMessage: cell.homeMessage)
         controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
     }
@@ -129,6 +130,7 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
     func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {
         switch cell.homeMessage {
         case .defaultBrowserPrompt:
+            Pixel.fire(pixel: .defaultBrowserButtonPressedHome)
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }

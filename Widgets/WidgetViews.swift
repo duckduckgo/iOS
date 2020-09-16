@@ -238,3 +238,43 @@ extension Image {
     }
 
 }
+
+struct WidgetViews_Previews: PreviewProvider {
+    static let mockFavorites: [Favorite] = {
+        let duckDuckGoFavorite = Favorite(url: URL(string: "https://duckduckgo.com/")!, domain: "duckduckgo.com", favicon: nil)
+
+        let favorites = "abcdefghijk".map {
+            Favorite(url: URL(string: "https://\($0).com/")!, domain: "\($0).com", favicon: nil)
+        }
+
+        return [duckDuckGoFavorite] + favorites
+    }()
+
+    static let entry = FavoritesEntry(date: Date(), favorites: mockFavorites, isPreview: false)
+
+    static var previews: some View {
+        SearchWidgetView(entry: entry)
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .environment(\.colorScheme, .light)
+
+        SearchWidgetView(entry: entry)
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .environment(\.colorScheme, .dark)
+
+        FavoritesWidgetView(entry: entry)
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .environment(\.colorScheme, .light)
+
+        FavoritesWidgetView(entry: entry)
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .environment(\.colorScheme, .dark)
+
+        FavoritesWidgetView(entry: entry)
+            .previewContext(WidgetPreviewContext(family: .systemLarge))
+            .environment(\.colorScheme, .light)
+
+        FavoritesWidgetView(entry: entry)
+            .previewContext(WidgetPreviewContext(family: .systemLarge))
+            .environment(\.colorScheme, .dark)
+    }
+}

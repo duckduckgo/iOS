@@ -40,6 +40,11 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private let homePageConfiguration: HomePageConfiguration
     
+    private lazy var cellForSizing: HomeMessageCell = {
+        let nib = Bundle.main.loadNibNamed("HomeMessageCell", owner: HomeMessageCell.self, options: nil)
+        return nib!.first as! HomeMessageCell
+    }()
+    
     init(homePageConfiguration: HomePageConfiguration) {
         self.homePageConfiguration = homePageConfiguration
         super.init()
@@ -83,18 +88,35 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             fatalError("not a HomeMessageCell")
         }
 
-        cell.configure(withModel: homePageConfiguration.homeMessages()[indexPath.row])
+        cell.setWidth(collectionViewCellWidth(collectionView))
+        cell.configure(withModel: homeMessageModel(forIndexPath: indexPath))
         cell.delegate = self
         return cell
-
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 343, height: 190) //TODO dynamically sized
+        let width = collectionViewCellWidth(collectionView)
+
+        cellForSizing.setWidth(width)
+        cellForSizing.configure(withModel: homeMessageModel(forIndexPath: indexPath))
+
+        let targetSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let size = cellForSizing.systemLayoutSizeFitting(targetSize)
+        return size
     }
 
+    private func homeMessageModel(forIndexPath indexPath: IndexPath) -> HomeMessageModel {
+        return homePageConfiguration.homeMessages()[indexPath.row]
+    }
+    
+    private func collectionViewCellWidth(_ collectionView: UICollectionView) -> CGFloat {
+        let marginWidth = Constants.horizontalMargin * 2
+        let availableWidth = collectionView.bounds.size.width - marginWidth
+        let maxCellWidth = HomeMessageCell.maximumWidth
+        return  min(availableWidth, maxCellWidth)
+    }
 }
 
 extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {

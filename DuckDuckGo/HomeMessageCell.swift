@@ -27,6 +27,7 @@ protocol HomeMessageCellDelegate: class {
 class HomeMessageCell: UICollectionViewCell {
     
     static let reuseIdentifier = "homeMessageCell"
+    static let maximumWidth: CGFloat = 343
     
     weak var delegate: HomeMessageCellDelegate?
     var homeMessage: HomeMessage = .defaultBrowserPrompt
@@ -38,6 +39,7 @@ class HomeMessageCell: UICollectionViewCell {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var subheaderLabel: UILabel!
+    @IBOutlet weak var cellWidthConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,6 +69,12 @@ class HomeMessageCell: UICollectionViewCell {
         subheaderLabel.text = model.subheader
         topLabel.text = model.topText
         mainButton.setTitle(model.buttonText, for: .normal)
+        layoutIfNeeded()
+    }
+    
+    func setWidth(_ width: CGFloat) {
+        cellWidthConstraint.constant = width
+        layoutIfNeeded()
     }
     
     @IBAction func dismissButtonPressed(_ sender: Any) {
@@ -79,6 +87,10 @@ class HomeMessageCell: UICollectionViewCell {
     
     private func setShadowPath() {
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+    }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
     }
 }
 

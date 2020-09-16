@@ -21,25 +21,25 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="homeMessageCell" id="Oa2-t5-HU2" customClass="HomeMessageCell" customModule="DuckDuckGo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="315" height="194"/>
+            <rect key="frame" x="0.0" y="0.0" width="347" height="176"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A9x-hQ-tLp">
-                <rect key="frame" x="0.0" y="0.0" width="315" height="194"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A9x-hQ-tLp">
+                <rect key="frame" x="0.0" y="0.0" width="347" height="176"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Open links with peace of mind, every time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0j-qV-cF4">
-                        <rect key="frame" x="8" y="103.5" width="245" height="17.5"/>
+                        <rect key="frame" x="8" y="94" width="327" height="15"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                         <color key="textColor" name="WidgetSearchFieldTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Make DuckDuckGo your default browser." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh6-HD-bG9">
-                        <rect key="frame" x="18" y="50.5" width="225" height="47"/>
+                        <rect key="frame" x="18" y="48" width="307" height="40"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0L-dl-avX">
-                        <rect key="frame" x="39.5" y="137" width="182" height="31"/>
+                        <rect key="frame" x="79.5" y="125" width="184" height="31"/>
                         <color key="backgroundColor" name="AccentColor"/>
                         <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                         <constraints>
@@ -59,7 +59,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-DQ-0n5">
-                        <rect key="frame" x="209" y="0.0" width="52" height="52"/>
+                        <rect key="frame" x="291" y="0.0" width="52" height="52"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="52" id="PeG-Sf-Zjg"/>
                             <constraint firstAttribute="height" constant="52" id="kzB-0Z-hgR"/>
@@ -72,7 +72,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="NEW IN IOS 14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLE-Fv-A9p">
-                        <rect key="frame" x="86" y="16" width="89.5" height="15.5"/>
+                        <rect key="frame" x="128.5" y="16" width="86.5" height="13"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="13"/>
                         <color key="textColor" name="AccentColor"/>
                         <nil key="highlightedColor"/>
@@ -81,6 +81,7 @@
                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 <constraints>
                     <constraint firstItem="PLE-Fv-A9p" firstAttribute="top" secondItem="A9x-hQ-tLp" secondAttribute="top" constant="16" id="3kI-7N-Afp"/>
+                    <constraint firstAttribute="width" constant="343" id="7fE-a4-PVb"/>
                     <constraint firstItem="PLE-Fv-A9p" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="8" id="8a1-0E-48u"/>
                     <constraint firstAttribute="trailing" secondItem="fh6-HD-bG9" secondAttribute="trailing" constant="18" id="D4f-iK-s0m"/>
                     <constraint firstAttribute="bottom" secondItem="w0L-dl-avX" secondAttribute="bottom" constant="32" id="DNk-Zh-p5u"/>
@@ -99,15 +100,20 @@
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="w0L-dl-avX" secondAttribute="trailing" constant="8" id="yBy-Cu-c6z"/>
                 </constraints>
             </collectionViewCellContentView>
-            <size key="customSize" width="315" height="194"/>
+            <constraints>
+                <constraint firstItem="A9x-hQ-tLp" firstAttribute="top" secondItem="Oa2-t5-HU2" secondAttribute="top" id="02f-vM-Dqk"/>
+                <constraint firstItem="A9x-hQ-tLp" firstAttribute="leading" secondItem="Oa2-t5-HU2" secondAttribute="leading" id="bmb-wr-IyK"/>
+            </constraints>
+            <size key="customSize" width="347" height="176"/>
             <connections>
+                <outlet property="cellWidthConstraint" destination="7fE-a4-PVb" id="ZYu-wy-PgS"/>
                 <outlet property="dismissButton" destination="7vJ-DQ-0n5" id="HdE-PT-OND"/>
                 <outlet property="headerLabel" destination="fh6-HD-bG9" id="5mb-4Y-TCn"/>
                 <outlet property="mainButton" destination="w0L-dl-avX" id="70C-b7-HPh"/>
                 <outlet property="subheaderLabel" destination="h0j-qV-cF4" id="NLP-8i-e6u"/>
                 <outlet property="topLabel" destination="PLE-Fv-A9p" id="JLH-uW-7WG"/>
             </connections>
-            <point key="canvasLocation" x="-570.28985507246387" y="-435.9375"/>
+            <point key="canvasLocation" x="-547.10144927536237" y="-441.96428571428572"/>
         </collectionViewCell>
     </objects>
     <resources>

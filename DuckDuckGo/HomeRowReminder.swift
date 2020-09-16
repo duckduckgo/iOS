@@ -31,16 +31,22 @@ class HomeRowReminder {
     struct Constants {
 
         static let reminderTimeInDays = 3.0
+        static let reminderTimeInDaysIOS14 = 3.0
 
     }
 
     private var storage: HomeRowReminderStorage
+    private var homeMessageStorage: HomeMessageStorage
 
-    init(storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage()) {
+    init(storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage(),
+         homeMessageStorage: HomeMessageStorage = HomeMessageStorage()) {
         self.storage = storage
+        self.homeMessageStorage = homeMessageStorage
     }
 
     func showNow() -> Bool {
+        // Note this is also depedent on when the Default browser home message was dismissed
+        // we should bare this depedency in mind when experimenting in the future
         guard !hasShownBefore() else { return false }
         guard hasReminderTimeElapsed() else { return false }
         return true
@@ -55,12 +61,20 @@ class HomeRowReminder {
     }
 
     private func hasReminderTimeElapsed() -> Bool {
-        guard let date = storage.firstAccessDate else {
-            storage.firstAccessDate = Date()
-            return false
+        if #available(iOS 14, *) {
+            guard let date = homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) else {
+                return false
+            }
+            let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
+            return days > Constants.reminderTimeInDaysIOS14
+        } else {
+            guard let date = storage.firstAccessDate else {
+                storage.firstAccessDate = Date()
+                return false
+            }
+            let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
+            return days > Constants.reminderTimeInDays
         }
-        let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
-        return days > Constants.reminderTimeInDays
     }
 
 }

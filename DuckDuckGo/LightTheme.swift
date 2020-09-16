@@ -109,4 +109,12 @@ struct LightTheme: Theme {
     
     var daxDialogBackgroundColor: UIColor = UIColor.white
     var daxDialogTextColor: UIColor = UIColor.darkGreyish
+    
+    var homeMessageBackgroundColor = UIColor.white
+    var homeMessageHeaderTextColor = UIColor.black
+    var homeMessageSubheaderTextColor = UIColor.greyish3
+    var homeMessageTopTextColor = UIColor.cornflowerBlue
+    var homeMessageButtonColor = UIColor.cornflowerBlue
+    var homeMessageButtonTextColor = UIColor.white
+    var homeMessageDismissButtonColor = UIColor.nearlyBlackLight
 }

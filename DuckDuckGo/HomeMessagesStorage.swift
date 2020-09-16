@@ -39,7 +39,7 @@ public class HomeMessageStorage {
     func setDateDismissed(forHomeMessage homeMessage: HomeMessage, date: Date? = Date()) {
         let defaultsKey = key(forHomeMessage: homeMessage)
         if let date = date {
-            userDefaults.set(date.timeIntervalSince1970, forKey: defaultsKey)
+            //userDefaults.set(date.timeIntervalSince1970, forKey: defaultsKey)
         } else {
             userDefaults.removeObject(forKey: defaultsKey)
         }

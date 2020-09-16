@@ -42,6 +42,9 @@ class HomeMessageCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        let image = dismissButton.image(for: .normal)?.withRenderingMode(.alwaysTemplate)
+        dismissButton.setImage(image, for: .normal)
+        
         contentView.layer.cornerRadius = 8
         contentView.layer.masksToBounds = true
 
@@ -79,11 +82,15 @@ class HomeMessageCell: UICollectionViewCell {
     }
 }
 
-//TODO test this
 extension HomeMessageCell: Themable {
 
     func decorate(with theme: Theme) {
-        //TODO dark mode/themeing
-        //todo close button colour (also colours in general)
+        contentView.backgroundColor = theme.homeMessageBackgroundColor
+        headerLabel.textColor = theme.homeMessageHeaderTextColor
+        subheaderLabel.textColor = theme.homeMessageSubheaderTextColor
+        topLabel.textColor = theme.homeMessageTopTextColor
+        mainButton.backgroundColor = theme.homeMessageButtonColor
+        mainButton.setTitleColor(theme.homeMessageButtonTextColor, for: .normal)
+        dismissButton.tintColor = theme.homeMessageDismissButtonColor
     }
 }

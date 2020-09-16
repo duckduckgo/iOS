@@ -57,9 +57,6 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.cta = spec?.cta
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta
-        containerHeight.constant = (daxDialogViewController?.view.systemLayoutSizeFitting(CGSize(width: daxDialogViewController?.view.bounds.width ?? 375, height: 1000),
-                                                                                         withHorizontalFittingPriority: .required,
-                                                                                         verticalFittingPriority: .fittingSizeLevel).height ?? 350) + 20
         
         if spec?.highlightAddressBar ?? false {
             fullScreen.isActive = false
@@ -80,6 +77,7 @@ class FullscreenDaxDialogViewController: UIViewController {
         if let spec = spec {
             Pixel.fire(pixel: spec.pixelName)
         }
+        containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         daxDialogViewController?.start()
     }
     

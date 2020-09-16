@@ -58,10 +58,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         daxDialog?.message = UserText.daxDialogOnboardingMessage
         daxDialog?.theme = LightTheme()
         daxDialog?.reset()
-        daxDialogContainerHeight.constant = daxDialog?.view.systemLayoutSizeFitting(CGSize(width: daxDialog?.view.bounds.width ?? 375, height: 1000),
-                                                                                    withHorizontalFittingPriority: .required,
-                                                                                    verticalFittingPriority: .fittingSizeLevel).height ?? 0
-
+        daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
         button.displayDropShadow()
         daxIcon.isHidden = true
     }

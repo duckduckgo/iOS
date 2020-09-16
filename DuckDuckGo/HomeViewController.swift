@@ -224,7 +224,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
 extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     
     func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer, didDismissHomeMessage homeMessage: HomeMessage) {
-        self.refresh()
+        refresh()
     }
 }
 

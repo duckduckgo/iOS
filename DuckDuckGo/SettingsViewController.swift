@@ -68,8 +68,9 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureIconViews()
         
-        // Force reload of the table to make sure muliline labels are correctly presented
-        tableView.reloadData()
+        // Make sure muliline labels are correctly presented
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -203,6 +204,10 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         return cell.isHidden ? 0 : UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

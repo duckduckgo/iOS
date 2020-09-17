@@ -639,7 +639,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="67" y="224" width="280" height="20"/>
+                                                <rect key="frame" x="51.666666666666657" y="224" width="310.66666666666674" height="20"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -648,11 +648,9 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="67" y="276" width="280" height="336.66666666666674"/>
+                                                <rect key="frame" x="51.666666666666657" y="276" width="310.66666666666674" height="336.66666666666674"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="280" id="nip-EV-w1g">
-                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                                    </constraint>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="480" id="nip-EV-w1g"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment>
@@ -671,7 +669,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="67" y="628.66666666666663" width="280" height="31"/>
+                                                <rect key="frame" x="51.666666666666657" y="628.66666666666663" width="310.66666666666674" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="AIi-4Y-OcU"/>
@@ -705,6 +703,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="OvW-0f-7rn"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="width" secondItem="odm-6J-APs" secondAttribute="width" id="YvC-NF-ti6"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="width" secondItem="odm-6J-APs" secondAttribute="width" id="gOl-sI-byy"/>
+                                            <constraint firstItem="odm-6J-APs" firstAttribute="width" secondItem="wfd-Kx-0gx" secondAttribute="width" multiplier="0.75" priority="750" id="lS0-sr-i8m"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="oWa-mr-Pit"/>
                                         </constraints>
                                     </view>

@@ -31,7 +31,6 @@ class HomeRowReminder {
     struct Constants {
 
         static let reminderTimeInDays = 3.0
-        static let reminderTimeInDaysIOS14 = 3.0
 
     }
 
@@ -62,11 +61,7 @@ class HomeRowReminder {
 
     private func hasReminderTimeElapsed(isDefaultBrowserSupported: Bool) -> Bool {
         if isDefaultBrowserSupported {
-            guard let date = homeMessageStorage.dateDismissed(forHomeMessage: .defaultBrowserPrompt) else {
-                return false
-            }
-            let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
-            return days > Constants.reminderTimeInDaysIOS14
+            return homeMessageStorage.hasExpiredForHomeRow()
         } else {
             guard let date = storage.firstAccessDate else {
                 storage.firstAccessDate = Date()

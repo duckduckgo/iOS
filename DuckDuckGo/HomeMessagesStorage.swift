@@ -20,35 +20,38 @@
 import Core
 
 public class HomeMessageStorage {
+    
+    struct Constants {
 
-    private struct Keys {
-        static let dateDismissed = "com.duckduckgo.homeMessage.dateDismissed."
+        static let homeRowReminderTimeInDays = 3.0
+
     }
     
-    private func key(forHomeMessage homeMessage: HomeMessage) -> String {
-        return Keys.dateDismissed + homeMessage.rawValue
-    }
+    @UserDefaultsWrapper(key: .homeDefaultBrowserMessageDateDismissed, defaultValue: nil)
+    var homeDefaultBrowserMessageDateDismissed: Date?
     
-    func dateDismissed(forHomeMessage homeMessage: HomeMessage) -> Date? {
-        if let interval = userDefaults.object(forKey: key(forHomeMessage: homeMessage)) as? Double {
-            return Date(timeIntervalSince1970: interval)
+    func homeMessagesThatShouldBeShown() -> [HomeMessageModel] {
+        var messages = [HomeMessageModel]()
+        if shouldShowDefaultBrowserMessage() {
+            messages.append(HomeMessageModel.homeMessageModel(forHomeMessage: .defaultBrowserPrompt))
         }
-        return nil
+        
+        return messages
     }
     
-    func setDateDismissed(forHomeMessage homeMessage: HomeMessage, date: Date? = Date()) {
-        let defaultsKey = key(forHomeMessage: homeMessage)
-        if let date = date {
-            userDefaults.set(date.timeIntervalSince1970, forKey: defaultsKey)
-        } else {
-            userDefaults.removeObject(forKey: defaultsKey)
+    func hasExpiredForHomeRow() -> Bool {
+        guard let date = homeDefaultBrowserMessageDateDismissed else {
+            return false
         }
+        let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
+        return days > Constants.homeRowReminderTimeInDays
     }
-
-    private let userDefaults: UserDefaults
-
-    public init(userDefaults: UserDefaults = UserDefaults.standard) {
-        self.userDefaults = userDefaults
+    
+    private func shouldShowDefaultBrowserMessage() -> Bool {
+        if #available(iOS 14, *), homeDefaultBrowserMessageDateDismissed == nil {
+            return true
+        }
+        return false
     }
 
 }

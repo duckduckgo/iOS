@@ -131,7 +131,7 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
     
     func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell) {
         Pixel.fire(pixel: .defaultBrowserHomeMessageDismissed)
-        setCellDismissed(forHomeMessage: cell.homeMessage)
+        homePageConfiguration.homeMessageDismissed(cell.homeMessage)
         UIView.animate(withDuration: 0.3, animations: {
             cell.alpha = 0
         }, completion: { _ in
@@ -147,12 +147,7 @@ extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
                 UIApplication.shared.open(url)
             }
         }
-        setCellDismissed(forHomeMessage: cell.homeMessage)
+        homePageConfiguration.homeMessageDismissed(cell.homeMessage)
         controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
-    }
-    
-    private func setCellDismissed(forHomeMessage homeMessage: HomeMessage) {
-        let storage = homePageConfiguration.homeMessageStorage
-        storage.setDateDismissed(forHomeMessage: homeMessage)
     }
 }

@@ -35,7 +35,7 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        HomeMessageStorage().setDateDismissed(forHomeMessage: .defaultBrowserPrompt)
+        HomeMessageStorage().homeDefaultBrowserMessageDateDismissed = Date()
     }
     
     override func onContinuePressed(navigationHandler: @escaping () -> Void) {

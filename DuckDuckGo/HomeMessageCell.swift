@@ -28,6 +28,7 @@ class HomeMessageCell: UICollectionViewCell {
     
     static let reuseIdentifier = "homeMessageCell"
     static let maximumWidth: CGFloat = 343
+    static let maximumWidthIpad: CGFloat = 455
     
     weak var delegate: HomeMessageCellDelegate?
     var homeMessage: HomeMessage = .defaultBrowserPrompt

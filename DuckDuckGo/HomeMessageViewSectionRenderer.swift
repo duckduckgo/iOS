@@ -36,6 +36,10 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
+    private var isIPad: Bool {
+        return controller?.traitCollection.horizontalSizeClass == .regular
+    }
+    
     private weak var controller: (UIViewController & HomeMessageViewSectionRendererDelegate)?
     
     private let homePageConfiguration: HomePageConfiguration
@@ -118,7 +122,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func collectionViewCellWidth(_ collectionView: UICollectionView) -> CGFloat {
         let marginWidth = Constants.horizontalMargin * 2
         let availableWidth = collectionView.bounds.size.width - marginWidth
-        let maxCellWidth = HomeMessageCell.maximumWidth
+        let maxCellWidth = isIPad ? HomeMessageCell.maximumWidthIpad : HomeMessageCell.maximumWidth
         return  min(availableWidth, maxCellWidth)
     }
 }

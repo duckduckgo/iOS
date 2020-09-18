@@ -59,14 +59,14 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-DQ-0n5">
-                        <rect key="frame" x="291" y="0.0" width="52" height="52"/>
+                        <rect key="frame" x="303" y="0.0" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="52" id="PeG-Sf-Zjg"/>
-                            <constraint firstAttribute="height" constant="52" id="kzB-0Z-hgR"/>
+                            <constraint firstAttribute="width" constant="40" id="PeG-Sf-Zjg"/>
+                            <constraint firstAttribute="height" constant="40" id="kzB-0Z-hgR"/>
                         </constraints>
                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="contentEdgeInsets" minX="14" minY="14" maxX="14" maxY="14"/>
-                        <state key="normal" image="Remove"/>
+                        <state key="normal" image="dismiss"/>
                         <connections>
                             <action selector="dismissButtonPressed:" destination="Oa2-t5-HU2" eventType="touchUpInside" id="Z9t-8o-4g3"/>
                         </connections>
@@ -101,8 +101,8 @@
                 </constraints>
             </collectionViewCellContentView>
             <constraints>
-                <constraint firstItem="A9x-hQ-tLp" firstAttribute="top" secondItem="Oa2-t5-HU2" secondAttribute="top" id="bu3-kl-zwQ"/>
-                <constraint firstItem="A9x-hQ-tLp" firstAttribute="leading" secondItem="Oa2-t5-HU2" secondAttribute="leading" id="gEx-NK-Ak1"/>
+                <constraint firstItem="A9x-hQ-tLp" firstAttribute="leading" secondItem="Oa2-t5-HU2" secondAttribute="leading" id="JJl-0Y-0gv"/>
+                <constraint firstItem="A9x-hQ-tLp" firstAttribute="top" secondItem="Oa2-t5-HU2" secondAttribute="top" id="NxF-gl-1NO"/>
             </constraints>
             <size key="customSize" width="347" height="176"/>
             <connections>
@@ -117,7 +117,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Remove" width="24" height="24"/>
+        <image name="dismiss" width="12" height="12"/>
         <namedColor name="AccentColor">
             <color red="0.40400001406669617" green="0.56099998950958252" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

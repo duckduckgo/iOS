@@ -550,6 +550,7 @@
 		F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3372506A225002D07D7 /* OHHTTPStubsSwift */; };
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
+		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1219,6 +1220,7 @@
 		F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
+		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1846,6 +1848,7 @@
 				984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */,
 				984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */,
 				989B337422D7EF2100437824 /* EmptyCollectionReusableView.swift */,
+				F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -3325,6 +3328,7 @@
 				AA4D6AB823DE4D15007E8790 /* AppIconYellow29x29@2x.png in Resources */,
 				984147C024F026A300362052 /* Tab.storyboard in Resources */,
 				AA4D6AE123DE4D33007E8790 /* AppIconGreen76x76@2x.png in Resources */,
+				F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */,
 				AA4D6A9123DE49A5007E8790 /* AppIconBlack60x60@3x.png in Resources */,
 				AA4D6A8E23DE49A5007E8790 /* AppIconBlack60x60@2x.png in Resources */,
 				AA4D6AC023DE4D15007E8790 /* AppIconYellow76x76@2x.png in Resources */,

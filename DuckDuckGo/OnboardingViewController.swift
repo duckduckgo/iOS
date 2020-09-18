@@ -22,7 +22,13 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
     
-    private var controllerNames = ["onboardingHomeRow"]
+    private var controllerNames: [String] = {
+        if #available(iOS 14.0, *) {
+            return ["onboardingDefaultBrowser"]
+        } else {
+            return ["onboardingHomeRow"]
+        }
+    }()
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
@@ -142,7 +148,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         let skipButtonTitle = nextScreen.skipButtonTitle
         skipButton.setTitle(skipButtonTitle, for: .normal)
         skipButton.setTitle(skipButtonTitle, for: .disabled)
-        skipButton.isHidden = true
+        skipButton.isHidden = !(nextScreen is OnboardingDefaultBroswerViewController)
     }
     
     func done() {

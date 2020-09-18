@@ -69,8 +69,7 @@ public class APIRequest {
         
         let session = callBackOnMainThread ? mainThreadCallbackSession : defaultSession
 
-        let task = session.dataTask(with: urlRequest) {
-            (data, response, error) in
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
             
             let httpResponse = response as? HTTPURLResponse
             

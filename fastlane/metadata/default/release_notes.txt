@@ -1,1 +1,1 @@
-• iOS 14 users can now set DuckDuckGo as their default browser and add search and favorites to their home screen.
+• Now users can initiate setting DuckDuckGo as their default browser right from within the app! We're adding an in app message, but you can also find the option in Settings.

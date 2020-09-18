@@ -222,6 +222,12 @@ public enum PixelName: String {
 
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"
+    
+    case defaultBrowserButtonPressedOnboarding = "m_db_o"
+    case defaultBrowserButtonPressedSettings = "m_db_s"
+    case defaultBrowserButtonPressedHome = "m_db_h"
+    case defaultBrowserHomeMessageShown = "m_db_h_s"
+    case defaultBrowserHomeMessageDismissed = "m_db_h_d"
 }
 
 public struct PixelParameters {
@@ -281,8 +287,7 @@ public class Pixel {
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
         
-        APIRequest.request(url: url, parameters: newParams, headers:headers, callBackOnMainThread: true) {
-            (_, error) in
+        APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
             
             os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
             onComplete(error)

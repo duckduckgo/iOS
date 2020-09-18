@@ -37,7 +37,10 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
     @IBOutlet weak var rememberLoginsCell: UITableViewCell!
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
-
+    @IBOutlet weak var doNotSellCell: UITableViewCell!
+    @IBOutlet weak var doNotSellAccessoryText: UILabel!
+    @IBOutlet weak var doNotSellIndicator: UIView!
+    
     @IBOutlet weak var longPressCell: UITableViewCell!
 
     @IBOutlet var labels: [UILabel]!
@@ -82,6 +85,7 @@ class SettingsViewController: UITableViewController {
         
         configureAutoClearCellAccessory()
         configureRememberLogins()
+        configureDoNotSell()
         configureIconViews()
     }
 
@@ -167,6 +171,12 @@ class SettingsViewController: UITableViewController {
         } else {
             autoClearAccessoryText.text = UserText.autoClearAccessoryOff
         }
+    }
+    
+    private func configureDoNotSell() {
+        doNotSellAccessoryText.text = appSettings.sendDoNotSell ? "Enabled" : "Disabled"
+        doNotSellIndicator.layer.cornerRadius = 9 / 2
+        doNotSellIndicator.backgroundColor = appSettings.sendDoNotSell ? .systemGreen : .systemRed
     }
      
     private func configureRememberLogins() {

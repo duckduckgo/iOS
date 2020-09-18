@@ -97,6 +97,9 @@ public enum PixelName: String {
     case settingsUnprotectedSites = "ms_mw"
     case settingsLinkPreviewsOff = "ms_lp_f"
     case settingsLinkPreviewsOn = "ms_lp_n"
+    
+    case settingsDoNotSellOn = "ms_dns_on"
+    case settingsDoNotSellOff = "ms_dns_off"
 
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"

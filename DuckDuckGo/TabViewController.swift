@@ -80,6 +80,7 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
+    private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
@@ -155,6 +156,7 @@ class TabViewController: UIViewController {
     private var contentBlockerScript = ContentBlockerUserScript()
     private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
+    private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var debugScript = DebugUserScript()
@@ -185,6 +187,7 @@ class TabViewController: UIViewController {
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
+        addDoNotSellObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -225,6 +228,10 @@ class TabViewController: UIViewController {
         } else {
             generalScripts.append(documentScript)
             ddgScripts.append(documentScript)
+        }
+        
+        if appSettings.sendDoNotSell {
+            generalScripts.append(doNotSellScript)
         }
         
         faviconScript.delegate = self
@@ -550,6 +557,13 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
+    private func addDoNotSellObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDoNotSellChange),
+                                               name: AppUserDefaults.Notifications.doNotSellStatusChange,
+                                               object: nil)
+    }
+    
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
     }
@@ -573,6 +587,10 @@ class TabViewController: UIViewController {
             ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
+    }
+    
+    @objc func onDoNotSellChange() {
+        reload(scripts: true)
     }
 
     private func resetNavigationBar() {
@@ -952,6 +970,28 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        // Add Do Not sell header if needed
+        if appSettings.sendDoNotSell {
+            var request = navigationAction.request
+            if let headers = request.allHTTPHeaderFields,
+               headers.firstIndex(where: { $0.key == "Sec-GPC" }) == nil {
+                request.addValue("1", forHTTPHeaderField: "Sec-GPC")
+                decisionHandler(.cancel)
+                load(urlRequest: request)
+                return
+            }
+        } else {
+            // Check if DN$ header is still there and remove it
+            var request = navigationAction.request
+            if let headers = request.allHTTPHeaderFields,
+               let _ = headers.firstIndex(where: { $0.key == "Sec-GPC" }) {
+                request.setValue(nil, forHTTPHeaderField: "Sec-GPC")
+                decisionHandler(.cancel)
+                load(urlRequest: request)
+                return
+            }
+        }
                 
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
             switch tapLinkDestination {

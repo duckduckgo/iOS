@@ -21,6 +21,10 @@ import Foundation
 import Core
 
 public class AppUserDefaults: AppSettings {
+    
+    public struct Notifications {
+        public static let doNotSellStatusChange = Foundation.Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
+    }
 
     private let groupName: String
 

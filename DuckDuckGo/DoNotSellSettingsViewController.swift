@@ -33,6 +33,7 @@ class DoNotSellSettingsViewController: UITableViewController {
     @IBAction func onDoNotSellValueChanged(_ sender: Any) {
         appSettings.sendDoNotSell = doNotSellToggle.isOn
         Pixel.fire(pixel: doNotSellToggle.isOn ? .settingsDoNotSellOn : .settingsDoNotSellOff)
+        NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
     }
     
 }

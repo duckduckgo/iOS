@@ -31,6 +31,7 @@ public class HomeMessageStorage {
     var homeDefaultBrowserMessageDateDismissed: Date?
     
     func homeMessagesThatShouldBeShown() -> [HomeMessageModel] {
+        return [HomeMessageModel.homeMessageModel(forHomeMessage: .defaultBrowserPrompt)]
         var messages = [HomeMessageModel]()
         if shouldShowDefaultBrowserMessage() {
             messages.append(HomeMessageModel.homeMessageModel(forHomeMessage: .defaultBrowserPrompt))

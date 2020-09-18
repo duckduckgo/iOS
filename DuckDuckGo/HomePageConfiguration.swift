@@ -25,14 +25,28 @@ class HomePageConfiguration {
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
         case favorites
+        case homeMessage
     }
     
     func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
         let fixed = bookmarksManager.favoritesCount == 0
         return [
             .navigationBarSearch(fixed: fixed),
+            .homeMessage,
             .favorites
         ]
     }
     
+    private let homeMessageStorage = HomeMessageStorage()
+    
+    func homeMessages() -> [HomeMessageModel] {
+        return homeMessageStorage.homeMessagesThatShouldBeShown()
+    }
+    
+    func homeMessageDismissed(_ homeMessage: HomeMessage) {
+        switch homeMessage {
+        case .defaultBrowserPrompt:
+            homeMessageStorage.homeDefaultBrowserMessageDateDismissed = Date()
+        }
+    }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -70,7 +70,7 @@ example.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Continue Button" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="30" y="762" width="354" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
                                         <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
@@ -95,7 +95,7 @@ example.</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
                                 <rect key="frame" x="30" y="825" width="354" height="29"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Skip"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
@@ -108,6 +108,7 @@ example.</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="E7x-g7-gBV"/>
@@ -124,7 +125,6 @@ example.</string>
                             <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="12" id="xiB-7o-5e7"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="yd2-2T-gt7"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                     </view>
                     <connections>
                         <outlet property="contentContainer" destination="bos-sp-j80" id="5Aw-TP-cka"/>
@@ -183,13 +183,13 @@ every day.</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ko7-GM-i4t"/>
                         <constraints>
                             <constraint firstItem="Nh7-i9-URZ" firstAttribute="centerX" secondItem="Ko7-GM-i4t" secondAttribute="centerX" id="0lF-zt-4Jx"/>
                             <constraint firstItem="Nh7-i9-URZ" firstAttribute="width" secondItem="VId-rQ-yCx" secondAttribute="width" id="XZq-IE-Lbg"/>
                             <constraint firstItem="Nh7-i9-URZ" firstAttribute="centerY" secondItem="VId-rQ-yCx" secondAttribute="centerY" id="dk2-An-k0W"/>
                             <constraint firstItem="Nh7-i9-URZ" firstAttribute="height" secondItem="VId-rQ-yCx" secondAttribute="height" id="kQy-n1-T0v"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Ko7-GM-i4t"/>
                     </view>
                     <size key="freeformSize" width="320" height="276"/>
                     <connections>
@@ -206,8 +206,40 @@ every day.</string>
             </objects>
             <point key="canvasLocation" x="351" y="358"/>
         </scene>
+        <!--Open links with peace of mind, every time.-->
+        <scene sceneID="sXM-7r-JHN">
+            <objects>
+                <viewController storyboardIdentifier="onboardingDefaultBrowser" title="Open links with peace of mind, every time." id="0MQ-7J-rAM" customClass="OnboardingDefaultBroswerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5SA-Fc-Nnf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingDefaultBrowserImage" translatesAutoresizingMaskIntoConstraints="NO" id="3wL-i2-kEu">
+                                <rect key="frame" x="0.0" y="20" width="320" height="256"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nY3-Cr-hwl"/>
+                        <constraints>
+                            <constraint firstItem="3wL-i2-kEu" firstAttribute="top" secondItem="5SA-Fc-Nnf" secondAttribute="top" constant="20" id="2vA-su-oIf"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3wL-i2-kEu" secondAttribute="bottom" id="cYi-yJ-2JZ"/>
+                            <constraint firstItem="3wL-i2-kEu" firstAttribute="leading" secondItem="5SA-Fc-Nnf" secondAttribute="leading" id="o5b-JB-eRL"/>
+                            <constraint firstAttribute="trailing" secondItem="3wL-i2-kEu" secondAttribute="trailing" id="s70-P9-6np"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="320" height="276"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5fn-Ph-ZPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="1dR-Me-8TR">
+                    <connections>
+                        <action selector="playVideo" destination="0MQ-7J-rAM" id="eJh-Er-BCP"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="351" y="620"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="OnboardingDefaultBrowserImage" width="259" height="266"/>
         <image name="PlayButton" width="80" height="80"/>
     </resources>
 </document>

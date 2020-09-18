@@ -50,6 +50,8 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "favorite")
         register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "PrivacyHomeCell")
+        register(UINib(nibName: "HomeMessageCell", bundle: nil),
+                 forCellWithReuseIdentifier: "homeMessageCell")
         register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "extraContent")
         
@@ -78,6 +80,9 @@ class HomeCollectionView: UICollectionView {
                 
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+                
+            case .homeMessage:
+                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
             }
 
         }
@@ -149,6 +154,9 @@ class HomeCollectionView: UICollectionView {
         controller.collectionView.reloadData()
     }
     
+    func isShowingHomeMessage(_ homeMessage: HomeMessage) -> Bool {
+        return homePageConfiguration.homeMessages().contains { $0.homeMessage == homeMessage }
+    }
 }
 
 extension HomeCollectionView: Themable {

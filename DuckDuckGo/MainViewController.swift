@@ -711,7 +711,11 @@ class MainViewController: UIViewController {
     func showHomeRowReminder() {
 
         let feature = HomeRowReminder()
-        guard feature.showNow() else { return }
+        if #available(iOS 14, *) {
+            guard feature.showNow(isDefaultBrowserSupported: true) else { return }
+        } else {
+            guard feature.showNow(isDefaultBrowserSupported: false) else { return }
+        }
 
         showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
             if tapped {

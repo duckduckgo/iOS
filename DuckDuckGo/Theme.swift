@@ -110,4 +110,12 @@ protocol Theme {
     
     var daxDialogBackgroundColor: UIColor { get }
     var daxDialogTextColor: UIColor { get }
+    
+    var homeMessageBackgroundColor: UIColor { get }
+    var homeMessageHeaderTextColor: UIColor { get }
+    var homeMessageSubheaderTextColor: UIColor { get }
+    var homeMessageTopTextColor: UIColor { get }
+    var homeMessageButtonColor: UIColor { get }
+    var homeMessageButtonTextColor: UIColor { get }
+    var homeMessageDismissButtonColor: UIColor { get }
 }

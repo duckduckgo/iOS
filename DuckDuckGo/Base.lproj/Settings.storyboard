@@ -1448,13 +1448,16 @@ enhanced by Privacy Protection.</string>
                             <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
                                     <rect key="frame" x="8" y="0.0" width="398" height="83"/>
-                                    <string key="text">Thanks to laws like the California Consumer Privacy Act (CCPA), DuckDuckGo can ask websites not to sell any data they collect about you. This keeps your identity more private. Learn more</string>
+                                    <string key="text">Thanks to laws like the California Consumer Privacy Act (CCPA), DuckDuckGo can ask websites not to sell any data they collect about you. This keeps your identity more private. Learn More</string>
                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="fV3-86-QQj" id="vlC-d2-AuN"/>
+                                    </connections>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1509,6 +1512,7 @@ enhanced by Privacy Protection.</string>
                     <navigationItem key="navigationItem" title="Do Not Sell (DN$)" id="tWw-Lh-ZT1"/>
                     <connections>
                         <outlet property="doNotSellToggle" destination="mpn-np-GLZ" id="BYG-ZW-qXU"/>
+                        <outlet property="infoTextView" destination="Jw1-Ty-6VJ" id="n4b-wC-vBe"/>
                         <outletCollection property="labels" destination="cW7-OM-2oW" collectionClass="NSMutableArray" id="3T7-l5-7BW"/>
                     </connections>
                 </tableViewController>

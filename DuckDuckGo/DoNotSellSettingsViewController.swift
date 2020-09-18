@@ -14,8 +14,11 @@ class DoNotSellSettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     
     @IBOutlet weak var doNotSellToggle: UISwitch!
+    @IBOutlet weak var infoTextView: UITextView!
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    
+    let learnMoreStr = "Learn More"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +43,26 @@ class DoNotSellSettingsViewController: UITableViewController {
 
 extension DoNotSellSettingsViewController: Themable {
     
+    func applyAtributes(theme: Theme) {
+        let tempStr = NSMutableAttributedString(attributedString: infoTextView.attributedText)
+        let range = NSRange(location: infoTextView.text.count - learnMoreStr.count, length: learnMoreStr.count)
+        tempStr.setAttributes([:], range: range)
+        tempStr.addAttribute(.link, value: "ddgQuickLink://global-privacy-control.glitch.me/", range: range)
+        let linkAttributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor,
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: infoTextView.font!.pointSize + 4)
+        ]
+        infoTextView.attributedText = tempStr
+        infoTextView.linkTextAttributes = linkAttributes
+    }
+    
     func decorate(with theme: Theme) {
         
         for label in labels {
             label.textColor = theme.tableCellTextColor
         }
+        
+        applyAtributes(theme: theme)
 
         doNotSellToggle.onTintColor = theme.buttonTintColor
 
@@ -55,4 +73,11 @@ extension DoNotSellSettingsViewController: Themable {
 
     }
     
+}
+
+extension DoNotSellSettingsViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+        return true
+    }
 }

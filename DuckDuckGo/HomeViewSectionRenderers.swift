@@ -268,7 +268,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         renderers[indexPath.section].collectionView(collectionView, didSelectItemAt: indexPath)
     }
-    
+        
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,

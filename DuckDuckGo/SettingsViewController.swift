@@ -23,6 +23,7 @@ import Core
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
@@ -40,17 +41,29 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
+    private let defaultBroswerSectionIndex = 0
+    
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
 
+    private static var shouldShowDefaultBrowserSection: Bool {
+        if #available(iOS 14, *) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
@@ -109,6 +122,10 @@ class SettingsViewController: UITableViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
+    }
+    
+    private func configureDefaultBroswerCell() {
+        defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
     }
     
     private func configureThemeCellAccessory() {
@@ -171,6 +188,13 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if tableView.cellForRow(at: indexPath) == defaultBrowserCell {
+            Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
+            
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -208,6 +232,33 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return 22.0
+        } else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return CGFloat.leastNonzeroMagnitude
+        } else {
+            return super.tableView(tableView, heightForFooterInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return nil
+        } else {
+            return super.tableView(tableView, titleForFooterInSection: section)
+        }
     }
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

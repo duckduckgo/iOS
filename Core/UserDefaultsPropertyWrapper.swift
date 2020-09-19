@@ -52,6 +52,8 @@ public struct UserDefaultsWrapper<T> {
         case faviconsNeedMigration = "com.duckduckgo.ios.favicons.needsMigration"
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
+        
+        case homeDefaultBrowserMessageDateDismissed = "com.duckduckgo.ios.homeMessage.defaultBrowser.dateDismissed"
     }
 
     private let key: Key

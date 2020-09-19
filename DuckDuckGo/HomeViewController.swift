@@ -118,6 +118,10 @@ class HomeViewController: UIViewController {
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
             showNextDaxDialog()
             Pixel.fire(pixel: .homeScreenShown)
+            
+            if collectionView.isShowingHomeMessage(.defaultBrowserPrompt) {
+                Pixel.fire(pixel: .defaultBrowserHomeMessageShown)
+            }
         }
                 
         viewHasAppeared = true
@@ -216,6 +220,13 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
         delegate?.home(self, didRequestUrl: link.url)
     }
 
+}
+
+extension HomeViewController: HomeMessageViewSectionRendererDelegate {
+    
+    func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer, didDismissHomeMessage homeMessage: HomeMessage) {
+        refresh()
+    }
 }
 
 extension HomeViewController: Themable {

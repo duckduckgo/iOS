@@ -94,8 +94,9 @@ public class HTTPSUpgrade {
         let serviceRequest = APIRequest.urlRequestFor(url: url, timeoutInterval: 10.0)
         let cachedResponse = URLCache.shared.cachedResponse(for: serviceRequest)?.response as? HTTPURLResponse
         
-        APIRequest.request(url: url, timeoutInterval: 10, callBackOnMainThread: true) {
-            (response, error) in
+        APIRequest.request(url: url,
+                           timeoutInterval: 10,
+                           callBackOnMainThread: true) { (response, _) in
             
             guard let httpResponse = response?.urlResponse as? HTTPURLResponse, let data = response?.data else {
                 completion((isInList: false, isCached: false))

@@ -97,7 +97,7 @@ struct LargeSearchFieldView: View {
 
                 }.padding(EdgeInsets(top: 0, leading: 27, bottom: 0, trailing: 27))
 
-            }
+            }.unredacted()
         }
     }
 

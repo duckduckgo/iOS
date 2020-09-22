@@ -29,16 +29,20 @@ public class AppWidthObserver {
     }
     
     public static let shared = AppWidthObserver()
-    
-    private var currentWidth: CGFloat = 0
+
+    // mutable for testing
+    var isPad = UIDevice.current.userInterfaceIdiom == .pad
+    var currentWidth: CGFloat = 0
     
     public var isLargeWidth: Bool {
-        return currentWidth >= Constants.minPadWidth
+        return isPad && currentWidth >= Constants.minPadWidth
     }
 
     private init() {}
 
     func willResize(toWidth width: CGFloat) -> Bool {
+        guard isPad else { return false }
+        
         if width != currentWidth {
             currentWidth = width
             return true

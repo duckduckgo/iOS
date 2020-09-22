@@ -21,7 +21,6 @@ import UIKit
 
 class DaxDialogViewController: UIViewController {
     
-    @IBOutlet weak var bottomSpacing: NSLayoutConstraint!
     @IBOutlet weak var topSpacing: NSLayoutConstraint!
 
     @IBOutlet weak var icon: UIView!
@@ -39,6 +38,23 @@ class DaxDialogViewController: UIViewController {
         didSet {
             initCTA()
         }
+    }
+    
+    func calculateHeight() -> CGFloat {
+        guard let text = message ?? cta, !text.isEmpty else { return 370.0 }
+        
+        let attributes = attributedString(from: text, color: .black).attributes(at: 0, effectiveRange: nil)
+        
+        let size = (text as NSString).boundingRect(with: CGSize(width: label.bounds.width, height: 1000),
+                                                   options: [.usesFontLeading, .usesLineFragmentOrigin],
+                                                   attributes: attributes,
+                                                   context: nil)
+
+        let iconHeight = icon.bounds.height
+        let topMargin: CGFloat = 20.0
+        let buttonHeight: CGFloat = cta != nil ? 60.0 : 0.0
+        let bottomMargin: CGFloat = 24.0
+        return iconHeight + topMargin + size.height + buttonHeight + bottomMargin
     }
     
     var onTapCta: (() -> Void)?
@@ -140,6 +156,11 @@ class DaxDialogViewController: UIViewController {
         combined.append(baseText)
         combined.append(invisible)
         label.attributedText = combined
+        
+        if label.bounds.height == 0 {
+            label.setNeedsLayout()
+            label.layoutIfNeeded()
+        }
     }
     
     private func attributedString(from string: String, color: UIColor) -> NSAttributedString {

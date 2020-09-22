@@ -85,7 +85,8 @@ public class SiteRatingView: UIView {
             grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
-            circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+            circleIndicator.accessibilityLabel = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+            circleIndicator.accessibilityHint = UserText.privacyGradeHint
         }
     }
 }

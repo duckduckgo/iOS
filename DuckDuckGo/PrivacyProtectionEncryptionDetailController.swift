@@ -116,6 +116,18 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
             }
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+    }
 
 }
 
@@ -159,7 +171,7 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return siteRating.https ? 22 : 180
+        return UITableView.automaticDimension
     }
 
     private func cellForEncrypted(at indexPath: IndexPath) -> UITableViewCell {

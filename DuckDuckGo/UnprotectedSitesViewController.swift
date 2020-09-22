@@ -67,6 +67,18 @@ class UnprotectedSitesViewController: UITableViewController {
         backButton.isHidden = !showBackButton
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+    }
+    
     // MARK: UITableView data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {

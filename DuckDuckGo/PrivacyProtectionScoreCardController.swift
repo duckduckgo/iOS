@@ -29,26 +29,17 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var privacyGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var enhancedGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var isMajorNetworkCell: PrivacyProtectionScoreCardCell!
-    @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
     private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
-    weak var header: PrivacyProtectionHeaderController!
 
     override func viewDidLoad() {
-        
         Pixel.fire(pixel: .privacyDashboardScorecard)
-        initBackButton()
+        
+        tableView.register(UINib(nibName: "PrivacyProtectionHeaderCell", bundle: nil),
+                           forCellReuseIdentifier: "PPHeaderCell")
+        
         update()
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if let header = segue.destination as? PrivacyProtectionHeaderController {
-            header.using(siteRating: siteRating, protectionStore: protectionStore)
-            self.header = header
-        }
-
     }
 
     @IBAction func onBack() {
@@ -57,11 +48,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
-    }
-
-    private func initBackButton() {
-        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        return cell.isHidden ? 0 : UITableView.automaticDimension
     }
 
     private func update() {
@@ -106,7 +93,22 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         enhancedGradeCell.iconImage.image = gradeImages.to
         enhancedGradeCell.isHidden = !siteRating.protecting(protectionStore) || gradeImages.from == gradeImages.to
     }
-
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row == 0 else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PPHeaderCell", for: indexPath) as? PrivacyProtectionHeaderCell else {
+            fatalError("Missing Header cell")
+        }
+        
+        PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, protectionStore: protectionStore)
+        cell.disclosureImage.isHidden = true
+        cell.backImage.isHidden = !AppWidthObserver.shared.isLargeWidth
+        
+        return cell
+    }
 }
 
 extension PrivacyProtectionScoreCardController: PrivacyProtectionInfoDisplaying {

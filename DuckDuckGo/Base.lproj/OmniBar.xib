@@ -48,6 +48,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ii4-Sq-bD1" userLabel="Bookmarks">
                             <rect key="frame" x="96" y="0.0" width="24" height="24"/>
+                            <accessibility key="accessibilityConfiguration" label="Bookmarks"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="I47-lV-kYz"/>
                             </constraints>
@@ -244,6 +245,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hor-Jd-3kw">
                             <rect key="frame" x="0.0" y="0.0" width="30" height="24"/>
+                            <accessibility key="accessibilityConfiguration" label="Share"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="QdK-eJ-q8O"/>
                             </constraints>

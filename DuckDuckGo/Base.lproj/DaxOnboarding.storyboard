@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -165,6 +165,7 @@ DuckDuckGo!</string>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UzU-6y-Vfa">
                                 <rect key="frame" x="26" y="0.0" width="71" height="71"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="Gg3-rW-lbU"/>
                                     <constraint firstAttribute="width" constant="71" id="Hgd-WC-F8o"/>
                                     <constraint firstAttribute="width" secondItem="UzU-6y-Vfa" secondAttribute="height" multiplier="1:1" id="x9W-fX-bsI"/>
                                 </constraints>
@@ -250,7 +251,6 @@ DuckDuckGo!</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bottomSpacing" destination="1XZ-4V-bSQ" id="KVZ-qW-ch6"/>
                         <outlet property="button" destination="zJt-F9-L48" id="RMQ-DD-jZK"/>
                         <outlet property="icon" destination="UzU-6y-Vfa" id="h5u-VZ-4uc"/>
                         <outlet property="label" destination="UDm-rv-vek" id="E3z-rn-qvh"/>

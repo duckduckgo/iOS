@@ -2990,6 +2990,7 @@
 			buildConfigurationList = 84E341BA1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGo" */;
 			buildPhases = (
 				0A991F5B239418D100AA1F64 /* Prevent Version Override */,
+				98B0CE69251C937D003FB601 /* Update Localizable.strings */,
 				84E3418E1E2F7EFB00BDBA6F /* Sources */,
 				8558AA7D20EE3CB200A346E9 /* Swift Lint */,
 				84E3418F1E2F7EFB00BDBA6F /* Frameworks */,
@@ -3565,6 +3566,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelif [ -d ~/DuckDuckGo/Fonts/proximanova ]\nthen\n\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\nelif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\nthen\n                                      \n    echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                      \nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		98B0CE69251C937D003FB601 /* Update Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update Localizable.strings";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SOURCE_ROOT/loc_update.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

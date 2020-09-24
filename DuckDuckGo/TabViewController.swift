@@ -666,7 +666,7 @@ class TabViewController: UIViewController {
     
     func presentOpenInExternalAppAlert(url: URL) {
         let title = UserText.customUrlSchemeTitle
-        let message = UserText.forCustomUrlSchemePrompt(url: url)
+        let message = UserText.customUrlSchemeMessage
         let open = UserText.customUrlSchemeOpen
         let dontOpen = UserText.customUrlSchemeDontOpen
         

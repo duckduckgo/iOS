@@ -136,8 +136,9 @@ class HomeViewController: UIViewController {
         collectionView.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
+        daxDialogViewController?.loadViewIfNeeded()
         daxDialogViewController?.message = spec.message
-        daxDialogContainerHeight.constant = spec.height
+        daxDialogContainerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         hideLogo()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

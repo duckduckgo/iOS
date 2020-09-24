@@ -23,14 +23,12 @@ import Core
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
-    @IBOutlet weak var homePageAccessoryText: UILabel!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
@@ -67,7 +65,7 @@ class SettingsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMargins()
+
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
@@ -76,7 +74,6 @@ class SettingsViewController: UITableViewController {
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
         configureRememberLogins()
-
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -87,6 +84,10 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDoNotSell()
         configureIconViews()
+        
+        // Make sure muliline labels are correctly presented
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -124,13 +125,6 @@ class SettingsViewController: UITableViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet
             }
-        }
-    }
-
-    private func configureMargins() {
-        guard #available(iOS 11, *) else { return }
-        for margin in margins {
-            margin.constant = 0
         }
     }
     
@@ -243,7 +237,11 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+        return cell.isHidden ? 0 : UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

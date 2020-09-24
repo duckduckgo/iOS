@@ -121,6 +121,18 @@ class PrivacyProtectionPracticesController: UIViewController {
         }
         footerLabel.attributedText = mutableFooter
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+    }
 }
 
 extension PrivacyProtectionPracticesController: UITableViewDataSource {

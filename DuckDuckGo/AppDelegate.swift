@@ -243,7 +243,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: private
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
-        application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
+        if #available(iOS 13.0, *) {
+            AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
+            AppConfigurationFetch.scheduleBackgroundRefreshTask()
+        } else {
+            application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
+        }
     }
     
     private func displayAuthenticationWindow() {

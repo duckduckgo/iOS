@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BackgroundTasks
 import Core
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
@@ -37,6 +38,7 @@ class AppConfigurationFetch {
     
     private struct Constants {
         static let backgroundTaskName = "Fetch Configuration Task"
+        static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
     }
     
     private struct Keys {
@@ -80,6 +82,32 @@ class AppConfigurationFetch {
             }
             completion?(newData)
         }
+    }
+
+    @available(iOS 13.0, *)
+    static func registerBackgroundRefreshTaskHandler() {
+        BGTaskScheduler.shared.register(
+            forTaskWithIdentifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier,
+            using: fetchQueue) { (task) in
+
+            AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
+                task.setTaskCompleted(success: newData)
+                scheduleBackgroundRefreshTask()
+            }
+        }
+    }
+
+    @available(iOS 13.0, *)
+    static func scheduleBackgroundRefreshTask() {
+        let task = BGProcessingTaskRequest(identifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier)
+        task.requiresNetworkConnectivity = true
+        task.earliestBeginDate = Date(timeIntervalSinceNow: 60)
+
+        // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
+        //
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
+
+        try? BGTaskScheduler.shared.submit(task)
     }
     
     private func markFetchStarted(isBackground: Bool) {

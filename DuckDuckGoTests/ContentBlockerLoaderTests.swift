@@ -161,7 +161,9 @@ class MockContentBlockingRequest: ContentBlockerRemoteDataSource {
     
     var mockResponse: ContentBlockerRequest.Response?
     
-    func request(_ configuration: ContentBlockerRequest.Configuration, etag: String?, completion: @escaping (ContentBlockerRequest.Response) -> Void) {
+    func request(_ configuration: ContentBlockerRequest.Configuration,
+                 etagStorage: BlockerListETagStorage,
+                 completion: @escaping (ContentBlockerRequest.Response) -> Void) {
         guard let response = mockResponse else {
             fatalError("No mock response set")
         }

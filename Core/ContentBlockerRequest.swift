@@ -25,7 +25,7 @@ protocol ContentBlockerRemoteDataSource {
     
     func request(_ configuration: ContentBlockerRequest.Configuration,
                  etagStorage: BlockerListETagStorage,
-                 completion: @escaping (ContentBlockerRequest.Response) -> Void)
+                 completion:@escaping (ContentBlockerRequest.Response) -> Void)
 }
 
 class ContentBlockerRequest: ContentBlockerRemoteDataSource {

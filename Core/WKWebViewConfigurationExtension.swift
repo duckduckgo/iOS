@@ -70,18 +70,9 @@ extension WKWebViewConfiguration {
     }
     
     private func installContentBlockingRules() {
-        func addRulesToController(rules: WKContentRuleList) {
-            self.userContentController.add(rules)
-        }
-        
-        // Get rules list from manager and add to userContentController
-        if let rulesList = ContentBlockerRulesManager.shared.blockingRules {
-            addRulesToController(rules: rulesList)
-        } else {
-            ContentBlockerRulesManager.shared.compileRules { rulesList in
-                if let rulesList = rulesList {
-                    addRulesToController(rules: rulesList)
-                }
+        ContentBlockerRulesManager.shared.compileRulesIfNeeded { rulesList in
+            if let rules = rulesList {
+                self.userContentController.add(rules)
             }
         }
     }

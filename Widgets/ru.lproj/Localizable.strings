@@ -1,0 +1,18 @@
+/* No comment provided by engineer. */
+"Label" = "Метка";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Поиск и посещение любимых сайтов без слежки всего в одно касание.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Поиск и избранное";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Конфиденциальный поиск через DuckDuckGo в два счета.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Поиск";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Поиск в DuckDuckGo";
+

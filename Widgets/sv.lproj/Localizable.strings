@@ -1,0 +1,18 @@
+/* No comment provided by engineer. */
+"Label" = "Etikett";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Gör sökningar eller besök dina favoritwebbplatser privat med ett enda tryck.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Sökning och favoriter";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Snabbstarta en privat sökning i DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Sök";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Sök med DuckDuckGo";
+

@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "DuckDuckGo";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Σας επιτρέπει να ανεβάζετε φωτογραφίες και βίντεο";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Σας επιτρέπει να ξεκλειδώνετε χρησιμοποιώντας το Face ID";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Σας επιτρέπει να κοινοποιείτε την τοποθεσία σας";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Σας επιτρέπει να μοιράζεστε ηχογραφήσεις";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "Σας επιτρέπει να αποθηκεύετε φωτογραφίες στη συσκευή σας";
+
+/* (No Comment) */
+"Paste from clipboard" = "Επικόλληση από το πρόχειρο";
+

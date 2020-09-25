@@ -1,3 +1,6 @@
 /* Bundle display name */
-"CFBundleDisplayName" = "Open in DuckDuckGo";
+"CFBundleDisplayName" = "Atvērt vietnē DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "ShareExtension";
 

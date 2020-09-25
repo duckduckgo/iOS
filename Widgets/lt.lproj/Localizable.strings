@@ -1,0 +1,18 @@
+/* No comment provided by engineer. */
+"Label" = "Etiketė";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Ieškokite arba lankykitės savo mėgstamose svetainėse privačiai vienu bakstelėjimu.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Paieška ir mėgstamiausi";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Greitai paleiskite privačią paiešką „DuckDuckGo“.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Paieška";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Ieškoti DuckDuckGo";
+

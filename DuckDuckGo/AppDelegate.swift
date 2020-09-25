@@ -117,6 +117,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !privacyStore.authenticationEnabled {
             showKeyboardOnLaunch()
         }
+
+        AppConfigurationFetch().start(completion: nil)
     }
 
     private func fireAppLaunchPixel() {
@@ -168,7 +170,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func onApplicationLaunch(_ application: UIApplication) {
         beginAuthentication()
-        AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
         applyAppearanceChanges()
     }

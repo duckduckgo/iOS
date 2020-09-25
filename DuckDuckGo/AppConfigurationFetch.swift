@@ -24,7 +24,8 @@ import Core
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
 protocol AppConfigurationFetchStatistics {
-    
+    var lastConfigurationRefreshDate: Date? { get set }
+
     var foregroundStartCount: Int { get set }
     var foregroundNoDataCount: Int { get set }
     var foregroundNewDataCount: Int { get set }
@@ -51,9 +52,21 @@ class AppConfigurationFetch {
     }
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
+
+    var shouldRefresh: Bool {
+        guard let lastRefreshDate = AppUserDefaults().lastConfigurationRefreshDate else {
+            return true
+        }
+
+        return Date().timeIntervalSince(lastRefreshDate) > 60 * 60 * 12
+    }
     
     func start(isBackgroundFetch: Bool = false,
                completion: AppConfigurationCompletion?) {
+        guard shouldRefresh else {
+            completion?(false)
+            return
+        }
 
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
@@ -136,6 +149,8 @@ class AppConfigurationFetch {
                 store.foregroundNoDataCount += 1
             }
         }
+
+        store.lastConfigurationRefreshDate = Date()
     }
     
     private func sendStatistics(completion: () -> Void ) {

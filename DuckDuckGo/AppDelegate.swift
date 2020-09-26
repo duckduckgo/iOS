@@ -118,7 +118,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardOnLaunch()
         }
 
-        AppConfigurationFetch().start(completion: nil)
+        AppConfigurationFetch().start { newData in
+            if newData {
+                NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+            }
+        }
     }
 
     private func fireAppLaunchPixel() {

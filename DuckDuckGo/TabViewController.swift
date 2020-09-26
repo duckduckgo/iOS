@@ -569,7 +569,6 @@ class TabViewController: UIViewController {
 
                 self.webView.configuration.userContentController.remove(rulesList)
                 self.webView.configuration.userContentController.add(rulesList)
-                self.webView.configuration.userContentController.removeAllContentRuleLists()
             }
             
             self.reload(scripts: true)

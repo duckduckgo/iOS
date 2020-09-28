@@ -108,8 +108,12 @@ class AppConfigurationFetch {
             forTaskWithIdentifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier,
             using: fetchQueue) { (task) in
 
+            task.expirationHandler = {
+                scheduleBackgroundRefreshTask()
+            }
+
             AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
-                task.setTaskCompleted(success: newData)
+                task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
             }
         }

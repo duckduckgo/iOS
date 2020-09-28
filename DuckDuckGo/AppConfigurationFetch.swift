@@ -43,6 +43,9 @@ class AppConfigurationFetch {
     }
     
     private struct Keys {
+        static let bgFetchType = "bgft"
+        static let bgFetchTypeBackgroundTasks = "bgbt"
+        static let bgFetchTypeLegacy = "bgl"
         static let bgFetchStart = "bgfs"
         static let bgFetchNoData = "bgnd"
         static let bgFetchWithData = "bgwd"
@@ -159,13 +162,22 @@ class AppConfigurationFetch {
             completion()
             return
         }
+
+        let backgroundFetchType: String
+
+        if #available(iOS 13.0, *) {
+            backgroundFetchType = Keys.bgFetchTypeBackgroundTasks
+        } else {
+            backgroundFetchType = Keys.bgFetchTypeLegacy
+        }
         
         let parameters = [Keys.bgFetchStart: String(store.backgroundStartCount),
                           Keys.bgFetchNoData: String(store.backgroundNoDataCount),
                           Keys.bgFetchWithData: String(store.backgroundNewDataCount),
                           Keys.fgFetchStart: String(store.foregroundStartCount),
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
-                          Keys.fgFetchWithData: String(store.foregroundNewDataCount)]
+                          Keys.fgFetchWithData: String(store.foregroundNewDataCount),
+                          Keys.bgFetchType: backgroundFetchType]
         
         let semaphore = DispatchSemaphore(value: 0)
         

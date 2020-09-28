@@ -53,6 +53,7 @@ class DoNotSellSettingsViewController: UITableViewController {
 
 extension DoNotSellSettingsViewController: Themable {
     
+    /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
         let tempStr = NSMutableAttributedString(attributedString: disclaimerTextView.attributedText)
         let range = NSRange(location: disclaimerTextView.text.count - learnMoreStr.count, length: learnMoreStr.count)
@@ -60,8 +61,8 @@ extension DoNotSellSettingsViewController: Themable {
         tempStr.setAttributes([
                                 NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
                                 NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
-                              ], range: NSRange(location: 223, length: 162))
-        tempStr.addAttribute(.link, value: "ddgQuickLink://global-privacy-control.glitch.me/", range: range)
+                              ], range: NSRange(location: 223, length: 162)) // Hard coded range based on text copy
+        tempStr.addAttribute(.link, value: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more", range: range)
         tempStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme.ddgTextTintColor, range: range)
         let linkAttributes: [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),

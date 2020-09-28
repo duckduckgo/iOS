@@ -20,6 +20,7 @@
 import Foundation
 import BackgroundTasks
 import Core
+import os.log
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
@@ -40,6 +41,7 @@ class AppConfigurationFetch {
     private struct Constants {
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
+        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
     }
     
     private struct Keys {
@@ -61,7 +63,7 @@ class AppConfigurationFetch {
             return true
         }
 
-        return Date().timeIntervalSince(lastRefreshDate) > 60 * 60 * 12
+        return Date().timeIntervalSince(lastRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
     
     func start(isBackgroundFetch: Bool = false,
@@ -117,13 +119,17 @@ class AppConfigurationFetch {
     static func scheduleBackgroundRefreshTask() {
         let task = BGProcessingTaskRequest(identifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier)
         task.requiresNetworkConnectivity = true
-        task.earliestBeginDate = Date(timeIntervalSinceNow: 60)
+        task.earliestBeginDate = Date(timeIntervalSinceNow: Constants.minimumConfigurationRefreshInterval)
 
         // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
         //
         // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
 
-        try? BGTaskScheduler.shared.submit(task)
+        do {
+            try BGTaskScheduler.shared.submit(task)
+        } catch {
+            os_log("Error when submitting background task: %s", log: generalLog, type: .debug, error.localizedDescription)
+        }
     }
     
     private func markFetchStarted(isBackground: Bool) {

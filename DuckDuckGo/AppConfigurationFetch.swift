@@ -75,20 +75,8 @@ class AppConfigurationFetch {
 
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            self.markFetchStarted(isBackground: isBackgroundFetch)
+            let newData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
 
-            var newData = false
-            let semaphore = DispatchSemaphore(value: 0)
-
-            AppDependencyProvider.shared.storageCache.update { newCache in
-                newData = newData || (newCache != nil)
-                semaphore.signal()
-            }
-
-            semaphore.wait()
-            
-            self.markFetchCompleted(isBackground: isBackgroundFetch, hasNewData: newData)
-            
             if !isBackgroundFetch {
                 type(of: self).fetchQueue.async {
                     self.sendStatistics {
@@ -98,6 +86,7 @@ class AppConfigurationFetch {
             } else {
                 UIApplication.shared.endBackgroundTask(taskID)
             }
+
             completion?(newData)
         }
     }
@@ -112,10 +101,10 @@ class AppConfigurationFetch {
                 scheduleBackgroundRefreshTask()
             }
 
-            AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
-                task.setTaskCompleted(success: true)
-                scheduleBackgroundRefreshTask()
-            }
+            AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
+            scheduleBackgroundRefreshTask()
+
+            task.setTaskCompleted(success: true)
         }
     }
 
@@ -134,6 +123,24 @@ class AppConfigurationFetch {
         } catch {
             os_log("Error when submitting background task: %s", log: generalLog, type: .debug, error.localizedDescription)
         }
+    }
+
+    @discardableResult
+    private func fetchConfigurationFiles(isBackground: Bool) -> Bool {
+        self.markFetchStarted(isBackground: isBackground)
+
+        var newData = false
+        let semaphore = DispatchSemaphore(value: 0)
+
+        AppDependencyProvider.shared.storageCache.update { newCache in
+            newData = newData || (newCache != nil)
+            semaphore.signal()
+        }
+
+        semaphore.wait()
+
+        self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
+        return newData
     }
     
     private func markFetchStarted(isBackground: Bool) {

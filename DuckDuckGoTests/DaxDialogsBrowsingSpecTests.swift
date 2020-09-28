@@ -32,12 +32,12 @@ class DaxDialogsBrowsingSpecTests: XCTestCase {
         XCTAssertTrue(message.contains("\n"))
     }
     
-    func testWhenSiteIsMajorTrackerIsFormattedThenContainsNameAndPercentage() {
+    func testWhenSiteIsMajorTrackerIsFormattedThenContainsNameAndDomain() {
         let majorTracker1 = "TestTracker1"
-        let percent = 34.3
-        let message = DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: majorTracker1, percent).message
+        let domain = "testtracker.com"
+        let message = DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: majorTracker1, domain).message
         XCTAssertTrue(message.contains(majorTracker1))
-        XCTAssertTrue(message.contains("34%"))
+        XCTAssertTrue(message.contains(domain))
         XCTAssertEqual(2, message.countInstances(of: majorTracker1))
         XCTAssertTrue(message.contains("\n"))
     }

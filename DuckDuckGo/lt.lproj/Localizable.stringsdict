@@ -13,23 +13,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<string>*%2$@, %3$@* ir *1 kitas* bandė tave stebėti.
 
-I blocked them!
+Užblokavau juos!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* ir *%1$d kiti* bandė tave stebėti.
 
-I blocked them!
+Užblokavau juos!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* ir *%1$d kito* bandė tave stebėti.
+
+Užblokavau juos!
+
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
+			<string>*%2$@, %3$@* ir *%1$d kitų* bandė tave stebėti.
 
-I blocked them!
+Užblokavau juos!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -43,9 +49,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>%1$d pagrindinė stebėjimo priemonė rasta</string>
+			<key>few</key>
+			<string>%1$d pagrindinės stebėjimo priemonės rastos</string>
+			<key>many</key>
+			<string>%1$d pagrindinės stebėjimo priemonės rasta</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
+			<string>%1$d pagrindinių stebėjimo priemonių rasta</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -59,9 +69,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
+			<string>%1$d pagrindinė stebėjimo priemonė užblokuota</string>
+			<key>few</key>
+			<string>%1$d pagrindinės stebėjimo priemonės užblokuotos</string>
+			<key>many</key>
+			<string>%1$d pagrindinės stebėjimo priemonės užblokuota</string>
 			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
+			<string>%1$d pagrindinių stebėjimo priemonių užblokuota</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -75,9 +89,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Found</string>
+			<string>Rasta %1$d stebėjimo priemonė</string>
+			<key>few</key>
+			<string>Rastos %1$d stebėjimo priemonės</string>
+			<key>many</key>
+			<string>Rasta %1$d stebėjimo priemonės</string>
 			<key>other</key>
-			<string>%d Trackers Found</string>
+			<string>Rasta %1$d stebėjimo priemonių</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -91,9 +109,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Blocked</string>
+			<string>Užblokuota %1$d stebėjimo priemonė</string>
+			<key>few</key>
+			<string>Užblokuotos %1$d stebėjimo priemonės</string>
+			<key>many</key>
+			<string>Užblokuota %1$d stebėjimo priemonė</string>
 			<key>other</key>
-			<string>%d Trackers Blocked</string>
+			<string>Užblokuota %1$d stebėjimo priemonių</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -107,11 +129,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%1$d privatus skirtukas</string>
+			<key>few</key>
+			<string>%1$d privatūs skirtukai</string>
+			<key>many</key>
+			<string>%1$d privataus skirtuko</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%1$d privačiu skirtukų</string>
 		</dict>
 	</dict>
 </dict>

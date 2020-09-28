@@ -13,23 +13,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<string>*%2$@, %3$@* in *še 1* so te skušali zaslediti tukaj. 
 
-I blocked them!
+Blokiral sem jih!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
+☝️ Preveriš lahko URL vrstico, da vidiš, kdo te poskuša zaslediti, ko obiščeš novo spletišče.️</string>
+			<key>two</key>
+			<string>*%2$@, %3$@* in *%1$d druga* so te skušali zaslediti tukaj.
 
-I blocked them!
+Blokiral sem jih!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Preveriš lahko URL vrstico, da vidiš, kdo vas poskuša zaslediti, ko obiščeš novo spletišče.️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* in *%1$d drugi* so te skušali zaslediti tukaj.
+
+Blokiral sem jih!
+
+☝️ Preveriš lahko URL vrstico, da vidiš, kdo vas poskuša zaslediti, ko obiščeš novo spletišče.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
+			<string>*%2$@, %3$@* in *%1$d drugi* so te skušali zaslediti tukaj.
 
-I blocked them!
+Blokiral sem jih!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Preveriš lahko URL vrstico, da vidiš, kdo te poskuša zaslediti, ko obiščeš novo spletišče.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -43,9 +49,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>Najden %1$d glavni sledilnik</string>
+			<key>two</key>
+			<string>Najdena %1$d glavna sledilnika</string>
+			<key>few</key>
+			<string>Najdeni %1$d glavni sledilniki</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
+			<string>Najdenih %1$d glavnih sledilnikov</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -59,9 +69,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
+			<string>Blokiran %1$d glavni sledilnik</string>
+			<key>two</key>
+			<string>Blokirana %1$d glavna sledilnika</string>
+			<key>few</key>
+			<string>Blokirani %1$d glavni sledilniki</string>
 			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
+			<string>Blokiranih %1$d glavnih sledilnikov</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -75,9 +89,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Found</string>
+			<string>Najden %1$d sledilnik</string>
+			<key>two</key>
+			<string>Najdena %1$d sledilnika</string>
+			<key>few</key>
+			<string>Najdeni %1$d sledilniki</string>
 			<key>other</key>
-			<string>%d Trackers Found</string>
+			<string>Najdenih %1$d sledilnikov</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -91,9 +109,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Blocked</string>
+			<string>Blokiran %1$d sledilnik</string>
+			<key>two</key>
+			<string>Blokirana %1$d sledilnika</string>
+			<key>few</key>
+			<string>Blokiranih %1$d sledilnikov</string>
 			<key>other</key>
-			<string>%d Trackers Blocked</string>
+			<string>Blokiranih %1$d sledilnikov</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -107,11 +129,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%1$d zasebni zavihek</string>
+			<key>two</key>
+			<string>%1$d zasebna zavihka</string>
+			<key>few</key>
+			<string>%1$d zasebni zavihki</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%1$d zasebnih zavihkov</string>
 		</dict>
 	</dict>
 </dict>

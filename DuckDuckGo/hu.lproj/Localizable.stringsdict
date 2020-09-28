@@ -13,23 +13,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<string>*%2$@, %3$@* és *további 1* próbált itt követni.
 
-I blocked them!
+Blokkoltam őket!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új weboldalra látogatsz.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
+			<string>*%2$@, %3$@* és *további %1$d* próbált itt követni.
 
-I blocked them!
+Blokkoltam őket!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új weboldalra látogatsz.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -43,9 +37,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>%1$d nagy nyomkövető található</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
+			<string>%1$d nagy nyomkövető található</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -59,9 +53,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
+			<string>%1$d nagy nyomkövető letiltva</string>
 			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
+			<string>%1$d nagy nyomkövető letiltva</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -75,9 +69,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Found</string>
+			<string>%1$d nyomkövető megtalálva</string>
 			<key>other</key>
-			<string>%d Trackers Found</string>
+			<string>%1$d nyomkövető megtalálva</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -91,9 +85,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Blocked</string>
+			<string>%1$d nyomkövető letiltva</string>
 			<key>other</key>
-			<string>%d Trackers Blocked</string>
+			<string>%1$d nyomkövető letiltva</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -107,11 +101,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%1$d privát lap</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%1$d privát lap</string>
 		</dict>
 	</dict>
 </dict>

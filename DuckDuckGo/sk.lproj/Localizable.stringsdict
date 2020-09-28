@@ -13,23 +13,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<string>*%2$@, %3$@* a *1 ďalší* sa vás tu pokúsil sledovať.
 
-I blocked them!
+Boli zablokovaní!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
+☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* a%1$d ďalší* sa vás tu pokúsili sledovať. 
 
-I blocked them!
+Boli zablokovaní!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+ ☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* a *%1$d ďalších* sa vás tu pokúsila sledovať. 
+
+Boli zablokovaní!
+
+ ☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
+			<string>*%2$@, %3$@* a *%1$d ďalších* sa vás tu pokúsilo sledovať. 
 
-I blocked them!
+Boli zablokovaní!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -43,9 +49,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>Našlo sa %1$d hlavné sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Našli sa %1$d hlavné sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Našla sa %1$d hlavných sledovacích zariadení</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
+			<string>Našlo sa %1$d hlavných sledovacích zariadení</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -59,9 +69,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
+			<string>Zablokovalo sa %1$d sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Zablokovali sa %1$d sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Zablokovala sa %1$d sledovacích zariadení</string>
 			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
+			<string>Zablokovalo sa %1$d sledovacích zariadení</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -75,9 +89,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Found</string>
+			<string>Našlo sa %1$d sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Našli sa %1$d sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Našlo sa %1$d sledovacieho zariadenia</string>
 			<key>other</key>
-			<string>%d Trackers Found</string>
+			<string>Našlo sa %1$d sledovacích zariadení</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -91,9 +109,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Blocked</string>
+			<string>Zablokovalo sa %1$d sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Zablokovali sa %1$d sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Zablokovalo sa %1$d sledovacieho zariadenia</string>
 			<key>other</key>
-			<string>%d Trackers Blocked</string>
+			<string>Zablokovalo sa %1$d sledovacích zariadení</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -107,11 +129,13 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%1$d súkromná karta</string>
+			<key>few</key>
+			<string>%1$d súkromné karty</string>
+			<key>many</key>
+			<string>%1$d súkromných kariet</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%1$d súkromných kariet</string>
 		</dict>
 	</dict>
 </dict>

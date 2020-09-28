@@ -13,23 +13,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<string>*%2$@, %3$@* och *1 annan* försökte spåra dig här.
 
-I blocked them!
+Jag blockerade dem!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Du kan kontrollera webbadressfältet för att se vem som försöker spåra dig när du besöker en ny webbplats.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
+			<string>*%2$@, %3$@* och *%1$d andra* försökte spåra dig här.
 
-I blocked them!
+ Jag blockerade dem!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ Du kan kontrollera URL-fältet för att se vem som försöker spåra dig när du besöker en ny webbplats.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -43,9 +37,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>%1$d stor spårare hittades</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
+			<string>%1$d stora spårare hittades</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -59,9 +53,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
+			<string>%1$d stor spårare blockerades</string>
 			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
+			<string>%1$d stora spårare blockerades</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -75,9 +69,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Found</string>
+			<string>%1$d spårare hittades</string>
 			<key>other</key>
-			<string>%d Trackers Found</string>
+			<string>%1$d spårare hittades</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -91,9 +85,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Blocked</string>
+			<string>%1$d spårare blockerades</string>
 			<key>other</key>
-			<string>%d Trackers Blocked</string>
+			<string>%1$d spårare blockerades</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -107,11 +101,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%1$d privat flik</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%1$d privata flikar</string>
 		</dict>
 	</dict>
 </dict>

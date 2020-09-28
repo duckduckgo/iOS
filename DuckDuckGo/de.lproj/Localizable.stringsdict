@@ -13,23 +13,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<string>*%2$@, %3$@* und * 1 anderes Tracker-Netzwerk* haben versucht, dich hier zu tracken.
 
-I blocked them!
+Ich habe sie blockiert!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+ ☝️Du kannst in der URL-Leiste überprüfen, wer versucht, dich zu tracken, wenn du eine neue Website besuchst.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
+			<string>*%2$@, %3$@* und *%1$d andere Tracker-Netzwerke* haben versucht, dich hier zu tracken.
 
-I blocked them!
+Ich habe sie blockiert!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+ ☝️Du kannst in der URL-Leiste überprüfen, wer versucht, dich zu tracken, wenn du eine neue Website besuchst.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -43,9 +37,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>%1$d großer Tracker wurde gefunden</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
+			<string>%1$d große Tracker wurden gefunden</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -59,9 +53,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
+			<string>%1$d großer Tracker wurde blockiert</string>
 			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
+			<string>%1$d große Tracker wurden blockiert</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -75,9 +69,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Found</string>
+			<string>%1$d Tracker gefunden</string>
 			<key>other</key>
-			<string>%d Trackers Found</string>
+			<string>%1$d Tracker gefunden</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -91,9 +85,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Blocked</string>
+			<string>%1$d Tracker blockiert</string>
 			<key>other</key>
-			<string>%d Trackers Blocked</string>
+			<string>%1$d Tracker blockiert</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -107,11 +101,9 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%1$d privater Tab</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%1$d private Tabs</string>
 		</dict>
 	</dict>
 </dict>

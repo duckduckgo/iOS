@@ -230,20 +230,15 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Privacy &amp; Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationLevel="2" indentationWidth="9" textLabel="UNq-DI-x5m" style="IBUITableViewCellStyleValue1" id="Iez-TI-0JI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="9" textLabel="UNq-DI-x5m" style="IBUITableViewCellStyleValue1" id="Iez-TI-0JI">
                                         <rect key="frame" x="0.0" y="429.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Iez-TI-0JI" id="Wrd-s6-Sut">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1fR-2b-aMA">
-                                                    <rect key="frame" x="20" y="17" width="9" height="9"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                                </view>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Do Not Sell Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
-                                                    <rect key="frame" x="38" y="14" width="143.33333333333334" height="16"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Global Privacy Control" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
+                                                    <rect key="frame" x="20" y="14" width="159.33333333333334" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -305,7 +300,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Automatically Clear Data" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekF-SJ-PAQ">
-                                                    <rect key="frame" x="20" y="10" width="286.66666666666669" height="24"/>
+                                                    <rect key="frame" x="20" y="10" width="287.33333333333331" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="CpU-SU-Iuu"/>
                                                     </constraints>
@@ -314,7 +309,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="On/Off" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZiK-vA-FAa" userLabel="On/Off">
-                                                    <rect key="frame" x="326.66666666666669" y="12.666666666666666" width="48" height="18.666666666666671"/>
+                                                    <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -593,7 +588,6 @@
                         <outlet property="defaultBrowserCell" destination="TFL-da-OrV" id="b59-Ul-Qut"/>
                         <outlet property="doNotSellAccessoryText" destination="4uU-Ow-65B" id="yLo-Na-qgs"/>
                         <outlet property="doNotSellCell" destination="Iez-TI-0JI" id="SeW-kf-KE0"/>
-                        <outlet property="doNotSellIndicator" destination="1fR-2b-aMA" id="eNK-nx-bBq"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
@@ -689,7 +683,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="635.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="632"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="127" y="32" width="160" height="160"/>
@@ -700,7 +694,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="40" y="224" width="334" height="23.333333333333343"/>
+                                                <rect key="frame" x="40" y="224" width="334" height="20"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -709,7 +703,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="40" y="279.33333333333337" width="334" height="288.33333333333337"/>
+                                                <rect key="frame" x="40" y="276" width="334" height="288.33333333333326"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="480" id="nip-EV-w1g"/>
                                                 </constraints>
@@ -730,7 +724,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="40" y="583.66666666666663" width="334" height="31"/>
+                                                <rect key="frame" x="40" y="580.33333333333337" width="334" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="AIi-4Y-OcU"/>
@@ -1124,10 +1118,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
+                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1155,7 +1149,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Unprotected Sites Yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
+                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1231,10 +1225,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
-                                            <rect key="frame" x="20" y="12.666666666666666" width="374" height="18.666666666666671"/>
+                                            <rect key="frame" x="20" y="14" width="374" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1429,14 +1423,16 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Ioy-SL-amy">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
-                                    <rect key="frame" x="8" y="0.0" width="398" height="83"/>
-                                    <string key="text">Thanks to laws like the California Consumer Privacy Act (CCPA), DuckDuckGo can ask websites not to sell any data they collect about you. This keeps your identity more private. Learn More</string>
-                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
+                                    <rect key="frame" x="8" y="0.0" width="398" height="104"/>
+                                    <string key="text">Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
+	1.	Not sell your personal data
+	2.	Limit sharing your personal to other companies*</string>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     <connections>
@@ -1452,18 +1448,105 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <constraint firstItem="Jw1-Ty-6VJ" firstAttribute="leading" secondItem="Ioy-SL-amy" secondAttribute="leadingMargin" id="jW4-YB-uTX"/>
                             </constraints>
                         </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="i9Y-nk-P1r">
+                            <rect key="frame" x="0.0" y="183.66666793823242" width="414" height="212"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JtH-yN-KpS">
+                                    <rect key="frame" x="8" y="-10" width="398" height="222"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <attributedString key="attributedText">
+                                        <fragment>
+                                            <string key="content">*The Global Privacy Control is intended to convey a general request that data controllers limit the sale or sharing of your personal data to other data controllers (i.e. to other companies besides the website you are on).</string>
+                                            <attributes>
+                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                            <attributes>
+                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" metaFont="system"/>
+                                                <real key="NSKern" value="0.0"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <real key="NSStrokeWidth" value="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                            <attributes>
+                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" metaFont="system"/>
+                                                <real key="NSKern" value="0.0"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                    <tabStops/>
+                                                </paragraphStyle>
+                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <real key="NSStrokeWidth" value="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content">Since the Global Privacy control is setting a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes recognized worldwide.</string>
+                                            <attributes>
+                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" metaFont="systemBold" size="14"/>
+                                                <real key="NSKern" value="0.0"/>
+                                                <font key="NSOriginalFont" metaFont="systemBold" size="14"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                    <tabStops/>
+                                                </paragraphStyle>
+                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <real key="NSStrokeWidth" value="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content"> By enabling it, you're not only taking a stand for your own right to online privacy, you're also helping us raise the standard of trust online. Learn More</string>
+                                            <attributes>
+                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                <real key="NSKern" value="0.0"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                    <tabStops/>
+                                                </paragraphStyle>
+                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <real key="NSStrokeWidth" value="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailingMargin" secondItem="JtH-yN-KpS" secondAttribute="trailing" id="AIm-FL-2b5"/>
+                                <constraint firstItem="JtH-yN-KpS" firstAttribute="top" secondItem="i9Y-nk-P1r" secondAttribute="top" constant="-10" id="T1p-QI-DGf"/>
+                                <constraint firstAttribute="bottom" secondItem="JtH-yN-KpS" secondAttribute="bottom" id="TD7-0d-t3T"/>
+                                <constraint firstItem="JtH-yN-KpS" firstAttribute="leading" secondItem="i9Y-nk-P1r" secondAttribute="leadingMargin" id="kak-Yn-nml"/>
+                            </constraints>
+                        </view>
                         <sections>
                             <tableViewSection id="KJY-jI-68Y">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="XWV-Nl-lTa">
-                                        <rect key="frame" x="0.0" y="101" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="122" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XWV-Nl-lTa" id="cxv-L1-1dA">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Do Not Sell Request to Websites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
-                                                    <rect key="frame" x="20" y="11" width="290" height="22"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tell websites not to sell your data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
+                                                    <rect key="frame" x="20" y="11" width="252" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1495,6 +1578,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                     </tableView>
                     <navigationItem key="navigationItem" title="Do Not Sell (DN$)" id="tWw-Lh-ZT1"/>
                     <connections>
+                        <outlet property="disclaimerTextView" destination="JtH-yN-KpS" id="B4W-GL-YHh"/>
                         <outlet property="doNotSellToggle" destination="mpn-np-GLZ" id="BYG-ZW-qXU"/>
                         <outlet property="infoTextView" destination="Jw1-Ty-6VJ" id="n4b-wC-vBe"/>
                         <outletCollection property="labels" destination="cW7-OM-2oW" collectionClass="NSMutableArray" id="3T7-l5-7BW"/>
@@ -1612,14 +1696,8 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tableCellGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

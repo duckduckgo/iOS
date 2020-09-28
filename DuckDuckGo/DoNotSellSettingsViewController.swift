@@ -15,6 +15,7 @@ class DoNotSellSettingsViewController: UITableViewController {
     
     @IBOutlet weak var doNotSellToggle: UISwitch!
     @IBOutlet weak var infoTextView: UITextView!
+    @IBOutlet weak var disclaimerTextView: UITextView!
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
@@ -24,6 +25,15 @@ class DoNotSellSettingsViewController: UITableViewController {
         super.viewDidLoad()
         
         doNotSellToggle.isOn = appSettings.sendDoNotSell
+        
+        infoTextView.text = """
+            Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
+
+                \u{2022} Not sell your personal data
+                \u{2022} Limit sharing your personal to other companies*
+            """
+        infoTextView.font = UIFont.appFont(ofSize: 14.0)
+        disclaimerTextView.font = UIFont.appFont(ofSize: 14.0)
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -44,16 +54,22 @@ class DoNotSellSettingsViewController: UITableViewController {
 extension DoNotSellSettingsViewController: Themable {
     
     func applyAtributes(theme: Theme) {
-        let tempStr = NSMutableAttributedString(attributedString: infoTextView.attributedText)
-        let range = NSRange(location: infoTextView.text.count - learnMoreStr.count, length: learnMoreStr.count)
+        let tempStr = NSMutableAttributedString(attributedString: disclaimerTextView.attributedText)
+        let range = NSRange(location: disclaimerTextView.text.count - learnMoreStr.count, length: learnMoreStr.count)
         tempStr.setAttributes([:], range: range)
+        tempStr.setAttributes([
+                                NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
+                                NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                              ], range: NSRange(location: 223, length: 162))
         tempStr.addAttribute(.link, value: "ddgQuickLink://global-privacy-control.glitch.me/", range: range)
+        tempStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme.ddgTextTintColor, range: range)
         let linkAttributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
             NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor,
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: infoTextView.font!.pointSize + 4)
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
         ]
-        infoTextView.attributedText = tempStr
-        infoTextView.linkTextAttributes = linkAttributes
+        disclaimerTextView.attributedText = tempStr
+        disclaimerTextView.linkTextAttributes = linkAttributes
     }
     
     func decorate(with theme: Theme) {
@@ -62,6 +78,8 @@ extension DoNotSellSettingsViewController: Themable {
             label.textColor = theme.tableCellTextColor
         }
         
+        infoTextView.textColor = theme.tableCellTextColor
+        disclaimerTextView.textColor = theme.tableCellTextColor
         applyAtributes(theme: theme)
 
         doNotSellToggle.onTintColor = theme.buttonTintColor

@@ -8,10 +8,9 @@ for dir in $1/*; do
   if test -f "$dir/en.xliff"; then
     echo "Processing $locale xliff"
 
-    targetLocale=$(echo $locale | cut -f1 -d-)
-    if [ "$locale" != "$targetLoc" ]
+    if [ "$locale" != "$targetLocale" ];
     then
-      echo "Changing locale from $locale to $targetLocale"
+      echo "Changing locale from '$locale' to '$targetLocale'"
       sed -i '.bak' "s/target-language=\"$locale\"/target-language=\"$targetLocale\"/" "$dir/en.xliff"
       rm "$dir/en.xliff.bak"
     fi

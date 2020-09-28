@@ -38,10 +38,17 @@ class HomeMessageCell: UICollectionViewCell {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var subheaderLabel: UILabel!
-    @IBOutlet weak var cellWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sizingLabel: UILabel!
+    private lazy var cellWidthConstraint = contentView.widthAnchor.constraint(equalToConstant: HomeMessageCell.maximumWidth)
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        cellWidthConstraint.isActive = true
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        mainButton.titleLabel?.textAlignment = .center
         
         let image = dismissButton.image(for: .normal)?.withRenderingMode(.alwaysTemplate)
         dismissButton.setImage(image, for: .normal)
@@ -67,6 +74,8 @@ class HomeMessageCell: UICollectionViewCell {
         headerLabel.text = model.header
         subheaderLabel.text = model.subheader
         topLabel.text = model.topText
+        sizingLabel.font = mainButton.titleLabel?.font
+        sizingLabel.text = model.buttonText
         mainButton.setTitle(model.buttonText, for: .normal)
         layoutIfNeeded()
     }

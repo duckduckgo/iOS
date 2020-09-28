@@ -68,7 +68,7 @@ class PrivacyProtectionHeaderConfigurator {
         } else if differentGrades(in: siteRating) {
             cell.gradeLabel.attributedText = makeEnhancedProtectionLabel(siteRating, fromText: cell.gradeLabel.attributedText!)
         } else {
-            cell.gradeLabel.setAttributedTextString(UserText.privacyProtectionProtectionDisabled)
+            cell.gradeLabel.setAttributedTextString(UserText.privacyProtectionPrivacyGrade)
         }
     }
     

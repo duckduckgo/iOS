@@ -14,6 +14,8 @@ class DoNotSellSettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     
     @IBOutlet weak var doNotSellToggle: UISwitch!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var infoTextView: UITextView!
     @IBOutlet weak var disclaimerTextView: UITextView!
     
@@ -34,6 +36,9 @@ class DoNotSellSettingsViewController: UITableViewController {
             """
         infoTextView.font = UIFont.appFont(ofSize: 14.0)
         disclaimerTextView.font = UIFont.appFont(ofSize: 14.0)
+        
+        infoTextView.backgroundColor = .clear
+        disclaimerTextView.backgroundColor = .clear
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -84,6 +89,9 @@ extension DoNotSellSettingsViewController: Themable {
         applyAtributes(theme: theme)
 
         doNotSellToggle.onTintColor = theme.buttonTintColor
+        
+        headerView.backgroundColor = theme.backgroundColor
+        footerView.backgroundColor = theme.backgroundColor
 
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

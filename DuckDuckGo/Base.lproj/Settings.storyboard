@@ -1580,6 +1580,8 @@ Cg
                     <connections>
                         <outlet property="disclaimerTextView" destination="JtH-yN-KpS" id="B4W-GL-YHh"/>
                         <outlet property="doNotSellToggle" destination="mpn-np-GLZ" id="BYG-ZW-qXU"/>
+                        <outlet property="footerView" destination="i9Y-nk-P1r" id="N5b-ld-Gx7"/>
+                        <outlet property="headerView" destination="Ioy-SL-amy" id="0uu-Hz-W0t"/>
                         <outlet property="infoTextView" destination="Jw1-Ty-6VJ" id="n4b-wC-vBe"/>
                         <outletCollection property="labels" destination="cW7-OM-2oW" collectionClass="NSMutableArray" id="3T7-l5-7BW"/>
                     </connections>

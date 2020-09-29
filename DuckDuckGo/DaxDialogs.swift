@@ -179,11 +179,10 @@ class DaxDialogs {
     private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
         guard let entity = TrackerDataManager.shared.findEntity(forHost: host),
-            let entityName = entity.displayName,
-            let entityPrevalence = entity.prevalence else { return nil }
+            let entityName = entity.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithoutTrackersShown = true
-        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, entityPrevalence)
+        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, host)
     }
     
     private func searchMessage() -> BrowsingSpec? {

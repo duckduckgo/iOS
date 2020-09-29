@@ -83,6 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         clearLegacyAllowedDomainCookies()
+
+        if #available(iOS 13.0, *) {
+            // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
+            // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
+            AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
+        }
         
         appIsLaunching = true
         return true
@@ -249,7 +255,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         if #available(iOS 13.0, *) {
-            AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
             AppConfigurationFetch.scheduleBackgroundRefreshTask()
         } else {
             application.setMinimumBackgroundFetchInterval(60 * 60 * 24)

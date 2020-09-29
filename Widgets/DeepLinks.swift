@@ -23,6 +23,9 @@ struct DeepLinks {
 
     static let newSearch = URL(string: AppDeepLinks.newSearch + "?w=1")!
 
+    // TODO
+    static let addFavorite = URL(string: AppDeepLinks.newSearch + "?w=1")!
+
     static func createFavoriteLauncher(forUrl url: URL) -> URL {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         components?.scheme = String(AppDeepLinks.launchFavorite.dropLast(3))

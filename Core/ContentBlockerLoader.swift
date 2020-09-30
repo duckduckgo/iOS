@@ -37,8 +37,9 @@ public class ContentBlockerLoader {
         self.fileStore = fileStore
     }
 
-    func checkForUpdates(dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
-        
+    func checkForUpdates(dataSource: ContentBlockerRemoteDataSource? = nil) -> Bool {
+        let dataSource = dataSource ?? ContentBlockerRequest(etagStorage: etagStorage)
+
         self.newData.removeAll()
         self.etags.removeAll()
         
@@ -79,7 +80,7 @@ public class ContentBlockerLoader {
     fileprivate func request(_ configuration: ContentBlockerRequest.Configuration,
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
                              _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(configuration, etagStorage: etagStorage) { response in
+        contentBlockerRequest.request(configuration) { response in
             
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
@@ -98,7 +99,7 @@ public class ContentBlockerLoader {
     }
     
     private func requestHttpsUpgrade(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.httpsBloomFilterSpec, etagStorage: etagStorage) { response in
+        contentBlockerRequest.request(.httpsBloomFilterSpec) { response in
             guard case ContentBlockerRequest.Response.success(_, let data) = response,
                 let specification = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data)
                 else {
@@ -112,7 +113,7 @@ public class ContentBlockerLoader {
                 return
             }
             
-            contentBlockerRequest.request(.httpsBloomFilter, etagStorage: self.etagStorage) { response in
+            contentBlockerRequest.request(.httpsBloomFilter) { response in
                 guard case ContentBlockerRequest.Response.success(_, let data) = response else {
                     semaphore.signal()
                     return
@@ -125,7 +126,7 @@ public class ContentBlockerLoader {
     }
     
     private func requestHttpsExcludedDomains(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.httpsExcludedDomains, etagStorage: etagStorage) { response in
+        contentBlockerRequest.request(.httpsExcludedDomains) { response in
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
                 return

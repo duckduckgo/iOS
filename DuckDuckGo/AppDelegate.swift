@@ -23,6 +23,7 @@ import UserNotifications
 import os.log
 import Kingfisher
 import WidgetKit
+import BackgroundTasks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -255,7 +256,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         if #available(iOS 13.0, *) {
-            AppConfigurationFetch.scheduleBackgroundRefreshTask()
+            // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
+            // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
+            BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+                guard tasks.isEmpty else {
+                    return
+                }
+
+                AppConfigurationFetch.scheduleBackgroundRefreshTask()
+            }
         } else {
             application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
         }

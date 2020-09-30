@@ -37,7 +37,7 @@ public class ContentBlockerRulesManager {
     }
 
     public func compileRulesIfNeeded(completion: @escaping ((WKContentRuleList?) -> Void)) {
-        // Callers of this code will frequently want to make changes to WKWebView configuration instances after receiving rules, so the completion
+        // Callers of this function will frequently want to make changes to WKWebView configuration instances after receiving rules, so the completion
         // handler is called on the main thread.
         DispatchQueue.main.async {
             if let rulesList = self.blockingRules, TrackerDataManager.shared.trackerData == self.trackerData {

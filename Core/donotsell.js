@@ -20,13 +20,13 @@
 (function() {
     if (navigator.globalPrivacyControl === undefined) {
         Object.defineProperty(navigator, 'globalPrivacyControl', {
-            value: '1',
+            value: true,
             writable: false,
             configurable: false
         });
     } else {
         try {
-            navigator.globalPrivacyControl = '1';
+            navigator.globalPrivacyControl = true;
         } catch (e) {
             console.error('globalPrivacyControl is not writable: ', e);
         }

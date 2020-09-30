@@ -18,15 +18,15 @@
 //
 
 (function() {
-    if (window.globalPrivacyControl === undefined) {
-        Object.defineProperty(window, 'globalPrivacyControl', {
+    if (navigator.globalPrivacyControl === undefined) {
+        Object.defineProperty(navigator, 'globalPrivacyControl', {
             value: '1',
             writable: false,
             configurable: false
         });
     } else {
         try {
-            window.globalPrivacyControl = '1';
+            navigator.globalPrivacyControl = '1';
         } catch (e) {
             console.error('globalPrivacyControl is not writable: ', e);
         }

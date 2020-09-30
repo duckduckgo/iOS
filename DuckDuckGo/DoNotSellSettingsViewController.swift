@@ -2,8 +2,19 @@
 //  DoNotSellSettingsViewController.swift
 //  DuckDuckGo
 //
-//  Created by Brad Slayter on 9/18/20.
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import UIKit
@@ -28,12 +39,7 @@ class DoNotSellSettingsViewController: UITableViewController {
         
         doNotSellToggle.isOn = appSettings.sendDoNotSell
         
-        infoTextView.text = """
-            Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
-
-                \u{2022} Not sell your personal data
-                \u{2022} Limit sharing your personal to other companies*
-            """
+        infoTextView.text = UserText.doNotSellInfoText
         infoTextView.font = UIFont.appFont(ofSize: 14.0)
         disclaimerTextView.font = UIFont.appFont(ofSize: 14.0)
         
@@ -60,13 +66,22 @@ extension DoNotSellSettingsViewController: Themable {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
-        let tempStr = NSMutableAttributedString(attributedString: disclaimerTextView.attributedText)
+        let tempStr = NSMutableAttributedString(string: UserText.doNotSellDisclaimerPrefix,
+                                                attributes: [
+                                                    NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
+                                                    NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                                                ])
+        tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerBold,
+                                          attributes: [
+                                            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
+                                            NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                                          ]))
+        tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerSuffix,
+                                          attributes: [
+                                            NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
+                                            NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                                          ]))
         let range = NSRange(location: disclaimerTextView.text.count - learnMoreStr.count, length: learnMoreStr.count)
-        tempStr.setAttributes([:], range: range)
-        tempStr.setAttributes([
-                                NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
-                                NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
-                              ], range: NSRange(location: 223, length: 162)) // Hard coded range based on text copy
         tempStr.addAttribute(.link, value: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more", range: range)
         tempStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme.ddgTextTintColor, range: range)
         let linkAttributes: [NSAttributedString.Key : Any] = [
@@ -84,8 +99,7 @@ extension DoNotSellSettingsViewController: Themable {
             label.textColor = theme.tableCellTextColor
         }
         
-        infoTextView.textColor = theme.tableCellTextColor
-        disclaimerTextView.textColor = theme.tableCellTextColor
+        infoTextView.textColor = theme.ddgTextTintColor
         applyAtributes(theme: theme)
 
         doNotSellToggle.onTintColor = theme.buttonTintColor

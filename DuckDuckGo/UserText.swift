@@ -309,4 +309,15 @@ public struct UserText {
     public static let defaultBrowserHomeMessageSubheader = NSLocalizedString("home.message.subheader", value: "Open links with peace of mind, every time.", comment: "")
     public static let defaultBrowserHomeMessageTopText = NSLocalizedString("home.message.topText", value: "NEW IN IOS 14", comment: "")
     public static let defaultBrowserHomeMessageButtonText = NSLocalizedString("home.message.buttonText", value: "Set as Default Browser", comment: "")
+    
+    public static let doNotSellInfoText = NSLocalizedString("donotsell.info.headertext", value: """
+                        Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
+
+                            \u{2022} Not sell your personal data
+                            \u{2022} Limit sharing your personal to other companies*
+                        """,
+                        comment: "")
+    public static let doNotSellDisclaimerPrefix = NSLocalizedString("donotsell.disclaimer.prefix", value: "*The Global Privacy Control is intended to convey a general request that data controllers limit the sale or sharing of your personal data to other data controllers (i.e. to other companies besides the website you are on).\n\n", comment: "")
+    public static let doNotSellDisclaimerBold = NSLocalizedString("donotsell.disclaimer.bold", value: "Since the Global Privacy control is setting a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes recognized worldwide. ", comment: "")
+    public static let doNotSellDisclaimerSuffix = NSLocalizedString("donotsell.disclaimer.suffix", value: "By enabling it, you're not only taking a stand for your own right to online privacy, you're also helping us raise the standard of trust online. Learn More", comment: "")
 }

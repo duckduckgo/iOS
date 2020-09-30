@@ -867,7 +867,7 @@ extension TabViewController: WKNavigationDelegate {
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
         guard let siteRating = self.siteRating,
             !daxDialogsDisabled,
-            let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
+            let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return
         }

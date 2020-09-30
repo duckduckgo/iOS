@@ -132,7 +132,9 @@ class HomeViewController: UIViewController {
     }
         
     func showNextDaxDialog() {
-        guard let spec = DaxDialogs().nextHomeScreenMessage() else { return }
+
+        guard !isShowingDax else { return }
+        guard let spec = DaxDialogs.shared.nextHomeScreenMessage() else { return }
         collectionView.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0

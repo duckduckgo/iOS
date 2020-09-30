@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            DaxDialogs().primeForUse()
+            DaxDialogs.shared.primeForUse()
         }
 
         if let main = mainViewController {
@@ -184,6 +184,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        DaxDialogs.shared.resume()
         autoClear?.applicationDidEnterBackground()
     }
 
@@ -219,6 +220,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 removeOverlay()
             }
             mainViewController?.onQuickFirePressed()
+        } else if AppDeepLinks.isAddFavorite(url: url) {
+            mainViewController?.startAddFavoriteFlow()
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url)

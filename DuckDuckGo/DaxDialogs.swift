@@ -35,9 +35,10 @@ class DaxDialogs {
 
         static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial)
         static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent)
+        static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite)
 
         let message: String
-        
+
     }
     
     struct BrowsingSpec: Equatable {
@@ -85,11 +86,15 @@ class DaxDialogs {
         }
         
     }
-    
+
+    public static let shared = DaxDialogs()
+
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
-    
-    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+
+    private var nextHomeScreenMessageOverride: HomeScreenSpec?
+
+    private init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.settings = settings
     }
     
@@ -100,6 +105,12 @@ class DaxDialogs {
             || settings.browsingMajorTrackingSiteShown
     }
     
+    var isEnabled: Bool {
+        // skip dax dialogs in integration tests
+        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
+        return !settings.isDismissed
+    }
+
     func dismiss() {
         settings.isDismissed = true
     }
@@ -107,15 +118,24 @@ class DaxDialogs {
     func primeForUse() {
         settings.isDismissed = false
     }
-    
-    var isEnabled: Bool {
-        // skip dax dialogs in integration tests
-        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
-        return !settings.isDismissed
+
+    /// Suspend the regular flow and override the next home screen message, even if disabled previously
+    func suspend(withNextHomeScreenMessage message: HomeScreenSpec) {
+        nextHomeScreenMessageOverride = message
     }
-    
+
+    /// Move the regular flow forward to the specified home screen message
+    func skipTo(homeScreenMessage: Int) {
+        let numberSeen = settings.homeScreenMessagesSeen
+        settings.homeScreenMessagesSeen = max(settings.homeScreenMessagesSeen, numberSeen)
+    }
+
+    func resume() {
+        nextHomeScreenMessageOverride = nil
+    }
+
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
-        guard isEnabled else { return nil }
+        guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
@@ -141,6 +161,11 @@ class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
+
+        if nextHomeScreenMessageOverride != nil {
+            return nextHomeScreenMessageOverride
+        }
+
         guard isEnabled else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }
         

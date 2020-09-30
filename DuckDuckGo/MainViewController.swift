@@ -138,6 +138,12 @@ class MainViewController: UIViewController {
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }
+
+    func startAddFavoriteFlow() {
+        DaxDialogs.shared.skipTo(homeScreenMessage: 1)
+        DaxDialogs.shared.suspend(withNextHomeScreenMessage: .addFavorite)
+        newTab()
+    }
     
     func startOnboardingFlowIfNotSeenBefore() {
         
@@ -1247,6 +1253,7 @@ extension MainViewController: AutoClearWorker {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
+        DaxDialogs.shared.resume()
         FireAnimation.animate {
             self.forgetTabs()
             completion?()

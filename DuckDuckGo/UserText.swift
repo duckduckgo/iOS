@@ -317,7 +317,7 @@ public struct UserText {
                             \u{2022} Limit sharing your personal data to other companies
                         """,
                         comment: "")
-    public static let doNotSellDisclaimerBold = NSLocalizedString("donotsell.disclaimer.footertext", value: "Since Global Privacy Control (GPC) is a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes recognized worldwide. ", comment: "")
+    public static let doNotSellDisclaimerBold = NSLocalizedString("donotsell.disclaimer.footertext", value: "Since Global Privacy Control (GPC) is a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes accepted worldwide. ", comment: "")
     public static let doNotSellDisclaimerSuffix = NSLocalizedString("donotsell.disclaimer.suffix", value: " However, websites are only required to act on the signal to the extent applicable laws compel them to do so. ", comment: "")
     public static let doNotSellLearnMore = NSLocalizedString("donotsell.disclaimer.learnmore", value: "Learn More", comment: "")
 }

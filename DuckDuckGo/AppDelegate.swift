@@ -184,7 +184,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        DaxDialogs.shared.resumeRegularFlow()
         autoClear?.applicationDidEnterBackground()
     }
 

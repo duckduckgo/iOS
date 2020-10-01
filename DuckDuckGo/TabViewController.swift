@@ -54,8 +54,10 @@ class TabViewController: UIViewController {
     
     private let instrumentation = TabInstrumentation()
 
+    // Set to
+    var isLinkPreview = false
+    
     var openedByPage = false
-    var daxDialogsDisabled = false
     weak var openingTab: TabViewController? {
         didSet {
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -190,6 +192,7 @@ class TabViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         resetNavigationBar()
+        showMenuHighlighterIfNeeded()
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -199,6 +202,11 @@ class TabViewController: UIViewController {
         activities.append(FindInPageActivity(controller: self))
 
         return activities
+    }
+
+    func showMenuHighlighterIfNeeded() {
+        guard DaxDialogs.shared.isAddFavoriteFlow else { return }
+        highlightMenu()
     }
 
     func initUserScripts() {
@@ -247,7 +255,14 @@ class TabViewController: UIViewController {
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
-    
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        DispatchQueue.main.async {
+            self.showMenuHighlighterIfNeeded()
+        }
+    }
+
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
@@ -630,6 +645,8 @@ class TabViewController: UIViewController {
         guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = buildBrowsingMenu()
         present(controller: alert, fromView: button)
+        ViewHighlighter.hideAll()
+        DaxDialogs.shared.resumeRegularFlow()
     }
     
     private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
@@ -860,13 +877,29 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
-     
+
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
-    
+
+    private func highlightMenu() {
+        Swift.print("***", #function)
+        guard let menuButton = chromeDelegate?.omniBar.menuButton,
+              let window = view.window else { return }
+        ViewHighlighter.hideAll()
+        ViewHighlighter.showIn(window, focussedOnView: menuButton)
+    }
+
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+        guard !isLinkPreview else { return }
+
+        if DaxDialogs.shared.isAddFavoriteFlow {
+            if let url = url, !appUrls.isDuckDuckGo(url: url) {
+                showMenuHighlighterIfNeeded()
+            }
+            return
+        }
+
         guard let siteRating = self.siteRating,
-            !daxDialogsDisabled,
             let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return

@@ -167,6 +167,8 @@
 		85482D902462DCD100EDEDD1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */; };
 		85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 85482D882462DCD100EDEDD1 /* OpenAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		85482D992462F1C600EDEDD1 /* ActionIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */; };
+		8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */; };
+		8548D96825262C33005AAE49 /* view_highlight.json in Resources */ = {isa = PBXBuildFile; fileRef = 8548D96725262C33005AAE49 /* view_highlight.json */; };
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		85519125247468580010FDD0 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8551912624746EDC0010FDD0 /* SnapshotHelper.swift */; };
@@ -831,6 +833,8 @@
 		85482D8F2462DCD100EDEDD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		85482D912462DCD100EDEDD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ActionIcons.xcassets; sourceTree = "<group>"; };
+		8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHighlighter.swift; sourceTree = "<group>"; };
+		8548D96725262C33005AAE49 /* view_highlight.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = view_highlight.json; sourceTree = "<group>"; };
 		85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios13-home-row.mp4"; sourceTree = "<group>"; };
 		85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRadarIntegrationTests.swift; sourceTree = "<group>"; };
 		8551912624746EDC0010FDD0 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
@@ -2384,6 +2388,8 @@
 				8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */,
 				98999D5822FDA41500CBBE1B /* BasicAuthenticationAlert.swift */,
 				8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */,
+				8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */,
+				8548D96725262C33005AAE49 /* view_highlight.json */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -3333,6 +3339,7 @@
 				85DFEDF724CB1CAB00973FE7 /* ShareSheet.xcassets in Resources */,
 				98DA6B3322243CC3006EA9EB /* Feedback.xcassets in Resources */,
 				AA4D6ABD23DE4D15007E8790 /* AppIconYellow60x60@2x.png in Resources */,
+				8548D96825262C33005AAE49 /* view_highlight.json in Resources */,
 				AA4D6AD423DE4D27007E8790 /* AppIconPurple40x40@3x.png in Resources */,
 				AA4D6AD123DE4D27007E8790 /* AppIconPurple40x40@2x.png in Resources */,
 				AAF2E28B23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png in Resources */,
@@ -3660,6 +3667,7 @@
 				98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
 				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
+				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,

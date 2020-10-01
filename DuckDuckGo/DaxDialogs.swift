@@ -33,11 +33,13 @@ class DaxDialogs {
     
     struct HomeScreenSpec: Equatable {
 
-        static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial)
-        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent)
-        static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite)
+        static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial, accessibilityLabel: nil)
+        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
+        static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
+                                                accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
 
         let message: String
+        let accessibilityLabel: String?
 
     }
     
@@ -94,7 +96,8 @@ class DaxDialogs {
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
 
-    private init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+    /// Use singleton acessor, this is only accessible only for tests
+    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.settings = settings
     }
     
@@ -111,6 +114,10 @@ class DaxDialogs {
         return !settings.isDismissed
     }
 
+    var isAddFavoriteFlow: Bool {
+        return nextHomeScreenMessageOverride == .addFavorite
+    }
+
     func dismiss() {
         settings.isDismissed = true
     }
@@ -119,18 +126,13 @@ class DaxDialogs {
         settings.isDismissed = false
     }
 
-    /// Suspend the regular flow and override the next home screen message, even if disabled previously
-    func suspend(withNextHomeScreenMessage message: HomeScreenSpec) {
-        nextHomeScreenMessageOverride = message
+    func enableAddFavoriteFlow() {
+        nextHomeScreenMessageOverride = .addFavorite
+        // Progress to next home screen message, but don't re-show the second dax dialog if it's already been shown
+        settings.homeScreenMessagesSeen = max(settings.homeScreenMessagesSeen, 1)
     }
 
-    /// Move the regular flow forward to the specified home screen message
-    func skipTo(homeScreenMessage: Int) {
-        let numberSeen = settings.homeScreenMessagesSeen
-        settings.homeScreenMessagesSeen = max(settings.homeScreenMessagesSeen, numberSeen)
-    }
-
-    func resume() {
+    func resumeRegularFlow() {
         nextHomeScreenMessageOverride = nil
     }
 

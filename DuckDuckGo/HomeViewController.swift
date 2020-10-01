@@ -140,6 +140,7 @@ class HomeViewController: UIViewController {
         daxDialogContainer.alpha = 0.0
         daxDialogViewController?.loadViewIfNeeded()
         daxDialogViewController?.message = spec.message
+        daxDialogViewController?.accessibleMessage = spec.accessibilityLabel
         daxDialogContainerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         hideLogo()
 

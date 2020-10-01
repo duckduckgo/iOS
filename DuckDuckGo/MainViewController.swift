@@ -140,9 +140,10 @@ class MainViewController: UIViewController {
     }
 
     func startAddFavoriteFlow() {
-        DaxDialogs.shared.skipTo(homeScreenMessage: 1)
-        DaxDialogs.shared.suspend(withNextHomeScreenMessage: .addFavorite)
-        newTab()
+        DaxDialogs.shared.enableAddFavoriteFlow()
+        if DefaultTutorialSettings().hasSeenOnboarding {
+            newTab()
+        }
     }
     
     func startOnboardingFlowIfNotSeenBefore() {
@@ -1253,7 +1254,7 @@ extension MainViewController: AutoClearWorker {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
-        DaxDialogs.shared.resume()
+        DaxDialogs.shared.resumeRegularFlow()
         FireAnimation.animate {
             self.forgetTabs()
             completion?()

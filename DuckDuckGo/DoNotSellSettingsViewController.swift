@@ -66,24 +66,20 @@ extension DoNotSellSettingsViewController: Themable {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
-        let tempStr = NSMutableAttributedString(string: UserText.doNotSellDisclaimerPrefix,
+        let tempStr = NSMutableAttributedString(string: UserText.doNotSellDisclaimerBold,
                                                 attributes: [
-                                                    NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
+                                                    NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
                                                     NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
                                                 ])
-        tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerBold,
-                                          attributes: [
-                                            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
-                                            NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
-                                          ]))
         tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerSuffix,
                                           attributes: [
-                                            NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
-                                            NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                                              NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
+                                              NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
                                           ]))
-        let range = NSRange(location: disclaimerTextView.text.count - learnMoreStr.count, length: learnMoreStr.count)
-        tempStr.addAttribute(.link, value: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more", range: range)
-        tempStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme.ddgTextTintColor, range: range)
+        tempStr.append(NSAttributedString(string: UserText.doNotSellLearnMore,
+                                          attributes: [
+                                            NSAttributedString.Key.link: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more"
+                                          ]))
         let linkAttributes: [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
             NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor,

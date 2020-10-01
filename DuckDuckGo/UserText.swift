@@ -311,13 +311,13 @@ public struct UserText {
     public static let defaultBrowserHomeMessageButtonText = NSLocalizedString("home.message.buttonText", value: "Set as Default Browser", comment: "")
     
     public static let doNotSellInfoText = NSLocalizedString("donotsell.info.headertext", value: """
-                        Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
+                        Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the \"Global Privacy Control\" (GPC) setting and we'll signal to websites your preference to:
 
                             \u{2022} Not sell your personal data
-                            \u{2022} Limit sharing your personal to other companies*
+                            \u{2022} Limit sharing your personal data to other companies
                         """,
                         comment: "")
-    public static let doNotSellDisclaimerPrefix = NSLocalizedString("donotsell.disclaimer.prefix", value: "*The Global Privacy Control is intended to convey a general request that data controllers limit the sale or sharing of your personal data to other data controllers (i.e. to other companies besides the website you are on).\n\n", comment: "")
-    public static let doNotSellDisclaimerBold = NSLocalizedString("donotsell.disclaimer.bold", value: "Since the Global Privacy control is setting a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes recognized worldwide. ", comment: "")
-    public static let doNotSellDisclaimerSuffix = NSLocalizedString("donotsell.disclaimer.suffix", value: "By enabling it, you're not only taking a stand for your own right to online privacy, you're also helping us raise the standard of trust online. Learn More", comment: "")
+    public static let doNotSellDisclaimerBold = NSLocalizedString("donotsell.disclaimer.footertext", value: "Since Global Privacy Control (GPC) is a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes recognized worldwide. ", comment: "")
+    public static let doNotSellDisclaimerSuffix = NSLocalizedString("donotsell.disclaimer.suffix", value: " However, websites are only required to act on the signal to the extent applicable laws compel them to do so. ", comment: "")
+    public static let doNotSellLearnMore = NSLocalizedString("donotsell.disclaimer.learnmore", value: "Learn More", comment: "")
 }

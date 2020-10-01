@@ -1231,6 +1231,7 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetTabs() {
+        DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()
         tabManager.removeAll()
         showBars()

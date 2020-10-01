@@ -113,7 +113,7 @@ extension TabViewController {
         let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
 
         let title = [
-            addToFavoriteFlow ? "👋" : "",
+            addToFavoriteFlow ? "👋 " : "",
             UserText.actionSaveFavorite
         ].joined()
 

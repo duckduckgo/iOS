@@ -96,7 +96,7 @@ class DaxDialogs {
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
 
-    /// Use singleton acessor, this is only accessible only for tests
+    /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.settings = settings
     }

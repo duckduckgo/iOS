@@ -54,7 +54,6 @@ class TabViewController: UIViewController {
     
     private let instrumentation = TabInstrumentation()
 
-    // Set to
     var isLinkPreview = false
     
     var openedByPage = false
@@ -882,7 +881,6 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func highlightMenu() {
-        Swift.print("***", #function)
         guard let menuButton = chromeDelegate?.omniBar.menuButton,
               let window = view.window else { return }
         ViewHighlighter.hideAll()

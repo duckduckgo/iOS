@@ -121,7 +121,7 @@ class AppConfigurationFetch {
         do {
             try BGTaskScheduler.shared.submit(task)
         } catch {
-            os_log("Error when submitting background task: %s", log: generalLog, type: .debug, error.localizedDescription)
+            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
         }
     }
 

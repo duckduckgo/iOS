@@ -25,8 +25,6 @@ import os.log
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
 protocol AppConfigurationFetchStatistics {
-    var lastConfigurationRefreshDate: Date? { get set }
-
     var foregroundStartCount: Int { get set }
     var foregroundNoDataCount: Int { get set }
     var foregroundNewDataCount: Int { get set }
@@ -58,12 +56,11 @@ class AppConfigurationFetch {
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
 
-    var shouldRefresh: Bool {
-        guard let lastRefreshDate = AppUserDefaults().lastConfigurationRefreshDate else {
-            return true
-        }
+    @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
+    private var lastConfigurationRefreshDate: Date
 
-        return Date().timeIntervalSince(lastRefreshDate) > Constants.minimumConfigurationRefreshInterval
+    var shouldRefresh: Bool {
+        return Date().timeIntervalSince(lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
     
     func start(isBackgroundFetch: Bool = false,
@@ -170,7 +167,7 @@ class AppConfigurationFetch {
             }
         }
 
-        store.lastConfigurationRefreshDate = Date()
+        lastConfigurationRefreshDate = Date()
     }
     
     private func sendStatistics(completion: () -> Void ) {

@@ -33,8 +33,6 @@ public class AppUserDefaults: AppSettings {
         
         static let homePage = "com.duckduckgo.app.homePage"
 
-        static let lastConfigurationRefreshDate = "com.duckduckgo.app.lastConfigurationRefreshDate"
-
         static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
         static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
         static let foregroundFetchNewDataCount = "com.duckduckgo.app.fgFetchNewDataCount"
@@ -143,14 +141,6 @@ public class AppUserDefaults: AppSettings {
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {
-    var lastConfigurationRefreshDate: Date? {
-        get {
-            return userDefaults?.object(forKey: Keys.lastConfigurationRefreshDate) as? Date
-        }
-        set {
-            userDefaults?.setValue(newValue, forKey: Keys.lastConfigurationRefreshDate)
-        }
-    }
     
     var foregroundStartCount: Int {
         get {

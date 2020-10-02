@@ -30,7 +30,7 @@ class ViewHighlighter {
 
     static func showIn(_ window: UIWindow, focussedOnView view: UIView) {
         guard let center = view.superview?.convert(view.center, to: nil) else { return }
-        let size = max(view.frame.width, view.frame.height) * 4.5
+        let size = max(view.frame.width, view.frame.height) * 5.5
 
         let highlightView = AnimationView(name: "view_highlight")
         highlightView.frame = CGRect(x: 0, y: 0, width: size, height: size)

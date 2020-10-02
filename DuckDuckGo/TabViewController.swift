@@ -255,13 +255,6 @@ class TabViewController: UIViewController {
         shouldReloadOnError = true
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        DispatchQueue.main.async {
-            self.showMenuHighlighterIfNeeded()
-        }
-    }
-
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
@@ -891,9 +884,7 @@ extension TabViewController: WKNavigationDelegate {
         guard !isLinkPreview else { return }
 
         if DaxDialogs.shared.isAddFavoriteFlow {
-            if let url = url, !appUrls.isDuckDuckGo(url: url) {
-                showMenuHighlighterIfNeeded()
-            }
+            showMenuHighlighterIfNeeded()
             return
         }
 

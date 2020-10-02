@@ -581,7 +581,11 @@ class MainViewController: UIViewController {
         if AppWidthObserver.shared.willResize(toWidth: size.width) {
             applyWidth()
         }
-    
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.currentTab?.showMenuHighlighterIfNeeded()
+        }
+
     }
     
     private func applyWidth() {

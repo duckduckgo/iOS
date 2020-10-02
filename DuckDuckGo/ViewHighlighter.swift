@@ -29,11 +29,12 @@ class ViewHighlighter {
     static var addedViews = [WeaklyHeldView]()
 
     static func showIn(_ window: UIWindow, focussedOnView view: UIView) {
+        guard let center = view.superview?.convert(view.center, to: nil) else { return }
         let size = max(view.frame.width, view.frame.height) * 3
 
         let highlightView = AnimationView(name: "view_highlight")
         highlightView.frame = CGRect(x: 0, y: 0, width: size, height: size)
-        highlightView.center = window.convert(view.center, from: view)
+        highlightView.center = center
         highlightView.isUserInteractionEnabled = false
         window.addSubview(highlightView)
 

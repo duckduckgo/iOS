@@ -259,6 +259,8 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+        ViewHighlighter.hideAll()
+
         if let controller = segue.destination as? SuggestionTrayViewController {
             controller.dismissHandler = dismissSuggestionTray
             controller.autocompleteDelegate = self

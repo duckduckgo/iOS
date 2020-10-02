@@ -230,38 +230,32 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Privacy &amp; Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="9" textLabel="UNq-DI-x5m" style="IBUITableViewCellStyleValue1" id="Iez-TI-0JI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vPz-uO-6gB" detailTextLabel="3cF-XE-ZHg" style="IBUITableViewCellStyleValue1" id="X9R-j6-TtK">
                                         <rect key="frame" x="0.0" y="429.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Iez-TI-0JI" id="Wrd-s6-Sut">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X9R-j6-TtK" id="hhP-bZ-dyU">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vPz-uO-6gB">
                                                     <rect key="frame" x="20" y="14" width="204.33333333333334" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="On/Off" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="4uU-Ow-65B" userLabel="On/Off">
-                                                    <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On/Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3cF-XE-ZHg">
+                                                    <rect key="frame" x="327.33333333333337" y="14" width="47.333333333333336" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="Wrd-s6-Sut" secondAttribute="centerY" id="0SV-aO-Zuu"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="4uU-Ow-65B" secondAttribute="trailing" id="IBs-su-Ce4"/>
-                                                <constraint firstAttribute="top" secondItem="Wrd-s6-Sut" secondAttribute="top" constant="10" id="IX2-wM-EG9"/>
-                                                <constraint firstItem="4uU-Ow-65B" firstAttribute="centerY" secondItem="Wrd-s6-Sut" secondAttribute="centerY" id="MFi-P4-AbE"/>
-                                                <constraint firstAttribute="leading" secondItem="Wrd-s6-Sut" secondAttribute="leadingMargin" id="Wog-kc-B3r"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="fV3-86-QQj" kind="show" id="n4z-9P-rrY"/>
+                                            <segue destination="fV3-86-QQj" kind="show" id="XDJ-yY-6yf"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="0DQ-yq-UuT" detailTextLabel="PNf-tz-lTg" style="IBUITableViewCellStyleValue1" id="EqN-m3-s4f">
@@ -586,8 +580,8 @@
                         <outlet property="autoClearAccessoryText" destination="ZiK-vA-FAa" id="NMH-tv-Mmr"/>
                         <outlet property="autocompleteToggle" destination="PNd-rx-En1" id="KD7-z4-4OW"/>
                         <outlet property="defaultBrowserCell" destination="TFL-da-OrV" id="b59-Ul-Qut"/>
-                        <outlet property="doNotSellAccessoryText" destination="4uU-Ow-65B" id="yLo-Na-qgs"/>
-                        <outlet property="doNotSellCell" destination="Iez-TI-0JI" id="SeW-kf-KE0"/>
+                        <outlet property="doNotSellAccessoryText" destination="3cF-XE-ZHg" id="FLj-LQ-KR6"/>
+                        <outlet property="doNotSellCell" destination="X9R-j6-TtK" id="T8Q-4B-bvp"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
@@ -607,15 +601,14 @@
                         <outletCollection property="labels" destination="a1T-ui-4Nw" collectionClass="NSMutableArray" id="pfw-Kn-kET"/>
                         <outletCollection property="labels" destination="U8i-cQ-5WW" collectionClass="NSMutableArray" id="Pep-YK-P4v"/>
                         <outletCollection property="labels" destination="cKo-er-HNj" collectionClass="NSMutableArray" id="TyT-Oa-igp"/>
-                        <outletCollection property="labels" destination="UNq-DI-x5m" collectionClass="NSMutableArray" id="HzF-9j-VvL"/>
                         <outletCollection property="labels" destination="0DQ-yq-UuT" collectionClass="NSMutableArray" id="BpL-OW-QAw"/>
                         <outletCollection property="labels" destination="HLr-R8-xxF" collectionClass="NSMutableArray" id="zei-0d-VBl"/>
                         <outletCollection property="labels" destination="ekF-SJ-PAQ" collectionClass="NSMutableArray" id="se8-tg-Bxf"/>
                         <outletCollection property="labels" destination="dBZ-yq-FYj" collectionClass="NSMutableArray" id="crg-Da-Zbb"/>
-                        <outletCollection property="accessoryLabels" destination="4uU-Ow-65B" collectionClass="NSMutableArray" id="S1v-FL-vhp"/>
                         <outletCollection property="accessoryLabels" destination="PNf-tz-lTg" collectionClass="NSMutableArray" id="hhm-GA-xST"/>
                         <outletCollection property="accessoryLabels" destination="ZiK-vA-FAa" collectionClass="NSMutableArray" id="jq2-al-pso"/>
                         <outletCollection property="labels" destination="xof-5k-PkI" collectionClass="NSMutableArray" id="aGo-28-l7f"/>
+                        <outletCollection property="accessoryLabels" destination="3cF-XE-ZHg" collectionClass="NSMutableArray" id="4hj-89-pdl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>

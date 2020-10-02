@@ -31,6 +31,8 @@ class TabViewController: UIViewController {
         static let frameLoadInterruptedErrorCode = 102
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
+        
+        static let secGPCHeader = "Sec-GPC"
     }
     
     enum LinkDestination {
@@ -966,31 +968,38 @@ extension TabViewController: WKNavigationDelegate {
         detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
+    
+    private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
+        var request = incomingRequest
+        // Add Do Not sell header if needed
+        if appSettings.sendDoNotSell {
+            if let headers = request.allHTTPHeaderFields,
+               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
+                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
+                load(urlRequest: request)
+                return request
+            }
+        } else {
+            // Check if DN$ header is still there and remove it
+            if let headers = request.allHTTPHeaderFields,
+               let _ = headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) {
+                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
+                load(urlRequest: request)
+                return request
+            }
+        }
+        
+        return nil
+    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
-            var request = navigationAction.request
-            if let headers = request.allHTTPHeaderFields,
-               headers.firstIndex(where: { $0.key == "Sec-GPC" }) == nil {
-                request.addValue("1", forHTTPHeaderField: "Sec-GPC")
-                decisionHandler(.cancel)
-                load(urlRequest: request)
-                return
-            }
-        } else {
-            // Check if DN$ header is still there and remove it
-            var request = navigationAction.request
-            if let headers = request.allHTTPHeaderFields,
-               let _ = headers.firstIndex(where: { $0.key == "Sec-GPC" }) {
-                request.setValue(nil, forHTTPHeaderField: "Sec-GPC")
-                decisionHandler(.cancel)
-                load(urlRequest: request)
-                return
-            }
+        if let request = requestForDoNotSell(basedOn: navigationAction.request) {
+            decisionHandler(.cancel)
+            load(urlRequest: request)
+            return
         }
                 
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {

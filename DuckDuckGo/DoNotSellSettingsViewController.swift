@@ -40,7 +40,15 @@ class DoNotSellSettingsViewController: UITableViewController {
         doNotSellToggle.isOn = appSettings.sendDoNotSell
         
         infoTextView.text = UserText.doNotSellInfoText
-        infoTextView.font = UIFont.appFont(ofSize: 14.0)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 0.98
+        infoTextView.attributedText = NSAttributedString(string: UserText.doNotSellInfoText,
+                                                         attributes: [
+                                                            NSAttributedString.Key.kern: 0.24,
+                                                            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                                                            NSAttributedString.Key.font: UIFont.appFont(ofSize: 13)
+                                                         ])
+        
         disclaimerTextView.font = UIFont.appFont(ofSize: 14.0)
         
         infoTextView.backgroundColor = .clear
@@ -66,23 +74,31 @@ extension DoNotSellSettingsViewController: Themable {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 0.98
         let tempStr = NSMutableAttributedString(string: UserText.doNotSellDisclaimerBold,
                                                 attributes: [
-                                                    NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
-                                                    NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                                                    NSAttributedString.Key.kern: 0.24,
+                                                    NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                                                    NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 13),
+                                                    NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
                                                 ])
         tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerSuffix,
                                           attributes: [
-                                              NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
-                                              NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor
+                                              NSAttributedString.Key.kern: 0.24,
+                                              NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                                              NSAttributedString.Key.font: UIFont.appFont(ofSize: 13),
+                                              NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
                                           ]))
         tempStr.append(NSAttributedString(string: UserText.doNotSellLearnMore,
                                           attributes: [
                                             NSAttributedString.Key.link: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more"
                                           ]))
         let linkAttributes: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 14),
-            NSAttributedString.Key.foregroundColor: theme.ddgTextTintColor,
+            NSAttributedString.Key.kern: 0.24,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 13),
+            NSAttributedString.Key.foregroundColor: theme.searchBarTextColor,
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         disclaimerTextView.attributedText = tempStr
@@ -95,7 +111,7 @@ extension DoNotSellSettingsViewController: Themable {
             label.textColor = theme.tableCellTextColor
         }
         
-        infoTextView.textColor = theme.ddgTextTintColor
+        infoTextView.textColor = theme.tableHeaderTextColor
         applyAtributes(theme: theme)
 
         doNotSellToggle.onTintColor = theme.buttonTintColor

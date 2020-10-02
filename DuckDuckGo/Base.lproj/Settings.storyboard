@@ -237,8 +237,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Global Privacy Control" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
-                                                    <rect key="frame" x="20" y="14" width="159.33333333333334" height="16"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNq-DI-x5m">
+                                                    <rect key="frame" x="20" y="14" width="204.33333333333334" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1545,8 +1545,8 @@ Cg
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tell websites not to sell your data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
-                                                    <rect key="frame" x="20" y="11" width="252" height="22"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
+                                                    <rect key="frame" x="20" y="11" width="220" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1576,7 +1576,7 @@ Cg
                             <outlet property="delegate" destination="fV3-86-QQj" id="Ikz-0T-T4c"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Do Not Sell (DN$)" id="tWw-Lh-ZT1"/>
+                    <navigationItem key="navigationItem" title="Global Privacy Control (GPC)" id="tWw-Lh-ZT1"/>
                     <connections>
                         <outlet property="disclaimerTextView" destination="JtH-yN-KpS" id="B4W-GL-YHh"/>
                         <outlet property="doNotSellToggle" destination="mpn-np-GLZ" id="BYG-ZW-qXU"/>

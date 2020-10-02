@@ -41,15 +41,13 @@ class DoNotSellSettingsViewController: UITableViewController {
         
         infoTextView.text = UserText.doNotSellInfoText
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 0.98
+        paragraphStyle.lineHeightMultiple = 1.16
         infoTextView.attributedText = NSAttributedString(string: UserText.doNotSellInfoText,
                                                          attributes: [
-                                                            NSAttributedString.Key.kern: 0.24,
+                                                            NSAttributedString.Key.kern: -0.08,
                                                             NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                                                            NSAttributedString.Key.font: UIFont.appFont(ofSize: 13)
+                                                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13)
                                                          ])
-        
-        disclaimerTextView.font = UIFont.appFont(ofSize: 14.0)
         
         infoTextView.backgroundColor = .clear
         disclaimerTextView.backgroundColor = .clear
@@ -75,19 +73,19 @@ extension DoNotSellSettingsViewController: Themable {
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 0.98
+        paragraphStyle.lineHeightMultiple = 1.16
         let tempStr = NSMutableAttributedString(string: UserText.doNotSellDisclaimerBold,
                                                 attributes: [
-                                                    NSAttributedString.Key.kern: 0.24,
+                                                    NSAttributedString.Key.kern: -0.08,
                                                     NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                                                    NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 13),
+                                                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13),
                                                     NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
                                                 ])
         tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerSuffix,
                                           attributes: [
-                                              NSAttributedString.Key.kern: 0.24,
+                                              NSAttributedString.Key.kern: -0.08,
                                               NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                                              NSAttributedString.Key.font: UIFont.appFont(ofSize: 13),
+                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),
                                               NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
                                           ]))
         tempStr.append(NSAttributedString(string: UserText.doNotSellLearnMore,
@@ -95,9 +93,9 @@ extension DoNotSellSettingsViewController: Themable {
                                             NSAttributedString.Key.link: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more"
                                           ]))
         let linkAttributes: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.kern: 0.24,
+            NSAttributedString.Key.kern: -0.08,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 13),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),
             NSAttributedString.Key.foregroundColor: theme.searchBarTextColor,
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
         ]

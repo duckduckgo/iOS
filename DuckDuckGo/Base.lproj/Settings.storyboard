@@ -1423,11 +1423,11 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Ioy-SL-amy">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="129"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
-                                    <rect key="frame" x="8" y="0.0" width="398" height="104"/>
+                                    <rect key="frame" x="8" y="0.0" width="398" height="129"/>
                                     <string key="text">Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
 	1.	Not sell your personal data
 	2.	Limit sharing your personal to other companies*</string>
@@ -1449,7 +1449,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="i9Y-nk-P1r">
-                            <rect key="frame" x="0.0" y="183.66666793823242" width="414" height="212"/>
+                            <rect key="frame" x="0.0" y="208.66666793823242" width="414" height="212"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JtH-yN-KpS">
@@ -1539,7 +1539,7 @@ Cg
                             <tableViewSection id="KJY-jI-68Y">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="XWV-Nl-lTa">
-                                        <rect key="frame" x="0.0" y="122" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="147" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XWV-Nl-lTa" id="cxv-L1-1dA">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>

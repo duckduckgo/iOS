@@ -200,18 +200,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         showKeyboardIfSettingOn = false
         
         if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.newTab()
+            mainViewController?.newTab(reuseExisting: true)
             if url.getParam(name: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
                 mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
-            mainViewController?.loadQueryInNewTab(query)
+            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
             Pixel.fire(pixel: .widgetFavoriteLaunch)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
-            mainViewController?.loadQueryInNewTab(query)
+            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {
@@ -223,7 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.startAddFavoriteFlow()
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
-            mainViewController?.loadUrlInNewTab(url)
+            mainViewController?.loadUrlInNewTab(url, reuseExisting: true)
         }
         
         return true

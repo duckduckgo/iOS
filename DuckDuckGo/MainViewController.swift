@@ -446,17 +446,24 @@ class MainViewController: UIViewController {
         return currentTab?.siteRating
     }
 
-    func loadQueryInNewTab(_ query: String) {
+    func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         let url = appUrls.url(forQuery: query)
-        loadUrlInNewTab(url)
+        loadUrlInNewTab(url, reuseExisting: reuseExisting)
     }
 
-    func loadUrlInNewTab(_ url: URL) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false) {
         allowContentUnderflow = false
         customNavigationBar.alpha = 1
         loadViewIfNeeded()
-        addTab(url: url)
+        if reuseExisting, let existing = tabManager.first(withUrl: url) {
+            tabManager.selectTab(existing)
+        } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+            tabManager.selectTab(existing)
+            loadUrl(url)
+        } else {
+            addTab(url: url)
+        }
         refreshOmniBar()
         refreshTabIcon()
         refreshControls()
@@ -758,10 +765,15 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
-    func newTab() {
+    func newTab(reuseExisting: Bool = false) {
         hideSuggestionTray()
         currentTab?.dismiss()
-        tabManager.addHomeTab()
+
+        if reuseExisting, let existing = tabManager.firstHomeTab() {
+            tabManager.selectTab(existing)
+        } else {
+            tabManager.addHomeTab()
+        }
         attachHomeScreen()
         homeController?.openedAsNewTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)

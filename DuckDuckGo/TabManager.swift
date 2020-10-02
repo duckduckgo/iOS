@@ -123,7 +123,21 @@ class TabManager {
         model.select(tabAt: model.count - 1)
         save()
     }
-    
+
+    func firstHomeTab() -> Tab? {
+        return model.tabs.first(where: { $0.link == nil })
+    }
+
+    func first(withUrl url: URL) -> Tab? {
+        return model.tabs.first(where: { $0.link?.url == url })
+    }
+
+    func selectTab(_ tab: Tab) {
+        guard let index = model.indexOf(tab: tab) else { return }
+        model.select(tabAt: index)
+        save()
+    }
+
     func loadUrlInCurrentTab(_ url: URL) -> TabViewController {
         guard let tab = model.currentTab else {
             fatalError("No current tab")

@@ -26,32 +26,18 @@ public class ContentBlockerRulesManager {
     
     public static let shared = ContentBlockerRulesManager()
     
-    private var trackerData: TrackerData
-    
     public var blockingRules: WKContentRuleList?
     
     public weak var storageCache: StorageCache?
     
-    private init() {
-        trackerData = TrackerDataManager.shared.trackerData
-    }
+    private init() {}
 
-    public func compileRulesIfNeeded(completion: @escaping ((WKContentRuleList?) -> Void)) {
-        // Callers of this function will frequently want to make changes to WKWebView instances after receiving rules, so the completion handler is
-        // called on the main thread.
-        DispatchQueue.main.async {
-            if let rulesList = self.blockingRules, TrackerDataManager.shared.trackerData == self.trackerData {
-                completion(rulesList)
-            } else {
-                self.trackerData = TrackerDataManager.shared.trackerData
-                ContentBlockerRulesManager.shared.compileRules { rulesList in
-                    completion(rulesList)
-                }
-            }
+    public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
+        guard let trackerData = TrackerDataManager.shared.trackerData else {
+            completion?(nil)
+            return
         }
-    }
-    
-    private func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
+
         let unprotectedSites = UnprotectedSitesManager().domains
         let tempUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
 

@@ -178,7 +178,9 @@ struct FavoritesWidgetView: View {
             VStack(spacing: 8) {
                 Text(UserText.noFavoritesMessage)
                     .font(.system(size: 15))
+                    .multilineTextAlignment(.center)
                     .foregroundColor(.widgetAddFavoriteMessage)
+                    .padding(.horizontal)
 
                 HStack {
                     Text(UserText.noFavoritesCTA)

@@ -167,6 +167,10 @@ class BookmarksManager {
         return indexOf(url, in: bookmarks)
     }
 
+    func contains(url: URL) -> Bool {
+        return containsBookmark(url: url) || containsFavorite(url: url)
+    }
+
     func containsFavorite(url: URL) -> Bool {
         return indexOfFavorite(url: url) != nil
     }

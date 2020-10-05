@@ -996,12 +996,12 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        if let request = requestForDoNotSell(basedOn: navigationAction.request) {
+        if navigationAction.isTargetingMainFrame(), let request = requestForDoNotSell(basedOn: navigationAction.request) {
             decisionHandler(.cancel)
             load(urlRequest: request)
             return
         }
-                
+
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
             switch tapLinkDestination {
             case .newTab:

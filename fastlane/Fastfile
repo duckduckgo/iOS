@@ -6,7 +6,18 @@ lane :release do
 
   gym(
     scheme: "DuckDuckGo",
-    export_method: "app-store"
+    export_method: "app-store",
+    export_options: {
+      signingStyle: "manual",
+      provisioningProfiles: {
+        "com.duckduckgo.mobile.ios" => "iOS 14 - App Store - App",
+	"com.duckduckgo.mobile.ios.ShareExtension" => "iOS 14 - App Store - Share",
+	"com.duckduckgo.mobile.ios.BookmarksTodayExtension" => "iOS 14 - App Store - Bookmarks",
+	"com.duckduckgo.mobile.ios.QuickActionsTodayExtension" => "iOS 14 - App Store - Quick Actions",
+	"com.duckduckgo.mobile.ios.OpenAction2" => "iOS 14 - App Store - Open Action",
+	"com.duckduckgo.mobile.ios.Widgets" => "iOS 14 - App Store - Widgets"
+      }
+    }
   )
 
   deliver(

@@ -5,12 +5,14 @@ default_platform :ios
 lane :release do 
 
   gym(
+    # codesigning_identity: "iPhone Distribution: Duck Duck Go, Inc.",
     scheme: "DuckDuckGo",
     export_method: "app-store",
     skip_profile_detection: true,
     export_options: {
       method: "app-store",
       signingStyle: "manual",
+      signingCertificate: "Apple Distribution",
       provisioningProfiles: {
         "com.duckduckgo.mobile.ios"                            => "728d59ea-e4bb-4bad-ab06-20c2efc67f94",
         "com.duckduckgo.mobile.ios.BookmarksTodayExtension"    => "d02c8f73-7ebf-4ba7-99b5-c6fbe212a815",

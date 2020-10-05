@@ -646,6 +646,7 @@ class MainViewController: UIViewController {
             applyWidthToTrayController()
 
             if !AppWidthObserver.shared.isLargeWidth {
+                ViewHighlighter.hideAll()
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()
                 }
@@ -889,7 +890,6 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        
         if updatedQuery.isEmpty && homeController == nil {
             showSuggestionTray(.favorites)
         } else {
@@ -899,22 +899,26 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onOmniQuerySubmitted(_ query: String) {
+        ViewHighlighter.hideAll()
         loadQuery(query)
         hideSuggestionTray()
         showHomeRowReminder()
     }
 
     func onSiteRatingPressed() {
+        ViewHighlighter.hideAll()
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
+        ViewHighlighter.hideAll()
         hideSuggestionTray()
         launchBrowsingMenu()
     }
 
     @objc func onBookmarksPressed() {
+        ViewHighlighter.hideAll()
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
@@ -924,6 +928,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSettingsPressed() {
+        ViewHighlighter.hideAll()
         launchSettings()
     }
     
@@ -931,6 +936,7 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
+        currentTab?.showMenuHighlighterIfNeeded()
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
@@ -939,6 +945,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+        ViewHighlighter.hideAll()
         guard let homeController = homeController else { return }
         homeController.launchNewSearch()
     }

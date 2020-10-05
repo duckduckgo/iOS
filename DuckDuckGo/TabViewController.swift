@@ -204,7 +204,8 @@ class TabViewController: UIViewController {
     }
 
     func showMenuHighlighterIfNeeded() {
-        guard DaxDialogs.shared.isAddFavoriteFlow else { return }
+        guard DaxDialogs.shared.isAddFavoriteFlow,
+              !isError else { return }
         highlightMenu()
     }
 
@@ -637,7 +638,6 @@ class TabViewController: UIViewController {
         guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = buildBrowsingMenu()
         present(controller: alert, fromView: button)
-        ViewHighlighter.hideAll()
         DaxDialogs.shared.resumeRegularFlow()
     }
     

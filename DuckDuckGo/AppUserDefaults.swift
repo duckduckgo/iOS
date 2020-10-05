@@ -21,6 +21,10 @@ import Foundation
 import Core
 
 public class AppUserDefaults: AppSettings {
+    
+    public struct Notifications {
+        public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
+    }
 
     private let groupName: String
 
@@ -137,6 +141,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: Keys.longPressPreviews)
         }
     }
+    
+    @UserDefaultsWrapper(key: .doNotSell, defaultValue: false)
+    var sendDoNotSell: Bool
     
 }
 

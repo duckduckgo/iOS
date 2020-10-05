@@ -1,8 +1,8 @@
 //
-//  MockAppSettings.swift
+//  donotsell.js
 //  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,16 +17,18 @@
 //  limitations under the License.
 //
 
-import Foundation
-
-class MockAppSettings: AppSettings {
-    
-    var autocomplete: Bool = true
-    var currentThemeName: ThemeName = ThemeName.dark
-    var autoClearTiming: AutoClearSettingsModel.Timing = .termination
-    var autoClearAction: AutoClearSettingsModel.Action = []
-    var allowUniversalLinks: Bool = true
-    var longPressPreviews: Bool = true
-    var sendDoNotSell: Bool = true
-    
-}
+(function() {
+    if (navigator.globalPrivacyControl === undefined) {
+        Object.defineProperty(navigator, 'globalPrivacyControl', {
+            value: true,
+            writable: false,
+            configurable: false
+        });
+    } else {
+        try {
+            navigator.globalPrivacyControl = true;
+        } catch (e) {
+            console.error('globalPrivacyControl is not writable: ', e);
+        }
+    }
+})();

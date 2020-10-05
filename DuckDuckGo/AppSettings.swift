@@ -27,5 +27,7 @@ protocol AppSettings: AnyObject {
     var longPressPreviews: Bool { get set }
 
     var allowUniversalLinks: Bool { get set }
+    
+    var sendDoNotSell: Bool { get set }
 
 }

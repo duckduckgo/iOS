@@ -33,62 +33,52 @@ class DaxDialogs {
     
     struct HomeScreenSpec: Equatable {
 
-        static let initial = HomeScreenSpec(height: 235, message: UserText.daxDialogHomeInitial)
-        static let subsequent = HomeScreenSpec(height: 210, message: UserText.daxDialogHomeSubsequent)
+        static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial)
+        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent)
 
-        let height: CGFloat
         let message: String
         
     }
     
     struct BrowsingSpec: Equatable {
-
-        static let afterSearch = BrowsingSpec(height: 250,
-                                              message: UserText.daxDialogBrowsingAfterSearch,
+        
+        static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
                                               pixelName: .daxDialogsSerp)
         
-        static let withoutTrackers = BrowsingSpec(height: 260,
-                                                  message: UserText.daxDialogBrowsingWithoutTrackers,
+        static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
                                                   pixelName: .daxDialogsWithoutTrackers)
         
-        static let siteIsMajorTracker = BrowsingSpec(height: 345,
-                                                     message: UserText.daxDialogBrowsingSiteIsMajorTracker,
+        static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
                                                      pixelName: .daxDialogsSiteIsMajor)
         
-        static let siteOwnedByMajorTracker = BrowsingSpec(height: 365,
-                                                          message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
+        static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
                                                           pixelName: .daxDialogsSiteOwnedByMajor)
         
-        static let withOneTracker = BrowsingSpec(height: 345,
-                                                      message: UserText.daxDialogBrowsingWithOneTracker,
-                                                      cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
+        static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
+                                                 cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
+                                                 highlightAddressBar: true,
+                                                 pixelName: .daxDialogsWithTrackers)
+        
+        static let withMutipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
+                                                      cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers)
         
-        static let withMutipleTrackers = BrowsingSpec(height: 345,
-                                                               message: UserText.daxDialogBrowsingWithMultipleTrackers,
-                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
-                                                               highlightAddressBar: true,
-                                                               pixelName: .daxDialogsWithTrackers)
-
-
-        let height: CGFloat
         let message: String
         let cta: String
         let highlightAddressBar: Bool
         let pixelName: PixelName
         
         func format(args: CVarArg...) -> BrowsingSpec {
-            return BrowsingSpec(height: height,
-                                message: String(format: message, arguments: args),
+            return BrowsingSpec(message: String(format: message, arguments: args),
                                 cta: cta,
                                 highlightAddressBar: highlightAddressBar,
                                 pixelName: pixelName)
@@ -189,11 +179,10 @@ class DaxDialogs {
     private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
         guard let entity = TrackerDataManager.shared.findEntity(forHost: host),
-            let entityName = entity.displayName,
-            let entityPrevalence = entity.prevalence else { return nil }
+            let entityName = entity.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithoutTrackersShown = true
-        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, entityPrevalence)
+        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, host)
     }
     
     private func searchMessage() -> BrowsingSpec? {

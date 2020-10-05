@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -23,27 +23,34 @@
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="homeMessageCell" id="Oa2-t5-HU2" customClass="HomeMessageCell" customModule="DuckDuckGo" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="347" height="176"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A9x-hQ-tLp">
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="A9x-hQ-tLp">
                 <rect key="frame" x="0.0" y="0.0" width="347" height="176"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Open links with peace of mind, every time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0j-qV-cF4">
-                        <rect key="frame" x="8" y="103.5" width="327" height="17.5"/>
+                        <rect key="frame" x="8" y="85" width="331" height="17.5"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                         <color key="textColor" name="WidgetSearchFieldTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Make DuckDuckGo your default browser." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh6-HD-bG9">
-                        <rect key="frame" x="18" y="50.5" width="307" height="47"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="998" text="Make DuckDuckGo your default browser." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh6-HD-bG9">
+                        <rect key="frame" x="18" y="50.5" width="311" height="28.5"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0L-dl-avX">
-                        <rect key="frame" x="80.5" y="137" width="182" height="31"/>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19N-wy-Gwg">
+                        <rect key="frame" x="97.5" y="126.5" width="152" height="17.5"/>
+                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="w0L-dl-avX">
+                        <rect key="frame" x="82.5" y="118.5" width="182" height="33.5"/>
                         <color key="backgroundColor" name="AccentColor"/>
                         <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="31" id="C8S-da-Ap4"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="C8S-da-Ap4"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="15"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -59,7 +66,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-DQ-0n5">
-                        <rect key="frame" x="303" y="0.0" width="40" height="40"/>
+                        <rect key="frame" x="307" y="0.0" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="PeG-Sf-Zjg"/>
                             <constraint firstAttribute="height" constant="40" id="kzB-0Z-hgR"/>
@@ -72,7 +79,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="NEW IN IOS 14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLE-Fv-A9p">
-                        <rect key="frame" x="127" y="16" width="89.5" height="15.5"/>
+                        <rect key="frame" x="129" y="16" width="89.5" height="15.5"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="13"/>
                         <color key="textColor" name="AccentColor"/>
                         <nil key="highlightedColor"/>
@@ -81,8 +88,9 @@
                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 <constraints>
                     <constraint firstItem="PLE-Fv-A9p" firstAttribute="top" secondItem="A9x-hQ-tLp" secondAttribute="top" constant="16" id="3kI-7N-Afp"/>
-                    <constraint firstAttribute="width" constant="343" id="7fE-a4-PVb"/>
+                    <constraint firstItem="19N-wy-Gwg" firstAttribute="centerY" secondItem="w0L-dl-avX" secondAttribute="centerY" id="3qO-Uz-cmt"/>
                     <constraint firstItem="PLE-Fv-A9p" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="8" id="8a1-0E-48u"/>
+                    <constraint firstItem="19N-wy-Gwg" firstAttribute="trailing" secondItem="w0L-dl-avX" secondAttribute="trailing" constant="-15" id="Cec-dA-7XM"/>
                     <constraint firstAttribute="trailing" secondItem="fh6-HD-bG9" secondAttribute="trailing" constant="18" id="D4f-iK-s0m"/>
                     <constraint firstAttribute="bottom" secondItem="w0L-dl-avX" secondAttribute="bottom" constant="24" id="DNk-Zh-p5u"/>
                     <constraint firstItem="h0j-qV-cF4" firstAttribute="top" secondItem="fh6-HD-bG9" secondAttribute="bottom" constant="6" id="Dof-72-wke"/>
@@ -91,25 +99,23 @@
                     <constraint firstItem="h0j-qV-cF4" firstAttribute="leading" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="8" id="JNP-Ap-7oR"/>
                     <constraint firstItem="w0L-dl-avX" firstAttribute="centerX" secondItem="A9x-hQ-tLp" secondAttribute="centerX" id="L9O-66-mXF"/>
                     <constraint firstAttribute="trailing" secondItem="7vJ-DQ-0n5" secondAttribute="trailing" id="PFL-u6-J7u"/>
-                    <constraint firstItem="w0L-dl-avX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="8" id="RyR-xR-Ybd"/>
+                    <constraint firstItem="w0L-dl-avX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A9x-hQ-tLp" secondAttribute="leading" constant="16" id="RyR-xR-Ybd"/>
                     <constraint firstItem="7vJ-DQ-0n5" firstAttribute="top" secondItem="A9x-hQ-tLp" secondAttribute="top" id="V5x-xh-BLE"/>
                     <constraint firstItem="7vJ-DQ-0n5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PLE-Fv-A9p" secondAttribute="trailing" id="apV-5w-72J"/>
+                    <constraint firstItem="19N-wy-Gwg" firstAttribute="leading" secondItem="w0L-dl-avX" secondAttribute="leading" constant="15" id="bFW-Q8-KZd"/>
+                    <constraint firstItem="19N-wy-Gwg" firstAttribute="height" secondItem="w0L-dl-avX" secondAttribute="height" constant="-16" id="dXv-Tt-Di4"/>
                     <constraint firstItem="PLE-Fv-A9p" firstAttribute="centerX" secondItem="A9x-hQ-tLp" secondAttribute="centerX" id="fz6-zG-gko"/>
                     <constraint firstAttribute="trailing" secondItem="h0j-qV-cF4" secondAttribute="trailing" constant="8" id="icN-zD-imL"/>
                     <constraint firstItem="fh6-HD-bG9" firstAttribute="top" secondItem="PLE-Fv-A9p" secondAttribute="bottom" constant="19" id="v74-fm-09H"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="w0L-dl-avX" secondAttribute="trailing" constant="8" id="yBy-Cu-c6z"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="w0L-dl-avX" secondAttribute="trailing" constant="16" id="yBy-Cu-c6z"/>
                 </constraints>
             </collectionViewCellContentView>
-            <constraints>
-                <constraint firstItem="A9x-hQ-tLp" firstAttribute="leading" secondItem="Oa2-t5-HU2" secondAttribute="leading" id="JJl-0Y-0gv"/>
-                <constraint firstItem="A9x-hQ-tLp" firstAttribute="top" secondItem="Oa2-t5-HU2" secondAttribute="top" id="NxF-gl-1NO"/>
-            </constraints>
             <size key="customSize" width="347" height="176"/>
             <connections>
-                <outlet property="cellWidthConstraint" destination="7fE-a4-PVb" id="ZYu-wy-PgS"/>
                 <outlet property="dismissButton" destination="7vJ-DQ-0n5" id="HdE-PT-OND"/>
                 <outlet property="headerLabel" destination="fh6-HD-bG9" id="5mb-4Y-TCn"/>
                 <outlet property="mainButton" destination="w0L-dl-avX" id="70C-b7-HPh"/>
+                <outlet property="sizingLabel" destination="19N-wy-Gwg" id="0BC-lz-24d"/>
                 <outlet property="subheaderLabel" destination="h0j-qV-cF4" id="NLP-8i-e6u"/>
                 <outlet property="topLabel" destination="PLE-Fv-A9p" id="JLH-uW-7WG"/>
             </connections>

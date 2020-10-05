@@ -31,6 +31,8 @@ class TabViewController: UIViewController {
         static let frameLoadInterruptedErrorCode = 102
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
+        
+        static let secGPCHeader = "Sec-GPC"
     }
     
     enum LinkDestination {
@@ -80,6 +82,7 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
+    private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
@@ -155,6 +158,7 @@ class TabViewController: UIViewController {
     private var contentBlockerScript = ContentBlockerUserScript()
     private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
+    private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var debugScript = DebugUserScript()
@@ -185,6 +189,7 @@ class TabViewController: UIViewController {
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
+        addDoNotSellObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -225,6 +230,10 @@ class TabViewController: UIViewController {
         } else {
             generalScripts.append(documentScript)
             ddgScripts.append(documentScript)
+        }
+        
+        if appSettings.sendDoNotSell {
+            generalScripts.append(doNotSellScript)
         }
         
         faviconScript.delegate = self
@@ -550,6 +559,13 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
+    private func addDoNotSellObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDoNotSellChange),
+                                               name: AppUserDefaults.Notifications.doNotSellStatusChange,
+                                               object: nil)
+    }
+    
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
     }
@@ -573,6 +589,10 @@ class TabViewController: UIViewController {
             ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
+    }
+    
+    @objc func onDoNotSellChange() {
+        reload(scripts: true)
     }
 
     private func resetNavigationBar() {
@@ -648,7 +668,7 @@ class TabViewController: UIViewController {
     
     func presentOpenInExternalAppAlert(url: URL) {
         let title = UserText.customUrlSchemeTitle
-        let message = UserText.forCustomUrlSchemePrompt(url: url)
+        let message = UserText.customUrlSchemeMessage
         let open = UserText.customUrlSchemeOpen
         let dontOpen = UserText.customUrlSchemeDontOpen
         
@@ -948,11 +968,40 @@ extension TabViewController: WKNavigationDelegate {
         detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
+    
+    private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
+        var request = incomingRequest
+        // Add Do Not sell header if needed
+        if appSettings.sendDoNotSell {
+            if let headers = request.allHTTPHeaderFields,
+               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
+                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
+                load(urlRequest: request)
+                return request
+            }
+        } else {
+            // Check if DN$ header is still there and remove it
+            if let headers = request.allHTTPHeaderFields,
+               let _ = headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) {
+                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
+                load(urlRequest: request)
+                return request
+            }
+        }
+        
+        return nil
+    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-                
+        
+        if navigationAction.isTargetingMainFrame(), let request = requestForDoNotSell(basedOn: navigationAction.request) {
+            decisionHandler(.cancel)
+            load(urlRequest: request)
+            return
+        }
+
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
             switch tapLinkDestination {
             case .newTab:

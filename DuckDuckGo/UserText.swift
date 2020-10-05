@@ -73,8 +73,11 @@ public struct UserText {
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
     
-    public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
-    public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
+    public static let privacyProtectionProtectionDisabled = NSLocalizedString("privacy.protection.main.disabled", value: "SITE PROTECTION DISABLED", comment: "")
+    public static let privacyProtectionPrivacyGrade = NSLocalizedString("privacy.protection.main.grade", value: "PRIVACY GRADE", comment: "")
+    public static let privacyProtectionEnhanced = NSLocalizedString("privacy.protection.main.enhanced", value: "ENHANCED FROM $1 TO $2", comment: "$1 and $2 are grades - letters. Example: Enhanced from D to B")
+    public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Do not translate - stringsdict entry")
+    public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Do not translate - stringsdict entry")
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
     public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
     
@@ -101,7 +104,7 @@ public struct UserText {
     public static let ppEncryptionUsageSign = NSLocalizedString("privacy.protection.encryption.usage.sign", value: "Sign", comment: "Usage of a certificate")
     public static let ppEncryptionUsageVerify = NSLocalizedString("privacy.protection.encryption.usage.verify", value: "Verify", comment: "Usage of a certificate")
     public static let ppEncryptionUsage = NSLocalizedString("privacy.protection.encryption.usage", value: "Usage", comment: "Part of certificate info")
-    public static let ppEncryptionPermanent = NSLocalizedString("privacy.protection.encryption.permanent", value: "Permanent", comment: "Part of certificate info")
+    public static let ppEncryptionPermanent = NSLocalizedString("privacy.protection.encryption.permanent", value: "Permanent", comment: "Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one).")
     public static let ppEncryptionId = NSLocalizedString("privacy.protection.encryption.id", value: "Subject Key Identifier", comment: "Part of certificate info")
     public static let ppEncryptionKey = NSLocalizedString("privacy.protection.encryption.key", value: "Public Key", comment: "Part of certificate info")
     public static let ppEncryptionYes = NSLocalizedString("privacy.protection.encryption.yes", value: "Yes", comment: "Confirmation that certificate is permanent")
@@ -158,10 +161,7 @@ public struct UserText {
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", value: "Thank You! Feedback submitted.", comment: "")
     
     public static let customUrlSchemeTitle = NSLocalizedString("prompt.custom.url.scheme.title", value: "Open in Another App?", comment: "Alert title")
-    public static func forCustomUrlSchemePrompt(url: URL) -> String {
-        let message = NSLocalizedString("prompt.custom.url.scheme.prompt", comment: "Would you like to leave DuckDuckGo to view this content?")
-        return message.format(arguments: url.absoluteString)
-    }
+    public static let customUrlSchemeMessage = NSLocalizedString("prompt.custom.url.scheme.prompt", value: "Would you like to leave DuckDuckGo to view this content?", comment: "")
     public static let customUrlSchemeOpen = NSLocalizedString("prompt.custom.url.scheme.open", value: "Yes", comment: "Confirm action")
     public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", value: "No", comment: "Deny action")
     
@@ -218,17 +218,19 @@ public struct UserText {
     public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", value: "Off", comment: "")
     
     public static func privacyGrade(_ grade: String) -> String {
-        let message = NSLocalizedString("privacy.protection.site.grade", comment: "")
+        let message = NSLocalizedString("privacy.protection.site.grade", value: "Privacy grade %@", comment: "Replacement string is a single letter: A/B/C/D")
         return message.format(arguments: grade)
     }
     
+    public static let privacyGradeHint = NSLocalizedString("privacy.protection.site.hint", value: "Press to open Privacy Protection screen", comment: "")
+    
     public static func numberOfTabs(_ number: Int) -> String {
-        let message = NSLocalizedString("number.of.tabs", comment: "")
+        let message = NSLocalizedString("number.of.tabs", comment: "Do not translate - stringsdict entry")
         return message.format(arguments: number)
     }
     
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("tab.open.with.title.and.address", comment: "")
+        let message = NSLocalizedString("tab.open.with.title.and.address", value: "Open \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
     }
 
@@ -236,7 +238,7 @@ public struct UserText {
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
 
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("tab.close.with.title.and.address", comment: "")
+        let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
     }
     
@@ -245,7 +247,7 @@ public struct UserText {
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "")
     public static let onboardingContinue = NSLocalizedString("onboardingContinue", value: "Continue", comment: "")
     public static let onboardingSkip = NSLocalizedString("onboardingSkip", value: "Skip", comment: "")
-    public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", value: "Start Browsing", comment: "")
+    public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", value: "Start Browsing", comment: "This is on a button presented on the last of the onboarding screens.")
     public static let onboardingSetAsDefaultBrowser = NSLocalizedString("onboardingSetAsDefaultBrowser", value: "Set as Default Browser", comment: "")
     public static let onboardingDefaultBrowserTitle = NSLocalizedString("onboardingDefaultBrowserTitle", value: "Make DuckDuckGo your default browser.", comment: "")
     public static let onboardingDefaultBrowserMaybeLater = NSLocalizedString("onboardingDefaultBrowserMaybeLater", value: "Maybe Later", comment: "")
@@ -267,9 +269,11 @@ public struct UserText {
     public static let homeTabTitle = NSLocalizedString("homeTab.title", value: "Home", comment: "Home tab title")
     
     public static let settingTutorialInfo = NSLocalizedString("settings.tutorial.info", value: "Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.", comment: "")
-    public static let settingTutorialOpenStep = NSLocalizedString("settings.tutorial.open", value: "Open *Settings* App", comment: "Asterix is an indicator of a bold text")
+    public static let settingTutorialOpenStep = NSLocalizedString("settings.tutorial.open", value: "Open *Settings* App", comment: "Asterix is an indicator of a bold text. Settings is a native iOS app.")
     public static let settingTutorialNavigateStep = NSLocalizedString("settings.tutorial.navigate", value: "Navigate to *Safari*, then *Search Engine*", comment: "")
     public static let settingTutorialSelectStep = NSLocalizedString("settings.tutorial.select", value: "Select *DuckDuckGo*", comment: "")
+    
+    public static let settingsAboutText = NSLocalizedString("settings.about.text", value: "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.", comment: "")
     
     public static let daxDialogHomeInitial = NSLocalizedString("dax.onboarding.home.initial", value: "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒", comment: "")
     public static let daxDialogHomeSubsequent = NSLocalizedString("dax.onboarding.home.subsequent", value: "You’ve got this!\n\nRemember: every time you browse with me a creepy ad loses its wings. 👍", comment: "ad = advertisment")
@@ -280,7 +284,7 @@ public struct UserText {
     public static let daxDialogBrowsingWithoutTrackers = NSLocalizedString("dax.onboarding.browsing.without.trackers", value: "As you tap and scroll, I’ll block pesky trackers.\n\nGo ahead - keep browsing!", comment: "")
     public static let daxDialogBrowsingWithoutTrackersCTA = NSLocalizedString("dax.onboarding.browsing.without.trackers.cta", value: "Got It", comment: "")
     
-    public static let daxDialogBrowsingSiteIsMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker", value: "Heads up! %1$@ is a major tracking network.\n\nTheir trackers lurk on about %2$.0lf%% of top sites 😱 but don’t worry!\n\nI’ll block %1$@ from seeing your activity on those sites.", comment: "First paramter is a string - domain name, second is a number %")
+    public static let daxDialogBrowsingSiteIsMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker", value: "Heads up! I can’t stop %1$@ from seeing your activity on %2$@.\n\nBut browse with me, and I can reduce what %1$@ knows about you overall by blocking their trackers on lots of other sites.",  comment: "First paramter is a string - network name, 2nd parameter is a string - domain name")
     public static let daxDialogBrowsingSiteIsMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.is.major.tracker.cta", value:  "Got It", comment: "")
     
     public static let daxDialogBrowsingSiteOwnedByMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker", value: "Heads up! Since %2$@ owns %1$@, I can’t stop them from seeing your activity here.\n\nBut browse with me, and I can reduce what %2$@ knows about you overall by blocking their trackers on lots of other sites.", comment: "Parameters are domain names (strings)")
@@ -305,4 +309,10 @@ public struct UserText {
     public static let defaultBrowserHomeMessageSubheader = NSLocalizedString("home.message.subheader", value: "Open links with peace of mind, every time.", comment: "")
     public static let defaultBrowserHomeMessageTopText = NSLocalizedString("home.message.topText", value: "NEW IN IOS 14", comment: "")
     public static let defaultBrowserHomeMessageButtonText = NSLocalizedString("home.message.buttonText", value: "Set as Default Browser", comment: "")
+    
+    public static let doNotSellInfoText = NSLocalizedString("donotsell.info.headertext", value: "Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the \"Global Privacy Control\" (GPC) setting and we'll signal to websites your preference to:\n\n• Not sell your personal data.\n• Limit sharing of your personal data to other companies.",
+                        comment: "")
+    public static let doNotSellDisclaimerBold = NSLocalizedString("donotsell.disclaimer.footertext", value: "Since Global Privacy Control (GPC) is a new standard, most websites won't recognize it yet, but we're working hard to ensure it becomes accepted worldwide.", comment: "")
+    public static let doNotSellDisclaimerSuffix = NSLocalizedString("donotsell.disclaimer.suffix", value: " However, websites are only required to act on the signal to the extent applicable laws compel them to do so. ", comment: "")
+    public static let doNotSellLearnMore = NSLocalizedString("donotsell.disclaimer.learnmore", value: "Learn More", comment: "")
 }

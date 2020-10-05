@@ -170,6 +170,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
+        applyAppearanceChanges()
+    }
+    
+    private func applyAppearanceChanges() {
+        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

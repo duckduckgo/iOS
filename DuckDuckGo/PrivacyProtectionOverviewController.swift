@@ -22,6 +22,16 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
     
+    private enum Cells: Int {
+        case grade = 0
+        case encryptionInfo
+        case trackersInfo
+        case practicesInfo
+        case protection
+        case gatheringData
+        case leaderboard
+    }
+    
     let privacyPracticesImages: [PrivacyPractices.Summary: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Icon Privacy Bad On"),
@@ -35,57 +45,82 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet weak var trackersCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
     
+    @IBOutlet weak var privacyProtectionView: UIView!
+    @IBOutlet weak var privacyProtectionSwitch: UISwitch!
+    
+    @IBOutlet weak var collectingDataInfo: UILabel!
+    
+    // Leaderboard
+    @IBOutlet weak var firstPill: TrackerNetworkPillView!
+    @IBOutlet weak var secondPill: TrackerNetworkPillView!
+    @IBOutlet weak var thirdPill: TrackerNetworkPillView!
+
+    var leaderboard = NetworkLeaderboard.shared
+    
     fileprivate var popRecognizer: InteractivePopRecognizer!
     
     private var siteRating: SiteRating!
     private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
-    private weak var header: PrivacyProtectionHeaderController!
-    private weak var footer: PrivacyProtectionFooterController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UINib(nibName: "PrivacyProtectionHeaderCell", bundle: nil),
+                           forCellReuseIdentifier: "PPHeaderCell")
+        
         initPopRecognizer()
-        adjustMargins()
+        prepareUI()
         
         update()
-
+        
         applyTheme(ThemeManager.shared.currentTheme)
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, protectionStore: protectionStore)
         }
         
-        if let header = segue.destination as? PrivacyProtectionHeaderController {
-            self.header = header
+        if let unprotectedSitesController = segue.destination as? UnprotectedSitesViewController {
+            unprotectedSitesController.enforceLightTheme = true
+            if isPad {
+                unprotectedSitesController.showBackButton = true
+            }
+            Pixel.fire(pixel: .privacyDashboardManageProtection)
+            return
         }
         
-        if let footer = segue.destination as? PrivacyProtectionFooterController {
-            self.footer = footer
+        if let navController = segue.destination as? UINavigationController,
+            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+            Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
+            
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+            
+            if let privacyProtectionScreen = parent as? PrivacyProtectionController {
+                brokenSiteScreen.brokenSiteInfo = privacyProtectionScreen.privacyProtectionDelegate?.getCurrentWebsiteInfo()
+            }
         }
-        
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        
-        if identifier == "Leaderboard" && !NetworkLeaderboard.shared.shouldShow() {
-            return false
-        }
-        
-        return true
     }
 
     private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
         
-        header.using(siteRating: siteRating, protectionStore: protectionStore)
-        footer.using(siteRating: siteRating, protectionStore: protectionStore)
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()
+        updateProtectionToggle()
+    }
+    
+    private func prepareUI() {
+        firstPill.didLoad()
+        secondPill.didLoad()
+        thirdPill.didLoad()
+        
+        collectingDataInfo.setAttributedTextString(UserText.ppNetworkLeaderboardGatheringData)
+        tableView.tableFooterView = UIView()
     }
         
     private func updateEncryption() {
@@ -106,18 +141,20 @@ class PrivacyProtectionOverviewController: UITableViewController {
             encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
             
         }
-        
+    }
+    
+    private var isProtecting: Bool {
+        return protectionStore.isProtected(domain: siteRating.domain)
     }
     
     private func updateTrackers() {
         trackersCell.summaryLabel.text = siteRating.networksText(protectionStore: protectionStore)
         
-        if protecting() || siteRating.trackersDetected.count == 0 {
+        if isProtecting || siteRating.trackersDetected.count == 0 {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
         } else {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")
         }
-        
     }
     
     private func updatePrivacyPractices() {
@@ -125,8 +162,28 @@ class PrivacyProtectionOverviewController: UITableViewController {
         privacyPracticesCell.summaryImage.image = privacyPracticesImages[siteRating.privacyPracticesSummary()]
     }
     
-    private func protecting() -> Bool {
-        return protectionStore.isProtected(domain: siteRating.domain)
+    private func updateProtectionToggle() {
+        privacyProtectionSwitch.isOn = isProtecting
+        privacyProtectionView.backgroundColor = isProtecting ? UIColor.ppGreen : UIColor.ppGray
+    }
+    
+    @IBAction func protectionToggled(toggle: UISwitch) {
+        guard let domain = siteRating.domain else { return }
+        
+        let isProtected = toggle.isOn
+        let window = UIApplication.shared.keyWindow
+        window?.hideAllToasts()
+        
+        if isProtected {
+            protectionStore.enableProtection(forDomain: domain)
+            
+            window?.showBottomToast(UserText.toastProtectionEnabled.format(arguments: domain), duration: 1)
+        } else {
+            protectionStore.disableProtection(forDomain: domain)
+            
+            window?.showBottomToast(UserText.toastProtectionDisabled.format(arguments: domain), duration: 1)
+        }
+        Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
     }
     
     // see https://stackoverflow.com/a/41248703
@@ -136,14 +193,62 @@ class PrivacyProtectionOverviewController: UITableViewController {
         controller.interactivePopGestureRecognizer?.delegate = popRecognizer
     }
     
-    private func adjustMargins() {
-        if #available(iOS 10, *) {
-            for margin in margins {
-                margin.constant = 0
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        switch indexPath.row {
+        case Cells.grade.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PPHeaderCell", for: indexPath) as? PrivacyProtectionHeaderCell else {
+                fatalError("Missing Header cell")
             }
+            
+            PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, protectionStore: protectionStore)
+            cell.backImage.isHidden = true
+            
+            return cell
+        case Cells.leaderboard.rawValue:
+
+            if leaderboard.shouldShow() {
+                let networksDetected = leaderboard.networksDetected()
+                let pagesVisited = leaderboard.pagesVisited()
+                firstPill.update(network: networksDetected[0], pagesVisited: pagesVisited)
+                secondPill.update(network: networksDetected[1], pagesVisited: pagesVisited)
+                thirdPill.update(network: networksDetected[2], pagesVisited: pagesVisited)
+            }
+            
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        default:
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case Cells.gatheringData.rawValue:
+            if leaderboard.shouldShow() {
+                return 0
+            } else {
+                return UITableView.automaticDimension
+            }
+        case Cells.leaderboard.rawValue:
+            if leaderboard.shouldShow() {
+                return UITableView.automaticDimension
+            } else {
+                return 0
+            }
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.row {
+        case Cells.grade.rawValue:
+            performSegue(withIdentifier: "ShowScore", sender: nil)
+        default:
+            break
+        }
+    }
 }
 
 extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
@@ -160,19 +265,6 @@ class SummaryCell: UITableViewCell {
     
     @IBOutlet weak var summaryImage: UIImageView!
     @IBOutlet weak var summaryLabel: UILabel!
-    
-}
-
-class ProtectionUpgradedView: UIView {
-    
-    @IBOutlet weak var fromImage: UIImageView!
-    @IBOutlet weak var toImage: UIImageView!
-    
-    func update(with siteRating: SiteRating) {
-        let siteGradeImages = siteRating.siteGradeImages()
-        fromImage.image = siteGradeImages.from
-        toImage.image = siteGradeImages.to
-    }
     
 }
 
@@ -206,4 +298,34 @@ extension PrivacyProtectionOverviewController: Themable {
             overrideUserInterfaceStyle = .light
         }
     }
+}
+
+class TrackerNetworkPillView: UIView {
+
+    @IBOutlet weak var networkImage: UIImageView!
+    @IBOutlet weak var percentageLabel: UILabel!
+
+    func didLoad() {
+        layer.cornerRadius = frame.size.height / 2
+    }
+
+    func update(network: PPTrackerNetwork, pagesVisited: Int) {
+        let percent = 100 * Int(network.detectedOnCount) / pagesVisited
+        let percentText = "\(percent)%"
+        let image = network.image
+
+        networkImage.image = image
+        percentageLabel.text = percentText
+    }
+
+}
+
+fileprivate extension PPTrackerNetwork {
+
+    var image: UIImage {
+        let name = TrackerDataManager.shared.findEntity(byName: self.name ?? "")?.displayName ?? ""
+        let imageName = "PP Pill \(name.lowercased())"
+        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
+    }
+
 }

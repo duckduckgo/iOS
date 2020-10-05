@@ -129,13 +129,13 @@ class DaxDialogTests: XCTestCase {
 
     func testWhenFirstTimeOnFacebookThenShowMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.facebook)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Facebook", 39.0),
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Facebook", URLs.facebook.host ?? ""),
                        onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnGoogleThenShowMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.google)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Google", 92.0),
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Google", URLs.google.host ?? ""),
                        onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 

@@ -56,6 +56,8 @@ public struct UserDefaultsWrapper<T> {
         case homeDefaultBrowserMessageDateDismissed = "com.duckduckgo.ios.homeMessage.defaultBrowser.dateDismissed"
 
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
+        
+        case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
     }
 
     private let key: Key

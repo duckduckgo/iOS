@@ -5,21 +5,9 @@ default_platform :ios
 lane :release do 
 
   gym(
-    codesigning_identity: "Apple Distribution",
+    skip_codesigning: true,
     scheme: "DuckDuckGo",
-    export_method: "app-store",
-    export_options: {
-      method: "app-store",
-      signingStyle: "manual",
-      provisioningProfiles: {
-        "com.duckduckgo.mobile.ios" => "AppStore-App",
-      	"com.duckduckgo.mobile.ios.ShareExtension" => "AppStore-Share",
-      	"com.duckduckgo.mobile.ios.BookmarksTodayExtension" => "AppStore-Bookmarks",
-      	"com.duckduckgo.mobile.ios.QuickActionsTodayExtension" => "AppStore-QuickActions",
-      	"com.duckduckgo.mobile.ios.OpenAction2" => "AppStore-OpenAction",
-      	"com.duckduckgo.mobile.ios.Widgets" => "AppStore-Widgets"
-      }
-    }
+    export_options: "appStoreExportOptions.plist"
   )
 
   deliver(

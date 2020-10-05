@@ -6,8 +6,8 @@ lane :release do
 
   gym(
     scheme: "DuckDuckGo",
-    export_method: "app-store",
     export_options: {
+      method: "app-store",
       signingStyle: "manual",
       provisioningProfiles: {
         "com.duckduckgo.mobile.ios"                            => "728d59ea-e4bb-4bad-ab06-20c2efc67f94",

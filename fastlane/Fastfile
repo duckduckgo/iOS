@@ -5,7 +5,7 @@ default_platform :ios
 lane :release do 
 
   gym(
-    export_xcargs: "PROVISIONING_PROFILE_SPECIFIER=\"AppStore-App\"",
+    codesigning_identity: "iPhone Distribution",
     scheme: "DuckDuckGo",
     export_method: "app-store",
     export_options: {

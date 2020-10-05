@@ -21,8 +21,8 @@ lane :release do
   )
 
   deliver(
-    submit_for_review: true,
-    automatic_release: true, 
+    submit_for_review: false,
+    automatic_release: false, 
     phased_release: true,
     username: "jenkins-itunes@duckduckgo.com",
     force: true,

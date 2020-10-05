@@ -12,12 +12,12 @@ lane :release do
       method: "app-store",
       signingStyle: "manual",
       provisioningProfiles: {
-        "com.duckduckgo.mobile.ios" => "AppStore-App",
-	"com.duckduckgo.mobile.ios.ShareExtension" => "AppStore-Share",
-	"com.duckduckgo.mobile.ios.BookmarksTodayExtension" => "AppStore-Bookmarks",
-	"com.duckduckgo.mobile.ios.QuickActionsTodayExtension" => "AppStore-QuickActions",
-	"com.duckduckgo.mobile.ios.OpenAction2" => "AppStore-OpenAction",
-	"com.duckduckgo.mobile.ios.Widgets" => "AppStore-Widgets"
+        "com.duckduckgo.mobile.ios"                            => "728d59ea-e4bb-4bad-ab06-20c2efc67f94",
+        "com.duckduckgo.mobile.ios.BookmarksTodayExtension"    => "d02c8f73-7ebf-4ba7-99b5-c6fbe212a815",
+        "com.duckduckgo.mobile.ios.OpenAction2"                => "3b5a6f55-a65a-41d4-9174-5e8ef7bad426",
+        "com.duckduckgo.mobile.ios.QuickActionsTodayExtension" => "7326ee1c-e47a-4572-91b7-551349349704",
+      	"com.duckduckgo.mobile.ios.ShareExtension"             => "ffc5e246-5ac0-4ee4-b68d-48377950695d",
+      	"com.duckduckgo.mobile.ios.Widgets"                    => "26e8ea99-33eb-40fa-9b6a-470ddc465915"
       }
     }
   )

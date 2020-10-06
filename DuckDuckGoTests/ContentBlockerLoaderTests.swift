@@ -24,7 +24,7 @@ class ContentBlockerLoaderTests: XCTestCase {
 
     let mockEtagStorage = MockEtagStorage()
     let mockStorageCache = MockStorageCache()
-    let mockRequest = MockContenBlockingRequest()
+    let mockRequest = MockContentBlockingRequest()
     
     func testWhenThereIsNoResponseThenThereIsNothingToUpdate() {
         
@@ -156,7 +156,7 @@ class MockEtagStorage: BlockerListETagStorage {
     }
 }
 
-class MockContenBlockingRequest: ContentBlockerRemoteDataSource {
+class MockContentBlockingRequest: ContentBlockerRemoteDataSource {
     var requestCount: Int = 0
     
     var mockResponse: ContentBlockerRequest.Response?

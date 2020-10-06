@@ -936,7 +936,9 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
-        currentTab?.showMenuHighlighterIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.currentTab?.showMenuHighlighterIfNeeded()
+        }
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {

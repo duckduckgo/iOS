@@ -19,7 +19,7 @@
 
 import Foundation
 
-public struct TrackerData: Codable {
+public struct TrackerData: Codable, Equatable {
 
     public typealias EntityName = String
     public typealias TrackerDomain = String

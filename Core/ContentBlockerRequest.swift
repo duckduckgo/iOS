@@ -43,13 +43,20 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
     }
     
     var requestCount = 0
+
+    private let etagStorage: BlockerListETagStorage
+
+    init(etagStorage: BlockerListETagStorage) {
+        self.etagStorage = etagStorage
+    }
     
     func request(_ configuration: Configuration, completion:@escaping (Response) -> Void) {
         requestCount += 1
         
         let spid = Instruments.shared.startTimedEvent(.fetchingContentBlockerData, info: configuration.rawValue)
-        
-        APIRequest.request(url: url(for: configuration)) { (response, error) in
+        let cacheHeaders = APIHeaders().defaultHeaders(with: etagStorage.etag(for: configuration))
+
+        APIRequest.request(url: url(for: configuration), headers: cacheHeaders) { (response, error) in
             
             guard error == nil,
                 let response = response,

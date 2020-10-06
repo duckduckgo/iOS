@@ -235,6 +235,7 @@ public enum PixelName: String {
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"
 
+    case backgroundTaskSubmissionFailed = "m_bt_rf"
 }
 
 public struct PixelParameters {

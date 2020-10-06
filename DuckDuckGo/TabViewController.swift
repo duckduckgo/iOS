@@ -588,6 +588,7 @@ class TabViewController: UIViewController {
     
     @objc func onContentBlockerConfigurationChanged() {
         // Recompile and add the content rules list
+
         ContentBlockerRulesManager.shared.compileRules { [weak self] rulesList in
             guard let self = self else { return }
             if let rulesList = rulesList {

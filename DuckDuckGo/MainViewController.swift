@@ -591,10 +591,7 @@ class MainViewController: UIViewController {
             applyWidth()
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.currentTab?.showMenuHighlighterIfNeeded()
-        }
-
+        self.currentTab?.showMenuHighlighterIfNeeded()
     }
     
     private func applyWidth() {
@@ -936,9 +933,7 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.currentTab?.showMenuHighlighterIfNeeded()
-        }
+        self.currentTab?.showMenuHighlighterIfNeeded()
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {

@@ -211,7 +211,15 @@ class TabViewController: UIViewController {
     func showMenuHighlighterIfNeeded() {
         guard DaxDialogs.shared.isAddFavoriteFlow,
               !isError else { return }
-        highlightMenu()
+
+        guard let menuButton = chromeDelegate?.omniBar.menuButton,
+              let window = view.window else { return }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            ViewHighlighter.hideAll()
+            ViewHighlighter.showIn(window, focussedOnView: menuButton)
+        }
+
     }
 
     func initUserScripts() {
@@ -891,13 +899,6 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
-    }
-
-    private func highlightMenu() {
-        guard let menuButton = chromeDelegate?.omniBar.menuButton,
-              let window = view.window else { return }
-        ViewHighlighter.hideAll()
-        ViewHighlighter.showIn(window, focussedOnView: menuButton)
     }
 
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {

@@ -72,6 +72,12 @@ class FullscreenDaxDialogViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let spec = spec {

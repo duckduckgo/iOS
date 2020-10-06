@@ -36,7 +36,7 @@ public class AppUserDefaults: AppSettings {
         static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
         
         static let homePage = "com.duckduckgo.app.homePage"
-        
+
         static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
         static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
         static let foregroundFetchNewDataCount = "com.duckduckgo.app.fgFetchNewDataCount"

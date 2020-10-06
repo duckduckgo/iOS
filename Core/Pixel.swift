@@ -232,6 +232,8 @@ public enum PixelName: String {
     case defaultBrowserButtonPressedHome = "m_db_h"
     case defaultBrowserHomeMessageShown = "m_db_h_s"
     case defaultBrowserHomeMessageDismissed = "m_db_h_d"
+
+    case backgroundTaskSubmissionFailed = "m_bt_rf"
 }
 
 public struct PixelParameters {

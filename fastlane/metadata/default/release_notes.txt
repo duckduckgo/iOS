@@ -1,1 +1,1 @@
-• Now users can initiate setting DuckDuckGo as their default browser right from within the app! We're adding an in app message, but you can also find the option in Settings.
+• Bug fixes and improvements.

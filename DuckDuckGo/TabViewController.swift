@@ -1118,6 +1118,7 @@ extension TabViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
+        ViewHighlighter.hideAll()
 
         if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
             showError(message: error.localizedDescription)

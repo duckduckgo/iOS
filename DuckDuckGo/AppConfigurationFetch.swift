@@ -123,7 +123,9 @@ class AppConfigurationFetch {
         do {
             try BGTaskScheduler.shared.submit(task)
         } catch {
+            #if !targetEnvironment(simulator)
             Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
+            #endif
         }
     }
 

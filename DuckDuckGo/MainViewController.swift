@@ -459,7 +459,8 @@ class MainViewController: UIViewController {
         customNavigationBar.alpha = 1
         loadViewIfNeeded()
         if reuseExisting, let existing = tabManager.first(withUrl: url) {
-            tabManager.selectTab(existing)
+            selectTab(existing)
+            return
         } else if reuseExisting, let existing = tabManager.firstHomeTab() {
             tabManager.selectTab(existing)
             loadUrl(url)
@@ -1144,6 +1145,14 @@ extension MainViewController: TabDelegate {
         })
     }
 
+    func selectTab(_ tab: Tab) {
+        guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        select(tabAt: index)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.onCancelPressed()
+        }
+    }
+
 }
 
 extension MainViewController: TabSwitcherDelegate {
@@ -1153,14 +1162,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
-        guard let index = tabManager.model.indexOf(tab: tab) else { return }
-
-        select(tabAt: index)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.onCancelPressed()
-        }
-        
+        selectTab(tab)
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {

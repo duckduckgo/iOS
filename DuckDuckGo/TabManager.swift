@@ -129,7 +129,21 @@ class TabManager {
     }
 
     func first(withUrl url: URL) -> Tab? {
-        return model.tabs.first(where: { $0.link?.url == url })
+        return model.tabs.first(where: {
+            guard let linkUrl = $0.link?.url else { return false }
+
+            if linkUrl == url {
+                return true
+            }
+
+            if linkUrl.scheme == "https" && url.scheme == "http" {
+                var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                components?.scheme = "https"
+                return components?.url == linkUrl
+            }
+
+            return false
+        })
     }
 
     func selectTab(_ tab: Tab) {

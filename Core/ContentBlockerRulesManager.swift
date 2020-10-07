@@ -26,20 +26,21 @@ public class ContentBlockerRulesManager {
     
     public static let shared = ContentBlockerRulesManager()
     
-    private var trackerData: TrackerData!
-    
     public var blockingRules: WKContentRuleList?
     
     public weak var storageCache: StorageCache?
     
-    init() {
-        trackerData = TrackerDataManager.shared.trackerData
-    }
-    
+    private init() {}
+
     public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
+        guard let trackerData = TrackerDataManager.shared.trackerData else {
+            completion?(nil)
+            return
+        }
+
         let unprotectedSites = UnprotectedSitesManager().domains
         let tempUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-        
+
         let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
                                                                                     andTemporaryUnprotectedDomains: tempUnprotectedDomains)
         

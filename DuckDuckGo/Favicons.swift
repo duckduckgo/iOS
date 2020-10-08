@@ -32,6 +32,7 @@ public class Favicons {
         static let bookmarksCache = CacheType.bookmarks.create()
         static let tabsCache = CacheType.tabs.create()
         static let appUrls = AppUrls()
+        static let targetImageSizePoints: CGFloat = 64
         
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
@@ -195,12 +196,11 @@ public class Favicons {
             case .success(let image):
                 if let image = image.image {
                     Constants.caches[toCache]?.store(image, forKey: resource.cacheKey, options: .init(options))
-                    completion?(image)
-                } else {
-                    self.loadFavicon(forDomain: domain, intoCache: toCache, completion: completion)
                 }
+                completion?(image.image)
+
             default:
-                self.loadFavicon(forDomain: domain, intoCache: toCache, completion: completion)
+                completion?(nil)
             }
         }
         return
@@ -210,51 +210,113 @@ public class Favicons {
     //  e.g. if launching a bookmark, or clicking on a tab.
     public func loadFavicon(forDomain domain: String?,
                             fromURL url: URL? = nil,
-                            intoCache targetCache: CacheType,
+                            intoCache targetCacheType: CacheType,
                             fromCache: CacheType? = nil,
                             completion: ((UIImage?) -> Void)? = nil) {
 
         guard let domain = domain,
-            let options = kfOptions(forDomain: domain, withURL: url, usingCache: targetCache),
-            let resource = defaultResource(forDomain: domain) else {
+            let options = kfOptions(forDomain: domain, withURL: url, usingCache: targetCacheType),
+            let resource = defaultResource(forDomain: domain),
+            let targetCache = Favicons.Constants.caches[targetCacheType] else {
                 completion?(nil)
                 return
             }
         
         if let fromCache = fromCache, Constants.caches[fromCache]?.isCached(forKey: resource.cacheKey) ?? false {
-            copyFavicon(forDomain: domain, fromCache: fromCache, toCache: targetCache, completion: completion)
+            copyFavicon(forDomain: domain, fromCache: fromCache, toCache: targetCacheType, completion: completion)
             return
         }
-        
-        KingfisherManager.shared.retrieveImage(with: resource, options: options) { result in
-            guard let domain = resource.downloadURL.host else {
-                completion?(nil)
+
+        guard let queue = OperationQueue.current?.underlyingQueue else { return }
+
+        func complete(withImage image: UIImage?) {
+            queue.async {
+                if let image = image {
+                    targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
+                }
+                completion?(image)
+            }
+        }
+
+        targetCache.retrieveImage(forKey: resource.cacheKey, options: options) { result in
+
+            var image: UIImage?
+
+            switch result {
+
+            case .success(let result):
+                image = result.image
+
+            default: break
+            }
+
+            if let image = image {
+                complete(withImage: image)
+            } else {
+                self.loadImageFromNetwork(url, domain, resource.cacheKey, options, targetCache, complete)
+            }
+
+        }
+
+    }
+
+    private func loadImageFromNetwork(_ imageUrl: URL?,
+                                      _ domain: String,
+                                      _ cacheKey: String,
+                                      _ options: KingfisherOptionsInfo,
+                                      _ targetCache: ImageCache,
+                                      _ completion: @escaping (UIImage?) -> Void) {
+
+        guard Constants.downloader.shouldDownload(forDomain: domain) else {
+            completion(nil)
+            return
+        }
+
+        let bestSources = [
+            imageUrl,
+            sourcesProvider.mainSource(forDomain: domain)
+        ].compactMap { $0 }
+
+        let additionalSources = sourcesProvider.additionalSources(forDomain: domain)
+
+        // Try best sources first
+        retrieveBestImage(from: bestSources) {
+
+            // Fallback to favicons
+            guard let image = $0 else {
+                self.retrieveBestImage(from: additionalSources) {
+                    completion($0)
+                }
                 return
             }
 
-            switch result {
-            case .success(let imageResult):
-                // Store it anyway - Kingfisher doesn't appear to store the image if it came from an alternative source
-                Favicons.Constants.caches[targetCache]?.store(imageResult.image, forKey: resource.cacheKey, options: .init(options))
-                completion?(imageResult.image)
-                
-            case .failure(let error):
-                
-                switch error {
-                case .imageSettingError(let settingError):
-                    switch settingError {
-                    case .alternativeSourcesExhausted:
-                        Constants.downloader.noFaviconsFound(forDomain: domain)
-                    default: break
-                    }
+            completion(image)
+        }
+    }
 
-                default: break
+    private func retrieveBestImage(from urls: [URL], completion: @escaping (UIImage?) -> Void) {
+
+        print("***", #function, UIScreen.main.scale, UIScreen.main.nativeScale)
+
+        let targetSize = Constants.targetImageSizePoints * UIScreen.main.scale
+
+        DispatchQueue.global(qos: .background).async {
+            var bestImage: UIImage?
+            for url in urls {
+                guard let data = (try? Data(contentsOf: url)), let image = UIImage(data: data) else { continue }
+
+                if (bestImage?.size.width ?? 0) < image.size.width {
+                    bestImage = image
+                    if image.size.width >= targetSize {
+                        print("***", #function, "target size!", image.size.width)
+                        break
+                    }
                 }
 
-                completion?(nil)
             }
-            
+            completion(bestImage)
         }
+
     }
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {

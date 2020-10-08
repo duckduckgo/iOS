@@ -151,6 +151,7 @@
 				<string>ddgBookmarks</string>
 				<string>ddgFire</string>
 				<string>ddgFavorite</string>
+				<string>ddgAddFavorite</string>
 				<string>http</string>
 				<string>https</string>
 			</array>

@@ -117,6 +117,7 @@ public enum PixelName: String {
     case browsingMenuNewTab = "mb_tb"
     case browsingMenuAddToBookmarks = "mb_abk"
     case browsingMenuAddToFavorites = "mb_af"
+    case browsingMenuAddToFavoritesAddFavoriteFlow = "mb_aff"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
     case browsingMenuSettings = "mb_st"
@@ -203,8 +204,15 @@ public enum PixelName: String {
 
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"
-        
-    // debug pixels:
+    case widgetAddFavoriteLaunch = "m_w_af"
+
+    case defaultBrowserButtonPressedOnboarding = "m_db_o"
+    case defaultBrowserButtonPressedSettings = "m_db_s"
+    case defaultBrowserButtonPressedHome = "m_db_h"
+    case defaultBrowserHomeMessageShown = "m_db_h_s"
+    case defaultBrowserHomeMessageDismissed = "m_db_h_d"
+
+    // MARK: debug pixels
     
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
@@ -226,12 +234,6 @@ public enum PixelName: String {
 
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"
-    
-    case defaultBrowserButtonPressedOnboarding = "m_db_o"
-    case defaultBrowserButtonPressedSettings = "m_db_s"
-    case defaultBrowserButtonPressedHome = "m_db_h"
-    case defaultBrowserHomeMessageShown = "m_db_h_s"
-    case defaultBrowserHomeMessageDismissed = "m_db_h_d"
 
     case backgroundTaskSubmissionFailed = "m_bt_rf"
 }

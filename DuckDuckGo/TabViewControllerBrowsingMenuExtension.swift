@@ -96,7 +96,7 @@ extension TabViewController {
     
     private func buildSaveBookmarkAction(forLink link: Link) -> UIAlertAction? {
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.contains(url: link.url) else { return nil }
+        guard !bookmarksManager.containsBookmark(url: link.url) else { return nil }
         
         return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToBookmarks)
@@ -107,13 +107,23 @@ extension TabViewController {
     
     private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.contains(url: link.url) else { return nil }
+        guard !bookmarksManager.containsFavorite(url: link.url) else { return nil }
 
-        return UIAlertAction(title: UserText.actionSaveFavorite, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuAddToFavorites)
+        // Capture flow state here as will be reset after menu is shown
+        let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+
+        let title = [
+            addToFavoriteFlow ? "👋 " : "",
+            UserText.actionSaveFavorite
+        ].joined()
+
+        let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
             bookmarksManager.save(favorite: link)
             self?.view.showBottomToast(UserText.webSaveFavoriteDone)
         }
+        action.accessibilityLabel = UserText.actionSaveFavorite
+        return action
     }
 
     func onShareAction(forLink link: Link, fromView view: UIView) {

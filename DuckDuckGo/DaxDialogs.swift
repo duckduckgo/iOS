@@ -33,11 +33,14 @@ class DaxDialogs {
     
     struct HomeScreenSpec: Equatable {
 
-        static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial)
-        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent)
+        static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial, accessibilityLabel: nil)
+        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
+        static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
+                                                accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
 
         let message: String
-        
+        let accessibilityLabel: String?
+
     }
     
     struct BrowsingSpec: Equatable {
@@ -85,10 +88,15 @@ class DaxDialogs {
         }
         
     }
-    
+
+    public static let shared = DaxDialogs()
+
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
-    
+
+    private var nextHomeScreenMessageOverride: HomeScreenSpec?
+
+    /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.settings = settings
     }
@@ -100,6 +108,16 @@ class DaxDialogs {
             || settings.browsingMajorTrackingSiteShown
     }
     
+    var isEnabled: Bool {
+        // skip dax dialogs in integration tests
+        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
+        return !settings.isDismissed
+    }
+
+    var isAddFavoriteFlow: Bool {
+        return nextHomeScreenMessageOverride == .addFavorite
+    }
+
     func dismiss() {
         settings.isDismissed = true
     }
@@ -107,15 +125,19 @@ class DaxDialogs {
     func primeForUse() {
         settings.isDismissed = false
     }
-    
-    var isEnabled: Bool {
-        // skip dax dialogs in integration tests
-        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
-        return !settings.isDismissed
+
+    func enableAddFavoriteFlow() {
+        nextHomeScreenMessageOverride = .addFavorite
+        // Progress to next home screen message, but don't re-show the second dax dialog if it's already been shown
+        settings.homeScreenMessagesSeen = max(settings.homeScreenMessagesSeen, 1)
     }
-    
+
+    func resumeRegularFlow() {
+        nextHomeScreenMessageOverride = nil
+    }
+
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
-        guard isEnabled else { return nil }
+        guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
@@ -141,6 +163,11 @@ class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
+
+        if nextHomeScreenMessageOverride != nil {
+            return nextHomeScreenMessageOverride
+        }
+
         guard isEnabled else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }
         

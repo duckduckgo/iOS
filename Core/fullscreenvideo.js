@@ -17,4 +17,30 @@
 //  limitations under the License.
 //
 
+// WKWebView doesn't define the fullscreenEnabled property, although it does support webkitEnterFullscreen.
+// The workaround is to override fullscreenEnabled (if it isn't already defined), and add a custom implementation of the requestFullscreen function.
+// The implementation calls through to webkitEnterFullscreen, which is defined on HTMLVideoElement.
 
+(function() {
+    let canEnterFullscreen = HTMLVideoElement.prototype.webkitEnterFullscreen !== undefined;
+    let browserHasExistingFullScreenSupport = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+
+    if (!browserHasExistingFullScreenSupport && canEnterFullscreen) {
+        Object.defineProperty(document, "fullscreenEnabled", {
+            get: function() {
+                return true;
+            }
+        });
+
+        HTMLElement.prototype.requestFullscreen = function() {
+            let video = this.querySelector("video");
+
+            if (video) {
+                video.webkitEnterFullscreen();
+                return true;
+            }
+
+            return false;
+        };
+    }
+})();

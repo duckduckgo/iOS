@@ -30,9 +30,8 @@ struct FavoriteView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.widgetFavoritesBackground)
-                .isVisible(isPreview)
 
-            if let favorite = favorite, !isPreview {
+            if let favorite = favorite {
 
                 RoundedRectangle(cornerRadius: 10)
                     .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
@@ -124,6 +123,34 @@ struct FavoritesRowView: View {
 
 }
 
+struct FavoritesGridView: View {
+
+    @Environment(\.widgetFamily) var widgetFamily
+
+    var entry: Provider.Entry
+
+    var body: some View {
+
+        FavoritesRowView(entry: entry, start: 0, end: 3)
+
+        Spacer()
+
+        if widgetFamily == .systemLarge {
+
+            FavoritesRowView(entry: entry, start: 4, end: 7)
+
+            Spacer()
+
+            FavoritesRowView(entry: entry, start: 8, end: 11)
+
+            Spacer()
+
+        }
+
+    }
+
+}
+
 struct FavoritesWidgetView: View {
 
     @Environment(\.widgetFamily) var widgetFamily
@@ -138,23 +165,37 @@ struct FavoritesWidgetView: View {
 
                 LargeSearchFieldView()
 
-                FavoritesRowView(entry: entry, start: 0, end: 3)
-
-                Spacer()
-
-                if widgetFamily == .systemLarge {
-
-                    FavoritesRowView(entry: entry, start: 4, end: 7)
-
-                    Spacer()
-
-                    FavoritesRowView(entry: entry, start: 8, end: 11)
-
-                    Spacer()
-
+                if entry.favorites.isEmpty, !entry.isPreview {
+                    Link(destination: DeepLinks.addFavorite) {
+                        FavoritesGridView(entry: entry)
+                    }
+                } else {
+                    FavoritesGridView(entry: entry)
                 }
 
             }.padding(.bottom, 8)
+
+            VStack(spacing: 8) {
+                Text(UserText.noFavoritesMessage)
+                    .font(.system(size: 15))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.widgetAddFavoriteMessage)
+                    .padding(.horizontal)
+
+                HStack {
+                    Text(UserText.noFavoritesCTA)
+                        .bold()
+                        .font(.system(size: 15))
+                        .foregroundColor(.widgetAddFavoriteCTA)
+
+                    Image(systemName: "chevron.right")
+                        .imageScale(.medium)
+                        .foregroundColor(.widgetAddFavoriteCTA)
+                }
+            }
+            .isVisible(entry.favorites.isEmpty && !entry.isPreview)
+            .padding(EdgeInsets(top: widgetFamily == .systemLarge ? 48 : 60, leading: 0, bottom: 0, trailing: 0))
+
         }
     }
 }
@@ -251,51 +292,53 @@ struct WidgetViews_Previews: PreviewProvider {
         return [duckDuckGoFavorite] + favorites
     }()
 
-    static let entry = FavoritesEntry(date: Date(), favorites: mockFavorites, isPreview: false)
-    static let previewEntry = FavoritesEntry(date: Date(), favorites: mockFavorites, isPreview: true)
+    static let withFavorites = FavoritesEntry(date: Date(), favorites: mockFavorites, isPreview: false)
+    static let previewWithFavorites = FavoritesEntry(date: Date(), favorites: mockFavorites, isPreview: true)
+    static let emptyState = FavoritesEntry(date: Date(), favorites: [], isPreview: false)
+    static let previewEmptyState = FavoritesEntry(date: Date(), favorites: [], isPreview: true)
 
     static var previews: some View {
-        SearchWidgetView(entry: entry)
+        SearchWidgetView(entry: emptyState)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
             .environment(\.colorScheme, .light)
 
-        SearchWidgetView(entry: entry)
+        SearchWidgetView(entry: emptyState)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
             .environment(\.colorScheme, .dark)
 
         // Medium size:
 
-        FavoritesWidgetView(entry: previewEntry)
+        FavoritesWidgetView(entry: previewWithFavorites)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .environment(\.colorScheme, .light)
 
-        FavoritesWidgetView(entry: entry)
+        FavoritesWidgetView(entry: withFavorites)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .environment(\.colorScheme, .light)
 
-        FavoritesWidgetView(entry: previewEntry)
+        FavoritesWidgetView(entry: previewEmptyState)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .environment(\.colorScheme, .dark)
 
-        FavoritesWidgetView(entry: entry)
+        FavoritesWidgetView(entry: emptyState)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .environment(\.colorScheme, .dark)
 
         // Large size:
 
-        FavoritesWidgetView(entry: previewEntry)
+        FavoritesWidgetView(entry: previewWithFavorites)
             .previewContext(WidgetPreviewContext(family: .systemLarge))
             .environment(\.colorScheme, .light)
 
-        FavoritesWidgetView(entry: entry)
+        FavoritesWidgetView(entry: withFavorites)
             .previewContext(WidgetPreviewContext(family: .systemLarge))
             .environment(\.colorScheme, .light)
 
-        FavoritesWidgetView(entry: previewEntry)
+        FavoritesWidgetView(entry: previewEmptyState)
             .previewContext(WidgetPreviewContext(family: .systemLarge))
             .environment(\.colorScheme, .dark)
 
-        FavoritesWidgetView(entry: entry)
+        FavoritesWidgetView(entry: emptyState)
             .previewContext(WidgetPreviewContext(family: .systemLarge))
             .environment(\.colorScheme, .dark)
     }

@@ -37,8 +37,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
-    
     @IBOutlet weak var longPressCell: UITableViewCell!
+    @IBOutlet weak var versionCell: UITableViewCell!
 
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -65,6 +65,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureVersionCell()
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
@@ -131,11 +132,15 @@ class SettingsViewController: UITableViewController {
             }
         }
     }
-    
+
+    private func configureVersionCell() {
+        versionCell.isUserInteractionEnabled = isDebugBuild
+    }
+
     private func configureDefaultBroswerCell() {
         defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
     }
-    
+
     private func configureThemeCellAccessory() {
         switch appSettings.currentThemeName {
         case .systemDefault:
@@ -198,15 +203,32 @@ class SettingsViewController: UITableViewController {
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 
+    private func showDebug() {
+        // Use the "AdhocDebug" scheme when archiving to create a compatible adhoc build
+        guard isDebugBuild else { return }
+        performSegue(withIdentifier: "Debug", sender: nil)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        if tableView.cellForRow(at: indexPath) == defaultBrowserCell {
+
+        let cell = tableView.cellForRow(at: indexPath)
+
+        switch cell {
+
+        case defaultBrowserCell:
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
-            
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
+            break
+
+        case versionCell:
+            showDebug()
+            break
+
+        default: break
         }
+
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

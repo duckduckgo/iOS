@@ -138,6 +138,13 @@ class MainViewController: UIViewController {
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }
+
+    func startAddFavoriteFlow() {
+        DaxDialogs.shared.enableAddFavoriteFlow()
+        if DefaultTutorialSettings().hasSeenOnboarding {
+            newTab()
+        }
+    }
     
     func startOnboardingFlowIfNotSeenBefore() {
         
@@ -251,6 +258,8 @@ class MainViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        ViewHighlighter.hideAll()
 
         if let controller = segue.destination as? SuggestionTrayViewController {
             controller.dismissHandler = dismissSuggestionTray
@@ -439,17 +448,25 @@ class MainViewController: UIViewController {
         return currentTab?.siteRating
     }
 
-    func loadQueryInNewTab(_ query: String) {
+    func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         let url = appUrls.url(forQuery: query)
-        loadUrlInNewTab(url)
+        loadUrlInNewTab(url, reuseExisting: reuseExisting)
     }
 
-    func loadUrlInNewTab(_ url: URL) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false) {
         allowContentUnderflow = false
         customNavigationBar.alpha = 1
         loadViewIfNeeded()
-        addTab(url: url)
+        if reuseExisting, let existing = tabManager.first(withUrl: url) {
+            selectTab(existing)
+            return
+        } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+            tabManager.selectTab(existing)
+            loadUrl(url)
+        } else {
+            addTab(url: url)
+        }
         refreshOmniBar()
         refreshTabIcon()
         refreshControls()
@@ -574,7 +591,8 @@ class MainViewController: UIViewController {
         if AppWidthObserver.shared.willResize(toWidth: size.width) {
             applyWidth()
         }
-    
+
+        self.currentTab?.showMenuHighlighterIfNeeded()
     }
     
     private func applyWidth() {
@@ -626,6 +644,7 @@ class MainViewController: UIViewController {
             applyWidthToTrayController()
 
             if !AppWidthObserver.shared.isLargeWidth {
+                ViewHighlighter.hideAll()
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()
                 }
@@ -747,10 +766,15 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
-    func newTab() {
+    func newTab(reuseExisting: Bool = false) {
         hideSuggestionTray()
         currentTab?.dismiss()
-        tabManager.addHomeTab()
+
+        if reuseExisting, let existing = tabManager.firstHomeTab() {
+            tabManager.selectTab(existing)
+        } else {
+            tabManager.addHomeTab()
+        }
         attachHomeScreen()
         homeController?.openedAsNewTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -864,7 +888,6 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        
         if updatedQuery.isEmpty && homeController == nil {
             showSuggestionTray(.favorites)
         } else {
@@ -874,22 +897,26 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onOmniQuerySubmitted(_ query: String) {
+        ViewHighlighter.hideAll()
         loadQuery(query)
         hideSuggestionTray()
         showHomeRowReminder()
     }
 
     func onSiteRatingPressed() {
+        ViewHighlighter.hideAll()
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
+        ViewHighlighter.hideAll()
         hideSuggestionTray()
         launchBrowsingMenu()
     }
 
     @objc func onBookmarksPressed() {
+        ViewHighlighter.hideAll()
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
@@ -899,6 +926,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSettingsPressed() {
+        ViewHighlighter.hideAll()
         launchSettings()
     }
     
@@ -906,6 +934,7 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
+        self.currentTab?.showMenuHighlighterIfNeeded()
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
@@ -914,6 +943,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+        ViewHighlighter.hideAll()
         guard let homeController = homeController else { return }
         homeController.launchNewSearch()
     }
@@ -1115,6 +1145,14 @@ extension MainViewController: TabDelegate {
         })
     }
 
+    func selectTab(_ tab: Tab) {
+        guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        select(tabAt: index)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.onCancelPressed()
+        }
+    }
+
 }
 
 extension MainViewController: TabSwitcherDelegate {
@@ -1124,14 +1162,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
-        guard let index = tabManager.model.indexOf(tab: tab) else { return }
-
-        select(tabAt: index)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.onCancelPressed()
-        }
-        
+        selectTab(tab)
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
@@ -1224,6 +1255,7 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetTabs() {
+        DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()
         tabManager.removeAll()
         showBars()
@@ -1247,6 +1279,7 @@ extension MainViewController: AutoClearWorker {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
+        DaxDialogs.shared.resumeRegularFlow()
         FireAnimation.animate {
             self.forgetTabs()
             completion?()

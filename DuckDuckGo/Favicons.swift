@@ -245,13 +245,13 @@ public class Favicons {
                     switch settingError {
                     case .alternativeSourcesExhausted:
                         Constants.downloader.noFaviconsFound(forDomain: domain)
-
                     default: break
                     }
 
-                default:
-                    completion?(nil)
+                default: break
                 }
+
+                completion?(nil)
             }
             
         }

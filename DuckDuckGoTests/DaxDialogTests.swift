@@ -45,6 +45,20 @@ class DaxDialogTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
     }
 
+    func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessageShown() {
+        onboarding.enableAddFavoriteFlow()
+        onboarding.resumeRegularFlow()
+        XCTAssertNil(onboarding.nextHomeScreenMessage())
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.google)))
+        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .subsequent)
+    }
+
+    func testWhenStartingAddFavoriteFlowThenNextMessageIsAddFavorite() {
+        onboarding.enableAddFavoriteFlow()
+        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .addFavorite)
+        XCTAssertTrue(onboarding.isAddFavoriteFlow)
+    }
+
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
 
         // swiftlint:disable line_length

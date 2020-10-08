@@ -33,7 +33,7 @@ extension UIImageView {
     func loadFavicon(forDomain domain: String?,
                      usingCache cacheType: Favicons.CacheType,
                      useFakeFavicon: Bool = true,
-                     completion: ((UIImage?) -> Void)? = nil) {
+                     completion: ((UIImage?, Bool) -> Void)? = nil) {
         
         DispatchQueue.global(qos: .utility).async {
             self.loadFaviconSync(forDomain: domain, usingCache: cacheType, useFakeFavicon: useFakeFavicon, completion: completion)
@@ -44,16 +44,18 @@ extension UIImageView {
     private func loadFaviconSync(forDomain domain: String?,
                                  usingCache cacheType: Favicons.CacheType,
                                  useFakeFavicon: Bool,
-                                 completion: ((UIImage?) -> Void)? = nil) {
+                                 completion: ((UIImage?, Bool) -> Void)? = nil) {
    
         func complete(_ image: UIImage?) {
             DispatchQueue.main.async {
+                var fake = false
                 if image != nil {
                     self.image = image
                 } else if useFakeFavicon, let domain = domain {
+                    fake = true
                     self.image = Self.createFakeFavicon(forDomain: domain)
                 }
-                completion?(self.image)
+                completion?(self.image, fake)
             }
         }
         

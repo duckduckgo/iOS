@@ -87,6 +87,30 @@ class ImageCacheDebugViewController: UITableViewController {
         }
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let host: String?
+        switch indexPath.section {
+        case 0: host = bookmarksManager.favorite(atIndex: indexPath.row)?.url.host
+        case 1: host = bookmarksManager.bookmark(atIndex: indexPath.row)?.url.host
+        case 2: host = tabsModel.get(tabAt: indexPath.row).link?.url.host
+        default: host = nil
+        }
+        guard let domain = host, let cell = tableView.cellForRow(at: indexPath) else { return }
+        share(image: cell.imageView?.image, forDomain: domain, fromView: cell)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    private func share(image: UIImage?, forDomain domain: String, fromView view: UIView) {
+        guard let image = image else { return }
+        let controller = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        controller.title = domain
+        if let popover = controller.popoverPresentationController {
+            popover.sourceView = view
+        }
+        present(controller, animated: true)
+    }
+
     private func describe(_ image: UIImage?) -> String {
         guard let image = image else { return "No image" }
         let size = image.size

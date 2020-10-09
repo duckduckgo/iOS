@@ -1434,9 +1434,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
                                     <rect key="frame" x="8" y="0.0" width="398" height="129"/>
-                                    <string key="text">Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
-	1.	Not sell your personal data
-	2.	Limit sharing your personal to other companies*</string>
+                                    <string key="text">Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the "Global Privacy Control" (GPC) setting and we'll signal to websites your preference to:
+
+• Not sell your personal data.
+• Limit sharing of your personal data to other companies.</string>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

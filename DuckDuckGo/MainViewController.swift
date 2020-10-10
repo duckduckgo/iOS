@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var statusBarBackground: UIView!
     @IBOutlet weak var findInPageView: FindInPageView!
-    @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var findInPageContainerBottomLayoutConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var logoContainer: UIView!
     @IBOutlet weak var logo: UIImageView!
@@ -121,7 +121,7 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
 
         findInPageView.delegate = self
-        findInPageBottomLayoutConstraint.constant = 0
+        findInPageContainerBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
@@ -179,13 +179,13 @@ class MainViewController: UIViewController {
     /// This is only really for iOS 10 devices that don't properly support the change frame approach.
     @objc private func keyboardWillHide(_ notification: Notification) {
 
-        guard findInPageBottomLayoutConstraint.constant > 0,
+        guard findInPageContainerBottomLayoutConstraint.constant > 0,
             let userInfo = notification.userInfo else {
             return
         }
 
-        findInPageBottomLayoutConstraint.constant = 0
-        animateForKeyboard(userInfo: userInfo, y: view.frame.height)
+        findInPageContainerBottomLayoutConstraint.constant = 0
+        animateForKeyboard(userInfo: userInfo, height: 0)
     }
 
     /// Based on https://stackoverflow.com/a/46117073/73479
@@ -204,20 +204,19 @@ class MainViewController: UIViewController {
         let intersection = safeAreaFrame.intersection(keyboardFrameInView)
         height = intersection.height
 
-        findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-        animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
+        animateForKeyboard(userInfo: userInfo, height: height)
     }
     
-    private func animateForKeyboard(userInfo: [AnyHashable: Any], y: CGFloat) {
+    private func animateForKeyboard(userInfo: [AnyHashable: Any], height: CGFloat) {
         let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
         let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
 
-        let frame = self.findInPageView.frame
+        findInPageContainerBottomLayoutConstraint.constant = height
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
-            self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
+            self.view.layoutIfNeeded()
         }, completion: nil)
 
     }

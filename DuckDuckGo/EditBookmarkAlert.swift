@@ -80,11 +80,19 @@ private class ValidatingAlert: UIAlertController {
             guard let title = self.titleField.text else { return }
             guard var urlString = self.urlField.text else { return }
             
-            if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") {
+            if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") && !urlString.isBookmarklet() {
                 urlString = "http://\(urlString)"
             }
-            
-            guard let url = urlString.punycodedUrl else { return }
+
+            let optionalURL: URL?
+            if urlString.isBookmarklet() {
+                optionalURL = urlString.toEncodedBookmarklet()
+                guard URL.isValidBookmarklet(url: optionalURL) else { return }
+            } else {
+                optionalURL = urlString.punycodedUrl
+            }
+
+            guard let url = optionalURL else { return }
             
             completion(Link(title: title, url: url))
         }

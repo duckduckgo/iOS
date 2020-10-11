@@ -259,4 +259,18 @@ class URLExtensionTests: XCTestCase {
         XCTAssertFalse(url.isPart(ofDomain: "example.com"))
     }
 
+    func testWhenBookmarkletIsValid() {
+        let alert = "javascript:(function() { alert(1) })()".toEncodedBookmarklet()!
+        let allowReferenceError = "javascript:document".toEncodedBookmarklet()!
+        XCTAssertTrue(URL.isValidBookmarklet(url: alert))
+        XCTAssertTrue(URL.isValidBookmarklet(url: allowReferenceError))
+    }
+
+    func testWhenBookmarkletIsNotValid() {
+        let invalidSyntax = "javascript:(fun() { alert(1) })()".toEncodedBookmarklet()!
+        let invalidSyntax2 = "javascript:/".toEncodedBookmarklet()!
+        XCTAssertFalse(URL.isValidBookmarklet(url: invalidSyntax))
+        XCTAssertFalse(URL.isValidBookmarklet(url: invalidSyntax2))
+    }
+
 }

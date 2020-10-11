@@ -116,3 +116,28 @@ extension String {
     }
 
 }
+
+// MARK: - Bookmarklet
+
+extension String {
+    public func isBookmarklet() -> Bool {
+        return self.lowercased().hasPrefix("javascript:")
+    }
+
+    public func toDecodedBookmarklet() -> String? {
+        guard self.isBookmarklet(),
+              let result = self.dropPrefix(prefix: "javascript:").removingPercentEncoding,
+              !result.isEmpty else { return nil }
+        return result
+    }
+
+    public func toEncodedBookmarklet() -> URL? {
+        let allowedCharacters = CharacterSet.alphanumerics.union(.urlQueryAllowed)
+        guard self.isBookmarklet(),
+              let encoded = self.dropPrefix(prefix: "javascript:")
+                // Avoid double encoding by removing any encoding first
+                .removingPercentEncoding?
+                .addingPercentEncoding(withAllowedCharacters: allowedCharacters) else { return nil }
+        return URL(string: "javascript:\(encoded)")
+    }
+}

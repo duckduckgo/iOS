@@ -25,7 +25,7 @@
     let canEnterFullscreen = HTMLVideoElement.prototype.webkitEnterFullscreen !== undefined;
     let browserHasExistingFullScreenSupport = document.fullscreenEnabled || document.webkitFullscreenEnabled;
 
-    // YouTube Mobile won't exit fullscreen correctly if this patch is active. Reference: https://github.com/brave/brave-ios/pull/2002
+    // YouTube Mobile won't exit fullscreen correctly if requestFullscreen is overridden. Reference: https://github.com/brave/brave-ios/pull/2002
     let isMobile = /mobile/i.test(navigator.userAgent);
 
     if (!browserHasExistingFullScreenSupport && canEnterFullscreen && !isMobile) {

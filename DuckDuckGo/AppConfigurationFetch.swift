@@ -68,8 +68,10 @@ class AppConfigurationFetch {
         guard shouldRefresh else {
             // Statistics are not sent after a successful background refresh in order to reduce the time spent in the background, so they are checked
             // here in case a background refresh has happened recently.
-            sendStatistics {
-                completion?(false)
+            Self.fetchQueue.async {
+                self.sendStatistics {
+                    completion?(false)
+                }
             }
 
             return

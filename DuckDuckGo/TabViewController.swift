@@ -340,7 +340,9 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
-        self.url = url
+        if !url.isBookmarklet() {
+            self.url = url
+        }
         lastError = nil
         updateContentMode()
         load(urlRequest: URLRequest(url: url))
@@ -1071,6 +1073,15 @@ extension TabViewController: WKNavigationDelegate {
         
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
+            return
+        }
+
+        if url.isBookmarklet() && allowPolicy == .allow {
+            completion(.cancel)
+
+            if let js = url.toDecodedBookmarklet() {
+                webView.evaluateJavaScript(js)
+            }
             return
         }
         

@@ -253,7 +253,7 @@ public class Favicons {
             if let image = image {
                 complete(withImage: image)
             } else {
-                self.loadImageFromNetwork(url, domain, resource.cacheKey, options, targetCache, complete)
+                self.loadImageFromNetwork(url, domain, complete)
             }
 
         }
@@ -262,9 +262,6 @@ public class Favicons {
 
     private func loadImageFromNetwork(_ imageUrl: URL?,
                                       _ domain: String,
-                                      _ cacheKey: String,
-                                      _ options: KingfisherOptionsInfo,
-                                      _ targetCache: ImageCache,
                                       _ completion: @escaping (UIImage?) -> Void) {
 
         guard Constants.downloader.shouldDownload(forDomain: domain) else {

@@ -30,9 +30,7 @@
 
     if (!browserHasExistingFullScreenSupport && canEnterFullscreen && !isMobile) {
         Object.defineProperty(document, "fullscreenEnabled", {
-            get: function() {
-                return true;
-            }
+            value: true
         });
 
         HTMLElement.prototype.requestFullscreen = function() {

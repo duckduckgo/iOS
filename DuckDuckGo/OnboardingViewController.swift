@@ -23,6 +23,10 @@ import Core
 class OnboardingViewController: UIViewController, Onboarding {
     
     private var controllerNames: [String] = {
+        //TODO I guess I can do the varient stuff here?
+        //"onboardingWidget"
+        return ["onboardingWidget"]
+        
         if #available(iOS 14.0, *) {
             return ["onboardingDefaultBrowser"]
         } else {
@@ -49,6 +53,12 @@ class OnboardingViewController: UIViewController, Onboarding {
         super.viewDidLoad()
         loadInitialContent()
         updateForSmallerScreens()
+        setUpNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func loadInitialContent() {
@@ -67,6 +77,12 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     private func updateForSmallerScreens() {
         contentWidth.constant = isSmall ? -52 : -72
+    }
+    
+    private func setUpNavigationBar() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     private func adjustHeight(label: UILabel, toMaxHeight maxHeight: CGFloat) -> CGFloat {
@@ -96,7 +112,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         }
         updateContent(controller)
     }
-    
+
     private func updateContent(_ controller: OnboardingContentViewController) {
         controller.delegate = self
         continueButton.isEnabled = controller.canContinue
@@ -171,7 +187,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         let skipButtonTitle = nextScreen.skipButtonTitle
         skipButton.setTitle(skipButtonTitle, for: .normal)
         skipButton.setTitle(skipButtonTitle, for: .disabled)
-        skipButton.isHidden = !(nextScreen is OnboardingDefaultBroswerViewController)
+        skipButton.isHidden = (nextScreen is OnboardingHomeRowViewController)
     }
     
     func done() {

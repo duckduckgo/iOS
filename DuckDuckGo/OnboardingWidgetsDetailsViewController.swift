@@ -1,5 +1,5 @@
 //
-//  DaxOnboardingPadViewController.swift
+//  OnboardingWidgetsDetailsViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -15,19 +15,29 @@
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//
 
 import UIKit
 
-class DaxOnboardingPadViewController: UIViewController, Onboarding {
-
-    weak var delegate: OnboardingDelegate?
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let navController = segue.destination as? UINavigationController,
-           let onboarding = navController.viewControllers.first as? OnboardingViewController {
-            onboarding.delegate = delegate
+class OnboardingWidgetsDetailsViewController: UIViewController {
+    
+    var navigationHandler: (() -> Void)?
+    
+    @IBOutlet weak var secondInstructionsLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
         }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    @IBAction func ctaPressed(_ sender: Any) {
+        navigationHandler?()
+    }
 }

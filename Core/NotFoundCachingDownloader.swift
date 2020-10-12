@@ -49,6 +49,10 @@ class NotFoundCachingDownloader: ImageDownloader {
     
     func shouldDownload(_ url: URL, referenceDate: Date = Date()) -> Bool {
         guard let domain = url.host else { return false }
+        return shouldDownload(forDomain: domain, referenceDate: referenceDate)
+    }
+
+    func shouldDownload(forDomain domain: String, referenceDate: Date = Date()) -> Bool {
         guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return false }
         if let cacheAddTime = notFoundCache[hashedKey],
             referenceDate.timeIntervalSince1970 - cacheAddTime < Self.expiry {

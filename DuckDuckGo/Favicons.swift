@@ -295,28 +295,38 @@ public class Favicons {
     }
 
     private func retrieveBestImage(from urls: [URL], completion: @escaping (UIImage?) -> Void) {
-
-        print("***", #function, UIScreen.main.scale, UIScreen.main.nativeScale)
-
         let targetSize = Constants.targetImageSizePoints * UIScreen.main.scale
-
         DispatchQueue.global(qos: .background).async {
             var bestImage: UIImage?
             for url in urls {
-                guard let data = (try? Data(contentsOf: url)), let image = UIImage(data: data) else { continue }
-
+                guard let image = self.loadImage(url: url) else { continue }
                 if (bestImage?.size.width ?? 0) < image.size.width {
                     bestImage = image
                     if image.size.width >= targetSize {
-                        print("***", #function, "target size!", image.size.width)
                         break
                     }
                 }
-
             }
             completion(bestImage)
         }
+    }
 
+    private func loadImage(url: URL) -> UIImage? {
+        var image: UIImage?
+        var request = URLRequest(url: url)
+        UserAgentManager.shared.update(request: &request, isDesktop: false)
+
+        let group = DispatchGroup()
+        group.enter()
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                image = UIImage(data: data)
+            }
+            group.leave()
+        }
+        task.resume()
+        _ = group.wait(timeout: .now() + 60.0)
+        return image
     }
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {

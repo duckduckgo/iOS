@@ -1004,7 +1004,6 @@ extension TabViewController: WKNavigationDelegate {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-                load(urlRequest: request)
                 return request
             }
         } else {
@@ -1012,7 +1011,6 @@ extension TabViewController: WKNavigationDelegate {
             if let headers = request.allHTTPHeaderFields,
                let _ = headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) {
                 request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-                load(urlRequest: request)
                 return request
             }
         }

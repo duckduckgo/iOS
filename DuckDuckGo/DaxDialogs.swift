@@ -232,7 +232,9 @@ class DaxDialogs {
             
         default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withMutipleTrackers.format(args: entitiesBlocked.count - 2, entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
+            return BrowsingSpec.withMutipleTrackers.format(args: entitiesBlocked.count - 2,
+                                                           entitiesBlocked[0].displayName ?? "",
+                                                           entitiesBlocked[1].displayName ?? "")
         }
 
     }

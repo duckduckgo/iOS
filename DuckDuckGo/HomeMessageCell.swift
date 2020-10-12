@@ -41,7 +41,6 @@ class HomeMessageCell: UICollectionViewCell {
     @IBOutlet weak var sizingLabel: UILabel!
     private lazy var cellWidthConstraint = contentView.widthAnchor.constraint(equalToConstant: HomeMessageCell.maximumWidth)
 
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

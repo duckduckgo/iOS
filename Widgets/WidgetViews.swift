@@ -109,7 +109,7 @@ struct FavoritesRowView: View {
     var end: Int
 
     var body: some View {
-        HStack() {
+        HStack {
             ForEach(start...end, id: \.self) {
                 FavoriteView(favorite: entry.favoriteAt(index: $0), isPreview: entry.isPreview)
 
@@ -229,7 +229,6 @@ struct SearchWidgetView: View {
         }
     }
 }
-
 
 // See https://stackoverflow.com/a/59228385/73479
 extension View {

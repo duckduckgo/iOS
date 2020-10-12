@@ -1008,8 +1008,7 @@ extension TabViewController: WKNavigationDelegate {
             }
         } else {
             // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields,
-               let _ = headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) {
+            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
                 request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
                 return request
             }

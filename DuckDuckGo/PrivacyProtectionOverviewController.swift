@@ -108,6 +108,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
         
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()

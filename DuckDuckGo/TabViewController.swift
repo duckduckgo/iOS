@@ -162,6 +162,7 @@ class TabViewController: UIViewController {
     private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
+    private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var debugScript = DebugUserScript()
     
     private var generalScripts: [UserScript] = []
@@ -230,7 +231,8 @@ class TabViewController: UIViewController {
             navigatorPatchScript,
             contentBlockerScript,
             contentBlockerRulesScript,
-            faviconScript
+            faviconScript,
+            fullScreenVideoScript
         ]
         
         ddgScripts = [

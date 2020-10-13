@@ -220,11 +220,9 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
-            break
 
         case versionCell:
             showDebug()
-            break
 
         default: break
         }

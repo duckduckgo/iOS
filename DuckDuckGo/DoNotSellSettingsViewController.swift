@@ -92,7 +92,7 @@ extension DoNotSellSettingsViewController: Themable {
                                           attributes: [
                                             NSAttributedString.Key.link: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more"
                                           ]))
-        let linkAttributes: [NSAttributedString.Key : Any] = [
+        let linkAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.kern: -0.08,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),

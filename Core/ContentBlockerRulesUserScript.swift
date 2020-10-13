@@ -34,7 +34,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
         
         return loadJS("contentblockerrules", withReplacements: [
-            "${unprotectedDomains}": unprotectedDomains,
+            "${unprotectedDomains}": unprotectedDomains
         ])
     }
     

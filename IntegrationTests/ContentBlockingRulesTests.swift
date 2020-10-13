@@ -50,10 +50,8 @@ class ContentBlockingRulesTests: XCTestCase {
 
 extension Array where Element == ContentBlockerRule {
     func findExactFilter(filter: String) -> ContentBlockerRule? {
-        for rule in self {
-            if rule.trigger.urlFilter == filter {
-                return rule
-            }
+        for rule in self where rule.trigger.urlFilter == filter {
+            return rule
         }
         
         return nil
@@ -62,10 +60,8 @@ extension Array where Element == ContentBlockerRule {
     func findInIfDomain(domain: String) -> ContentBlockerRule? {
         for rule in self {
             if let ifDomain = rule.trigger.ifDomain {
-                for url in ifDomain {
-                    if url == domain {
-                        return rule
-                    }
+                for url in ifDomain where url == domain {
+                    return rule
                 }
             }
         }

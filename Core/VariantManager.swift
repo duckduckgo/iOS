@@ -35,7 +35,7 @@ public struct Variant {
         static let notPadDevice = { return !Self.padDevice() }
 
         static let inRequiredCountry = { return ["AU", "AT", "DK", "FI", "FR", "DE", "IT", "IE", "NZ", "NO", "ES", "SE", "GB"]
-                .contains(where: { Locale.current.regionCode == $0 } ) }
+                .contains(where: { Locale.current.regionCode == $0 }) }
     }
     
     static let doNotAllocate = 0
@@ -46,7 +46,7 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: 1, isIncluded: When.inRequiredCountry, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: 1, isIncluded: When.inRequiredCountry, features: []),
+        Variant(name: "se", weight: 1, isIncluded: When.inRequiredCountry, features: [])
 
     ]
     

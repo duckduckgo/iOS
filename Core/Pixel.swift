@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 
+// swiftlint:disable identifier_name
 public enum PixelName: String {
     
     case appLaunch = "ml"
@@ -237,6 +238,7 @@ public enum PixelName: String {
 
     case backgroundTaskSubmissionFailed = "m_bt_rf"
 }
+// swiftlint:enable identifier_name
 
 public struct PixelParameters {
     public static let url = "url"

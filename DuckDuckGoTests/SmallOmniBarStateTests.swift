@@ -22,6 +22,7 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 
+// swiftlint:disable type_body_length
 class SmallOmniBarStateTests: XCTestCase {
 
     func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShown() {
@@ -336,3 +337,4 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeNonEditingState().name)
     }
 }
+// swiftlint:enable type_body_length

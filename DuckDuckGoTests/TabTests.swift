@@ -43,7 +43,6 @@ class TabTests: XCTestCase {
     func testWhenDesktopModeToggledThenPropertyIsUpdated() {
         _ = AppWidthObserver.shared.willResize(toWidth: UIScreen.main.bounds.width)
 
-
         let tab = Tab(link: link())
 
         if AppWidthObserver.shared.isLargeWidth {

@@ -1,3 +1,3 @@
-• When you use our medium or large widgets without any favorites we now provide a handy link to learn about adding favorites.
-• Fixed a bug preventing YouTube videos from showing full screen in Desktop mode.
+• When you add our medium or large widgets, we now provide a handy way to learn about adding favorites.
+• Fixed a bug preventing YouTube videos from showing full screen in desktop mode.
 • Other bug fixes and improvements.

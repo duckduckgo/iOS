@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "High Five!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Se upp! %1$@ är ett stort spårningsnätverk.\n\nDeras spårare ligger och lurar på cirka %2$.0lf%% av de populäraste webbplatserna 😱 men oroa dig inte!\n\nJag kommer att hindra %1$@ från att se din aktivitet på dessa webbplatser.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Bra att veta! Jag kan inte hindra %1$@ från att se din aktivitet på %2$@.\n\nMen om du surfar med hjälp av mig kan jag se till att %1$@ får veta mindre om dig genom att blockera deras spårare på många andra webbplatser.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Jag fattar";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Jag fattar";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Besök dina favoritsidor på ett ögonblick!\n\nGå till en webbplats du gillar. Tryck sedan på ikonen \"⋯\" och välj *Lägg till i favoriter*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Besök dina favoritsidor på ett ögonblick! Besök en av dina favoritwebbplatser. Tryck sedan på knappen för att öppna menyn och välj Lägg till i favoriter.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Prova sedan att besöka en av dina favoritwebbplatser!\n\nJag blockerar trackers så att de inte kan spionera på dig. Jag uppgraderar också säkerheten för din uppkoppling om det är möjligt. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet kan vara lite läskigt.\n\nOroa dig inte! Att söka och surfa privat är lättare än du tror.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Eftersom Global Privacy Control (GPC) är en ny standard erkänns den ännu inte av de flesta webbplatser, men vi arbetar hårt på att få den accepterad i hela världen.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Läs mer";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Däremot är webbplatser endast tvungna att rätta sig efter signalen i den mån de är skyldiga att göra det enligt gällande lag. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Dina uppgifter ska inte vara till salu. Vi på DuckDuckGo håller med. Aktivera inställningen \"Global Privacy Control\" (GPC) så meddelar vi webbplatser att du föredrar att:<br/><br/> • Dina personuppgifter inte ska säljas.<br/>• Delning av dina personuppgifter med andra företag ska begränsas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Inga bokmärken ännu";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Visa alla flikar";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "VÄLKOMMEN TILL DUCKDUCKGO";
 
 /* Edit button */
 "navigation.title.edit" = "Redigera";

@@ -13,6 +13,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Buscar";
 
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Añadir favoritos";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Visita rápidamente tus sitios favoritos.";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Buscar en DuckDuckGo";
 

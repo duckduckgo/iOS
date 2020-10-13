@@ -1,3 +1,6 @@
+/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
+"0DQ-yq-UuT.text" = "Sites à prova de fogo";
+
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Desative para prevenir que ligações sejam abertas automaticamente noutras aplicações instaladas.";
 
@@ -9,9 +12,6 @@
 
 /* Class = "UILabel"; text = "Clear Tabs only"; ObjectID = "3WZ-Fi-HIH"; */
 "3WZ-Fi-HIH.text" = "Limpar apenas os separadores";
-
-/* Class = "UILabel"; text = "On/Off"; ObjectID = "4uU-Ow-65B"; */
-"4uU-Ow-65B.text" = "Ligar/Desligar";
 
 /* Class = "UILabel"; text = "App exit, inactive for 30min"; ObjectID = "5Yd-7i-bey"; */
 "5Yd-7i-bey.text" = "Saída da aplicação, inativa por 30 minutos";
@@ -45,6 +45,9 @@
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Ícone da aplicação";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
+"cW7-OM-2oW.text" = "Controlo Global de Privacidade (CGP)";
 
 /* Class = "UILabel"; text = "App exit, inactive for 15min"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Saída da aplicação, inativa por 15 minutos";
@@ -112,9 +115,6 @@
 /* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Ainda não há sites desprotegidos";
 
-/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "iaT-wz-PnG"; */
-"iaT-wz-PnG.text" = "Sites à prova de fogo";
-
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ícone";
 
@@ -139,6 +139,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Mostrar teclado em";
 
+/* Class = "UINavigationItem"; title = "Global Privacy Control (GPC)"; ObjectID = "tWw-Lh-ZT1"; */
+"tWw-Lh-ZT1.title" = "Controlo Global de Privacidade (CGP)";
+
 /* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
 "U2M-6p-6nl.headerTitle" = "Ação";
 
@@ -147,6 +150,9 @@
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Remover os websites com barreiras de segurança";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
+"vPz-uO-6gB.text" = "Controlo Global de Privacidade (CGP)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.footerTitle" = "A saída da aplicação é definida deslizando a aplicação para a fechar e fica inativa quando a aplicação está em segundo plano.";

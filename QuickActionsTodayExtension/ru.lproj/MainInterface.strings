@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Search privately or enter URL"; ObjectID = "1k2-q0-Mzn"; */
-"1k2-q0-Mzn.text" = "Search privately or enter URL";
+"1k2-q0-Mzn.text" = "Введите поисковый запрос или адрес (без слежки)";
 
 /* Class = "UIButton"; normalTitle = "Clear Data"; ObjectID = "jCS-jj-Eib"; */
 "jCS-jj-Eib.normalTitle" = "Сбросить данные";

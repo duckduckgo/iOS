@@ -82,7 +82,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
 "Mv2-oP-SQd.text" = "Label";
 
-/* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; */
+/* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; Note = "Placeholder string, do not translate"; */
 "OHN-Tz-cdk.text" = "n REȚELE URMĂRITOARE BLOCATE";
 
 /* Class = "UILabel"; text = "Good Privacy Practices"; ObjectID = "oyz-09-obQ"; */

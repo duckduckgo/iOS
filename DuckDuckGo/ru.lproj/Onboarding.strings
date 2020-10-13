@@ -5,11 +5,11 @@
 "ciS-pA-ovS.normalTitle" = "Продолжить";
 
 /* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
-"J1y-Qk-FSX.normalTitle" = "SKIP";
+"J1y-Qk-FSX.normalTitle" = "ПРОПУСТИТЬ";
 
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
 "u7Q-MU-drX.text" = "Добро пожаловать в DuckDuckGo!";
 
 /* Class = "UIViewController"; title = "Search and browse privately,\nevery day."; ObjectID = "Xjr-gI-tDG"; */
-"Xjr-gI-tDG.title" = "Search and browse privately,\nevery day.";
+"Xjr-gI-tDG.title" = "Интернет без слежки. \nНавсегда.";
 

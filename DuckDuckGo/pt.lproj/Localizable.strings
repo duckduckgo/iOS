@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "High Five!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Alerta! %1$@ é uma grande rede de rastreamento.\n\nOs seus rastreadores escondem-se em cerca de %2$.0lf%% dos sites principais 😱 mas não se preocupe!Irei bloquear %1$@ de ver a sua atividade nesses sites.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Alerta! Não consigo que %1$@ veja a sua atividade no %2$@.\n\nMas navegue comigo, e eu consigo reduzir o que %1$@ sabe sobre si em geral ao bloquear os seus rastreadores em muitos outros sites.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Entendi";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Entendi";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Visite os seus sites favoritos num instante!\n\nVá a um site que ame. De seguida, toque no ''⋯'' ícone e selecione *Adicionar aos Favoritos*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Visite os seus sites favoritos num instante! Visite um dos seus sites favoritos. De seguida, toque no botão abrir menu e selecione Adicionar aos Favoritos.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Em seguida, tente visitar um dos seus sites preferidos!\n\nBloquearei rastreadores para que não possam espiá-lo. Também irei atualizar a segurança da sua conexão, se possível. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "A Internet pode ser um pouco assustadora.\n\nMas não se preocupe! Pesquisar e navegar em privado é mais fácil do que pensa.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Uma vez que o Controlo Global de Privacidade (CGP) é um padrão novo, a maioria dos sites ainda não o reconhecem, mas estamos a trabalhar arduamente para ser aceite mundialmente.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Saiba mais";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Contudo, os websites só são obrigados a agir ao sinal da medida em que as leis aplicáveis os obrigam a fazê-lo. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Os seus dados não devem estar à venda. Na DuckDuckGo, concordamos. Ative a configuração de ''Controlo Global de Privacidade'' (CGP) e enviaremos um sinal aos sites da sua preferência para:<br/><br/> • Não vender os seus dados pessoais.<br/>• Limite a partilha dos seus dados pessoais com outras empresas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda sem marcadores";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Mostrar todos os separadores";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Bem-vindo(a) ao DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Editar";

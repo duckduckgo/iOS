@@ -13,6 +13,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Hledat";
 
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Přidat oblíbené";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Rychle navštivte své oblíbené stránky.";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";
 

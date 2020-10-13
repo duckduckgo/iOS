@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Çak bir beşlik!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Dikkat! %1$@ büyük bir izleme ağıdır.\n\nİzleyicileri en popüler sitelerin %%%2$.0lf kadarında mevcuttur. 😱 Ama endişelenmeyin!\n\nBu sitelerdeki etkinliğinizin %1$@ tarafından görülmesini engelleyeceğim.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Dikkat! %2$@ üzerindeki etkinliğinizin %1$@ tarafından görülmesini önleyemiyorum.\n\nAma benimle gezinirseniz diğer birçok sitedeki izleyicisini engelleyerek %1$@ tarafından sizinle ilgili olarak toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Anladım";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Anladım";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "En sevdiğiniz siteleri anında ziyaret edin!\n\nSevdiğiniz bir siteye gidin. Ardından \"...\" simgesine dokunun ve *Favorilere Ekle* öğesini seçin.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "En sevdiğiniz siteleri anında ziyaret edin!\n\n En sevdiğiniz sitelerden birini ziyaret edin. Ardından, menü düğmesine dokunun ve Favorilere Ekle'yi seçin.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Şimdi favori sitelerinizden birini ziyaret etmeyi deneyin!\n\nSizi gözetlemelerini önlemek için izleyicileri engelleyeceğim. Mümkünse bağlantınızın güvenlik seviyesini de yükselteceğim. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "İnternet bazen ürkütücü olabilir.\n\nEndişelenmeyin! İnternette kimsenin göremeyeceği şekilde arama yapmak ve gezinmek sandığınızdan çok daha kolay.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Küresel Gizlilik Kontrolü (GPC) yeni bir standart olduğundan, çoğu web sitesi tarafından henüz tanınmayacaktır. Ancak, dünya çapında benimsenmesini sağlamak için elimizden geleni yapıyoruz.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Daha Fazla Bilgi";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Bununla birlikte, web sitelerinin onlara bildirilen tercihleri yalnızca geçerli yasaların zorunlu kıldığı ölçüde dikkate almaları gerekmektedir. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Verileriniz satılık olmamalı. DuckDuckGo'da aynı fikirdeyiz. \"Küresel Gizlilik Kontrolü\" (GPC) ayarını etkinleştirirseniz web sitelerine şu tercihleri yaptığınızı bildiririz:<br/><br/> • Kişisel verilerinizin satılmasını istemediğinizi.<br/>• Kişisel verilerinizin diğer şirketlerle paylaşımının sınırlandırılmasını istediğinizi.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi yok";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Tüm Sekmeleri Göster";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "DuckDuckGo'ya hoş geldiniz!";
 
 /* Edit button */
 "navigation.title.edit" = "Düzenle";

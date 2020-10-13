@@ -13,6 +13,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Søg";
 
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Tilføj til favoritter";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Besøg hurtigt dine foretrukne websteder.";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Søg med DuckDuckGo";
 

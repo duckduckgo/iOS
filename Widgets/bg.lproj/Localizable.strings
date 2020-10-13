@@ -13,6 +13,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Търсене";
 
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Добавяне към любими";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Отварянето на любимите ви сайтове става бързо.";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Търси с DuckDuckGo";
 

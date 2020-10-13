@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Visoko pet!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Obrati pozornost! %1$@ je glavna mreža za praćenje.\n\nNjihovi tragači vrebaju na oko %2$.0lf%% vodećih web-mjesta 😱 ali ne brini!\n\nBlokirat ću %1$@ da ne vide tvoju aktivnost na tim web-mjestima.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Pažnja! Ne mogu spriječiti %1$@ da vidi vašu aktivnost na %2$@. \n\nAli pretražujte sa mnom i mogu umanjiti ono što %1$@ može saznati o vama tako što ću blokirati te tragače na mnogim drugim mrežnim mjestima.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Shvatio/la sam";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Shvatio/la sam";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Brzo posjetite svoja omiljena mrežna mjesta!\n\nPosjetite mrežno mjesto koje volite. Zatim dodirnite ikonu \"⋯\" i odaberite *Dodaj u omiljene*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Brzo posjetite svoja omiljena mrežna mjesta! Posjetite jedno od svojih omiljenih mrežnih mjesta. Zatim dodirnite gumb otvorenog izbornika i odaberite Dodaj u omiljene.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Zatim, pokušaj posjetiti jedno od svojih omiljenih web-mjesta!\n\nBlokirat ću tragače kako te ne bi mogli špijunirati. Nadogradit ću i sigurnost tvoje veze ako to bude moguće. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet može biti pomalo neugodan.Ne brini! Privatno pretraživanje i pregledavanje lakše je nego što misliš.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Budući da je Globalna kontrola privatnosti (GPC) novi standard, većina mrežnih mjesta još ga neće prepoznati, ali naporno radimo na tome da postane prihvaćen u cijelom svijetu.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Saznajte više";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Međutim, mrežna mjesta moraju djelovati na signal samo u mjeri u kojoj ih obvezuju važeći zakoni. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vaši podaci nisu na prodaju. Mi u DuckDuckGo se slažemo. Aktivirajte postavku \"Globalna kontrola privatnosti\" (GPC) i mrežnim ćemo mjestima dati signal da:\n\n• Ne prodaju vaše osobne podatke.\n• Ograniče dijeljenje vaših osobnih podataka s drugim tvrtkama.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Još nema knjižnih oznaka";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Prikaži sve kartice";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Dobro došli u DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Uredi";

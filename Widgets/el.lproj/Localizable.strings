@@ -13,6 +13,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Αναζήτηση";
 
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Προσθήκη στα Αγαπημένα";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Επισκεφθείτε γρήγορα τους αγαπημένους σας ιστότοπους.";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Αναζήτηση DuckDuckGo";
 

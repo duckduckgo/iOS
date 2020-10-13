@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Dod pieci!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Mazs brīdinājums! %1$@ ir lielākais izsekošanas tīkls.\n\nTā izsekotāji slēpjas apmēram %2$.0lf%% populārāko vietņu 😱, bet nesatraucies!\n\nEs bloķēšu %1$@, lai tas neredzētu tavas darbības šajās vietnēs.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Mazs brīdinājums! Es nevaru liegt %1$@ skatīt tavas darbības domēnā %2$@.\n\nTaču pārlūko kopā ar mani, jo es varu ierobežot to, ko %1$@ zina par tevi kopumā, bloķējot viņu izsekotājus daudzās citās vietnēs.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Sapratu";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Sapratu";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Atver savas iecienītākās vietnes zibens ātrumā!\n\nEj uz savu mīļāko vietni. Pēc tam pieskaries ikonai “⋯” un atlasi *Pievienot izlasei*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Atver savas iecienītākās vietnes zibens ātrumā! Atver kādu no savām mīļākajām vietnēm. Pēc tam pieskaries izvēlnes atvēršanas pogai un atlasi opciju “Pievienot izlasei”.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Tagad pamēģini atvērt kādu no savām mīļākajām vietnēm!\n\nEs nobloķēšu izsekotājus, lai tie nevarētu tevi izspiegot. Ja iespējams, uzlabošu arī tava savienojuma drošību. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internets var būt diezgan “mežonīgs”.\n\nBet neuztraucies! Meklēt un pārlūkot privātā režīmā ir vieglāk, nekā tu domā.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Tā kā Globālā privātuma kontrole (GPC) ir jauns standarts, lielākā daļa vietņu to vēl neatpazīst, taču mēs cītīgi strādājam pie tā, lai tas tiktu ievērots visā pasaulē.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Uzzināt vairāk";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Tomēr vietnēm ir obligāti jārīkojas tikai uz tām attiecināmo piemērojamo tiesību aktu ietvaros. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Tavi dati nav paredzēti pārdošanai. DuckDuckGo tam piekrīt. Aktivizē iestatījumu “Globālā privātuma kontrole” (GPC), un mēs vietnēm paziņosim, ka tu izvēlies:\n\n• Nepārdot savus personas datus.\n• Ierobežot savu personas datu koplietošanu ar citiem uzņēmumiem.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Vēl nav grāmatzīmju";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Rādīt visas cilnes";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Laipni lūdzam DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Rediģēt";

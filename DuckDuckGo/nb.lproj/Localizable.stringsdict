@@ -13,73 +13,23 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* og *én annen* prøvde å spore deg her. &lt;br/&gt;&lt;br/&gt;Jeg har blokkert dem!&lt;br/&gt;&lt;br/&gt; ☝️ Du kan se hvem som prøver å spore deg i adressefeltet når du besøker et nytt nettsted.</string>
+			<string>*%2$@, %3$@* og *1 annen* prøvde å spore deg her.
+
+Jeg har blokkert dem!
+
+☝️ Du kan se hvem som prøver å spore deg på adresselinjen når du besøker et nytt nettsted.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* og *%1$d andre* prøvde å spore deg her. &lt;br/&gt;&lt;br/&gt;Jeg har blokkert dem!&lt;br/&gt;&lt;br/&gt; ☝️ Du kan se hvem som prøver å spore deg i adressefeltet når du besøker et nytt nettsted.</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d større sporer funnet</string>
-			<key>other</key>
-			<string>%1$d større sporere funnet</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d større sporer er blokkert</string>
-			<key>other</key>
-			<string>%1$d større sporere er blokkert</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%% sporing oppdaget</string>
-			<key>other</key>
-			<string>%% sporinger oppdaget</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d sporing blokkert</string>
-			<key>other</key>
-			<string>%1$d sporinger blokkert</string>
+			<string>*%2$@, %3$@* og *%d andre* prøvde å spore deg her.
+
+Jeg har blokkert dem!
+
+☝️ Du kan se hvem som prøver å spore deg på adresselinjen når du besøker et nytt nettsted.</string>
+			<key>zero</key>
+			<string>*%2$@ og %3$@* prøvde å spore deg her.
+
+Jeg har blokkert dem!
+
+☝️ Du kan se hvem som prøver å spore deg på adresselinjen når du besøker et nytt nettsted.</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -93,9 +43,75 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d privat fane</string>
+			<string>%d privat fane</string>
 			<key>other</key>
-			<string>%1$d private faner</string>
+			<string>%d private faner</string>
+			<key>zero</key>
+			<string>Ingen private faner</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d større sporer blokkert</string>
+			<key>other</key>
+			<string>%d større sporere blokkert</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d større sporer funnet</string>
+			<key>other</key>
+			<string>%d større sporere funner</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d sporer blokkert</string>
+			<key>other</key>
+			<string>%d sporere blokkert</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d sporer funnet</string>
+			<key>other</key>
+			<string>%d sporere funnet</string>
 		</dict>
 	</dict>
 </dict>

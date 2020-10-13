@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Pacsi!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Figyelem! A(z) %1$@ egy nagy nyomkövető hálózat.\n\nA nyomkövetői ott leselkednek a legnagyobb webhelyek %2$.0lf%%-án 😱, de ne aggódj!\n\nMeg fogom akadályozni, hogy a(z) %1$@ láthassa a tevékenységedet azokon a weboldalakon.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Figyelem! Nem tudom megakadályozni, hogy %1$@ láthassa a tevékenységedet itt: %2$@.\n\nHa azonban velem böngészel, a sok más weboldalon is használt nyomkövetőjük blokkolásával korlátozni tudom azt, amit %1$@ megtudhat rólad.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Megvan";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Megvan";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Látogasd meg a kedvenc weboldalaidat egy pillanat alatt!\n\nLépj egy olyan weboldalra, amelyet szeretsz. Ezután koppints a(z) „⋯” ikonra, és válaszd a *Hozzáadás a kedvencekhez* elemet.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Látogasd meg a kedvenc weboldalaidat egy pillanat alatt! Látogass el az egyik kedvenc webhelyedre. Ezután koppints a menü megnyitása gombra, és válaszd a Hozzáadás a kedvencekhez elemet.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "A következő lépésben próbálj ellátogatni az egyik kedvenc webhelyedre!\n\nÉn blokkolom a nyomkövetőket, hogy ne tudjanak kémkedni utánad. Ha lehet, a kapcsolatod biztonságát is javítom. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Az internet meglehetősen undok hely lehet.\n\nNe aggódj! A bizalmas keresés és böngészés egyszerűbb, mint hinnéd.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Mivel a Nemzetközi Adatvédelmi Szabályozás (Global Privacy Control, GPC) új szabvány, a legtöbb weboldal még nem fogja felismerni, de keményen dolgozunk azon, hogy világszerte elfogadottá váljon.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "További részletek";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " A weboldalaknak azonban csak olyan mértékben kell eleget tenniük a kérésnek, amennyire a hatályos törvények ezt megkövetelik tőlük. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Az adataidnak nem lenne szabad eladónak lenniük. A DuckDuckGo-nál mi egyetértünk ezzel. Aktiváld a „Globális adatvédelmi szabályozás” (GPC) beállítást, és mi jelezzük a webhelyeknek, hogy te a következőket szeretnéd:\n\n• Ne adják el a személyes adataidat.\n• Korlátozzák a személyes adataid megosztását más vállalatokkal.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Összes lap megjelenítése";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Üdvözlünk a DuckDuckGo-ban!";
 
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";

@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Duok penkis!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Būk atidus! %1$@ yra pagrindinis sekimo tinklas.\n\nJo stebėjimo priemonės stebi maždaug %2$.0lf%% populiariausių svetainių 😱, bet nesijaudink!\n\nBlokuosiu %1$@, kad nestebėtų tavo veiklos tose svetainėse.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Būk atidus! Negaliu neleisti %1$@ matyti tavo veiklos %2$@.\n\nTačiau naršyk kartu su manimi ir aš sumažinsiu informacijos, kurią %1$@ žino apie tave, kiekį užblokuodamas stebėjimo priemones kitose svetainėse.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Supratau";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Supratau";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Apsilankykite savo mėgstamose svetainėse akimirksniu!\n\nEikite į savo mėgstamą svetainę. Tuomet bakstelėkite „⋯“ piktogramą ir pasirinkite *Pridėti prie mėgstamų*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Apsilankykite savo mėgstamose svetainėse akimirksniu! Apsilankykite vienoje savo mėgstamų svetainių. Tuomet bakstelėkite meniu atidarymo mygtuką ir pasirinkite „Pridėti prie mėgstamų“.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Pabandyk apsilankyti vienoje mėgstamiausių svetainių!\n\nUžblokuosiu stebėjimo priemones, kad jos negalėtų tavęs šnipinėti. Jei įmanoma, atnaujinsiu tavo ryšio saugumą. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internetas gali būti bauginantis.\n\nNesijaudink! Ieškoti ir naršyti privačiai yra lengviau, nei manai.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Kadangi visuotinė privatumo kontrolė (VPK) yra naujas standartas, daugelis svetainių jo neatpažįsta, tačiau mes stengiamės užtikrinti, kad jis būtų priimtas visame pasaulyje.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Sužinoti daugiau";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Tačiau svetainės turi veikti tik remiantis signalu tiek, kiek taikoma pagal taikytiną teisę. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Jūsų duomenys neturi būti pardavinėjami. Svetainėje „DuckDuckGo“ su tuo sutinkame. Aktyvinkite „Visuotinės privatumo kontrolės (VPK)“ nustatymą ir pranešime svetainėms:\n\n• Nepardavinėti jūsų asmens duomenų.\n• Apriboti jūsų asmens duomenų dalijimąsi su kitomis įmonėmis.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nėra";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Rodyti visus skirtukus";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Sveiki atvykę į „DUCKDUCKGO“";
 
 /* Edit button */
 "navigation.title.edit" = "Redaguoti";

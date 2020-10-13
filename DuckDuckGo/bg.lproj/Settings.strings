@@ -1,3 +1,6 @@
+/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
+"0DQ-yq-UuT.text" = "Огнеустойчиви уебсайтове";
+
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Деактивирайте, за да предотвратите автоматично отваряне на връзки в други инсталирани приложения.";
 
@@ -9,9 +12,6 @@
 
 /* Class = "UILabel"; text = "Clear Tabs only"; ObjectID = "3WZ-Fi-HIH"; */
 "3WZ-Fi-HIH.text" = "Изчистване само на разделите";
-
-/* Class = "UILabel"; text = "On/Off"; ObjectID = "4uU-Ow-65B"; */
-"4uU-Ow-65B.text" = "Вкл./Изкл.";
 
 /* Class = "UILabel"; text = "App exit, inactive for 30min"; ObjectID = "5Yd-7i-bey"; */
 "5Yd-7i-bey.text" = "Изход от приложението, 30 минути без активност";
@@ -45,6 +45,9 @@
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Икона на приложението";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
+"cW7-OM-2oW.text" = "Глобален контрол на поверителността (GPC)";
 
 /* Class = "UILabel"; text = "App exit, inactive for 15min"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Изход от приложението, 15 минути без активност";
@@ -112,9 +115,6 @@
 /* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Все още няма незащитени сайтове";
 
-/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "iaT-wz-PnG"; */
-"iaT-wz-PnG.text" = "Огнеустойчиви уебсайтове";
-
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Икона";
 
@@ -139,6 +139,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Показване на клавиатура в";
 
+/* Class = "UINavigationItem"; title = "Global Privacy Control (GPC)"; ObjectID = "tWw-Lh-ZT1"; */
+"tWw-Lh-ZT1.title" = "Глобален контрол на поверителността (GPC)";
+
 /* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
 "U2M-6p-6nl.headerTitle" = "Действие";
 
@@ -147,6 +150,9 @@
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Премахване на всички огнеустойчиви уебсайтове";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
+"vPz-uO-6gB.text" = "Глобален контрол на поверителността (GPC)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.footerTitle" = "Определен е изход от приложението чрез плъзгане за затваряне на приложението, а липсата на активност е когато приложението е във фонов режим.";

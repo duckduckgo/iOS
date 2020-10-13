@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Plácnutí!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Upozornění! %1$@ je významná sledovací síť.\n\nJejich trackery číhají na přibližně %2$.0lf%% významných webů 😱, ale nedělejte si starosti!\n\nZablokujeme %1$@, aby vaši aktivitu na těchto webových stránkách neviděli.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Upozornění! Nedokážeme zabránit, aby %1$@ viděli vaši aktivitu na %2$@.\n\nAle procházejte s námi a budeme moci omezit, co o vás celkově %1$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Mám to";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Mám to";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Navštivte v mžiku své oblíbené stránky!\n\nPřejděte na stránky, které máte rádi. Pak klepněte na ikonu „⋯“ a zvolte *Přidat do oblíbených*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Navštivte v mžiku své oblíbené stránky! Navštivte jedny z vašich oblíbených stránek. Pak klepněte na tlačítko otevřené nabídky a zvolte Přidat do oblíbených.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Dále zkuste navštívit jednu z vašich oblíbených stránek!\n\nZablokujeme trackery, aby vás nemohli špehovat. Pokud to bude možné, upgradujeme také zabezpečení vašeho připojení. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet může být trochu strašidelný.\n\nNebojte se! Anonymní vyhledávání a procházení je jednodušší, než si myslíte.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Vzhledem k tomu, že Globální kontrola ochrany osobních údajů (GPC) je nový standard, většina webových stránek ho zatím nerozpozná, nicméně tvrdě pracujeme na tom, abychom zajistili, že bude akceptován po celém světě.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Více informací";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Webové stránky jsou nicméně povinny řešit podněty pouze v rozsahu, v jakém je k tomu donutí příslušné zákony. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vaše osobní údaje nesmí být na prodej. S tím ve společnosti DuckDuckGo souhlasíme. Aktivujte nastavení „Globální kontrola ochrany osobních údajů“ (GPC) a my upozorníme webové stránky na vaše preference:\n\n• Neprodávat vaše osobní údaje.\n• Omezit sdílení vašich osobních údajů s jinými společnosti.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím žádné záložky";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Zobrazit všechny karty";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Vítejte v DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Upravit";

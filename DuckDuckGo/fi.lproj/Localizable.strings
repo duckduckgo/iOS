@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Ylävitonen!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Huomio! %1$@ on merkittävä seurantaverkosto.\n\nHeidän seurantaohjelmansa väijyvät noin %2$.0lf%%:lla suosituimmista sivustoista! 😱 Mutta ei hätää!\n\nEstän %1$@-väijyjää näkemästä toimintaasi näillä sivustoilla.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Huomio! %1$@ näkee mitä teet sivustolla %2$@, enkä voi estää sitä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %1$@ saa tietää sinusta, estämällä heidän seurantansa monilla muilla sivustoilla.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Selvä";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Selvä";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Käy lempisivustoillasi hetkessä!\n\nSiirry lempisivustollesi. Napauta \"...\"-kuvaketta ja valitse *Lisää suosikkeihin*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Käy lempisivustoillasi hetkessä! Käy suosikkisivustoillasi. Napauta sitten valikon avauspainiketta ja valitse Lisää suosikkeihin.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Käy seuraavaksi jollain lempisivustoistasi.\n\nEstän jäljittäjät, jotta he eivät voi vakoilla sinua. Päivitän myös yhteytesi suojauksen, jos se on mahdollista. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet voi olla pelottava paikka.<br/><br/>Mutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Koska Global Privacy Control (GPC) on uusi standardi, useimmat verkkosivustot eivät vielä tunnista sitä, mutta teemme parhaamme, että standardi hyväksyttäisiin kaikkialla maailmassa.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Lue lisää";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Verkkosivujen täytyy kuitenkin noudattaa kehotusta vain siinä laajuudessa kuin sovellettavat lait määräävät. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Tietojesi ei pitäisi olla myynnissä. DuckDuckGo on samaa mieltä. Ota \"Global Privacy Control\" (GPC) -asetus käyttöön, niin me kerromme verkkosivustoille, että:\n\n• ne eivät voi myydä tietojasi.\n• niiden täytyy rajoittaa henkilötietojesi jakamista muille yrityksille.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ei vielä kirjanmerkkejä";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Näytä kaikki välilehdet";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Tervetuloa DuckDuckGo-sovellukseen!";
 
 /* Edit button */
 "navigation.title.edit" = "Muokkaa";

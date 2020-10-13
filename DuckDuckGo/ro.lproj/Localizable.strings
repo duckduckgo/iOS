@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Bate Palma!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Atenție! %1$@ este o rețea semnificativă de urmărire.\n\nInstrumentele lor de urmărire lor spionează aproximativ %2$.0lf%% din site-urile de top, 😱 dar nu îți face griji!\n\nVoi bloca %1$@ să nu vadă activitatea ta pe acele site-uri.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Atenție! Nu pot împiedica %1$@ să îți vadă activitatea pe %2$@.\n\nDar navighează cu mine și pot reduce ceea ce %1$@ cunoaște despre tine în general, blocând instrumentele lor de urmărire pe o mulțime de alte site-uri.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Am înțeles";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Am înțeles";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Vizitează site-urile preferate într-o clipă!Accesează un site care îți place. Apoi atinge pictograma „⋯” și selectează *Adaugă la preferințe*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Vizitează site-urile preferate într-o clipă! Vizitează unul dintre site-urile preferate. Apoi atinge butonul meniului de deschidere și selectează Adaugă la preferințe.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Apoi, încearcă să vizitezi unul din site-urile tale preferate!\n\nVoi bloca instrumentele de urmărire ca să nu te mai spioneze. Voi îmbunătăți, de asemenea, securitatea conexiunii tale, dacă este posibil. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internetul poate fi cam terifiant.\n\nNu te îngrijora! Căutarea și navigarea în mod confidențial sunt mai ușoare decât crezi.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Întrucât Global Privacy Control (GPC) este un nou standard, majoritatea site-urilor web nu îl vor recunoaște încă, dar lucrăm din greu pentru a ne asigura că acesta va fi acceptat în întreaga lume.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Află mai multe";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Cu toate acestea, site-urile web sunt obligate să acționeze la semnal numai în măsura în care legile aplicabile le obligă să facă acest lucru. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Datele tale nu ar trebui să fie de vânzare. La DuckDuckGo, suntem de acord cu acest lucru. Activează setarea „Global Privacy Control” (GPC) și vom semnaliza site-urilor web preferința ta de a:\n\n• Nu vinde datele tale personale.\n• Limita distribuirea datelor tale personale către alte companii.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Încă nu există marcaje";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Afișează toate filele";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Bine ai venit la DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Editați";

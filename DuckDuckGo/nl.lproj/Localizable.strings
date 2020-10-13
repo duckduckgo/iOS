@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "High Five!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Opgelet! %1$@ is een groot trackernetwerk.\n\nHun trackers liggen op de loer op ongeveer %2$.0lf%% van de beste sites 😱 maar maak je geen zorgen!\n\nIk blokkeer %1$@, zodat jouw activiteit op die websites niet zichtbaar is.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Opgelet! Ik kan niet voorkomen dat %1$@ jouw activiteit op %2$@ kan zien.\n\nMaar als je met mij surft, kan ik ervoor zorgen dat %1$@ minder over je te weten komt door hun trackers op veel andere sites te blokkeren.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Ik snap het";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Ik snap het";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Bezoek je favoriete websites in een oogwenk!\n\nGa naar een van je favoriete sites, tik op het pictogram '⋯' en selecteer *Toevoegen aan favorieten*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Bezoek je favoriete websites in een oogwenk!\n\n Ga naar een van je favoriete sites, tik op de knop om het menu te openen en selecteer Toevoegen aan favorieten.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Probeer vervolgens een van je favoriete sites te bezoeken!\n\nIk blokkeer trackers zodat ze je niet kunnen bespioneren. Indien mogelijk upgrade ik ook de beveiliging van je verbinding. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet kan best eng zijn.\n\nMaak je geen zorgen! Privé zoeken en browsen is eenvoudiger dan je denkt.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Omdat Global Privacy Control (GPC) een nieuwe standaard is, erkennen de meeste websites deze nog niet. We werken er hard aan om ervoor te zorgen dat GPC wereldwijd wordt erkend.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Meer informatie";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Websites zijn alleen verplicht om op dit signaal te reageren voor zover de toepasselijke wetgeving dit vereist. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Je gegevens zouden niet te koop mogen staan. Bij DuckDuckGo zijn we het daarmee eens. Activeer de instelling 'Global Privacy Control' (GPC) en we laten websites weten om:\n\n • Je persoonsgegevens niet te verkopen.\n• Het delen van je persoonsgegevens met andere bedrijven te beperken.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Alle tabbladen weergeven";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "WELKOM BIJ DUCKDUCKGO!";
 
 /* Edit button */
 "navigation.title.edit" = "Bewerken";

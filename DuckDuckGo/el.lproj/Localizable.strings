@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Κόλλα πέντε!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Προσοχή! Το %1$@ αποτελεί σημαντικό δίκτυο παρακολούθησης.\n\nΟι εφαρμογές παρακολούθησης που διαθέτουν παραμονεύουν σε περίπου %2$.0lf%% κορυφαίους ιστότοπους😱 αλλά μην ανησυχείτε!\n\nΘα μπλοκάρω το %1$@ ώστε να μην μπορεί να βλέπει τη δραστηριότητά σας σε αυτούς τους ιστότοπους.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Προσοχή! Δεν μπορώ να εμποδίσω το δίκτυο %1$@ από το να δει τη δραστηριότητά σας στο %2$@.\n\nΑλλά περιηγηθείτε μαζί μου και θα μπορώ να περιορίσω το τι θα γνωρίζει το δίκτυο %1$@ για σας συνολικά, αποκλείοντας τις εφαρμογές παρακολούθησης σε πλήθος άλλων ιστότοπων.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Το έπιασα";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Το έπιασα";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\nΜεταβείτε σε έναν ιστότοπο που αγαπάτε. Έπειτα, πατήστε το εικονίδιο \"⋯\" και επιλέξτε *Προσθήκη στα αγαπημένα*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\n Επισκεφθείτε έναν από τους αγαπημένους σας ιστότοπους. Έπειτα, πατήστε το κουμπί Άνοιγμα μενού και επιλέξτε Προσθήκη στα αγαπημένα.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Στη συνέχεια, δοκιμάστε να επισκεφτείτε έναν από τους αγαπημένους σας ιστότοπους!\n\nΘα εμποδίσω τις εφαρμογές παρακολούθησης ώστε να μην μπορούν να σας κατασκοπεύουν. Επίσης, θα αναβαθμίσω την ασφάλεια της σύνδεσής σας, εάν είναι εφικτό. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Το Διαδίκτυο μπορεί να είναι κάπως ανατριχιαστικό.\n\nΜην ανησυχείτε! Το να πραγματοποιείτε αναζήτηση και περιήγηση ιδιωτικά είναι πιο εύκολο απ' όσο νομίζετε.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Καθώς ο Παγκόσμιος έλεγχος απορρήτου (GPC) αποτελεί νέο πρότυπο, οι περισσότεροι ιστότοποι δεν θα το αναγνωρίζουν ακόμη, αλλά εργαζόμαστε σκληρά ώστε να εξασφαλίσουμε ότι θα γίνει αποδεκτό παγκοσμίως.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Μάθετε περισσότερα";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Ωστόσο, οι ιστότοποι είναι υποχρεωμένοι να ενεργούν μόνο στον βαθμό που τους υποχρεώνουν οι ισχύοντες νόμοι. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Τα δεδομένα σας δεν πρέπει να πωλούνται. Στην DuckDuckGo συμφωνούμε. Ενεργοποιήστε τη ρύθμιση \"Παγκόσμιος έλεγχος απορρήτου\" (GPC) και θα ενημερώσουμε τους ιστότοπους για την προτίμησή σας:\n\n•.Να μην πωλούν τα προσωπικά δεδομένα σας.\n• Να περιορίσουν την κοινοποίηση των προσωπικών δεδομένων σας σε άλλες εταιρείες.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν υπάρχουν ακόμα σελιδοδείκτες";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Προβολή όλων των καρτελών";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Καλώς ορίσατε στον DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";

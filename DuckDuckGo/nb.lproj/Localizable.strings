@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "High Five!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Pass opp! %1$@ er et større sporingsnettverk.\n\nSporerne deres ligger på lur på ca. %2$.0lf%% av de ledende nettstedene 😱, men ikke vær redd!\n\nJeg blokkerer %1$@ slik at aktiviteten din på disse nettstedene ikke er synlig.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Pass opp! Jeg klarer ikke å forhindre at %1$@ ser aktiviteten din på %2$@.\n\nMen surf med meg, så kan jeg redusere informasjonen %1$@ får om deg. Det gjør jeg ved å blokkere vedkommendes sporingsanordninger på mange andre nettsteder.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Den er grei";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Den er grei";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Visit your favorite sites in a flash!\n\nGo to a site you love. Then tap the \"⋯\" icon and select *Add to Favorites*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Visit your favorite sites in a flash! Visit one of your favorite sites. Then tap the open menu button and select Add to Favorites.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Deretter kan du besøke et av favorittnettstedene dine!\n\nJeg blokkerer sporingsforsøk slik at de ikke kan spionere på deg. Hvis det er mulig, oppgraderer jeg også sikkerheten på forbindelsen din. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internettet kan være ganske skummelt.\n\nMen ikke vær redd! Det er enklere enn du tror å søke og surfe privat.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Since Global Privacy Control (GPC) is a new standard, most websites won't recognize it yet, but we're working hard to ensure it becomes accepted worldwide.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Finn ut mer";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " However, websites are only required to act on the signal to the extent applicable laws compel them to do so. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the \"Global Privacy Control\" (GPC) setting and we'll signal to websites your preference to:\n\n• Not sell your personal data.\n• Limit sharing of your personal data to other companies.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bokmerker ennå";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Vis alle faner";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Velkommen til DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Rediger";

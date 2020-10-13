@@ -13,6 +13,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Etsi";
 
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Lisää suosikkeja";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Siirry nopeasti suosikkisivustoillesi.";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Hae DuckDuckGo:sta";
 

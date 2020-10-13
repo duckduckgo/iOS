@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Batti cinque!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Attenzione! %1$@ è un'importante rete di tracciamento.\n\nI suoi sistemi di tracciamento si annidano in circa %2$.0lf%% dei siti più popolari 😱, ma non devi preoccuparti!\n\nImpedirò a %1$@ di spiare la tua attività in quei siti.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Attenzione! Non posso impedire a %1$@ di visualizzare la tua attività su %2$@.\n\nTuttavia, se navighi con me posso ridurre la quantità di informazioni che %2$@ conosce in generale su di te, bloccando i suoi sistemi di tracciamento su molti altri siti.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Fatto";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Fatto";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Visita i tuoi siti preferiti in un batter d'occhio!\n\nVai su un sito che ti piace. Poi tocca l'icona \"⋯\" e seleziona *Aggiungi ai preferiti*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Visita i tuoi siti preferiti in un batter d'occhio!\n\n Visita uno dei tuoi siti preferiti. Poi tocca il pulsante Apri menu e seleziona Aggiungi ai Preferiti.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "In seguito, prova a visitare uno dei tuoi siti preferiti!\n\nBloccherò i sistemi di tracciamento in modo che non possano spiarti e aggiornerò anche la sicurezza della tua connessione, se possibile. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet può essere un po' inquietante.\n\nNon preoccuparti! Effettuare ricerche e navigare in modo privato è più facile di quanto pensi.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Dal momento che il Global Privacy Control (GPC) rappresenta un nuovo standard, la maggior parte dei siti Web non lo riconosce ancora, ma ci stiamo impegnando al massimo per assicurarci che venga accettato in tutto il mondo.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Ulteriori informazioni";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Tuttavia, i siti Web sono tenuti a rispondere alla segnalazione esclusivamente nei limiti delle leggi pertinenti che li obbligano ad agire in tal senso. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "I tuoi dati non dovrebbero mai essere messi in vendita. Noi di DuckDuckGo ne siamo convinti. Attiva l'impostazione \"Global Privacy Control\" (GPC) e segnaleremo ai siti Web di:\n\n• Non vendere i tuoi dati personali.\n• Limitare la condivisione dei tuoi dati personali con altre aziende.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ancora nessun segnalibro";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Mostra tutte le schede";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Benvenuto su DuckDuckGo";
 
 /* Edit button */
 "navigation.title.edit" = "Modifica";

@@ -187,8 +187,8 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Viska viis!";
 
-/* First paramter is a string - domain name, second is a number % */
-"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! %1$@ on suur jälgimisvõrgustik.\n\nNende jälitajad jälgivad sind ligi %2$.0lf%% populaarsematel saitidel 😱, aga ära muretse!\n\nHoolitsen selle eest, et %1$@ sind nendel saitidel ei jälgiks.";
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! Ma ei saa takistada %1$@ nägemast sinu tegevust %2$@.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälitajad paljudel teistel lehtedel.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Sain aru";
@@ -205,6 +205,12 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Sain aru";
 
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Külasta oma lemmiksaite hetkega!\n\nMine saidile, mis sulle meeldib. Seejärel puuduta ikooni „⋯“ ja vali *Lisa lemmikutesse*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Külasta oma lemmiksaite hetkega! Külasta ühte oma lemmiksaitidest. Seejärel puuduta menüünuppu ja vali Lisa lemmikutesse.";
+
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Järgmisena proovi külastada ühte oma lemmiksaitidest!\n\nMina aga blokeerin jälgijaid, et nad ei saaks sind luurata. Võimaluse korral parandan ka sinu ühenduse turvalisust. 🔒";
 
@@ -213,6 +219,18 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet võib olla üsna jube.\n\nÄra muretse! Privaatselt otsimine ja sirvimine on lihtsam kui arvad.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Kuna ülemaailmne privaatsuskontroll (GPC) on uus standard, ei tunne enamik veebisaite seda veel ära, kuid me töötame selle nimel, et seda aktsepteeritaks üleilmselt.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Loe edasi";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Kuid veebisaidid peavad reageerima signaalile ainult niivõrd, kuivõrd kehtivad seadused neid selleks sunnivad. ";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Sinu andmeid ei tohiks müüa. DuckDuckGo nõustub sellega. Aktiveeri seadistus „Üleilmne privaatsuskontroll“ (GPC) ja me anname veebisaitidele märku sinu eelistustest: \n\n • Mitte müüa sinu isikuandmeid. \n• Piirata sinu isikuandmete jagamist teiste ettevõtetega.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Järjehoidjaid pole veel";
@@ -498,6 +516,9 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Kuva kõik vahekaardid";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Tere tulemast DuckDuckGo kasutajaks!";
 
 /* Edit button */
 "navigation.title.edit" = "Redigeeri";

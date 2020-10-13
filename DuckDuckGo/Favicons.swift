@@ -21,6 +21,7 @@ import Kingfisher
 import UIKit
 import os
 
+// swiftlint:disable type_body_length
 public class Favicons {
 
     public struct Constants {
@@ -315,7 +316,7 @@ public class Favicons {
 
         let group = DispatchGroup()
         group.enter()
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
             if let data = data {
                 image = UIImage(data: data)
             }
@@ -375,3 +376,4 @@ public class Favicons {
     }
 
 }
+// swiftlint:enable type_body_length

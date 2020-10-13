@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import WebKit
 import os.log
@@ -50,7 +49,8 @@ public class ContentBlockerRulesManager {
         }
         
         if let store = WKContentRuleListStore.default() {
-            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: String(data: data, encoding: .utf8)!) { [weak self] ruleList, error in
+            let ruleList = String(data: data, encoding: .utf8)!
+            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
                 self?.blockingRules = ruleList
                 completion?(ruleList)
                 if let error = error {

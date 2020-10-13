@@ -1573,25 +1573,32 @@ Cg
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
-                                                    <rect key="frame" x="20" y="11" width="305" height="22"/>
+                                                    <rect key="frame" x="20" y="10" width="305" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="wCS-Ck-arm"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mpn-np-GLZ">
                                                     <rect key="frame" x="345" y="6.6666666666666679" width="51" height="31.000000000000004"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="tc4-xw-WR4"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="onDoNotSellValueChanged:" destination="fV3-86-QQj" eventType="valueChanged" id="roN-tr-usp"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="top" secondItem="cxv-L1-1dA" secondAttribute="top" constant="10" id="0lU-jf-bIP"/>
                                                 <constraint firstItem="mpn-np-GLZ" firstAttribute="leading" secondItem="cW7-OM-2oW" secondAttribute="trailing" constant="20" id="PI4-JL-QD1"/>
-                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="top" secondItem="cxv-L1-1dA" secondAttribute="topMargin" id="ULD-OO-mZh"/>
                                                 <constraint firstItem="cW7-OM-2oW" firstAttribute="leading" secondItem="cxv-L1-1dA" secondAttribute="leadingMargin" id="a0I-7f-NHK"/>
-                                                <constraint firstAttribute="trailing" secondItem="mpn-np-GLZ" secondAttribute="trailing" constant="20" symbolic="YES" id="dAf-kX-71u"/>
-                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="centerY" secondItem="cxv-L1-1dA" secondAttribute="centerY" id="mV1-al-sPF"/>
-                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="centerY" secondItem="mpn-np-GLZ" secondAttribute="centerY" id="wQD-3v-mXl"/>
+                                                <constraint firstAttribute="bottom" secondItem="cW7-OM-2oW" secondAttribute="bottom" constant="10" id="d51-ez-Kvg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mpn-np-GLZ" secondAttribute="trailing" id="dAf-kX-71u"/>
+                                                <constraint firstItem="mpn-np-GLZ" firstAttribute="centerY" secondItem="cxv-L1-1dA" secondAttribute="centerY" id="rc4-ij-mRb"/>
+                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="centerY" secondItem="cxv-L1-1dA" secondAttribute="centerY" id="sGR-3C-6A4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

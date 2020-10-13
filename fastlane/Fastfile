@@ -4,11 +4,11 @@ default_platform :ios
 
 lane :release do 
 
-  # gym(
-  #   export_method: "app-store",
-  #   scheme: "DuckDuckGo",
-  #   export_options: "appStoreExportOptions.plist"
-  # )
+  gym(
+    export_method: "app-store",
+    scheme: "DuckDuckGo",
+    export_options: "appStoreExportOptions.plist"
+  )
 
   deliver(
     submit_for_review: false,

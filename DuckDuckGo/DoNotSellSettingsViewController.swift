@@ -39,7 +39,6 @@ class DoNotSellSettingsViewController: UITableViewController {
         
         doNotSellToggle.isOn = appSettings.sendDoNotSell
         
-        infoTextView.text = UserText.doNotSellInfoText
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
         infoTextView.attributedText = NSAttributedString(string: UserText.doNotSellInfoText,

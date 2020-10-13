@@ -67,6 +67,9 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard !view.isHidden else { return }
+        
+        daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
             self.transitionFromOnboarding()
         }

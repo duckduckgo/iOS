@@ -258,35 +258,45 @@
                                             <segue destination="fV3-86-QQj" kind="show" id="XDJ-yY-6yf"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="0DQ-yq-UuT" detailTextLabel="PNf-tz-lTg" style="IBUITableViewCellStyleValue1" id="EqN-m3-s4f">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="EqN-m3-s4f">
                                         <rect key="frame" x="0.0" y="473.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EqN-m3-s4f" id="R54-xq-W5V">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0DQ-yq-UuT">
-                                                    <rect key="frame" x="20" y="14" width="134.66666666666666" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwo-Bf-4mJ">
+                                                    <rect key="frame" x="20" y="10" width="287.33333333333331" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lhy-SS-UWF"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On/Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PNf-tz-lTg">
-                                                    <rect key="frame" x="327.33333333333337" y="14" width="47.333333333333336" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="On/Off" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="1SP-ku-vDO" userLabel="On/Off">
+                                                    <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1SP-ku-vDO" firstAttribute="centerY" secondItem="R54-xq-W5V" secondAttribute="centerY" id="Pkw-EZ-Fb4"/>
+                                                <constraint firstItem="hwo-Bf-4mJ" firstAttribute="centerY" secondItem="R54-xq-W5V" secondAttribute="centerY" id="jW4-Uh-n4y"/>
+                                                <constraint firstItem="hwo-Bf-4mJ" firstAttribute="leading" secondItem="R54-xq-W5V" secondAttribute="leadingMargin" id="lsk-Nh-Zxk"/>
+                                                <constraint firstItem="1SP-ku-vDO" firstAttribute="leading" secondItem="hwo-Bf-4mJ" secondAttribute="trailing" constant="20" id="neL-my-cTv"/>
+                                                <constraint firstAttribute="bottom" secondItem="hwo-Bf-4mJ" secondAttribute="bottom" constant="10" id="qvQ-zK-AhT"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1SP-ku-vDO" secondAttribute="trailing" id="uyP-c0-Q9T"/>
+                                                <constraint firstItem="hwo-Bf-4mJ" firstAttribute="top" secondItem="R54-xq-W5V" secondAttribute="top" constant="10" id="yns-Lz-rR2"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="Jzw-Jd-J97" kind="show" id="WYy-fS-w08"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" style="IBUITableViewCellStyleValue1" id="z07-QI-waz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="z07-QI-waz">
                                         <rect key="frame" x="0.0" y="517.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z07-QI-waz" id="1HL-Ha-Yz0">
@@ -302,7 +312,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="On/Off" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZiK-vA-FAa" userLabel="On/Off">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="On/Off" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZiK-vA-FAa" userLabel="On/Off">
                                                     <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -585,7 +595,7 @@
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
-                        <outlet property="rememberLoginsAccessoryText" destination="PNf-tz-lTg" id="7Ug-II-sOB"/>
+                        <outlet property="rememberLoginsAccessoryText" destination="1SP-ku-vDO" id="0Ru-gZ-Ump"/>
                         <outlet property="rememberLoginsCell" destination="EqN-m3-s4f" id="FAK-d0-jpX"/>
                         <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
                         <outlet property="versionCell" destination="TYF-GX-a3j" id="KDT-RF-urU"/>
@@ -602,15 +612,15 @@
                         <outletCollection property="labels" destination="a1T-ui-4Nw" collectionClass="NSMutableArray" id="pfw-Kn-kET"/>
                         <outletCollection property="labels" destination="U8i-cQ-5WW" collectionClass="NSMutableArray" id="Pep-YK-P4v"/>
                         <outletCollection property="labels" destination="cKo-er-HNj" collectionClass="NSMutableArray" id="TyT-Oa-igp"/>
-                        <outletCollection property="labels" destination="0DQ-yq-UuT" collectionClass="NSMutableArray" id="BpL-OW-QAw"/>
                         <outletCollection property="labels" destination="HLr-R8-xxF" collectionClass="NSMutableArray" id="zei-0d-VBl"/>
                         <outletCollection property="labels" destination="ekF-SJ-PAQ" collectionClass="NSMutableArray" id="se8-tg-Bxf"/>
                         <outletCollection property="labels" destination="dBZ-yq-FYj" collectionClass="NSMutableArray" id="crg-Da-Zbb"/>
-                        <outletCollection property="accessoryLabels" destination="PNf-tz-lTg" collectionClass="NSMutableArray" id="hhm-GA-xST"/>
                         <outletCollection property="accessoryLabels" destination="ZiK-vA-FAa" collectionClass="NSMutableArray" id="jq2-al-pso"/>
                         <outletCollection property="labels" destination="xof-5k-PkI" collectionClass="NSMutableArray" id="aGo-28-l7f"/>
                         <outletCollection property="accessoryLabels" destination="3cF-XE-ZHg" collectionClass="NSMutableArray" id="4hj-89-pdl"/>
                         <outletCollection property="labels" destination="vPz-uO-6gB" collectionClass="NSMutableArray" id="Veb-Tp-cmj"/>
+                        <outletCollection property="labels" destination="hwo-Bf-4mJ" collectionClass="NSMutableArray" id="p3V-EA-tVx"/>
+                        <outletCollection property="accessoryLabels" destination="1SP-ku-vDO" collectionClass="NSMutableArray" id="Q2K-in-SPo"/>
                         <segue destination="fzf-7H-o48" kind="show" identifier="Debug" id="o3U-Oe-eLc"/>
                     </connections>
                 </tableViewController>

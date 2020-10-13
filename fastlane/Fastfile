@@ -5,14 +5,13 @@ default_platform :ios
 lane :release do 
 
   gym(
-    export_method: "app-store",
     scheme: "DuckDuckGo",
-    export_options: "appStoreExportOptions.plist"
+    export_method: "app-store"
   )
 
   deliver(
     submit_for_review: false,
-    automatic_release: false, 
+    automatic_release: true, 
     phased_release: true,
     username: "jenkins-itunes@duckduckgo.com",
     force: true,
@@ -24,3 +23,4 @@ lane :release do
   )
 
 end
+

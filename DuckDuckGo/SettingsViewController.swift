@@ -177,7 +177,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureDoNotSell() {
-        doNotSellAccessoryText.text = appSettings.sendDoNotSell ? "Enabled" : "Disabled"
+        doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
     }
      
     private func configureRememberLogins() {

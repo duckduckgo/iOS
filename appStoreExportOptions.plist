@@ -12,22 +12,22 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.duckduckgo.mobile.ios</key>
-        <string>89f1c855-ea5b-4269-ab25-01b485419e11</string>
+        <string>AppStore-App</string>
 
         <key>com.duckduckgo.mobile.ios.ShareExtension</key>
-        <string>b15e0607-2c1f-4a02-80a3-e7610fedfaf7</string>
+        <string>AppStore-Share</string>
 
         <key>com.duckduckgo.mobile.ios.BookmarksTodayExtension</key>
-        <string>1ec64c2e-96f4-4e1c-a836-931236c24d4c</string>
+        <string>AppStore-Bookmarks</string>
 
         <key>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</key>
-        <string>d8f857a8-7af9-4385-b694-2aa029c2dd2e</string>
+        <string>AppStore-QuickActions</string>
 
         <key>com.duckduckgo.mobile.ios.OpenAction2</key>
-        <string>dce2cb9b-6f74-49c7-9b89-2c11120b5454</string>
+        <string>AppStore-OpenAction</string>
 
         <key>com.duckduckgo.mobile.ios.Widgets</key>
-        <string>8a5a32bf-030f-4cf3-86fb-67c174b561a8</string>
+        <string>AppStore-Widgets</string>
     </dict>
 
 </dict>

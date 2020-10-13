@@ -29,6 +29,14 @@ class OnboardingWidgetsDetailsViewController: UIViewController {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        
+        if  let image = UIImage(named: "OnboardingWidgetInstructionsLabelImage"),
+            let string = secondInstructionsLabel.text?.attributedString(
+                withPlaceholder: "%@",
+                replacedByImage: image,
+                verticalOffset: -5.0) {
+            secondInstructionsLabel.attributedText = string
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

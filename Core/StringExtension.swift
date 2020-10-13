@@ -115,4 +115,31 @@ extension String {
         return ""
     }
 
+    public func attributedString(withPlaceholder placeholder: String,
+                                 replacedByImage image: UIImage,
+                                 verticalOffset: CGFloat = 0.0) -> NSAttributedString? {
+        let components = self.components(separatedBy: placeholder)
+        guard components.count > 1 else { return nil }
+        
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        attachment.bounds = CGRect(x: 0, y: verticalOffset, width: image.size.width, height: image.size.height)
+        let attachmentString = NSAttributedString(attachment: attachment)
+        
+        let padding: CGFloat = 3.0
+        let paddingAttachment = NSTextAttachment()
+        paddingAttachment.bounds = CGRect(x: 0, y: 0, width: padding, height: 0)
+        let startPadding = NSAttributedString(attachment: paddingAttachment)
+        let endPadding = NSAttributedString(attachment: paddingAttachment)
+        
+        let firstString = NSMutableAttributedString(string: components[0])
+        for component in components.dropFirst() {
+            let endString = NSMutableAttributedString(string: component)
+            firstString.append(startPadding)
+            firstString.append(attachmentString)
+            firstString.append(endPadding)
+            firstString.append(endString)
+        }
+        return firstString
+    }
 }

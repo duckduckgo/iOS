@@ -5,7 +5,6 @@ default_platform :ios
 lane :release do 
 
   gym(
-    skip_codesigning: true,
     scheme: "DuckDuckGo",
     export_options: "appStoreExportOptions.plist"
   )
@@ -24,4 +23,3 @@ lane :release do
   )
 
 end
-

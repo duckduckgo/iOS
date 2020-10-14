@@ -25,8 +25,6 @@ import OHHTTPStubsSwift
 
 class HTTPSUpgradeTests: XCTestCase {
     
-    let host = AppUrls().httpsLookupServiceUrl(forPartialHost: "").host!
-
     override func tearDown() {
         HTTPStubs.removeAllStubs()
         HTTPStubs.allStubs()
@@ -35,7 +33,7 @@ class HTTPSUpgradeTests: XCTestCase {
 
     func testWhenURLIsHttpsThenShouldUpgradeResultIsFalse() {
         let expect = expectation(description: "Https url should not be upgraded")
-        let url = URL(string: "https://locallyUpgradable.url")!
+        let url = URL(string: "https://upgradable.url")!
         
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()
@@ -62,26 +60,9 @@ class HTTPSUpgradeTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
-    func testWhenURLIsHttpAndCanBeUpgradedLocallyThenShouldUpgradeIsTrue() {
-        let expect = expectation(description: "Http url in local list should be upgraded")
-        let url = URL(string: "http://locallyUpgradable.url")!
-
-        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
-        testee.loadData()
-        testee.isUgradeable(url: url) { result in
-            XCTAssertTrue(result)
-            expect.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-
-    func testWhenURLIsHttpAndCannotBeUpgradedLocallyButCanBeUpgradedByServiceThenShouldUpgradeIsTrue() {
-        let expect = expectation(description: "Http url not in local but in service list should be upgraded")
-        let url = URL(string: "http://service.url")!
-        stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.serviceResponseJson(), status: 200, headers: nil)
-        }
+    func testWhenURLIsHttpAndCanBeUpgradedThenShouldUpgradeIsTrue() {
+        let expect = expectation(description: "Http url in list and should be upgraded")
+        let url = URL(string: "http://upgradable.url")!
 
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()
@@ -93,64 +74,12 @@ class HTTPSUpgradeTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
-    func testWhenURLIsHttpAndCannotBeUpgradedLocallyAndCannotBeUpgradedByServiceThenShouldUpgradeIsFalse() {
-        let expect = expectation(description: "Http url not in local or service list should not be upgraded")
+    func testWhenURLIsHttpAndCannotBeUpgradedThenShouldUpgradeIsFalse() {
+        let expect = expectation(description: "Http url not in list should not be upgraded")
         let url = URL(string: "http://unknown.url")!
-        stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.serviceResponseJson(), status: 200, headers: nil)
-        }
 
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()
-        testee.isUgradeable(url: url) { result in
-            XCTAssertFalse(result)
-            expect.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-    
-    func testWhenURLIsHttpAndCannotBeUpgradedLocallyAndServiceRequestFailsThenShouldUpgradeIsFalse() {
-        let expect = expectation(description: "When service request fails http url should not be upgraded")
-        let url = URL(string: "http://service.url")!
-        stub(condition: isHost(host)) { _ in
-            return HTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
-        }
-        
-        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
-        testee.loadData()
-        testee.isUgradeable(url: url) { result in
-            XCTAssertFalse(result)
-            expect.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-        
-    func testWhenBloomFilterIsNotLoadedAndUrlIsInServiceListThenShouldUpgradeIsTrue() {
-        let expect = expectation(description: "Http url in service list should upgrade")
-        let url = URL(string: "http://service.url")!
-        stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.serviceResponseJson(), status: 200, headers: nil)
-        }
-        
-        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
-        testee.isUgradeable(url: url) { result in
-            XCTAssertTrue(result)
-            expect.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-    
-    func testWhenBloomFilterIsNotLoadedAndUrlNotInServiceListThenShouldUpgradeIsFalse() {
-        let expect = expectation(description: "Http url that cannot be checked locally and not in service list should not upgrade")
-        let url = URL(string: "https://locallyUpgradable.url")!
-        stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.serviceResponseJson(), status: 200, headers: nil)
-        }
-        
-        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.isUgradeable(url: url) { result in
             XCTAssertFalse(result)
             expect.fulfill()
@@ -161,13 +90,9 @@ class HTTPSUpgradeTests: XCTestCase {
     
     private func bloomFilter() -> BloomFilterWrapper {
         let filter = BloomFilterWrapper(totalItems: Int32(1000), errorRate: 0.0001)!
-        filter.add("locallyUpgradable.url")
+        filter.add("upgradable.url")
         filter.add("excluded.url")
         return filter
-    }
-    
-    func serviceResponseJson() -> String {
-        return OHPathForFile("MockFiles/https_service.json", type(of: self))!
     }
 }
 
@@ -191,8 +116,8 @@ private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
         return true
     }
     
-    func shouldUpgradeDomain(_ domain: String) -> Bool {
-        return domain != "excluded.url"
+    func shouldExcludeDomain(_ domain: String) -> Bool {
+        return domain == "excluded.url"
     }
     
     func persistExcludedDomains(_ domains: [String]) -> Bool {

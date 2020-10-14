@@ -110,7 +110,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 
         alertController.addAction(title: UserText.daxDialogHideButton, style: .default) {
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
-            DaxDialogs().dismiss()
+            DaxDialogs.shared.dismiss()
         }
         alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel)
         present(alertController, animated: true)

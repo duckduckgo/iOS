@@ -56,8 +56,9 @@ class TabViewController: UIViewController {
     
     private let instrumentation = TabInstrumentation()
 
+    var isLinkPreview = false
+    
     var openedByPage = false
-    var daxDialogsDisabled = false
     weak var openingTab: TabViewController? {
         didSet {
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -161,6 +162,7 @@ class TabViewController: UIViewController {
     private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
+    private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var debugScript = DebugUserScript()
     
     private var generalScripts: [UserScript] = []
@@ -195,6 +197,7 @@ class TabViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         resetNavigationBar()
+        showMenuHighlighterIfNeeded()
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -206,6 +209,20 @@ class TabViewController: UIViewController {
         return activities
     }
 
+    func showMenuHighlighterIfNeeded() {
+        guard DaxDialogs.shared.isAddFavoriteFlow,
+              !isError else { return }
+
+        guard let menuButton = chromeDelegate?.omniBar.menuButton,
+              let window = view.window else { return }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            ViewHighlighter.hideAll()
+            ViewHighlighter.showIn(window, focussedOnView: menuButton)
+        }
+
+    }
+
     func initUserScripts() {
         
         generalScripts = [
@@ -214,7 +231,8 @@ class TabViewController: UIViewController {
             navigatorPatchScript,
             contentBlockerScript,
             contentBlockerRulesScript,
-            faviconScript
+            faviconScript,
+            fullScreenVideoScript
         ]
         
         ddgScripts = [
@@ -256,7 +274,7 @@ class TabViewController: UIViewController {
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
-    
+
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
@@ -324,7 +342,9 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
-        self.url = url
+        if !url.isBookmarklet() {
+            self.url = url
+        }
         lastError = nil
         updateContentMode()
         load(urlRequest: URLRequest(url: url))
@@ -572,6 +592,7 @@ class TabViewController: UIViewController {
     
     @objc func onContentBlockerConfigurationChanged() {
         // Recompile and add the content rules list
+
         ContentBlockerRulesManager.shared.compileRules { [weak self] rulesList in
             guard let self = self else { return }
             if let rulesList = rulesList {
@@ -650,6 +671,7 @@ class TabViewController: UIViewController {
         guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = buildBrowsingMenu()
         present(controller: alert, fromView: button)
+        DaxDialogs.shared.resumeRegularFlow()
     }
     
     private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
@@ -880,14 +902,20 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
-     
+
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
-    
+
     private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+        guard !isLinkPreview else { return }
+
+        if DaxDialogs.shared.isAddFavoriteFlow {
+            showMenuHighlighterIfNeeded()
+            return
+        }
+
         guard let siteRating = self.siteRating,
-            !daxDialogsDisabled,
-            let spec = DaxDialogs().nextBrowsingMessage(siteRating: siteRating) else {
+            let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return
         }
@@ -976,15 +1004,12 @@ extension TabViewController: WKNavigationDelegate {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-                load(urlRequest: request)
                 return request
             }
         } else {
             // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields,
-               let _ = headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) {
+            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
                 request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-                load(urlRequest: request)
                 return request
             }
         }
@@ -995,8 +1020,11 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        if navigationAction.isTargetingMainFrame(), let request = requestForDoNotSell(basedOn: navigationAction.request) {
+
+        if navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
+           navigationAction.navigationType != .backForward,
+           let request = requestForDoNotSell(basedOn: navigationAction.request) {
             decisionHandler(.cancel)
             load(urlRequest: request)
             return
@@ -1047,6 +1075,15 @@ extension TabViewController: WKNavigationDelegate {
         
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
+            return
+        }
+
+        if url.isBookmarklet() && allowPolicy == .allow {
+            completion(.cancel)
+
+            if let js = url.toDecodedBookmarklet() {
+                webView.evaluateJavaScript(js)
+            }
             return
         }
         
@@ -1145,6 +1182,7 @@ extension TabViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
+        ViewHighlighter.hideAll()
 
         if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
             showError(message: error.localizedDescription)

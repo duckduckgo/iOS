@@ -39,15 +39,15 @@ public class FaviconUserScript: NSObject, UserScript {
     
     function findFavicons() {
 
-         var selectors = {
-            "link[rel~='icon']": 0,
-            "link[rel='apple-touch-icon']": 1,
-            "link[rel='apple-touch-icon-precomposed']": 2
-        };
+         var selectors = [
+            "link[rel='apple-touch-icon-precomposed']",
+            "link[rel='apple-touch-icon']",
+            "link[rel~='icon']"
+        ];
 
         var favicons = [];
         for (var selector in selectors) {
-            var icons = document.head.querySelectorAll(selector);
+            var icons = document.head.querySelectorAll(selectors[selector]);
             for (var i = 0; i < icons.length; i++) {
                 var href = icons[i].href;
                 

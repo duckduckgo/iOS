@@ -127,5 +127,4 @@ class PrivacyProtectionHeaderConfigurator {
         return siteGrade != enhancedGrade
     }
     
-    
 }

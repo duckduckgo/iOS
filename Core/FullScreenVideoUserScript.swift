@@ -1,5 +1,5 @@
 //
-//  NavigatorSharePatchUserScript.swift
+//  FullScreenVideoUserScript.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -17,22 +17,16 @@
 //  limitations under the License.
 //
 
-import UIKit
 import WebKit
 
-public class NavigatorSharePatchUserScript: NSObject, UserScript {
+public class FullScreenVideoUserScript: NSObject, UserScript {
     public var source: String {
-        return loadJS("navigatorsharepatch")
-    }
-    
-    public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
-    
-    public var forMainFrameOnly: Bool = false
-    
-    public var messageNames: [String] = []
-    
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        
+        return loadJS("fullscreenvideo")
     }
 
+    public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
+    public var forMainFrameOnly: Bool = false
+    public var messageNames: [String] = []
+
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {}
 }

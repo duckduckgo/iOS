@@ -37,8 +37,9 @@ public class ContentBlockerLoader {
         self.fileStore = fileStore
     }
 
-    func checkForUpdates(dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
-        
+    func checkForUpdates(dataSource: ContentBlockerRemoteDataSource? = nil) -> Bool {
+        let dataSource = dataSource ?? ContentBlockerRequest(etagStorage: etagStorage)
+
         self.newData.removeAll()
         self.etags.removeAll()
         

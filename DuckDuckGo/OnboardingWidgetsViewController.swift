@@ -36,9 +36,17 @@ class OnboardingWidgetsViewController: OnboardingContentViewController {
         return "Maybe Later"
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEnterBackground(notification:)),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil)
+    }
+    
     override func onContinuePressed(navigationHandler: @escaping () -> Void) {
-        //TODO pixel
-        //Pixel.fire(pixel: .defaultBrowserButtonPressedOnboarding)
+        Pixel.fire(pixel: .widgetsOnboardingCTAPressed)
         
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "onboardingWidgetDetails") as? OnboardingWidgetsDetailsViewController else {
                 fatalError("Unable to load widget details view controller")
@@ -47,5 +55,14 @@ class OnboardingWidgetsViewController: OnboardingContentViewController {
             super.onContinuePressed(navigationHandler: navigationHandler)
         }
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    override func onSkipPressed(navigationHandler: @escaping () -> Void) {
+        super.onSkipPressed(navigationHandler: navigationHandler)
+        Pixel.fire(pixel: .widgetsOnboardingDeclineOptionPressed)
+    }
+    
+    @objc func didEnterBackground(notification: NSNotification) {
+        Pixel.fire(pixel: .widgetsOnboardingMovedToBackground)
     }
 }

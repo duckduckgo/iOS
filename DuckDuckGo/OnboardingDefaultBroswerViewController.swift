@@ -45,4 +45,9 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
         }
         super.onContinuePressed(navigationHandler: navigationHandler)
     }
+    
+    override func onSkipPressed(navigationHandler: @escaping () -> Void) {
+        Pixel.fire(pixel: .defaultBroswerOnboardingDeclineOptionPressed)
+        super.onSkipPressed(navigationHandler: navigationHandler)
+    }
 }

@@ -145,6 +145,7 @@ public enum PixelName: String {
     case homeRowCTAReminderDismissed = "m_hd"
     
     case homeRowInstructionsReplayed = "m_hv"
+    case homeRowOnboardingMovedToBackground = "m_o_h_b"
     
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
@@ -228,10 +229,15 @@ public enum PixelName: String {
     case settingsAppIconChangeNotSupported = "m_d_aicns"
     
     case defaultBrowserButtonPressedOnboarding = "m_db_o"
+    case defaultBroswerOnboardingDeclineOptionPressed = "m_db_o_d"
     case defaultBrowserButtonPressedSettings = "m_db_s"
     case defaultBrowserButtonPressedHome = "m_db_h"
     case defaultBrowserHomeMessageShown = "m_db_h_s"
     case defaultBrowserHomeMessageDismissed = "m_db_h_d"
+    
+    case widgetsOnboardingCTAPressed = "m_o_w_a"
+    case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
+    case widgetsOnboardingMovedToBackground = "m_o_w_b"
 }
 
 public struct PixelParameters {

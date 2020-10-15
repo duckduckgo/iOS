@@ -13,29 +13,87 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* samt *en till* försökte spåra dig här.
+			<string>*%2$@, %3$@* och *1 annan* försökte spåra dig här.
 
-Jag blockerade det!
+Jag blockerade dem!
 
 ☝️ Du kan kontrollera webbadressfältet för att se vem som försöker spåra dig när du besöker en ny webbplats.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* samt *%d till* försökte spåra dig här.
+			<string>*%2$@, %3$@* och *%1$d andra* försökte spåra dig här.
 
-Jag blockerade det!
+ Jag blockerade dem!
 
-☝️ Du kan kontrollera webbadressfältet för att se vem som försöker spåra dig när du besöker en ny webbplats.️</string>
-			<key>zero</key>
-			<string>*%2$@ och %3$@* försökte spåra dig här.
-
-Jag blockerade det!
-
-☝️ Du kan kontrollera webbadressfältet för att se vem som försöker spåra dig när du besöker en ny webbplats.️</string>
+☝️ Du kan kontrollera URL-fältet för att se vem som försöker spåra dig när du besöker en ny webbplats.</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d stor spårare hittades</string>
+			<key>other</key>
+			<string>%1$d stora spårare hittades</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d stor spårare blockerades</string>
+			<key>other</key>
+			<string>%1$d stora spårare blockerades</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d spårare hittades</string>
+			<key>other</key>
+			<string>%1$d spårare hittades</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d spårare blockerades</string>
+			<key>other</key>
+			<string>%1$d spårare blockerades</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@flikar@</string>
+		<string>%#@tabs@</string>
 		<key>tabs</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -43,75 +101,9 @@ Jag blockerade det!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Privat flik</string>
+			<string>%1$d privat flik</string>
 			<key>other</key>
-			<string>%d Privata flikar</string>
-			<key>zero</key>
-			<string>Inga privata flikar</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@nätverk@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d stor spårare blockerades</string>
-			<key>other</key>
-			<string>%d stora spårare blockerades</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@nätverk@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d stor spårare hittades</string>
-			<key>other</key>
-			<string>%d stora spårare hittades</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@nätverk@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d stor spårare blockerades</string>
-			<key>other</key>
-			<string>%d stora spårare blockerades</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@nätverk@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d spårare hittades</string>
-			<key>other</key>
-			<string>%d spårare hittades</string>
+			<string>%1$d privata flikar</string>
 		</dict>
 	</dict>
 </dict>

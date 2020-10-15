@@ -13,57 +13,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* ja *1 muu* yritti seurata sinua.
+			<string>*%2$@, %3$@* ja *1 muu* yrittivät seurata sinua.
 
 Estin sen!
 
-☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.</string>
+☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* ja *%d muuta* yrittivät seurata sinua.
+			<string>*%2$@, %3$@* ja *%1$d muuta* yrittivät seurata sinua.
 
 Estin sen!
 
-☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.</string>
-			<key>zero</key>
-			<string>*%2$@ ja %3$@* yrittivät seurata sinua.
-
-Estin sen!
-
-☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d yksityinen välilehti</string>
-			<key>other</key>
-			<string>%d yksityistä välilehteä</string>
-			<key>zero</key>
-			<string>Ei yksityisiä välilehtiä</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d tärkeä seurantapalvelin estetty</string>
-			<key>other</key>
-			<string>%d tärkeää seurantapalvelinta estetty</string>
+☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -77,12 +37,12 @@ Estin sen!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d tärkeä seurantapalvelin löytynyt</string>
+			<string>%1$d tärkeä seurantapalvelin löytynyt</string>
 			<key>other</key>
-			<string>%d tärkeää seurantapalvelinta löytynyt</string>
+			<string>%1$d tärkeää seurantapalvelinta löytynyt</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -93,9 +53,9 @@ Estin sen!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d seurantapalvelin estetty</string>
+			<string>%1$d tärkeä seurantapalvelin estetty</string>
 			<key>other</key>
-			<string>%d seurantapalvelinta estetty</string>
+			<string>%1$d tärkeää seurantapalvelinta estetty</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -109,9 +69,41 @@ Estin sen!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d seurantapalvelin löytynyt</string>
+			<string>%1$d seurantapalvelin löytynyt</string>
 			<key>other</key>
-			<string>%d seurantapalvelinta löytynyt</string>
+			<string>%1$d seurantapalvelinta löytynyt</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d seurantapalvelin estetty</string>
+			<key>other</key>
+			<string>%1$d seurantapalvelinta estetty</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d yksityinen välilehti</string>
+			<key>other</key>
+			<string>%1$d yksityistä välilehteä</string>
 		</dict>
 	</dict>
 </dict>

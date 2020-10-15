@@ -12,78 +12,30 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>many</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
 			<key>one</key>
 			<string>*%2$@, %3$@* ir *1 kitas* bandė tave stebėti.
 
-Užblokavau!
+Užblokavau juos!
 
-☝️ Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.</string>
-			<key>other</key>
-			<string>*%2$@, %3$@* ir *%d kiti* bandė tave stebėti.
-
-Užblokavau!
-
-☝️ Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.</string>
-			<key>zero</key>
-			<string>*%2$@ ir %3$@* bandė tave stebėti.
-
-Užblokavau!
-
-☝️ Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
 			<key>few</key>
-			<string>%d Private Tabs</string>
+			<string>*%2$@, %3$@* ir *%1$d kiti* bandė tave stebėti.
+
+Užblokavau juos!
+
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
 			<key>many</key>
-			<string>%d Private Tabs</string>
-			<key>one</key>
-			<string>%d privatus skirtukas</string>
+			<string>*%2$@, %3$@* ir *%1$d kito* bandė tave stebėti.
+
+Užblokavau juos!
+
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
 			<key>other</key>
-			<string>%d privat. skirtuk.</string>
-			<key>zero</key>
-			<string>Privačių skirtukų nėra</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d Major Trackers Blocked</string>
-			<key>many</key>
-			<string>%d Major Trackers Blocked</string>
-			<key>one</key>
-			<string>Užblokuota %d pagrindinė stebėjimo priemonė</string>
-			<key>other</key>
-			<string>Užblokuotos (-a) %d pagr. stebėjim. priem.</string>
+			<string>*%2$@, %3$@* ir *%1$d kitų* bandė tave stebėti.
+
+Užblokavau juos!
+
+☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -96,17 +48,17 @@ Užblokavau!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d Major Trackers Found</string>
-			<key>many</key>
-			<string>%d Major Trackers Found</string>
 			<key>one</key>
-			<string>Rasta %d pagrindinė stebėjimo priemonė</string>
+			<string>%1$d pagrindinė stebėjimo priemonė rasta</string>
+			<key>few</key>
+			<string>%1$d pagrindinės stebėjimo priemonės rastos</string>
+			<key>many</key>
+			<string>%1$d pagrindinės stebėjimo priemonės rasta</string>
 			<key>other</key>
-			<string>Rastos (-a) %d pagr. stebėjim. priem.</string>
+			<string>%1$d pagrindinių stebėjimo priemonių rasta</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -116,14 +68,14 @@ Užblokavau!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d Trackers Blocked</string>
-			<key>many</key>
-			<string>%d Trackers Blocked</string>
 			<key>one</key>
-			<string>Užblokuota %d stebėjimo priemonė</string>
+			<string>%1$d pagrindinė stebėjimo priemonė užblokuota</string>
+			<key>few</key>
+			<string>%1$d pagrindinės stebėjimo priemonės užblokuotos</string>
+			<key>many</key>
+			<string>%1$d pagrindinės stebėjimo priemonės užblokuota</string>
 			<key>other</key>
-			<string>Užblokuotos (-a) %d stebėjim. priem.</string>
+			<string>%1$d pagrindinių stebėjimo priemonių užblokuota</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -136,14 +88,54 @@ Užblokavau!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d Trackers Found</string>
-			<key>many</key>
-			<string>%d Trackers Found</string>
 			<key>one</key>
-			<string>Rasta %d stebėjimo priemonė</string>
+			<string>Rasta %1$d stebėjimo priemonė</string>
+			<key>few</key>
+			<string>Rastos %1$d stebėjimo priemonės</string>
+			<key>many</key>
+			<string>Rasta %1$d stebėjimo priemonės</string>
 			<key>other</key>
-			<string>Rastos (-a) %d stebėjim. priem.</string>
+			<string>Rasta %1$d stebėjimo priemonių</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Užblokuota %1$d stebėjimo priemonė</string>
+			<key>few</key>
+			<string>Užblokuotos %1$d stebėjimo priemonės</string>
+			<key>many</key>
+			<string>Užblokuota %1$d stebėjimo priemonė</string>
+			<key>other</key>
+			<string>Užblokuota %1$d stebėjimo priemonių</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d privatus skirtukas</string>
+			<key>few</key>
+			<string>%1$d privatūs skirtukai</string>
+			<key>many</key>
+			<string>%1$d privataus skirtuko</string>
+			<key>other</key>
+			<string>%1$d privačiu skirtukų</string>
 		</dict>
 	</dict>
 </dict>

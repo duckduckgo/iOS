@@ -13,57 +13,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* и *още 1 друг* се опитват да ви проследят до тук.
+			<string>*%2$@, %3$@* и *още 1 друг* се опитват да ви проследят тук.
 
 Блокирах ги!
 
 ☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* и *още %d други* се опитват да ви проследят до тук.
+			<string>*%2$@, %3$@* и *още %1$d други* се опитват да ви проследят тук.
 
 Блокирах ги!
 
 ☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
-			<key>zero</key>
-			<string>*%2$@ и %3$@* се опитват да ви проследят до тук.
-
-Блокирах ги!
-
-☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d поверителен раздел</string>
-			<key>other</key>
-			<string>%d поверителни раздела</string>
-			<key>zero</key>
-			<string>Няма поверителни раздели</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Блокиран е %d основен тракер</string>
-			<key>other</key>
-			<string>Блокирани са %d основни тракера</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -77,12 +37,12 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Открит е %d основен тракер</string>
+			<string>Открит е %1$d основен тракер</string>
 			<key>other</key>
-			<string>Открити са %d основни тракера</string>
+			<string>Открити са %1$d основни тракери</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -93,9 +53,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Блокиран е %d тракер</string>
+			<string>Блокиран е %1$d основен тракер</string>
 			<key>other</key>
-			<string>Блокирани са %d тракера</string>
+			<string>Блокирани са %1$d основни тракери</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -109,9 +69,41 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Открит е %d тракер</string>
+			<string>%1$d открито проследяващо устройство</string>
 			<key>other</key>
-			<string>Открити са %d тракера</string>
+			<string>%1$d открити проследяващи устройства</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d блокирано проследяващо устройство</string>
+			<key>other</key>
+			<string>%1$d блокирани проследяващи устройства</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d поверителен раздел</string>
+			<key>other</key>
+			<string>%1$d поверителни раздела</string>
 		</dict>
 	</dict>
 </dict>

@@ -15,27 +15,85 @@
 			<key>one</key>
 			<string>*%2$@, %3$@* ja *veel üks* üritasid sind siin jälitada.
 
-Ma blokeerisin nad!
+Blokeerisin nad!
 
-☝️Võid vaadata URL-i riba, et näha, kes üritab sind jälitada, kui külastad uut saiti.️</string>
+☝️Võid vaadata URL-i riba, et näha, kes üritab sind jälgida, kui külastad uut saiti.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* ja *veel %d* üritasid sind siin jälitada.
+			<string>*%2$@, %3$@* ja *%1$d teist* üritasid sind siin jälitada.
 
-Ma blokeerisin nad!
+Blokeerisin nad!
 
-☝️Võid vaadata URL-i riba, et näha, kes üritab sind jälitada, kui külastad uut saiti.️</string>
-			<key>zero</key>
-			<string>*%2$@ ja %3$@* üritasid sind siin jälitada.
-
-Ma blokeerisin nad!
-
-☝️Võid vaadata URL-i riba, et näha, kes üritab sind jälitada, kui külastad uut saiti.️</string>
+☝️Võid vaadata URL-i riba, et näha, kes üritab sind jälgida, kui külastad uut saiti.️</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d suur jälitaja leitud</string>
+			<key>other</key>
+			<string>%1$d suurt jälitajat leitud</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d suur jälitaja blokeeritud</string>
+			<key>other</key>
+			<string>%1$d suurt jälitajat blokeeritud</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d jälitaja leitud</string>
+			<key>other</key>
+			<string>%1$d jälitajat leitud</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d jälgija on blokeeritud</string>
+			<key>other</key>
+			<string>%1$d jälgijat on blokeeritud</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@vahekaardid@</string>
+		<string>%#@tabs@</string>
 		<key>tabs</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -43,75 +101,9 @@ Ma blokeerisin nad!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d privaatne vahekaart</string>
+			<string>%1$d privaatne vahekaart</string>
 			<key>other</key>
-			<string>%d privaatset vahekaarti</string>
-			<key>zero</key>
-			<string>Privaatseid vahekaarte pole</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@võrgud@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d peamine jälitaja blokeeritud</string>
-			<key>other</key>
-			<string>%d peamist jälitajat blokeeritud</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@võrgud@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d peamine jälitaja leitud</string>
-			<key>other</key>
-			<string>%d peamist jälitajat leitud</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@võrgud@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d jälitaja blokeeritud</string>
-			<key>other</key>
-			<string>%d jälitajat blokeeritud</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@võrgud@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d jälitaja leitud</string>
-			<key>other</key>
-			<string>%d jälitajat leitud</string>
+			<string>%1$d privaatset vahekaarti</string>
 		</dict>
 	</dict>
 </dict>

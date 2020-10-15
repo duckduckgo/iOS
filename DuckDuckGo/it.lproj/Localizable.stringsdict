@@ -13,57 +13,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* e *1 altro* stavano cercando di tracciare la tua attività qui.
+			<string>*%2$@, %3$@* e *1 altro* cercavano di tracciare la tua attività qui.
 
 Li ho bloccati!
 
-☝️ Quando visiti un nuovo sito, puoi controllare la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività.️</string>
+☝️ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* e * altri %d* stavano cercando di tracciare la tua attività qui.
+			<string>*%2$@, %3$@* e *altri %1$d* cercavano di tracciare la tua attività qui.
 
 Li ho bloccati!
 
-☝️ Quando visiti un nuovo sito, puoi controllare la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività.️</string>
-			<key>zero</key>
-			<string>*%2$@ e %3$@* stavano cercando di tracciare la tua attività qui.
-
-Li ho bloccati!
-
-☝️ Quando visiti un nuovo sito, puoi controllare la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività.️</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Scheda privata</string>
-			<key>other</key>
-			<string>%d Schede private</string>
-			<key>zero</key>
-			<string>Nessuna scheda privata</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d sistema di tracciamento principale bloccato</string>
-			<key>other</key>
-			<string>%d sistemi di tracciamento principali bloccati</string>
+☝️ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -77,12 +37,12 @@ Li ho bloccati!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d sistema di tracciamento principale rilevato</string>
+			<string>%1$d sistema di tracciamento principale rilevato</string>
 			<key>other</key>
-			<string>%d sistemi di tracciamento principali rilevati</string>
+			<string>%1$d sistemi di tracciamento principali rilevati</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -93,9 +53,9 @@ Li ho bloccati!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d sistema di tracciamento bloccato</string>
+			<string>%1$d sistema di tracciamento principale bloccato</string>
 			<key>other</key>
-			<string>%d sistemi di tracciamento bloccati</string>
+			<string>%1$d sistemi di tracciamento principali bloccati</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -109,9 +69,41 @@ Li ho bloccati!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d sistema di tracciamento rilevato</string>
+			<string>%1$d sistema di tracciamento rilevato</string>
 			<key>other</key>
-			<string>%d sistemi di tracciamento rilevati</string>
+			<string>%1$d sistemi di tracciamento rilevati</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d sistema di tracciamento bloccato</string>
+			<key>other</key>
+			<string>%1$d sistemi di tracciamento bloccati</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d scheda privata</string>
+			<key>other</key>
+			<string>%1$d schede private</string>
 		</dict>
 	</dict>
 </dict>

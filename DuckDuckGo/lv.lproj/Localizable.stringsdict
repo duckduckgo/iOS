@@ -12,60 +12,24 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
+			<key>zero</key>
+			<string>*%2$@, %3$@* un *%1$d citas vietnes* mēģināja tevi šeit izsekot.
+
+Es tās nobloķēju!
+
+☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* un *1 cita vietne* mēģināja tevi šeit izsekot.
+			<string>*%2$@, %3$@* un *1 cita vietne* mēģināja tevi šeit izsekot.
 
 Es tās nobloķēju!
 
 ☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* un *%d citas vietnes* mēģināja tevi šeit izsekot.
+			<string>*%2$@, %3$@* un *%1$d citas vietnes* mēģināja tevi šeit izsekot.
 
 Es tās nobloķēju!
 
 ☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
-			<key>zero</key>
-			<string>*%2$@ un %3$@* mēģināja tevi šeit izsekot.
-
-Es tās nobloķēju!
-
-☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d privāta cilne</string>
-			<key>other</key>
-			<string>%d privātas cilnes</string>
-			<key>zero</key>
-			<string>Nav privātu ciļņu</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d galvenais izsekotājs ir bloķēts</string>
-			<key>other</key>
-			<string>%d galvenie izsekotāji ir bloķēti</string>
-			<key>zero</key>
-			<string>%d Major Trackers Blocked</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -78,15 +42,15 @@ Es tās nobloķēju!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>Atrasts %d galvenais izsekotājs</string>
-			<key>other</key>
-			<string>Atrasti %d galvenie izsekotāji</string>
 			<key>zero</key>
-			<string>%d Major Trackers Found</string>
+			<string>Atrasti %1$d lielākie izsekotāji</string>
+			<key>one</key>
+			<string>Atrasts %1$d lielākais izsekotājs</string>
+			<key>other</key>
+			<string>Atrasti %1$d lielākie izsekotāji</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -96,12 +60,12 @@ Es tās nobloķēju!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>%d izsekotājs ir bloķēts</string>
-			<key>other</key>
-			<string>%d izsekotāji ir bloķēti</string>
 			<key>zero</key>
-			<string>%d Trackers Blocked</string>
+			<string>Bloķēti %1$d lielākie izsekotāji</string>
+			<key>one</key>
+			<string>Bloķēts %1$d lielākais izsekotājs</string>
+			<key>other</key>
+			<string>Bloķēti %1$d lielākie izsekotāji</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -114,12 +78,48 @@ Es tās nobloķēju!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>Atrasts %d izsekotājs</string>
-			<key>other</key>
-			<string>Atrasti %d izsekotāji</string>
 			<key>zero</key>
-			<string>%d Trackers Found</string>
+			<string>%1$d Atrasti izsekotāji</string>
+			<key>one</key>
+			<string>%1$d Atrasts izsekotājs</string>
+			<key>other</key>
+			<string>%1$d Atrasti izsekotāji</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%1$d Izsekotāji ir bloķēti</string>
+			<key>one</key>
+			<string>%1$d Izsekotājs ir bloķēts</string>
+			<key>other</key>
+			<string>%1$d Izsekotāji ir bloķēti</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%1$d privātās cilnes</string>
+			<key>one</key>
+			<string>%1$d privātā cilne</string>
+			<key>other</key>
+			<string>%1$d privātās cilnes</string>
 		</dict>
 	</dict>
 </dict>

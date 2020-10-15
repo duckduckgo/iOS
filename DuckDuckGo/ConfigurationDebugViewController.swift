@@ -49,7 +49,7 @@ class ConfigurationDebugViewController: UITableViewController {
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+        formatter.dateStyle = .short
         formatter.timeStyle = .long
         return formatter
     }()
@@ -82,10 +82,12 @@ class ConfigurationDebugViewController: UITableViewController {
         case .refreshInformation:
             switch RefreshInformationRows(rawValue: indexPath.row) {
             case .lastRefreshDate:
+                cell.textLabel?.text = "Last Refresh"
+
                 if lastConfigurationRefreshDate == Date.distantPast {
-                    cell.textLabel?.text = "Last Refresh Date: Never"
+                    cell.detailTextLabel?.text = "Never"
                 } else {
-                    cell.textLabel?.text = "Last Refresh Date: \(dateFormatter.string(from: lastConfigurationRefreshDate))"
+                    cell.detailTextLabel?.text = dateFormatter.string(from: lastConfigurationRefreshDate)
                 }
             case .resetLastRefreshDate:
                 cell.textLabel?.text = "Reset Last Refresh Date"

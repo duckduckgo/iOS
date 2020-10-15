@@ -21,14 +21,14 @@ import UIKit
 import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
-    
-    private var controllerNames: [String] = {
-        //TODO I guess I can do the varient stuff here?
-        //"onboardingWidget"
-        return ["onboardingWidget"]
         
-        if #available(iOS 14.0, *) {
+    private lazy var controllerNames: [String] = {
+        if variantManager.isSupported(feature: .onboardingHomeRow) {
+            return ["onboardingHomeRow"]
+        } else if variantManager.isSupported(feature: .onboardingDefaultBrowser) {
             return ["onboardingDefaultBrowser"]
+        } else if variantManager.isSupported(feature: .onboardingWidgets) {
+            return ["onboardingWidget"]
         } else {
             return ["onboardingHomeRow"]
         }

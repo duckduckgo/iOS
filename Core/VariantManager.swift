@@ -25,6 +25,10 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
      
+    // Onboarding
+    case onboardingHomeRow
+    case onboardingDefaultBrowser
+    case onboardingWidgets
 }
 
 public struct Variant {
@@ -36,6 +40,14 @@ public struct Variant {
 
         static let inRequiredCountry = { return ["AU", "AT", "DK", "FI", "FR", "DE", "IT", "IE", "NZ", "NO", "ES", "SE", "GB"]
                 .contains(where: { Locale.current.regionCode == $0 }) }
+
+        static let iOS14 = { () -> Bool in
+            if #available(iOS 14, *) {
+                return true
+            } else {
+                return false
+            }
+        }
     }
     
     static let doNotAllocate = 0
@@ -44,10 +56,14 @@ public struct Variant {
     public static let defaultVariants: [Variant] = [
         
         // SERP testing
-        Variant(name: "sc", weight: 1, isIncluded: When.inRequiredCountry, features: []),
+        Variant(name: "sc", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: 1, isIncluded: When.inRequiredCountry, features: [])
+        Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
 
+        // Onboarding
+        Variant(name: "oh", weight: 1, isIncluded: When.iOS14, features: [ .onboardingHomeRow ]),
+        Variant(name: "od", weight: 1, isIncluded: When.iOS14, features: [ .onboardingDefaultBrowser ]),
+        Variant(name: "ow", weight: 1, isIncluded: When.iOS14, features: [ .onboardingWidgets ])
     ]
     
     public let name: String

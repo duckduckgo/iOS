@@ -1,3 +1,1 @@
-• When you add our medium or large widgets, we now provide a handy way to learn about adding favorites.
-• Fixed a bug preventing YouTube videos from showing full screen in desktop mode.
-• Other bug fixes and improvements.
+• Hallo! Bonjour! Ciao! Hola! We’ve translated our app into 24 languages.

@@ -62,7 +62,7 @@ class ConfigurationDebugViewController: UITableViewController {
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
+        formatter.dateStyle = .medium
         formatter.timeStyle = .long
         return formatter
     }()

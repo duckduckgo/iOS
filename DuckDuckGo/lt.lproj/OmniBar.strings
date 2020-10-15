@@ -1,0 +1,27 @@
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "1rB-5w-de3"; */
+"1rB-5w-de3.accessibilityLabel" = "Nustatymai";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse forward"; ObjectID = "aXg-p3-oeq"; */
+"aXg-p3-oeq.accessibilityLabel" = "Naršyti pirmyn";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "Dt8-We-5tV"; */
+"Dt8-We-5tV.accessibilityLabel" = "Valyti tekstą";
+
+/* Class = "UIButton"; accessibilityLabel = "Share"; ObjectID = "hor-Jd-3kw"; */
+"hor-Jd-3kw.accessibilityLabel" = "Bendrinti";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
+"i9n-fD-ncJ.accessibilityLabel" = "Naršyti atgal";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
+"IHT-9R-ERy.normalTitle" = "Atšaukti";
+
+/* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
+"ii4-Sq-bD1.accessibilityLabel" = "Žymelės";
+
+/* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
+"nJo-2d-gri.accessibilityLabel" = "Naršymo meniu";
+
+/* Class = "UIButton"; accessibilityLabel = "Refresh Page"; ObjectID = "Qea-QY-LVl"; */
+"Qea-QY-LVl.accessibilityLabel" = "Atnaujinti puslapį";
+

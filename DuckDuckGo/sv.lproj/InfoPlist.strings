@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "DuckDuckGo";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Gör att du kan ladda upp foton och videor";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Gör att du kan låsa upp med Face ID";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Gör att du kan dela din plats";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Gör att du kan dela inspelningar";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "Gör att du kan spara bilder på din enhet";
+
+/* (No Comment) */
+"Paste from clipboard" = "Klistra in från urklipp";
+

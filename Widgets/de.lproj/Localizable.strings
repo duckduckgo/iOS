@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Label";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Du kannst deine Lieblingswebsites privat durchsuchen und anzeigen – einfach durch Antippen!";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Suche und Favoriten";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Du kannst im Handumdrehen eine private Suche in DuckDuckGo starten.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Suche";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Favoriten hinzufügen";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Wechseln Sie mit nur einem Klick zu Ihren Lieblingswebsites.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Mit DuckDuckGo suchen";
+

@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Добавяне";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Отметка";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Отмени";
+
+/* Copy action */
+"action.title.copy" = "Копиране";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Деактивиране на защита на поверителността";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Активиране на защита на поверителността";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Затваряне на разделите и изчистване на данните";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Разделите и данните са изчистени";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Отваряне във фонов режим";
+
+/* Create New Tab action */
+"action.title.newTab" = "Нов подпрозорец";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Отваряне в нов подпрозорец";
+
+/* Open action */
+"action.title.open" = "Open";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Поставяне и отваряне";
+
+/* Reading List action */
+"action.title.readingList" = "Добавяне към списъка за четене";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Опресняване";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Подаване на сигнал за повреден сайт";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Заявка за сайт на работния плот";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Заявка за мобилен сайт";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Запази";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Добавяне към отметки";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Добавяне към любими";
+
+/* Settings action */
+"action.title.settings" = "Настройки...";
+
+/* Share action */
+"action.title.share" = "Споделяне...";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Поставяне на всички раздели в отметки?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Добавяне към незащитени сайтове";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Редактиране на отметка";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Запазване на отметка";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Запазване в любими";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Отключване на DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Вход";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Вход в %@. Вашите данни за вход ще бъдат изпратени по сигурен начин.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Вход в %@. Вашата парола ще бъде изпратена по несигурен начин, тъй като връзката не е криптирана.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Парола";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Изисква се удостоверяване";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Потребителско име";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Изключен";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Включен";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Заглавие на уебсайт";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Някои от разделите не могат да бъдат поставени в отметки";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Всички раздели са поставени в отметки";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Коментарите не се зареждат";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Липсва съдържание";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Изображенията не се зареждат";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Връзките или бутоните не работят";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Не мога да вляза";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Нещо друго";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Сайтът ме помоли да деактивирам";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Браузърът е несъвместим";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Видеото не се възпроизвежда";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Опишете проблема";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Скрий съветите за постоянно";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Отмени";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Само няколко са и се постарахме да са информативни.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Скрий оставащите съвети?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Търсенията ви в DuckDuckGo са анонимни и никога не съхранявам историята на вашите търсения. Никога. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Слава Богу!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Дай пет!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* се опитваше да ви проследи тук.\n\nБлокирах го!\n\n☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Дай пет!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Внимание! Не мога да направя така, че %1$@ да не вижда вашата активност на %2$@.\n\nНо ако сърфирате с мен, като цяло мога да намаля информацията, която %1$@ научава за вас, като блокирам техните тракери на много други сайтове.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Разбрах";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Внимание! Тъй като %2$@ притежава %1$@, той вижда какво правите тук.\n\nНо ако сърфирате с мен, като цяло мога да намаля информацията, която %2$@ научава за вас, като блокирам неговите тракери на много други сайтове.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Разбрах";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Докато докосвате и превъртате, аз ще блокирам досадните тракери.\n\nПродължавайте да сърфирате спокойно!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Разбрах";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Отварянето на любимите ви сайтове става светкавично!\n\nОтворете сайт, който харесвате. След това докоснете иконата \"⋯\" и изберете *Добавяне към любими*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Отварянето на любимите ви сайтове става светкавично!\n\n Посетете някой от любимите си сайтове. След това докоснете бутона за отваряне на меню и изберете \"Добавяне към любими\".";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Сега опитайте да отворите някой от любимите си сайтове!\n\nЩе блокирам тракерите, за да не ви шпионират. Освен това ще подобря сигурността на вашата връзка, ако това е възможно. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Нали разбрахте!\n\nЗапомнете: Всеки път, когато сърфирате с мен, аз ще подрязвам крилцата на досадните реклами. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Интернет може да бъде и доста опасно място.\n\nНе се притеснявайте! Поверителното търсене и сърфиране е много по-лесно, отколкото си мислите.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Деактивирано";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Тъй като Глобалният контрол на поверителността (GPC) е нов стандарт, повечето уеб сайтове все още не го разпознават, но ние полагаме усилия стандартът да бъде приет по целия свят.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Научете повече";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Въпреки това от уеб сайтовете се изисква да предприемат действия по даден сигнал до степента, до която приложимото законодателство им налага това. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Активирано";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Вашите лични данни не са за продажба. Ние в DuckDuckGo сме съгласни с това. Активирайте настройката \"Глобален контрол на поверителността\" (GPC) и ние ще уведомяваме уебсайтовете за вашето предпочитание:\n\n• Да не продават вашите лични данни.\n• Да ограничат споделянето на личните ви данни с други компании.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Все още няма отметки";
+
+/* Empty list state placholder */
+"empty.favorites" = "Все още няма любими";
+
+/* No comment provided by engineer. */
+"favorite" = "Любим";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Изтриване";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Редактиране";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Блокиране на реклами и изскачащи прозорци";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Създаване и управление на отметки";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Коя характеристика за сърфиране можем да добавим или да подобрим?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Проблеми с характеристика на браузъра";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Някои функции за сърфиране липсват или са объркващи";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Интерактивно гледане на изображения";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Придвижване напред, назад и/или опресняване";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Никое от тези";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Създаване и управление на подпрозорци";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Гледане на видео";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Как са изобразени отметките";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Коя опция за персонализиране можем да добавим или да подобрим?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Проблеми с персонализирането";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Няма достатъчно възможности за персонализиране на приложението";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Конфигурацията на началния екран";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Никое от тези";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Как са изобразени подпрозорците";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Как изглежда приложението";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Кои данни са изчистени";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Кога са изчистени данните";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "По-добро автозавършване";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Коя характеристика за търсене можем да добавим или да подобрим?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Проблеми при търсенето с DuckDuckGo";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "Търсенето с DuckDuckGo не е достатъчно добро";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Търсене на специфичен език или в специфичен район";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Оформлението трябва да бъде повече като Google";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "По-бързо зареждане";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Никое от тези";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Програмиращо/техническо търсене";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Моля, кажете ни какво можем да подобрим";
+
+/* Confirmation button */
+"feedback.form.submit" = "ИЗПРАЩАНЕ НА ОТЗИВИ";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Моля, бъдете колкото може по-конкретни";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Искате ли да споделите нещо по-конкретно?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Съжаляваме да чуем това.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "С какво най-вече са свързани отрицателните Ви впечатления?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Други проблеми";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Никое от тези";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Кой проблем имате?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Срив или замръзване на приложението";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Проблеми с работата";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Приложението е бавно, има бъгове или се срива";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Никое от тези";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Бъгове при възпроизвеждане на видео или мултимедийни файлове";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Уеб страниците или резултатите от търсене се зареждат бавно";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Споделете подробности";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Кое Ви беше най-приятно?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Искате ли да споделите повече подробности с нашия екип?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Страхотно е да чуем това!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Не, благодаря! Готово";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Споделете подробности";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Вашите анонимни отзиви са важни за нас.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Да започваме!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Как бихте категоризирали отзивите си?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Благодарим ви! Отзивът вие е изпратен.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Проблеми със зареждането на уебсайтове";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Определени уебсайтове не се зареждат правилно";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Какво съдържание е засегнато?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Къде виждате тези проблеми?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "В кой уебсайт има проблеми?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d от %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Намери в страницата";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Задаване като браузър по подразбиране";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Направете DuckDuckGo браузър по подразбиране.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Отваряйте връзки без притеснения";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "НОВО В IOS 14";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Добавете DuckDuckGo към началния си екран!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Добавете DuckDuckGo към панела за бърз и лесен достъп!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Вземете DuckDuckGo вкъщи";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Търсене и любими в нов раздел";
+
+/* Home tab title */
+"homeTab.title" = "Начален екран";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Добави отметка";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Добавяне в любими";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Сърфиране назад";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Сърфиране напред";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Затваряне";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Затваряне подпрозорец";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Намери в страницата";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Намери следващ";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Намери предишен";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Изчистване на всички подпрозорци и данни";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Търсене или въвеждане на адрес";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Нов подпрозорец";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Следващ раздел";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Отваряне на връзка във фонов режим";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Отваряне на връзка в нов раздел";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Предишен раздел";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Отпечатване";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Презареждане";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Избор";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Показване на всички раздели";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Добре дошли в DuckDuckGo!";
+
+/* Edit button */
+"navigation.title.edit" = "Редактиране";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Продължаване";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Може би по-късно";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Направете DuckDuckGo браузър по подразбиране.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Задаване като браузър по подразбиране";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Пропускане";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Стартиране на сърфирането";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Добре дошли в DuckDuckGo!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Съжаляваме, но приложението среща трудности с тази връзка.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Уеб сайтовете разчитат на бисквитки, за да поддържат сесията ви активна. Когато направите сайта огнеустойчив, бисквитките няма да бъдат изтрити и ще останете вписани, дори след като използвате огнения бутон.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Уеб сайтове";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Искате ли да направите %@ огнеустойчив?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Огнеустойчив уебсайт";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Не сега";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Премахване на всички";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "ОК";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Питай дали да направиш сайтовете огнеустойчиви";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ вече е огнеустойчив! Отворете настройките, за да го премахнете.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Алгоритъм";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d бита";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Грешка при извличане на сертификат";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Общоприето име";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Ефективен размер";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "Имейл";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Шифрована връзка";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Принудително криптиране";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Принудихме този сайт да използва криптирана връзка и така предотвратихме подслушването на личните данни, които изпращате към него.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Криптираната връзка предотвратява подслушването на личните данни, които изпращате към даден уебсайт.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Идентификатор на ключа за субекта";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Издател";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Публичен ключ";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Размер на ключа";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Смесено криптиране";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Този сайт използва смесено криптиране, тъй като част от съдържанието се предоставя чрез некриптирани връзки.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Не";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Постоянен";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Публичен ключ";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Криптираната връзка предотвратява подслушването на личните данни, които изпращате към даден уебсайт.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Име на субект";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Резюме";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Тази връзка не е криптирана, затова внимавайте какво изпращате.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Нешифрована връзка";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Неизвестен";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Употреба";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Дешифриране";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Извличане";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Криптиране";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Подписване";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Разархивиране";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Проверка";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Архивиране";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Да";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "ЗАЩИТА НА САЙТА ДЕАКТИВИРАНА";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "ПОДОБРЕНО ОТ $1 НА $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Клас на поверителност";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "На %1$@%% от уебсайтовете, които сте посетили от %2$@ досега, са намерени мрежи за проследяване.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Все още събираме данни, за да покажем колко\nтракери сме блокирали.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Използва политика за защита на поверителността от ToS;DR";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Практиките за защита на поверителността показват каква част от личната информация, която споделяте с уебсайт, е защитена.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Този уебсайт ще ви уведоми, преди да прехвърли вашата информация в случай на сливане или придобиване";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Политиката за защита на поверителността на този уебсайт не е прегледана.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Клас на поверителност %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Натиснете, за да отворите екрана за защита на поверителността";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Тези статистики се съхраняват само на вашето устройство и не се изпращат никъде другаде. Никога.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Добри практики за защита на поверителността";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Смесени практики за защита на поверителността";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Лоши практики за защита на поверителността";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Неизвестни практики за защита на поверителността";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Проследяващите мрежи обединяват историята на мрежата ви в профил с данни за вас. Основните проследяващи мрежи са по-вредни, защото могат да ви проследяват и насочват през по-голяма част от интернет.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Не";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Да";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Искате ли да напуснете DuckDuckGo, за да видите това съдържание?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Отваряне в друго приложение?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Изпращането на анонимен доклад за нефункциониращ сайт ни помага да отстраним грешките и да подобрим разширението.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Търсене или въвеждане на адрес";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Отметки";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Любими";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "В DuckDuckGo задаваме новия стандарт на доверие онлайн.\n\nБраузърът за поверителност DuckDuckGo осигурява всички необходими елементи за защита на поверителността, докато търсите и сърфирате в мрежата, включително блокиране на тракери, по-интелигентно криптиране и поверително търсене с DuckDuckGo.\n\nВ крайна сметка интернет не трябва да създава чувство на страх, а получаването на поверителността, която заслужавате онлайн, трябва да е толкова просто, колкото пускането на щорите.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Другите търсачки проследяват вашето търсене дори когато сте в режим на поверително сърфиране. Ние не ви проследяваме. Точка.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Отворете *Safari* и след това *Търсачка*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Отворете приложението *Настройки*";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Изберете *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Изпращане на доклад";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Домейн на нефункциониращ сайт:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Кое съдържание или функция не функционира правилно?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Докладването на нефункциониращ сайт е напълно анонимно и ни помага да подобрим приложението!";
+
+/* This is a form title */
+"siteFeedback.title" = "Подаване на сигнал за повреден сайт";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Кой уебсайт е повреден?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Затваряне на началния раздел";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Затваряне на \"%1$@\" с адрес %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Отваряне на началния раздел";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Отваряне на \"%1$@\" с адрес %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Превключване на раздели";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Тъмен";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Системна тема";
+
+/* Light Theme entry */
+"theme.acc.light" = "Светла тема";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Тъмен";
+
+/* Entry for Default System theme */
+"theme.name.default" = "По подразбиране за системата";
+
+/* Light Theme entry */
+"theme.name.light" = "Светла тема";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ е добавен към незащитените сайтове";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ е премахнат от незащитените сайтове";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Възникна неизвестна грешка";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Отметката е запазена";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Отметката вече е запазена";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Няма страница, за която да се постави отметка";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Запазен в любими";
+

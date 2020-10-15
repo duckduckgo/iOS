@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Label";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Κάντε αναζήτηση ή επισκεφτείτε τους αγαπημένους ιστότοπούς σας ιδιωτικά, με μόνο ένα πάτημα.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Αναζήτηση και Αγαπημένα";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Ξεκινήστε γρήγορα μια ιδιωτική αναζήτηση στο DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Αναζήτηση";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Προσθήκη στα Αγαπημένα";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Επισκεφθείτε γρήγορα τους αγαπημένους σας ιστότοπους.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Αναζήτηση DuckDuckGo";
+

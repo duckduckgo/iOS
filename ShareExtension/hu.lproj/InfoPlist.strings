@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Megnyitás DuckDuckGo-ban";
+
+/* Bundle name */
+"CFBundleName" = "ShareExtension";
+

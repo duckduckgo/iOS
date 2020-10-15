@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9SF-AN-ir1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9SF-AN-ir1">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,21 +27,15 @@
                                 <rect key="frame" x="126" y="436" width="162" height="21"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextPrivacySimplified" translatesAutoresizingMaskIntoConstraints="NO" id="YNp-bg-QpB">
-                                <rect key="frame" x="144" y="469" width="126" height="14"/>
-                                <color key="tintColor" red="0.99216622109999997" green="0.99214488270000001" blue="0.99214905499999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Uoe-RS-vTk"/>
                         <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="EId-hf-6HL" firstAttribute="centerX" secondItem="5uF-ws-lnA" secondAttribute="centerX" id="2In-4c-xKC"/>
-                            <constraint firstItem="YNp-bg-QpB" firstAttribute="centerX" secondItem="5uF-ws-lnA" secondAttribute="centerX" id="4fH-VQ-3vg"/>
-                            <constraint firstItem="YNp-bg-QpB" firstAttribute="top" secondItem="CCq-t1-1xH" secondAttribute="bottom" constant="11.999999999999943" id="5B2-Md-CYg"/>
                             <constraint firstItem="CCq-t1-1xH" firstAttribute="centerX" secondItem="5uF-ws-lnA" secondAttribute="centerX" id="VEh-23-FIM"/>
                             <constraint firstItem="CCq-t1-1xH" firstAttribute="top" secondItem="EId-hf-6HL" secondAttribute="bottom" constant="12" id="mpA-8u-WRo"/>
                             <constraint firstItem="EId-hf-6HL" firstAttribute="centerY" secondItem="5uF-ws-lnA" secondAttribute="centerY" constant="-72" id="x78-TH-9qh"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Uoe-RS-vTk"/>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </viewController>
@@ -53,6 +47,5 @@
     <resources>
         <image name="Logo" width="128" height="128"/>
         <image name="TextDuckDuckGo" width="162" height="21"/>
-        <image name="TextPrivacySimplified" width="126" height="14"/>
     </resources>
 </document>

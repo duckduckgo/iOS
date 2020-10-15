@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Címke";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Látogasd meg a kedvenc weboldalaidat és keress rajtuk privát módon, mindössze egyetlen koppintással.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Keresés és kedvencek";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Indíts gyorsan egy privát keresést a DuckDuckGóban.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Keresés";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Kedvencek hozzáadása";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Gyorsan látogass el a kedvenc webhelyeidre.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "DuckDuckGo keresés";
+

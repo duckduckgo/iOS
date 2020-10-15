@@ -31,7 +31,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     weak var delegate: OnboardingDelegate?
     weak var daxDialog: DaxDialogViewController?
     
-    @IBOutlet weak var welcomeMessage: UIView!
+    @IBOutlet weak var welcomeMessage: UILabel!
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var daxIcon: UIView!
@@ -55,6 +55,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        welcomeMessage.setAttributedTextString(UserText.launchscreenWelcomeMessage)
         daxDialog?.message = UserText.daxDialogOnboardingMessage
         daxDialog?.theme = LightTheme()
         daxDialog?.reset()
@@ -66,6 +67,9 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard !view.isHidden else { return }
+        
+        daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
             self.transitionFromOnboarding()
         }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* a *1 další* se vás snažili tady vysledovat.
+
+Zablokovali jsme je!
+
+☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* a *%1$d další* se vás snažili tady vysledovat.
+
+Zablokovali jsme je!
+
+☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* a *%1$d dalších* se vás snažilo tady vysledovat.
+
+Zablokovali jsme je!
+
+☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* a *%1$d dalších* se vás snažilo tady vysledovat.
+
+Zablokovali jsme je!
+
+☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Nalezen %1$d hlavní tracker</string>
+			<key>few</key>
+			<string>Nalezeny %1$d hlavní trackery</string>
+			<key>many</key>
+			<string>Nalezeno %1$d hlavních trackerů</string>
+			<key>other</key>
+			<string>Nalezeno %1$d hlavních trackerů</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Zablokován %1$d hlavní tracker</string>
+			<key>few</key>
+			<string>Zablokován %1$d hlavní tracker</string>
+			<key>many</key>
+			<string>Zablokováno %1$d hlavních trackerů</string>
+			<key>other</key>
+			<string>Zablokováno %1$d hlavních trackerů</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Nalezen %1$d tracker</string>
+			<key>few</key>
+			<string>Nalezeny %1$d trackery</string>
+			<key>many</key>
+			<string>Nalezeno %1$d trackerů</string>
+			<key>other</key>
+			<string>Nalezeno %1$d trackerů</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Zablokován %1$d tracker</string>
+			<key>few</key>
+			<string>Zablokovány %1$d trackery</string>
+			<key>many</key>
+			<string>Zablokováno %1$d trackerů</string>
+			<key>other</key>
+			<string>Zablokováno %1$d trackerů</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d soukromá karta</string>
+			<key>few</key>
+			<string>%1$d soukromé karty</string>
+			<key>many</key>
+			<string>%1$d soukromých karet</string>
+			<key>other</key>
+			<string>%1$d soukromých karet</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

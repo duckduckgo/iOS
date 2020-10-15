@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "In DuckDuckGo öffnen";
+
+/* Bundle name */
+"CFBundleName" = "OpenAction";
+

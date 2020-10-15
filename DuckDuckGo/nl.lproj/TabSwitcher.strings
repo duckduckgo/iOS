@@ -1,0 +1,57 @@
+/* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
+"1GE-Nf-lKM.text" = "Titel";
+
+/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
+"2aH-nO-H3f.accessibilityLabel" = "Alle tabbladen toevoegen als bladwijzers";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
+"2en-CB-bYH.accessibilityLabel" = "Tabblad sluiten";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
+"2GU-MM-UwX.text" = "Titel";
+
+/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
+"5nO-MZ-vSY.accessibilityLabel" = "Alle tabbladen sluiten en gegevens wissen";
+
+/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
+"Cy7-Lb-veV.text" = "Tabbladen";
+
+/* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
+"cYd-YU-sSj.accessibilityLabel" = "Nieuw tabblad toevoegen";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
+"G2C-qh-g3T.accessibilityLabel" = "Tabblad sluiten";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
+"Gyy-py-IOg.accessibilityLabel" = "Ongelezen tabblad";
+
+/* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "h1S-c2-Spf"; */
+"h1S-c2-Spf.title" = "Alle tabbladen sluiten en gegevens wissen";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
+"Hcx-F2-HgO.accessibilityLabel" = "Tabbladen en gegevens wissen";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
+"kW3-ZC-Axl.normalTitle" = "Klaar";
+
+/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
+"L7l-vl-rDZ.accessibilityLabel" = "Wisselen tussen raster- en lijstweergave";
+
+/* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
+"LbT-NO-T0G.text" = "Link";
+
+/* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
+"nYf-xs-PE7.title" = "Nieuw tabblad";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
+"qrJ-aX-XrW.accessibilityLabel" = "Ongelezen tabblad";
+
+/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
+"uIV-4q-5mj.accessibilityLabel" = "Tabblad toevoegen";
+
+/* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
+"Uu4-yR-9tN.text" = "Website -- Lange titel";
+
+/* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
+"xto-EI-h22.accessibilityHint" = "Sluiten";
+

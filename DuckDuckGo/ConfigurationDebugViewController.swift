@@ -26,13 +26,15 @@ class ConfigurationDebugViewController: UITableViewController {
 
     private let titles = [
         Sections.refreshInformation: "Background Refresh Info",
-        Sections.queuedTasks: "Queued Tasks (Earliest Execution Date)"
+        Sections.queuedTasks: "Queued Tasks (Earliest Execution Date)",
+        Sections.etags: "ETags"
     ]
 
     enum Sections: Int, CaseIterable {
 
         case refreshInformation
         case queuedTasks
+        case etags
 
     }
 
@@ -40,6 +42,17 @@ class ConfigurationDebugViewController: UITableViewController {
 
         case lastRefreshDate
         case resetLastRefreshDate
+
+    }
+
+    enum ETagRows: String, CaseIterable {
+
+        case httpsBloomFilterSpec
+        case httpsBloomFilter
+        case httpsExcludedDomains
+        case surrogates
+        case trackerDataSet
+        case temporaryUnprotectedSites
 
     }
 
@@ -95,7 +108,21 @@ class ConfigurationDebugViewController: UITableViewController {
             }
 
         case .queuedTasks:
-            cell.textLabel?.text = dateFormatter.string(from: queuedTasks[indexPath.row].earliestBeginDate!)
+            if queuedTasks.isEmpty {
+                cell.textLabel?.text = "None"
+            } else {
+                cell.textLabel?.text = dateFormatter.string(from: queuedTasks[indexPath.row].earliestBeginDate!)
+            }
+
+        case .etags:
+            let row = ETagRows.allCases[indexPath.row]
+            cell.textLabel?.text = row.rawValue
+
+            if let etag = etag(for: row) {
+                cell.detailTextLabel?.text = etag
+            } else {
+                cell.detailTextLabel?.text = "None"
+            }
 
         default: break
         }
@@ -106,7 +133,8 @@ class ConfigurationDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .refreshInformation: return RefreshInformationRows.allCases.count
-        case .queuedTasks: return queuedTasks.count
+        case .queuedTasks: return queuedTasks.isEmpty ? 1 : queuedTasks.count
+        case .etags: return ETagRows.allCases.count
         default: return 0
         }
     }
@@ -122,6 +150,14 @@ class ConfigurationDebugViewController: UITableViewController {
             }
         default: break
         }
+    }
+
+    // MARK: - ETag User Defaults Wrapper
+
+    lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
+
+    private func etag(for config: ETagRows) -> String? {
+        return defaults?.string(forKey: config.rawValue)
     }
 
 }

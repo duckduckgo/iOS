@@ -34,6 +34,7 @@ class OnboardingWidgetsDetailsViewController: UIViewController {
             let string = secondInstructionsLabel.text?.attributedString(
                 withPlaceholder: "%@",
                 replacedByImage: image,
+                horizontalPadding: 3.0,
                 verticalOffset: -5.0) {
             secondInstructionsLabel.attributedText = string
         }

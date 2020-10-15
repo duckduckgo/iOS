@@ -117,6 +117,7 @@ extension String {
 
     public func attributedString(withPlaceholder placeholder: String,
                                  replacedByImage image: UIImage,
+                                 horizontalPadding: CGFloat = 0.0,
                                  verticalOffset: CGFloat = 0.0) -> NSAttributedString? {
         let components = self.components(separatedBy: placeholder)
         guard components.count > 1 else { return nil }
@@ -126,9 +127,8 @@ extension String {
         attachment.bounds = CGRect(x: 0, y: verticalOffset, width: image.size.width, height: image.size.height)
         let attachmentString = NSAttributedString(attachment: attachment)
         
-        let padding: CGFloat = 3.0
         let paddingAttachment = NSTextAttachment()
-        paddingAttachment.bounds = CGRect(x: 0, y: 0, width: padding, height: 0)
+        paddingAttachment.bounds = CGRect(x: 0, y: 0, width: horizontalPadding, height: 0)
         let startPadding = NSAttributedString(attachment: paddingAttachment)
         let endPadding = NSAttributedString(attachment: paddingAttachment)
         

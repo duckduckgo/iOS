@@ -470,10 +470,15 @@ every day.</string>
                         <constraints>
                             <constraint firstItem="HOt-9c-gP5" firstAttribute="top" secondItem="35M-WT-Fs5" secondAttribute="bottom" constant="16" id="5RR-Sy-FrD"/>
                             <constraint firstItem="HOt-9c-gP5" firstAttribute="centerX" secondItem="Bv3-rQ-Vb9" secondAttribute="centerX" id="AZ6-rR-MW5"/>
+                            <constraint firstItem="XBd-OG-vC0" firstAttribute="leading" secondItem="Bv3-rQ-Vb9" secondAttribute="leading" constant="32" id="Avj-G0-Yd7"/>
                             <constraint firstItem="35M-WT-Fs5" firstAttribute="top" secondItem="Bv3-rQ-Vb9" secondAttribute="top" id="HbN-JF-t9t"/>
+                            <constraint firstItem="kYm-7s-KFg" firstAttribute="leading" secondItem="Bv3-rQ-Vb9" secondAttribute="leading" constant="32" id="JTc-Qp-J8Z"/>
                             <constraint firstItem="Bv3-rQ-Vb9" firstAttribute="trailing" secondItem="35M-WT-Fs5" secondAttribute="trailing" id="Jjm-Kt-fI5"/>
+                            <constraint firstItem="8Yp-jL-Y1J" firstAttribute="leading" secondItem="Bv3-rQ-Vb9" secondAttribute="leading" constant="32" id="OkO-h4-pO5"/>
                             <constraint firstItem="35M-WT-Fs5" firstAttribute="leading" secondItem="Bv3-rQ-Vb9" secondAttribute="leading" id="ZMP-90-nOP"/>
+                            <constraint firstItem="Bv3-rQ-Vb9" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LP0-iP-Alk" secondAttribute="trailing" constant="32" id="bMc-cA-u5g"/>
                             <constraint firstItem="Bv3-rQ-Vb9" firstAttribute="bottom" secondItem="HOt-9c-gP5" secondAttribute="bottom" constant="48" id="i7p-h1-jgK"/>
+                            <constraint firstItem="Bv3-rQ-Vb9" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="IZh-cn-pjt" secondAttribute="trailing" constant="32" id="kVS-dj-so3"/>
                             <constraint firstItem="O1x-XY-vpW" firstAttribute="width" secondItem="Q5L-lN-HDv" secondAttribute="width" id="mEe-na-Bgh"/>
                             <constraint firstItem="HOt-9c-gP5" firstAttribute="width" secondItem="Q5L-lN-HDv" secondAttribute="width" constant="-60" id="oZw-qj-pNN"/>
                         </constraints>

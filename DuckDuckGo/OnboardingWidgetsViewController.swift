@@ -48,7 +48,9 @@ class OnboardingWidgetsViewController: OnboardingContentViewController {
     override func onContinuePressed(navigationHandler: @escaping () -> Void) {
         Pixel.fire(pixel: .widgetsOnboardingCTAPressed)
         
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "onboardingWidgetDetails") as? OnboardingWidgetsDetailsViewController else {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "onboardingWidgetDetails")
+                as? OnboardingWidgetsDetailsViewController
+        else {
                 fatalError("Unable to load widget details view controller")
         }
         controller.navigationHandler = {

@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internets var būt diezgan “mežonīgs”.\n\nBet neuztraucies! Meklēt un pārlūkot privātā režīmā ir vieglāk, nekā tu domā.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Atspējota";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Tā kā Globālā privātuma kontrole (GPC) ir jauns standarts, lielākā daļa vietņu to vēl neatpazīst, taču mēs cītīgi strādājam pie tā, lai tas tiktu ievērots visā pasaulē.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Tomēr vietnēm ir obligāti jārīkojas tikai uz tām attiecināmo piemērojamo tiesību aktu ietvaros. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Iespējota";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Tavi dati nav paredzēti pārdošanai. DuckDuckGo tam piekrīt. Aktivizē iestatījumu “Globālā privātuma kontrole” (GPC), un mēs vietnēm paziņosim, ka tu izvēlies:\n\n• Nepārdot savus personas datus.\n• Ierobežot savu personas datu koplietošanu ar citiem uzņēmumiem.";

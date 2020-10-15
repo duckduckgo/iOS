@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "A Internet pode ser um pouco assustadora.\n\nMas não se preocupe! Pesquisar e navegar em privado é mais fácil do que pensa.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Desativado";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Uma vez que o Controlo Global de Privacidade (CGP) é um padrão novo, a maioria dos sites ainda não o reconhecem, mas estamos a trabalhar arduamente para ser aceite mundialmente.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Contudo, os websites só são obrigados a agir ao sinal da medida em que as leis aplicáveis os obrigam a fazê-lo. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Ativado";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Os seus dados não devem estar à venda. Na DuckDuckGo, concordamos. Ative a configuração de ''Controlo Global de Privacidade'' (CGP) e enviaremos um sinal aos sites da sua preferência para:<br/><br/> • Não vender os seus dados pessoais.<br/>• Limite a partilha dos seus dados pessoais com outras empresas.";

@@ -100,6 +100,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
 "FpT-1C-xtx.headerTitle" = "Annat";
 
+/* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
+"fV3-86-QQj.title" = "Global Privacy Control (GPC)";
+
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Standard";
 
@@ -171,9 +174,6 @@
 
 /* Class = "UILabel"; text = "Add DuckDuckGo to your dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Lägg till DuckDuckGo i din Dock";
-
-/* Class = "UILabel"; text = "On/Off"; ObjectID = "ZiK-vA-FAa"; */
-"ZiK-vA-FAa.text" = "På/Av";
 
 /* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
 "zMK-jc-4bJ.headerTitle" = "Hjälp";

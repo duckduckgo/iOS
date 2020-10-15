@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet može biti pomalo neugodan.Ne brini! Privatno pretraživanje i pregledavanje lakše je nego što misliš.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Onemogućeno";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Budući da je Globalna kontrola privatnosti (GPC) novi standard, većina mrežnih mjesta još ga neće prepoznati, ali naporno radimo na tome da postane prihvaćen u cijelom svijetu.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Međutim, mrežna mjesta moraju djelovati na signal samo u mjeri u kojoj ih obvezuju važeći zakoni. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Omogućeno";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Vaši podaci nisu na prodaju. Mi u DuckDuckGo se slažemo. Aktivirajte postavku \"Globalna kontrola privatnosti\" (GPC) i mrežnim ćemo mjestima dati signal da:\n\n• Ne prodaju vaše osobne podatke.\n• Ograniče dijeljenje vaših osobnih podataka s drugim tvrtkama.";

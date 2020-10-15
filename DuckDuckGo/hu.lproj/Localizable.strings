@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Az internet meglehetősen undok hely lehet.\n\nNe aggódj! A bizalmas keresés és böngészés egyszerűbb, mint hinnéd.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Letiltva";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Mivel a Nemzetközi Adatvédelmi Szabályozás (Global Privacy Control, GPC) új szabvány, a legtöbb weboldal még nem fogja felismerni, de keményen dolgozunk azon, hogy világszerte elfogadottá váljon.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " A weboldalaknak azonban csak olyan mértékben kell eleget tenniük a kérésnek, amennyire a hatályos törvények ezt megkövetelik tőlük. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Engedélyezve";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Az adataidnak nem lenne szabad eladónak lenniük. A DuckDuckGo-nál mi egyetértünk ezzel. Aktiváld a „Globális adatvédelmi szabályozás” (GPC) beállítást, és mi jelezzük a webhelyeknek, hogy te a következőket szeretnéd:\n\n• Ne adják el a személyes adataidat.\n• Korlátozzák a személyes adataid megosztását más vállalatokkal.";

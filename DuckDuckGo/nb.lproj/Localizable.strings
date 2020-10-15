@@ -206,10 +206,10 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Den er grei";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Visit your favorite sites in a flash!\n\nGo to a site you love. Then tap the \"⋯\" icon and select *Add to Favorites*.";
+"dax.onboarding.home.add.favorite" = "Besøk favorittsidene dine på et blunk!\n\nGå til et nettsted du liker. Trykk deretter på «...»-ikonet og velg *Legg til i Favoritter*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Visit your favorite sites in a flash! Visit one of your favorite sites. Then tap the open menu button and select Add to Favorites.";
+"dax.onboarding.home.add.favorite.accessible" = "Besøk favorittsidene dine på et blunk! Besøk en av favorittsidene dine. Trykk deretter på Åpne meny-knappen og velg Legg til i Favoritter.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Deretter kan du besøke et av favorittnettstedene dine!\n\nJeg blokkerer sporingsforsøk slik at de ikke kan spionere på deg. Hvis det er mulig, oppgraderer jeg også sikkerheten på forbindelsen din. 🔒";
@@ -220,17 +220,23 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internettet kan være ganske skummelt.\n\nMen ikke vær redd! Det er enklere enn du tror å søke og surfe privat.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Disabled";
+
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Since Global Privacy Control (GPC) is a new standard, most websites won't recognize it yet, but we're working hard to ensure it becomes accepted worldwide.";
+"donotsell.disclaimer.footertext" = "Siden Global Privacy Control (GPC) er en ny standard, gjenkjennes den nok ennå ikke av nettsteder flest, men vi jobber hardt for å sikre at den blir anerkjent verden over.";
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Finn ut mer";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " However, websites are only required to act on the signal to the extent applicable laws compel them to do so. ";
+"donotsell.disclaimer.suffix" = " Nettsteder er imidlertid kun pålagt å ta til følge denne opplysningsmeldingen når gjeldende lover pålegger dem å gjøre det. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Enabled";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the \"Global Privacy Control\" (GPC) setting and we'll signal to websites your preference to:\n\n• Not sell your personal data.\n• Limit sharing of your personal data to other companies.";
+"donotsell.info.headertext" = "Informasjonen din bør ikke være til salgs. Hos DuckDuckGo deler vi denne oppfatningen. Aktiver innstillingen \"Global Privacy Control\" (GPC), så opplyser vi nettsteder om at du foretrekker å:<br/><br/> • ikke selge dine personlige data.<br/>• begrense deling av personopplysninger med andre selskaper.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bokmerker ennå";

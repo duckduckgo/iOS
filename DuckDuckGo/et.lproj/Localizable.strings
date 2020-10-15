@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet võib olla üsna jube.\n\nÄra muretse! Privaatselt otsimine ja sirvimine on lihtsam kui arvad.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Keelatud";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Kuna ülemaailmne privaatsuskontroll (GPC) on uus standard, ei tunne enamik veebisaite seda veel ära, kuid me töötame selle nimel, et seda aktsepteeritaks üleilmselt.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Kuid veebisaidid peavad reageerima signaalile ainult niivõrd, kuivõrd kehtivad seadused neid selleks sunnivad. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Lubatud";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Sinu andmeid ei tohiks müüa. DuckDuckGo nõustub sellega. Aktiveeri seadistus „Üleilmne privaatsuskontroll“ (GPC) ja me anname veebisaitidele märku sinu eelistustest: \n\n • Mitte müüa sinu isikuandmeid. \n• Piirata sinu isikuandmete jagamist teiste ettevõtetega.";

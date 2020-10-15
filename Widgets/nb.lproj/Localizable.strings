@@ -14,10 +14,10 @@
 "widget.gallery.search.display.name" = "Søk";
 
 /* CTA shown in the favorites widget empty state. */
-"widget.no.favorites.cta" = "Add Favorites";
+"widget.no.favorites.cta" = "Legg til favoritter";
 
 /* Message shown in the favorites widget empty state. */
-"widget.no.favorites.message" = "Quickly visit your favorite sites.";
+"widget.no.favorites.message" = "Besøk favorittsidene dine raskt.";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Søk i DuckDuckGo";

@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internettet kan være ret uhyggeligt.\n\nBare rolig! Det er lettere at søge og browse privat, end du tror.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Deaktiveret";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Da Global Privacy Control (GPC) er en ny standard, genkender de fleste websteder det endnu ikke, men vi arbejder hårdt på at sikre, at det bliver accepteret over hele verden.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Websteder er dog kun forpligtet til at reagere på signalet i det omfang, de er forpligtet ifølge loven til at gøre det. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Aktiveret";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Dine data burde ikke være til salg. Det er vi enige i hos DuckDuckGo. Aktivér indstillingen \"Global Privacy Control\" (GPC), så signalerer til websteder, om du foretrækker: \n\n• Sælg ikke dine persondata.\n• Begræns deling af dine persondata til andre virksomheder.";

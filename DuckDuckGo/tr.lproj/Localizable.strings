@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "İnternet bazen ürkütücü olabilir.\n\nEndişelenmeyin! İnternette kimsenin göremeyeceği şekilde arama yapmak ve gezinmek sandığınızdan çok daha kolay.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Devre Dışı";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Küresel Gizlilik Kontrolü (GPC) yeni bir standart olduğundan, çoğu web sitesi tarafından henüz tanınmayacaktır. Ancak, dünya çapında benimsenmesini sağlamak için elimizden geleni yapıyoruz.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Bununla birlikte, web sitelerinin onlara bildirilen tercihleri yalnızca geçerli yasaların zorunlu kıldığı ölçüde dikkate almaları gerekmektedir. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Etkin";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Verileriniz satılık olmamalı. DuckDuckGo'da aynı fikirdeyiz. \"Küresel Gizlilik Kontrolü\" (GPC) ayarını etkinleştirirseniz web sitelerine şu tercihleri yaptığınızı bildiririz:<br/><br/> • Kişisel verilerinizin satılmasını istemediğinizi.<br/>• Kişisel verilerinizin diğer şirketlerle paylaşımının sınırlandırılmasını istediğinizi.";

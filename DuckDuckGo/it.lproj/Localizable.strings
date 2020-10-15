@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet può essere un po' inquietante.\n\nNon preoccuparti! Effettuare ricerche e navigare in modo privato è più facile di quanto pensi.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Disattivato";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Dal momento che il Global Privacy Control (GPC) rappresenta un nuovo standard, la maggior parte dei siti Web non lo riconosce ancora, ma ci stiamo impegnando al massimo per assicurarci che venga accettato in tutto il mondo.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Tuttavia, i siti Web sono tenuti a rispondere alla segnalazione esclusivamente nei limiti delle leggi pertinenti che li obbligano ad agire in tal senso. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Attivato";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "I tuoi dati non dovrebbero mai essere messi in vendita. Noi di DuckDuckGo ne siamo convinti. Attiva l'impostazione \"Global Privacy Control\" (GPC) e segnaleremo ai siti Web di:\n\n• Non vendere i tuoi dati personali.\n• Limitare la condivisione dei tuoi dati personali con altre aziende.";

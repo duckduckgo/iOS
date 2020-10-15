@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet voi olla pelottava paikka.<br/><br/>Mutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Pois käytöstä";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Koska Global Privacy Control (GPC) on uusi standardi, useimmat verkkosivustot eivät vielä tunnista sitä, mutta teemme parhaamme, että standardi hyväksyttäisiin kaikkialla maailmassa.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Verkkosivujen täytyy kuitenkin noudattaa kehotusta vain siinä laajuudessa kuin sovellettavat lait määräävät. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Käytössä";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Tietojesi ei pitäisi olla myynnissä. DuckDuckGo on samaa mieltä. Ota \"Global Privacy Control\" (GPC) -asetus käyttöön, niin me kerromme verkkosivustoille, että:\n\n• ne eivät voi myydä tietojasi.\n• niiden täytyy rajoittaa henkilötietojesi jakamista muille yrityksille.";

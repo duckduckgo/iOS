@@ -220,6 +220,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet může být trochu strašidelný.\n\nNebojte se! Anonymní vyhledávání a procházení je jednodušší, než si myslíte.";
 
+/* GPC Setting state */
+"donotsell.disabled" = "Zakázáno";
+
 /* No comment provided by engineer. */
 "donotsell.disclaimer.footertext" = "Vzhledem k tomu, že Globální kontrola ochrany osobních údajů (GPC) je nový standard, většina webových stránek ho zatím nerozpozná, nicméně tvrdě pracujeme na tom, abychom zajistili, že bude akceptován po celém světě.";
 
@@ -228,6 +231,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.suffix" = " Webové stránky jsou nicméně povinny řešit podněty pouze v rozsahu, v jakém je k tomu donutí příslušné zákony. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Povoleno";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Vaše osobní údaje nesmí být na prodej. S tím ve společnosti DuckDuckGo souhlasíme. Aktivujte nastavení „Globální kontrola ochrany osobních údajů“ (GPC) a my upozorníme webové stránky na vaše preference:\n\n• Neprodávat vaše osobní údaje.\n• Omezit sdílení vašich osobních údajů s jinými společnosti.";

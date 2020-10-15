@@ -177,7 +177,7 @@
                             <outlet property="delegate" destination="sSL-cj-dyo" id="bt0-bZ-yHh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Image Cache" id="42K-hM-uzg"/>
+                    <navigationItem key="navigationItem" title="Configuration Refresh Info" id="42K-hM-uzg"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rC6-OZ-nkP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

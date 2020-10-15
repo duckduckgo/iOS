@@ -37,7 +37,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lvy-9G-3gr">
-                                <rect key="frame" x="412.5" y="182" width="199" height="70"/>
+                                <rect key="frame" x="20" y="182" width="984" height="70"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Welcome to
@@ -124,6 +124,8 @@ DuckDuckGo!</string>
                             <constraint firstItem="77H-Rq-H5D" firstAttribute="top" secondItem="IfD-pB-0T8" secondAttribute="top" id="Y6T-vo-ZZZ"/>
                             <constraint firstItem="f5N-oh-abb" firstAttribute="top" secondItem="77H-Rq-H5D" secondAttribute="bottom" constant="-2" id="YCB-Hg-cND"/>
                             <constraint firstItem="67b-it-r0B" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="80" id="YJ2-ng-4PO"/>
+                            <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="Lvy-9G-3gr" secondAttribute="trailing" constant="20" id="YfI-Kf-MD3"/>
+                            <constraint firstItem="Lvy-9G-3gr" firstAttribute="leading" secondItem="ASL-d6-ybT" secondAttribute="leading" constant="20" id="ccG-4f-oSM"/>
                             <constraint firstItem="77H-Rq-H5D" firstAttribute="trailing" secondItem="IfD-pB-0T8" secondAttribute="trailing" constant="2" id="efA-8U-YSX"/>
                             <constraint firstAttribute="bottom" secondItem="XSv-kV-jRp" secondAttribute="bottom" id="gMg-sx-vAN"/>
                             <constraint firstItem="oAv-Zt-uIt" firstAttribute="width" secondItem="qNL-CF-WGF" secondAttribute="width" constant="-20" id="gQZ-NR-uqe"/>

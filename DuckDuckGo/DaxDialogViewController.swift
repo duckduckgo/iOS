@@ -34,6 +34,7 @@ class DaxDialogViewController: UIViewController {
             initLabel()
         }
     }
+    var accessibleMessage: String?
     var cta: String? {
         didSet {
             initCTA()
@@ -86,6 +87,10 @@ class DaxDialogViewController: UIViewController {
     
     private func initLabel() {
         label?.text = nil
+
+        // Use the accessible message if present, otherwise remove markdown and use the message
+        label?.accessibilityLabel = accessibleMessage ?? message?.attributedStringFromMarkdown(color: .black).string
+
         chars = Array(message ?? "")
     }
     

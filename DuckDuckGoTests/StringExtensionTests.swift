@@ -83,4 +83,24 @@ class StringExtensionTests: XCTestCase {
         let input = "ab\t\ncd"
         XCTAssertEqual(input, input.trimWhitespace())
     }
+
+    func testIsBookmarklet() {
+        XCTAssertTrue("javascript:alert(1)".isBookmarklet())
+        XCTAssertTrue("Javascript:alert(1)".isBookmarklet())
+        XCTAssertFalse("http://duckduckgo.com".isBookmarklet())
+    }
+
+    func testEncodeBookmarklet() {
+        let input = "javascript:(function() { alert(1) })()"
+        let inputEncoded = "javascript:(function()%20%7B%20alert(1)%20%7D)()"
+        XCTAssertEqual(inputEncoded, input.toEncodedBookmarklet()?.absoluteString)
+        XCTAssertEqual(inputEncoded, inputEncoded.toEncodedBookmarklet()?.absoluteString)
+        XCTAssertNil("http://duckduckgo.com".toEncodedBookmarklet())
+    }
+
+    func testDecodeBookmarklet() {
+        let bookmarklet = "(function() { alert(1) })()"
+        let bookmarkletEncoded = "javascript:(function()%20%7B%20alert(1)%20%7D)()"
+        XCTAssertEqual(bookmarklet, bookmarkletEncoded.toDecodedBookmarklet())
+    }
 }

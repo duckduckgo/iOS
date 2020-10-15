@@ -26,6 +26,8 @@ extension Color {
     static let widgetSearchFieldBackground = Color("WidgetSearchFieldBackgroundColor")
     static let widgetSearchFieldText = Color("WidgetSearchFieldTextColor")
     static let widgetFavoriteLetter = Color("WidgetFavoriteLetterColor")
+    static let widgetAddFavoriteCTA = Color(.cornflowerBlue)
+    static let widgetAddFavoriteMessage = Color("WidgetAddFavoriteMessageColor")
 
     static func forDomain(_ domain: String) -> Color {
         return Color(UIColor.forDomain(domain))

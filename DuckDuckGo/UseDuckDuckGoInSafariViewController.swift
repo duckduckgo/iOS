@@ -44,13 +44,19 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
             let color = attributes[.foregroundColor] as? UIColor,
             let style = attributes[.paragraphStyle] as? NSParagraphStyle {
             
-            let firstStepText = UserText.settingTutorialOpenStep.attributedStringFromMarkdown(color:color, lineHeightMultiple: style.lineHeightMultiple, fontSize: font.pointSize)
+            let firstStepText = UserText.settingTutorialOpenStep.attributedStringFromMarkdown(color: color,
+                                                                                              lineHeightMultiple: style.lineHeightMultiple,
+                                                                                              fontSize: font.pointSize)
             firstStepLabel.attributedText = firstStepText
             
-            let secondStepText = UserText.settingTutorialNavigateStep.attributedStringFromMarkdown(color:color, lineHeightMultiple: style.lineHeightMultiple, fontSize: font.pointSize)
+            let secondStepText = UserText.settingTutorialNavigateStep.attributedStringFromMarkdown(color: color,
+                                                                                                   lineHeightMultiple: style.lineHeightMultiple,
+                                                                                                   fontSize: font.pointSize)
             secondStepLabel.attributedText = secondStepText
             
-            let thirdStepText = UserText.settingTutorialSelectStep.attributedStringFromMarkdown(color:color, lineHeightMultiple: style.lineHeightMultiple, fontSize: font.pointSize)
+            let thirdStepText = UserText.settingTutorialSelectStep.attributedStringFromMarkdown(color: color,
+                                                                                                lineHeightMultiple: style.lineHeightMultiple,
+                                                                                                fontSize: font.pointSize)
             thirdStepLabel.attributedText = thirdStepText
         }
         

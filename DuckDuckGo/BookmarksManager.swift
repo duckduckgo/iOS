@@ -166,9 +166,17 @@ class BookmarksManager {
         let bookmarks = dataStore.bookmarks
         return indexOf(url, in: bookmarks)
     }
-    
+
     func contains(url: URL) -> Bool {
-        return nil != indexOfFavorite(url: url) || nil != indexOfBookmark(url: url)
+        return containsBookmark(url: url) || containsFavorite(url: url)
+    }
+
+    func containsFavorite(url: URL) -> Bool {
+        return indexOfFavorite(url: url) != nil
+    }
+
+    func containsBookmark(url: URL) -> Bool {
+        return indexOfBookmark(url: url) != nil
     }
 
     private func indexOfFavorite(url: URL) -> Int? {

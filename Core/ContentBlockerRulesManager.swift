@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import WebKit
 import os.log
@@ -26,20 +25,21 @@ public class ContentBlockerRulesManager {
     
     public static let shared = ContentBlockerRulesManager()
     
-    private var trackerData: TrackerData!
-    
     public var blockingRules: WKContentRuleList?
     
     public weak var storageCache: StorageCache?
     
-    init() {
-        trackerData = TrackerDataManager.shared.trackerData
-    }
-    
+    private init() {}
+
     public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
+        guard let trackerData = TrackerDataManager.shared.trackerData else {
+            completion?(nil)
+            return
+        }
+
         let unprotectedSites = UnprotectedSitesManager().domains
         let tempUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-        
+
         let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
                                                                                     andTemporaryUnprotectedDomains: tempUnprotectedDomains)
         
@@ -49,7 +49,8 @@ public class ContentBlockerRulesManager {
         }
         
         if let store = WKContentRuleListStore.default() {
-            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: String(data: data, encoding: .utf8)!) { [weak self] ruleList, error in
+            let ruleList = String(data: data, encoding: .utf8)!
+            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
                 self?.blockingRules = ruleList
                 completion?(ruleList)
                 if let error = error {

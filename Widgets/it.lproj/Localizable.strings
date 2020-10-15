@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Label";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Effettua ricerche o visita i tuoi siti preferiti in incognito con un solo tocco.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Ricerca e Preferiti";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Avvia rapidamente una navigazione in incognito in DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Ricerca";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Aggiungi preferiti";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Visita velocemente i tuoi siti preferiti.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Cerca DuckDuckGo";
+

@@ -39,7 +39,6 @@ class DoNotSellSettingsViewController: UITableViewController {
         
         doNotSellToggle.isOn = appSettings.sendDoNotSell
         
-        infoTextView.text = UserText.doNotSellInfoText
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
         infoTextView.attributedText = NSAttributedString(string: UserText.doNotSellInfoText,
@@ -53,6 +52,26 @@ class DoNotSellSettingsViewController: UITableViewController {
         disclaimerTextView.backgroundColor = .clear
         
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+        
+        if let footer = tableView.tableFooterView {
+            let newSize = footer.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            footer.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableFooterView = footer
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

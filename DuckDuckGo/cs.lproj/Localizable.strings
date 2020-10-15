@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Přidat";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Záložka";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Zrušit";
+
+/* Copy action */
+"action.title.copy" = "Kopírovat";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Zakázat ochranu soukromí";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Povolit ochranu soukromí";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Zavřít karty a vymazat data";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Karty a data vymazány";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Otevřít na pozadí";
+
+/* Create New Tab action */
+"action.title.newTab" = "Nová karta";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Otevřít v nové kartě";
+
+/* Open action */
+"action.title.open" = "Åben";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Vložit a jít";
+
+/* Reading List action */
+"action.title.readingList" = "Přidat do seznamu k přečtení";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Obnovit";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Nahlásit nefunkční webové stránky";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Načíst stránku v režimu plochy";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Načíst stránku v mobilním režimu";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Uložit";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Přidat do záložek";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Přidat do oblíbených";
+
+/* Settings action */
+"action.title.settings" = "Nastavení...";
+
+/* Share action */
+"action.title.share" = "Sdílet...";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Dát do záložek všechny karty?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Přidat na nechráněné stránky";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Upravit záložku";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Uložit záložku";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Uložit oblíbené";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Odemknout DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Přihlásit se";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Přihlaste se do %@. Vaše přihlašovací údaje vám budou bezpečně zaslány.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Přihlaste se do %@. Vaše heslo bude odesláno nezabezpečeným způsobem, protože připojení není šifrované.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Heslo";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Je vyžadována autentizace";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Uživatelské jméno";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Vypnout";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Aktivní";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Název webové stránky";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Některé karty nelze dát do záložek";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Všechny karty v záložkách";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Komentáře se nenačetly";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Chybí obsah";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Obrázky se nenačetly";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Odkazy nebo tlačítka nefungují";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Nemohu se přihlásit";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Něco jiného";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Tato stránka mě požádala o deaktivaci";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Prohlížeč je nekompatibilní";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Video se nepřehrálo";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Popište, co se stalo";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Navždy skrýt tipy";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Zrušit";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Je jich jen pár a snažili jsme se udělat je informativní.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Skrýt zbývající tipy?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Vaše vyhledávání DuckDuckGo jsou anonymní a historii Vašeho vyhledávání nikdy nikam neukládáme. Vůbec nikdy. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Pche!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Plácnutí!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* se vás snažili tady vysledovat.\n\nZablokovali jsme je!\n\n☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte novou webovou stránku. ️";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Plácnutí!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Upozornění! Nedokážeme zabránit, aby %1$@ viděli vaši aktivitu na %2$@.\n\nAle procházejte s námi a budeme moci omezit, co o vás celkově %1$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Mám to";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Upozornění! Vzhledem k tomu, že %2$@ vlastní %1$@, nemůžeme jim zabránit, aby viděli vaši aktivitu tady.Ale procházejte s námi a budeme moci omezit, co o vás celkově %2$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Mám to";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Zatímco poklepete a přejedete, my budeme blokovat otravné trackery.\n\nDo toho — pokračujte v prohlížení!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Mám to";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Navštivte v mžiku své oblíbené stránky!\n\nPřejděte na stránky, které máte rádi. Pak klepněte na ikonu „⋯“ a zvolte *Přidat do oblíbených*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Navštivte v mžiku své oblíbené stránky! Navštivte jedny z vašich oblíbených stránek. Pak klepněte na tlačítko otevřené nabídky a zvolte Přidat do oblíbených.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Dále zkuste navštívit jednu z vašich oblíbených stránek!\n\nZablokujeme trackery, aby vás nemohli špehovat. Pokud to bude možné, upgradujeme také zabezpečení vašeho připojení. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Máte to!\n\nPamatujte: pokaždé, když internet procházíte s námi, příšerným reklamám přistřihneme křídla. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internet může být trochu strašidelný.\n\nNebojte se! Anonymní vyhledávání a procházení je jednodušší, než si myslíte.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Zakázáno";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Vzhledem k tomu, že Globální kontrola ochrany osobních údajů (GPC) je nový standard, většina webových stránek ho zatím nerozpozná, nicméně tvrdě pracujeme na tom, abychom zajistili, že bude akceptován po celém světě.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Více informací";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Webové stránky jsou nicméně povinny řešit podněty pouze v rozsahu, v jakém je k tomu donutí příslušné zákony. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Povoleno";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vaše osobní údaje nesmí být na prodej. S tím ve společnosti DuckDuckGo souhlasíme. Aktivujte nastavení „Globální kontrola ochrany osobních údajů“ (GPC) a my upozorníme webové stránky na vaše preference:\n\n• Neprodávat vaše osobní údaje.\n• Omezit sdílení vašich osobních údajů s jinými společnosti.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Zatím žádné záložky";
+
+/* Empty list state placholder */
+"empty.favorites" = "Zatím žádné oblíbené";
+
+/* No comment provided by engineer. */
+"favorite" = "Oblíbené";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Smazat";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Upravit";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Blokování reklam a vyskakovacích oken";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Tvorba a správa záložek";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Kterou funkci prohlížení můžeme přidat nebo vylepšit?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Problémy s funkcemi prohlížeče";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Funkce prohlížení chybí nebo jsou nepohodlné.";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Interakce s obrázky";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Navigace dopředu, dozadu nebo obnovení";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Žádné z výše uvedených";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Tvorba a správa karet";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Při přehrávání videí";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Jak se záložky zobrazují";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Kterou možnost přizpůsobení můžeme přidat nebo vylepšit?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Potíže při přizpůsobování";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Není dostatek možností, jak aplikaci přizpůsobit";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Konfigurace domovské obrazovky";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Žádné z výše uvedených";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Jak se zobrazují karty";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Jak aplikace vypadá";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Která data jsou vymazána";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Kdy jsou data vymazána";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Lepší automatické doplňování";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Kterou funkci vyhledávání můžeme přidat nebo vylepšit?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Potíže s vyhledáváním DuckDuckGo";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "Vyhledávání DuckDuckGo není dostatečně dobré";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Vyhledávání v určitém jazyce nebo regionu";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Rozložení by mělo být více podobné Googlu.";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Rychlejší načtení";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Žádné z výše uvedených";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programování/technické vyhledávání";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Řekněte nám prosím, co můžeme zlepšit";
+
+/* Confirmation button */
+"feedback.form.submit" = "ODESLAT ZPĚTNOU VAZBU";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Buďte co nejkonkrétnější.";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Máte něco konkrétního, co byste chtěli zahrnout?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Je nám líto, že nejste spokojení.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "S čím souvisí vaše frustrace nejvíce?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Další problémy";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Žádné z výše uvedených";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Který problém zažíváte?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Aplikace se hroutí nebo zamrzne";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Potíže s výkonností";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Aplikace je pomalá, chybná nebo se hroutí";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Žádné z výše uvedených";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Chyby při přehrávání videa nebo médií";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Webové stránky nebo výsledky vyhledávání se načítají pomalu.";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Podělte se o podrobnosti.";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Co se vám líbilo?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Máte nějaké podrobnosti, o které byste se chtěli podělit s týmem?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "To rádi slyšíme!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Ne, díky! Skončil(a) jsem";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Podělte se o podrobnosti.";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Vaše anonymní zpětná vazba je pro nás důležitá.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Tak se do toho pustíme!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Do jaké kategorie byste zařadili svou zpětnou vazbu?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Děkujeme! Zpětná vazba odeslána.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Potíže při načítání webu";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Určité webové stránky se nenačítají správně";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Jaký obsah se zdá být postižen?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Kde jste narazili na tyto problémy?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Které webové stránky mají problémy?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d z %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Vyhledávání na stránce";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Nastavit jako výchozí prohlížeč";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Nastavte si DuckDuckGo jako výchozí prohlížeč.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Otevírejte odkazy s klidem mysli, pokaždé.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "NOVINKY V IOS 14";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Přidejte DuckDuckGo na svou domovskou obrazovku!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Přidejte DuckDuckGo do svého docku pro snadný přístup!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Přidejte DuckDuckGo na domovskou stránku";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Vyhledávání a oblíbené položky v nové kartě";
+
+/* Home tab title */
+"homeTab.title" = "Domů";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Přidat záložku";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Přidat oblíbené";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Procházet zpátky";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Procházet dopředu";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Zavřít";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Zavřít karta";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Vyhledávání na stránce";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Najít další";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Najít předchozí";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Vymazat všechny karty a data";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Vyhledejte nebo zadejte adresu";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Nová karta";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Další karta";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Otevřít odkaz na pozadí";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Otevřít odkaz na nové kartě";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Předchozí karta";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Vytisknout";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Načíst znovu";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Zvolit";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Zobrazit všechny karty";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Vítejte v DuckDuckGo!";
+
+/* Edit button */
+"navigation.title.edit" = "Upravit";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Pokračovat";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Možná později";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Nastavte si DuckDuckGo jako výchozí prohlížeč.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Nastavit jako výchozí prohlížeč";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Přeskočit";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Spustit procházení";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Vítejte v DuckDuckGo!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Je nám líto, ale žádná aplikace si s tímto odkazem neporadí.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Webové stránky spoléhají na soubory cookie, aby vás udržely přihlášené. Když na webu zapnete ochranu, soubory cookie se nevymažou a zůstanete přihlášeni, a to i po použití tlačítka pro mazání.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Webové stránky";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Chtěli byste u %@ ochranu?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Webová stránka pro ochranu souborů";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Teď ne";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Odstranit vše";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "Dobře";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Požádat o ochranu webových stránek";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ je nyní chráněný! Pro odstranění navštivte nastavení.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritmus";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bitů";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Chyba při vyjímání certifikátu";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Obecný název";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Efektivní velikost";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "Emailová adresa";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Šifrované připojení";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Nucené šifrování";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Pro tento web jsme vynutili používat šifrované připojení, které brání odposlouchávání jakýchkoli osobních údajů, které na něj posíláte.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Šifrované připojení zabraňuje odposlouchávání jakýchkoli osobních údajů, které odesíláte na web.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Identifikátor klíče subjektu";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Vydavatel";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Veřejný klíč";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Velikost klíče";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Smíšené šifrování";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Tento web má smíšené šifrování, protože určitý obsah je doručován přes nešifrovaná připojení.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Ne";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Trvale";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Veřejný klíč";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Šifrované připojení zabraňuje odposlouchávání jakýchkoli osobních údajů, které odesíláte na web.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Název subjektu";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Shrnutí";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Toto připojení není šifrované, proto dávejte pozor na to, co odešlete.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Nešifrované připojení";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Neznámé";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Využití";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Dešifrujte";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Odvoďte";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Zašifrujte";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Podepište";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Rozbalte";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Ověřte";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Zabalte";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Ano";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "OCHRANA STRÁNKY VYPNUTA";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "VYLEPŠENO Z $1 NA $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Hodnocení ochrany soukromí";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Sledovací sítě byly nalezeny na webových stránkách %1$@%%, které jste navštívili od roku %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Stále shromažďujeme data, abychom zjistili,\nkolik trackerů jsme zablokovali.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Používání informací o postupech na ochranu osobních údajů od společností ToS;DR";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Postupy ochrany soukromí ukazují, do jaké míry jsou osobní údaje, které sdílíte s webovými stránkami, chráněny.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Tato webová stránka vás upozorní před přenosem vašich údajů v případě fúze nebo akvizice";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Postupy na ochranu osobních údajů na této webové stránce nebyly přezkoumány.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Ochrana osobních údajů stupeň %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Stisknutím otevřete obrazovku Ochrany osobních údajů";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Tyto statistiky se ukládají pouze na vašem zařízení a nikam se neodesílají. Nikdy.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Správné postupy ochrany soukromí";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Smíšené postupy ochrany soukromí";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Nesprávné postupy ochrany soukromí";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Neznámé postupy ochrany soukromí";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Sledovací sítě agregují vaši webovou historii do datového profilu o vás. Hlavní sledovací sítě jsou nebezpečnější, protože vás mohou sledovat a zaměřit přes více internetových stránek.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Ne";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Ano";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Chtěl/a byste opustit DuckDuckGo a zobrazit si tento obsah?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Otevřít v jiné aplikaci?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Odeslání anonymní zprávy o nefunkční stránce nám pomůže tyto problémy odstranit a vylepšit rozšíření.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Vyhledejte nebo zadejte adresu";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Záložky";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Oblíbené";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "V DuckDuckGo přinášíme nový standard důvěry online.\n\nDuckDuckGo Privacy Browser poskytuje všechny základní prvky ochrany osobních údajů, které potřebujete k ochraně při vyhledávání a prohlížení webu, včetně blokování sledovacích zařízení, chytřejšího šifrování a soukromého vyhledávání DuckDuckGo.\n\nInternet by v konečném důsledku neměl být tak nebezpečný a získat ochranu osobních údajů, kterou si zasloužíte online, by mělo být stejně jednoduché jako zatáhnout žaluzie.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Ostatní vyhledávače sledují vaše vyhledávání, i když jste v režimu anonymního procházení. My vás nesledujeme. Tečka.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Přejděte na *Safari*, potom *Vyhledávač*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Otevřřete aplikaci *Nastavení*";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Vyberte *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Odešlete zprávu";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Doména nefunkční stránky:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Který obsah nebo funkce jsou poškozené?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Nahlášení nefunkční stránky je zcela anonymní a pomáhá nám vylepšit aplikaci!";
+
+/* This is a form title */
+"siteFeedback.title" = "Nahlásit poškozenou stránku";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Které webové stránky jsou poškozené?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Zavřít kartu Domů";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Zavřít \"%1$@\" na %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Otevřít kartu Domů";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Otevřít \"%1$@\" na %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Přepínač karet";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Tmavé";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Systém";
+
+/* Light Theme entry */
+"theme.acc.light" = "Světlo";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Tmavý";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Výchozí nastavení systému";
+
+/* Light Theme entry */
+"theme.name.light" = "Světlo";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ přidáno na nechráněné stránky";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ odstraněno z nechráněných stránek";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Vyskytla se neznámá chyba";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Záložky uloženy";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Záložky již uloženy";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Žádná webová stránka pro vytvoření záložky";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Oblíbené uloženy";
+

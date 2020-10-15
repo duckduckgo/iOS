@@ -1,0 +1,69 @@
+/* Class = "UIImageView"; accessibilityLabel = "Negative Feedback"; ObjectID = "1RQ-bi-6hU"; */
+"1RQ-bi-6hU.accessibilityLabel" = "Feedback negativ";
+
+/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
+"7zN-Xh-yYi.normalTitle" = "Partajează feedback";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Trimite feedback";
+
+/* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
+"A1s-GY-hbq.normalTitle" = "Nu mulțumesc! Am terminat";
+
+/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
+"cZl-qB-kSL.title" = "Închidere";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Trimite feedback";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
+"epz-Ta-KQ7.title" = "Înapoi";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "h2M-TW-0QG"; */
+"h2M-TW-0QG.title" = "Înapoi";
+
+/* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
+"iVe-E1-jAH.accessibilityHint" = "Feedbackul tău.";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
+"JF8-Ow-zXL.title" = "Înapoi";
+
+/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
+"jr6-Al-4fr.title" = "Trimite";
+
+/* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "TRIMITERE FEEDBACK";
+
+/* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Trimite feedback";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
+"m0a-EJ-h27.title" = "Înapoi";
+
+/* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
+"msl-mT-bMG.accessibilityLabel" = "Negativ";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Trimite feedback";
+
+/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Trimite feedback";
+
+/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Trimite feedback";
+
+/* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
+"TMj-NM-j3b.placeholder" = "Ce site este defect?”";
+
+/* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
+"WjT-HM-yim.title" = "Raportați Site-ul Distrus";
+
+/* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
+"Wx3-Vb-ItS.text" = "Motivul pentru care site-ul nu funcționează";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Trimite feedback";
+
+/* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
+"ze4-T7-OFN.accessibilityLabel" = "Pozitiv";
+

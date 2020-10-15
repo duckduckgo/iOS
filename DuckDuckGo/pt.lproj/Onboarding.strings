@@ -1,0 +1,15 @@
+/* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
+"0MQ-7J-rAM.title" = "Abra links com tranquilidade, sempre.";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
+"ciS-pA-ovS.normalTitle" = "Continuar";
+
+/* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
+"J1y-Qk-FSX.normalTitle" = "IGNORAR";
+
+/* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
+"u7Q-MU-drX.text" = "Bem-vindo(a) ao DuckDuckGo!";
+
+/* Class = "UIViewController"; title = "Search and browse privately,\nevery day."; ObjectID = "Xjr-gI-tDG"; */
+"Xjr-gI-tDG.title" = "Procurar e navegar de forma privada,\ntodos os dias.";
+

@@ -1,0 +1,27 @@
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "1rB-5w-de3"; */
+"1rB-5w-de3.accessibilityLabel" = "Definições";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse forward"; ObjectID = "aXg-p3-oeq"; */
+"aXg-p3-oeq.accessibilityLabel" = "Navegar para a frente";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "Dt8-We-5tV"; */
+"Dt8-We-5tV.accessibilityLabel" = "Limpar o texto";
+
+/* Class = "UIButton"; accessibilityLabel = "Share"; ObjectID = "hor-Jd-3kw"; */
+"hor-Jd-3kw.accessibilityLabel" = "Partilhar";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
+"i9n-fD-ncJ.accessibilityLabel" = "Navegar para trás";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
+"IHT-9R-ERy.normalTitle" = "Cancelar";
+
+/* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
+"ii4-Sq-bD1.accessibilityLabel" = "Marcadores";
+
+/* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
+"nJo-2d-gri.accessibilityLabel" = "Menu de navegação";
+
+/* Class = "UIButton"; accessibilityLabel = "Refresh Page"; ObjectID = "Qea-QY-LVl"; */
+"Qea-QY-LVl.accessibilityLabel" = "Atualizar a página";
+

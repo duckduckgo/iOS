@@ -1,0 +1,15 @@
+/* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
+"0MQ-7J-rAM.title" = "Otvarajte veze spokojno, svaki put.";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
+"ciS-pA-ovS.normalTitle" = "Nastaviti";
+
+/* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
+"J1y-Qk-FSX.normalTitle" = "PRESKOČI";
+
+/* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
+"u7Q-MU-drX.text" = "Dobro došli u DuckDuckGo!";
+
+/* Class = "UIViewController"; title = "Search and browse privately,\nevery day."; ObjectID = "Xjr-gI-tDG"; */
+"Xjr-gI-tDG.title" = "Privatno pretražuj i pregledavaj,\nsvaki dan.";
+

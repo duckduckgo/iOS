@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Label";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Tee hakuja ja käy lempisivustoillasi yhdellä napautuksella.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Haku ja suosikit";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Tee yksityinen haku DuckDuckGo:ssa nopeasti.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Etsi";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Lisää suosikkeja";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Siirry nopeasti suosikkisivustoillesi.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Hae DuckDuckGo:sta";
+

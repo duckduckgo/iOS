@@ -230,63 +230,95 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Privacy &amp; Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vPz-uO-6gB" detailTextLabel="3cF-XE-ZHg" style="IBUITableViewCellStyleValue1" id="X9R-j6-TtK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="X9R-j6-TtK">
                                         <rect key="frame" x="0.0" y="429.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X9R-j6-TtK" id="hhP-bZ-dyU">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vPz-uO-6gB">
-                                                    <rect key="frame" x="20" y="14" width="204.33333333333334" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-uO-6gB">
+                                                    <rect key="frame" x="20" y="10" width="287.33333333333331" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="2zu-Zv-RNU"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On/Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3cF-XE-ZHg">
-                                                    <rect key="frame" x="327.33333333333337" y="14" width="47.333333333333336" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="3Eb-dV-4ZX" userLabel="On/Off">
+                                                    <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="On/Off">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3Eb-dV-4ZX" firstAttribute="leading" secondItem="vPz-uO-6gB" secondAttribute="trailing" constant="20" id="4b7-S0-8i6"/>
+                                                <constraint firstItem="vPz-uO-6gB" firstAttribute="centerY" secondItem="hhP-bZ-dyU" secondAttribute="centerY" id="B4L-ce-75k"/>
+                                                <constraint firstAttribute="bottom" secondItem="vPz-uO-6gB" secondAttribute="bottom" constant="10" id="DDB-FY-bg4"/>
+                                                <constraint firstItem="vPz-uO-6gB" firstAttribute="top" secondItem="hhP-bZ-dyU" secondAttribute="top" constant="10" id="KQX-fD-CYv"/>
+                                                <constraint firstItem="3Eb-dV-4ZX" firstAttribute="centerY" secondItem="hhP-bZ-dyU" secondAttribute="centerY" id="Nqq-dP-Qub"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="3Eb-dV-4ZX" secondAttribute="trailing" id="Tl5-FV-c3f"/>
+                                                <constraint firstItem="vPz-uO-6gB" firstAttribute="leading" secondItem="hhP-bZ-dyU" secondAttribute="leadingMargin" id="tgm-TF-VsW"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="fV3-86-QQj" kind="show" id="XDJ-yY-6yf"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="0DQ-yq-UuT" detailTextLabel="PNf-tz-lTg" style="IBUITableViewCellStyleValue1" id="EqN-m3-s4f">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="EqN-m3-s4f">
                                         <rect key="frame" x="0.0" y="473.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EqN-m3-s4f" id="R54-xq-W5V">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0DQ-yq-UuT">
-                                                    <rect key="frame" x="20" y="14" width="134.66666666666666" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DQ-yq-UuT">
+                                                    <rect key="frame" x="20" y="10" width="287.33333333333331" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lhy-SS-UWF"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On/Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PNf-tz-lTg">
-                                                    <rect key="frame" x="327.33333333333337" y="14" width="47.333333333333336" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="1SP-ku-vDO" userLabel="On/Off">
+                                                    <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="On/Off">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1SP-ku-vDO" firstAttribute="centerY" secondItem="R54-xq-W5V" secondAttribute="centerY" id="Pkw-EZ-Fb4"/>
+                                                <constraint firstItem="0DQ-yq-UuT" firstAttribute="centerY" secondItem="R54-xq-W5V" secondAttribute="centerY" id="jW4-Uh-n4y"/>
+                                                <constraint firstItem="0DQ-yq-UuT" firstAttribute="leading" secondItem="R54-xq-W5V" secondAttribute="leadingMargin" id="lsk-Nh-Zxk"/>
+                                                <constraint firstItem="1SP-ku-vDO" firstAttribute="leading" secondItem="0DQ-yq-UuT" secondAttribute="trailing" constant="20" id="neL-my-cTv"/>
+                                                <constraint firstAttribute="bottom" secondItem="0DQ-yq-UuT" secondAttribute="bottom" constant="10" id="qvQ-zK-AhT"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1SP-ku-vDO" secondAttribute="trailing" id="uyP-c0-Q9T"/>
+                                                <constraint firstItem="0DQ-yq-UuT" firstAttribute="top" secondItem="R54-xq-W5V" secondAttribute="top" constant="10" id="yns-Lz-rR2"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="Jzw-Jd-J97" kind="show" id="WYy-fS-w08"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" style="IBUITableViewCellStyleValue1" id="z07-QI-waz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="z07-QI-waz">
                                         <rect key="frame" x="0.0" y="517.33333206176758" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z07-QI-waz" id="1HL-Ha-Yz0">
@@ -302,10 +334,16 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="On/Off" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZiK-vA-FAa" userLabel="On/Off">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZiK-vA-FAa" userLabel="On/Off">
                                                     <rect key="frame" x="327.33333333333331" y="14" width="47.333333333333314" height="16"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="On/Off">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -509,11 +547,11 @@
                                         <rect key="frame" x="0.0" y="1036.6666641235352" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="20" y="0.0" width="354.66666666666669" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -540,14 +578,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="20" y="8" width="54" height="16"/>
+                                                    <rect key="frame" x="15" y="8" width="54" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="20.000000000000007" y="24" width="98.666666666666671" height="12"/>
+                                                    <rect key="frame" x="15.000000000000007" y="24" width="98.666666666666671" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -580,12 +618,12 @@
                         <outlet property="autoClearAccessoryText" destination="ZiK-vA-FAa" id="NMH-tv-Mmr"/>
                         <outlet property="autocompleteToggle" destination="PNd-rx-En1" id="KD7-z4-4OW"/>
                         <outlet property="defaultBrowserCell" destination="TFL-da-OrV" id="b59-Ul-Qut"/>
-                        <outlet property="doNotSellAccessoryText" destination="3cF-XE-ZHg" id="FLj-LQ-KR6"/>
+                        <outlet property="doNotSellAccessoryText" destination="3Eb-dV-4ZX" id="i3h-XN-Jzz"/>
                         <outlet property="doNotSellCell" destination="X9R-j6-TtK" id="T8Q-4B-bvp"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
-                        <outlet property="rememberLoginsAccessoryText" destination="PNf-tz-lTg" id="7Ug-II-sOB"/>
+                        <outlet property="rememberLoginsAccessoryText" destination="1SP-ku-vDO" id="0Ru-gZ-Ump"/>
                         <outlet property="rememberLoginsCell" destination="EqN-m3-s4f" id="FAK-d0-jpX"/>
                         <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
                         <outlet property="versionCell" destination="TYF-GX-a3j" id="KDT-RF-urU"/>
@@ -602,15 +640,15 @@
                         <outletCollection property="labels" destination="a1T-ui-4Nw" collectionClass="NSMutableArray" id="pfw-Kn-kET"/>
                         <outletCollection property="labels" destination="U8i-cQ-5WW" collectionClass="NSMutableArray" id="Pep-YK-P4v"/>
                         <outletCollection property="labels" destination="cKo-er-HNj" collectionClass="NSMutableArray" id="TyT-Oa-igp"/>
-                        <outletCollection property="labels" destination="0DQ-yq-UuT" collectionClass="NSMutableArray" id="BpL-OW-QAw"/>
                         <outletCollection property="labels" destination="HLr-R8-xxF" collectionClass="NSMutableArray" id="zei-0d-VBl"/>
                         <outletCollection property="labels" destination="ekF-SJ-PAQ" collectionClass="NSMutableArray" id="se8-tg-Bxf"/>
                         <outletCollection property="labels" destination="dBZ-yq-FYj" collectionClass="NSMutableArray" id="crg-Da-Zbb"/>
-                        <outletCollection property="accessoryLabels" destination="PNf-tz-lTg" collectionClass="NSMutableArray" id="hhm-GA-xST"/>
                         <outletCollection property="accessoryLabels" destination="ZiK-vA-FAa" collectionClass="NSMutableArray" id="jq2-al-pso"/>
                         <outletCollection property="labels" destination="xof-5k-PkI" collectionClass="NSMutableArray" id="aGo-28-l7f"/>
-                        <outletCollection property="accessoryLabels" destination="3cF-XE-ZHg" collectionClass="NSMutableArray" id="4hj-89-pdl"/>
-                        <outletCollection property="labels" destination="vPz-uO-6gB" collectionClass="NSMutableArray" id="Veb-Tp-cmj"/>
+                        <outletCollection property="labels" destination="0DQ-yq-UuT" collectionClass="NSMutableArray" id="p3V-EA-tVx"/>
+                        <outletCollection property="accessoryLabels" destination="1SP-ku-vDO" collectionClass="NSMutableArray" id="Q2K-in-SPo"/>
+                        <outletCollection property="labels" destination="vPz-uO-6gB" collectionClass="NSMutableArray" id="uIp-dc-5qn"/>
+                        <outletCollection property="accessoryLabels" destination="3Eb-dV-4ZX" collectionClass="NSMutableArray" id="fOs-VN-OGc"/>
                         <segue destination="fzf-7H-o48" kind="show" identifier="Debug" id="o3U-Oe-eLc"/>
                     </connections>
                 </tableViewController>
@@ -689,7 +727,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="632"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="635.33333333333337"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="127" y="32" width="160" height="160"/>
@@ -700,7 +738,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="40" y="224" width="334" height="20"/>
+                                                <rect key="frame" x="40" y="224" width="334" height="23.333333333333343"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -709,7 +747,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="40" y="276" width="334" height="288.33333333333326"/>
+                                                <rect key="frame" x="40" y="279.33333333333337" width="334" height="288.33333333333337"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="480" id="nip-EV-w1g"/>
                                                 </constraints>
@@ -717,7 +755,7 @@
                                                     <fragment>
                                                         <string key="content">At DuckDuckGo, we’re setting the new standard of trust online.
 
-DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
+DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.
 
 After all, the internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
                                                         <attributes>
@@ -730,7 +768,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="40" y="580.33333333333337" width="334" height="31"/>
+                                                <rect key="frame" x="40" y="583.66666666666663" width="334" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="AIi-4Y-OcU"/>
@@ -1124,10 +1162,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
+                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="18.666666666666668"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1155,7 +1193,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Unprotected Sites Yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
+                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1231,10 +1269,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
-                                            <rect key="frame" x="20" y="14" width="374" height="16"/>
+                                            <rect key="frame" x="20" y="12.666666666666666" width="374" height="18.666666666666671"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666668"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1420,10 +1458,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
             </objects>
             <point key="canvasLocation" x="5756" y="929"/>
         </scene>
-        <!--Do Not Sell (DN$)-->
+        <!--Global Privacy Control (GPC)-->
         <scene sceneID="dw0-CB-JU5">
             <objects>
-                <tableViewController title="Do Not Sell (DN$)" id="fV3-86-QQj" customClass="DoNotSellSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Global Privacy Control (GPC)" id="fV3-86-QQj" customClass="DoNotSellSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="ZC8-NB-fKY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1432,13 +1470,20 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <rect key="frame" x="0.0" y="0.0" width="414" height="129"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" usesAttributedText="YES" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jw1-Ty-6VJ">
                                     <rect key="frame" x="8" y="0.0" width="398" height="129"/>
-                                    <string key="text">Your data shouldn't be for sale. At DuckDuckGo we agree. Activate and we'll tell websites to:
-	1.	Not sell your personal data
-	2.	Limit sharing your personal to other companies*</string>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <attributedString key="attributedText">
+                                        <fragment>
+                                            <string key="content">Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the "Global Privacy Control" (GPC) setting and we'll signal to websites your preference to:
+
+• Not sell your personal data.
+• Limit sharing of your personal data to other companies.</string>
+                                            <attributes>
+                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" metaFont="system" size="14"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     <connections>
@@ -1551,26 +1596,33 @@ Cg
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
-                                                    <rect key="frame" x="20" y="11" width="220" height="22"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global Privacy Control (GPC)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW7-OM-2oW">
+                                                    <rect key="frame" x="20" y="10" width="305" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="wCS-Ck-arm"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mpn-np-GLZ">
                                                     <rect key="frame" x="345" y="6.6666666666666679" width="51" height="31.000000000000004"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="tc4-xw-WR4"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="onDoNotSellValueChanged:" destination="fV3-86-QQj" eventType="valueChanged" id="roN-tr-usp"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="mpn-np-GLZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cW7-OM-2oW" secondAttribute="trailing" constant="35" id="PI4-JL-QD1"/>
-                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="top" secondItem="cxv-L1-1dA" secondAttribute="topMargin" id="ULD-OO-mZh"/>
+                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="top" secondItem="cxv-L1-1dA" secondAttribute="top" constant="10" id="0lU-jf-bIP"/>
+                                                <constraint firstItem="mpn-np-GLZ" firstAttribute="leading" secondItem="cW7-OM-2oW" secondAttribute="trailing" constant="20" id="PI4-JL-QD1"/>
                                                 <constraint firstItem="cW7-OM-2oW" firstAttribute="leading" secondItem="cxv-L1-1dA" secondAttribute="leadingMargin" id="a0I-7f-NHK"/>
-                                                <constraint firstAttribute="trailing" secondItem="mpn-np-GLZ" secondAttribute="trailing" constant="20" symbolic="YES" id="dAf-kX-71u"/>
-                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="centerY" secondItem="cxv-L1-1dA" secondAttribute="centerY" id="mV1-al-sPF"/>
-                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="centerY" secondItem="mpn-np-GLZ" secondAttribute="centerY" id="wQD-3v-mXl"/>
+                                                <constraint firstAttribute="bottom" secondItem="cW7-OM-2oW" secondAttribute="bottom" constant="10" id="d51-ez-Kvg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mpn-np-GLZ" secondAttribute="trailing" id="dAf-kX-71u"/>
+                                                <constraint firstItem="mpn-np-GLZ" firstAttribute="centerY" secondItem="cxv-L1-1dA" secondAttribute="centerY" id="rc4-ij-mRb"/>
+                                                <constraint firstItem="cW7-OM-2oW" firstAttribute="centerY" secondItem="cxv-L1-1dA" secondAttribute="centerY" id="sGR-3C-6A4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

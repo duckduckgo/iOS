@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Ярлыки DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "QuickActionsTodayExtension";
+

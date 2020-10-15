@@ -1,0 +1,27 @@
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "1rB-5w-de3"; */
+"1rB-5w-de3.accessibilityLabel" = "Postavke";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse forward"; ObjectID = "aXg-p3-oeq"; */
+"aXg-p3-oeq.accessibilityLabel" = "Pretraži unaprijed";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "Dt8-We-5tV"; */
+"Dt8-We-5tV.accessibilityLabel" = "Obriši tekst";
+
+/* Class = "UIButton"; accessibilityLabel = "Share"; ObjectID = "hor-Jd-3kw"; */
+"hor-Jd-3kw.accessibilityLabel" = "Podijeli";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
+"i9n-fD-ncJ.accessibilityLabel" = "Pretraži unazad";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
+"IHT-9R-ERy.normalTitle" = "Otkaži";
+
+/* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
+"ii4-Sq-bD1.accessibilityLabel" = "Knjižne oznake";
+
+/* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
+"nJo-2d-gri.accessibilityLabel" = "Izbornik pregledavanja";
+
+/* Class = "UIButton"; accessibilityLabel = "Refresh Page"; ObjectID = "Qea-QY-LVl"; */
+"Qea-QY-LVl.accessibilityLabel" = "Osvježi stranicu";
+

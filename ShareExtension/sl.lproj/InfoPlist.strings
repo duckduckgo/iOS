@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Odpri v DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "ShareExtension";
+

@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Etiķete";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Meklē vai apmeklē savas iecienītās vietnes konfidenciāli, veicot tikai vienu pieskārienu.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Meklēšana un izlase";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Ātri sāc privātu meklēšanu vietnē DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Meklēt";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Pievienot izlasi";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Ātri atver savas mīļākās vietnes.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Meklēt DuckDuckGo";
+

@@ -1,0 +1,57 @@
+/* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
+"1GE-Nf-lKM.text" = "Pavadinimas";
+
+/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
+"2aH-nO-H3f.accessibilityLabel" = "Pridėti visus skirtukus kaip žymes";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
+"2en-CB-bYH.accessibilityLabel" = "Uždaryti kortelė";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
+"2GU-MM-UwX.text" = "Pavadinimas";
+
+/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
+"5nO-MZ-vSY.accessibilityLabel" = "Uždaryti visus skirtukus ir išvalyti duomenis";
+
+/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
+"Cy7-Lb-veV.text" = "Kortelės";
+
+/* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
+"cYd-YU-sSj.accessibilityLabel" = "Pridėti naują skirtuką";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
+"G2C-qh-g3T.accessibilityLabel" = "Uždaryti kortelė";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
+"Gyy-py-IOg.accessibilityLabel" = "Skirtukas neperskaitytas";
+
+/* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "h1S-c2-Spf"; */
+"h1S-c2-Spf.title" = "Uždaryti visus skirtukus ir išvalyti duomenis";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
+"Hcx-F2-HgO.accessibilityLabel" = "Valyti skirtukus ir duomenis";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
+"kW3-ZC-Axl.normalTitle" = "Atlikta";
+
+/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
+"L7l-vl-rDZ.accessibilityLabel" = "Perjungti iš tinklelio rodinio į sąrašo rodinį";
+
+/* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
+"LbT-NO-T0G.text" = "Nuoroda";
+
+/* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
+"nYf-xs-PE7.title" = "Nauja kortelė";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
+"qrJ-aX-XrW.accessibilityLabel" = "Skirtukas neperskaitytas";
+
+/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
+"uIV-4q-5mj.accessibilityLabel" = "Pridėti skirtuką";
+
+/* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
+"Uu4-yR-9tN.text" = "Svetainė -- ilgas pavadinimas";
+
+/* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
+"xto-EI-h22.accessibilityHint" = "Uždaryti";
+

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* ja *1 muu* yrittivät seurata sinua.
+
+Estin sen!
+
+☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* ja *%1$d muuta* yrittivät seurata sinua.
+
+Estin sen!
+
+☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.️</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d tärkeä seurantapalvelin löytynyt</string>
+			<key>other</key>
+			<string>%1$d tärkeää seurantapalvelinta löytynyt</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d tärkeä seurantapalvelin estetty</string>
+			<key>other</key>
+			<string>%1$d tärkeää seurantapalvelinta estetty</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d seurantapalvelin löytynyt</string>
+			<key>other</key>
+			<string>%1$d seurantapalvelinta löytynyt</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d seurantapalvelin estetty</string>
+			<key>other</key>
+			<string>%1$d seurantapalvelinta estetty</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d yksityinen välilehti</string>
+			<key>other</key>
+			<string>%1$d yksityistä välilehteä</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

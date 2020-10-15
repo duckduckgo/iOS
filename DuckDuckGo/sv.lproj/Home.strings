@@ -1,0 +1,9 @@
+/* Class = "UIView"; accessibilityLabel = "Search or enter address"; ObjectID = "7Jf-KE-oXj"; */
+"7Jf-KE-oXj.accessibilityLabel" = "Sök eller ange adress";
+
+/* Class = "UILabel"; text = "Search or enter address"; ObjectID = "73D-OT-n1K"; */
+"73D-OT-n1K.text" = "Sök eller ange adress";
+
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "kcN-YB-mZi"; */
+"kcN-YB-mZi.accessibilityLabel" = "Inställningar";
+

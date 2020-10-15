@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Отваряне в DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "OpenAction";
+

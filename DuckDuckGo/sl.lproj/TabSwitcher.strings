@@ -1,0 +1,57 @@
+/* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
+"1GE-Nf-lKM.text" = "Naslov";
+
+/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
+"2aH-nO-H3f.accessibilityLabel" = "Dodaj tako vse zavihke kot zaznamke";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
+"2en-CB-bYH.accessibilityLabel" = "Zapri zavihek";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
+"2GU-MM-UwX.text" = "Naslov";
+
+/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
+"5nO-MZ-vSY.accessibilityLabel" = "Zapri vse zavihke in izbriši podatke";
+
+/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
+"Cy7-Lb-veV.text" = "Zavihki";
+
+/* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
+"cYd-YU-sSj.accessibilityLabel" = "Dodaj nov zavihek";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
+"G2C-qh-g3T.accessibilityLabel" = "Zapri zavihek";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
+"Gyy-py-IOg.accessibilityLabel" = "Zavihek ni prebran";
+
+/* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "h1S-c2-Spf"; */
+"h1S-c2-Spf.title" = "Zapri vse zavihke in izbriši podatke";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
+"Hcx-F2-HgO.accessibilityLabel" = "Počisti zavihke in podatke";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
+"kW3-ZC-Axl.normalTitle" = "Končano";
+
+/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
+"L7l-vl-rDZ.accessibilityLabel" = "Preklopite med prikazom mreže in seznama";
+
+/* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
+"LbT-NO-T0G.text" = "Povezava";
+
+/* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
+"nYf-xs-PE7.title" = "Nov zavihek";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
+"qrJ-aX-XrW.accessibilityLabel" = "Zavihek ni prebran";
+
+/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
+"uIV-4q-5mj.accessibilityLabel" = "Dodaj zavihek";
+
+/* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
+"Uu4-yR-9tN.text" = "Spletno mesto - dolg naslov";
+
+/* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
+"xto-EI-h22.accessibilityHint" = "Zapri";
+

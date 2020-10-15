@@ -1,0 +1,9 @@
+/* Class = "UILabel"; text = "Search privately or enter URL"; ObjectID = "1k2-q0-Mzn"; */
+"1k2-q0-Mzn.text" = "Išči zasebno ali vnesi URL";
+
+/* Class = "UIButton"; normalTitle = "Clear Data"; ObjectID = "jCS-jj-Eib"; */
+"jCS-jj-Eib.normalTitle" = "Počisti podatke";
+
+/* Class = "UIButton"; normalTitle = "Bookmarks"; ObjectID = "vPI-Ro-ISr"; */
+"vPI-Ro-ISr.normalTitle" = "Zaznamki";
+

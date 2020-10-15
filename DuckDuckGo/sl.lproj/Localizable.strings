@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Dodaj";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Zaznamek";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Prekliči";
+
+/* Copy action */
+"action.title.copy" = "Kopiraj";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Onemogoči zaščito zasebnosti";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Omogoči zaščito zasebnosti";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Zapri zavihke in izbriši podatke";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Zavihki in podatki so izbrisani";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Odpri v ozadju";
+
+/* Create New Tab action */
+"action.title.newTab" = "Nov zavihek";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Odpri na novem zavihku";
+
+/* Open action */
+"action.title.open" = "Odpri";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Prilepi in nadaljuj";
+
+/* Reading List action */
+"action.title.readingList" = "Dodaj na seznam za branje";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Osveži";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Prijavi nedelujočo stran";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Zahteva za namizno stran";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Zahteva za mobilno stran";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Shrani";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Dodaj med zaznamke";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Dodaj med priljubljene";
+
+/* Settings action */
+"action.title.settings" = "Nastavitve ...";
+
+/* Share action */
+"action.title.share" = "Deli …";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Obstoječi zaznamki ne bodo podvojeni.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Želiš dodati vse zavihke med zaznamke?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Dodaj na nezaščitene strani";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Uredi zaznamek";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Shrani zaznamek";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Shrani priljubljeno";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Odkleni DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Prijava";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Prijava v %@. Vaši podatki za prijavo bodo varno poslani.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Prijava v %@. Vaše geslo ne bo varno poslano, ker povezava ni šifrirana.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Geslo";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Potrebno je preverjanje pristnosti";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Uporabniško ime";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Izklopljeno";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Vključeno";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Naslov spletnega mesta";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Nekaterih zavihkov ni mogoče dodati med zaznamke";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Vsi zavihki dodani med zaznamke";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Komentarji se niso naložili";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Vsebina manjka";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Slike se niso naložile";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Povezave ali tipke ne delujejo";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Ne morem se prijaviti";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Nekaj drugega";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Spletišče me je prosilo, da onemogočim";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Brskalnik ni združljiv";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Video se ni predvajal";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Opišite, kaj se je zgodilo";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Skrivaj nasvete za vedno";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Prekliči";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Le nekaj jih je in poskušali smo jih narediti informativne.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Skrij preostale nasvete?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna in nikoli ne shranim vaše zgodovine iskanja. Vedno. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Fuj!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Petka!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* vas je poskusil zaslediti tukaj.\n\nBlokiral sem ga!\n\n☝️ Preverite lahko URL vrstico, da vidite, kdo vam poskuša slediti, ko obiščete novo spletno mesto.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Petka!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Opozorilo! Ne morem preprečiti, da bi %1$@ videl vašo aktivnost na %2$@.\n\nToda brskajte z nami in lahko zmanjšamo količina tistega, kar %1$@ ve o vas na splošno, tako da blokiramo njihove sledilce na mnogih drugih spletnih mestih.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Razumem";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Glavo gor! Ker je %2$@ lastnik %1$@, mu ne moremo preprečiti, da bi videl tvojo aktivnost tukaj.\n\nToda brskaj z nami in lahko zmanjšamo količina tistega, kar %2$@ ve o vas na splošno, tako da blokiramo njihove sledilce na mnogih drugih spletnih mestih.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Razumem";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Ko tapkate in se pomikate, bom blokiral nadležne sledilce.Brskajte naprej!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Razumem";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Hitro obiščite svoja priljubljena spletna mesta! \n\nObiščite spletno mesto, ki vam je všeč. Nato se dotaknite ikone \"⋯\" in izberite *Dodaj med priljubljene*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Hitro obiščite svoja priljubljena spletna mesta! \n\n Obiščite eno izmed svojih priljubljenih spletnih mest. Nato se dotaknite gumba odpri meni in izberite Dodaj med priljubljene.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Nato obiščite eno od svojih najljubših spletišč!\n\nBlokiral bom sledilce, da ne bodo vohunili. Prav tako bom nadgradil varnost tvoje povezave. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Uspelo ti bo!\n\nNe pozabi: vsakič, ko brskate z mano, grozljiv oglas izgubi krila. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internet je lahko grozljiv.\n\nNe skrbi! Iskanje in brskanje na zaseben način je lažje, kot si misliš.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Onemogočeno";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Ker je globalni nadzor zasebnosti (Global Privacy Control (GPC)) nov standard, ga večina spletnih mest še ne prepozna, vendar si močno prizadevamo, da bi bil sprejet po vsem svetu.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Več";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Vendar morajo spletna mesta na podlagi signala ukrepati le v meri, ki jo določajo veljavni zakoni. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Omogočeno";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vaši podatki ne bi smeli biti naprodaj. Pri DuckDuckGo se strinjamo. Aktivirajte nastavitev globalni nadzor zasebnosti (Global Privacy Control (GPC) in spletnim mestom bomo sporočili vaše nastavitve:\n\n• Ne prodajajte svojih osebnih podatkov.\n• Omejite skupno rabo svojih osebnih podatkov z drugimi podjetji.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Zaznamkov še ni";
+
+/* Empty list state placholder */
+"empty.favorites" = "Priljubljenih še ni";
+
+/* No comment provided by engineer. */
+"favorite" = "Priljubljeni";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Izbriši";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Uredi";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Blokiranje oglasov in pojavnih oken";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Ustvarjanje in upravljanje zaznamkov";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Katero funkcijo brskanja lahko dodamo ali izboljšamo?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Težave s funkcijami brskalnika";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Funkcije brskalnika manjkajo ali pa so zoprne";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Interakcija s slikami";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Premikanje naprej, nazaj in/ali osveževanje";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Nič od tega";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Ustvarjanje in upravljanje zavihkov";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Ogled videoposnetkov";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Kako so zaznamki prikazani";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Katero možnost prilagajanja lahko dodamo ali izboljšamo?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Težave s prilagoditvami";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Ni dovolj načinov za prilagoditev aplikacije";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Konfiguracija domačega zaslona";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Nič od tega";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Kako so zavihki prikazani";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Kako je videti aplikacija";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Kateri podatki so izbrisani";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Kdaj so podatki izbrisani";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Boljše samodokončanje";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Katero funkcijo iskanja lahko dodamo ali izboljšamo?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Težave z iskanjem DuckDuckGo";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "Iskanje DuckDuckGo ni dovolj dobro";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Iskanje v določenem jeziku ali regiji";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Postavitev bi morala biti bolj podobna Googlu";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Hitrejše nalaganje";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Nič od tega";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programsko/tehnično iskanje";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Povejte nam, kaj lahko izboljšamo";
+
+/* Confirmation button */
+"feedback.form.submit" = "POŠLJITE POVRATNE INFORMACIJE";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Bodite čim bolj natančni";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Ali bi želeli vključiti kakšne podrobnosti?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Žal nam je, da tako menite.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "Nad čim ste najbolj razočarani?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Druge težave";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Nič od tega";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Katero težavo imate?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Aplikacija se sesuje ali zamrzne";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Težave z učinkovitostjo";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Aplikacija je počasna, ima napake ali se zruši";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Nič od tega";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Napake pri predvajanju videoposnetkov ali medijev";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Spletne strani ali rezultati iskanja se nalagajo počasi";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Delite podrobnosti";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Kaj vam je bilo všeč?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Ali so kakšne podrobnosti, ki jih želite deliti z ekipo?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "To je super slišati!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Ne, hvala! Zaključil/a sem";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Delite podrobnosti";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Vaše anonimne povratne informacije so nam pomembne.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Začnimo!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Kako bi opredelili svoje povratne informacije?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Hvala! Povratne informacije so poslane.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Težave z nalaganjem spletnega mesta";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Določena spletna mesta se ne nalagajo pravilno";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Na katere vsebine vpliva?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Kje vidite te težave?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Katero spletno mesto ima težave?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d od %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Najdi na strani";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Nastavite za privzeti brskalnik";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Nastavite DuckDuckGo kot privzet brskalnik.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Bodite pomirjeni, ko odpirate povezave.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "NOVO V IOS 14";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Dodaj DuckDuckGo na domači zaslon!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Dodaj DuckDuckGo na domači zaslon za enostaven dostop!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Dodaj DuckDuckGo na domači zaslon";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Iskanje in priljubljene v novem zavihku";
+
+/* Home tab title */
+"homeTab.title" = "Domov";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Dodaj zaznamek";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Dodaj priljubljene";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Brskaj nazaj";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Brskaj naprej";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Zapri";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Zapri zavihek";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Najdi na strani";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Najdi naslednje";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Najdi prejšnje";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Počisti vse zavihke in podatke";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Poišči ali vnesi naslov";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Nov zavihek";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Naslednji zavihek";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Odpri povezavo v ozadju";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Odpri povezavo na novem zavihku";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Prejšnji zavihek";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Natisni";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Ponovno naloži";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Izberi";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Prikaži vse zavihke";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji DUCKDUCKGO";
+
+/* Edit button */
+"navigation.title.edit" = "Uredi";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Nadaljuj";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Mogoče kasneje";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Nastavite DuckDuckGo kot privzet brskalnik.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Nastavite za privzeti brskalnik";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Preskoči";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Začni brskanje";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Dobrodošli v aplikaciji DUCKDUCKGO";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Žal nobena aplikacija ne more upravljati s to povezavo.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Spletne strani se zanašajo na piškotke, da boš vedno prijavljen. Ko spletno mesto požarno zaščitiš, piškotki ne bodo izbrisani in ostal boš prijavljen tudi po uporabi gumba Fire.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Spletna mesta";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Želiš požarno zaščito %@?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Spletna stran s požarno zaščito";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Ne zdaj";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Odstrani vse";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "V redu";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Poziv ob straneh s požarno zaščito";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ ima sedaj požarno zaščito! Obišči nastavitve za odstranitev.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritem";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bitov";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Napaka pri pridobivanju potrdila";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Splošno ime";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Učinkovita velikost";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "E-naslov";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Šifrirana povezava";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Prisilno šifriranje";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "To spletno mesto smo prisilili, da uporablja šifrirano povezavo in preprečuje prestrezanje vseh osebnih podatkov, ki jih pošlješ.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Šifrirana povezava preprečuje prestrezanje vseh osebnih podatkov, ki jih pošlješ spletnemu mestu.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Identifikator ključa predmeta";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Izdajatelj";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Javni ključ";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Velikost ključa";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Mešano šifriranje";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "To spletno mesto ima mešano šifriranje, ker se določena vsebina prikazuje prek nekodiranih povezav.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Ne";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Trajno";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Javni ključ";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Šifrirana povezava preprečuje prestrezanje vseh osebnih podatkov, ki jih pošlješ spletnemu mestu.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Ime predmeta";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Povzetek";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Ta povezava ni šifrirana, zato pazite, kaj pošlješ.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Nešifrirana povezava";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Neznano";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Uporaba";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Dešifriraj";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Izpelji";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Šifriraj";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Znak";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Razvij";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Preveri";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Zavij";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Da";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "ONEMOGOČI ZAŠČITO NA STRANI";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "IZBOLJŠANO OD $1 DO $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Ocena zasebnosti";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Sledilna omrežja smo našli na %1$@%% spletnih mestih, ki si jih obiskal od %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Še vedno zbiramo podatke za prikaz, koliko\nsledilnikov smo blokirali.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Uporaba informacij o praksah zasebnosti iz ToS; DR";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Prakse zasebnosti kažejo, koliko osebnih podatkov, ki jih delite s spletnim mestom, je zaščitenih.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "To spletno mesto vas bo obvestilo pred prenosom vaših podatkov v primeru združitve ali prevzema";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Prakse zasebnosti tega spletnega mesta niso bile pregledane.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Raven zasebnosti %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Pritisnite, da odprete zaslon za zaščito zasebnosti";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Te statistike so shranjene samo v vaši napravi in jih ne posredujemo. Nikoli.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Dobre prakse zasebnosti";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Mešane prakse zasebnosti“";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "„Slabe prakse zasebnosti“";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Neznane prakse zasebnosti";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Sledilna omrežja združijo vašo spletno zgodovino v podatkovni profil o vas. Glavna sledilna omrežja so bolj škodljiva, ker vas lahko spremljajo in ciljajo na večjem delu interneta.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Ne";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Da";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Želite zapustiti DuckDuckGo in si ogledati to vsebino?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Odpri v drugi aplikaciji?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Če pošlješ poročilo o anonimnem pokvarjenem spletišču, nam pomagaš odpraviti napake in izboljšati razširitve.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Poišči ali vnesi naslov";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Zaznamki";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Priljubljeni";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "Pri DuckDuckGo vzpostavljamo nov standard zaupanja na spletu.\n\nZasebni brskalnik DuckDuckGo zagotavlja vse bistvene sestavine zasebnosti, ki jih potrebujete za svojo zaščito, kadar iščete in brskate po spletu, vključno z blokiranjem sledilnikov, pametnejšim šifriranjem in zasebnim iskanjem DuckDuckGo.\n\nDoseganje zasebnosti na spletu, ki si jo zaslužimo, bi moralo biti tako preprosto kot zagrinjanje zaves.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Drugi iskalniki spremljajo vaša iskanja, tudi če ste v načinu zasebnega brskanja. Ne sledimo vam in vašim podatkov. In pika.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Odprite *Safari* in nato *Iskalnik*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Odprite *Nastavitve* aplikacije";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Izberite *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Pošlji poročilo";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Domena poškodovanega spletnega mesta:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Katera vsebina ali funkcionalnost ne deluje?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Pošiljanje poročil o poškodovanem spletnem mestu je popolnoma anonimno in nam pomaga izboljšati aplikacijo!";
+
+/* This is a form title */
+"siteFeedback.title" = "Prijavite poškodovano spletno mesto";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?“";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Zapri zavihek Domov";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Zapri \"%1$@\" ob %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Odpri zavihek Domov";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Odpri \"%1$@\" ob %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Preklopi med zavihki";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Temna";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Sistem";
+
+/* Light Theme entry */
+"theme.acc.light" = "Luč";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Temna";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Privzeti sistem";
+
+/* Light Theme entry */
+"theme.name.light" = "Luč";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ dodano na nezaščitene strani";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ odstranjeno z nezaščitenih spletnih strani";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Prišlo je do neznane napake";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Zaznamek je shranjen";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Zaznamek je že shranjen";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Ni spletne strani za zaznamek";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Priljubljeni shranjeni";
+

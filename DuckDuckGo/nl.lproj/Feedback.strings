@@ -1,0 +1,69 @@
+/* Class = "UIImageView"; accessibilityLabel = "Negative Feedback"; ObjectID = "1RQ-bi-6hU"; */
+"1RQ-bi-6hU.accessibilityLabel" = "Negatieve feedback";
+
+/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
+"7zN-Xh-yYi.normalTitle" = "Feedback delen";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Verstuur feedback";
+
+/* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
+"A1s-GY-hbq.normalTitle" = "Nee, bedankt! Ik ben klaar";
+
+/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
+"cZl-qB-kSL.title" = "Sluiten";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Verstuur feedback";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
+"epz-Ta-KQ7.title" = "Terug";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "h2M-TW-0QG"; */
+"h2M-TW-0QG.title" = "Terug";
+
+/* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
+"iVe-E1-jAH.accessibilityHint" = "Je feedback.";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
+"JF8-Ow-zXL.title" = "Terug";
+
+/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
+"jr6-Al-4fr.title" = "Verzenden";
+
+/* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "FEEDBACK VERSTUREN";
+
+/* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Verstuur feedback";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
+"m0a-EJ-h27.title" = "Terug";
+
+/* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
+"msl-mT-bMG.accessibilityLabel" = "Negatief";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Verstuur feedback";
+
+/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Verstuur feedback";
+
+/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Verstuur feedback";
+
+/* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
+"TMj-NM-j3b.placeholder" = "Welke website is defect?";
+
+/* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
+"WjT-HM-yim.title" = "Defecte website melden";
+
+/* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
+"Wx3-Vb-ItS.text" = "Reden voor defecte website";
+
+/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Verstuur feedback";
+
+/* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
+"ze4-T7-OFN.accessibilityLabel" = "Positief";
+

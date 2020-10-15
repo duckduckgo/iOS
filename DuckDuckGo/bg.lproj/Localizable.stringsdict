@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* и *още 1 друг* се опитват да ви проследят тук.
+
+Блокирах ги!
+
+☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* и *още %1$d други* се опитват да ви проследят тук.
+
+Блокирах ги!
+
+☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Открит е %1$d основен тракер</string>
+			<key>other</key>
+			<string>Открити са %1$d основни тракери</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Блокиран е %1$d основен тракер</string>
+			<key>other</key>
+			<string>Блокирани са %1$d основни тракери</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d открито проследяващо устройство</string>
+			<key>other</key>
+			<string>%1$d открити проследяващи устройства</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d блокирано проследяващо устройство</string>
+			<key>other</key>
+			<string>%1$d блокирани проследяващи устройства</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d поверителен раздел</string>
+			<key>other</key>
+			<string>%1$d поверителни раздела</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

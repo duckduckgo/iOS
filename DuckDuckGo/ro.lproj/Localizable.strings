@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Adăugați";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Marcat";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Renunță";
+
+/* Copy action */
+"action.title.copy" = "Copiere";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Dezactivează protecția confidențialității";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Activează protecția confidențialității";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Închide filele și șterge datele";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "File și date șterse";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Deschide în fundal";
+
+/* Create New Tab action */
+"action.title.newTab" = "Filă nouă";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Deschide într-o filă nouă";
+
+/* Open action */
+"action.title.open" = "Deschideți";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Lipește și pornește";
+
+/* Reading List action */
+"action.title.readingList" = "Adaugă la lista de citire";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Reîmprospătare";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Raportați Site-ul Distrus";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Solicită versiunea desktop";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Solicită site-ul mobil";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Salvează";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Adaugă la marcaje";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Adaugă la preferințe";
+
+/* Settings action */
+"action.title.settings" = "Setări...";
+
+/* Share action */
+"action.title.share" = "Partajare…";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Marcajele existente nu vor fi duplicate.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Marchezi toate filele?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Adaugă la site-uri neprotejate";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Editare semn de carte";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Salvare marcaj";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Salvează preferința";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Deblochează DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Autentificare";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Conectează-te la %@. Informațiile tale de conectare vor fi trimise în siguranță.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Conectează-te la %@. Parola ta va fi trimisă în mod nesigur, deoarece conexiunea este necriptată.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Parolă";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Este necesară autentificarea";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Nume utilizator";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Dezactivat";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Activat";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Titlul site-ului web";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Imposibil de marcat unele file";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Toate filele marcate";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Comentariile nu s-au încărcat";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Conținutul lipsește";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Imaginile nu s-au încărcat";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Linkurile sau butoanele nu funcționează";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Nu mă pot autentifica";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Altceva";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Site-ul mi-a cerut să dezactivez";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Browserul este incompatibil";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Videoclipul nu s-a redat";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Descrie ce s-a întâmplat";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Ascunde sfaturile definitiv";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Renunță";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Sunt doar câteva, iar noi am încercat să le facem informative.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Ascunzi sfaturile rămase?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Căutările tale DuckDuckGo sunt anonime și nu îți voi stoca niciodată istoricul căutării. Niciodată. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Pfiu!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Bate Palma!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* încercau să te urmărească aici.\n\nI-am blocat!\n\n☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Bate Palma!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Atenție! Nu pot împiedica %1$@ să îți vadă activitatea pe %2$@.\n\nDar navighează cu mine și pot reduce ceea ce %1$@ cunoaște despre tine în general, blocând instrumentele lor de urmărire pe o mulțime de alte site-uri.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Am înțeles";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Atenție! Deoarece %2$@ deține %1$@, nu îi pot împiedica să îți vadă activitatea aici.\n\nDar navighează cu mine și pot reduce ceea ce %2$@ cunoaște despre tine în general, blocând instrumentele lor de urmărire pe o mulțime de alte site-uri.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Am înțeles";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "În timp ce atingi și derulezi, voi bloca urmăritorii pisălogi.\n\nDă-i bătaie - continuă să navighezi!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Am înțeles";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Vizitează site-urile preferate într-o clipă!Accesează un site care îți place. Apoi atinge pictograma „⋯” și selectează *Adaugă la preferințe*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Vizitează site-urile preferate într-o clipă! Vizitează unul dintre site-urile preferate. Apoi atinge butonul meniului de deschidere și selectează Adaugă la preferințe.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Apoi, încearcă să vizitezi unul din site-urile tale preferate!\n\nVoi bloca instrumentele de urmărire ca să nu te mai spioneze. Voi îmbunătăți, de asemenea, securitatea conexiunii tale, dacă este posibil. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Ai ghicit!\n\nReține: de fiecare dată când navighezi cu mine, o reclamă terifiantă își pierde aripile. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internetul poate fi cam terifiant.\n\nNu te îngrijora! Căutarea și navigarea în mod confidențial sunt mai ușoare decât crezi.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Dezactivat";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Întrucât Global Privacy Control (GPC) este un nou standard, majoritatea site-urilor web nu îl vor recunoaște încă, dar lucrăm din greu pentru a ne asigura că acesta va fi acceptat în întreaga lume.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Află mai multe";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Cu toate acestea, site-urile web sunt obligate să acționeze la semnal numai în măsura în care legile aplicabile le obligă să facă acest lucru. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Activat";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Datele tale nu ar trebui să fie de vânzare. La DuckDuckGo, suntem de acord cu acest lucru. Activează setarea „Global Privacy Control” (GPC) și vom semnaliza site-urilor web preferința ta de a:\n\n• Nu vinde datele tale personale.\n• Limita distribuirea datelor tale personale către alte companii.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Încă nu există marcaje";
+
+/* Empty list state placholder */
+"empty.favorites" = "Nicio preferință încă";
+
+/* No comment provided by engineer. */
+"favorite" = "Preferință";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Ștergere";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Editați";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Blocarea anunțurilor și ferestrelor pop-up";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Crearea și gestionarea marcajelor";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Ce funcție de navigare putem adăuga sau îmbunătăți?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Probleme privind funcțiile browserului";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Funcțiile de navigare lipsesc sau sunt frustrante pentru utilizator";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Interacțiunea cu imaginile";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Navigare înainte, înapoi și/sau reîmprospătare";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Niciuna dintre acestea";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Crearea și gestionarea filelor";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Vizionarea videoclipurilor";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Modul în care sunt afișate semnele de carte";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Ce opțiune de personalizare putem adăuga sau îmbunătăți?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Probleme privind personalizarea";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Nu există suficiente modalități de a personaliza aplicația";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Configurarea ecranului de pornire";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Niciuna dintre acestea";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Modul în care sunt afișate filele";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Felul în care arată aplicația";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Ce date sunt șterse";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Când sunt șterse datele";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Completare automată mai bună";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Ce funcție de căutare putem adăuga sau îmbunătăți?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Probleme privind funcția de căutare a DuckDuckGo";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "Căutarea DuckDuckGo nu este suficient de bună";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Căutarea într-o anumită limbă sau regiune";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Aspectul ar trebui să semene mai mult cu Google";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Timp de încărcare mai rapid";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Niciuna dintre acestea";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Căutare privind programarea/tehnica";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Te rugăm să ne spui ce putem îmbunătăți";
+
+/* Confirmation button */
+"feedback.form.submit" = "TRIMITERE FEEDBACK";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Vă rugăm să furnizați detalii cât mai concrete";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Există anumite specificații pe care dorești să le incluzi?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Ne pare rău să auzim aceasta.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "Ce aspect vă deranjează cel mai tare?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Alte probleme";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Niciuna dintre acestea";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Ce problemă întâmpinați?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Aplicația cade sau se blochează";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Probleme privind funcționarea";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Aplicația este lentă, cu erori sau se blochează";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Niciuna dintre acestea";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Erori de redare video sau media";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Paginile web sau rezultatele căutării se încarcă încet";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Partajare detalii";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Ce v-a plăcut?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Există detalii pe care doriți să le împărtășiți echipei?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Ne bucurăm să auzim aceasta!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Nu mulțumesc! Am terminat";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Partajare detalii";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Feedbackul dvs. anonim este important pentru noi.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Să începem!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Cum vă clasificați feedbackul?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Mulțumesc! Feedback trimis.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Probleme privind încărcarea site-ului web";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Anumite site-uri web nu se încarcă în mod corect";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Ce conținut pare să fie afectat?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Unde vedeți aceste probleme?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Ce site web are probleme?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d din %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Găsire în pagină";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Setare ca browser implicit";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Setează DuckDuckGo ca browser implicit.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Deschide link-urile cu liniște sufletească, de fiecare dată.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "NOU ÎN IOS 14";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Adaugă DuckDuckGo pe ecranul de start!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Adaugă DuckDuckGo pe rândul de jos de pictograme pentru acces ușor!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Pune DuckDuckGo pe pagina de pornire";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Căutare și preferințe într-o filă nouă";
+
+/* Home tab title */
+"homeTab.title" = "Pagina de pornire";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Adăugare semn de carte";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Adaugă preferință";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Navigare înapoi";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Navigare înainte";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Închidere";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Închidere nouă";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Găsire în pagină";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Găsirea următorului rezultat";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Găsirea rezultatului anterior";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Șterge toate filele și datele";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Caută sau introdu adresa";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Filă nouă";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Fila următoare";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Deschide linkul în fundal";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Deschide linkul într-o filă nouă";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Fila anterioară";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Tipărire";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Reîncarcă";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Selecție";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Afișează toate filele";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Bine ai venit la DuckDuckGo!";
+
+/* Edit button */
+"navigation.title.edit" = "Editați";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Continuați";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Poate Mai Târziu";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Setează DuckDuckGo ca browser implicit.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Setare ca browser implicit";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "IGNORARE";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Începe navigarea";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Bine ai venit la DuckDuckGo!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Ne pare rău, nicio aplicație nu poate trata acel link.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Site-urile web se bazează pe cookie-uri pentru a te menține conectat. Atunci când ștergi activitatea și istoricul unui site, cookie-urile nu vor fi șterse și vei rămâne conectat, chiar și după utilizarea butonului Ștergere activitate și istoric.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Site-uri web";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Dorești să ștergi activitatea și istoricul pentru %@?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Website ignifug";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Nu acum";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Elimină tot";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "OK";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Solicită ștergea activității și istoricului din browser la site-urile web";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ nu mai păstrează acum activitatea și istoricul! Accesează setările pentru a elimina.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritm";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d biți";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Eroare la extragerea certificatului";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Denumirea comună";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Dimensiune efectivă";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "E-mail";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Conexiune criptată";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Criptare forțată";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Am forțat acest site să utilizeze o conexiune criptată, împiedicând interceptarea oricăror informații personale pe care i le trimiți.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "O conexiune criptată împiedică interceptarea oricăror informații personale pe care le trimiți unui site web.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Identificator cheie subiect";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Emitent";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Cheie publică";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Dimensiunea cheii";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Criptare mixtă";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Acest site are criptare mixtă, deoarece un anumit conținut este servit prin conexiuni necriptate.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Nu";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Permanent";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Cheie publică";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "O conexiune criptată împiedică interceptarea oricăror informații personale pe care le trimiți unui site web.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Numele subiectului";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Rezumat";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Această conexiune nu este criptată, așa că ai grijă ce trimiți.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Conexiune necriptată";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Necunoscut";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Utilizare";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Decriptare";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Derivare";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Criptare";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Semn";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Anulare încadrare";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Verificare";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Încadrare";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Da";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "PROTECȚIE SITE DEZACTIVATĂ";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "MĂRIT DE LA $1 LA $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Grad de confidențialitate";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Rețele de urmărire au fost găsite pe %1$@%% de site-uri web pe care le-ai vizitat din %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Continuă să colectăm date pentru a arăta câte\n instrumente de urmărire am blocat.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Utilizează informațiile despre practicile de confidențialitate de la ToS;DR";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Practicile privind confidențialitatea indică în ce măsură datele cu caracter personal pe care le partajați cu un site web sunt protejate.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Acest site web te va anunța înainte de a transfera informațiile tale în cazul unei fuziuni sau achiziții";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Practicile de confidențialitate ale acestui site nu au fost revizuite.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Grad de confidențialitate %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Apăsați pentru a deschide ecranul de protecție a confidențialității";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Aceste statistici sunt stocate doar pe dispozitivul tău și nu sunt trimise nicăieri. Niciodată.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Bune practici privind confidențialitatea";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Practici mixte privind confidențialitatea”";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "„Practici inadecvate privind confidențialitatea”";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Practici necunoscute privind confidențialitatea";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Rețelele de cookie-uri de urmărire vă adună istoricul web într-un profil de date despre dvs. Rețelele mari de cookie-uri de urmărire sunt mai dăunătoare, deoarece vă pot urmări și vă pot viza pe mai multe site-uri de pe internet.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Nu";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Da";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Doriți să părăsiți DuckDuckGo pentru a vizualiza acest conținut?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Deschizi în altă aplicație?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Trimiterea unui raport anonim al unui site care nu funcționează ne ajută să corectăm aceste probleme și să îmbunătățim extensia.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Caută sau introdu adresa";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Semne de carte";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Preferințe";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "Aici, la DuckDuckGo, stabilim noul standard de încredere online.\n\nDuckDuckGo Privacy Browser oferă toate elementele esențiale de confidențialitate de care aveți nevoie pentru a vă proteja în timp ce căutați și navigați pe web, inclusiv blocarea cookie-urilor de urmărire, criptare mai inteligentă și căutare privată DuckDuckGo.\n\nLa urma urmei, internetul nu ar trebui să fie perceput atât de ciudat, iar obținerea confidențialității pe care o meritați online ar trebui să fie la fel de simplă ca a trage perdeaua.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Alte motoare de căutare îți monitorizează căutările chiar și în modul privat de navigare. Noi nu te monitorizăm. Punct.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Navighează la *Safari*, apoi *Motor de căutare*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Deschide *Setări* aplicație";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Selectează *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Trimite raportul";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Domeniul site-ului defect:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Ce funcție sau conținut nu funcționează?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Raportarea site-urilor care nu funcționează este complet anonimă și ne ajută să îmbunătățim aplicația!";
+
+/* This is a form title */
+"siteFeedback.title" = "Raportare site defect";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Ce site este defect?”";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Închide fila de pornire";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Închideți \"%1$@\" la %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Deschide fila de pornire";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Deschideți \"%1$@\" la %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Comutator între file";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Dark";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Sistem";
+
+/* Light Theme entry */
+"theme.acc.light" = "Lumină";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Dark";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Setare implicită de sistem";
+
+/* Light Theme entry */
+"theme.name.light" = "Lumină";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ adăugat la site-uri neprotejate";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ eliminat de la site-uri neprotejate";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "A apărut o eroare necunoscută";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Marcaj salvat";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Marcaj deja salvat";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Nicio pagină web de marcat";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Preferință salvată";
+

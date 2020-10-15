@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Закладки в DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "BookmarksTodayExtension";
+

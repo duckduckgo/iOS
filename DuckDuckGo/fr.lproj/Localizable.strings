@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Ajouter";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Ajouter aux signets";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Annuler";
+
+/* Copy action */
+"action.title.copy" = "Copier";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Désactiver la protection de la confidentialité";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Activer la protection de la confidentialité";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Fermer les onglets et effacer les données";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Onglets et données effacés";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Ouvrir en arrière-plan";
+
+/* Create New Tab action */
+"action.title.newTab" = "Nouvel onglet";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Ouvrir dans un nouvel onglet";
+
+/* Open action */
+"action.title.open" = "Ouvert";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Coller et valider";
+
+/* Reading List action */
+"action.title.readingList" = "Ajouter à la liste de lecture";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Actualiser";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Signaler un site cassé";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Afficher en version ordinateur";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Afficher en version mobile";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Enregistrer";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Ajouter aux signets";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Ajouter aux favoris";
+
+/* Settings action */
+"action.title.settings" = "Paramètres…";
+
+/* Share action */
+"action.title.share" = "Partager…";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Les signets existants ne seront pas dupliqués.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Ajouter tous les onglets aux signets ?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Ajouter aux sites non protégés";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Modifier le signet";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Enregistrer le signet";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Enregistrer le favori";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Déverrouiller DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Connexion";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Connectez-vous à %@. Vos identifiants de connexion seront envoyés en toute sécurité.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Connectez-vous à %@. Votre mot de passe ne sera pas envoyé de manière sûre car la connexion n'est pas chiffrée.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Mot de passe";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Authentification requise";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Nom d'utilisateur";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Désactivé";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Activé";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Titre du site Web";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Impossible d'ajouter certains onglets aux signets";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Tous les onglets ont été ajoutés aux signets";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Les commentaires n'ont pas pu être chargés";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Le contenu est manquant";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Les images n'ont pas pu être chargées";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Les liens ou les boutons ne fonctionnent pas";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Je ne peux pas me connecter";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Autre chose";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Le site m'a demandé de désactiver";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Le navigateur est incompatible";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "La vidéo n'a pas été lue";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Décrivez ce qui s'est passé";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Masquer les conseils pour toujours";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Annuler";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Il n'y en a que quelques-uns, et nous avons essayé de les rendre informatifs.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Masquer les conseils restants ?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Vos recherches effectuées sur DuckDuckGo sont confidentielles et je ne conserve jamais votre historique de recherche. Jamais. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Ouf !";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Bien joué !";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* essayait de vous traquer ici.\n\nJe l'ai bloqué !\n\n☝️ Vous pouvez voir dans la barre d'adresse URL qui essaie de vous traquer lorsque vous visitez un nouveau site.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Bien joué !";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Attention ! Je ne peux pas empêcher %1$@ de voir votre activité sur %2$@.\n\nSi vous naviguez avec moi, je peux réduire les données récoltées par %1$@ en bloquant ses traqueurs sur de nombreux autres sites.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "J'ai compris";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Attention ! Comme %2$@ est propriétaire de %1$@, je ne peux pas l'empêcher d'y suivre votre activité.\n\nSi vous naviguez avec moi, je peux réduire les données récoltées par %2$@ en bloquant ses traqueurs sur de nombreux autres sites.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "J'ai compris";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Lors de votre navigation, je bloque les traqueurs indésirables.\n\nContinuez à naviguer en toute tranquillité !";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "J'ai compris";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Consultez vos sites préférés en un clin d'œil !\n\nRendez-vous sur un site que vous aimez particulièrement. Appuyez sur l'icône « ⋯ » et sélectionnez *Ajouter aux favoris*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Consultez vos sites préférés en un clin d'œil !\n\n Rendez-vous sur l'un de vos sites préférés. Appuyez sur le bouton pour ouvrir le menu et sélectionnez Ajouter aux favoris.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Maintenant, essayez de visiter un de vos sites préférés !\n\nJe bloquerai les traqueurs afin qu'ils ne puissent pas vous espionner. J'améliorerai également la sécurité de votre connexion dans la mesure du possible. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Bien joué !\n\nSouvenez-vous : chaque fois que vous naviguez avec moi, des publicités intrusives disparaissent. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internet peut être intrusif.\n\nMais ne vous inquiétez pas ! Rechercher et naviguer de manière confidentielle est plus facile que vous ne le pensez.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Désactivé";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Étant donné que le Global Privacy Control (GPC) est une nouvelle norme, la plupart des sites Web ne la reconnaissent pas encore, mais nous mettons tout en œuvre pour qu'elle soit reconnue dans le monde entier.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "En savoir plus";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Cependant, les sites Web ne sont tenus de respecter cette demande que dans la mesure où les lois applicables les y obligent. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Activé";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vos données ne devraient pas être à vendre. C'est aussi la philosophie de DuckDuckGo. Activez le paramètre « Global Privacy Control » (GPC) et nous indiquerons aux sites Web que vous leur demandez de :\n\n• Ne pas vendre vos données personnelles.\n• Limiter le partage de vos données personnelles avec d'autres entreprises.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Pas encore de signets";
+
+/* Empty list state placholder */
+"empty.favorites" = "Pas encore de favoris";
+
+/* No comment provided by engineer. */
+"favorite" = "Favori";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Supprimer";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Modifier";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Bloquer les publicités et les fenêtres contextuelles";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Créer et gérer les signets";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Quelle fonctionnalité de navigation pouvons-nous ajouter ou améliorer ?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Problèmes de fonctionnalités du navigateur";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Des fonctionnalités de navigation sont manquantes ou peu satisfaisantes";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Interagir avec les images";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Naviguer vers l'avant, vers l'arrière et/ou actualiser";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Aucune de ces options";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Créer et gérer les onglets";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Regarder des vidéos";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "L'affichage des signets";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Quelle option de personnalisation pouvons-nous ajouter ou améliorer ?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Problèmes de personnalisation";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Il n'y a pas assez de façons de personnaliser l'application";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "La configuration de l'écran d'accueil";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Aucune de ces options";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "L'affichage des onglets";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "L'aspect visuel de l'application";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Les données qui sont effacées";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Quand les données sont effacées";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Meilleure saisie semi-automatique";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Quelle fonctionnalité de recherche pouvons-nous ajouter ou améliorer ?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Problèmes de recherche DuckDuckGo";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "La recherche DuckDuckGo n’est pas satisfaisante";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Recherche dans une langue ou une région spécifique";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "La mise en page devrait ressembler davantage à Google";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Temps de chargement plus rapide";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Aucune de ces options";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programmation/recherche technique";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Dites-nous ce que nous pouvons améliorer";
+
+/* Confirmation button */
+"feedback.form.submit" = "ENVOYER UN COMMENTAIRE";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Veuillez être aussi précis que possible";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Y a-t-il des informations dont vous aimeriez nous faire part ?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Nous sommes désolés de l'apprendre.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "À quoi votre insatisfaction est-elle la plus liée ?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Autres problèmes";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Aucune de ces options";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Quel problème rencontrez-vous ?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "L'application plante ou se bloque";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Problèmes de performances";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "L'application est lente, bogue ou plante";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Aucune de ces options";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Bogues de lecture vidéo ou multimédia";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Les pages Web ou les résultats de recherche se chargent lentement";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Partager des informations";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Qu'avez-vous apprécié ?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Y a-t-il des informations que vous aimeriez partager avec l'équipe ?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Nous sommes heureux de l'apprendre !";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Non merci ! J'ai terminé";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Partager des informations";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Vos commentaires anonymes sont importants pour nous.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Commençons !";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Comment catégoriseriez-vous vos commentaires ?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Merci ! Commentaire envoyé.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Problèmes de chargement de sites Web";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Certains sites Web ne se chargent pas correctement";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Quel contenu semble affecté ?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Où voyez-vous ces problèmes ?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Quel site rencontre des problèmes ?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d sur %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Rechercher dans la page";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Définir comme navigateur par défaut";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Faites de DuckDuckGo votre navigateur par défaut.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Des liens ouverts en toute tranquillité d'esprit, à chaque fois.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "NOUVEAUTÉS DE L'IOS 14";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Ajoutez DuckDuckGo à votre écran d'accueil !";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Ajoutez DuckDuckGo à votre Dock pour y accéder facilement !";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Ajoutez DuckDuckGo à vos favoris";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Effectuez des recherches et consultez vos favoris dans un nouvel onglet";
+
+/* Home tab title */
+"homeTab.title" = "Accueil";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Ajouter un signet";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Ajouter un favori";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Afficher la page précédente";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Afficher la page suivante";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Fermer";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Fermer onglet";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Rechercher dans la page";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Rechercher le suivant";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Rechercher le précédent";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Effacer tous les onglets et données";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Chercher ou saisir une adresse";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Nouvel onglet";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Onglet suivant";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Ouvrir le lien en arrière-plan";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Ouvrir le lien dans un nouvel onglet";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Onglet précédent";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Imprimer";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Recharger";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Sélectionner";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Afficher tous les onglets";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Bienvenue sur DuckDuckGo !";
+
+/* Edit button */
+"navigation.title.edit" = "Modifier";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Continuer";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Peut-être plus tard";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Faites de DuckDuckGo votre navigateur par défaut.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Définir comme navigateur par défaut";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Ignorer";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Commencer la navigation";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Bienvenue sur DuckDuckGo !";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Nous sommes désolés, aucune application ne peut prendre en charge ce lien.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Les sites Web utilisent des cookies pour maintenir votre connexion. Quand vous placez un site en mode coupe-feu, les cookies sont conservés et vous restez connecté(e), même après avoir utilisé le bouton en forme de flamme.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Sites Web";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Souhaitez-vous placer %@ en mode coupe-feu ?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Site Web coupe-feu";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Pas maintenant";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Tout supprimer";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "Ok";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Demander à placer des sites Web en mode coupe-feu";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ est maintenant en mode coupe-feu ! Accédez aux paramètres pour le supprimer.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algorithme";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bits";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Erreur lors de l'extraction du certificat";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Nom commun";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Taille réelle";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "Adresse électronique";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Connexion chiffrée";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Cryptage forcé";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Nous avons obligé ce site à utiliser une connexion chiffrée, ce qui l'empêchera d'espionner les informations personnelles que vous lui enverrez.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Une connexion chiffrée empêche l'espionnage des informations personnelles que vous envoyez à un site Web.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Identifiant de la clé du sujet";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Émetteur";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Clé publique";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Taille de la clé";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Cryptage mixte";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Ce site a un cryptage mixte car une partie de son contenu passe par des connexions non chiffrées.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Non";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Permanent";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Clé publique";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Une connexion chiffrée empêche l'espionnage des informations personnelles que vous envoyez à un site Web.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Nom de l'émetteur";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Résumé";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Cette connexion n'est pas chiffrée, donc faites attention à ce que vous envoyez.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Connexion non chiffrée";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Inconnu";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Utilisation";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Décrypter";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Dériver";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Chiffrer";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Signer";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Déballer";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Vérifier";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Emballer";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Oui";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "PROTECTION DU SITE DÉSACTIVÉE";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "AMÉLIORÉ DE $1 à 2$";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Degré de confidentialité";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Des réseaux de traqueurs ont été trouvés sur %1$@%% des sites Web que vous avez visités depuis le %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Nous recueillons toujours des données pour indiquer\nle nombre de traqueurs que nous avons bloqués.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Utilisation des informations de pratiques de confidentialité de ToS;DR";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Les pratiques de confidentialité indiquent dans quelle mesure les informations personnelles que vous partagez avec un site Web sont protégées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Ce site Web vous avertira avant de transférer vos informations en cas de fusion ou de rachat";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Les pratiques de confidentialité de ce site Web n'ont pas été vérifiées.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Degré de confidentialité %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Appuyer pour activer la protection de la confidentialité";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Ces statistiques sont uniquement enregistrées sur votre appareil et ne seront envoyées nulle part. Jamais.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Bonnes pratiques de confidentialité";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "« Pratiques de confidentialité mixtes »";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "« Mauvaises pratiques de confidentialité »";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Pratiques de confidentialité inconnues";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Les réseaux de trackers regroupent votre historique Web dans un profil de données vous concernant. Les réseaux majeurs de trackers sont plus nuisibles, car ils peuvent vous suivre et vous cibler sur une plus grande partie du Web.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Non";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Oui";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Souhaitez-vous quitter DuckDuckGo pour afficher ce contenu ?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Ouvrir dans une autre application ?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "La soumission d'un rapport anonyme pour signaler le mauvais fonctionnement du site nous aide à déboguer ces problèmes et à améliorer l'extension.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Chercher ou saisir une adresse";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Signets";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Favoris";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "Chez DuckDuckGo, nous mettons en place un nouveau concept de confiance en ligne.\n\nLe navigateur confidentiel DuckDuckGo fournit tous les éléments de confidentialité essentiels dont vous avez besoin pour vous protéger lorsque vous faites des recherches et naviguez sur le Web, notamment le blocage des traqueurs, un cryptage plus intelligent et la recherche privée DuckDuckGo.\n\nAprès tout, la sphère Internet gagnerait à s’affranchir d’un éventail de pratiques douteuses. Avec nous, protégez votre vie privée en ligne aussi aisément que vous fermez les rideaux.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "D'autres moteurs de recherche pistent vos recherches même lorsque vous êtes en mode de navigation privée. Nous ne vous pisterons jamais.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Accédez à *Safari*, puis *Moteur de recherche*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Accédez à l'application *Réglages*";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Sélectionnez *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Envoyer le rapport";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Domaine du site endommagé :";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Quel est le contenu ou la fonctionnalité qui ne fonctionne plus ?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Le signalement des sites endommagés se fait de manière totalement anonyme et nous aide à améliorer l'application !";
+
+/* This is a form title */
+"siteFeedback.title" = "Signaler un problème de site";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Quel site Web pose problème ?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Fermer l'onglet d'accueil";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Fermer « %1$@ » via %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Ouvrir l'onglet d'accueil";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Ouvrir « %1$@ » via %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Outil de changement d'onglet";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Sombre";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Système";
+
+/* Light Theme entry */
+"theme.acc.light" = "Clair";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Sombre";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Par défaut";
+
+/* Light Theme entry */
+"theme.name.light" = "Clair";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ ajouté aux sites non protégés";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ supprimé des sites non protégés";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Une erreur inconnue s'est produite";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Signet enregistré";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Signet déjà enregistré";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Il n'y a aucune page Web à ajouter aux signets";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Favori enregistré";
+

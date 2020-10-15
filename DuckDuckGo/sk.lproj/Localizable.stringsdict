@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* a *1 ďalší* sa vás tu pokúsil sledovať.
+
+Boli zablokovaní!
+
+☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* a%1$d ďalší* sa vás tu pokúsili sledovať. 
+
+Boli zablokovaní!
+
+ ☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* a *%1$d ďalších* sa vás tu pokúsila sledovať. 
+
+Boli zablokovaní!
+
+ ☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* a *%1$d ďalších* sa vás tu pokúsilo sledovať. 
+
+Boli zablokovaní!
+
+☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Našlo sa %1$d hlavné sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Našli sa %1$d hlavné sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Našla sa %1$d hlavných sledovacích zariadení</string>
+			<key>other</key>
+			<string>Našlo sa %1$d hlavných sledovacích zariadení</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Zablokovalo sa %1$d sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Zablokovali sa %1$d sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Zablokovala sa %1$d sledovacích zariadení</string>
+			<key>other</key>
+			<string>Zablokovalo sa %1$d sledovacích zariadení</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Našlo sa %1$d sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Našli sa %1$d sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Našlo sa %1$d sledovacieho zariadenia</string>
+			<key>other</key>
+			<string>Našlo sa %1$d sledovacích zariadení</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Zablokovalo sa %1$d sledovacie zariadenie</string>
+			<key>few</key>
+			<string>Zablokovali sa %1$d sledovacie zariadenia</string>
+			<key>many</key>
+			<string>Zablokovalo sa %1$d sledovacieho zariadenia</string>
+			<key>other</key>
+			<string>Zablokovalo sa %1$d sledovacích zariadení</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d súkromná karta</string>
+			<key>few</key>
+			<string>%1$d súkromné karty</string>
+			<key>many</key>
+			<string>%1$d súkromných kariet</string>
+			<key>other</key>
+			<string>%1$d súkromných kariet</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

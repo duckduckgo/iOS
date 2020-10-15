@@ -1,0 +1,57 @@
+/* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
+"1GE-Nf-lKM.text" = "Título";
+
+/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
+"2aH-nO-H3f.accessibilityLabel" = "Adicionar todos os separadores como favoritos";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
+"2en-CB-bYH.accessibilityLabel" = "Fechar separador";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
+"2GU-MM-UwX.text" = "Título";
+
+/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
+"5nO-MZ-vSY.accessibilityLabel" = "Fechar todos os separadores e limpar os dados";
+
+/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
+"Cy7-Lb-veV.text" = "Separadores";
+
+/* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
+"cYd-YU-sSj.accessibilityLabel" = "Adicionar um novo separador";
+
+/* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
+"G2C-qh-g3T.accessibilityLabel" = "Fechar separador";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
+"Gyy-py-IOg.accessibilityLabel" = "Separador não lido";
+
+/* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "h1S-c2-Spf"; */
+"h1S-c2-Spf.title" = "Fechar todos os separadores e limpar os dados";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
+"Hcx-F2-HgO.accessibilityLabel" = "Limpar separadores e dados";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
+"kW3-ZC-Axl.normalTitle" = "Feito";
+
+/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
+"L7l-vl-rDZ.accessibilityLabel" = "Alternar entre a vista de grelha e lista";
+
+/* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
+"LbT-NO-T0G.text" = "Link";
+
+/* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
+"nYf-xs-PE7.title" = "Novo separador";
+
+/* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
+"qrJ-aX-XrW.accessibilityLabel" = "Separador não lido";
+
+/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
+"uIV-4q-5mj.accessibilityLabel" = "Adicionar separador";
+
+/* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
+"Uu4-yR-9tN.text" = "Website -- Título longo";
+
+/* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
+"xto-EI-h22.accessibilityHint" = "Fechar";
+

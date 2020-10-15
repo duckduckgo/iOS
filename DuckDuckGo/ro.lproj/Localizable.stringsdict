@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* și *încă unul* încercau să te urmărească aici.
+
+I-am blocat!
+
+☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* și *alți %1$d* încercau să te urmărească aici.
+
+I-am blocat!
+
+☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* și *alți %1$d* încercau să te urmărească aici.
+
+I-am blocat!
+
+☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d instrument de urmărire important găsit</string>
+			<key>few</key>
+			<string>%1$d instrumente de urmărire importante găsite</string>
+			<key>other</key>
+			<string>%1$d de instrumente de urmărire importante găsite</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d instrument de urmărire important blocat</string>
+			<key>few</key>
+			<string>%1$d instrumente de urmărire importante blocate</string>
+			<key>other</key>
+			<string>%1$d de instrumente de urmărire importante blocate</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d Urmăritor Găsit</string>
+			<key>few</key>
+			<string>%1$d Urmăritori Găsiți</string>
+			<key>other</key>
+			<string>%1$d Urmăritori Găsiți</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d Urmăritor Blocat</string>
+			<key>few</key>
+			<string>%1$d Urmăritori Blocați</string>
+			<key>other</key>
+			<string>%1$d Urmăritori Blocați</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d filă privată</string>
+			<key>few</key>
+			<string>%1$d file private</string>
+			<key>other</key>
+			<string>%1$d de file private</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

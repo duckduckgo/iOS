@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Label";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Pretražite ili posjetite svoja omiljena mrežna mjesta privatno jednim dodirom.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Pretraživanje i favoriti";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Brzo pokrenite privatnu pretragu u pregledniku DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Traži";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Dodaj u omiljene";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Brzo posjetite svoja omiljena mrežna mjesta.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Pretraži DuckDuckGo";
+

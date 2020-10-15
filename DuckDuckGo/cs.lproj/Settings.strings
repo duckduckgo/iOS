@@ -1,0 +1,189 @@
+/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
+"0DQ-yq-UuT.text" = "Webové stránky pro ochranu souborů";
+
+/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
+"0gU-rZ-pRc.footerTitle" = "Zakažte, chcete-li zabránit automatickému otevírání odkazů v jiných nainstalovaných aplikacích.";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
+"2ky-s9-1aZ.text" = "Verze";
+
+/* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
+"2pp-PM-6rW.title" = "Klávesnice";
+
+/* Class = "UILabel"; text = "Clear Tabs only"; ObjectID = "3WZ-Fi-HIH"; */
+"3WZ-Fi-HIH.text" = "Vymazat pouze karty";
+
+/* Class = "UILabel"; text = "App exit, inactive for 30min"; ObjectID = "5Yd-7i-bey"; */
+"5Yd-7i-bey.text" = "Ukončení aplikace, neaktivní po dobu 30 minut";
+
+/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
+"5YD-Od-uDU.text" = "Automaticky vymazat data";
+
+/* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
+"7nt-uS-sOh.normalTitle" = "Více na duckduckgo.com/about";
+
+/* Class = "UILabel"; text = "App exit, inactive for 60min"; ObjectID = "9EC-lx-77p"; */
+"9EC-lx-77p.text" = "Ukončení aplikace, neaktivní po dobu 60 minut";
+
+/* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
+"9fc-9r-4aA.text" = "Vymazat karty a data";
+
+/* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
+"13n-KI-KLq.text" = "Spuštění aplikace";
+
+/* Class = "UILabel"; text = "Use DuckDuckGo in Safari"; ObjectID = "74x-N4-jKV"; Note = "This is on a button leading to a screen with instructions about how to enable DuckDuckGo in Safari"; */
+"74x-N4-jKV.text" = "Používejte DuckDuckGo v prohlížeči Safari";
+
+/* Class = "UILabel"; text = "Open Links in their Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
+"a1T-ui-4Nw.text" = "Otevřít odkazy v přidružených aplikacích";
+
+/* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
+"BGs-JL-4ib.footerTitle" = "Data nebo karty budou vymazány po restartu aplikace.";
+
+/* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "Při přihlašování";
+
+/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
+"cKo-er-HNj.text" = "Ikona aplikace";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
+"cW7-OM-2oW.text" = "Globální kontrola ochrany osobních údajů (GPC)";
+
+/* Class = "UILabel"; text = "App exit, inactive for 15min"; ObjectID = "D0R-jp-UY8"; */
+"D0R-jp-UY8.text" = "Ukončení aplikace, neaktivní po dobu 15 minut";
+
+/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
+"d5n-vG-8kF.text" = "10.0.1 (Build 10005)";
+
+/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
+"dBZ-yq-FYj.text" = "Zámek aplikace";
+
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
+"dj9-vh-Rig.headerTitle" = "Přizpůsobit";
+
+/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.footerTitle" = "Pokud je nastaveno Touch ID, Face ID nebo přístupový kód k systému, budete při otevírání požádáni o odemknutí aplikace.";
+
+/* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.headerTitle" = "Ochrana osobních údajů a zabezpečení";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
+"dud-qo-Ces.text" = "Štítek";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
+"Dyd-bm-goj.title" = "Nastavení";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
+"EIq-Ev-nfj.text" = "Štítek";
+
+/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
+"ekF-SJ-PAQ.text" = "Automaticky vymazat data";
+
+/* Class = "UILabel"; text = "App exit, inactive for 5min"; ObjectID = "ElX-yE-4PX"; */
+"ElX-yE-4PX.text" = "Ukončení aplikace, neaktivní po dobu 5 minut";
+
+/* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
+"eMH-uv-Kms.title" = "Ikona aplikace";
+
+/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
+"f1O-6u-LFY.text" = "Téma";
+
+/* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
+"Fal-1Y-o2S.text" = "Pouze ukončení aplikace";
+
+/* Class = "UITableViewController"; title = "Auto Clear Data"; ObjectID = "fdJ-b1-Des"; */
+"fdJ-b1-Des.title" = "Automaticky vymazat data";
+
+/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
+"FHC-1z-Z3v.text" = "Nechráněné stránky";
+
+/* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
+"FpT-1C-xtx.headerTitle" = "Jiné";
+
+/* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
+"fV3-86-QQj.title" = "Globální kontrola ochrany osobních údajů (GPC)";
+
+/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
+"Gbx-kl-uOO.text" = "Výchozí";
+
+/* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
+"gji-Fs-EET.text" = "Ochrana soukromí, zjednodušená. ";
+
+/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
+"gS2-mg-l7R.title" = "Téma";
+
+/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
+"HLr-R8-xxF.text" = "Náhledy dlouhého stisknutí";
+
+/* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
+"Hu1-5i-vjL.text" = "Zatím žádné nechráněné stránky";
+
+/* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
+"jbD-Oy-Cmw.title" = "Ikona";
+
+/* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
+"m23-t6-9cb.text" = "Odeslat zpětnou vazbu";
+
+/* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
+"NRb-Cc-1d6.footerTitle" = "Pokud je tato funkce povolena, webové stránky se automaticky otevřou v DuckDuckGo.";
+
+/* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Žádný";
+
+/* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
+"OHV-qC-tL9.title" = "Nechráněné stránky";
+
+/* Class = "UILabel"; text = "About"; ObjectID = "oM7-1o-9oY"; */
+"oM7-1o-9oY.text" = "O společnosti";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
+"qeN-SV-zy7.text" = "Štítek";
+
+/* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
+"tGh-di-rfq.headerTitle" = "Zobrazit klávesnici na";
+
+/* Class = "UINavigationItem"; title = "Global Privacy Control (GPC)"; ObjectID = "tWw-Lh-ZT1"; */
+"tWw-Lh-ZT1.title" = "Globální kontrola ochrany osobních údajů (GPC)";
+
+/* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
+"U2M-6p-6nl.headerTitle" = "Akce";
+
+/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
+"U8i-cQ-5WW.text" = "Zobrazit návrhy automatického doplňování";
+
+/* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
+"UZx-52-aer.text" = "Odebrat všechny webové stránky s ochranou";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
+"vPz-uO-6gB.text" = "Globální kontrola ochrany osobních údajů (GPC)";
+
+/* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
+"vSJ-YJ-bBs.footerTitle" = "Ukončení aplikace je definováno přejetím prstem po aplikaci za účelem zavření, zatímco neaktivní aplikace znamená, že aplikace běží na pozadí.";
+
+/* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
+"vSJ-YJ-bBs.headerTitle" = "Požadované časování";
+
+/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
+"xof-5k-PkI.text" = "Nastavit jako výchozí prohlížeč";
+
+/* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
+"xUX-nF-HOl.title" = "Webové stránky pro ochranu souborů";
+
+/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
+"yoZ-jw-Cu3.text" = "Klávesnice";
+
+/* Class = "UILabel"; text = "Add DuckDuckGo to your dock"; ObjectID = "yvj-LL-MiR"; */
+"yvj-LL-MiR.text" = "Přidejte DuckDuckGo do vašeho docku";
+
+/* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
+"zMK-jc-4bJ.headerTitle" = "Nápověda";
+
+/* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
+"Zpg-h0-rYv.text" = "Nová karta";
+
+/* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
+"zvh-2e-Wmz.text" = "Tyto nechráněné stránky nebudou\nvylepšeny ochranou osobních údajů.";
+
+/* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
+"zWP-d3-nVc.title" = "Domovská obrazovka";
+

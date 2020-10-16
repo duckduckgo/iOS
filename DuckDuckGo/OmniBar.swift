@@ -389,6 +389,11 @@ extension OmniBar: UITextFieldDelegate {
         DispatchQueue.main.async {
             self.omniDelegate?.onTextFieldDidBeginEditing(self)
             self.refreshState(self.state.onEditingStartedState)
+        }
+
+        // Allow the cursor to move to the end before selecting all the text
+        // to avoid text not being selected properly
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.textField.selectAll(nil)
         }
     }

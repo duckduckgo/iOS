@@ -1078,7 +1078,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        if url.isBookmarklet() && allowPolicy == .allow {
+        if url.isBookmarklet() {
             completion(.cancel)
 
             if let js = url.toDecodedBookmarklet() {

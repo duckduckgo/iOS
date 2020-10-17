@@ -32,6 +32,8 @@ class PrivacyProtectionHeaderCell: UITableViewCell {
 
 class PrivacyProtectionHeaderConfigurator {
     
+    static let fallbackEnhancedGradeString = "$1 -> $2"
+    
     private static let gradesOn: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A On"),
         .bPlus: #imageLiteral(resourceName: "PP Grade B Plus On"),
@@ -72,14 +74,22 @@ class PrivacyProtectionHeaderConfigurator {
         }
     }
     
+    // swiftlint:disable function_body_length
     private static func makeEnhancedProtectionLabel(_ siteRating: SiteRating, fromText: NSAttributedString) -> NSAttributedString? {
         let siteGradeImages = siteRating.siteGradeImages()
         
-        let string = UserText.privacyProtectionEnhanced
-        
+        var string = UserText.privacyProtectionEnhanced
         let regex = try? NSRegularExpression(pattern: "\\$([1-9])")
-        guard let match = regex?.matches(in: string, options: [], range: NSRange(location: 0, length: string.count)),
-            match.count >= 2 else { return nil }
+        
+        let match: [NSTextCheckingResult]
+        if let regexMatch = regex?.matches(in: string, options: [], range: NSRange(location: 0, length: string.count)), regexMatch.count >= 2 {
+            match = regexMatch
+        } else if let fallbackMatch = regex?.matches(in: Self.fallbackEnhancedGradeString,
+                                                     options: [],
+                                                     range: NSRange(location: 0, length: Self.fallbackEnhancedGradeString.count)) {
+            string = Self.fallbackEnhancedGradeString
+            match = fallbackMatch
+        } else { return nil }
         
         let firstRange = Range(match[0].range, in: string)!
         let secondRange = Range(match[1].range, in: string)!
@@ -90,8 +100,7 @@ class PrivacyProtectionHeaderConfigurator {
         let lastPart = String(string[secondRange.upperBound..<string.endIndex])
         
         let fullString = NSMutableAttributedString(string: firstPart)
-        fullString.setAttributes(fromText.attributes(at: 0, effectiveRange: nil),
-                                 range: firstPart.fullRange)
+        fullString.setAttributes(fromText.attributes(at: 0, effectiveRange: nil), range: firstPart.fullRange)
         
         let image1Attachment = NSTextAttachment()
         image1Attachment.image = siteGradeImages.from
@@ -120,6 +129,7 @@ class PrivacyProtectionHeaderConfigurator {
    
         return fullString
     }
+    // swiftlint:enable function_body_length
     
     private static func differentGrades(in siteRating: SiteRating) -> Bool {
         let siteGrade = siteRating.scores.site.grade.normalize()

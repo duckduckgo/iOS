@@ -689,7 +689,7 @@
 "privacy.protection.main.disabled" = "VIETAS AIZSARDZĪBA IR ATSPĒJOTA";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "UZLABOTS NO 1$ uz 2$";
+"privacy.protection.main.enhanced" = "UZLABOTS NO $1 uz $2";
 
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "Privātuma līmenis";

@@ -1,1 +1,2 @@
 • Hallo! Bonjour! Ciao! Hola! We’ve translated our app into 24 languages.
+• Other bug fixes and improvements.

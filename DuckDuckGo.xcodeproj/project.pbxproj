@@ -22,6 +22,7 @@
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
+		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
 		4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */; };
 		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
@@ -698,6 +699,7 @@
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
+		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
 		4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoUserScript.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
@@ -2557,6 +2559,7 @@
 			children = (
 				858566E7252E4F56007501B8 /* Debug.storyboard */,
 				858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */,
+				4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -4575,6 +4578,7 @@
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
+				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
 				02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */,

@@ -40,6 +40,8 @@ public struct Variant {
 
         static let inRequiredCountry = { return ["AU", "AT", "DK", "FI", "FR", "DE", "IT", "IE", "NZ", "NO", "ES", "SE", "GB"]
                 .contains(where: { Locale.current.regionCode == $0 }) }
+        
+        static let inEnglish = { return Locale.current.languageCode == "en" }
 
         static let iOS14 = { () -> Bool in
             if #available(iOS 14, *) {
@@ -48,6 +50,8 @@ public struct Variant {
                 return false
             }
         }
+        
+        static let inEnglishAndIOS14 = { return inEnglish() && iOS14() }
     }
     
     static let doNotAllocate = 0
@@ -61,9 +65,9 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
 
         // Onboarding
-        Variant(name: "oh", weight: 1, isIncluded: When.iOS14, features: [ .onboardingHomeRow ]),
-        Variant(name: "od", weight: 1, isIncluded: When.iOS14, features: [ .onboardingDefaultBrowser ]),
-        Variant(name: "ow", weight: 1, isIncluded: When.iOS14, features: [ .onboardingWidgets ])
+        Variant(name: "oh", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingHomeRow ]),
+        Variant(name: "od", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingDefaultBrowser ]),
+        Variant(name: "ow", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingWidgets ])
     ]
     
     public let name: String

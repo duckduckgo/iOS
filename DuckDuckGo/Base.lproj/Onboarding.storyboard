@@ -16,9 +16,6 @@
         <array key="proximanova-extrabold.otf">
             <string>ProximaNova-Extrabld</string>
         </array>
-        <array key="proximanova-regular.otf">
-            <string>ProximaNova-Regular</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Navigation Controller-->
@@ -49,7 +46,7 @@
                                 <rect key="frame" x="0.0" y="88.000000000000014" width="414" height="132.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Welcome to DuckDuckGo!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="20" y="65.333333333333343" width="374" height="64"/>
+                                        <rect key="frame" x="20" y="54.666666666666664" width="374" height="74.666666666666686"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
@@ -132,7 +129,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                <rect key="frame" x="30" y="825" width="354" height="29"/>
+                                <rect key="frame" x="30" y="822" width="354" height="32"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Skip"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -347,7 +344,7 @@ every day.</string>
                                 <rect key="frame" x="0.0" y="44" width="414" height="704"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Yp-jL-Y1J">
-                                        <rect key="frame" x="32" y="85.333333333333343" width="24" height="24"/>
+                                        <rect key="frame" x="32" y="80" width="24" height="24"/>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="3zR-ah-ZAu"/>
@@ -363,7 +360,7 @@ every day.</string>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBd-OG-vC0">
-                                        <rect key="frame" x="32" y="157" width="24" height="24"/>
+                                        <rect key="frame" x="32" y="149.66666666666666" width="24" height="24"/>
                                         <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="LYb-Z9-nPX"/>
@@ -378,39 +375,60 @@ every day.</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Long-press on the home screen to enter jiggle mode." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZh-cn-pjt">
-                                        <rect key="frame" x="72" y="85.333333333333343" width="310" height="39.666666666666657"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZh-cn-pjt">
+                                        <rect key="frame" x="72" y="80" width="310" height="37.666666666666657"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Long-press on the home screen to enter jiggle mode.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.1000000000000001" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Widget Instructions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZv-GS-xyE">
-                                        <rect key="frame" x="16" y="16.000000000000004" width="382" height="37.333333333333343"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Widget Instructions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZv-GS-xyE">
+                                        <rect key="frame" x="16" y="16" width="382" height="32"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Extrabld" family="Proxima Nova" pointSize="32"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingWidgetInstructionsImage" translatesAutoresizingMaskIntoConstraints="NO" id="7jO-bh-iAP">
-                                        <rect key="frame" x="72" y="212.66666666666669" width="310" height="174"/>
+                                        <rect key="frame" x="72" y="203.33333333333337" width="310" height="174"/>
                                         <constraints>
                                             <constraint firstAttribute="width" priority="750" constant="350" id="QVG-Ac-nRR"/>
                                             <constraint firstAttribute="width" secondItem="7jO-bh-iAP" secondAttribute="height" multiplier="271:152" id="klt-u0-ZgQ"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Tap the Add button %@ at the top of the screen." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVP-in-A0R">
-                                        <rect key="frame" x="72" y="157" width="310" height="39.666666666666657"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVP-in-A0R">
+                                        <rect key="frame" x="72" y="149.66666666666666" width="310" height="37.666666666666657"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Tap the Add button %@ at the top of the screen.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.1000000000000001" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Find DuckDuckGo in the list and choose a widget." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LP0-iP-Alk">
-                                        <rect key="frame" x="72" y="418.66666666666669" width="310" height="39.666666666666686"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LP0-iP-Alk">
+                                        <rect key="frame" x="72" y="409.33333333333331" width="310" height="37.666666666666686"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Find DuckDuckGo in the list and choose a widget.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.1000000000000001" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYm-7s-KFg">
-                                        <rect key="frame" x="32" y="418.66666666666669" width="24" height="24"/>
+                                        <rect key="frame" x="32" y="409.33333333333331" width="24" height="24"/>
                                         <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="PXq-4y-GyI"/>
@@ -426,7 +444,7 @@ every day.</string>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O1x-XY-vpW">
-                                        <rect key="frame" x="0.0" y="474.33333333333337" width="414" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="463" width="414" height="0.0"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="gLN-iq-pby"/>
@@ -466,7 +484,7 @@ every day.</string>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bv3-rQ-Vb9"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="HOt-9c-gP5" firstAttribute="top" secondItem="35M-WT-Fs5" secondAttribute="bottom" constant="16" id="5RR-Sy-FrD"/>
                             <constraint firstItem="HOt-9c-gP5" firstAttribute="centerX" secondItem="Bv3-rQ-Vb9" secondAttribute="centerX" id="AZ6-rR-MW5"/>

@@ -258,6 +258,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         if #available(iOS 13.0, *) {
+            guard UIApplication.shared.backgroundRefreshStatus == .available else {
+                return
+            }
+            
             // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
             // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
             BGTaskScheduler.shared.getPendingTaskRequests { tasks in

@@ -57,7 +57,6 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let urlString = dict[ContentBlockerKey.url] as? String else { return }
         guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
         
-        Swift.print("PAGE: \(pageUrlStr)")
         if let tracker = trackerFromUrl(urlString, blocked: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
                let pageHost = pageUrl.host,

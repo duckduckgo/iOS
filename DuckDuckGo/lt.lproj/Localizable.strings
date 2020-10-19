@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Papildyti";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Žymė";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Atšaukti";
+
+/* Copy action */
+"action.title.copy" = "Kopijuoti";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Išjungti privatumo apsaugą";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Įjungti privatumo apsaugą";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Uždaryti skirtukus ir valyti duomenis";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Skirtukai ir duomenys išvalyti";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Atidaryti fone";
+
+/* Create New Tab action */
+"action.title.newTab" = "Nauja kortelė";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Atverti naujoje kortelėje";
+
+/* Open action */
+"action.title.open" = "Atviras";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Klijuoti ir eiti";
+
+/* Reading List action */
+"action.title.readingList" = "Pridėti prie skaitymo sąrašo";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Atnaujinti";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Pranešti apie sugadintą svetainę";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Įkelti iš naujo darbalaukyje";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Įkelti iš naujo mobiliajame";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Išsaugoti";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Pridėti prie žymų";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Pridėti prie mėgstamų";
+
+/* Settings action */
+"action.title.settings" = "Nustatymai...";
+
+/* Share action */
+"action.title.share" = "Bendrinti...";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Pažymėti visus skirtukus?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Pridėti prie neapsaugotų svetainių";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Redaguoti žymelę";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Įrašyti žymę";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Įrašyti mėgstamą";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Atrakinti „DuckDuckGo“";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Prisijungti";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Prisijungti prie %@. Prisijungimo informacija bus išsiųsta saugiai.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Prisijungti prie %@. Jūsų slaptažodis bus išsiųstas nesaugiai, kadangi ryšys nėra šifruojamas.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Slaptažodis";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Būtinas autentifikavimas";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Naudotojo vardas";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Išjungti";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Įjungti";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Svetainės pavadinimas";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Nepavyko pažymėti kai kurių skirtukų";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Visi skirtukai pažymėti";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Komentarai neįkelti";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Trūksta turinio";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Vaizdai neįkelti";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Nuorodos ar mygtukai neveikia";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Galiu prisijungti";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Kažkas kito";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Svetainė paprašė manęs išjungti";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Naršyklė nesuderinama";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Vaizdo įrašas nepaleistas";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Aprašykite, kas atsitiko";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Slėpti patarimus visam laikui";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Atšaukti";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Jų tik keletas, stengėmės, kad jie būtų informatyvūs.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Slėpti likusius patarimus?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "„DuckDuckGo“ paieškos yra anoniminės ir niekada nekaupiu jūsų paieškos istorijos. Niekada. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Oi!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Duok penkis!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* bandė tave stebėti.\n\nUžblokavau!\n\n☝️ Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Duok penkis!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Būk atidus! Negaliu neleisti %1$@ matyti tavo veiklos %2$@.\n\nTačiau naršyk kartu su manimi ir aš sumažinsiu informacijos, kurią %1$@ žino apie tave, kiekį užblokuodamas stebėjimo priemones kitose svetainėse.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Supratau";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Būk atidus! Kadangi %2$@ priklauso %1$@, negaliu neleisti jiems matyti tavo veiklos.\n\nTačiau naršyk kartu su manimi ir aš sumažinsiu informacijos, kurią %2$@ žino apie tave, kiekį užblokuodamas stebėjimo priemones kitose svetainėse.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Supratau";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Bakstelėjus ir slenkant, bus blokuojamos įkyrios stebėjimo priemonės.\n\nPirmyn – naršykite toliau!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Supratau";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Apsilankykite savo mėgstamose svetainėse akimirksniu!\n\nEikite į savo mėgstamą svetainę. Tuomet bakstelėkite „⋯“ piktogramą ir pasirinkite *Pridėti prie mėgstamų*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Apsilankykite savo mėgstamose svetainėse akimirksniu! Apsilankykite vienoje savo mėgstamų svetainių. Tuomet bakstelėkite meniu atidarymo mygtuką ir pasirinkite „Pridėti prie mėgstamų“.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Pabandyk apsilankyti vienoje mėgstamiausių svetainių!\n\nUžblokuosiu stebėjimo priemones, kad jos negalėtų tavęs šnipinėti. Jei įmanoma, atnaujinsiu tavo ryšio saugumą. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Atlikai!\n\nĮsidėmėk: kiekvieną kartą, kai naršai su manimi, bauginantis skelbimas praranda galią. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internetas gali būti bauginantis.\n\nNesijaudink! Ieškoti ir naršyti privačiai yra lengviau, nei manai.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Išjungta";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Kadangi visuotinė privatumo kontrolė (VPK) yra naujas standartas, daugelis svetainių jo neatpažįsta, tačiau mes stengiamės užtikrinti, kad jis būtų priimtas visame pasaulyje.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Sužinoti daugiau";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Tačiau svetainės turi veikti tik remiantis signalu tiek, kiek taikoma pagal taikytiną teisę. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Įjungta";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Jūsų duomenys neturi būti pardavinėjami. Svetainėje „DuckDuckGo“ su tuo sutinkame. Aktyvinkite „Visuotinės privatumo kontrolės (VPK)“ nustatymą ir pranešime svetainėms:\n\n• Nepardavinėti jūsų asmens duomenų.\n• Apriboti jūsų asmens duomenų dalijimąsi su kitomis įmonėmis.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Žymių dar nėra";
+
+/* Empty list state placholder */
+"empty.favorites" = "Mėgstamų dar nėra";
+
+/* No comment provided by engineer. */
+"favorite" = "Mėgstamas";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Trinti";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Redaguoti";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Reklamų ir iššokančių langų blokavimas";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Žymelių kūrimas ir tvarkymas";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Kokią naršymo funkciją galime pridėti arba patobulinti?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Naršyklės funkcijų problemos";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Naršymo funkcijų trūksta arba jos neaiškios";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Paveikslėlių naudojimas";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Naršymas pirmyn, atgal ir (arba) atnaujinimas";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Nei vienas iš šių";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Kortelių kūrimas ir tvarkymas";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Vaizdo įrašų peržiūra";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Kaip rodomos žymelės";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Kokią tinkinimo parinktį galime pridėti ar pagerinti?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Tinkinimo problemos";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Nepakanka galimybių tinkinti programą";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Pagrindinio ekrano konfigūracija";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Nei vienas iš šių";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Kaip rodomos kortelės";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Kaip atrodo programa";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Kurie duomenys yra išvalomi";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Kada duomenys yra išvalomi";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Geresnis automatinis užbaigimas";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Kokią paieškos funkciją galime pridėti arba patobulinti?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Problemos paieškai naudojant „DuckDuckGo“";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "„DuckDuckGo“ paieška nepakankamai gera";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Paieška konkrečia kalba ar konkrečiame regione";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Išdėstymas turėtų būti panašesnis į „Google“";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Spartesnis krovimasis";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Nei vienas iš šių";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programavimas / techninė paieška";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Papasakokite, ką galime patobulinti";
+
+/* Confirmation button */
+"feedback.form.submit" = "PATEIKTI ATSILIEPIMĄ";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Nurodykite kuo konkrečiau";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Ar norėtumėte įtraukti konkrečios informacijos?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Apgailestaujame.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "Kas jums kelia didžiausią susierzinimą?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Kitos problemos";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Nei vienas iš šių";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Su kokia problema susiduriate?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Programa stringa arba nustoja veikti";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Veikimo problemos";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Programa veikia lėtai, genda ar stringa";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Nei vienas iš šių";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Vaizdo įrašų arba medijos atkūrimo klaidos";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Žiniatinklio puslapiai arba paieškos rezultatai įkeliami lėtai";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Dalintis informacija";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Kas jums patiko?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Ar norėtumėte papasakoti išsamiau?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Nuostabu tai girdėti!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Ne, ačiū! Pakaks";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Dalintis informacija";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Jūsų anoniminiai atsiliepimai mums labai svarbūs.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Pradėkime!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Kaip suskirstytumėte atsiliepimus į kategorijas?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Dėkojame! Atsiliepimas pateiktas.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Problemos kraunantis svetainei";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Kai kurios svetainės įkeliamos neteisingai";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Koks turinys atrodo paveiktas?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Kur susiduriate su šiomis problemomis?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Kokioje svetainėje susidūrėte su problema?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d iš %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Rasti puslapyje";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Nustatyti kaip numatytąją naršyklę";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Nustatykite „DuckDuckGo“ savo numatytąja naršykle.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Kiekvieną kartą be jaudulio atverkite nuorodas.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "NAUJIENA „IOS 14“";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Pridėti „DuckDuckGo“ prie pagrindinio ekrano!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Pridėkite „DuckDuckGo“ prie juostos, kad lengvai pasiektumėte!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Eiti į „DuckDuckGo“ pagrindinį puslapį";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Ieškoti ir pridėti mėgstamų naujame skirtuke";
+
+/* Home tab title */
+"homeTab.title" = "Pagrindinis";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Pridėti žymelę";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Pridėti mėgstamą";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Naršyti atgal";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Naršyti pirmyn";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Uždaryti";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Uždaryti kortelė";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Rasti puslapyje";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Rasti kitą";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Rasti ankstesnį";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Valyti visas korteles ir duomenis";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Ieškoti arba įvesti adresą";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Nauja kortelė";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Kitas skirtukas";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Atidaryti nuorodą fone";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Atidaryti nuorodą naujame skirtuke";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Ankstesnis skirtukas";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Spausdinti";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Įkelti iš naujo";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Pasirinkti";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Rodyti visus skirtukus";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Sveiki atvykę į „DUCKDUCKGO“";
+
+/* Edit button */
+"navigation.title.edit" = "Redaguoti";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Tęsti";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Galbūt vėliau";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Nustatykite „DuckDuckGo“ savo numatytąja naršykle.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Nustatyti kaip numatytąją naršyklę";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Praleisti";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Pradėti naršyti";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Sveiki atvykę į „DUCKDUCKGO“";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Apgailestaujame, jokia programa negali atidaryti šios nuorodos.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Svetainės pagrįstos slapukais, kad liktumėte prisijungę. Apsaugojus svetainę, slapukai nėra ištrinami ir liksite prisijungę net paspaudę apsaugojimo mygtuką.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Svetainės";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Ar norite apsaugoti %@?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Patikrinti svetainę";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Ne dabar";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Pašalinti visus";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "Gerai";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Prašyti apsaugoti svetaines";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ dabar yra apsaugota! Apsilankykite nustatymuose norėdami pašalinti.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritmas";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bitai";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Klaida ištraukiant sertifikatą";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Bendras pavadinimas";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Efektyvus dydis";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "El.paštas";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Šifruotas ryšys";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Priverstinis šifravimas";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Privertėme šią svetainę naudoti šifruotą ryšį, kad nenutekėtų pateikiama asmeninė informacija.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Šifruotas ryšys neleidžia nutekėti asmeninei informacijai, kurią siunčiate svetainei.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Temos rakto identifikatorius";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Leidėjas";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Viešas raktas";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Rakto dydis";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Mišrus šifravimas";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Šioje svetainėje naudojamas mišrus šifravimas, nes tam tikras turinys tiekiamas nešifruotu ryšiu.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Ne";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Nuolatinis";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Viešas raktas";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Šifruotas ryšys neleidžia nutekėti asmeninei informacijai, kurią siunčiate svetainei.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Temos pavadinimas";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Santrauka";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Šis ryšys nešifruotas, todėl būkite atidūs, ką siunčiate.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Nešifruotas ryšys";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Nežinomas";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Naudojimas";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Iššifruoti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Išvesti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Šifruoti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Pasirašyti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Išskleisti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Tikrinti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Suskleisti";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Taip";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "SVETAINĖS APSAUGA IŠJUNGTA";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "PATOBULINTA NUO $1 IKI $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Privatumo laipsnis";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Stebėjimo priemonės tinklai rasti %1$@%% svetainių, kuriose lankėtės nuo %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Renkame duomenis, kad galėtumėme parodyti, kiek\nstebėjimo priemonių užblokavome.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Privatumo praktikų informacijos iš ToS;DR naudojimas";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Privatumo praktika nurodo, kiek asmeninės informacijos, kuria dalinatės svetainėje, yra apsaugota.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Ši svetainė informuos jus prieš perduodant jūsų informaciją jungimosi arba įsigijimo atveju";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Šios svetainės privatumo praktikos neperžiūrėtos.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Privatumo laipsnis %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Paspauskite norėdami atidaryti privatumo apsaugos ekraną";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Ši statistika saugoma tik jūsų įrenginyje, ji nėra siunčiama niekur kitur. Niekada.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Gera privatumo praktika";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Mišri privatumo praktika";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Prasta privatumo praktika";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Nežinoma privatumo praktika";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Sekiklių tinklai stebi jūsų naršymo tinkle istoriją ir iš jos sudaro jūsų duomenų profilį. Daugelis sekiklių tinklų yra pavojingesni, nes jie gali sekti ir rasti jus didesnėje interneto erdvėje.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Ne";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Taip";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Ar norite išeiti iš „DuckDuckGo“ ir peržiūrėti šį turinį?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Atidaryti kitoje programoje?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Pateikus anoniminę sugadintos svetainės ataskaitą, galime padėti išspręsti šias problemas ir patobulinti plėtinį.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Ieškoti arba įvesti adresą";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Žymelės";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Mėgstami";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "„DuckDuckGo“ nustatome naują patikimumo tinkle standartą.\n\n„DuckDuckGo“ privatumo naršyklė užtikrina visus svarbiausius įrankius, kurie padės apsaugoti savo privatumą ieškant ir naršant tinkle, įskaitant sekiklių blokavimą, išmanųjį šifravimą ir „DuckDuckGo“ privačias paieškas.\n\nMūsų komanda tiki, kad internetas neturėtų būti toks baisus, o privatumas, kurio nusipelnėte internete, turėtų būti ranka pasiekiamas.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Kitos paieškos sistemos seka jūsų paieškas net tada, kai esate pasirinkę privatų naršymo režimą. Mes jūsų nesekame. Taškas.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Eikite į *Safari*, tuomet rinkitės *paieškos sistemą*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Atidarykite programoje *nustatymus*";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Pasirinkite *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Pateikti ataskaitą";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Sugedusios svetainės domenas:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Koks turinys ar funkcija neveikia?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Pranešimas apie sugedusią svetainę yra anonimiškas ir padeda mums tobulinti programą!";
+
+/* This is a form title */
+"siteFeedback.title" = "Pranešti apie neveikiančią svetainę";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Kuri svetainė neveikia?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Uždaryti pagrindinio puslapio skirtuką";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Uždaryti „%1$@“ adresu %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Atidaryti pagrindinio puslapio skirtuką";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Atidaryti „%1$@“ adresu %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Skirtukų perjungiklis";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Tamsi";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Sistema";
+
+/* Light Theme entry */
+"theme.acc.light" = "Šviesi";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Tamsi";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Sistemos numatytoji";
+
+/* Light Theme entry */
+"theme.name.light" = "Šviesi";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ pridėtas prie neapsaugotų svetainių";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ pašalintas iš neapsaugotų svetainių";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Įvyko nežinoma klaida";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Žymė išsaugota";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Žymė jau išsaugota";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Nėra pažymimo tinklalapio";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Mėgstamas įrašytas";
+

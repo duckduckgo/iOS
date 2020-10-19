@@ -1,0 +1,27 @@
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "1rB-5w-de3"; */
+"1rB-5w-de3.accessibilityLabel" = "Instellingen";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse forward"; ObjectID = "aXg-p3-oeq"; */
+"aXg-p3-oeq.accessibilityLabel" = "Vooruit browsen";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "Dt8-We-5tV"; */
+"Dt8-We-5tV.accessibilityLabel" = "Tekst wissen";
+
+/* Class = "UIButton"; accessibilityLabel = "Share"; ObjectID = "hor-Jd-3kw"; */
+"hor-Jd-3kw.accessibilityLabel" = "Delen";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
+"i9n-fD-ncJ.accessibilityLabel" = "Terug browsen";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
+"IHT-9R-ERy.normalTitle" = "Annuleren";
+
+/* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
+"ii4-Sq-bD1.accessibilityLabel" = "Bladwijzers";
+
+/* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
+"nJo-2d-gri.accessibilityLabel" = "Optiemenu";
+
+/* Class = "UIButton"; accessibilityLabel = "Refresh Page"; ObjectID = "Qea-QY-LVl"; */
+"Qea-QY-LVl.accessibilityLabel" = "Pagina vernieuwen";
+

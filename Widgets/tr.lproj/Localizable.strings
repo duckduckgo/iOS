@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Label";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Tek bir dokunuşla favori sitelerinizi gizlice arayın veya ziyaret edin.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Arama ve Favoriler";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "DuckDuckGo'da hızlıca gizli arama başlatın.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Ara";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Favori Ekle";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "En sevdiğiniz siteleri hızlıca ziyaret edin.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "DuckDuckGo'da Ara";
+

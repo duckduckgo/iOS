@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Atajos de teclado de DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "QuickActionsTodayExtension";
+

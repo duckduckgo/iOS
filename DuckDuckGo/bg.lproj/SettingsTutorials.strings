@@ -1,0 +1,9 @@
+/* Class = "UIButton"; accessibilityLabel = "close"; ObjectID = "Bw5-c9-4tY"; */
+"Bw5-c9-4tY.accessibilityLabel" = "Затваряне";
+
+/* Class = "UILabel"; text = "Use DuckDuckGo in Safari"; ObjectID = "e7k-jo-PSC"; */
+"e7k-jo-PSC.text" = "Използване на DuckDuckGo в Safari";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "uR1-Au-6JU"; */
+"uR1-Au-6JU.normalTitle" = "Done";
+

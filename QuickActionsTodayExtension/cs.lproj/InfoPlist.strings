@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Klávesové zkratky DuckGo";
+
+/* Bundle name */
+"CFBundleName" = "QuickActionsTodayExtension";
+

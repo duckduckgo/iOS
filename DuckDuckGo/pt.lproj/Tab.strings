@@ -1,0 +1,6 @@
+/* Class = "UILabel"; text = "DuckDuckGo can’t load this page."; ObjectID = "6P7-7R-riV"; */
+"6P7-7R-riV.text" = "O DuckDuckGo não consegue carregar esta página.";
+
+/* Class = "UILabel"; text = "This website has an invalid certificate and could be trying to pretend to be the website you are trying to access.  Please proceed with caution."; ObjectID = "Cjw-mk-QL3"; */
+"Cjw-mk-QL3.text" = "Este website tem um certificado inválido e pode estar a tentar passar por um website que está a tentar aceder.  Avance com cuidado.";
+

@@ -1,0 +1,24 @@
+/* No comment provided by engineer. */
+"Label" = "Štítek";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Vyhledávejte nebo navštěvujte své oblíbené weby soukromě jediným klepnutím.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Vyhledávání a oblíbené položky";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Rychle spusťte soukromé vyhledávání v DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Hledat";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Přidat oblíbené";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Rychle navštivte své oblíbené stránky.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";
+

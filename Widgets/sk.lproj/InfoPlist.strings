@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Miniaplikácie";
+
+/* Bundle name */
+"CFBundleName" = "WidgetsExtension";
+

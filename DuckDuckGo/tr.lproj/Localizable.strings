@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Ekle";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Yer imi ekle";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Vazgeç";
+
+/* Copy action */
+"action.title.copy" = "Kopyala";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Gizlilik Korumasını Devre Dışı Bırak";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Gizlilik Korumasını Etkinleştir";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Sekmeleri Kapat ve Verileri Temizle";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Sekmeler ve veriler temizlendi";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Arka Planda Aç";
+
+/* Create New Tab action */
+"action.title.newTab" = "Yeni sekme";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Yeni sekmede aç";
+
+/* Open action */
+"action.title.open" = "Aç";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Yapıştır ve Git";
+
+/* Reading List action */
+"action.title.readingList" = "Okuma Listesine Ekle";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Yenile";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Hatalı Siteyi Bildir";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Masaüstü Sitesini Yükle";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Mobil Siteyi Yükle";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Kaydet";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Yer İmlerine Ekle";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Favorilere Ekle";
+
+/* Settings action */
+"action.title.settings" = "Ayarlar...";
+
+/* Share action */
+"action.title.share" = "Paylaş...";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Tüm Sekmelere Yer İmi Eklensin mi?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Korumasız Sitelere Ekle";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Yer İşaretini Düzenle";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Yer İmi Kaydet";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Favori Kaydet";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "DuckDuckGo'nun kilidini açın";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Oturum Aç";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "%@ adresine oturum aç. Giriş bilgileriniz güvenli bir şekilde gönderilecektir.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "%@ adresine oturum aç. Bağlantı şifrelenmemiş olduğu için parolanız güvenli olmayan bir şekilde gönderilecek.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Parola";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Kimlik doğrulaması gerekiyor";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Kullanıcı adı";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Kapalı";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Açık";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Web sitesi başlığı";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Bazı sekmelere yer imi eklenemiyor";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Tüm sekmelere yer imi eklendi";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Yorumlar yüklenmedi";
+
+/* Broken Site Category */
+"brokensite.category.content" = "İçerik eksik";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Resimler yüklenmedi";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Bağlantılar veya düğmeler çalışmıyor";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Oturum açamıyorum";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Başka bir şey";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Site benden devre dışı bırakmamı istedi";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Tarayıcı uyumsuz";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Video oynatılamadı";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Ne olduğunu açıklayın";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "İpuçlarını sonsuza kadar gizle";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Vazgeç";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Sadece birkaç tane var ve onları da bilgilendirici hale getirmeye çalıştık.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Kalan ipuçları gizlensin mi?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "DuckDuckGo aramalarınız anonimdir ve arama geçmişiniz asla saklanmaz. Asla. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Uf!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Çak bir beşlik!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* sizi burada izlemeye çalışıyordu.\n\nOnu engelledim!\n\n☝️Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını görmek için URL çubuğunu kontrol edebilirsiniz.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Çak bir beşlik!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Dikkat! %2$@ üzerindeki etkinliğinizin %1$@ tarafından görülmesini önleyemiyorum.\n\nAma benimle gezinirseniz diğer birçok sitedeki izleyicisini engelleyerek %1$@ tarafından sizinle ilgili olarak toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Anladım";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Dikkat! %1$@ sitesinin sahibi %2$@ olduğundan, buradaki etkinliğinizi görmesini engelleyemem.\n\nAma benimle gezinirseniz diğer sitelerdeki pek çok izleyicisini engelleyerek sizinle ilgili olarak %1$@ tarafından toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Anladım";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Siz internette gezinirken sinir bozucu izleyicileri engelleyeceğim.\n\nHadi gezinmeye devam edin!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Anladım";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "En sevdiğiniz siteleri anında ziyaret edin!\n\nSevdiğiniz bir siteye gidin. Ardından \"...\" simgesine dokunun ve *Favorilere Ekle* öğesini seçin.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "En sevdiğiniz siteleri anında ziyaret edin!\n\n En sevdiğiniz sitelerden birini ziyaret edin. Ardından, menü düğmesine dokunun ve Favorilere Ekle'yi seçin.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Şimdi favori sitelerinizden birini ziyaret etmeyi deneyin!\n\nSizi gözetlemelerini önlemek için izleyicileri engelleyeceğim. Mümkünse bağlantınızın güvenlik seviyesini de yükselteceğim. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "İşte bu kadar!\n\nUnutmayın: İnterneti benimle ne kadar çok gezerseniz rahatsız edici reklamları da o kadar az görürsünüz. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "İnternet bazen ürkütücü olabilir.\n\nEndişelenmeyin! İnternette kimsenin göremeyeceği şekilde arama yapmak ve gezinmek sandığınızdan çok daha kolay.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Devre Dışı";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Küresel Gizlilik Kontrolü (GPC) yeni bir standart olduğundan, çoğu web sitesi tarafından henüz tanınmayacaktır. Ancak, dünya çapında benimsenmesini sağlamak için elimizden geleni yapıyoruz.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Daha Fazla Bilgi";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Bununla birlikte, web sitelerinin onlara bildirilen tercihleri yalnızca geçerli yasaların zorunlu kıldığı ölçüde dikkate almaları gerekmektedir. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Etkin";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Verileriniz satılık olmamalı. DuckDuckGo'da aynı fikirdeyiz. \"Küresel Gizlilik Kontrolü\" (GPC) ayarını etkinleştirirseniz web sitelerine şu tercihleri yaptığınızı bildiririz:<br/><br/> • Kişisel verilerinizin satılmasını istemediğinizi.<br/>• Kişisel verilerinizin diğer şirketlerle paylaşımının sınırlandırılmasını istediğinizi.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Henüz yer imi yok";
+
+/* Empty list state placholder */
+"empty.favorites" = "Henüz favori yok";
+
+/* No comment provided by engineer. */
+"favorite" = "Favori";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Sil";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Düzenle";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Reklam ve pop-up engelleme";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Yer imleri oluşturma ve yönetme";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Hangi tarama özelliğini ekleyebilir veya geliştirebiliriz?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Tarayıcı Özelliği Sorunları";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Tarama özellikleri eksik veya sinir bozucu";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Görüntülerle etkileşim kurma";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "İleri geri gitme ve/veya yenileme";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Bunların hiçbiri";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Sekmeler oluşturma ve yönetme";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Videoları izleme";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Yer imlerinin görünüşü";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Hangi özelleştirme seçeneğini ekleyebilir veya geliştirebiliriz?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Özelleştirme Sorunları";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Uygulamayı özelleştirmek için yeterli seçenek yok";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Ana ekran yapılandırması";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Bunların hiçbiri";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Sekmelerin görüntülenme şekli";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Uygulamanın görünüşü";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Silinen veri";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Veriler temizlendiğinde";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Daha iyi otomatik tamamlama";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Hangi arama özelliğini ekleyebilir veya geliştirebiliriz?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "DuckDuckGo Arama Sorunları";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "DuckDuckGo arama özelliği yeterince iyi değil";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Belirli bir dilde veya bölgede arama yapma";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Düzen daha çok Google gibi olmalı";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Daha hızlı yükleme süresi";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Bunların hiçbiri";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programlama/teknik arama";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Neleri geliştirebileceğimizi lütfen bize söyleyin";
+
+/* Confirmation button */
+"feedback.form.submit" = "GERİ BİLDİRİM GÖNDER";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Lütfen mümkün olduğunca spesifik olun";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Ayrıntılı olarak belirtmek istediğiniz herhangi bir şey var mı?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Bunu duyduğumuza üzüldük.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "En çok ne ile ilgili sıkıntı yaşadınız?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Diğer sorunlar";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Bunların hiçbiri";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Hangi sorunu yaşıyorsunuz?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Uygulama çöküyor veya donuyor";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Performans sorunları";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Uygulama yavaş, hatalı veya kilitleniyor";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Bunların hiçbiri";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Video veya medya oynatma hataları";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Web sayfaları veya arama sonuçları yavaş yükleniyor";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Ayrıntıları paylaşın";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Nelerden hoşlandınız?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Ekiple paylaşmak istediğiniz ayrıntılar var mı?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Bunu duymak harika!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Hayır, teşekkürler! Şimdilik bu kadar";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Ayrıntıları paylaşın";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "İsimsiz geri bildiriminiz bizim için önemlidir.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Hadi başlayalım!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Geri bildirimlerinizi nasıl sınıflandırırsınız?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Teşekkürler! Geri bildirim gönderildi.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Web sitesi yükleme Sorunları";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Bazı web siteleri düzgün yüklenmiyor";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Bu durumdan hangi içerikler etkileniyor?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Bu sorunları nerede görüyorsunuz?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Hangi web sitesinde sorunlar var?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d / %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Sayfada bul";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Varsayılan tarayıcı olarak ayarla";
+
+/* No comment provided by engineer. */
+"home.message.header" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Her zaman gönül rahatlığıyla açık bağlantılar.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "IOS 14'TE YENİ";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "DuckDuckGo'yu ana ekranınıza ekleyin!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Kolay erişim için DuckDuckGo'yu dock'unuza ekleyin!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "DuckDuckGo'yu ana sayfaya ekleyin";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Yeni bir sekmede arama ve favoriler";
+
+/* Home tab title */
+"homeTab.title" = "Ana Sayfa";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Yer imi ekle";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Favori Ekle";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Geri Dön";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "İleri Git";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Kapat";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Sekmeyi kapat";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Sayfada bul";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Sonraki bul";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Öncekini bul";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Tüm Sekmeleri ve Verileri Temizle";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Adres Ara veya Gir";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Yeni sekme";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Sonraki Sekme";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Bağlantıyı Arka Planda Aç";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Bağlantıyı Yeni Sekmede Aç";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Önceki Sekme";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Yazdır";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Tekrar yükle";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Seç";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Tüm Sekmeleri Göster";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "DuckDuckGo'ya hoş geldiniz!";
+
+/* Edit button */
+"navigation.title.edit" = "Düzenle";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Devam et";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Belki sonra";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Varsayılan tarayıcı olarak ayarla";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Atla";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Gezinmeye Başla";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "DuckDuckGo'ya hoş geldiniz!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Üzgünüz, bu bağlantıyı açacak uygulama yok.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Web siteleri oturumunuzu açık tutmak için çerezler kullanır. Bir siteyi Yanmaya Dayanıklı yaptığınızda çerezler silinmez ve Yangın Düğmesi'ni kullandıktan sonra bile oturumunuz açık kalır.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Web siteleri";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "%@ sitesini Yanmaya Dayanıklı yapmak ister misiniz?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Korumalı Web Sitesi";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Şimdi değil";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Tümünü Kaldır";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "Tamam";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Siteleri Yanmaya Dayanıklı Yapmadan Önce Sor";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ artık Yanmaya Dayanıklı! Bunu değiştirmek için ayarlara gidin.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritma";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bit";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Sertifika ayıklanırken hata oluştu";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Ortak Ad";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Geçerli Boyut";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "E-posta";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Şifreli Bağlantı";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Zorunlu Şifreleme";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Bu siteyi şifreli bir bağlantı kullanmaya zorladık. Bu sayede, siteye gönderdiğiniz kişisel bilgiler kaydedilemeyecek.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Şifreli bağlantı, web sitelerine gönderdiğiniz kişisel bilgilerin ele geçirilmesini önler.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Subject Key Identifier";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Sertifikayı Veren";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Ortak Anahtar";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Anahtar Boyutu";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Karışık Şifreleme";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Bazı içerikler şifrelenmemiş bağlantılar üzerinden sunulduğu için bu sitede karışık şifreleme kullanılıyor.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Hayır";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Kalıcı";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Ortak Anahtar";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Şifreli bağlantı, web sitelerine gönderdiğiniz kişisel bilgilerin ele geçirilmesini önler.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Konu Adı";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Özet";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Bu bağlantı şifreli değil. Bu yüzden gönderdiğiniz bilgiler açısından dikkatli olun.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Şifrelenmemiş Bağlantı";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Bilinmiyor";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Kullanım";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Şifre çözme";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Türev";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Şifreleme";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "İmzala";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Paket açma";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Doğrulama";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Paketleme";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Evet";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "SİTE KORUMASI KAPATILDI";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "YÜKSELTİLDİ: $1 -> $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Gizlilik Derecesi";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "%2$@ yılından beri ziyaret ettiğiniz web sitelerin %%%1$@ kadarında izleyici ağları bulundu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Kaç izleyiciyi engellediğimizi göstermek için\nhâlâ veri topluyoruz.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "ToS;DR gizlilik uygulamaları bilgileri kullanılıyor";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Gizlilik uygulamaları, bir web sitesiyle paylaştığınız kişisel bilgilerin ne kadar korunduğunu gösterir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Bu web sitesi, birleşme veya satın alma durumunda bilgilerinizi aktarmadan önce sizi bilgilendirecektir";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Bu web sitesinin gizlilik uygulamaları gözden geçirilmemiştir.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Gizlilik derecesi %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Gizlilik Koruması ekranını açmak için basın";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Bu istatistikler yalnızca cihazınızda depolanır ve hiçbir yere gönderilmez. Asla.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Öne Çıkan Gizlilik Uygulamaları";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Karma Gizlilik Uygulamaları";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Kötü Gizlilik Uygulamaları";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Bilinmeyen Gizlilik Uygulamaları";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "İzleyici ağları, web geçmişinizi sizinle ilgili bir veri profilinde toplar. Büyük izleyici ağları daha zararlıdır, çünkü sizi İnternet'te izleyebilir ve hedefleyebilirler.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Hayır";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Evet";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Bu içeriği görüntülemek için DuckDuckGo'dan ayrılmak ister misiniz?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Başka Bir Uygulamada Açılsın mı?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Anonim olarak hatalı site raporu göndermeniz, bu sorunları ayıklamamıza ve uzantıyı geliştirmemize yardımcı olur.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Adres ara veya gir";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Yer imleri";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Favoriler";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "DuckDuckGo'da, internet için yeni güven standardını belirliyoruz.\n\nDuckDuckGo Gizlilik Tarayıcısı izleyici engelleme, akıllı şifreleme ve DuckDuckGo gizli arama da dâhil olmak üzere web'de arama ve göz atma sırasında kendinizi korumak için ihtiyacınız olan tüm gizlilik özelliklerini sağlar.\n\nNe de olsa, internet sizi korkutmamalı ve internette hakkınız olan gizliliği elde etmek panjurları kapatmak kadar basit olmalı.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Diğer arama motorları, siz Gizli Gezinme Modundayken bile aramalarınızı kaydeder. Ama biz sizi asla takip etmeyiz. Nokta.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "*Safari*, ardından *Arama Motoru* bölümüne gidin";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "*Ayarlar* Uygulamasını açın";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "*DuckDuckGo*'yu seçin";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Rapor Gönder";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Bozuk Sitenin Alan Adı:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Hangi içerik veya işlevsellik bozuk?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Bozuk site raporlama tamamen anonimdir ve uygulamayı geliştirmemize yardımcı olur!";
+
+/* This is a form title */
+"siteFeedback.title" = "Hatalı Bir Siteyi Bildirin";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Hangi web sitesi hatalı?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Ana sekmeyi kapat";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "%2$@ adresindeki \"%1$@\" sitesini kapat";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Ana sekmeyi aç";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "%2$@ adresindeki \"%1$@\" sitesini aç";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Sekme Değiştirici";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Karanlık";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Sistem";
+
+/* Light Theme entry */
+"theme.acc.light" = "Açık";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Karanlık";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Sistem Varsayılanı";
+
+/* Light Theme entry */
+"theme.name.light" = "Açık";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ korumasız sitelere eklendi";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ korumasız sitelerden kaldırıldı";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Bilinmeyen bir hata oluştu";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Yer imi kaydedildi";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Yer imi zaten kaydedilmiş";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Yer imi eklenecek web sayfası yok";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Favori kaydedildi";
+

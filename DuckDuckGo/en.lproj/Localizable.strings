@@ -533,6 +533,15 @@
 "number.of.tabs" = "number.of.tabs";
 
 /* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Add Widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Using DuckDuckGo just got easier.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Maybe Later";
+
+/* No comment provided by engineer. */
 "onboardingContinue" = "Continue";
 
 /* No comment provided by engineer. */

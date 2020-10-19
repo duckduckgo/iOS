@@ -22,18 +22,15 @@ import Core
 class OnboardingWidgetsViewController: OnboardingContentViewController {
     
     override var header: String {
-        //TODO
-        return "Using DuckDuckGo just got easier."
+        return UserText.onboardingWidgetsHeader
     }
     
     override var continueButtonTitle: String {
-        //TODO
-        return "Add Widget"
+        return UserText.onboardingWidgetsContinueButtonText
     }
     
     override var skipButtonTitle: String {
-        //TODO
-        return "Maybe Later"
+        return UserText.onboardingWidgetsSkipButtonText
     }
     
     override func viewDidLoad() {

@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo-pikanäppäimet";
+
+/* Bundle name */
+"CFBundleName" = "QuickActionsTodayExtension";
+

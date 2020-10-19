@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "DuckDuckGo";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Позволяет загружать фото и видео";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Позволяет разблокировать приложение через Face ID";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Позволяет делиться своей геопозицией";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Позволяет делиться аудиозаписями";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "Позволяет сохранять изображения на устройство";
+
+/* (No Comment) */
+"Paste from clipboard" = "Вставить из буфера обмена";
+

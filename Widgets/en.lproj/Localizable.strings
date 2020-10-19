@@ -1,0 +1,21 @@
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Search or visit your favorite sites privately with just one tap.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Search and Favorites";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Quickly launch a private search in DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Search";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Add Favorites";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Quickly visit your favorite sites.";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Search DuckDuckGo";
+

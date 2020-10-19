@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* e *mais 1* estavam a tentar rastrear aqui.
+
+Eu bloqueei-os!
+
+☝️ Pode verificar a barra de URL para ver quem está a tentar rastrear quando visita um novo site.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* e *mais %1$d* estavam a tentar rastrear aqui.
+
+Eu bloqueei-os!
+
+☝️ Pode verificar a barra de URL para ver quem está a tentar rastreá-lo quando visita um novo site.</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d Principal rastreador encontrado</string>
+			<key>other</key>
+			<string>%1$d Principais rastreadores encontrados</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d Principal rastreador bloqueado</string>
+			<key>other</key>
+			<string>%1$d Principais rastreadores bloqueados</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d rastreador encontrado</string>
+			<key>other</key>
+			<string>%1$d rastreadores encontrados</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d rastreador bloqueado</string>
+			<key>other</key>
+			<string>%1$d rastreadores bloqueados</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d Separador privado</string>
+			<key>other</key>
+			<string>%1$d Separadores privados</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

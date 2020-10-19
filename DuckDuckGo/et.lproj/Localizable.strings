@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Lisa";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Järjehoidja";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Tühista";
+
+/* Copy action */
+"action.title.copy" = "Kopeeri";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Keela Eraelu puutumatuse kaitse";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Luba Eraelu puutumatuse kaitse";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Sulge vahekaardid ja kustuta andmed";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Vahekaardid ja andmed kustutatud";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Ava taustal";
+
+/* Create New Tab action */
+"action.title.newTab" = "Uus vaheleht";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Ava uuel vahelehel";
+
+/* Open action */
+"action.title.open" = "Avatud";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Kleebi ja mine";
+
+/* Reading List action */
+"action.title.readingList" = "Lisa lugemisloendisse";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Värskenda";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Teata mittetoimivast saidist";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Taotle töölaua saiti";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Taotle mobiilisaiti";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Salvesta";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Lisa järjehoidjatesse";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Lisa lemmikutesse";
+
+/* Settings action */
+"action.title.settings" = "Sätted...";
+
+/* Share action */
+"action.title.share" = "Jaga...";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Kas lisada kõik vahekaardid järjehoidjasse?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Lisa kaitsmata saitidele";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Redigeeri järjehoidjat";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Salvesta järjehoidjasse";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Salvesta lemmikusse";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Vabasta DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Logi sisse";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Logi %@. Sinu logimisandmed saadetakse turvaliselt.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Logi %@. Sinu parool saadetakse ebaturvaliselt, sest ühendus on krüpteerimata.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Parool";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Autentimine on vajalik";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Kasutajanimi";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Väljas";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Sees";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Veebisaidi pealkiri";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Mõnda vahekaarti ei saa järjehoidjasse lisada";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Kõik vahekaardid on järjehoidjatesse lisatud";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Kommentaare ei laaditud";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Sisu puudub";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Pilte ei laaditud";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Lingid või nupud ei töötanud";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Ma ei saa sisse logida";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Midagi muud";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Sait palus mul välja lülitada";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Brauser ei ühildu";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Videot ei esitatud";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Kirjeldage toimunut";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Peida näpunäited igaveseks";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Tühista";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Neid on üsna vähe ja püüdsime muuta need informatiivseks.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Kas peita allesjäänud näpunäited?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Teie DuckDuckGo otsingud on anonüümsed ja ma ei salvesta kunagi teie otsinguajalugu. Mitte kunagi. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Huh!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Viska viis!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* üritas sind siin jälitada.\n\nMa blokeerisin nad!\n\n☝️Võid vaadata URL-i riba, et näha, kes üritab sind jälitada, kui külastad uut saiti.️";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Viska viis!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! Ma ei saa takistada %1$@ nägemast sinu tegevust %2$@.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälitajad paljudel teistel lehtedel.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Sain aru";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Ettevaatust! Kuna %2$@ on %1$@ omanik, ei saa ma takistada teda jälgimast sinu tegevust siin.Kuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälgijad paljudel teistel lehtedel.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Sain aru";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Kui puudutad ja kerid, siis mina blokeerin tüütud jälgijad.\n\nHakka sirvima!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Sain aru";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Külasta oma lemmiksaite hetkega!\n\nMine saidile, mis sulle meeldib. Seejärel puuduta ikooni „⋯“ ja vali *Lisa lemmikutesse*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Külasta oma lemmiksaite hetkega! Külasta ühte oma lemmiksaitidest. Seejärel puuduta menüünuppu ja vali Lisa lemmikutesse.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Järgmisena proovi külastada ühte oma lemmiksaitidest!\n\nMina aga blokeerin jälgijaid, et nad ei saaks sind luurata. Võimaluse korral parandan ka sinu ühenduse turvalisust. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Said selle!\n\nPea meeles: iga kord kui minuga sirvid, kaotab jube reklaam oma tiivad. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internet võib olla üsna jube.\n\nÄra muretse! Privaatselt otsimine ja sirvimine on lihtsam kui arvad.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Keelatud";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Kuna ülemaailmne privaatsuskontroll (GPC) on uus standard, ei tunne enamik veebisaite seda veel ära, kuid me töötame selle nimel, et seda aktsepteeritaks üleilmselt.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Loe edasi";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Kuid veebisaidid peavad reageerima signaalile ainult niivõrd, kuivõrd kehtivad seadused neid selleks sunnivad. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Lubatud";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Sinu andmeid ei tohiks müüa. DuckDuckGo nõustub sellega. Aktiveeri seadistus „Üleilmne privaatsuskontroll“ (GPC) ja me anname veebisaitidele märku sinu eelistustest: \n\n • Mitte müüa sinu isikuandmeid. \n• Piirata sinu isikuandmete jagamist teiste ettevõtetega.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Järjehoidjaid pole veel";
+
+/* Empty list state placholder */
+"empty.favorites" = "Lemmikuid pole veel";
+
+/* No comment provided by engineer. */
+"favorite" = "Lemmik";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Kustuta";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Redigeeri";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Reklaami ja hüpikakende blokeerimine";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Järjehoidjate loomine ja haldamine";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Millist brauseri funktsiooni saame lisada või täiustada?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Brauseri funktsioonide probleemid";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Sirvimisfunktsioonid puuduvad või valmistavad pettumust";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Piltidega suhtlemine";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Edasi, tagasi liikumine ja/või värskendamine";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Mitte ükski neist";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Vahelehtede loomine ja haldamine";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Videote vaatamine";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Kuidas järjehoidjaid kuvatakse";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Millist kohandamise valikut saame lisada või täiustada?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Kohandamise probleemid";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Rakenduse kohandamiseks pole piisavalt võimalusi";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Avaekraani konfiguratsioon";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Mitte ükski neist";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Kuidas vahekaarte kuvatakse";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Kuidas rakendus välja näeb";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Millised andmed kustutatakse";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Andmete kustutamise aeg";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Parem automaatne täitmine";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Millist otsingufunktsiooni saame lisada või täiustada?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "DuckDuckGo otsingu probleemid";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "DuckDuckGo otsing pole piisavalt hea";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Otsimine konkreetses keeles või piirkonnas";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Paigutus peaks olema rohkem nagu Google";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Kiirem laadimisaeg";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Mitte ükski neist";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programmeerimine / tehniline otsing";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Ütle meile, mida saaksime parandada.";
+
+/* Confirmation button */
+"feedback.form.submit" = "SAADA TAGASISIDE";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Palun olge võimalikult konkreetne";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Kas on mingeid üksikasju, mida soovid lisada?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Meil on kahju seda kuulda.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "Mis on teie pettumusega kõige rohkem seotud?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Teised probleemid";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Mitte ükski neist";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Milline probleem teil on?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Rakendus jookseb kokku või külmub";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Toimivusega seotud probleemid";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Rakendus on aeglane, vigane või jookseb kokku";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Mitte ükski neist";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Video või meedia taasesituse vead";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Veebilehed või otsingutulemid laaditakse aeglaselt";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Jagage üksikasju";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Mida olete nautinud?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Kas on mingeid üksikasju, mida soovid meeskonnaga jagada?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Vinge kuulda!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Tänan, ei! Olen lõpetanud";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Jagage üksikasju";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Teie anonüümne tagasiside on meile oluline.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Alustame!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Kuidas liigitate oma tagasiside?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Aitäh! Tagasiside on esitatud.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Veebisaidi laadimisega seotud probleemid";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Mõned veebisaidid ei laadi õigesti";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Milline sisu näib olevat mõjutatud?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Kus te neid probleeme näete?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Millisel veebisaidil on probleeme?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d / %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Otsi lehel";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Määrake vaikebrauseriks";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Muutke DuckDuckGo oma vaikimisi brauseriks.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Avage linke igal ajal, rahuliku meelega.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "UUS IOS 14-s";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Lisa DuckDuckGo oma avaekraanile!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Lisa DuckDuckGo oma dokki hõlpsaks juurdepääsuks!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Pane DuckDuckGo avalehele";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Otsing ja lemmikud uuel vahekaardil";
+
+/* Home tab title */
+"homeTab.title" = "Avaleht";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Lisa järjehoidja";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Lisa lemmik";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Sirvi tagasi";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Sirvi edasi";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Sulge";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Sulge vaheleht";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Otsi lehel";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Otsi järgmine";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Otsi eelmine";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Kustuta kõik vahekaardid ja andmed";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Otsi või sisesta aadress";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Uus vaheleht";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Järgmine vahekaart";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Ava link taustal";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Ava link uuel vahekaardil";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Eelmine vahekaart";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Prindi";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Laadige uuesti";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Vali";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Kuva kõik vahekaardid";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Tere tulemast DuckDuckGo kasutajaks!";
+
+/* Edit button */
+"navigation.title.edit" = "Redigeeri";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Jätka";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Võib-olla hiljem";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Muutke DuckDuckGo oma vaikimisi brauseriks.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Määrake vaikebrauseriks";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Jäta vahele";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Alusta sirvimist";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Tere tulemast DuckDuckGo kasutajaks!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Vabandus, mitte ükski rakendus ei saa seda linki hallata.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Veebisaidid kasutavad küpsiseid, et hoida sind sisse logitud. Kui teed saidi tulekindlaks, ei kustutata küpsiseid ja sa jääd sisse logituks isegi pärast tulenupu kasutamist.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Veebilehed";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Kas soovid muuta %@ tulekindaks?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Tulekindel veebisait";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Mitte praegu";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Eemalda kõik";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "OK";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Palu tulekindlaid veebisaite";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ on nüüd tulekindel! Eemaldamiseks mine sätetesse.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritm";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bitti";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Tõrge sertifikaadi ekstraktimisel";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Üldine nimi";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Efektiivne suurus";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "E-post";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Krüptitud ühendus";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Sunnitud krüpteerimine";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Sundisime seda saiti kasutama krüpteeritud ühendust, vältides sellele saadetud isikuandmete pealtkuulamist.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Krüpteeritud ühendus takistab veebisaidile saadetud isikuandmete pealtkuulamist.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Teema võtme identifikaator";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Väljaandja";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Avalik võti";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Võtme suurus";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Segatud krüpteerimine";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Sellel saidil on segatud krüpteerimine, kuna mõnda sisu pakutakse krüpteerimata ühenduste kaudu.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Ei";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Püsiv";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Avalik võti";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Krüpteeritud ühendus takistab veebisaidile saadetud isikuandmete pealtkuulamist.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Teema nimi";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Kokkuvõte";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "See ühendus ei ole krüpteeritud, seega ole ettevaatlik, mida saadad.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Krüptimata ühendus";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Tundmatu";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Kasutamine";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Dekrüpteeri";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Tuleta";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Krüpteeri";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Logi sisse";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Paki lahti";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Kinnita";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Paki";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Jah";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "Saidi kaitse on keelatud";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "ÜLENDATUD $1-lt $2-le";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Privaatsusaste";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Jälgija võrgud leiti %1$@%% veebisaitidest, mida sa oled külastanud alates %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Kogume endiselt andmeid, et näidata, kui\npalju jälgijaid oleme blokeerinud.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Privaatsustavade teabe kasutamine ToS;DR-lt";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Privaatsustavad näitavad, kui palju on veebisaidiga jagatav isiklik teave kaitstud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "See veebisait teavitab sind enne sinu andmete edastamist ühinemise või omandamise korral";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Selle veebisaidi privaatsustavasid ei ole üle vaadatud.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Privaatsusaste %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Vajuta, et avada privaatsuse kaitse aken";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "See statistika salvestatakse ainult sinu seadmesse ja seda ei saadeta kuhugi. Mitte kunagi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Hea privaatsustava";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Erinevad privaatsustavad";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Kehv privaatsustava";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Teadmata privaatsustava";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Jälgimisvõrgud koondavad teie veebiajaloo teie kohta andmeprofiiliks. Suuremad jälgimisvõrgud on kahjulikumad, kuna need saavad teid jälgida ja sihtida suuremas Internetis.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Ei";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Jah";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Kas soovite selle sisu vaatamiseks lahkuda DuckDuckGo'st?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Avada teises rakenduses?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Anonüümse mittetoimiva saidi aruande esitamine aitab meil neid probleeme siluda ja laiendust täiustada.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Otsi või sisesta aadress";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Järjehoidjad";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Lemmikud";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "DuckDuckGo on uus standard veebi usaldusväärsusele.\n \nDuckDuckGo privaatsusbrauser pakub kõiki privaatsuse põhifunktsioone, mida peate enda kaitsmiseks veebist otsides ja sirvides kasutama, sealhulgas jälgijate blokeerimist, nutikamat krüptimist ja DuckDuckGo privaatset otsingut.\n\nLõppude lõpuks ei tohiks Internet nii jube olla ja Internetis väärilise privaatsuse saamine peaks olema sama lihtne kui ruloo alla tõmbamine.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Teised otsingumootorid jälgivad sinu otsinguid ka siis, kui oled privaatse sirvimise režiimis. Me ei jälgi sind. Punkt.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Navigeeri jaotisesse *Safari*, seejärel *Otsingumootor*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Ava *Sätted* rakendus";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Vali *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Saada aruanne";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Mittetoimiva saidi domeen";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Milline sisu või funktsioon ei toimi?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Mittetoimivast saidist teatamine on täiesti anonüümne ja aitab meil parandada rakendust!";
+
+/* This is a form title */
+"siteFeedback.title" = "Teatage katkisest saidist";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Milline veebisait on katki?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Sulge avalehe vahekaart";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Sulge \"%1$@\" aadressil %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Ava avalehe vahekaart";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Ava \"%1$@\" aadressil %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Vahekaardi vahetaja";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Tume";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Süsteem";
+
+/* Light Theme entry */
+"theme.acc.light" = "Hele";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Tume";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Süsteem vaikimisi";
+
+/* Light Theme entry */
+"theme.name.light" = "Hele";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ lisatud kaitsmata saitidele";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ eemaldatud kaitsmata saitidelt";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Tekkis tundmatu tõrge";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Järjehoidja salvestatud";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Järjehoidja on juba salvestatud";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Puuduvad veebisaidid, mida järjehoidjaks panna";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Lemmik salvestatud";
+

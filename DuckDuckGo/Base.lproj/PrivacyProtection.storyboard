@@ -1631,7 +1631,7 @@ many trackers we've blocked.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="21" estimatedRowHeight="21" sectionHeaderHeight="46" estimatedSectionHeaderHeight="46" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-Qt-dWn">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="25" estimatedRowHeight="25" sectionHeaderHeight="46" estimatedSectionHeaderHeight="46" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-Qt-dWn">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="e4V-2n-13h" userLabel="Header">
@@ -1656,6 +1656,9 @@ many trackers we've blocked.</string>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder string, do not translate"/>
+                                            </attributedString>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwM-eP-cbc" userLabel="Description View">
                                             <rect key="frame" x="0.0" y="148" width="414" height="86.666666666666686"/>
@@ -1790,15 +1793,18 @@ many trackers we've blocked.</string>
                                             <outlet property="nameLabel" destination="K8A-I1-h5l" id="3Ie-2Z-eU2"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Row" rowHeight="21" id="UFd-fT-gX0" userLabel="Row Cell" customClass="PrivacyProtectionTrackerNetworksRowCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="335.99999872843421" width="414" height="21"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Row" rowHeight="25" id="UFd-fT-gX0" userLabel="Row Cell" customClass="PrivacyProtectionTrackerNetworksRowCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="335.99999872843421" width="414" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UFd-fT-gX0" id="qJg-oa-ngh">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-Wf-SyO">
-                                                    <rect key="frame" x="20" y="5" width="297.33333333333331" height="11"/>
+                                                    <rect key="frame" x="20" y="5" width="297.66666666666669" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="teJ-kb-N2f"/>
+                                                    </constraints>
                                                     <attributedString key="attributedText">
                                                         <fragment content="www.tracker.com">
                                                             <attributes>
@@ -1810,7 +1816,10 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4u-yL-AUp">
-                                                    <rect key="frame" x="337.33333333333331" y="5" width="56.666666666666686" height="11"/>
+                                                    <rect key="frame" x="337.66666666666669" y="5" width="56.333333333333314" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="eHg-yD-XGJ"/>
+                                                    </constraints>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Category">
                                                             <attributes>

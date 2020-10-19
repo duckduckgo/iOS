@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "DuckDuckGo";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Voit ladata valokuvia ja videoita";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Voit poistaa lukituksen Face ID -sovelluksella";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Voit jakaa sijaintisi";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Voit jakaa tallenteita";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "Voit tallentaa kuvia laitteellesi";
+
+/* (No Comment) */
+"Paste from clipboard" = "Liitä leikepöydältä";
+

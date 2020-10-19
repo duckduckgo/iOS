@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "DuckDuckGo";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Lehetővé teszi fényképek és videók feltöltését";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Lehetővé teszi az arcfelismeréses feloldást";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Lehetővé teszi a helymegosztást";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Lehetővé teszi a felvételek megosztását";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "Lehetővé teszi képek mentését az eszközödre";
+
+/* (No Comment) */
+"Paste from clipboard" = "Beillesztés a vágólapról";
+

@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Tasti di scelta rapida di DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "QuickActionsTodayExtension";
+

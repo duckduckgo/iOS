@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* και *άλλος 1* προσπαθούσαν να σας παρακολουθήσουν εδώ.
+
+Τους μπλόκαρα!
+
+☝️ Μπορείτε να ελέγξετε τη γραμμή διευθύνσεων URL για να δείτε ποιος προσπαθεί να σας παρακολουθήσει όταν επισκέπτεστε έναν νέο ιστότοπο.️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* και *άλλοι %1$d* προσπαθούσαν να σας παρακολουθήσουν εδώ.
+
+Τους μπλόκαρα!
+
+☝️ Μπορείτε να ελέγξετε τη γραμμή διευθύνσεων URL για να δείτε ποιος προσπαθεί να σας παρακολουθήσει όταν επισκέπτεστε έναν νέο ιστότοπο.️</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Βρέθηκε %1$d κύρια εφαρμογή παρακολούθησης</string>
+			<key>other</key>
+			<string>Βρέθηκαν %1$d κύριες εφαρμογές παρακολούθησης</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Μπλοκαρίστηκε %1$d κύρια εφαρμογή παρακολούθησης</string>
+			<key>other</key>
+			<string>Μπλοκαρίστηκαν %1$d κύριες εφαρμογές παρακολούθησης</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Βρέθηκε %1$d παρακολούθηση</string>
+			<key>other</key>
+			<string>Βρέθηκαν %1$d παρακολουθήσεις</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Αποκλείστηκε %1$d παρακολούθηση</string>
+			<key>other</key>
+			<string>Αποκλείστηκαν %1$d παρακολουθήσεις</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d ιδιωτική καρτέλα</string>
+			<key>other</key>
+			<string>%1$d ιδιωτικές καρτέλες</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

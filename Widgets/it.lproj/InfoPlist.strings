@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Widget";
+
+/* Bundle name */
+"CFBundleName" = "WidgetsExtension";
+

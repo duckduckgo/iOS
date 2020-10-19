@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "DuckDuckGo";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Îți permite să încarci fotografii și videoclipuri";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Îți permite să deblochezi folosind Face ID";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Îți permite să îți partajezi locația";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Îți permite să partajezi înregistrări";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "Îți permite să salvezi imagini pe dispozitivul tău";
+
+/* (No Comment) */
+"Paste from clipboard" = "Lipește din clipboard";
+

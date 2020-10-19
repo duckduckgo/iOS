@@ -1,0 +1,189 @@
+/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
+"0DQ-yq-UuT.text" = "Огнеустойчиви уебсайтове";
+
+/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
+"0gU-rZ-pRc.footerTitle" = "Деактивирайте, за да предотвратите автоматично отваряне на връзки в други инсталирани приложения.";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
+"2ky-s9-1aZ.text" = "Версия";
+
+/* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
+"2pp-PM-6rW.title" = "Клавиатура";
+
+/* Class = "UILabel"; text = "Clear Tabs only"; ObjectID = "3WZ-Fi-HIH"; */
+"3WZ-Fi-HIH.text" = "Изчистване само на разделите";
+
+/* Class = "UILabel"; text = "App exit, inactive for 30min"; ObjectID = "5Yd-7i-bey"; */
+"5Yd-7i-bey.text" = "Изход от приложението, 30 минути без активност";
+
+/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
+"5YD-Od-uDU.text" = "Автоматично изчистване на данните";
+
+/* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
+"7nt-uS-sOh.normalTitle" = "Още на duckduckgo.com/about";
+
+/* Class = "UILabel"; text = "App exit, inactive for 60min"; ObjectID = "9EC-lx-77p"; */
+"9EC-lx-77p.text" = "Изход от приложението, 60 минути без активност";
+
+/* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
+"9fc-9r-4aA.text" = "Изчистване на раздели и данни";
+
+/* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
+"13n-KI-KLq.text" = "Стартиране на приложение";
+
+/* Class = "UILabel"; text = "Use DuckDuckGo in Safari"; ObjectID = "74x-N4-jKV"; Note = "This is on a button leading to a screen with instructions about how to enable DuckDuckGo in Safari"; */
+"74x-N4-jKV.text" = "Използване на DuckDuckGo в Safari";
+
+/* Class = "UILabel"; text = "Open Links in their Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
+"a1T-ui-4Nw.text" = "Отваряне на връзките в съответните им приложения";
+
+/* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
+"BGs-JL-4ib.footerTitle" = "Данните и/или разделите ще бъдат изчистени при рестартиране на приложението.";
+
+/* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "При влизане";
+
+/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
+"cKo-er-HNj.text" = "Икона на приложението";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
+"cW7-OM-2oW.text" = "Глобален контрол на поверителността (GPC)";
+
+/* Class = "UILabel"; text = "App exit, inactive for 15min"; ObjectID = "D0R-jp-UY8"; */
+"D0R-jp-UY8.text" = "Изход от приложението, 15 минути без активност";
+
+/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
+"d5n-vG-8kF.text" = "10.0.1 (Компилация 10005)";
+
+/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
+"dBZ-yq-FYj.text" = "Заключване на приложение";
+
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
+"dj9-vh-Rig.headerTitle" = "Персонализиране";
+
+/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.footerTitle" = "Ако сте задали пръстов отпечатък, лицево разпознаване или системна парола, ще бъдете приканени да отключите приложението при отваряне.";
+
+/* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.headerTitle" = "Поверителност и сигурност";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
+"dud-qo-Ces.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
+"Dyd-bm-goj.title" = "Настройки";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
+"EIq-Ev-nfj.text" = "Label";
+
+/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
+"ekF-SJ-PAQ.text" = "Автоматично изчистване на данните";
+
+/* Class = "UILabel"; text = "App exit, inactive for 5min"; ObjectID = "ElX-yE-4PX"; */
+"ElX-yE-4PX.text" = "Изход от приложението, 5 минути без активност";
+
+/* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
+"eMH-uv-Kms.title" = "Икона на приложението";
+
+/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
+"f1O-6u-LFY.text" = "Тема";
+
+/* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
+"Fal-1Y-o2S.text" = "Само при изход от приложението";
+
+/* Class = "UITableViewController"; title = "Auto Clear Data"; ObjectID = "fdJ-b1-Des"; */
+"fdJ-b1-Des.title" = "Автоматично изчистване на данните";
+
+/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
+"FHC-1z-Z3v.text" = "Незащитени сайтове";
+
+/* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
+"FpT-1C-xtx.headerTitle" = "Други";
+
+/* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
+"fV3-86-QQj.title" = "Глобален контрол на поверителността (GPC)";
+
+/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
+"Gbx-kl-uOO.text" = "По подразбиране";
+
+/* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
+"gji-Fs-EET.text" = "Privacy, simplified. ";
+
+/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
+"gS2-mg-l7R.title" = "Тема";
+
+/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
+"HLr-R8-xxF.text" = "Прегледи с продължително натискане";
+
+/* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
+"Hu1-5i-vjL.text" = "Все още няма незащитени сайтове";
+
+/* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
+"jbD-Oy-Cmw.title" = "Икона";
+
+/* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
+"m23-t6-9cb.text" = "Изпратете отзив";
+
+/* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
+"NRb-Cc-1d6.footerTitle" = "Уебсайтовете автоматично ще отварят DuckDuckGo, когато програмата е активирана.";
+
+/* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Няма";
+
+/* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
+"OHV-qC-tL9.title" = "Незащитени сайтове";
+
+/* Class = "UILabel"; text = "About"; ObjectID = "oM7-1o-9oY"; */
+"oM7-1o-9oY.text" = "За нас";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
+"qeN-SV-zy7.text" = "Label";
+
+/* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
+"tGh-di-rfq.headerTitle" = "Показване на клавиатура в";
+
+/* Class = "UINavigationItem"; title = "Global Privacy Control (GPC)"; ObjectID = "tWw-Lh-ZT1"; */
+"tWw-Lh-ZT1.title" = "Глобален контрол на поверителността (GPC)";
+
+/* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
+"U2M-6p-6nl.headerTitle" = "Действие";
+
+/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
+"U8i-cQ-5WW.text" = "Показване на предложенията за автоматично довършване";
+
+/* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
+"UZx-52-aer.text" = "Премахване на всички огнеустойчиви уебсайтове";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
+"vPz-uO-6gB.text" = "Глобален контрол на поверителността (GPC)";
+
+/* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
+"vSJ-YJ-bBs.footerTitle" = "Определен е изход от приложението чрез плъзгане за затваряне на приложението, а липсата на активност е когато приложението е във фонов режим.";
+
+/* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
+"vSJ-YJ-bBs.headerTitle" = "Желан период";
+
+/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
+"xof-5k-PkI.text" = "Задаване като браузър по подразбиране";
+
+/* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
+"xUX-nF-HOl.title" = "Огнеустойчиви уебсайтове";
+
+/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
+"yoZ-jw-Cu3.text" = "Клавиатура";
+
+/* Class = "UILabel"; text = "Add DuckDuckGo to your dock"; ObjectID = "yvj-LL-MiR"; */
+"yvj-LL-MiR.text" = "Добавяне на DuckDuckGo към панела";
+
+/* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
+"zMK-jc-4bJ.headerTitle" = "Помощ";
+
+/* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
+"Zpg-h0-rYv.text" = "Нов подпрозорец";
+
+/* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
+"zvh-2e-Wmz.text" = "Към тези незащитени сайтове няма да бъде приложена\nзащита на поверителността.";
+
+/* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
+"zWP-d3-nVc.title" = "Начален екран";
+

@@ -1,0 +1,861 @@
+/* Add action - button shown in alert */
+"action.title.add" = "Legg til";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Legg til";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Avbryt";
+
+/* Copy action */
+"action.title.copy" = "Kopier";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Deaktiver personvernbeskyttelse";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Aktiver personvernbeskyttelse";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Lukk faner og slett data";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Faner lukket og data slettet";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Åpne i bakgrunnen";
+
+/* Create New Tab action */
+"action.title.newTab" = "Ny fane";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Åpne i ny fane";
+
+/* Open action */
+"action.title.open" = "Åpen";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Lim inn og gå";
+
+/* Reading List action */
+"action.title.readingList" = "Legg til i leseliste";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Oppdater";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Rapporter ødelagt nettsted";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Åpne skrivebordsversjon";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Åpne mobilversjon";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Lagre";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Legg til i bokmerker";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Legg til i favoritter";
+
+/* Settings action */
+"action.title.settings" = "Innstillinger…";
+
+/* Share action */
+"action.title.share" = "Del…";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Eksisterende bokmerker blir ikke duplisert.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Legg til alle faner i bokmerker?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Legg til i ubeskyttede nettsteder";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Edit Bookmark action */
+"alert.title.edit.bookmark" = "Rediger bokmerke";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Lagre bokmerke";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Lagre favoritt";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Lås opp DuckDuckGo";
+
+/* Authentication Alert Log In Button */
+"auth.alert.login.button" = "Logg inn";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Logg inn på %@. Påloggingsinformasjonen sendes på en sikker måte.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Logg inn på %@. Passordet ditt sendes på en usikker måte siden forbindelsen ikke er kryptert.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Passord";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Autentisering kreves";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Brukernavn";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Av";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "På";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Nettsidetittel";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Noen faner kunne ikke legges til i bokmerker";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Alle faner lagt til i bokmerker";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Kommentarene ble ikke lastet inn";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Innhold manglet";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Bildene ble ikke lastet inn";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Lenker eller knapper fungerer ikke";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Jeg kan ikke logge inn";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Noe annet";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Nettstedet ba meg om å deaktivere";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Nettleseren er inkompatibel";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Videoen ble ikke avspilt";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "Beskriv hva som skjedde";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Skjul tips for alltid";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Avbryt";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Det er bare noen få, og vi prøvde å gjøre dem informative.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Skjule gjenværende tips?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "DuckDuckGo-søkene dine er anonyme, jeg lagrer aldri søkehistorikken din. Noensinne. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Puh!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "High Five!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* prøvde å spore deg her.\n\nJeg blokkerte!\n\n☝️ Du kan se hvem som prøver å spore deg i adressefeltet når du besøker et nytt nettsted.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "High Five!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Pass opp! Jeg klarer ikke å forhindre at %1$@ ser aktiviteten din på %2$@.\n\nMen surf med meg, så kan jeg redusere informasjonen %1$@ får om deg. Det gjør jeg ved å blokkere vedkommendes sporingsanordninger på mange andre nettsteder.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Den er grei";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Pass opp! Siden %2$@ eier %1$@, kan jeg ikke forhindre at de ser aktiviteten din her.\n\nMen surf med meg, så kan jeg redusere informasjonen %2$@ får om deg, ved å blokkere sporingsanordningene deres på mange andre nettsteder.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Den er grei";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Jeg blokkerer irriterende sporere mens du trykker og blar.\n\nDu kan bare fortsette å surfe!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Den er grei";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Besøk favorittsidene dine på et blunk!\n\nGå til et nettsted du liker. Trykk deretter på «...»-ikonet og velg *Legg til i Favoritter*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Besøk favorittsidene dine på et blunk! Besøk en av favorittsidene dine. Trykk deretter på Åpne meny-knappen og velg Legg til i Favoritter.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Deretter kan du besøke et av favorittnettstedene dine!\n\nJeg blokkerer sporingsforsøk slik at de ikke kan spionere på deg. Hvis det er mulig, oppgraderer jeg også sikkerheten på forbindelsen din. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Dette går bra!\n\nHusk: Hver gang du surfer med meg, klippes vingene på en uhyggelig annonse. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Internettet kan være ganske skummelt.\n\nMen ikke vær redd! Det er enklere enn du tror å søke og surfe privat.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Disabled";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Siden Global Privacy Control (GPC) er en ny standard, gjenkjennes den nok ennå ikke av nettsteder flest, men vi jobber hardt for å sikre at den blir anerkjent verden over.";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Finn ut mer";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.suffix" = " Nettsteder er imidlertid kun pålagt å ta til følge denne opplysningsmeldingen når gjeldende lover pålegger dem å gjøre det. ";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Enabled";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Informasjonen din bør ikke være til salgs. Hos DuckDuckGo deler vi denne oppfatningen. Aktiver innstillingen \"Global Privacy Control\" (GPC), så opplyser vi nettsteder om at du foretrekker å:<br/><br/> • ikke selge dine personlige data.<br/>• begrense deling av personopplysninger med andre selskaper.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Ingen bokmerker ennå";
+
+/* Empty list state placholder */
+"empty.favorites" = "Ingen favoritter ennå";
+
+/* No comment provided by engineer. */
+"favorite" = "Favoritt";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Slett";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Rediger";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Blokkering av reklame og pop-uper";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Opprette og håndtere bokmerker";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Hvilken nettleserfunksjon kan vi legge til eller forbedre?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Problemer med nettleserfunksjoner";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Nettleserfunksjoner mangler eller fungerer dårlig";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Bruk av bilder";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Gå videre, tilbake og/eller oppdater";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Ingen av disse";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Opprette og håndtere faner";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Se videoer";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Hvordan bokmerker vises";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Hvilket tilpasningsvalg kan vi legge til eller forbedre?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Tilpasningsproblemer";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Det finnes ikke nok tilpasningsalternativer i appen";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Konfigurasjon av startskjermen";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Ingen av disse";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Hvordan faner vises";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Hvordan appen ser ut";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Hvilke data som tømmes";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Når data tømmes";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Bedre autofullføring";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Hvilken søkefunksjon kan vi legge til eller forbedre?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "DuckDuckGo-søkeproblemer";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "DuckDuckGo-søket er ikke bra nok";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Søk på et bestemt språk eller i en bestemt region";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Layout burde ligne mer på Google";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Raskere innlasting";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Ingen av disse";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Programmerings- og tekniske søk";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Fortell oss hva vi kan gjøre bedre";
+
+/* Confirmation button */
+"feedback.form.submit" = "SEND INN TILBAKEMELDING";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Vær så spesifikk som mulig";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Er det noe spesielt du vil ha med?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Det var leit å høre.";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "Hva er det som er mest frustrerende?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Andre problemer";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Ingen av disse";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Hvilket problem opplever du?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Appen krasjer eller fryser";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Ytelsesproblemer";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Appen er treg, full av feil eller krasjer";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Ingen av disse";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Problemer med avspilling av video og medier";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Nettsider og søkeresultater lastes inn sakte";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Del detaljer";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Hva liker du?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Har du noe mer du ønsker å dele med teamet?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Flott å høre!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Nei takk. Jeg er ferdig.";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Del detaljer";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Den anonyme tilbakemeldingen din er viktig for oss.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Vi setter i gang!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Hvordan vil du kategorisere tilbakemeldingen din?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Takk! Tilbakemeldingen er sendt.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Problemer med innlasting av nettsteder";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Enkelte nettsteder lastes ikke inn på riktig måte";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "Hva slags innhold påvirkes?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Når opplever du disse problemene?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Hvilke nettsteder har problemer?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d av %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Finn på side";
+
+/* No comment provided by engineer. */
+"home.message.buttonText" = "Gjør til standard nettleser";
+
+/* No comment provided by engineer. */
+"home.message.header" = "Ha DuckDuckGo som standardnettleser.";
+
+/* No comment provided by engineer. */
+"home.message.subheader" = "Åpne lenker med ro i sinnet, hver gang.";
+
+/* No comment provided by engineer. */
+"home.message.topText" = "NYTT I IOS 14";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Legg til DuckDuckGo på hjemskjermen!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Legg til DuckDuckGo i docken for enkel tilgang!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Få DuckDuckGo på hjemskjermen";
+
+/* This describes empty tab, on which you can search or navigate to favorites */
+"homeTab.searchAndFavorites" = "Søk og favoritter i ny fane";
+
+/* Home tab title */
+"homeTab.title" = "Hjem";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Legg til bokmerke";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Legg til favoritt";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Gå tilbake";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Gå videre";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Lukk";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Lukk fane";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Finn på side";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Finn neste";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Finn forrige";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Tøm alle faner og data";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Søk eller skriv inn adresse";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Ny fane";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Neste fane";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Åpne lenke i bakgrunnen";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Åpne lenke i ny fane";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Forrige fane";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Skriv ut";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Last inn på nytt";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Velg";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Vis alle faner";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Velkommen til DuckDuckGo!";
+
+/* Edit button */
+"navigation.title.edit" = "Rediger";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Fortsett";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Kanskje senere";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Ha DuckDuckGo som standardnettleser.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Gjør til standard nettleser";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Hopp over";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Begynn å surfe";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Velkommen til DuckDuckGo!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Beklager, ingen app kan håndtere denne lenken.";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Nettsider anvender informasjonskapsler for å holde deg innlogget. Når du gjør en side brannsikker, slettes ikke informasjonskapslene, og du forblir innlogget, selv etter å ha brukt brannknappen.";
+
+/* Section header above Fireproffed websites list */
+"preserveLogins.domain.list.title" = "Nettsteder";
+
+/* Paramter is a string - domain name */
+"preserveLogins.fireproof.message" = "Ønsker du å brannsikre %@?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Brannsikkert nettsted";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Ikke nå";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Fjern alle";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "OK";
+
+/* Ask to Fireproof Websites */
+"preserveLogins.switch.title" = "Spør om å gjøre sider brannsikre";
+
+/* Paramter is a string - domain name */
+"preserveLogins.toast" = "%@ er nå brannsikker! Vis innstillinger for å endre.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Algoritme";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bits";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Feil ved utpakking av sertifikat";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Navn";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Effektiv størrelse";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "E-post";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Kryptert tilkobling";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Tvungen kryptering";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Vi har tvunget dette nettstedet til å bruke en kryptert tilkobling, noe som hindrer tyvlytting av personlige opplysninger du sender gjennom denne tilkoblingen.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "En kryptert tilkobling forhindrer at noen tyvlytter til personlige opplysninger du sender til et nettsted.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Identifikator for subjektnøkkel";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Utsteder";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Offentlig nøkkel";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Nøkkelstørrelse";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Blandet kryptering";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Denne siden har blandet kryptering siden noe innhold sendes gjennom ikke-krypterte forbindelser.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Nei";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Permanent";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Offentlig nøkkel";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "En kryptert tilkobling forhindrer at noen tyvlytter til personlige opplysninger du sender til et nettsted.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Utsteders navn";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Sammendrag";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Tilkoblingen er ikke kryptert, så vær forsiktig med hva du sender.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Ukryptert tilkobling";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Ukjent";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Bruk";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Dekrypter";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Hent fra";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Krypter";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Signer";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Pakk ut";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Verifiser";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Pakk inn";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Ja";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "BESKYTTELSE AV NETTSIDEN DEAKTIVERT";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "FORBEDRET FRA $1 TIL $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "Grad av personvern";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Sporingsnettverk ble funnet på %1$@ %% av nettstedene du har besøkt siden %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Vi samler fortsatt inn data for å vise deg\nhvor mange sporinger vi har blokkert.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Bruker informasjon om personvernpraksis fra ToS;DR";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Personvernpraksis indikerer hvor mye av den personlige informasjonen du deler med et nettsted som er beskyttet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Nettstedet varsler deg før de overfører informasjonen din ved tilfeller av fusjon eller kjøp";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Personvenpraksisen til dette nettstedet har ikke blitt vurdert.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Grad av personvern %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Trykk for å åpne Personvernskjermen";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Denne statistikken lagres kun på enheten din, og sendes ikke noe sted. Aldri.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "God personvernpraksis";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Blandet personvernpraksis";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Dårlig personvernpraksis";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Ukjent personvernpraksis";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Sporingsnettverk samler netthistorikken din i en dataprofil om deg. Større sporingsnettverk gjør mer skade fordi de kan spore og peile seg inn på deg på flere steder på Internett.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Nei";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Ja";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Ønsker du å forlate DuckDuckGo for å vise dette innholdet?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Åpne i en annen app?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Når du sender inn en anonym rapport om nettstedfeil, hjelper det oss med å feilsøke disse problemene og forbedre utvidelsen.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Søk eller skriv inn adresse";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Bokmerker";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Favoritter";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "Hos DuckDuckGo setter vi den nye standarden for tillit på nett.\n\nDuckDuckGo privatnettleser gir deg verktøyene du trenger for å sikre personvernet mens du søker og surfer på nett, med funksjoner som blokkering av sporingsanordninger, smartere kryptering og DuckDuckGo privatsøk.\n\nInternett burde ikke føles ekkelt å bruke, og det å få privatlivet du fortjener på nett, bør være like enkelt som å lukke persiennene.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.info" = "Andre søkemotorer sporer søkene dine, til og med når du er i privat nettlesermodus. Vi sporer deg ikke. Punktum.";
+
+/* No comment provided by engineer. */
+"settings.tutorial.navigate" = "Gå til *Safari*, deretter *Søkemotor*";
+
+/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
+"settings.tutorial.open" = "Åpne *Innstillinger*-appen";
+
+/* No comment provided by engineer. */
+"settings.tutorial.select" = "Velg *DuckDuckGo*";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Send inn rapport";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Domene til nettsted med feil:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Hva slags innhold eller funksjon fungerer ikke?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Rapportering av nettstedfeil er helt anonymt og det gjør det lettere for oss å gjøre appen enda bedre!";
+
+/* This is a form title */
+"siteFeedback.title" = "Rapporter et ødelagt nettsted";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Hvilket nettsted er ødelagt?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Lukk hjem-fane";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Lukk \"%1$@\" på %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Åpne hjem-fane";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Åpne \"%1$@\" på %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Fanebytter";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Mørkt";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "System";
+
+/* Light Theme entry */
+"theme.acc.light" = "Lys";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Mørkt";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Systemstandard";
+
+/* Light Theme entry */
+"theme.name.light" = "Lys";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "%@ lagt til i ubeskyttede nettsteder";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "%@ fjernet fra ubeskyttede nettsteder";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Det oppstod en ukjent feil";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Bokmerke lagret";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Bokmerket er alledre lagret";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Det er ingen nettside å legge til";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Favoritt lagret";
+

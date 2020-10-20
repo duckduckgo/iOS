@@ -24,7 +24,8 @@ class DaxOnboardingPadViewController: UIViewController, Onboarding {
     weak var delegate: OnboardingDelegate?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let onboarding = segue.destination as? OnboardingViewController {
+        if let navController = segue.destination as? UINavigationController,
+           let onboarding = navController.viewControllers.first as? OnboardingViewController {
             onboarding.delegate = delegate
         }
     }

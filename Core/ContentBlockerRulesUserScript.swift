@@ -26,6 +26,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         static let url = "url"
         static let resourceType = "resourceType"
         static let blocked = "blocked"
+        static let pageUrl = "pageUrl"
     }
     
     public var source: String {
@@ -54,9 +55,19 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let urlString = dict[ContentBlockerKey.url] as? String else { return }
+        guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
         
         if let tracker = trackerFromUrl(urlString, blocked: blocked) {
-            delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+            guard let pageUrl = URL(string: pageUrlStr),
+               let pageHost = pageUrl.host,
+               let pageEntity = TrackerDataManager.shared.findEntity(forHost: pageHost) else {
+                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+                return
+            }
+            
+            if pageEntity.displayName != tracker.entity?.displayName {
+                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+            }
         }
     }
     

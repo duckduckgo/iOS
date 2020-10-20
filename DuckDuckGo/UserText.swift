@@ -23,11 +23,11 @@ import Core
 
 public struct UserText {
     
-    public static let appUnlock = NSLocalizedString("app.authentication.unlock", value: "Unlock DuckDuckGo", comment: "Shown on authentication screen")
+    public static let appUnlock = NSLocalizedString("app.authentication.unlock", value: "Unlock DuckDuckGo.", comment: "Shown on authentication screen")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", value: "Search or enter address", comment: "")
-    public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", value: "Bookmark saved", comment: "Confirmation message")
+    public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", value: "Bookmark added", comment: "Confirmation message")
     public static let webBookmarkAlreadySaved = NSLocalizedString("web.url.save.bookmark.exists", value: "Bookmark already saved", comment: "Floating Info message")
-    public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", value: "Favorite saved", comment: "Confirmation message")
+    public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", value: "Favorite added", comment: "Confirmation message")
     public static let webSaveBookmarkNone = NSLocalizedString("web.url.save.bookmark.none", value: "No webpage to bookmark", comment: "Floating message indicating failure")
     
     public static let actionPasteAndGo = NSLocalizedString("action.title.pasteAndGo", value: "Paste & Go", comment: "Paste and Go action")
@@ -52,7 +52,7 @@ public struct UserText {
     public static let actionSaveBookmark = NSLocalizedString("action.title.save.bookmark", value: "Add to Bookmarks", comment: "Add to Bookmarks action")
     public static let actionSaveFavorite = NSLocalizedString("action.title.save.favorite", value: "Add to Favorites", comment: "Add to Favorites action")
     public static let actionReportBrokenSite = NSLocalizedString("action.title.reportBrokenSite", value: "Report Broken Site", comment: "Report broken site action")
-    public static let actionSettings = NSLocalizedString("action.title.settings", value: "Settings...", comment: "Settings action")
+    public static let actionSettings = NSLocalizedString("action.title.settings", value: "Settings", comment: "Settings action")
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", value: "Save Bookmark", comment: "Save Bookmark action")
     public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", value: "Save Favorite", comment: "Save Favorite action")
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", value: "Edit Bookmark", comment: "Edit Bookmark action")
@@ -61,15 +61,15 @@ public struct UserText {
     
     public static let alertDisableProtection = NSLocalizedString("alert.title.disable.protection", value: "Add to Unprotected Sites", comment: "Disable protection alert")
     public static let alertDisableProtectionPlaceholder = NSLocalizedString("alert.title.disable.protection.placeholder", value: "www.example.com", comment: "Disable potection alert placeholder - leave as it is")
-    public static let toastProtectionDisabled = NSLocalizedString("toast.protection.disabled", value: "%@ added to unprotected sites", comment: "Confirmation of an action - populated with a domain name")
-    public static let toastProtectionEnabled = NSLocalizedString("toast.protection.enabled", value: "%@ removed from unprotected sites", comment: "Confirmation of an action - populated with a domain name")
+    public static let toastProtectionDisabled = NSLocalizedString("toast.protection.disabled", value: "%@ added to Unprotected Sites", comment: "Confirmation of an action - populated with a domain name")
+    public static let toastProtectionEnabled = NSLocalizedString("toast.protection.enabled", value: "%@ removed from Unprotected Sites", comment: "Confirmation of an action - populated with a domain name")
     
-    public static let authAlertTitle = NSLocalizedString("auth.alert.title", value: "Authentication required", comment: "Authentication Alert Title")
-    public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", value: "Log in to %@. Your login information will be sent securely.", comment: "Authentication Alert - populated with a domain name")
+    public static let authAlertTitle = NSLocalizedString("auth.alert.title", value: "Authentication Required", comment: "Authentication Alert Title")
+    public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", value: "Sign in to %@. Your login information will be sent securely.", comment: "Authentication Alert - populated with a domain name")
     public static let authAlertPlainConnectionMessage = NSLocalizedString("auth.alert.message.plain", value: "Log in to %@. Your password will be sent insecurely because the connection is unencrypted.", comment: "Authentication Alert - populated with a domain name")
     public static let authAlertUsernamePlaceholder = NSLocalizedString("auth.alert.username.placeholder", value: "Username", comment: "Authentication User name field placeholder")
     public static let authAlertPasswordPlaceholder = NSLocalizedString("auth.alert.password.placeholder", value: "Password", comment: "Authentication Password field placeholder")
-    public static let authAlertLogInButtonTitle = NSLocalizedString("auth.alert.login.button", value: "Log In", comment: "Authentication Alert Log In Button")
+    public static let authAlertLogInButtonTitle = NSLocalizedString("auth.alert.login.button", value: "Sign In", comment: "Authentication Alert Sign In Button")
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
     
@@ -121,7 +121,7 @@ public struct UserText {
     public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", value: "Mixed Encryption", comment: "")
     public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", value: "Unencrypted Connection", comment: "")
     
-    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", value: "Tracker networks were found on %@%% of web sites you’ve visited since %@.", comment: "First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date")
+    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", value: "Tracker networks were found on %@%% of websites you’ve visited since %@.", comment: "First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date")
     public static let ppNetworkLeaderboardGatheringData = NSLocalizedString("privacy.protection.network.leaderboard.gathering", value: "We’re still collecting data to show how\nmany trackers we’ve blocked.", comment: "")
     
     public static let ppEncryptionHeaderInfo = NSLocalizedString("privacy.protection.encryption.header", value: "An encrypted connection prevents eavesdropping of any personal information you send to a website.", comment: "")
@@ -132,7 +132,7 @@ public struct UserText {
     
     public static let ppTrackerNetworksInfo = NSLocalizedString("privacy.protection.tracker.networks.info", value: "Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the internet.", comment: "")
     
-    public static let ppPracticesHeaderInfo = NSLocalizedString("privacy.protection.practices.header.info", value: "Privacy practices indicate how much the  personal information that you share with a website is protected.", comment: "")
+    public static let ppPracticesHeaderInfo = NSLocalizedString("privacy.protection.practices.header.info", value: "Privacy practices indicate how much the personal information that you share with a website is protected.", comment: "")
     public static let ppPracticesReviewedInfo = NSLocalizedString("privacy.protection.practices.reviewed.info", value: "This website will notify you before transferring your information in the event of a merger or acquisition", comment: "")
     public static let ppPracticesUnknownInfo = NSLocalizedString("privacy.protection.practices.unknown.info", value: "The privacy practices of this website have not been reviewed.", comment: "")
     public static let ppPracticesFooterInfo = NSLocalizedString("privacy.protection.practices.footer.info", value: "Using privacy practices info from ToS;DR", comment: "ToS;DR is an organization")
@@ -147,11 +147,11 @@ public struct UserText {
     static let brokenSiteCategoryVideos = NSLocalizedString("brokensite.category.videos", value: "Video didn’t play", comment: "Broken Site Category")
     static let brokenSiteCategoryLinks = NSLocalizedString("brokensite.category.links", value: "Links or buttons don’t work", comment: "Broken Site Category")
     static let brokenSiteCategoryContent = NSLocalizedString("brokensite.category.content", value: "Content is missing", comment: "Broken Site Category")
-    static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", value: "I can’t login", comment: "Broken Site Category")
+    static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", value: "I can’t sign in", comment: "Broken Site Category")
     static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", value: "The browser is incompatible", comment: "Broken Site Category")
     static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", value: "Something else", comment: "Broken Site Category")
     
-    public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", value: "An unknown error occured", comment: "")
+    public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", value: "An unknown error occurred.", comment: "")
     
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", value: "Take DuckDuckGo home", comment: "Home is this context is the bottom home row (dock)")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", value: "Add DuckDuckGo to your dock for easy access!", comment: "")
@@ -162,10 +162,10 @@ public struct UserText {
     
     public static let customUrlSchemeTitle = NSLocalizedString("prompt.custom.url.scheme.title", value: "Open in Another App?", comment: "Alert title")
     public static let customUrlSchemeMessage = NSLocalizedString("prompt.custom.url.scheme.prompt", value: "Would you like to leave DuckDuckGo to view this content?", comment: "")
-    public static let customUrlSchemeOpen = NSLocalizedString("prompt.custom.url.scheme.open", value: "Yes", comment: "Confirm action")
-    public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", value: "No", comment: "Deny action")
+    public static let customUrlSchemeOpen = NSLocalizedString("prompt.custom.url.scheme.open", value: "Open", comment: "Confirm action")
+    public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", value: "Cancel", comment: "Deny action")
     
-    public static let failedToOpenExternally = NSLocalizedString("open.externally.failed", value: "Sorry, no app can handle that link.", comment: "’Link’ is link on a website")
+    public static let failedToOpenExternally = NSLocalizedString("open.externally.failed", value: "The app required to open that link can’t be found", comment: "’Link’ is link on a website")
     
     public static let sectionTitleBookmarks = NSLocalizedString("section.title.bookmarks", value: "Bookmarks", comment: "")
     public static let sectionTitleFavorites = NSLocalizedString("section.title.favorites", value: "Favorites", comment: "")
@@ -173,8 +173,8 @@ public struct UserText {
     public static let favoriteMenuDelete = NSLocalizedString("favorite.menu.delete", value: "Delete", comment: "")
     public static let favoriteMenuEdit = NSLocalizedString("favorite.menu.edit", value: "Edit", comment: "")
     
-    public static let emptyBookmarks = NSLocalizedString("empty.bookmarks", value: "No bookmarks yet", comment: "Empty list state placholder")
-    public static let emptyFavorites = NSLocalizedString("empty.favorites", value: "No favorites yet", comment: "Empty list state placholder")
+    public static let emptyBookmarks = NSLocalizedString("empty.bookmarks", value: "No bookmarks added yet", comment: "Empty list state placholder")
+    public static let emptyFavorites = NSLocalizedString("empty.favorites", value: "No favorites added yet", comment: "Empty list state placholder")
     
     public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", value: "Website title", comment: "Placeholder in the add bookmark form")
     public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", value: "www.example.com", comment: "Placeholder in the add bookmark form")
@@ -204,7 +204,7 @@ public struct UserText {
     public static let keyCommandOpenInNewBackgroundTab = NSLocalizedString("keyCommandOpenInNewBackgroundTab", value: "Open Link in Background", comment: "")
     
     public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", value: "All tabs bookmarked", comment: "Confirmation message after selecting Bookmark All button")
-    public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", value: "Unable to bookmark some tabs", comment: "Info message after selecting Bookmark All button")
+    public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", value: "Added new bookmarks for all tabs", comment: "Info message after selecting Bookmark All button")
     
     public static let themeNameDefault = NSLocalizedString("theme.name.default", value: "System Default", comment: "Entry for Default System theme")
     public static let themeNameLight = NSLocalizedString("theme.name.light", value: "Light", comment: "Light Theme entry")
@@ -253,20 +253,20 @@ public struct UserText {
     public static let onboardingDefaultBrowserTitle = NSLocalizedString("onboardingDefaultBrowserTitle", value: "Make DuckDuckGo your default browser.", comment: "")
     public static let onboardingDefaultBrowserMaybeLater = NSLocalizedString("onboardingDefaultBrowserMaybeLater", value: "Maybe Later", comment: "")
     
-    public static let preserveLoginsSwitchTitle = NSLocalizedString("preserveLogins.switch.title", value: "Ask to Fireproof Websites", comment: "Ask to Fireproof Websites")
+    public static let preserveLoginsSwitchTitle = NSLocalizedString("preserveLogins.switch.title", value: "Ask to Fireproof Sites", comment: "Ask to Fireproof Sites")
     
     public static let preserveLoginsListTitle = NSLocalizedString("preserveLogins.domain.list.title", value: "Websites", comment: "Section header above Fireproffed websites list")
-    public static let preserveLoginsListFooter = NSLocalizedString("preserveLogins.domain.list.footer", value: "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button.", comment: "")
+    public static let preserveLoginsListFooter = NSLocalizedString("preserveLogins.domain.list.footer", value: "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.", comment: "")
     public static let preserveLoginsRemoveAll = NSLocalizedString("preserveLogins.remove.all", value: "Remove All", comment: "Alert title")
     public static let preserveLoginsRemoveAllOk = NSLocalizedString("preserveLogins.remove.all.ok", value: "OK", comment: "Confirmation button in alert")
     
     public static let preserveLoginsFireproofAsk = NSLocalizedString("preserveLogins.fireproof.message", value: "Would you like to Fireproof %@?", comment: "Paramter is a string - domain name")
-    public static let preserveLoginsFireproofConfirm = NSLocalizedString("preserveLogins.menu.confirm", value: "Fireproof Website", comment: "Confirm fireproofing action")
+    public static let preserveLoginsFireproofConfirm = NSLocalizedString("preserveLogins.menu.confirm", value: "Fireproof Site", comment: "Confirm fireproofing action")
     public static let preserveLoginsFireproofDefer = NSLocalizedString("preserveLogins.menu.defer", value: "Not Now", comment: "Deny fireproofing action")
     
-    public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", value: "%@ is now Fireproof! Visit settings to remove.", comment: "Paramter is a string - domain name")
+    public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", value: "%@ is now Fireproof! Visit Settings to manage.", comment: "Paramter is a string - domain name")
     
-    public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", value: "Search and favorites in a new tab", comment: "This describes empty tab, on which you can search or navigate to favorites")
+    public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", value: "Search or enter address", comment: "This describes empty tab")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", value: "Home", comment: "Home tab title")
     
     public static let settingTutorialInfo = NSLocalizedString("settings.tutorial.info", value: "Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.", comment: "")
@@ -274,10 +274,10 @@ public struct UserText {
     public static let settingTutorialNavigateStep = NSLocalizedString("settings.tutorial.navigate", value: "Navigate to *Safari*, then *Search Engine*", comment: "")
     public static let settingTutorialSelectStep = NSLocalizedString("settings.tutorial.select", value: "Select *DuckDuckGo*", comment: "")
     
-    public static let settingsAboutText = NSLocalizedString("settings.about.text", value: "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.", comment: "")
+    public static let settingsAboutText = NSLocalizedString("settings.about.text", value: "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the Internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.", comment: "")
     
     public static let daxDialogHomeInitial = NSLocalizedString("dax.onboarding.home.initial", value: "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒", comment: "")
-    public static let daxDialogHomeSubsequent = NSLocalizedString("dax.onboarding.home.subsequent", value: "You’ve got this!\n\nRemember: every time you browse with me a creepy ad loses its wings. 👍", comment: "ad = advertisment")
+    public static let daxDialogHomeSubsequent = NSLocalizedString("dax.onboarding.home.subsequent", value: "You’ve got this!\n\nRemember: Every time you browse with me a creepy ad loses its wings. 👍", comment: "ad = advertisment")
     public static let daxDialogHomeAddFavorite = NSLocalizedString("dax.onboarding.home.add.favorite", value: "Visit your favorite sites in a flash!\n\nGo to a site you love. Then tap the \"⋯\" icon and select *Add to Favorites*.", comment: "Encourage user to add favorite site using the browsing menu.")
     public static let daxDialogHomeAddFavoriteAccessible = NSLocalizedString("dax.onboarding.home.add.favorite.accessible", value: "Visit your favorite sites in a flash! Visit one of your favorite sites. Then tap the open menu button and select Add to Favorites.", comment: "Accessible version of dax.onboarding.home.add.favorite")
 
@@ -293,7 +293,7 @@ public struct UserText {
     public static let daxDialogBrowsingSiteOwnedByMajorTracker = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker", value: "Heads up! Since %2$@ owns %1$@, I can’t stop them from seeing your activity here.\n\nBut browse with me, and I can reduce what %2$@ knows about you overall by blocking their trackers on lots of other sites.", comment: "Parameters are domain names (strings)")
     public static let daxDialogBrowsingSiteOwnedByMajorTrackerCTA = NSLocalizedString("dax.onboarding.browsing.site.owned.by.major.tracker.cta", value: "Got It", comment: "Got It")
     
-    public static let daxDialogBrowsingWithOneTracker = NSLocalizedString("dax.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the URL bar to see who is trying to track you when you visit a new site.", comment: "Parameter is domain name (string)")
+    public static let daxDialogBrowsingWithOneTracker = NSLocalizedString("dax.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ You can check the address bar to see who is trying to track you when you visit a new site.", comment: "Parameter is domain name (string)")
     public static let daxDialogBrowsingWithOneTrackerCTA = NSLocalizedString("dax.onboarding.browsing.one.tracker.cta", value: "High Five!", comment: "")
     
     public static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
@@ -303,7 +303,7 @@ public struct UserText {
     
     public static let daxDialogHideTitle = NSLocalizedString("dax.hide.title", value: "Hide remaining tips?", comment: "Title in Hide Dax dialog")
     public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", value: "There are only a few, and we tried to make them informative.", comment: "Subtitle in Hide Dax dialog")
-    public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", value: "Hide tips forever", comment: "")
+    public static let daxDialogHideButton = NSLocalizedString("dax.hide.button", value: "Hide Tips Forever", comment: "")
     public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", value: "Cancel", comment: "")
     
     public static let tabSwitcherAccessibilityLabel = NSLocalizedString("tab.switcher.accessibility.label", value: "Tab Switcher", comment: "Tab Switcher Accessibility Label")

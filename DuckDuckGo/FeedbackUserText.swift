@@ -52,7 +52,7 @@ extension UserText {
                                                               comment: "")
     
     public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
-                                                                 value: "Awesome to hear!",
+                                                                 value: "Awesome to Hear!",
                                                                  comment: "")
     public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
                                                                 value: "Share Details",

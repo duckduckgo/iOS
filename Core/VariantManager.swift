@@ -65,9 +65,9 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
 
         // Onboarding
-        Variant(name: "oh", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingHomeRow ]),
-        Variant(name: "od", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingDefaultBrowser ]),
-        Variant(name: "ow", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingWidgets ])
+        Variant(name: "mh", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingHomeRow ]),
+        Variant(name: "md", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingDefaultBrowser ]),
+        Variant(name: "mw", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingWidgets ])
     ]
     
     public let name: String

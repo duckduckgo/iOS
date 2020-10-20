@@ -315,6 +315,14 @@ class MainViewController: UIViewController {
 
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return DefaultTutorialSettings().hasSeenOnboarding ? [.allButUpsideDown] : [.portrait]
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
     @objc func dismissSuggestionTray() {
         dismissOmniBar()
     }

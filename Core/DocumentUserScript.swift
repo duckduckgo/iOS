@@ -38,7 +38,7 @@ public class DocumentUserScript: NSObject, UserScript {
     }
 
     public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Void) {
-        let javascript = "duckduckgoDocument.getHrefFromPoint(\(x), \(y))"
+        let javascript = "window.__ddg__.getHrefFromPoint(\(x), \(y))"
         webView?.evaluateJavaScript(javascript) { (result, _) in
             if let text = result as? String {
                 let url = URL(string: text)
@@ -52,7 +52,7 @@ public class DocumentUserScript: NSObject, UserScript {
     public func getUrlAtPointSynchronously(x: Int, y: Int) -> URL? {
         var complete = false
         var url: URL?
-        let javascript = "duckduckgoDocument.getHrefFromPoint(\(x), \(y))"
+        let javascript = "window.__ddg__.getHrefFromPoint(\(x), \(y))"
         webView?.evaluateJavaScript(javascript) { (result, _) in
             if let text = result as? String {
                 url = URL(string: text)

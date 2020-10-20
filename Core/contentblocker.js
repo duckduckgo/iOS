@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-var duckduckgoContentBlocking = function() {
+(function() {
 
    function trackerDetected(data) {
        try {
@@ -620,4 +620,4 @@ _utf8_encode : function (string) {
     return {
         shouldBlock: shouldBlock
     }
-}()
+})()

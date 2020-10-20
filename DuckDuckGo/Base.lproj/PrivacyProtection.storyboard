@@ -1234,45 +1234,52 @@ many trackers we've blocked.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="162"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WarningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Xh2-s0-IWl">
-                                                    <rect key="frame" x="181" y="20" width="52" height="45"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="CZX-DU-SRe">
+                                                    <rect key="frame" x="10" y="29.666666666666664" width="394" height="102.66666666666669"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WarningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Xh2-s0-IWl">
+                                                            <rect key="frame" x="171" y="0.0" width="52" height="45"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="52" id="JLJ-4X-v6D"/>
+                                                                <constraint firstAttribute="height" constant="45" id="aU7-th-YeR"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Data Is Unencrypted" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T4-dB-Wu0">
+                                                            <rect key="frame" x="20" y="53" width="354" height="17.333333333333329"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-HR-hpn">
+                                                            <rect key="frame" x="20" y="78.333333333333329" width="354" height="24.333333333333329"/>
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Be careful when entering information on this site.">
+                                                                    <attributes>
+                                                                        <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="52" id="JLJ-4X-v6D"/>
-                                                        <constraint firstAttribute="height" constant="45" id="aU7-th-YeR"/>
+                                                        <constraint firstItem="Bzj-HR-hpn" firstAttribute="width" secondItem="CZX-DU-SRe" secondAttribute="width" constant="-40" id="H3n-nY-ctM"/>
+                                                        <constraint firstItem="2T4-dB-Wu0" firstAttribute="width" secondItem="CZX-DU-SRe" secondAttribute="width" constant="-40" id="HFr-D7-4ha"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" ambiguous="YES" text="Data Is Unencrypted" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T4-dB-Wu0">
-                                                    <rect key="frame" x="23.666666666666657" y="85" width="367" height="16"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-HR-hpn">
-                                                    <rect key="frame" x="23.666666666666657" y="106" width="367" height="36"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Be careful when entering information on this site.">
-                                                            <attributes>
-                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="2T4-dB-Wu0" firstAttribute="top" secondItem="Xh2-s0-IWl" secondAttribute="bottom" constant="20" id="9Qh-rG-5U6"/>
-                                                <constraint firstItem="Bzj-HR-hpn" firstAttribute="top" secondItem="2T4-dB-Wu0" secondAttribute="bottom" constant="5" id="MxZ-S5-6k7"/>
-                                                <constraint firstItem="2T4-dB-Wu0" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="ZKl-x6-b1D"/>
-                                                <constraint firstItem="Bzj-HR-hpn" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="bGW-CX-vm9"/>
-                                                <constraint firstItem="2T4-dB-Wu0" firstAttribute="width" secondItem="8mk-HM-777" secondAttribute="width" constant="-47" id="fs6-5W-p2I"/>
-                                                <constraint firstItem="Xh2-s0-IWl" firstAttribute="top" secondItem="8mk-HM-777" secondAttribute="top" constant="20" id="kOX-Sr-bb4"/>
-                                                <constraint firstItem="Bzj-HR-hpn" firstAttribute="width" secondItem="8mk-HM-777" secondAttribute="width" constant="-47" id="va5-fP-qmP"/>
-                                                <constraint firstItem="Xh2-s0-IWl" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="vdt-pq-H32"/>
-                                                <constraint firstAttribute="bottom" secondItem="Bzj-HR-hpn" secondAttribute="bottom" constant="20" id="yrX-45-nXC"/>
+                                                <constraint firstItem="CZX-DU-SRe" firstAttribute="top" secondItem="8mk-HM-777" secondAttribute="top" constant="29.666666666666671" id="8iG-zW-3pd"/>
+                                                <constraint firstAttribute="bottom" secondItem="CZX-DU-SRe" secondAttribute="bottom" constant="29.666666666666657" id="JbN-VQ-CFK"/>
+                                                <constraint firstItem="CZX-DU-SRe" firstAttribute="centerY" secondItem="8mk-HM-777" secondAttribute="centerY" id="bWy-2f-pAA"/>
+                                                <constraint firstItem="CZX-DU-SRe" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="rhV-BU-W7O"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="CZX-DU-SRe" firstAttribute="width" secondItem="U2L-Z5-GZd" secondAttribute="width" constant="-20" id="n6R-aV-iyK"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="detailLabel" destination="Bzj-HR-hpn" id="qxT-zj-4aq"/>
                                         </connections>

@@ -32,6 +32,8 @@ protocol AppConfigurationFetchStatistics {
     var backgroundStartCount: Int { get set }
     var backgroundNoDataCount: Int { get set }
     var backgroundNewDataCount: Int { get set }
+
+    var backgroundTaskExpirationCount: Int { get set }
 }
 
 class AppConfigurationFetch {
@@ -46,6 +48,7 @@ class AppConfigurationFetch {
         static let bgFetchType = "bgft"
         static let bgFetchTypeBackgroundTasks = "bgbt"
         static let bgFetchTypeLegacy = "bgl"
+        static let bgFetchTaskExpiration = "bgte"
         static let bgFetchStart = "bgfs"
         static let bgFetchNoData = "bgnd"
         static let bgFetchWithData = "bgwd"
@@ -102,6 +105,9 @@ class AppConfigurationFetch {
             using: fetchQueue) { (task) in
 
             task.expirationHandler = {
+                var store: AppConfigurationFetchStatistics = AppUserDefaults()
+                store.backgroundTaskExpirationCount += 1
+
                 scheduleBackgroundRefreshTask()
             }
 
@@ -200,7 +206,8 @@ class AppConfigurationFetch {
                           Keys.fgFetchStart: String(store.foregroundStartCount),
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
-                          Keys.bgFetchType: backgroundFetchType]
+                          Keys.bgFetchType: backgroundFetchType,
+                          Keys.bgFetchTaskExpiration: String(store.backgroundTaskExpirationCount)]
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -227,5 +234,6 @@ class AppConfigurationFetch {
         store.foregroundStartCount = 0
         store.foregroundNoDataCount = 0
         store.foregroundNewDataCount = 0
+        store.backgroundTaskExpirationCount = 0
     }
 }

@@ -82,7 +82,8 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
             self.daxDialog = controller
         } else if let controller = segue.destination as? DaxOnboardingPadViewController {
             controller.delegate = self
-        } else if let controller = segue.destination as? OnboardingViewController {
+        } else if let navController = segue.destination as? UINavigationController,
+                  let controller = navController.viewControllers.first as? OnboardingViewController {
             controller.delegate = self
         }
         

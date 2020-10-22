@@ -127,6 +127,10 @@ class AppConfigurationFetch {
         // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
         //
         // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
+        //
+        // Task expiration can be simulated similarly:
+        //
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
 
         do {
             try BGTaskScheduler.shared.submit(task)

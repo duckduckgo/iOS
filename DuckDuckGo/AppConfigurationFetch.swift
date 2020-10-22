@@ -32,15 +32,6 @@ protocol AppConfigurationFetchStatistics {
     var backgroundStartCount: Int { get set }
     var backgroundNoDataCount: Int { get set }
     var backgroundNewDataCount: Int { get set }
-
-    var backgroundTaskExpirationCount: Int { get set }
-
-    var downloadedHTTPSBloomFilterSpecCount: Int { get set }
-    var downloadedHTTPSBloomFilterCount: Int { get set }
-    var downloadedHTTPSExcludedDomainsCount: Int { get set }
-    var downloadedSurrogatesCount: Int { get set }
-    var downloadedTrackerDataSetCount: Int { get set }
-    var downloadedTemporaryUnprotectedSitesCount: Int { get set }
 }
 
 class AppConfigurationFetch {
@@ -75,6 +66,27 @@ class AppConfigurationFetch {
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
+
+    @UserDefaultsWrapper(key: .backgroundFetchTaskExpirationCount, defaultValue: 0)
+    static private var backgroundFetchTaskExpirationCount: Int
+    
+    @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterSpecCount, defaultValue: 0)
+    private var downloadedHTTPSBloomFilterSpecCount: Int
+    
+    @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterCount, defaultValue: 0)
+    private var downloadedHTTPSBloomFilterCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedHTTPSExcludedDomainsCount, defaultValue: 0)
+    private var downloadedHTTPSExcludedDomainsCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedSurrogatesCount, defaultValue: 0)
+    private var downloadedSurrogatesCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedTrackerDataSetCount, defaultValue: 0)
+    private var downloadedTrackerDataSetCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
+    private var downloadedTemporaryUnprotectedSitesCount: Int
 
     var shouldRefresh: Bool {
         return Date().timeIntervalSince(lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
@@ -119,9 +131,7 @@ class AppConfigurationFetch {
             using: fetchQueue) { (task) in
 
             task.expirationHandler = {
-                var store: AppConfigurationFetchStatistics = AppUserDefaults()
-                store.backgroundTaskExpirationCount += 1
-
+                backgroundFetchTaskExpirationCount += 1
                 scheduleBackgroundRefreshTask()
             }
 
@@ -184,15 +194,13 @@ class AppConfigurationFetch {
     }
 
     private func updateFetchProgress(configuration: ContentBlockerRequest.Configuration) {
-        var store: AppConfigurationFetchStatistics = AppUserDefaults()
-
         switch configuration {
-        case .httpsBloomFilter: store.downloadedHTTPSBloomFilterCount += 1
-        case .httpsBloomFilterSpec: store.downloadedHTTPSBloomFilterSpecCount += 1
-        case .httpsExcludedDomains: store.downloadedHTTPSExcludedDomainsCount += 1
-        case .surrogates: store.downloadedSurrogatesCount += 1
-        case .temporaryUnprotectedSites: store.downloadedTemporaryUnprotectedSitesCount += 1
-        case .trackerDataSet: store.downloadedTrackerDataSetCount += 1
+        case .httpsBloomFilter: downloadedHTTPSBloomFilterCount += 1
+        case .httpsBloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
+        case .httpsExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
+        case .surrogates: downloadedSurrogatesCount += 1
+        case .temporaryUnprotectedSites: downloadedTemporaryUnprotectedSitesCount += 1
+        case .trackerDataSet: downloadedTrackerDataSetCount += 1
         }
     }
     
@@ -238,13 +246,13 @@ class AppConfigurationFetch {
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
                           Keys.bgFetchType: backgroundFetchType,
-                          Keys.bgFetchTaskExpiration: String(store.backgroundTaskExpirationCount),
-                          Keys.fetchHTTPSBloomFilterSpec: String(store.downloadedHTTPSBloomFilterSpecCount),
-                          Keys.fetchHTTPSBloomFilter: String(store.downloadedHTTPSBloomFilterCount),
-                          Keys.fetchHTTPSExcludedDomainsCount: String(store.downloadedHTTPSExcludedDomainsCount),
-                          Keys.fetchSurrogatesCount: String(store.downloadedSurrogatesCount),
-                          Keys.fetchTrackerDataSetCount: String(store.downloadedTrackerDataSetCount),
-                          Keys.fetchTemporaryUnprotectedSitesCount: String(store.downloadedTemporaryUnprotectedSitesCount)]
+                          Keys.bgFetchTaskExpiration: String(Self.backgroundFetchTaskExpirationCount),
+                          Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
+                          Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
+                          Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
+                          Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
+                          Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
+                          Keys.fetchTemporaryUnprotectedSitesCount: String(downloadedTemporaryUnprotectedSitesCount)]
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -271,12 +279,13 @@ class AppConfigurationFetch {
         store.foregroundStartCount = 0
         store.foregroundNoDataCount = 0
         store.foregroundNewDataCount = 0
-        store.backgroundTaskExpirationCount = 0
-        store.downloadedHTTPSBloomFilterCount = 0
-        store.downloadedHTTPSBloomFilterSpecCount = 0
-        store.downloadedHTTPSExcludedDomainsCount = 0
-        store.downloadedSurrogatesCount = 0
-        store.downloadedTemporaryUnprotectedSitesCount = 0
-        store.downloadedTrackerDataSetCount = 0
+
+        Self.backgroundFetchTaskExpirationCount = 0
+        downloadedHTTPSBloomFilterCount = 0
+        downloadedHTTPSBloomFilterSpecCount = 0
+        downloadedHTTPSExcludedDomainsCount = 0
+        downloadedSurrogatesCount = 0
+        downloadedTemporaryUnprotectedSitesCount = 0
+        downloadedTrackerDataSetCount = 0
     }
 }

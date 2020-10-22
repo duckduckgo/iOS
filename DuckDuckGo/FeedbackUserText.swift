@@ -76,7 +76,7 @@ extension UserText {
                                                                           comment: "")
     
     public static let feedbackNegativeHeader = NSLocalizedString("feedback.negative.header",
-                                                                 value: "We’re Sorry to Hear That.",
+                                                                 value: "We’re Sorry to Hear That",
                                                                  comment: "")
     public static let feedbackNegativeSupplementary = NSLocalizedString("feedback.negative.supplementary",
                                                                         value: "What is your frustration most related to?",

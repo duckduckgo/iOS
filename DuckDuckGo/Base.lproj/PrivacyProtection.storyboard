@@ -2100,14 +2100,6 @@ many trackers we've blocked.</string>
                                                     <integer key="NSUnderline" value="1"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content=".">
-                                                <attributes>
-                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                    <font key="NSOriginalFont" size="14" name="ProximaNova-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>

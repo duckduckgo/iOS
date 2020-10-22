@@ -353,7 +353,7 @@
 "feedback.negative.form.placeholder" = "Are there any specifics you’d like to include?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "We’re Sorry to Hear That.";
+"feedback.negative.header" = "We’re Sorry to Hear That";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "What is your frustration most related to?";
@@ -589,7 +589,7 @@
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Ask to Fireproof Sites";
 
-/* Paramter is a string - domain name */
+/* Parameter is a string - domain name */
 "preserveLogins.toast" = "%@ is now Fireproof! Visit Settings to manage.";
 
 /* Part of certificate info */
@@ -716,7 +716,7 @@
 "privacy.protection.network.leaderboard.gathering" = "We’re still collecting data to show how\nmany trackers we’ve blocked.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Privacy Practices from ToS;DR";
+"privacy.protection.practices.footer.info" = "Privacy Practices from ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Privacy practices indicate how much the personal information that you share with a website is protected.";

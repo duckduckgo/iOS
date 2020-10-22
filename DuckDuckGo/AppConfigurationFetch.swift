@@ -34,6 +34,13 @@ protocol AppConfigurationFetchStatistics {
     var backgroundNewDataCount: Int { get set }
 
     var backgroundTaskExpirationCount: Int { get set }
+
+    var downloadedHTTPSBloomFilterSpecCount: Int { get set }
+    var downloadedHTTPSBloomFilterCount: Int { get set }
+    var downloadedHTTPSExcludedDomainsCount: Int { get set }
+    var downloadedSurrogatesCount: Int { get set }
+    var downloadedTrackerDataSetCount: Int { get set }
+    var downloadedTemporaryUnprotectedSitesCount: Int { get set }
 }
 
 class AppConfigurationFetch {
@@ -55,6 +62,13 @@ class AppConfigurationFetch {
         static let fgFetchStart = "fgfs"
         static let fgFetchNoData = "fgnd"
         static let fgFetchWithData = "fgwd"
+
+        static let fetchHTTPSBloomFilterSpec = "d1"
+        static let fetchHTTPSBloomFilter = "d2"
+        static let fetchHTTPSExcludedDomainsCount = "d3"
+        static let fetchSurrogatesCount = "d4"
+        static let fetchTrackerDataSetCount = "d5"
+        static let fetchTemporaryUnprotectedSitesCount = "d6"
     }
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
@@ -148,7 +162,7 @@ class AppConfigurationFetch {
         var newData = false
         let semaphore = DispatchSemaphore(value: 0)
 
-        AppDependencyProvider.shared.storageCache.update { newCache in
+        AppDependencyProvider.shared.storageCache.update(progress: updateFetchProgress) { newCache in
             newData = newData || (newCache != nil)
             semaphore.signal()
         }
@@ -166,6 +180,19 @@ class AppConfigurationFetch {
             store.backgroundStartCount += 1
         } else {
             store.foregroundStartCount += 1
+        }
+    }
+
+    private func updateFetchProgress(configuration: ContentBlockerRequest.Configuration) {
+        var store: AppConfigurationFetchStatistics = AppUserDefaults()
+
+        switch configuration {
+        case .httpsBloomFilter: store.downloadedHTTPSBloomFilterCount += 1
+        case .httpsBloomFilterSpec: store.downloadedHTTPSBloomFilterSpecCount += 1
+        case .httpsExcludedDomains: store.downloadedHTTPSExcludedDomainsCount += 1
+        case .surrogates: store.downloadedSurrogatesCount += 1
+        case .temporaryUnprotectedSites: store.downloadedTemporaryUnprotectedSitesCount += 1
+        case .trackerDataSet: store.downloadedTrackerDataSetCount += 1
         }
     }
     
@@ -211,7 +238,13 @@ class AppConfigurationFetch {
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
                           Keys.bgFetchType: backgroundFetchType,
-                          Keys.bgFetchTaskExpiration: String(store.backgroundTaskExpirationCount)]
+                          Keys.bgFetchTaskExpiration: String(store.backgroundTaskExpirationCount),
+                          Keys.fetchHTTPSBloomFilterSpec: String(store.downloadedHTTPSBloomFilterSpecCount),
+                          Keys.fetchHTTPSBloomFilter: String(store.downloadedHTTPSBloomFilterCount),
+                          Keys.fetchHTTPSExcludedDomainsCount: String(store.downloadedHTTPSExcludedDomainsCount),
+                          Keys.fetchSurrogatesCount: String(store.downloadedSurrogatesCount),
+                          Keys.fetchTrackerDataSetCount: String(store.downloadedTrackerDataSetCount),
+                          Keys.fetchTemporaryUnprotectedSitesCount: String(store.downloadedTemporaryUnprotectedSitesCount)]
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -239,5 +272,11 @@ class AppConfigurationFetch {
         store.foregroundNoDataCount = 0
         store.foregroundNewDataCount = 0
         store.backgroundTaskExpirationCount = 0
+        store.downloadedHTTPSBloomFilterCount = 0
+        store.downloadedHTTPSBloomFilterSpecCount = 0
+        store.downloadedHTTPSExcludedDomainsCount = 0
+        store.downloadedSurrogatesCount = 0
+        store.downloadedTemporaryUnprotectedSitesCount = 0
+        store.downloadedTrackerDataSetCount = 0
     }
 }

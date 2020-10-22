@@ -46,6 +46,13 @@ public class AppUserDefaults: AppSettings {
         static let backgroundFetchNewDataCount = "com.duckduckgo.app.bgFetchNewDataCount"
 
         static let backgroundFetchTaskExpirationCount = "com.duckduckgo.app.bgFetchTaskExpirationCount"
+
+        static let downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
+        static let downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"
+        static let downloadedHTTPSExcludedDomainsCount = "com.duckduckgo.app.downloadedHTTPSExcludedDomainsCount"
+        static let downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
+        static let downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
+        static let downloadedTemporaryUnprotectedSitesCount = "com.duckduckgo.app.downloadedTemporaryUnprotectedSitesCount"
         
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
         static let allowUniversalLinks = "com.duckduckgo.app.allowUniversalLinks"
@@ -211,6 +218,60 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
         }
         set {
             userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchTaskExpirationCount)
+        }
+    }
+
+    var downloadedHTTPSBloomFilterSpecCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.downloadedHTTPSBloomFilterSpecCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.downloadedHTTPSBloomFilterSpecCount)
+        }
+    }
+
+    var downloadedHTTPSBloomFilterCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.downloadedHTTPSBloomFilterCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.downloadedHTTPSBloomFilterCount)
+        }
+    }
+
+    var downloadedHTTPSExcludedDomainsCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.downloadedHTTPSExcludedDomainsCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.downloadedHTTPSExcludedDomainsCount)
+        }
+    }
+
+    var downloadedSurrogatesCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.downloadedSurrogatesCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.downloadedSurrogatesCount)
+        }
+    }
+
+    var downloadedTrackerDataSetCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.downloadedTrackerDataSetCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.downloadedTrackerDataSetCount)
+        }
+    }
+
+    var downloadedTemporaryUnprotectedSitesCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.downloadedTemporaryUnprotectedSitesCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.downloadedTemporaryUnprotectedSitesCount)
         }
     }
 }

@@ -22,7 +22,8 @@ import Foundation
 public class StorageCacheProvider {
     
     public static let didUpdateStorageCacheNotification = NSNotification.Name(rawValue: "com.duckduckgo.storageCacheProvider.notifications.didUpdate")
-    
+
+    public typealias StorageCacheUpdateProgress = (ContentBlockerRequest.Configuration) -> Void
     public typealias StorageCacheUpdateCompletion = (StorageCache?) -> Void
     
     private static let updateQueue = DispatchQueue(label: "StorageCache update queue", qos: .utility)
@@ -47,13 +48,13 @@ public class StorageCacheProvider {
     
     public init() {}
     
-    public func update(completion: @escaping StorageCacheUpdateCompletion) {
-    
+    public func update(progress: StorageCacheUpdateProgress? = nil, completion: @escaping StorageCacheUpdateCompletion) {
+
         Self.updateQueue.async {
             let loader = ContentBlockerLoader()
             let currentCache = self.current
             
-            guard loader.checkForUpdates() else {
+            guard loader.checkForUpdates(progress: progress) else {
                 completion(nil)
                 return
             }

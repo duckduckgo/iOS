@@ -115,13 +115,13 @@ public class ContentBlockerLoader {
             guard case ContentBlockerRequest.Response.success(_, let data) = response,
                 let specification = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data)
                 else {
+                    progress?(.httpsBloomFilter)
                     semaphore.signal()
                     return
             }
             
             if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification(), storedSpecification == specification {
                 os_log("Bloom filter already downloaded", log: generalLog, type: .debug)
-                // Mark the Bloom Filter as downloaded if the current version already exists locally.
                 progress?(.httpsBloomFilter)
                 semaphore.signal()
                 return

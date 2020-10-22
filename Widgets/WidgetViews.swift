@@ -33,11 +33,11 @@ struct FavoriteView: View {
 
             if let favorite = favorite {
 
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
-                    .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
-
                 Link(destination: favorite.url) {
+
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
+                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
 
                     if let image = favorite.favicon {
 
@@ -60,6 +60,7 @@ struct FavoriteView: View {
                     }
 
                 }
+                .accessibilityLabel(Text(favorite.title))
 
             }
 
@@ -118,7 +119,9 @@ struct FavoritesRowView: View {
                 }
 
             }
-        }.padding(.horizontal, 16)
+        }
+        .padding(.horizontal, 16)
+
     }
 
 }
@@ -167,7 +170,7 @@ struct FavoritesWidgetView: View {
 
                 if entry.favorites.isEmpty, !entry.isPreview {
                     Link(destination: DeepLinks.addFavorite) {
-                        FavoritesGridView(entry: entry)
+                        FavoritesGridView(entry: entry).accessibilityLabel(Text(UserText.noFavoritesCTA))
                     }
                 } else {
                     FavoritesGridView(entry: entry)
@@ -181,6 +184,7 @@ struct FavoritesWidgetView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(.widgetAddFavoriteMessage)
                     .padding(.horizontal)
+                    .accessibilityHidden(true)
 
                 HStack {
                     Text(UserText.noFavoritesCTA)
@@ -191,7 +195,8 @@ struct FavoritesWidgetView: View {
                     Image(systemName: "chevron.right")
                         .imageScale(.medium)
                         .foregroundColor(.widgetAddFavoriteCTA)
-                }
+                }.accessibilityHidden(true)
+
             }
             .isVisible(entry.favorites.isEmpty && !entry.isPreview)
             .padding(EdgeInsets(top: widgetFamily == .systemLarge ? 48 : 60, leading: 0, bottom: 0, trailing: 0))
@@ -205,7 +210,9 @@ struct SearchWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color.widgetBackground)
+            Rectangle()
+                .fill(Color.widgetBackground)
+                .accessibilityLabel(Text(UserText.searchDuckDuckGo))
 
             VStack(alignment: .center, spacing: 15) {
 
@@ -213,6 +220,7 @@ struct SearchWidgetView: View {
                     .resizable()
                     .frame(width: 46, height: 46, alignment: .center)
                     .isHidden(false)
+                    .accessibilityHidden(true)
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
@@ -225,7 +233,7 @@ struct SearchWidgetView: View {
                         .isHidden(false)
 
                 }
-            }
+            }.accessibilityHidden(true)
         }
     }
 }
@@ -282,10 +290,13 @@ extension Image {
 struct WidgetViews_Previews: PreviewProvider {
 
     static let mockFavorites: [Favorite] = {
-        let duckDuckGoFavorite = Favorite(url: URL(string: "https://duckduckgo.com/")!, domain: "duckduckgo.com", favicon: nil)
+        let duckDuckGoFavorite = Favorite(url: URL(string: "https://duckduckgo.com/")!,
+                                          domain: "duckduckgo.com",
+                                          title: "title",
+                                          favicon: nil)
 
         let favorites = "abcdefghijk".map {
-            Favorite(url: URL(string: "https://\($0).com/")!, domain: "\($0).com", favicon: nil)
+            Favorite(url: URL(string: "https://\($0).com/")!, domain: "\($0).com", title: "title", favicon: nil)
         }
 
         return [duckDuckGoFavorite] + favorites

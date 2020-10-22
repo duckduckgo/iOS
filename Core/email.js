@@ -634,7 +634,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
   var ddgDomainRegex = new RegExp(/^https:\/\/(([a-z0-9-_]+?)\.)?duckduckgo\.com/); // Send a message to the web app (only on DDG domains)
     
-    console.log("At least this gets run, right?")
+    console.log("requires have run")
 
  var injectEmailAutofill = function injectEmailAutofill() {
     // Here we store a map of input -> button associations
@@ -767,17 +767,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
   window.addEventListener('message', function (event) {
-      console.log("testing1234")
+      console.log("message event listener")
     if (!event.origin.match(ddgDomainRegex)) return; // The web app notifies us that the user signed in
 
+      console.log("pre adduserdata")
     if (event.data.addUserData) {
       console.log(("adduserdata"));
+        window.webkit.messageHandlers["emailHandlerStoreToken"].postMessage({ token: event.data.addUserData.token, username: event.data.addUserData.userName });
       //EmailInterface.storeCredentials(event.data.addUserData.token, event.data.addUserData.userName);
     } // The web app wants to know if the user is signed in
 
+      console.log("pre checkExtensionSignedIn")
     if (event.data.checkExtensionSignedIn) {
+        console.log("checkExtensionSignedIn was true")
       //var userData = (EmailInterface.isSignedIn() == 'true');
-        var userData = true;
+        var userData = false;
       notifyWebApp({
         extensionSignedIn: {
           value: userData
@@ -788,7 +792,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
     console.log(("test5432"));
   //var userData = (EmailInterface.isSignedIn() == 'true');
-    var userData = true
+    var userData = false
   if (userData) {
     injectEmailAutofill();
     notifyWebApp({

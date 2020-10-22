@@ -19,7 +19,13 @@
 
 import WebKit
 
+public enum EmailMessageNames: String {
+    case storeToken = "emailHandlerStoreToken"
+}
+
 public class EmailUserScript: NSObject, UserScript {
+    
+    private let emailManager = EmailManager()
 
     public lazy var source: String = {
         return loadJS("email")
@@ -29,10 +35,21 @@ public class EmailUserScript: NSObject, UserScript {
     
     public var forMainFrameOnly: Bool = false
     
-    public var messageNames: [String] = ["emailHandler"]
+    public var messageNames: [String] = [EmailMessageNames.storeToken.rawValue]
         
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        print("SSSS")
-        //TODO
+        guard let type = EmailMessageNames(rawValue: message.name) else {
+            print("Receieved invalid message name")
+            return
+        }
+        
+        switch type {
+        case .storeToken:
+            guard let dict = message.body as? [String: Any],
+                  let token = dict["token"] as? String,
+                  let username = dict["username"] as? String else { return }
+            
+            emailManager.storeToken(token, username: username)
+        }
     }
 }

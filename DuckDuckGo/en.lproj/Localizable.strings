@@ -353,7 +353,7 @@
 "feedback.negative.form.placeholder" = "Are there any specifics you’d like to include?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "We’re sorry to hear that.";
+"feedback.negative.header" = "We’re Sorry to Hear That.";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "What is your frustration most related to?";
@@ -398,7 +398,7 @@
 "feedback.positive.header" = "Awesome to Hear!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "No thanks! I’m done";
+"feedback.positive.noThanks" = "No Thanks! I’m Done";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Share Details";
@@ -407,7 +407,7 @@
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
 
 /* No comment provided by engineer. */
-"feedback.start.header" = "Let’s get started!";
+"feedback.start.header" = "Let’s Get Started!";
 
 /* No comment provided by engineer. */
 "feedback.start.supplementary" = "How would you categorize your feedback?";
@@ -659,7 +659,7 @@
 "privacy.protection.encryption.summary" = "Summary";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "This connection is not encrypted, so be careful what you send.";
+"privacy.protection.encryption.unencrypted" = "Be careful when entering personal information on this site.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Unencrypted Connection";
@@ -716,7 +716,7 @@
 "privacy.protection.network.leaderboard.gathering" = "We’re still collecting data to show how\nmany trackers we’ve blocked.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Using privacy practices info from ToS;DR";
+"privacy.protection.practices.footer.info" = "Privacy Practices from ToS;DR";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Privacy practices indicate how much the personal information that you share with a website is protected.";
@@ -749,7 +749,7 @@
 "privacy.protection.tos.unknown" = "Unknown Privacy Practices";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the internet.";
+"privacy.protection.tracker.networks.info" = "Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the Internet.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
@@ -770,7 +770,7 @@
 "prompt.custom.url.scheme.title" = "Open in Another App?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Submitting an anonymous broken site report helps us debug these issues and improve the extension.";
+"report.brokensite.header" = "Submitting an anonymous broken site report helps us debug these issues and improve the app.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Search or enter address";
@@ -788,13 +788,13 @@
 "settings.tutorial.info" = "Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigate to *Safari*, then *Search Engine*";
+"settings.tutorial.navigate" = "Navigate to *Safari*, then *Search Engine*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Open *Settings* App";
+"settings.tutorial.open" = "Open *Settings* app.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Select *DuckDuckGo*";
+"settings.tutorial.select" = "Select *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";

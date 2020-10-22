@@ -126,18 +126,18 @@ public struct UserText {
     
     public static let ppEncryptionHeaderInfo = NSLocalizedString("privacy.protection.encryption.header", value: "An encrypted connection prevents eavesdropping of any personal information you send to a website.", comment: "")
     
-    public static let ppEncryptionUnencryptedDetailInfo = NSLocalizedString("privacy.protection.encryption.unencrypted", value: "This connection is not encrypted, so be careful what you send.", comment: "")
+    public static let ppEncryptionUnencryptedDetailInfo = NSLocalizedString("privacy.protection.encryption.unencrypted", value: "Be careful when entering personal information on this site.", comment: "")
     
     public static let ppTopOffendersInfo = NSLocalizedString("privacy.protection.top.offenders.info", value: "These stats are only stored on your device, and are not sent anywhere. Ever.", comment: "")
     
-    public static let ppTrackerNetworksInfo = NSLocalizedString("privacy.protection.tracker.networks.info", value: "Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the internet.", comment: "")
+    public static let ppTrackerNetworksInfo = NSLocalizedString("privacy.protection.tracker.networks.info", value: "Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the Internet.", comment: "")
     
     public static let ppPracticesHeaderInfo = NSLocalizedString("privacy.protection.practices.header.info", value: "Privacy practices indicate how much the personal information that you share with a website is protected.", comment: "")
     public static let ppPracticesReviewedInfo = NSLocalizedString("privacy.protection.practices.reviewed.info", value: "This website will notify you before transferring your information in the event of a merger or acquisition", comment: "")
     public static let ppPracticesUnknownInfo = NSLocalizedString("privacy.protection.practices.unknown.info", value: "The privacy practices of this website have not been reviewed.", comment: "")
-    public static let ppPracticesFooterInfo = NSLocalizedString("privacy.protection.practices.footer.info", value: "Using privacy practices info from ToS;DR", comment: "ToS;DR is an organization")
+    public static let ppPracticesFooterInfo = NSLocalizedString("privacy.protection.practices.footer.info", value: "Privacy Practices from ToS;DR", comment: "ToS;DR is an organization")
     
-    static let reportBrokenSiteHeader = NSLocalizedString("report.brokensite.header", value: "Submitting an anonymous broken site report helps us debug these issues and improve the extension.", comment: "")
+    static let reportBrokenSiteHeader = NSLocalizedString("report.brokensite.header", value: "Submitting an anonymous broken site report helps us debug these issues and improve the app.", comment: "")
     
     static let brokenSiteSectionTitle = NSLocalizedString("brokensite.sectionTitle", value: "DESCRIBE WHAT HAPPENED", comment: "Broken Site Section Title")
     
@@ -270,9 +270,9 @@ public struct UserText {
     public static let homeTabTitle = NSLocalizedString("homeTab.title", value: "Home", comment: "Home tab title")
     
     public static let settingTutorialInfo = NSLocalizedString("settings.tutorial.info", value: "Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.", comment: "")
-    public static let settingTutorialOpenStep = NSLocalizedString("settings.tutorial.open", value: "Open *Settings* App", comment: "Asterix is an indicator of a bold text. Settings is a native iOS app.")
-    public static let settingTutorialNavigateStep = NSLocalizedString("settings.tutorial.navigate", value: "Navigate to *Safari*, then *Search Engine*", comment: "")
-    public static let settingTutorialSelectStep = NSLocalizedString("settings.tutorial.select", value: "Select *DuckDuckGo*", comment: "")
+    public static let settingTutorialOpenStep = NSLocalizedString("settings.tutorial.open", value: "Open *Settings* app.", comment: "Asterix is an indicator of a bold text. Settings is a native iOS app.")
+    public static let settingTutorialNavigateStep = NSLocalizedString("settings.tutorial.navigate", value: "Navigate to *Safari*, then *Search Engine*.", comment: "")
+    public static let settingTutorialSelectStep = NSLocalizedString("settings.tutorial.select", value: "Select *DuckDuckGo*.", comment: "")
     
     public static let settingsAboutText = NSLocalizedString("settings.about.text", value: "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the Internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.", comment: "")
     

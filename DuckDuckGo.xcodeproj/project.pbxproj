@@ -565,6 +565,8 @@
 		F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3372506A225002D07D7 /* OHHTTPStubsSwift */; };
 		F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */; };
 		F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */; };
+		F4D349632541D7D0002AAF35 /* EmailUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349622541D7D0002AAF35 /* EmailUserScript.swift */; };
+		F4D349752541EF2D002AAF35 /* email.js in Resources */ = {isa = PBXBuildFile; fileRef = F4D349742541EF2D002AAF35 /* email.js */; };
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
@@ -1983,6 +1985,8 @@
 		F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsViewController.swift; sourceTree = "<group>"; };
 		F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsDetailsViewController.swift; sourceTree = "<group>"; };
+		F4D349622541D7D0002AAF35 /* EmailUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUserScript.swift; sourceTree = "<group>"; };
+		F4D349742541EF2D002AAF35 /* email.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = email.js; sourceTree = "<group>"; };
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
@@ -3198,6 +3202,7 @@
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,
 				F143C3141E4A99BE00CFDE3A /* Domain */,
+				F4D349572541C44B002AAF35 /* Email */,
 				85CA53A724BB342B00A6288C /* Favicons */,
 				8512BCBF2061B6110085E862 /* global.swift */,
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
@@ -3697,6 +3702,15 @@
 				F1EEAC4C1EAFC708006128D9 /* readme.txt */,
 			);
 			name = Licensed;
+			sourceTree = "<group>";
+		};
+		F4D349572541C44B002AAF35 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				F4D349742541EF2D002AAF35 /* email.js */,
+				F4D349622541D7D0002AAF35 /* EmailUserScript.swift */,
+			);
+			name = Email;
 			sourceTree = "<group>";
 		};
 		F4D9C4F8251179CC00814B71 /* HomeMessages */ = {
@@ -4272,6 +4286,7 @@
 				987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */,
 				98B001B0251EABB40090EC07 /* InfoPlist.strings in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
+				F4D349752541EF2D002AAF35 /* email.js in Resources */,
 				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
 				02C57C5F251533CE009E5129 /* donotsell.js in Resources */,
 				850559C923C61B5D0055C0D5 /* login-form-detection.js in Resources */,
@@ -4823,6 +4838,7 @@
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				9896632422C56716007BE4FE /* EtagStorage.swift in Sources */,
+				F4D349632541D7D0002AAF35 /* EmailUserScript.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				8521FDEE238DD1B500A44CC3 /* MockEntityMapping.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,

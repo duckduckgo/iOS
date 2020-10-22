@@ -50,6 +50,7 @@ public class EmailUserScript: NSObject, UserScript {
                   let username = dict["username"] as? String else { return }
             
             emailManager.storeToken(token, username: username)
+            //TODO also fetch an alias from the backend
         }
     }
 }

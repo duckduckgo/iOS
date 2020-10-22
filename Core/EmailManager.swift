@@ -21,8 +21,8 @@ import WebKit
 
 public class EmailManager {
     
-    private var token: String? = nil
-    private var username: String? = nil
+    private var token: String?
+    private var username: String?
     
     var isSignedIn: Bool {
         return token != nil && username != nil
@@ -32,5 +32,37 @@ public class EmailManager {
         //TODO actual storage
         self.token = token
         self.username = username
+        
+        fetchAlias()
+    }
+    
+    private static let apiAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
+
+    private var headers: HTTPHeaders {
+        guard let token = token else {
+            return [:]
+        }
+        return ["Authorization": "Bearer " + token]
+    }
+    
+    struct EmailResponse: Decodable {
+        let address: String
+    }
+        
+    func fetchAlias() {
+        APIRequest.request(url: EmailManager.apiAddress, method: .post, headers: headers) { response, error in
+            guard let data = response?.data, error == nil else {
+                print("error fetching alias")
+                return
+            }
+            do {
+                let decoder = JSONDecoder()
+                let alias = try decoder.decode(EmailResponse.self, from: data).address
+                print(alias)
+            } catch {
+                print("invalid alias response")
+                return
+            }
+        }
     }
 }

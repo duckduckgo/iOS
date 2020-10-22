@@ -21,7 +21,7 @@ import Foundation
 import os.log
 
 public class ContentBlockerLoader {
-    typealias ContentBlockerConfigurationProgress = (ContentBlockerRequest.Configuration) -> Void
+    typealias ContentBlockerLoaderProgress = (ContentBlockerRequest.Configuration) -> Void
 
     private typealias DataDict = [ContentBlockerRequest.Configuration: Any]
     private typealias EtagDict = [ContentBlockerRequest.Configuration: String]
@@ -38,7 +38,7 @@ public class ContentBlockerLoader {
         self.fileStore = fileStore
     }
 
-    func checkForUpdates(progress: ContentBlockerConfigurationProgress? = nil, dataSource: ContentBlockerRemoteDataSource? = nil) -> Bool {
+    func checkForUpdates(progress: ContentBlockerLoaderProgress? = nil, dataSource: ContentBlockerRemoteDataSource? = nil) -> Bool {
         let dataSource = dataSource ?? ContentBlockerRequest(etagStorage: etagStorage)
 
         self.newData.removeAll()
@@ -68,7 +68,7 @@ public class ContentBlockerLoader {
     
     private func startRequests(with semaphore: DispatchSemaphore,
                                dataSource: ContentBlockerRemoteDataSource,
-                               progress: ContentBlockerConfigurationProgress? = nil) -> Int {
+                               progress: ContentBlockerLoaderProgress? = nil) -> Int {
         
         request(.surrogates, with: dataSource, semaphore, progress)
         request(.trackerDataSet, with: dataSource, semaphore, progress)
@@ -82,7 +82,7 @@ public class ContentBlockerLoader {
     fileprivate func request(_ configuration: ContentBlockerRequest.Configuration,
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
                              _ semaphore: DispatchSemaphore,
-                             _ progress: ContentBlockerConfigurationProgress? = nil) {
+                             _ progress: ContentBlockerLoaderProgress? = nil) {
         contentBlockerRequest.request(configuration) { response in
             defer {
                 progress?(configuration)
@@ -106,7 +106,7 @@ public class ContentBlockerLoader {
     
     private func requestHttpsUpgrade(_ contentBlockerRequest: ContentBlockerRemoteDataSource,
                                      _ semaphore: DispatchSemaphore,
-                                     _ progress: ContentBlockerConfigurationProgress? = nil) {
+                                     _ progress: ContentBlockerLoaderProgress? = nil) {
         contentBlockerRequest.request(.httpsBloomFilterSpec) { response in
             defer {
                 progress?(.httpsBloomFilterSpec)
@@ -145,7 +145,7 @@ public class ContentBlockerLoader {
     
     private func requestHttpsExcludedDomains(_ contentBlockerRequest: ContentBlockerRemoteDataSource,
                                              _ semaphore: DispatchSemaphore,
-                                             _ progress: ContentBlockerConfigurationProgress? = nil) {
+                                             _ progress: ContentBlockerLoaderProgress? = nil) {
         contentBlockerRequest.request(.httpsExcludedDomains) { response in
             defer {
                 progress?(.httpsExcludedDomains)

@@ -46,18 +46,47 @@ class AppConfigurationFetch {
         static let bgFetchType = "bgft"
         static let bgFetchTypeBackgroundTasks = "bgbt"
         static let bgFetchTypeLegacy = "bgl"
+        static let bgFetchTaskExpiration = "bgte"
         static let bgFetchStart = "bgfs"
         static let bgFetchNoData = "bgnd"
         static let bgFetchWithData = "bgwd"
         static let fgFetchStart = "fgfs"
         static let fgFetchNoData = "fgnd"
         static let fgFetchWithData = "fgwd"
+
+        static let fetchHTTPSBloomFilterSpec = "d1"
+        static let fetchHTTPSBloomFilter = "d2"
+        static let fetchHTTPSExcludedDomainsCount = "d3"
+        static let fetchSurrogatesCount = "d4"
+        static let fetchTrackerDataSetCount = "d5"
+        static let fetchTemporaryUnprotectedSitesCount = "d6"
     }
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
+
+    @UserDefaultsWrapper(key: .backgroundFetchTaskExpirationCount, defaultValue: 0)
+    static private var backgroundFetchTaskExpirationCount: Int
+    
+    @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterSpecCount, defaultValue: 0)
+    private var downloadedHTTPSBloomFilterSpecCount: Int
+    
+    @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterCount, defaultValue: 0)
+    private var downloadedHTTPSBloomFilterCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedHTTPSExcludedDomainsCount, defaultValue: 0)
+    private var downloadedHTTPSExcludedDomainsCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedSurrogatesCount, defaultValue: 0)
+    private var downloadedSurrogatesCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedTrackerDataSetCount, defaultValue: 0)
+    private var downloadedTrackerDataSetCount: Int
+
+    @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
+    private var downloadedTemporaryUnprotectedSitesCount: Int
 
     var shouldRefresh: Bool {
         return Date().timeIntervalSince(lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
@@ -102,6 +131,7 @@ class AppConfigurationFetch {
             using: fetchQueue) { (task) in
 
             task.expirationHandler = {
+                backgroundFetchTaskExpirationCount += 1
                 scheduleBackgroundRefreshTask()
             }
 
@@ -121,6 +151,10 @@ class AppConfigurationFetch {
         // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
         //
         // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
+        //
+        // Task expiration can be simulated similarly:
+        //
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
 
         do {
             try BGTaskScheduler.shared.submit(task)
@@ -138,7 +172,7 @@ class AppConfigurationFetch {
         var newData = false
         let semaphore = DispatchSemaphore(value: 0)
 
-        AppDependencyProvider.shared.storageCache.update { newCache in
+        AppDependencyProvider.shared.storageCache.update(progress: updateFetchProgress) { newCache in
             newData = newData || (newCache != nil)
             semaphore.signal()
         }
@@ -156,6 +190,17 @@ class AppConfigurationFetch {
             store.backgroundStartCount += 1
         } else {
             store.foregroundStartCount += 1
+        }
+    }
+
+    private func updateFetchProgress(configuration: ContentBlockerRequest.Configuration) {
+        switch configuration {
+        case .httpsBloomFilter: downloadedHTTPSBloomFilterCount += 1
+        case .httpsBloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
+        case .httpsExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
+        case .surrogates: downloadedSurrogatesCount += 1
+        case .temporaryUnprotectedSites: downloadedTemporaryUnprotectedSitesCount += 1
+        case .trackerDataSet: downloadedTrackerDataSetCount += 1
         }
     }
     
@@ -200,7 +245,14 @@ class AppConfigurationFetch {
                           Keys.fgFetchStart: String(store.foregroundStartCount),
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
-                          Keys.bgFetchType: backgroundFetchType]
+                          Keys.bgFetchType: backgroundFetchType,
+                          Keys.bgFetchTaskExpiration: String(Self.backgroundFetchTaskExpirationCount),
+                          Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
+                          Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
+                          Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
+                          Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
+                          Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
+                          Keys.fetchTemporaryUnprotectedSitesCount: String(downloadedTemporaryUnprotectedSitesCount)]
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -227,5 +279,13 @@ class AppConfigurationFetch {
         store.foregroundStartCount = 0
         store.foregroundNoDataCount = 0
         store.foregroundNewDataCount = 0
+
+        Self.backgroundFetchTaskExpirationCount = 0
+        downloadedHTTPSBloomFilterCount = 0
+        downloadedHTTPSBloomFilterSpecCount = 0
+        downloadedHTTPSExcludedDomainsCount = 0
+        downloadedSurrogatesCount = 0
+        downloadedTemporaryUnprotectedSitesCount = 0
+        downloadedTrackerDataSetCount = 0
     }
 }

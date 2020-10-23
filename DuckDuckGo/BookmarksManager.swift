@@ -35,6 +35,10 @@ class BookmarksManager {
     var favoritesCount: Int {
         return dataStore.favorites.count
     }
+    
+    var allLinks: [Link] {
+        return dataStore.favorites + dataStore.bookmarks
+    }
 
     func bookmark(atIndex index: Int) -> Link? {
         return link(at: index, in: dataStore.bookmarks)
@@ -193,12 +197,6 @@ class BookmarksManager {
             index += 1
         }
         return nil
-    }
-    
-    func migrateFavoritesToBookmarks() {
-        while favoritesCount > 0 {
-            moveFavorite(at: 0, toBookmark: 0)
-        }
     }
 
     func reloadWidgets() {

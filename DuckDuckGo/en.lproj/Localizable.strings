@@ -244,6 +244,9 @@
 /* Empty list state placholder */
 "empty.favorites" = "No favorites yet";
 
+/* Empty search list state placholder */
+"empty.search" = "No results";
+
 /* No comment provided by engineer. */
 "favorite" = "Favorite";
 

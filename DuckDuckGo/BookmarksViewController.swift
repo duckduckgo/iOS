@@ -25,18 +25,19 @@ class BookmarksViewController: UITableViewController {
 
     @IBOutlet weak var editButton: UIBarButtonItem!
 
+    private var searchController: UISearchController!
     weak var delegate: BookmarksDelegate?
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
-    fileprivate lazy var dataSource: BookmarksDataSource = {
-        return BookmarksDataSource()
-    }()
+    fileprivate var dataSource = DefaultBookmarksDataSource()
+    fileprivate var searchDataSource = SearchBookmarksDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addAplicationActiveObserver()
         configureTableView()
+        configureSearch()
         refreshEditButton()
         
         applyTheme(ThemeManager.shared.currentTheme)
@@ -70,13 +71,35 @@ class BookmarksViewController: UITableViewController {
     private func configureTableView() {
         tableView.dataSource = dataSource
     }
+    
+    private func configureSearch() {
+        searchController = UISearchController()
+        navigationItem.searchController = searchController
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        if #available(iOS 13.0, *) {
+            searchController.automaticallyShowsScopeBar = false
+        }
+//        searchController.searchBar.searchTextField.textColor = .rwGreen()
+//        searchController.searchBar.searchTextField.tokenBackgroundColor = .rwGreen()
+    }
+    
+    private var currentDataSource: BookmarksDataSource {
+        if tableView.dataSource === dataSource {
+            return dataSource
+        }
+        return searchDataSource
+    }
 
     @objc func onApplicationBecameActive(notification: NSNotification) {
         tableView.reloadData()
     }
 
     private func refreshEditButton() {
-        if dataSource.isEmpty {
+        if currentDataSource.isEmpty {
             disableEditButton()
         } else {
             enableEditButton()
@@ -89,7 +112,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
-        if tableView.isEditing && !dataSource.isEmpty {
+        if tableView.isEditing && !currentDataSource.isEmpty {
             finishEditing()
         } else {
             dismiss()
@@ -131,7 +154,7 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate func showShareSheet(for indexPath: IndexPath) {
 
-        if let link = dataSource.link(at: indexPath) {
+        if let link = currentDataSource.link(at: indexPath) {
             let appUrls: AppUrls = AppUrls()
             let url = appUrls.removeATBAndSource(fromUrl: link.url)
             presentShareSheet(withItems: [ url, link ], fromView: self.view)
@@ -150,6 +173,34 @@ class BookmarksViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension BookmarksViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            if tableView.dataSource !== dataSource {
+                tableView.dataSource = dataSource
+                tableView.reloadData()
+            }
+            return
+        }
+        
+        searchDataSource.performSearch(text: searchText, data: dataSource.bookmarksManager.allLinks)
+        tableView.dataSource = searchDataSource
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        tableView.dataSource = dataSource
+        tableView.reloadData()
+    }
+}
+
+extension BookmarksViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        finishEditing()
+    }
 }
 
 extension BookmarksViewController: Themable {

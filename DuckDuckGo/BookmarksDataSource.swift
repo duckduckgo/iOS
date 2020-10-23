@@ -21,44 +21,28 @@ import UIKit
 import Core
 
 class BookmarksDataSource: NSObject, UITableViewDataSource {
-
-    private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-
-    var isEmpty: Bool {
-        return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
-    }
-
+    
     func link(at indexPath: IndexPath) -> Link? {
-        if indexPath.section == 0 {
-            return bookmarksManager.favorite(atIndex: indexPath.row)
-        } else {
-            return bookmarksManager.bookmark(atIndex: indexPath.row)
-        }
+        return nil
     }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? UserText.sectionTitleFavorites : UserText.sectionTitleBookmarks
+    
+    var isEmpty: Bool {
+        return false
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(1, section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount)
+        return 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if link(at: indexPath) != nil {
             return createBookmarkCell(tableView, forIndexPath: indexPath)
         } else {
             return createEmptyCell(tableView, forIndexPath: indexPath)
         }
-
     }
-
-    private func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
+    
+    fileprivate func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
             fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
         }
@@ -67,13 +51,11 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.label.textColor = theme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-    
-        cell.label.text = indexPath.section == 0 ? UserText.emptyFavorites : UserText.emptyBookmarks
 
         return cell
     }
 
-    private func createBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
+    fileprivate func createBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
@@ -87,7 +69,44 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         
         return cell
     }
+}
 
+class DefaultBookmarksDataSource: BookmarksDataSource {
+
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+
+    override var isEmpty: Bool {
+        return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
+    }
+
+    override func link(at indexPath: IndexPath) -> Link? {
+        if indexPath.section == 0 {
+            return bookmarksManager.favorite(atIndex: indexPath.row)
+        } else {
+            return bookmarksManager.bookmark(atIndex: indexPath.row)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return max(1, section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount)
+    }
+    
+    override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {
+        let cell = super.createEmptyCell(tableView, forIndexPath: indexPath)
+        
+        cell.label.text = indexPath.section == 0 ? UserText.emptyFavorites : UserText.emptyBookmarks
+        
+        return cell
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? UserText.sectionTitleFavorites : UserText.sectionTitleBookmarks
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return link(at: indexPath) != nil
     }
@@ -147,5 +166,58 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         
         tableView.reloadData()
     }
+}
+
+class SearchBookmarksDataSource: BookmarksDataSource {
     
+    var searchResults = [Link]()
+    
+    func performSearch(text: String, data: [Link]) {
+        let text = text.lowercased()
+        let tokens = text.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
+
+        searchResults = data.filter { link -> Bool in
+            guard let title = link.title?.lowercased() else { return false }
+            let url = link.url.absoluteString.lowercased()
+            // Look for direct match
+            if title.contains(text) || url.contains(text) {
+                return true
+            }
+            
+            // Look if all tokens match
+            var matchesAll = true
+            for token in tokens {
+                if !title.contains(token) && !url.contains(token) {
+                    matchesAll = false
+                    break
+                }
+            }
+            
+            return matchesAll
+        }
+    }
+
+    override var isEmpty: Bool {
+        return searchResults.isEmpty
+    }
+
+    override func link(at indexPath: IndexPath) -> Link? {
+        guard indexPath.row < searchResults.count else {
+            return nil
+        }
+        
+        return searchResults[indexPath.row]
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return max(1, searchResults.count)
+    }
+    
+    override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {
+        let cell = super.createEmptyCell(tableView, forIndexPath: indexPath)
+        
+        cell.label.text = "No results"
+        
+        return cell
+    }
 }

@@ -21,7 +21,8 @@ import Foundation
 import os.log
 
 public class ContentBlockerLoader {
-    
+    typealias ContentBlockerLoaderProgress = (ContentBlockerRequest.Configuration) -> Void
+
     private typealias DataDict = [ContentBlockerRequest.Configuration: Any]
     private typealias EtagDict = [ContentBlockerRequest.Configuration: String]
 
@@ -37,14 +38,14 @@ public class ContentBlockerLoader {
         self.fileStore = fileStore
     }
 
-    func checkForUpdates(dataSource: ContentBlockerRemoteDataSource? = nil) -> Bool {
+    func checkForUpdates(progress: ContentBlockerLoaderProgress? = nil, dataSource: ContentBlockerRemoteDataSource? = nil) -> Bool {
         let dataSource = dataSource ?? ContentBlockerRequest(etagStorage: etagStorage)
 
         self.newData.removeAll()
         self.etags.removeAll()
         
         let semaphore = DispatchSemaphore(value: 0)
-        let numberOfRequests = startRequests(with: semaphore, dataSource: dataSource)
+        let numberOfRequests = startRequests(with: semaphore, dataSource: dataSource, progress: progress)
         
         for _ in 0 ..< numberOfRequests {
             semaphore.wait()
@@ -66,22 +67,27 @@ public class ContentBlockerLoader {
     }
     
     private func startRequests(with semaphore: DispatchSemaphore,
-                               dataSource: ContentBlockerRemoteDataSource) -> Int {
+                               dataSource: ContentBlockerRemoteDataSource,
+                               progress: ContentBlockerLoaderProgress? = nil) -> Int {
         
-        request(.surrogates, with: dataSource, semaphore)
-        request(.trackerDataSet, with: dataSource, semaphore)
-        request(.temporaryUnprotectedSites, with: dataSource, semaphore)
-        requestHttpsUpgrade(dataSource, semaphore)
-        requestHttpsExcludedDomains(dataSource, semaphore)
+        request(.surrogates, with: dataSource, semaphore, progress)
+        request(.trackerDataSet, with: dataSource, semaphore, progress)
+        request(.temporaryUnprotectedSites, with: dataSource, semaphore, progress)
+        requestHttpsUpgrade(dataSource, semaphore, progress)
+        requestHttpsExcludedDomains(dataSource, semaphore, progress)
         
         return dataSource.requestCount
     }
     
     fileprivate func request(_ configuration: ContentBlockerRequest.Configuration,
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
-                             _ semaphore: DispatchSemaphore) {
+                             _ semaphore: DispatchSemaphore,
+                             _ progress: ContentBlockerLoaderProgress? = nil) {
         contentBlockerRequest.request(configuration) { response in
-            
+            defer {
+                progress?(configuration)
+            }
+
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
                 return
@@ -98,22 +104,34 @@ public class ContentBlockerLoader {
         }
     }
     
-    private func requestHttpsUpgrade(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
+    private func requestHttpsUpgrade(_ contentBlockerRequest: ContentBlockerRemoteDataSource,
+                                     _ semaphore: DispatchSemaphore,
+                                     _ progress: ContentBlockerLoaderProgress? = nil) {
         contentBlockerRequest.request(.httpsBloomFilterSpec) { response in
+            defer {
+                progress?(.httpsBloomFilterSpec)
+            }
+
             guard case ContentBlockerRequest.Response.success(_, let data) = response,
                 let specification = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data)
                 else {
+                    progress?(.httpsBloomFilter)
                     semaphore.signal()
                     return
             }
             
             if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification(), storedSpecification == specification {
                 os_log("Bloom filter already downloaded", log: generalLog, type: .debug)
+                progress?(.httpsBloomFilter)
                 semaphore.signal()
                 return
             }
             
             contentBlockerRequest.request(.httpsBloomFilter) { response in
+                defer {
+                    progress?(.httpsBloomFilter)
+                }
+
                 guard case ContentBlockerRequest.Response.success(_, let data) = response else {
                     semaphore.signal()
                     return
@@ -125,8 +143,14 @@ public class ContentBlockerLoader {
         }
     }
     
-    private func requestHttpsExcludedDomains(_ contentBlockerRequest: ContentBlockerRemoteDataSource, _ semaphore: DispatchSemaphore) {
+    private func requestHttpsExcludedDomains(_ contentBlockerRequest: ContentBlockerRemoteDataSource,
+                                             _ semaphore: DispatchSemaphore,
+                                             _ progress: ContentBlockerLoaderProgress? = nil) {
         contentBlockerRequest.request(.httpsExcludedDomains) { response in
+            defer {
+                progress?(.httpsExcludedDomains)
+            }
+
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
                 return

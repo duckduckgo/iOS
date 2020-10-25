@@ -41,10 +41,9 @@ public struct AppUrls {
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
  
-        //TODO update to prod urls
-        static let httpsBloomFilter = "http://ddg-sandbox.s3.amazonaws.com/https/mia/https-mobile-v2-bloom.bin"
-        static let httpsBloomFilterSpec = "http://ddg-sandbox.s3.amazonaws.com/https/mia/https-mobile-v2-bloom-spec.json"
-        static let httpsExcludedDomains = "http://ddg-sandbox.s3.amazonaws.com/https/mia/https-mobile-v2-false-positives.json"
+        static let httpsBloomFilter = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-bloom.bin"
+        static let httpsBloomFilterSpec = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-bloom-spec.json"
+        static let httpsExcludedDomains = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-false-positives.json"
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"

@@ -28,6 +28,8 @@ import BackgroundTasks
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private static let ShowKeyboardOnLaunchThreshold = TimeInterval(45)
+    
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
@@ -47,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
+    private var lastBackgroundDate: Date?
 
     // MARK: lifecycle
 
@@ -168,9 +171,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
+    
+    private func shouldShowKeyboardOnLaunch() -> Bool {
+        guard let date = lastBackgroundDate else { return true }
+        return Date().timeIntervalSince(date) > AppDelegate.ShowKeyboardOnLaunchThreshold
+    }
 
     private func showKeyboardOnLaunch() {
-        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
+        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
         self.mainViewController?.enterSearch()
         showKeyboardIfSettingOn = false
     }
@@ -197,6 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         autoClear?.applicationDidEnterBackground()
+        lastBackgroundDate = Date()
     }
 
     func application(_ application: UIApplication,

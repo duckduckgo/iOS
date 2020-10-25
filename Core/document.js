@@ -17,10 +17,16 @@
 //  limitations under the License.
 //
 
-
-var duckduckgoDocument = function () {
+(function() {
+    if (!window.__ddg__) {
+        Object.defineProperty(window, "__ddg__", {
+            enumerable: false,
+            configurable: false,
+            writable: false
+        });
+    }
     
-    getHrefFromPoint = function(x, y) {
+    var getHrefFromPoint = function(x, y) {
         var element = document.elementFromPoint(x, y);
         while (element && !element.href) {
             element = element.parentNode
@@ -33,8 +39,11 @@ var duckduckgoDocument = function () {
         return null;
     };
     
-    return {
-        getHrefFromPoint: getHrefFromPoint
-    };
+    Object.defineProperty(window.__ddg__, "getHrefFromPoint", {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: getHrefFromPoint
+    })
     
-}();
+})();

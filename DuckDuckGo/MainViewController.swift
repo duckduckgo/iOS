@@ -56,7 +56,9 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var statusBarBackground: UIView!
     @IBOutlet weak var findInPageView: FindInPageView!
+    @IBOutlet weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var findInPageInnerContainerView: UIView!
 
     @IBOutlet weak var logoContainer: UIView!
     @IBOutlet weak var logo: UIImageView!
@@ -870,6 +872,7 @@ extension MainViewController: BrowserChromeDelegate {
         }
         let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
         toolbarBottom.constant = bottomHeight * multiplier
+        findInPageHeightLayoutConstraint.constant = findInPageInnerContainerView.frame.height + view.safeAreaInsets.bottom
     }
 
     // 1.0 - full size, 0.0 - hidden

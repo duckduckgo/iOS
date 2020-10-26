@@ -44,12 +44,11 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     }
     
     private struct EmbeddedResource {
-        static let bloomFilter = Bundle.core.url(forResource: "httpsMobileBloom", withExtension: "bin")!
-        static let bloomSpecification = Bundle.core.url(forResource: "httpsMobileBloomSpec", withExtension: "json")!
-        static let excludedDomains = Bundle.core.url(forResource: "httpsMobileBloomFalsePositives", withExtension: "json")!
+        static let bloomSpecification = Bundle.core.url(forResource: "httpsMobileV2BloomSpec", withExtension: "json")!
+        static let bloomFilter = Bundle.core.url(forResource: "httpsMobileV2Bloom", withExtension: "bin")!
+        static let excludedDomains = Bundle.core.url(forResource: "httpsMobileV2FalsePositives", withExtension: "json")!
     }
     
-    //TODO update embedded data
     private struct EmbeddedBloomData {
         let specification: HTTPSBloomFilterSpecification
         let bloomFilter: Data

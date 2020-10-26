@@ -31,7 +31,7 @@ public class EmailUserScript: NSObject, UserScript {
         return loadJS("email")
     }()
     
-    public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
+    public var injectionTime: WKUserScriptInjectionTime = .atDocumentEnd
     
     public var forMainFrameOnly: Bool = false
     

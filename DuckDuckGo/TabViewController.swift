@@ -258,7 +258,6 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
-        ContentBlockerRulesManager.shared.storageCache = storageCache
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
     }
@@ -606,8 +605,6 @@ class TabViewController: UIViewController {
 
     @objc func onStorageCacheChange() {
         DispatchQueue.main.async {
-            self.storageCache = AppDependencyProvider.shared.storageCache.current
-            ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
     }

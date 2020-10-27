@@ -27,7 +27,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
     
     var isEmpty: Bool {
-        return false
+        return true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -207,6 +207,10 @@ class SearchBookmarksDataSource: BookmarksDataSource {
         }
         
         return searchResults[indexPath.row]
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return link(at: indexPath) != nil
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

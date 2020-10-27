@@ -73,7 +73,8 @@ class BookmarksViewController: UITableViewController {
     }
     
     private func configureSearch() {
-        searchController = UISearchController()
+        // Do not use UISearchController() as it causes iOS 12 to miss search bar.
+        searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         
         searchController.obscuresBackgroundDuringPresentation = false
@@ -224,7 +225,12 @@ extension BookmarksViewController: Themable {
             overrideSystemTheme(with: theme)
             searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
         } else {
-            searchController.searchBar.textColor = theme.searchBarTextColor
+            switch theme.currentImageSet {
+            case .dark:
+                searchController.searchBar.barStyle = .blackTranslucent
+            case .light:
+                searchController.searchBar.barStyle = .default
+            }
         }
         
         tableView.separatorColor = theme.tableCellSeparatorColor

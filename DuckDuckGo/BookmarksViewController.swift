@@ -77,14 +77,12 @@ class BookmarksViewController: UITableViewController {
         navigationItem.searchController = searchController
         
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         if #available(iOS 13.0, *) {
             searchController.automaticallyShowsScopeBar = false
+            searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
         }
-//        searchController.searchBar.searchTextField.textColor = .rwGreen()
-//        searchController.searchBar.searchTextField.tokenBackgroundColor = .rwGreen()
     }
     
     private var currentDataSource: BookmarksDataSource {
@@ -138,6 +136,18 @@ class BookmarksViewController: UITableViewController {
         editButton.title = ""
         editButton.isEnabled = false
     }
+    
+    private func prepareForSearching() {
+        finishEditing()
+        disableEditButton()
+    }
+    
+    private func finishSearching() {
+        tableView.dataSource = dataSource
+        tableView.reloadData()
+        
+        enableEditButton()
+    }
 
     fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
         let title = UserText.alertEditBookmark
@@ -180,20 +190,22 @@ extension BookmarksViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             if tableView.dataSource !== dataSource {
-                tableView.dataSource = dataSource
-                tableView.reloadData()
+                finishSearching()
             }
             return
         }
         
+        if currentDataSource !== searchDataSource {
+            prepareForSearching()
+            tableView.dataSource = searchDataSource
+        }
+        
         searchDataSource.performSearch(text: searchText, data: dataSource.bookmarksManager.allLinks)
-        tableView.dataSource = searchDataSource
         tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        tableView.dataSource = dataSource
-        tableView.reloadData()
+        finishSearching()
     }
 }
 
@@ -210,6 +222,9 @@ extension BookmarksViewController: Themable {
         
         if #available(iOS 13.0, *) {
             overrideSystemTheme(with: theme)
+            searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
+        } else {
+            searchController.searchBar.textColor = theme.searchBarTextColor
         }
         
         tableView.separatorColor = theme.tableCellSeparatorColor

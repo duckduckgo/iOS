@@ -175,7 +175,7 @@ public struct UserText {
     
     public static let emptyBookmarks = NSLocalizedString("empty.bookmarks", value: "No bookmarks yet", comment: "Empty list state placholder")
     public static let emptyFavorites = NSLocalizedString("empty.favorites", value: "No favorites yet", comment: "Empty list state placholder")
-    public static let noResults = NSLocalizedString("empty.search", value: "No results", comment: "Empty search list state placholder")
+    public static let noMatchesFound = NSLocalizedString("empty.search", value: "No matches found", comment: "Empty search placholder on bookmarks search")
     
     public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", value: "Website title", comment: "Placeholder in the add bookmark form")
     public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", value: "www.example.com", comment: "Placeholder in the add bookmark form")

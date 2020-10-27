@@ -244,8 +244,8 @@
 /* Empty list state placholder */
 "empty.favorites" = "No favorites yet";
 
-/* Empty search list state placholder */
-"empty.search" = "No results";
+/* Empty search placholder on bookmarks search */
+"empty.search" = "No matches found";
 
 /* No comment provided by engineer. */
 "favorite" = "Favorite";

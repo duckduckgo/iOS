@@ -216,7 +216,7 @@ class SearchBookmarksDataSource: BookmarksDataSource {
     override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {
         let cell = super.createEmptyCell(tableView, forIndexPath: indexPath)
         
-        cell.label.text = "No results"
+        cell.label.text = UserText.noMatchesFound
         
         return cell
     }

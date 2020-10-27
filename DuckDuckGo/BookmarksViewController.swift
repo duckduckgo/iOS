@@ -46,7 +46,7 @@ class BookmarksViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             showEditBookmarkAlert(for: indexPath)
-        } else if let link = dataSource.link(at: indexPath) {
+        } else if let link = currentDataSource.link(at: indexPath) {
             Pixel.fire(pixel: .bookmarkTapped)
             selectLink(link)
         }
@@ -181,7 +181,14 @@ class BookmarksViewController: UITableViewController {
 
     private func dismiss() {
         delegate?.bookmarksUpdated()
-        dismiss(animated: true, completion: nil)
+        
+        if searchController.isActive {
+            searchController.dismiss(animated: false) {
+                self.dismiss(animated: true, completion: nil)
+            }
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
 }

@@ -35,8 +35,8 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
 
     /// This may fail after embedded data is updated, fix accordingly
     func testWhenBloomNotPersistedThenEmbeddedSpecificationReturned() {
-        let sha = "38a829408324f809acb59d0c104d11a03ce48b7fe3380ca4cef1a1875310325f"
-        let specification = HTTPSBloomFilterSpecification(bitCount: 28756, errorRate: 0.000001, totalEntries: 1000, sha256: sha)
+        let sha = "d72a358afca8f70fd1447009efd9e5e42aa7a4e6a01f593da226dbabef0a0052"
+        let specification = HTTPSBloomFilterSpecification(bitCount: 12153347, errorRate: 0.000001, totalEntries: 422649, sha256: sha)
         XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
     
@@ -55,7 +55,7 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     /// This may fail after embedded data is updated, fix accordingly
     func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndEmbeddedExcludedDomainIsTrue() {
         XCTAssertNotNil(testee.bloomFilter())
-        XCTAssertTrue(testee.shouldExcludeDomain("zurich.co.uk"))
+        XCTAssertTrue(testee.shouldExcludeDomain("www.dppps.sc.gov"))
     }
         
     func testWhenNewBloomFilterMatchesShaInSpecThenSpecAndDataPersisted() {

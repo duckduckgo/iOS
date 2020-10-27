@@ -26,9 +26,7 @@ public class ContentBlockerRulesManager {
     public static let shared = ContentBlockerRulesManager()
     
     public var blockingRules: WKContentRuleList?
-    
-    public weak var storageCache: StorageCache?
-    
+
     private init() {}
 
     public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
@@ -37,8 +35,10 @@ public class ContentBlockerRulesManager {
             return
         }
 
+        let storageCache = StorageCacheProvider().current
         let unprotectedSites = UnprotectedSitesManager().domains
-        let tempUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+        let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
 
         let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
                                                                                     andTemporaryUnprotectedDomains: tempUnprotectedDomains)

@@ -42,6 +42,12 @@ class BookmarksViewController: UITableViewController {
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
@@ -76,6 +82,8 @@ class BookmarksViewController: UITableViewController {
         // Do not use UISearchController() as it causes iOS 12 to miss search bar.
         searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
+        // Reveal search field
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -84,6 +92,7 @@ class BookmarksViewController: UITableViewController {
             searchController.automaticallyShowsScopeBar = false
             searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
         }
+        
     }
     
     private var currentDataSource: BookmarksDataSource {
@@ -232,11 +241,21 @@ extension BookmarksViewController: Themable {
             overrideSystemTheme(with: theme)
             searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
         } else {
-            switch theme.currentImageSet {
-            case .dark:
-                searchController.searchBar.barStyle = .blackTranslucent
-            case .light:
-                searchController.searchBar.barStyle = .default
+            searchController.searchBar.tintColor = theme.searchBarTextColor
+            if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+                searchField.layer.backgroundColor = theme.searchBarBackgroundColor.cgColor
+                searchField.layer.cornerRadius = 8
+                
+                // Hide default background view.
+                for view in searchField.subviews {
+                    // Background has same size as search field
+                    guard view.bounds == searchField.bounds else {
+                        continue
+                    }
+
+                    view.alpha = 0.0
+                    break
+                }
             }
         }
         

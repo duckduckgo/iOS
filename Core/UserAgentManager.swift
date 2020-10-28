@@ -79,7 +79,8 @@ struct UserAgent {
     }
     
     private static let sitesThatOmitApplication = [
-        "cvs.com"
+        "cvs.com",
+        "sovietgames.su"
     ]
     
     private let baseAgent: String

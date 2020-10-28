@@ -1658,6 +1658,28 @@ class DDGAutofill extends HTMLElement {
             el.animationFrame = null
         })
     }
+    
+    iosAppAliasCallback (alias) {
+        console.log("iosAppAliasCallback called")
+        console.log(alias)
+        if (alias) {
+            this.execOnInputs(input => {
+                console.log("this.execOnInputs runs")
+                if (input.classList.contains('ddg-autofilled')) return
+                console.log("this.execOnInputs post return")
+
+                input.value = alias
+                input.classList.add('ddg-autofilled')
+
+                // If the user changes the alias, remove the decoration
+                input.addEventListener('input', () => {
+                    this.execOnInputs(input => {
+                        input.classList.remove('ddg-autofilled')
+                    })
+                }, {once: true})
+            })
+       }
+    }
 
     connectedCallback () {
         DDGAutofill.updateButtonPosition(this)
@@ -1690,23 +1712,8 @@ class DDGAutofill extends HTMLElement {
             return allEmpty
         }
         this.autofillInputs = () => {
-            chrome.runtime.sendMessage({getAlias: true}, (res) => {
-                if (res.alias) {
-                    this.execOnInputs(input => {
-                        if (input.classList.contains('ddg-autofilled')) return
-
-                        input.value = res.alias
-                        input.classList.add('ddg-autofilled')
-
-                        // If the user changes the alias, remove the decoration
-                        input.addEventListener('input', () => {
-                            this.execOnInputs(input => {
-                                input.classList.remove('ddg-autofilled')
-                            })
-                        }, {once: true})
-                    })
-                }
-            })
+            window.inputToAutofill = this
+            window.webkit.messageHandlers["emailHandlerGetAlias"].postMessage({});
         }
         this.resetInputs = () => {
             this.execOnInputs(input => {
@@ -2152,8 +2159,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             }
         }
         
-        if (event.data.emailHandlerGetAliasCallback) {
-            
+        if (event.data.getAliasCallback) {
+            console.log("handling emailHandlerGetAliasCallback from iOS app")
+            window.inputToAutofill.iosAppAliasCallback(event.data.alias)
         }
     };
 

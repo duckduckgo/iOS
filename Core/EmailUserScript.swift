@@ -23,6 +23,7 @@ public enum EmailMessageNames: String {
     case storeToken = "emailHandlerStoreToken"
     case checkSignedInStatus = "emailHandlerCheckAppSignedInStatus"
     case checkCanInjectAutofill = "emailHandlerCheckCanInjectAutoFill"
+    case getAlias = "emailHandlerGetAlias"
 }
 
 public class EmailUserScript: NSObject, UserScript {
@@ -42,7 +43,8 @@ public class EmailUserScript: NSObject, UserScript {
     public var messageNames: [String] = [
         EmailMessageNames.storeToken.rawValue,
         EmailMessageNames.checkSignedInStatus.rawValue,
-        EmailMessageNames.checkCanInjectAutofill.rawValue
+        EmailMessageNames.checkCanInjectAutofill.rawValue,
+        EmailMessageNames.getAlias.rawValue
     ]
         
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -66,6 +68,10 @@ public class EmailUserScript: NSObject, UserScript {
         case .checkCanInjectAutofill:
             let canInject = emailManager.isSignedIn
             webView!.evaluateJavaScript("window.postMessage({checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject), fromIOSApp: true})")
+        case .getAlias:
+            //let alias = emailManager.alias ?? ""
+            let alias = "testAliasFromIOSAppHurray"
+            webView!.evaluateJavaScript("window.postMessage({getAliasCallback: true, alias: \"\(alias)\", fromIOSApp: true})")
         }
     }
     

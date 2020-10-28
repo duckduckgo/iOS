@@ -1602,8 +1602,8 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
 },{"process/browser.js":3,"timers":4}],5:[function(require,module,exports){
-const logo = chrome.runtime.getURL('img/ddg-logo-borderless.svg')
-const css = chrome.runtime.getURL('public/css/email-style.css')
+const logo = 'https://spreadprivacy.com/content/images/2019/01/ddg_icon_white-background-3.png'//chrome.runtime.getURL('img/ddg-logo-borderless.svg')
+const css = ""//chrome.runtime.getURL('img/ddg-logo-borderless.svg')
 
 class DDGAutofill extends HTMLElement {
     constructor (input, associatedForm) {
@@ -1991,7 +1991,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   var Form = require('./Form'); // Font-face must be declared in the host page, otherwise it won't work in the shadow dom
 
 
-  var regFontUrl = chrome.runtime.getURL('public/font/ProximaNova-Reg-webfont.woff');
+  var regFontUrl = "public/font/ProximaNova-Reg-webfont.woff" //chrome.runtime.getURL('public/font/ProximaNova-Reg-webfont.woff');
   var styleTag = document.createElement('style');
   document.head.appendChild(styleTag);
   var sheet = styleTag.sheet;
@@ -2005,183 +2005,183 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     }
   }; // Listen for sign in message from the ddg email page
 
+    var injectEmailAutofill = function injectEmailAutofill() {
+        console.log("injectEmailAutofill function run")
+      // Here we store a map of input -> button associations
+      var inputButtonMap = new Map();
+      var forms = new Map();
+      customElements.define('ddg-autofill', DDGAutofill);
 
-  window.addEventListener('message', function (event) {
-    if (!event.origin.match(ddgDomainRegex)) return; // The web app notifies us that the user signed in
+      var updateAllButtons = function updateAllButtons() {
+        inputButtonMap.forEach(function (button) {
+          DDGAutofill.updateButtonPosition(button);
+        });
+      };
 
-    if (event.data.addUserData) {
-      chrome.runtime.sendMessage(event.data, function (res) {
-        console.log('Extension login result', res);
-      });
-    } // The web app wants to know if the user is signed in
+      var intObs = new IntersectionObserver(function (entries) {
+        var _iterator = _createForOfIteratorHelper(entries),
+            _step;
 
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var entry = _step.value;
+            var input = entry.target;
 
-    if (event.data.checkExtensionSignedIn) {
-      chrome.runtime.sendMessage({
-        getSetting: {
-          name: 'userData'
+            if (entry.isIntersecting) {
+              // If is intersecting and visible (note that `display:none` will never intersect)
+              if (window.getComputedStyle(input).visibility !== 'hidden') {
+                var associatedForm = forms.get(input.form) || forms.get(input);
+                var button = new DDGAutofill(input, associatedForm);
+                document.body.appendChild(button); // Keep track of the input->button pair
+
+                inputButtonMap.set(input, button);
+              }
+            } else {
+              // If it's not intersecting and we have the input stored…
+              if (inputButtonMap.has(input)) {
+                // …remove the button from the DOM
+                inputButtonMap.get(input).remove(); // …and remove the input from the map
+
+                inputButtonMap["delete"](input);
+              }
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
         }
-      }, function (userData) {
-        notifyWebApp({
-          extensionSignedIn: {
-            value: userData && userData.nextAlias
+      });
+      var EMAIL_SELECTOR = "\n        input:not([type])[name*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=\"\"][name*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=text][name*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input:not([type])[id*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=\"\"][id*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=text][id*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=email]:not([readonly]):not([disabled]):not([hidden]),\n        input[aria-label*=mail i],\n        input[placeholder*=mail i]:not([readonly])\n    ";
+
+      var findEligibleInput = function findEligibleInput(context) {
+        context.querySelectorAll(EMAIL_SELECTOR).forEach(function (input) {
+          var parentForm = input.form;
+
+          if (parentForm) {
+            if (forms.has(parentForm)) {
+              // If we've already met the form, add the input
+              forms.get(parentForm).addInput(input);
+            } else {
+              forms.set(parentForm, new Form(parentForm, input, intObs));
+            }
+          } else {
+            // If input is not associated with a form, analyse the page
+            forms.set(input, new Form(null, input, intObs));
           }
         });
-      });
-    }
-  }); // Check if we already have user data
+        forms.forEach(function (formObj, formEl) {
+          //console.log(formEl, formObj.autofillSignal, formObj.signals);
+          if (formObj.autofillSignal > 0) {
+            formObj.decorateInputs();
+          }
+        });
+      };
 
-  chrome.runtime.sendMessage({
-    getSetting: {
-      name: 'userData'
-    }
-  }, function (userData) {
-    if (userData && userData.nextAlias) {
-      injectEmailAutofill();
-      notifyWebApp({
-        extensionSignedIn: {
-          value: true
-        }
-      });
-    } else {
-      // If we don't have user data yet, notify the web app that we are ready to receive it…
-      notifyWebApp({
-        extensionInstalled: true
-      }); // …then listen for when the user data is set
+      findEligibleInput(document); // For all DOM mutations, search for new eligible inputs and update existing inputs positions
 
-      chrome.runtime.onMessage.addListener(function (message, sender) {
-        if (sender.id === chrome.runtime.id && message.type === 'ddgUserReady') {
-          notifyWebApp({
-            extensionSignedIn: {
-              value: true
+      var mutObs = new MutationObserver(function (mutationList) {
+        var _iterator2 = _createForOfIteratorHelper(mutationList),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var mutationRecord = _step2.value;
+
+            if (mutationRecord.type === 'childList') {
+              // We query only within the context of added/removed nodes
+              mutationRecord.addedNodes.forEach(function (el) {
+                if (el instanceof HTMLElement) {
+                  window.requestIdleCallback(function () {
+                    return findEligibleInput(el);
+                  });
+                }
+              });
             }
-          });
-          injectEmailAutofill();
-        }
-      });
-    }
-  });
 
-  var injectEmailAutofill = function injectEmailAutofill() {
-    // Here we store a map of input -> button associations
-    var inputButtonMap = new Map();
-    var forms = new Map();
-    customElements.define('ddg-autofill', DDGAutofill);
-
-    var updateAllButtons = function updateAllButtons() {
-      inputButtonMap.forEach(function (button) {
-        DDGAutofill.updateButtonPosition(button);
-      });
-    };
-
-    var intObs = new IntersectionObserver(function (entries) {
-      var _iterator = _createForOfIteratorHelper(entries),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var entry = _step.value;
-          var input = entry.target;
-
-          if (entry.isIntersecting) {
-            // If is intersecting and visible (note that `display:none` will never intersect)
-            if (window.getComputedStyle(input).visibility !== 'hidden') {
-              var associatedForm = forms.get(input.form) || forms.get(input);
-              var button = new DDGAutofill(input, associatedForm);
-              document.body.appendChild(button); // Keep track of the input->button pair
-
-              inputButtonMap.set(input, button);
-            }
-          } else {
-            // If it's not intersecting and we have the input stored…
-            if (inputButtonMap.has(input)) {
-              // …remove the button from the DOM
-              inputButtonMap.get(input).remove(); // …and remove the input from the map
-
-              inputButtonMap["delete"](input);
+            if (mutationRecord.type === 'attributes') {
+              updateAllButtons();
             }
           }
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-    });
-    var EMAIL_SELECTOR = "\n        input:not([type])[name*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=\"\"][name*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=text][name*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input:not([type])[id*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=\"\"][id*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=text][id*=mail i]:not([readonly]):not([disabled]):not([hidden]),\n        input[type=email]:not([readonly]):not([disabled]):not([hidden]),\n        input[aria-label*=mail i],\n        input[placeholder*=mail i]:not([readonly])\n    ";
-
-    var findEligibleInput = function findEligibleInput(context) {
-      context.querySelectorAll(EMAIL_SELECTOR).forEach(function (input) {
-        var parentForm = input.form;
-
-        if (parentForm) {
-          if (forms.has(parentForm)) {
-            // If we've already met the form, add the input
-            forms.get(parentForm).addInput(input);
-          } else {
-            forms.set(parentForm, new Form(parentForm, input, intObs));
-          }
-        } else {
-          // If input is not associated with a form, analyse the page
-          forms.set(input, new Form(null, input, intObs));
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
         }
       });
-      forms.forEach(function (formObj, formEl) {
-        console.log(formEl, formObj.autofillSignal, formObj.signals);
+      mutObs.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true
+      });
+      var resObs = new ResizeObserver(function (entries) {
+        return entries.forEach(updateAllButtons);
+      });
+      resObs.observe(document.body); // Update the position if transitions or animations are detected just in case
 
-        if (formObj.autofillSignal > 0) {
-          formObj.decorateInputs();
-        }
+      ['transitionend', 'animationend', 'load'].forEach(function (eventType) {
+        return window.addEventListener(eventType, function () {
+          return updateAllButtons();
+        });
       });
     };
-
-    findEligibleInput(document); // For all DOM mutations, search for new eligible inputs and update existing inputs positions
-
-    var mutObs = new MutationObserver(function (mutationList) {
-      var _iterator2 = _createForOfIteratorHelper(mutationList),
-          _step2;
-
-      try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var mutationRecord = _step2.value;
-
-          if (mutationRecord.type === 'childList') {
-            // We query only within the context of added/removed nodes
-            mutationRecord.addedNodes.forEach(function (el) {
-              if (el instanceof HTMLElement) {
-                window.requestIdleCallback(function () {
-                  return findEligibleInput(el);
-                });
-              }
+    
+    var handleMessageFromIOSApp = function handleMessageFromIOSApp(event) {
+        console.log("received iOS message")
+        
+        if (event.data.checkExtensionSignedInCallback) {
+            console.log("handling checkExtensionSignedInCallback from iOS app")
+            var userData = event.data.isAppSignedIn;
+            notifyWebApp({
+                extensionSignedIn: {
+                    value: userData
+                }
             });
-          }
-
-          if (mutationRecord.type === 'attributes') {
-            updateAllButtons();
-          }
         }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
-      }
-    });
-    mutObs.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true
-    });
-    var resObs = new ResizeObserver(function (entries) {
-      return entries.forEach(updateAllButtons);
-    });
-    resObs.observe(document.body); // Update the position if transitions or animations are detected just in case
 
-    ['transitionend', 'animationend', 'load'].forEach(function (eventType) {
-      return window.addEventListener(eventType, function () {
-        return updateAllButtons();
-      });
-    });
-  };
+        if (event.data.checkCanInjectAutoFillCallback) {
+            console.log("handling checkCanInjectAutoFilCallback from iOS app")
+            var userData = event.data.canInjectAutoFill;
+            if (userData) {
+                injectEmailAutofill();
+                notifyWebApp({
+                    extensionSignedIn: {
+                        value: true
+                    }
+                });
+            }
+        }
+        
+        if (event.data.emailHandlerGetAliasCallback) {
+            
+        }
+    };
+
+    window.addEventListener('message', function (event) {
+        console.log("Received message")
+        
+        if (event.data.fromIOSApp) {
+            handleMessageFromIOSApp(event);
+            return;
+        }
+        
+        if (!event.origin.match(ddgDomainRegex)) return; // The web app notifies us that the user signed in
+
+        console.log("Received web app message")
+        console.log(event)
+
+        if (event.data.addUserData) {
+            console.log(("adduserdata"));
+          window.webkit.messageHandlers["emailHandlerStoreToken"].postMessage({ token: event.data.addUserData.token, username: event.data.addUserData.userName });
+        } // The web app wants to know if the user is signed in
+
+        if (event.data.checkExtensionSignedIn) {
+          console.log("checkExtensionSignedIn")
+          window.webkit.messageHandlers["emailHandlerCheckAppSignedInStatus"].postMessage({});
+        }
+    }); // Check if we already have user data
+
+    window.webkit.messageHandlers["emailHandlerCheckCanInjectAutoFill"].postMessage({})
 })();
 
 },{"./DDGAutofill":5,"./Form":6,"./requestIdleCallback":8,"@webcomponents/webcomponentsjs":1,"intersection-observer":2}],8:[function(require,module,exports){

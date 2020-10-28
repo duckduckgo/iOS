@@ -268,6 +268,7 @@ class TabViewController: UIViewController {
         ContentBlockerRulesManager.shared.storageCache = storageCache
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
+        emailScript.webView = webView
     }
     
     func updateTabModel() {
@@ -313,6 +314,16 @@ class TabViewController: UIViewController {
         } else if let request = request {
             load(urlRequest: request)
         }
+    }
+    
+    func loadEmailScriptIfNeeded(_ request: URLRequest) {
+        guard let url = request.url, appUrls.isDuckDuckGo(url: url) else {
+            Swift.print("not a DDG url")
+            return
+        }
+        
+        //TODO check if loaded email script (might be able to use logged in as proxy? If already logged in, we should have already loaded it
+        
     }
 
     private func addObservers() {
@@ -360,6 +371,7 @@ class TabViewController: UIViewController {
     private func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
         webView.stopLoading()
+        loadEmailScriptIfNeeded(urlRequest)
         webView.load(urlRequest)
     }
     
@@ -504,6 +516,18 @@ class TabViewController: UIViewController {
     }
     
     private func reloadUserScripts() {
+        //TODO we may need to load the email script here if signed in
+        //depends what we count as a user script...
+        //yeah, looks like it should be included in user scripts
+        
+        //I don't understand how this works
+        //if we visit DDG, it loads the ddgscripts, but then never seems to load the general ones?
+        
+        //starting the app on ddg, url is nil
+        //so then it loads the general scripts
+        //is this correct?
+        //seems like url is always nil. not sure when this is supposed to be called
+        
         removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
@@ -877,6 +901,8 @@ extension TabViewController: WKNavigationDelegate {
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
         
+        //TODO fow now we always say we're signed in
+        emailScript.notifyWebViewEmailSignedInStatus()
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()

@@ -21,23 +21,32 @@ import WebKit
 
 public enum EmailMessageNames: String {
     case storeToken = "emailHandlerStoreToken"
+    case checkSignedInStatus = "emailHandlerCheckAppSignedInStatus"
+    case checkCanInjectAutofill = "emailHandlerCheckCanInjectAutoFill"
 }
 
 public class EmailUserScript: NSObject, UserScript {
     
     private let emailManager = EmailManager()
-
+    
+    public var webView: WKWebView?
+    
     public lazy var source: String = {
-        return loadJS("email")
+        return loadJS("email-autofill")
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentEnd
     
     public var forMainFrameOnly: Bool = false
     
-    public var messageNames: [String] = [EmailMessageNames.storeToken.rawValue]
+    public var messageNames: [String] = [
+        EmailMessageNames.storeToken.rawValue,
+        EmailMessageNames.checkSignedInStatus.rawValue,
+        EmailMessageNames.checkCanInjectAutofill.rawValue
+    ]
         
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        print(message)
         guard let type = EmailMessageNames(rawValue: message.name) else {
             print("Receieved invalid message name")
             return
@@ -51,6 +60,18 @@ public class EmailUserScript: NSObject, UserScript {
             
             emailManager.storeToken(token, username: username)
             //TODO also fetch an alias from the backend
+        case .checkSignedInStatus:
+            let signedInStatus = String(emailManager.isSignedIn)
+            webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus), fromIOSApp: true})")
+        case .checkCanInjectAutofill:
+            let canInject = emailManager.isSignedIn
+            webView!.evaluateJavaScript("window.postMessage({checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject), fromIOSApp: true})")
         }
+    }
+    
+    public func notifyWebViewEmailSignedInStatus() {
+        //todo probs don't need this
+//        let signedInStatus = String(emailManager.isSignedIn)
+//        webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedIn: true, isAppSignedIn: \(signedInStatus)})")
     }
 }

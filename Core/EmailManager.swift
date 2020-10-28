@@ -21,8 +21,9 @@ import WebKit
 
 public class EmailManager {
     
-    private var token: String?
-    private var username: String?
+    public var token: String?
+    public var username: String?
+    public var alias: String?
     
     var isSignedIn: Bool {
         return token != nil && username != nil
@@ -57,8 +58,8 @@ public class EmailManager {
             }
             do {
                 let decoder = JSONDecoder()
-                let alias = try decoder.decode(EmailResponse.self, from: data).address
-                print(alias)
+                self.alias = try decoder.decode(EmailResponse.self, from: data).address
+                print(self.alias)
             } catch {
                 print("invalid alias response")
                 return

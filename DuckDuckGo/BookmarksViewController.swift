@@ -42,12 +42,6 @@ class BookmarksViewController: UITableViewController {
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        navigationItem.hidesSearchBarWhenScrolling = true
-    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
@@ -82,8 +76,6 @@ class BookmarksViewController: UITableViewController {
         // Do not use UISearchController() as it causes iOS 12 to miss search bar.
         searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-        // Reveal search field
-        navigationItem.hidesSearchBarWhenScrolling = false
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -92,7 +84,6 @@ class BookmarksViewController: UITableViewController {
             searchController.automaticallyShowsScopeBar = false
             searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
         }
-        
     }
     
     private var currentDataSource: BookmarksDataSource {
@@ -200,6 +191,26 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if #available(iOS 13.0, *), searchController.searchBar.bounds.height == 0 {
+            // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
+            isModalInPresentation = true
+        }
+    }
+
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+            // Re-enable drag-to-dismiss if needed
+            isModalInPresentation = false
+        }
+    }
+
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+            // Re-enable drag-to-dismiss if needed
+            isModalInPresentation = false
+        }
+    }
 }
 
 extension BookmarksViewController: UISearchBarDelegate {

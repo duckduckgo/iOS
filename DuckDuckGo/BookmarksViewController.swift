@@ -42,7 +42,7 @@ class BookmarksViewController: UITableViewController {
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             showEditBookmarkAlert(for: indexPath)
@@ -85,7 +85,7 @@ class BookmarksViewController: UITableViewController {
             searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
         }
         
-        // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0.
+        // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0 and we are using `isModalInPresentation` set to true
         tableView.setContentOffset(CGPoint(x: 0, y: 1), animated: false)
     }
     
@@ -191,6 +191,27 @@ class BookmarksViewController: UITableViewController {
             }
         } else {
             dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if #available(iOS 13.0, *), searchController.searchBar.bounds.height == 0 {
+            // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
+            isModalInPresentation = true
+        }
+    }
+
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+            // Re-enable drag-to-dismiss if needed
+            isModalInPresentation = false
+        }
+    }
+
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+            // Re-enable drag-to-dismiss if needed
+            isModalInPresentation = false
         }
     }
 }

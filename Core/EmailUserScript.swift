@@ -64,10 +64,10 @@ public class EmailUserScript: NSObject, UserScript {
             //TODO also fetch an alias from the backend
         case .checkSignedInStatus:
             let signedInStatus = String(emailManager.isSignedIn)
-            webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus), fromIOSApp: true})")
+            webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus), fromIOSApp: true}, window.origin)")
         case .checkCanInjectAutofill:
             let canInject = emailManager.isSignedIn
-            webView!.evaluateJavaScript("window.postMessage({checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject), fromIOSApp: true})")
+            webView!.evaluateJavaScript("window.postMessage({checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject), fromIOSApp: true}, window.origin)")
         case .getAlias:
             //let alias = emailManager.alias ?? ""
             let alias = "testAliasFromIOSAppHurray"

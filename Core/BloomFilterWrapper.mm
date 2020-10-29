@@ -27,11 +27,11 @@
 
 @implementation BloomFilterWrapper
 
-- (instancetype)initFromPath:(NSString*)path withTotalItems:(int)count {
+- (instancetype)initFromPath:(NSString*)path withBitCount:(int)bitCount andTotalItems:(int)totalItems {
     self = [super init];
     if (self != nil) {
         NSLog(@"Bloom: Importing data from %@", path);
-        filter = new BloomFilter([path cStringUsingEncoding: NSString.defaultCStringEncoding], count);
+        filter = new BloomFilter([path cStringUsingEncoding: NSString.defaultCStringEncoding], bitCount, totalItems);
     }
     return self;
 }

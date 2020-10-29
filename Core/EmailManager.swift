@@ -21,20 +21,23 @@ import WebKit
 
 public class EmailManager {
     
-    public var token: String?
+    //TODO load stored version on init
     public var username: String?
+    public var token: String?
     public var alias: String?
     
     var isSignedIn: Bool {
+        //return true
         return token != nil && username != nil
     }
 
     func storeToken(_ token: String, username: String) {
-        //TODO actual storage
         self.token = token
         self.username = username
+        EmailKeychainManager.addToKeychainToken(token, forUsername: username)
         
         fetchAlias()
+        EmailKeychainManager.retreiveTokenAndUsernameFromKeychain()
     }
     
     private static let apiAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
@@ -65,5 +68,102 @@ public class EmailManager {
                 return
             }
         }
+    }
+}
+
+class EmailKeychainManager {
+    
+    /*
+     Uses just kSecAttrService as the primary key, since we don't want to store
+     multiple accounts/tokens at the same time
+    */
+    private enum EmailKeychainService: String {
+        case username = "email.duckduckgo.com.username"
+        case token = "email.duckduckgo.com.token"
+        case alias = "email.duckduckgo.com.alias"
+    }
+    
+    static func deleteAllKeychainData() {
+        deleteKeychainItemWithService(.username)
+        deleteKeychainItemWithService(.token)
+        deleteKeychainItemWithService(.alias)
+    }
+    
+    //TODO what about alias
+    static func addToKeychainToken(_ token: String, forUsername username: String) {
+        guard let tokenData = token.data(using: String.Encoding.utf8),
+              let usernameData = username.data(using: String.Encoding.utf8) else {
+            print("oh no")
+            return
+        }
+        deleteAllKeychainData()
+        
+        addDataToKeychain(tokenData, withService: .token)
+        addDataToKeychain(usernameData, withService: .username)
+    }
+    
+    static func retreiveTokenAndUsernameFromKeychain() -> (String, String)? {
+        guard let tokenData = retreiveDataFromKeychain(forService: .token),
+              let usernameData = retreiveDataFromKeychain(forService: .username),
+              let token = String(data: tokenData, encoding: String.Encoding.utf8),
+              let username = String(data: usernameData, encoding: String.Encoding.utf8) else {
+            print("oh no")
+            return nil
+        }
+        return (token, username)
+    }
+    
+    private static func deleteKeychainItemWithService(_ service: EmailKeychainService) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service.rawValue]
+        let deleteStatus = SecItemDelete(query as CFDictionary)
+        guard deleteStatus == errSecSuccess else {
+            print("Keychain error")
+            print(deleteStatus)
+            return
+        }
+    }
+    
+    private static func addDataToKeychain(_ data: Data, withService service: EmailKeychainService) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrSynchronizable as String: false,
+            kSecAttrService as String: service.rawValue,
+            kSecValueData as String: data]
+        
+        let status = SecItemAdd(query as CFDictionary, nil)
+        guard status == errSecSuccess else {
+            print("Keychain error")
+            print(status)
+            return
+        }
+    }
+    
+    private static func retreiveDataFromKeychain(forService service: EmailKeychainService) -> Data? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecAttrService as String: service.rawValue,
+            kSecReturnData as String: true]
+        
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        guard status != errSecItemNotFound else {
+            print("Keychain error: item not found")
+            print(status)
+            return nil
+        }
+        guard status == errSecSuccess else {
+            print("Keychain error")
+            print(status)
+            return nil
+        }
+        
+        guard let existingItem = item as? Data else {
+            print("oh no")
+            return nil
+        }
+        return existingItem
     }
 }

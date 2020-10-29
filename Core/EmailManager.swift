@@ -77,19 +77,18 @@ class EmailKeychainManager {
      Uses just kSecAttrService as the primary key, since we don't want to store
      multiple accounts/tokens at the same time
     */
-    private enum EmailKeychainService: String {
+    enum EmailKeychainField: String {
         case username = "email.duckduckgo.com.username"
         case token = "email.duckduckgo.com.token"
         case alias = "email.duckduckgo.com.alias"
     }
     
     static func deleteAllKeychainData() {
-        deleteKeychainItemWithService(.username)
-        deleteKeychainItemWithService(.token)
-        deleteKeychainItemWithService(.alias)
+        deleteKeychainItem(forField: .username)
+        deleteKeychainItem(forField: .token)
+        deleteKeychainItem(forField: .alias)
     }
     
-    //TODO what about alias
     static func addToKeychainToken(_ token: String, forUsername username: String) {
         guard let tokenData = token.data(using: String.Encoding.utf8),
               let usernameData = username.data(using: String.Encoding.utf8) else {

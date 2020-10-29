@@ -27,11 +27,11 @@ public protocol HTTPSUpgradeStore {
     
     func bloomFilterSpecification() -> HTTPSBloomFilterSpecification?
     
-    func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool
+    @discardableResult func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool
     
     func shouldExcludeDomain(_ domain: String) -> Bool
     
-    func persistExcludedDomains(_ domains: [String]) -> Bool
+    @discardableResult func persistExcludedDomains(_ domains: [String]) -> Bool
 }
 
 public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
@@ -83,17 +83,20 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     private func loadEmbeddedData() -> EmbeddedBloomData? {
         os_log("Loading embedded https data")
-        guard let specificationData = try? Data(contentsOf: EmbeddedResource.bloomSpecification) else { return nil }
-        guard let specification = try? JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specificationData) else { return nil }
-        guard let bloomData = try? Data(contentsOf: EmbeddedResource.bloomFilter) else { return nil }
-        guard let excludedDomainsData = try? Data(contentsOf: EmbeddedResource.excludedDomains) else { return nil }
-        guard let excludedDomains = try? JSONDecoder().decode(HTTPSExcludedDomains.self, from: excludedDomainsData) else { return nil }
-        _ = persistBloomFilter(specification: specification, data: bloomData)
-        _ = persistExcludedDomains(excludedDomains.data)
+        guard let specificationData = try? Data(contentsOf: EmbeddedResource.bloomSpecification),
+              let specification = try? JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specificationData),
+              let bloomData = try? Data(contentsOf: EmbeddedResource.bloomFilter),
+              let excludedDomainsData = try? Data(contentsOf: EmbeddedResource.excludedDomains),
+              let excludedDomains = try? JSONDecoder().decode(HTTPSExcludedDomains.self, from: excludedDomainsData)
+        else {
+            return nil
+        }
+        persistBloomFilter(specification: specification, data: bloomData)
+        persistExcludedDomains(excludedDomains.data)
         return EmbeddedBloomData(specification: specification, bloomFilter: bloomData, excludedDomains: excludedDomains.data)
     }
     
-    public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
+    @discardableResult public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
         os_log("HTTPS Bloom Filter %s", log: generalLog, type: .debug, Resource.bloomFilter.absoluteString)
         guard data.sha256 == specification.sha256 else { return false }
         guard persistBloomFilter(data: data) else { return false }
@@ -156,8 +159,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
         return result
     }
     
-    @discardableResult
-    public func persistExcludedDomains(_ domains: [String]) -> Bool {
+    @discardableResult public func persistExcludedDomains(_ domains: [String]) -> Bool {
         var result = true
         context.performAndWait {
             deleteExcludedDomains()

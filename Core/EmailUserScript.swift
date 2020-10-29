@@ -71,7 +71,8 @@ public class EmailUserScript: NSObject, UserScript {
         case .getAlias:
             //let alias = emailManager.alias ?? ""
             let alias = "testAliasFromIOSAppHurray"
-            webView!.evaluateJavaScript("window.postMessage({getAliasCallback: true, alias: \"\(alias)\", fromIOSApp: true})")
+            //webView!.evaluateJavaScript("window.postMessage({getAliasCallback: true, alias: \"\(alias)\", fromIOSApp: true})")
+            webView!.evaluateJavaScript("window.postMessage({type: 'getAliasResponse', alias: \"\(alias)\", fromIOSApp: true}, window.origin)")
         }
     }
     

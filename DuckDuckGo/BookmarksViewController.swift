@@ -83,18 +83,18 @@ class BookmarksViewController: UITableViewController {
         if #available(iOS 13.0, *) {
             searchController.automaticallyShowsScopeBar = false
             searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
-        }
-        
-        // Add separator
-        if let nv = navigationController?.navigationBar {
-            let separator = UIView()
-            separator.backgroundColor = .greyish
-            nv.addSubview(separator)
-            separator.translatesAutoresizingMaskIntoConstraints = false
-            separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
-            separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
-            separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
-            separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
+            
+            // Add separator
+            if let nv = navigationController?.navigationBar {
+                let separator = UIView()
+                separator.backgroundColor = .greyish
+                nv.addSubview(separator)
+                separator.translatesAutoresizingMaskIntoConstraints = false
+                separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
+                separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
+                separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
+                separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
+            }
         }
         
         // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0 and we are using `isModalInPresentation` set to true

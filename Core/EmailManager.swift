@@ -33,20 +33,15 @@ public class EmailManager {
     }
     
     var isSignedIn: Bool {
-        return true
-
         return token != nil && username != nil
     }
 
     func storeToken(_ token: String, username: String) {
-        EmailKeychainManager.addToKeychainToken(token, forUsername: username)
+        EmailKeychainManager.addToKeychain(token: token, forUsername: username)
         fetchAndStoreAlias()
     }
-    
-    //TODO should do a func here that access alias if exists, or fetches if it doesn't
-    //(with completion handler)
-    
-    private static let apiAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
+        
+    private static let apiAddress = URL(string: "https://quack.duckduckgo.com/api/email/addresses")!
 
     private var headers: HTTPHeaders {
         guard let token = token else {
@@ -59,15 +54,18 @@ public class EmailManager {
         let address: String
     }
     
-    func getAliasIfNeededAndConsume(timeoutInterval: TimeInterval = 5.0, completionHandler: @escaping (String?) -> Void) {
+    func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 5.0, completionHandler: @escaping (String?) -> Void) {
         if let alias = alias {
-            completionHandler(alias)
+            completionHandler(emailFromAlias(alias))
             consumeAliasAndReplace()
             return
         }
         fetchAndStoreAlias(timeoutInterval: timeoutInterval) { [weak self] newAlias in
+            if let newAlias = newAlias {
+                completionHandler(self?.emailFromAlias(newAlias))
+                self?.consumeAliasAndReplace()
+            }
             completionHandler(newAlias)
-            self?.consumeAliasAndReplace()
         }
     }
     
@@ -79,7 +77,7 @@ public class EmailManager {
                 completionHandler?(nil)
                 return
             }
-            EmailKeychainManager.addToKeychainAlias(alias)
+            EmailKeychainManager.addToKeychain(alias: alias)
             completionHandler?(alias)
         }
     }
@@ -106,6 +104,10 @@ public class EmailManager {
             }
         }
     }
+    
+    private func emailFromAlias(_ alias: String) -> String {
+        return alias + "@duck.com"
+    }
 }
 
 class EmailKeychainManager {
@@ -126,7 +128,7 @@ class EmailKeychainManager {
         deleteKeychainItem(forField: .alias)
     }
     
-    static func addToKeychainToken(_ token: String, forUsername username: String) {
+    static func addToKeychain(token: String, forUsername username: String) {
         guard let tokenData = token.data(using: String.Encoding.utf8),
               let usernameData = username.data(using: String.Encoding.utf8) else {
             print("oh no")
@@ -138,7 +140,7 @@ class EmailKeychainManager {
         addDataToKeychain(usernameData, forField: .username)
     }
     
-    static func addToKeychainAlias(_ alias: String) {
+    static func addToKeychain(alias: String) {
         guard let aliasData = alias.data(using: String.Encoding.utf8) else {
             print("oh no")
             return

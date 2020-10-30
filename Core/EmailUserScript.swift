@@ -26,6 +26,8 @@ enum EmailMessageNames: String {
     case getAlias = "emailHandlerGetAlias"
 }
 
+
+//TODO what happens if they are signed into the app, but then sign in to a different user on web?
 public class EmailUserScript: NSObject, UserScript {
     
     private let emailManager = EmailManager()
@@ -74,7 +76,7 @@ public class EmailUserScript: NSObject, UserScript {
         case .getAlias:
             print(self.emailManager.token)
             print(self.emailManager.username)
-            emailManager.getAliasIfNeededAndConsume { alias in
+            emailManager.getAliasEmailIfNeededAndConsume { alias in
                 guard let alias = alias else {
                     print("oh no")
                     return

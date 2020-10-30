@@ -20,18 +20,20 @@
 import Foundation
 
 public struct HTTPSBloomFilterSpecification: Equatable, Decodable {
-    let totalEntries: Int
+    let bitCount: Int
     let errorRate: Double
+    let totalEntries: Int
     let sha256: String
     
     static public func == (lhs: HTTPSBloomFilterSpecification, rhs: HTTPSBloomFilterSpecification) -> Bool {
-        return lhs.totalEntries == rhs.totalEntries && lhs.errorRate == rhs.errorRate && lhs.sha256 == rhs.sha256
+        return lhs.bitCount == rhs.bitCount && lhs.errorRate == rhs.errorRate && lhs.totalEntries == rhs.totalEntries && lhs.sha256 == rhs.sha256
     }
     
     static func copy(storedSpecification specification: HTTPSStoredBloomFilterSpecification?) -> HTTPSBloomFilterSpecification? {
         guard let specification = specification else { return nil }
-        return HTTPSBloomFilterSpecification(totalEntries: Int(specification.totalEntries),
+        return HTTPSBloomFilterSpecification(bitCount: Int(specification.bitCount),
                                              errorRate: specification.errorRate,
+                                             totalEntries: Int(specification.totalEntries),
                                              sha256: specification.sha256!)
     }
 }

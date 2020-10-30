@@ -27,7 +27,7 @@ class FileStoreTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .surrogates))
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .temporaryUnprotectedSites))
     }
-    
+
     func testWhenFileExistsThenHasDataReturnsTrue() {
         let store = FileStore()
         XCTAssertFalse(store.hasData(forConfiguration: .surrogates))

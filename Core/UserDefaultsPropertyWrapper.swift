@@ -58,6 +58,14 @@ public struct UserDefaultsWrapper<T> {
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
         
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
+
+        case backgroundFetchTaskExpirationCount = "com.duckduckgo.app.bgFetchTaskExpirationCount"
+        case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
+        case downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"
+        case downloadedHTTPSExcludedDomainsCount = "com.duckduckgo.app.downloadedHTTPSExcludedDomainsCount"
+        case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
+        case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
+        case downloadedTemporaryUnprotectedSitesCount = "com.duckduckgo.app.downloadedTemporaryUnprotectedSitesCount"
     }
 
     private let key: Key

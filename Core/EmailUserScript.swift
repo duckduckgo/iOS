@@ -19,7 +19,7 @@
 
 import WebKit
 
-public enum EmailMessageNames: String {
+enum EmailMessageNames: String {
     case storeToken = "emailHandlerStoreToken"
     case checkSignedInStatus = "emailHandlerCheckAppSignedInStatus"
     case checkCanInjectAutofill = "emailHandlerCheckCanInjectAutoFill"
@@ -46,6 +46,10 @@ public class EmailUserScript: NSObject, UserScript {
         EmailMessageNames.checkCanInjectAutofill.rawValue,
         EmailMessageNames.getAlias.rawValue
     ]
+    
+    public var isSignedIn: Bool {
+        emailManager.isSignedIn
+    }
         
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print(message)
@@ -61,7 +65,6 @@ public class EmailUserScript: NSObject, UserScript {
                   let username = dict["username"] as? String else { return }
             
             emailManager.storeToken(token, username: username)
-            //TODO also fetch an alias from the backend
         case .checkSignedInStatus:
             let signedInStatus = String(emailManager.isSignedIn)
             webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus), fromIOSApp: true}, window.origin)")
@@ -69,10 +72,15 @@ public class EmailUserScript: NSObject, UserScript {
             let canInject = emailManager.isSignedIn
             webView!.evaluateJavaScript("window.postMessage({checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject), fromIOSApp: true}, window.origin)")
         case .getAlias:
-            //let alias = emailManager.alias ?? ""
-            let alias = "testAliasFromIOSAppHurray"
-            //webView!.evaluateJavaScript("window.postMessage({getAliasCallback: true, alias: \"\(alias)\", fromIOSApp: true})")
-            webView!.evaluateJavaScript("window.postMessage({type: 'getAliasResponse', alias: \"\(alias)\", fromIOSApp: true}, window.origin)")
+            print(self.emailManager.token)
+            print(self.emailManager.username)
+            emailManager.getAliasIfNeededAndConsume { alias in
+                guard let alias = alias else {
+                    print("oh no")
+                    return
+                }
+                self.webView!.evaluateJavaScript("window.postMessage({type: 'getAliasResponse', alias: \"\(alias)\", fromIOSApp: true}, window.origin)")
+            }
         }
     }
     

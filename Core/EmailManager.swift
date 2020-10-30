@@ -21,24 +21,30 @@ import WebKit
 
 public class EmailManager {
     
-    //TODO load stored version on init
-    public var username: String?
-    public var token: String?
-    public var alias: String?
+    //todo these can probably be private once we're done testing
+    public var username: String? {
+        EmailKeychainManager.getStringFromKeychain(forField: .username)
+    }
+    public var token: String? {
+        EmailKeychainManager.getStringFromKeychain(forField: .token)
+    }
+    private var alias: String? {
+        EmailKeychainManager.getStringFromKeychain(forField: .alias)
+    }
     
     var isSignedIn: Bool {
-        //return true
+        return true
+
         return token != nil && username != nil
     }
 
     func storeToken(_ token: String, username: String) {
-        self.token = token
-        self.username = username
         EmailKeychainManager.addToKeychainToken(token, forUsername: username)
-        
-        fetchAlias()
-        EmailKeychainManager.retreiveTokenAndUsernameFromKeychain()
+        fetchAndStoreAlias()
     }
+    
+    //TODO should do a func here that access alias if exists, or fetches if it doesn't
+    //(with completion handler)
     
     private static let apiAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
 
@@ -52,20 +58,51 @@ public class EmailManager {
     struct EmailResponse: Decodable {
         let address: String
     }
+    
+    func getAliasIfNeededAndConsume(timeoutInterval: TimeInterval = 5.0, completionHandler: @escaping (String?) -> Void) {
+        if let alias = alias {
+            completionHandler(alias)
+            consumeAliasAndReplace()
+            return
+        }
+        fetchAndStoreAlias(timeoutInterval: timeoutInterval) { [weak self] newAlias in
+            completionHandler(newAlias)
+            self?.consumeAliasAndReplace()
+        }
+    }
+    
+    func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: ((String?) -> Void)? = nil) {
+        fetchAlias(timeoutInterval: timeoutInterval) { alias in
+            guard let alias = alias else {
+                //todo error handling
+                print("oh no")
+                completionHandler?(nil)
+                return
+            }
+            EmailKeychainManager.addToKeychainAlias(alias)
+            completionHandler?(alias)
+        }
+    }
+    
+    private func consumeAliasAndReplace() {
+        EmailKeychainManager.deleteFromKeychainAlias()
+        fetchAndStoreAlias()
+    }
         
-    func fetchAlias() {
-        APIRequest.request(url: EmailManager.apiAddress, method: .post, headers: headers) { response, error in
+    private func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: ((String?) -> Void)? = nil) {
+        APIRequest.request(url: EmailManager.apiAddress, method: .post, headers: headers, timeoutInterval: timeoutInterval) { response, error in
             guard let data = response?.data, error == nil else {
                 print("error fetching alias")
+                completionHandler?(nil)
                 return
             }
             do {
                 let decoder = JSONDecoder()
-                self.alias = try decoder.decode(EmailResponse.self, from: data).address
-                print(self.alias)
+                let alias = try decoder.decode(EmailResponse.self, from: data).address
+                completionHandler?(alias)
             } catch {
                 print("invalid alias response")
-                return
+                completionHandler?(nil)
             }
         }
     }
@@ -97,25 +134,36 @@ class EmailKeychainManager {
         }
         deleteAllKeychainData()
         
-        addDataToKeychain(tokenData, withService: .token)
-        addDataToKeychain(usernameData, withService: .username)
+        addDataToKeychain(tokenData, forField: .token)
+        addDataToKeychain(usernameData, forField: .username)
     }
     
-    static func retreiveTokenAndUsernameFromKeychain() -> (String, String)? {
-        guard let tokenData = retreiveDataFromKeychain(forService: .token),
-              let usernameData = retreiveDataFromKeychain(forService: .username),
-              let token = String(data: tokenData, encoding: String.Encoding.utf8),
-              let username = String(data: usernameData, encoding: String.Encoding.utf8) else {
+    static func addToKeychainAlias(_ alias: String) {
+        guard let aliasData = alias.data(using: String.Encoding.utf8) else {
+            print("oh no")
+            return
+        }
+        deleteKeychainItem(forField: .alias)
+        addDataToKeychain(aliasData, forField: .alias)
+    }
+    
+    static func deleteFromKeychainAlias() {
+        deleteKeychainItem(forField: .alias)
+    }
+    
+    static func getStringFromKeychain(forField field: EmailKeychainField) -> String? {
+        guard let data = retreiveDataFromKeychain(forField: field),
+              let string = String(data: data, encoding: String.Encoding.utf8) else {
             print("oh no")
             return nil
         }
-        return (token, username)
+        return string
     }
     
-    private static func deleteKeychainItemWithService(_ service: EmailKeychainService) {
+    private static func deleteKeychainItem(forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service.rawValue]
+            kSecAttrService as String: field.rawValue]
         let deleteStatus = SecItemDelete(query as CFDictionary)
         guard deleteStatus == errSecSuccess else {
             print("Keychain error")
@@ -124,11 +172,11 @@ class EmailKeychainManager {
         }
     }
     
-    private static func addDataToKeychain(_ data: Data, withService service: EmailKeychainService) {
+    private static func addDataToKeychain(_ data: Data, forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: false,
-            kSecAttrService as String: service.rawValue,
+            kSecAttrService as String: field.rawValue,
             kSecValueData as String: data]
         
         let status = SecItemAdd(query as CFDictionary, nil)
@@ -139,11 +187,11 @@ class EmailKeychainManager {
         }
     }
     
-    private static func retreiveDataFromKeychain(forService service: EmailKeychainService) -> Data? {
+    private static func retreiveDataFromKeychain(forField field: EmailKeychainField) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecAttrService as String: service.rawValue,
+            kSecAttrService as String: field.rawValue,
             kSecReturnData as String: true]
         
         var item: CFTypeRef?

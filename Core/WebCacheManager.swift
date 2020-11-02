@@ -212,15 +212,10 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
     
     public func removeAllData(forDomain domain: String, completion: @escaping () -> Void) {
         fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { [weak self] records in
-            var setToRemove = [WKWebsiteDataRecord]()
-            for record in records {
-                if record.displayName.hasPrefix(domain) {
-                    setToRemove.append(record)
-                }
-            }
+            let toRemove = records.filter { record in record.displayName.hasPrefix(domain) }
             
             self?.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
-                             for: setToRemove,
+                             for: toRemove,
                              completionHandler: completion)
         }
     }

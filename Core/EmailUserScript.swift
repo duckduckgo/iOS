@@ -70,21 +70,22 @@ public class EmailUserScript: NSObject, UserScript {
             emailManager.storeToken(token, username: username)
         case .checkSignedInStatus:
             let signedInStatus = String(emailManager.isSignedIn)
-            webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus), fromIOSApp: true}, window.origin)")
+            let properties = "checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus)"
+            let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
+            self.webView!.evaluateJavaScript(jsString)
         case .checkCanInjectAutofill:
             let canInject = emailManager.isSignedIn
-            webView!.evaluateJavaScript("window.postMessage({checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject), fromIOSApp: true}, window.origin)")
+            let properties = "checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject)"
+            let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
+            self.webView!.evaluateJavaScript(jsString)
         case .getAlias:
-            print(self.emailManager.token)
-            print(self.emailManager.username)
             emailManager.getAliasEmailIfNeededAndConsume { alias in
                 guard let alias = alias else {
                     print("oh no")
                     return
                 }
-                //TODO if field already populated with a duck address, this does nothing :(
-                //still works if there's other stuff in the field tho
-                self.webView!.evaluateJavaScript("window.postMessage({type: 'getAliasResponse', alias: \"\(alias)\", fromIOSApp: true}, window.origin)")
+                let jsString = EmailUserScript.postMessageJSString(withPropertyString: "type: 'getAliasResponse', alias: \"\(alias)\"")
+                self.webView!.evaluateJavaScript(jsString)
             }
         }
     }
@@ -93,5 +94,8 @@ public class EmailUserScript: NSObject, UserScript {
         //todo probs don't need this
 //        let signedInStatus = String(emailManager.isSignedIn)
 //        webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedIn: true, isAppSignedIn: \(signedInStatus)})")
+    private static func postMessageJSString(withPropertyString propertyString: String) -> String {
+        let string = "window.postMessage({%@, fromIOSApp: true}, window.origin)"
+        return String(format: string, propertyString)
     }
 }

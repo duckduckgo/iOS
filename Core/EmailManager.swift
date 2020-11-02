@@ -25,11 +25,12 @@ private struct EmailAliasResponse: Decodable {
 
 public class EmailManager {
     
-    //todo these can probably be private once we're done testing
-    public var username: String? {
+    private static let emailDomain = "duck.com"
+    
+    private var username: String? {
         EmailKeychainManager.getStringFromKeychain(forField: .username)
     }
-    public var token: String? {
+    private var token: String? {
         EmailKeychainManager.getStringFromKeychain(forField: .token)
     }
     private var alias: String? {
@@ -56,70 +57,81 @@ public class EmailManager {
         EmailKeychainManager.addToKeychain(token: token, forUsername: username)
         fetchAndStoreAlias()
     }
-    //TODO settings action should copy to clipboard and notify user
-    //"Reference UI that we use for Fireproof - Alerts and CTAs doc in Figma"
-    private static let apiAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
-    
-    private static let emailDomain = "duck.com"
+        
+    public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
+        if let alias = alias {
+            completionHandler(emailFromAlias(alias), nil)
+            consumeAliasAndReplace()
+            return
+        }
+        fetchAndStoreAlias(timeoutInterval: timeoutInterval) { [weak self] newAlias, error in
+            guard let newAlias = newAlias, error == nil  else {
+                completionHandler(nil, error)
+                return
+            }
+            completionHandler(self?.emailFromAlias(newAlias), nil)
+            self?.consumeAliasAndReplace()
+        }
+    }
+}
 
-    private var headers: HTTPHeaders {
+// Alias managment
+extension EmailManager {
+    
+    public enum FetchAliasError: Error {
+        case networkError
+        case signedOut
+        case invalidResponse
+    }
+    
+    public typealias AliasCompletion = (String?, FetchAliasError?) -> Void
+
+    private static let aliasAPIAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
+    
+    private var aliasHeaders: HTTPHeaders {
         guard let token = token else {
             return [:]
         }
         return ["Authorization": "Bearer " + token]
     }
     
-    //TODO general error handling
-    //TODO should guard that we're actually signed in
-    
-    public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 5.0, completionHandler: @escaping (String?) -> Void) {
-        if let alias = alias {
-            completionHandler(emailFromAlias(alias))
-            consumeAliasAndReplace()
-            return
-        }
-        fetchAndStoreAlias(timeoutInterval: timeoutInterval) { [weak self] newAlias in
-            if let newAlias = newAlias {
-                completionHandler(self?.emailFromAlias(newAlias))
-                self?.consumeAliasAndReplace()
-            }
-            completionHandler(newAlias)
-        }
-    }
-    
-    func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: ((String?) -> Void)? = nil) {
-        fetchAlias(timeoutInterval: timeoutInterval) { alias in
-            guard let alias = alias else {
-                //todo error handling
-                print("oh no")
-                completionHandler?(nil)
-                return
-            }
-            EmailKeychainManager.addToKeychain(alias: alias)
-            completionHandler?(alias)
-        }
-    }
-    
     private func consumeAliasAndReplace() {
         EmailKeychainManager.deleteFromKeychainAlias()
         fetchAndStoreAlias()
     }
+    
+    private func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
+        fetchAlias(timeoutInterval: timeoutInterval) { alias, error in
+            guard let alias = alias, error == nil else {
+                completionHandler?(nil, error)
+                return
+            }
+            //TODO before storing, should we check we haven't signed out in the interim?
+            //this could be an issue if the network is slow
+            EmailKeychainManager.addToKeychain(alias: alias)
+            completionHandler?(alias, nil)
+        }
+    }
         
-    private func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: ((String?) -> Void)? = nil) {
-        APIRequest.request(url: EmailManager.apiAddress, method: .post, headers: headers, timeoutInterval: timeoutInterval) { response, error in
+    private func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
+        guard isSignedIn else {
+            completionHandler?(nil, .signedOut)
+            return
+        }
+        APIRequest.request(url: EmailManager.aliasAPIAddress,
+                           method: .post,
+                           headers: aliasHeaders,
+                           timeoutInterval: timeoutInterval) { response, error in
             guard let data = response?.data, error == nil else {
-                //TODO getting an error here, need to investigate
-                print("error fetching alias")
-                completionHandler?(nil)
+                completionHandler?(nil, .networkError)
                 return
             }
             do {
                 let decoder = JSONDecoder()
                 let alias = try decoder.decode(EmailAliasResponse.self, from: data).address
-                completionHandler?(alias)
+                completionHandler?(alias, nil)
             } catch {
-                print("invalid alias response")
-                completionHandler?(nil)
+                completionHandler?(nil, .invalidResponse)
             }
         }
     }

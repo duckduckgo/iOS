@@ -79,9 +79,8 @@ public class EmailUserScript: NSObject, UserScript {
             let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
             self.webView!.evaluateJavaScript(jsString)
         case .getAlias:
-            emailManager.getAliasEmailIfNeededAndConsume { alias in
+            emailManager.getAliasEmailIfNeededAndConsume { alias, _ in
                 guard let alias = alias else {
-                    print("oh no")
                     return
                 }
                 let jsString = EmailUserScript.postMessageJSString(withPropertyString: "type: 'getAliasResponse', alias: \"\(alias)\"")

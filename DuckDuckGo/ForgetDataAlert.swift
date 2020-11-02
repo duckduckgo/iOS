@@ -28,7 +28,7 @@ class ForgetDataAlert {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
 
-        let forgetCurrentTabAndDataAction = UIAlertAction(title: "Clear Current Tab", style: .destructive) { _ in
+        let forgetCurrentTabAndDataAction = UIAlertAction(title: UserText.actionForgetTab, style: .destructive) { _ in
             forgetCurrentTabAndDataHandler?()
         }
         
@@ -40,7 +40,7 @@ class ForgetDataAlert {
             cancelHandler?()
         }
 
-        if let _ = forgetCurrentTabAndDataHandler {
+        if forgetCurrentTabAndDataHandler != nil {
             alert.addAction(forgetCurrentTabAndDataAction)
         }
         alert.addAction(forgetTabsAndDataAction)

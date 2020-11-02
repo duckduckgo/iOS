@@ -22,6 +22,12 @@
 /* Confirmation message */
 "action.title.forgetAllDone" = "Tabs and data cleared";
 
+/* No comment provided by engineer. */
+"action.title.forgetTab" = "Clear Current Website";
+
+/* No comment provided by engineer. */
+"action.title.forgetTabDone" = "Current Website Cleared";
+
 /* Open in New Background Tab action */
 "action.title.newBackgroundTabForUrl" = "Open in Background";
 

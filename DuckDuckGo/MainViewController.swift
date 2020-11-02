@@ -1287,7 +1287,7 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.shared.clear(domain: domain) {
             tab.refresh()
             let window = UIApplication.shared.keyWindow
-            window?.showBottomToast("Current Tab Cleared", duration: 1)
+            window?.showBottomToast(UserText.actionForgetTabDone, duration: 1)
         }
     }
     

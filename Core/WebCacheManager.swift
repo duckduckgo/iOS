@@ -35,6 +35,8 @@ public protocol WebCacheManagerDataStore {
     
     func removeAllData(completion: @escaping () -> Void)
     
+    func removeAllData(forDomain domain: String, completion: @escaping () -> Void)
+    
 }
 
 public class WebCacheManager {
@@ -133,6 +135,12 @@ public class WebCacheManager {
             self.clearAllData(dataStore: dataStore, completion: completion)
         }
     }
+    
+    public func clear(domain: String,
+                      dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+                      completion: @escaping () -> Void) {
+        dataStore.removeAllData(forDomain: domain.dropPrefix(prefix: "www."), completion: completion)
+    }
 
     private func clearAllData(dataStore: WebCacheManagerDataStore, completion: @escaping () -> Void) {
         dataStore.removeAllData(completion: completion)
@@ -158,6 +166,30 @@ public class WebCacheManager {
         }
 
     }
+    
+    /**
+     Save all cookies except for those set for the specified domain
+     */
+    private func extractExcludedDomains(forDomain domain: String,
+                                        cookieStore: WebCacheManagerCookieStore?,
+                                        cookieStorage: CookieStorage,
+                                        logins: PreserveLogins,
+                                        completion: @escaping () -> Void) {
+        
+        guard let cookieStore = cookieStore else {
+            completion()
+            return
+        }
+        
+        cookieStore.getAllCookies { cookies in
+            for cookie in cookies {
+                if cookie.domain != domain || logins.isAllowed(cookieDomain: cookie.domain) {
+                    cookieStorage.setCookie(cookie)
+                }
+            }
+            completion()
+        }
+    }
 
 }
 
@@ -176,6 +208,21 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
         removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
                    modifiedSince: Date.distantPast,
                    completionHandler: completion)
+    }
+    
+    public func removeAllData(forDomain domain: String, completion: @escaping () -> Void) {
+        fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { [weak self] records in
+            var setToRemove = [WKWebsiteDataRecord]()
+            for record in records {
+                if record.displayName.hasPrefix(domain) {
+                    setToRemove.append(record)
+                }
+            }
+            
+            self?.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                             for: setToRemove,
+                             completionHandler: completion)
+        }
     }
     
 }

@@ -429,7 +429,10 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
 
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+        let alert = ForgetDataAlert.buildAlert(forgetCurrentTabAndDataHandler: { [weak self] in
+            self?.forgetCurrentTab()
+        },
+            forgetTabsAndDataHandler: { [weak self] in
             self?.forgetAllWithAnimation {}
         })
         self.present(controller: alert, fromView: self.toolbar)
@@ -1275,6 +1278,17 @@ extension MainViewController: AutoClearWorker {
         Favicons.shared.clearCache(.tabs)
     }
     
+    func forgetCurrentTab() {
+        guard let tab = currentTab, let tabUrl = tab.url, let domain = tabUrl.host else {
+            return
+        }
+        
+        ServerTrustCache.shared.clear(forDomain: domain)
+        WebCacheManager.shared.clear(domain: domain) {
+            tab.refresh()
+        }
+    }
+    
     func forgetData() {
         findInPageView?.done()
         
@@ -1284,6 +1298,12 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.shared.clear {
             pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
+    }
+    
+    func forgetCurrentTab(completion: (() -> Void)? = nil) {
+        let spid = Instruments.shared.startTimedEvent(.clearingData)
+        forgetCurrentTab()
+        Instruments.shared.endTimedEvent(for: spid)
     }
     
     func forgetAllWithAnimation(completion: (() -> Void)? = nil) {

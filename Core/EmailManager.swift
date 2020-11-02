@@ -26,13 +26,13 @@ public class EmailManager {
     private static let emailDomain = "duck.com"
     
     private var username: String? {
-        EmailKeychainManager.getStringFromKeychain(forField: .username)
+        EmailKeychainManager.getString(forField: .username)
     }
     private var token: String? {
-        EmailKeychainManager.getStringFromKeychain(forField: .token)
+        EmailKeychainManager.getString(forField: .token)
     }
     private var alias: String? {
-        EmailKeychainManager.getStringFromKeychain(forField: .alias)
+        EmailKeychainManager.getString(forField: .alias)
     }
     
     public var isSignedIn: Bool {
@@ -48,11 +48,11 @@ public class EmailManager {
     }
     
     public func signOut() {
-        EmailKeychainManager.deleteAllKeychainData()
+        EmailKeychainManager.deleteAll()
     }
 
     func storeToken(_ token: String, username: String) {
-        EmailKeychainManager.addToKeychain(token: token, forUsername: username)
+        EmailKeychainManager.add(token: token, forUsername: username)
         fetchAndStoreAlias()
     }
         
@@ -94,7 +94,7 @@ extension EmailManager {
     }
     
     private func consumeAliasAndReplace() {
-        EmailKeychainManager.deleteFromKeychainAlias()
+        EmailKeychainManager.deleteAlias()
         fetchAndStoreAlias()
     }
     
@@ -106,7 +106,7 @@ extension EmailManager {
             }
             //TODO before storing, should we check we haven't signed out in the interim?
             //this could be an issue if the network is slow
-            EmailKeychainManager.addToKeychain(alias: alias)
+            EmailKeychainManager.add(alias: alias)
             completionHandler?(alias, nil)
         }
     }

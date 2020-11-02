@@ -30,39 +30,39 @@ class EmailKeychainManager {
         case alias = "email.duckduckgo.com.alias"
     }
     
-    static func deleteAllKeychainData() {
-        deleteKeychainItem(forField: .username)
-        deleteKeychainItem(forField: .token)
-        deleteKeychainItem(forField: .alias)
+    static func deleteAll() {
+        deleteItem(forField: .username)
+        deleteItem(forField: .token)
+        deleteItem(forField: .alias)
     }
     
-    static func addToKeychain(token: String, forUsername username: String) {
+    static func add(token: String, forUsername username: String) {
         guard let tokenData = token.data(using: String.Encoding.utf8),
               let usernameData = username.data(using: String.Encoding.utf8) else {
             print("oh no")
             return
         }
-        deleteAllKeychainData()
+        deleteAll()
         
-        addDataToKeychain(tokenData, forField: .token)
-        addDataToKeychain(usernameData, forField: .username)
+        add(data: tokenData, forField: .token)
+        add(data: usernameData, forField: .username)
     }
     
-    static func addToKeychain(alias: String) {
+    static func add(alias: String) {
         guard let aliasData = alias.data(using: String.Encoding.utf8) else {
             print("oh no")
             return
         }
-        deleteKeychainItem(forField: .alias)
-        addDataToKeychain(aliasData, forField: .alias)
+        deleteItem(forField: .alias)
+        add(data: aliasData, forField: .alias)
     }
     
-    static func deleteFromKeychainAlias() {
-        deleteKeychainItem(forField: .alias)
+    static func deleteAlias() {
+        deleteItem(forField: .alias)
     }
     
-    static func getStringFromKeychain(forField field: EmailKeychainField) -> String? {
-        guard let data = retreiveDataFromKeychain(forField: field),
+    static func getString(forField field: EmailKeychainField) -> String? {
+        guard let data = retreiveData(forField: field),
               let string = String(data: data, encoding: String.Encoding.utf8) else {
             print("oh no")
             return nil
@@ -70,7 +70,7 @@ class EmailKeychainManager {
         return string
     }
     
-    private static func deleteKeychainItem(forField field: EmailKeychainField) {
+    private static func deleteItem(forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: field.rawValue]
@@ -82,7 +82,7 @@ class EmailKeychainManager {
         }
     }
     
-    private static func addDataToKeychain(_ data: Data, forField field: EmailKeychainField) {
+    private static func add(data: Data, forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: false,
@@ -97,7 +97,7 @@ class EmailKeychainManager {
         }
     }
     
-    private static func retreiveDataFromKeychain(forField field: EmailKeychainField) -> Data? {
+    private static func retreiveData(forField field: EmailKeychainField) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecMatchLimit as String: kSecMatchLimitOne,

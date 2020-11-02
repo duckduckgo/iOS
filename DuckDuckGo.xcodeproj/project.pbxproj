@@ -573,6 +573,7 @@
 		F4D349A02548329B002AAF35 /* ddg-logo-borderless.svg in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499C2548329B002AAF35 /* ddg-logo-borderless.svg */; };
 		F4D349A12548329B002AAF35 /* email-style.css in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499D2548329B002AAF35 /* email-style.css */; };
 		F4D349D125502AC4002AAF35 /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */; };
+		F4D349DB25506A1E002AAF35 /* EmailKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */; };
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
@@ -1999,6 +2000,7 @@
 		F4D3499C2548329B002AAF35 /* ddg-logo-borderless.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ddg-logo-borderless.svg"; sourceTree = "<group>"; };
 		F4D3499D2548329B002AAF35 /* email-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "email-style.css"; sourceTree = "<group>"; };
 		F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
+		F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailKeychainManager.swift; sourceTree = "<group>"; };
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
@@ -3727,6 +3729,7 @@
 				F4D3499A2548329A002AAF35 /* ProximaNova-Reg-webfont.woff */,
 				F4D349622541D7D0002AAF35 /* EmailUserScript.swift */,
 				F4D3497E2541F712002AAF35 /* EmailManager.swift */,
+				F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */,
 			);
 			name = Email;
 			sourceTree = "<group>";
@@ -4853,6 +4856,7 @@
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */,
+				F4D349DB25506A1E002AAF35 /* EmailKeychainManager.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,

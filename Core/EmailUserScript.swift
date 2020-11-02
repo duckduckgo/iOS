@@ -90,10 +90,6 @@ public class EmailUserScript: NSObject, UserScript {
         }
     }
     
-    public func notifyWebViewEmailSignedInStatus() {
-        //todo probs don't need this
-//        let signedInStatus = String(emailManager.isSignedIn)
-//        webView!.evaluateJavaScript("window.postMessage({checkExtensionSignedIn: true, isAppSignedIn: \(signedInStatus)})")
     private static func postMessageJSString(withPropertyString propertyString: String) -> String {
         let string = "window.postMessage({%@, fromIOSApp: true}, window.origin)"
         return String(format: string, propertyString)

@@ -901,8 +901,6 @@ extension TabViewController: WKNavigationDelegate {
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
         
-        //TODO fow now we always say we're signed in
-        emailScript.notifyWebViewEmailSignedInStatus()
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()

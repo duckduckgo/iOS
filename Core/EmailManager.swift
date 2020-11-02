@@ -104,8 +104,12 @@ extension EmailManager {
                 completionHandler?(nil, error)
                 return
             }
-            //TODO before storing, should we check we haven't signed out in the interim?
-            //this could be an issue if the network is slow
+            // Check we haven't signed out whilst waiting
+            // if so we don't want to save sensitive data
+            guard self.isSignedIn else {
+                completionHandler?(nil, .signedOut)
+                return
+            }
             EmailKeychainManager.add(alias: alias)
             completionHandler?(alias, nil)
         }

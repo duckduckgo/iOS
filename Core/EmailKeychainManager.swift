@@ -30,10 +30,12 @@ class EmailKeychainManager {
         case alias = "email.duckduckgo.com.alias"
     }
     
-    static func deleteAll() {
-        deleteItem(forField: .username)
-        deleteItem(forField: .token)
-        deleteItem(forField: .alias)
+    static func getString(forField field: EmailKeychainField) -> String? {
+        guard let data = retreiveData(forField: field),
+              let string = String(data: data, encoding: String.Encoding.utf8) else {
+            return nil
+        }
+        return string
     }
     
     static func add(token: String, forUsername username: String) {
@@ -59,33 +61,14 @@ class EmailKeychainManager {
         deleteItem(forField: .alias)
     }
     
-    static func getString(forField field: EmailKeychainField) -> String? {
-        guard let data = retreiveData(forField: field),
-              let string = String(data: data, encoding: String.Encoding.utf8) else {
-            return nil
-        }
-        return string
+    static func deleteAll() {
+        deleteItem(forField: .username)
+        deleteItem(forField: .token)
+        deleteItem(forField: .alias)
     }
 }
 
 extension EmailKeychainManager {
-    private static func deleteItem(forField field: EmailKeychainField) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: field.rawValue]
-        SecItemDelete(query as CFDictionary)
-    }
-    
-    private static func add(data: Data, forField field: EmailKeychainField) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrSynchronizable as String: false,
-            kSecAttrService as String: field.rawValue,
-            kSecValueData as String: data]
-        
-        SecItemAdd(query as CFDictionary, nil)
-    }
-    
     private static func retreiveData(forField field: EmailKeychainField) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -100,5 +83,22 @@ extension EmailKeychainManager {
         }
 
         return existingItem
+    }
+    
+    private static func add(data: Data, forField field: EmailKeychainField) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrSynchronizable as String: false,
+            kSecAttrService as String: field.rawValue,
+            kSecValueData as String: data]
+        
+        SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    private static func deleteItem(forField field: EmailKeychainField) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: field.rawValue]
+        SecItemDelete(query as CFDictionary)
     }
 }

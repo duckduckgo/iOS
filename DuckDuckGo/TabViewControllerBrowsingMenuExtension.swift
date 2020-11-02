@@ -24,8 +24,6 @@ extension TabViewController {
     
     func buildBrowsingMenu() -> UIAlertController {
         
-        //TODO after share, before request desktop site
-        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
         alert.addAction(title: UserText.actionNewTab) { [weak self] in
@@ -136,14 +134,14 @@ extension TabViewController {
         guard emailScript.isSignedIn else { return nil }
         let title = UserText.emailBrowsingMenuUseNewDuckAddress
         return UIAlertAction(title: title, style: .default) { [weak self] _ in
-            self?.emailScript.emailManager.getAliasEmailIfNeededAndConsume { alias in
+            self?.emailScript.emailManager.getAliasEmailIfNeededAndConsume { [weak self] alias in
                 guard let alias = alias else {
-                    Swift.print("oh no, no alias :(")
+                    //TODO we may want to communicate this failure to the user
                     return
                 }
                 let pasteBoard = UIPasteboard.general
                 pasteBoard.string = alias
-                //TODO alert user
+                self?.view.showBottomToast(UserText.emailBrowsingMenuAlert)
             }
         }
     }

@@ -19,6 +19,10 @@
 
 import WebKit
 
+private struct EmailAliasResponse: Decodable {
+    let address: String
+}
+
 public class EmailManager {
     
     //todo these can probably be private once we're done testing
@@ -32,9 +36,18 @@ public class EmailManager {
         EmailKeychainManager.getStringFromKeychain(forField: .alias)
     }
     
-    var isSignedIn: Bool {
+    public var isSignedIn: Bool {
         return token != nil && username != nil
     }
+    
+    public var userEmail: String? {
+        guard let username = username else { return nil }
+        return username + "@" + EmailManager.emailDomain
+    }
+    
+    public init() {
+    }
+    
     public func signOut() {
         EmailKeychainManager.deleteAllKeychainData()
     }
@@ -43,8 +56,11 @@ public class EmailManager {
         EmailKeychainManager.addToKeychain(token: token, forUsername: username)
         fetchAndStoreAlias()
     }
-        
-    private static let apiAddress = URL(string: "https://quack.duckduckgo.com/api/email/addresses")!
+    //TODO settings action should copy to clipboard and notify user
+    //"Reference UI that we use for Fireproof - Alerts and CTAs doc in Figma"
+    private static let apiAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
+    
+    private static let emailDomain = "duck.com"
 
     private var headers: HTTPHeaders {
         guard let token = token else {
@@ -53,11 +69,10 @@ public class EmailManager {
         return ["Authorization": "Bearer " + token]
     }
     
-    struct EmailResponse: Decodable {
-        let address: String
-    }
+    //TODO general error handling
+    //TODO should guard that we're actually signed in
     
-    func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 5.0, completionHandler: @escaping (String?) -> Void) {
+    public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 5.0, completionHandler: @escaping (String?) -> Void) {
         if let alias = alias {
             completionHandler(emailFromAlias(alias))
             consumeAliasAndReplace()
@@ -93,13 +108,14 @@ public class EmailManager {
     private func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: ((String?) -> Void)? = nil) {
         APIRequest.request(url: EmailManager.apiAddress, method: .post, headers: headers, timeoutInterval: timeoutInterval) { response, error in
             guard let data = response?.data, error == nil else {
+                //TODO getting an error here, need to investigate
                 print("error fetching alias")
                 completionHandler?(nil)
                 return
             }
             do {
                 let decoder = JSONDecoder()
-                let alias = try decoder.decode(EmailResponse.self, from: data).address
+                let alias = try decoder.decode(EmailAliasResponse.self, from: data).address
                 completionHandler?(alias)
             } catch {
                 print("invalid alias response")
@@ -109,10 +125,11 @@ public class EmailManager {
     }
     
     private func emailFromAlias(_ alias: String) -> String {
-        return alias + "@duck.com"
+        return alias + "@" + EmailManager.emailDomain
     }
 }
 
+//TODO might want a generic storage protocol and abstract this away...
 class EmailKeychainManager {
     
     /*

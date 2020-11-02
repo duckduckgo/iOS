@@ -37,6 +37,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
+    @IBOutlet weak var emailCell: UITableViewCell!
+    @IBOutlet weak var emailAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
 
@@ -49,6 +51,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
+    private lazy var emailManager = EmailManager()
 
     private static var shouldShowDefaultBrowserSection: Bool {
         if #available(iOS 14, *) {
@@ -84,6 +87,7 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDoNotSell()
         configureIconViews()
+        configureEmail()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -178,6 +182,15 @@ class SettingsViewController: UITableViewController {
     
     private func configureDoNotSell() {
         doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
+    }
+    
+    private func configureEmail() {
+        if emailManager.isSignedIn {
+            emailCell.isHidden = false
+            emailAccessoryText.text = emailManager.userEmail
+        } else {
+            emailCell.isHidden = true
+        }
     }
      
     private func configureRememberLogins() {

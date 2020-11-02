@@ -24,6 +24,8 @@ extension TabViewController {
     
     func buildBrowsingMenu() -> UIAlertController {
         
+        //TODO after share, before request desktop site
+        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
         alert.addAction(title: UserText.actionNewTab) { [weak self] in
@@ -51,6 +53,10 @@ extension TabViewController {
                 guard let self = self else { return }
                 guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
                 self.onShareAction(forLink: link, fromView: menu)
+            }
+            
+            if let action = buildUseNewDuckAddressAction(forLink: link) {
+                alert.addAction(action)
             }
             
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
@@ -124,6 +130,22 @@ extension TabViewController {
         }
         action.accessibilityLabel = UserText.actionSaveFavorite
         return action
+    }
+    
+    private func buildUseNewDuckAddressAction(forLink link: Link) -> UIAlertAction? {
+        guard emailScript.isSignedIn else { return nil }
+        let title = UserText.emailBrowsingMenuUseNewDuckAddress
+        return UIAlertAction(title: title, style: .default) { [weak self] _ in
+            self?.emailScript.emailManager.getAliasEmailIfNeededAndConsume { alias in
+                guard let alias = alias else {
+                    Swift.print("oh no, no alias :(")
+                    return
+                }
+                let pasteBoard = UIPasteboard.general
+                pasteBoard.string = alias
+                //TODO alert user
+            }
+        }
     }
 
     func onShareAction(forLink link: Link, fromView view: UIView) {

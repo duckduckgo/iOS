@@ -30,7 +30,7 @@ enum EmailMessageNames: String {
 //TODO what happens if they are signed into the app, but then sign in to a different user on web?
 public class EmailUserScript: NSObject, UserScript {
     
-    private let emailManager = EmailManager()
+    public let emailManager = EmailManager()
     
     public var webView: WKWebView?
     
@@ -49,6 +49,7 @@ public class EmailUserScript: NSObject, UserScript {
         EmailMessageNames.getAlias.rawValue
     ]
     
+    //TODO we should inject emailManager and not have this
     public var isSignedIn: Bool {
         emailManager.isSignedIn
     }
@@ -81,6 +82,8 @@ public class EmailUserScript: NSObject, UserScript {
                     print("oh no")
                     return
                 }
+                //TODO if field already populated with a duck address, this does nothing :(
+                //still works if there's other stuff in the field tho
                 self.webView!.evaluateJavaScript("window.postMessage({type: 'getAliasResponse', alias: \"\(alias)\", fromIOSApp: true}, window.origin)")
             }
         }

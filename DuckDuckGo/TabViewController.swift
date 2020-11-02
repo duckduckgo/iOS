@@ -163,7 +163,7 @@ class TabViewController: UIViewController {
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
-    private var emailScript = EmailUserScript()
+    var emailScript = EmailUserScript() //TODO change way this is accessed
     private var debugScript = DebugUserScript()
     
     private var generalScripts: [UserScript] = []
@@ -256,10 +256,10 @@ class TabViewController: UIViewController {
             generalScripts.append(doNotSellScript)
         }
         
-        //TODO if logged in, email script should be included in general scripts
-        //should always be included in ddgscripts
-        //for now lets put it in all the time
-        generalScripts.append(emailScript)
+        //TODO  this
+        //if emailScript.isSignedIn {
+            generalScripts.append(emailScript)
+        //}
         
         faviconScript.delegate = self
         debugScript.instrumentation = instrumentation

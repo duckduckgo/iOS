@@ -35,6 +35,9 @@ public class EmailManager {
     var isSignedIn: Bool {
         return token != nil && username != nil
     }
+    public func signOut() {
+        EmailKeychainManager.deleteAllKeychainData()
+    }
 
     func storeToken(_ token: String, username: String) {
         EmailKeychainManager.addToKeychain(token: token, forUsername: username)

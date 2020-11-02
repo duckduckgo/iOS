@@ -39,7 +39,6 @@ class EmailKeychainManager {
     static func add(token: String, forUsername username: String) {
         guard let tokenData = token.data(using: String.Encoding.utf8),
               let usernameData = username.data(using: String.Encoding.utf8) else {
-            print("oh no")
             return
         }
         deleteAll()
@@ -50,7 +49,6 @@ class EmailKeychainManager {
     
     static func add(alias: String) {
         guard let aliasData = alias.data(using: String.Encoding.utf8) else {
-            print("oh no")
             return
         }
         deleteItem(forField: .alias)
@@ -64,22 +62,18 @@ class EmailKeychainManager {
     static func getString(forField field: EmailKeychainField) -> String? {
         guard let data = retreiveData(forField: field),
               let string = String(data: data, encoding: String.Encoding.utf8) else {
-            print("oh no")
             return nil
         }
         return string
     }
-    
+}
+
+extension EmailKeychainManager {
     private static func deleteItem(forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: field.rawValue]
-        let deleteStatus = SecItemDelete(query as CFDictionary)
-        guard deleteStatus == errSecSuccess else {
-            print("Keychain error")
-            print(deleteStatus)
-            return
-        }
+        SecItemDelete(query as CFDictionary)
     }
     
     private static func add(data: Data, forField field: EmailKeychainField) {
@@ -89,12 +83,7 @@ class EmailKeychainManager {
             kSecAttrService as String: field.rawValue,
             kSecValueData as String: data]
         
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
-            print("Keychain error")
-            print(status)
-            return
-        }
+        SecItemAdd(query as CFDictionary, nil)
     }
     
     private static func retreiveData(forField field: EmailKeychainField) -> Data? {
@@ -106,21 +95,10 @@ class EmailKeychainManager {
         
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status != errSecItemNotFound else {
-            print("Keychain error: item not found")
-            print(status)
+        guard status == errSecSuccess, let existingItem = item as? Data else {
             return nil
         }
-        guard status == errSecSuccess else {
-            print("Keychain error")
-            print(status)
-            return nil
-        }
-        
-        guard let existingItem = item as? Data else {
-            print("oh no")
-            return nil
-        }
+
         return existingItem
     }
 }

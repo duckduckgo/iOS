@@ -1322,23 +1322,26 @@ extension MainViewController: AutoClearWorker {
 }
 
 extension MainViewController: ClearTabDelegate {
-    func commitClearTab(forController controller: ClearTabViewController, domain: String) {
-        forgetCurrentTab()
+    func commitClearTab(forController controller: ClearTabViewController, domain: String, recordType: WebCacheManager.RecordType) {
+        forgetCurrentTab(recordType: recordType) {}
     }
     
-    func forgetCurrentTab(completion: (() -> Void)? = nil) {
+    func forgetCurrentTab(recordType: WebCacheManager.RecordType, completion: (() -> Void)? = nil) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
-        forgetCurrentTab()
+        clearCurrentTabData(recordType: recordType)
         Instruments.shared.endTimedEvent(for: spid)
     }
     
-    func forgetCurrentTab() {
+    func clearCurrentTabData(recordType: WebCacheManager.RecordType) {
         guard let tab = currentTab, let tabUrl = tab.url, let domain = tabUrl.host else {
             return
         }
         
-        ServerTrustCache.shared.clear(forDomain: domain)
-        WebCacheManager.shared.clear(domain: domain) {
+        if recordType == .allData {
+            ServerTrustCache.shared.clear(forDomain: domain)
+        }
+        
+        WebCacheManager.shared.clear(domain: domain, recordType: recordType) {
             tab.refresh()
             let window = UIApplication.shared.keyWindow
             window?.showBottomToast(UserText.actionForgetTabDone, duration: 1)

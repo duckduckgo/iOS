@@ -35,7 +35,7 @@ public protocol WebCacheManagerDataStore {
     
     func removeAllData(completion: @escaping () -> Void)
     
-    func removeAllData(forDomain domain: String, completion: @escaping () -> Void)
+    func removeAllData(forDomain domain: String, recordType: WebCacheManager.RecordType, completion: @escaping () -> Void)
     
 }
 
@@ -43,6 +43,13 @@ public class WebCacheManager {
 
     private struct Constants {
         static let cookieDomain = "duckduckgo.com"
+    }
+    
+    public enum RecordType {
+        case cookies
+        case allData
+        
+        public static let allValues: [RecordType] = [.cookies, .allData]
     }
     
     public static var shared = WebCacheManager()
@@ -137,9 +144,12 @@ public class WebCacheManager {
     }
     
     public func clear(domain: String,
+                      recordType: RecordType,
                       dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
                       completion: @escaping () -> Void) {
-        dataStore.removeAllData(forDomain: domain.dropPrefix(prefix: "www."), completion: completion)
+        dataStore.removeAllData(forDomain: domain.dropPrefix(prefix: "www."),
+                                recordType: recordType,
+                                completion: completion)
     }
 
     private func clearAllData(dataStore: WebCacheManagerDataStore, completion: @escaping () -> Void) {
@@ -210,11 +220,12 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
                    completionHandler: completion)
     }
     
-    public func removeAllData(forDomain domain: String, completion: @escaping () -> Void) {
-        fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { [weak self] records in
+    public func removeAllData(forDomain domain: String, recordType: WebCacheManager.RecordType, completion: @escaping () -> Void) {
+        let recordTypes: Set<String> = (recordType == .cookies) ? [WKWebsiteDataTypeCookies] : WKWebsiteDataStore.allWebsiteDataTypes()
+        fetchDataRecords(ofTypes: recordTypes) { [weak self] records in
             let toRemove = records.filter { record in record.displayName.hasPrefix(domain) }
             
-            self?.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+            self?.removeData(ofTypes: recordTypes,
                              for: toRemove,
                              completionHandler: completion)
         }

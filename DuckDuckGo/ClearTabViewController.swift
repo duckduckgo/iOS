@@ -18,15 +18,17 @@
 //
 
 import UIKit
+import Core
 
 protocol ClearTabDelegate: class {
-    func commitClearTab(forController controller: ClearTabViewController, domain: String)
+    func commitClearTab(forController controller: ClearTabViewController, domain: String, recordType: WebCacheManager.RecordType)
 }
 
 class ClearTabViewController: UITableViewController {
 
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var domainSlider: StepSlider!
+    @IBOutlet weak var dataTypeControl: UISegmentedControl!
     
     public var domain: String!
     private lazy var domainComponents = [String]()
@@ -58,7 +60,7 @@ class ClearTabViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return UserText.actionForgetTabHeader
+        return (section == 0) ? UserText.actionForgetTabHeader : nil
     }
     
     func formatDomainLabel() {
@@ -81,7 +83,9 @@ class ClearTabViewController: UITableViewController {
     @IBAction func onClearTapped(_ sender: Any) {
         guard let domainStr = domainLabel.text else { return }
         
-        delegate?.commitClearTab(forController: self, domain: domainStr)
+        delegate?.commitClearTab(forController: self,
+                                 domain: domainStr,
+                                 recordType: WebCacheManager.RecordType.allValues[dataTypeControl.selectedSegmentIndex])
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -90,6 +94,13 @@ extension ClearTabViewController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
         domainLabel.textColor = theme.tableCellTextColor
+        
+        if #available(iOS 13.0, *) {
+            dataTypeControl.selectedSegmentTintColor = theme.buttonTintColor
+            dataTypeControl.backgroundColor = theme.barBackgroundColor
+        } else {
+            // Fallback on earlier versions
+        }
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

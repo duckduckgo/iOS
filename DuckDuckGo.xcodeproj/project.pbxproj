@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */; };
 		0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */; };
+		022196C42551D56E000CE70B /* ClearTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022196C32551D56E000CE70B /* ClearTab.storyboard */; };
+		022196CE2551D5F3000CE70B /* ClearTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022196CD2551D5F3000CE70B /* ClearTabViewController.swift */; };
+		022196D82551DAB9000CE70B /* StepSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022196D72551DAB9000CE70B /* StepSlider.swift */; };
 		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
 		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
@@ -692,6 +695,9 @@
 /* Begin PBXFileReference section */
 		0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRule.swift; sourceTree = "<group>"; };
 		0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesBuilder.swift; sourceTree = "<group>"; };
+		022196C32551D56E000CE70B /* ClearTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClearTab.storyboard; sourceTree = "<group>"; };
+		022196CD2551D5F3000CE70B /* ClearTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearTabViewController.swift; sourceTree = "<group>"; };
+		022196D72551DAB9000CE70B /* StepSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSlider.swift; sourceTree = "<group>"; };
 		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
 		0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesUserScript.swift; sourceTree = "<group>"; };
 		0254AC2324EDACDE004855DF /* contentblockerrules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = contentblockerrules.js; sourceTree = "<group>"; };
@@ -2095,6 +2101,16 @@
 			name = ContentBlockerRules;
 			sourceTree = "<group>";
 		};
+		022196C22551D186000CE70B /* ClearTab */ = {
+			isa = PBXGroup;
+			children = (
+				022196C32551D56E000CE70B /* ClearTab.storyboard */,
+				022196CD2551D5F3000CE70B /* ClearTabViewController.swift */,
+				022196D72551DAB9000CE70B /* StepSlider.swift */,
+			);
+			name = ClearTab;
+			sourceTree = "<group>";
+		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2382,6 +2398,7 @@
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
+				022196C22551D186000CE70B /* ClearTab */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
 				F1AB2B401E3F75A000868554 /* Settings */,
@@ -4192,6 +4209,7 @@
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				AA4D6AD323DE4D27007E8790 /* AppIconPurple29x29@2x.png in Resources */,
 				AA4D6AA123DE4CC4007E8790 /* AppIconBlue60x60@3x.png in Resources */,
+				022196C42551D56E000CE70B /* ClearTab.storyboard in Resources */,
 				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,
 				98ED39E82506FAA000490915 /* PrivacyProtectionHeaderCell.xib in Resources */,
 				984147A824F0259000362052 /* Onboarding.storyboard in Resources */,
@@ -4602,6 +4620,7 @@
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
+				022196CE2551D5F3000CE70B /* ClearTabViewController.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
@@ -4610,6 +4629,7 @@
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
+				022196D82551DAB9000CE70B /* StepSlider.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,

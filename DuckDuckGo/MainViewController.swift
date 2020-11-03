@@ -292,6 +292,16 @@ class MainViewController: UIViewController {
             return
         }
         
+        if segue.destination.children.count > 0,
+           let controller = segue.destination.children[0] as? ClearTabViewController {
+            guard let tab = currentTab, let tabUrl = tab.url, let domain = tabUrl.host else {
+                return
+            }
+            controller.domain = domain
+            controller.delegate = self
+            return
+        }
+        
         if let navController = segue.destination as? UINavigationController,
             let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
@@ -430,7 +440,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
 
         let alert = ForgetDataAlert.buildAlert(forgetCurrentTabAndDataHandler: { [weak self] in
-            self?.forgetCurrentTab()
+            self?.performSegue(withIdentifier: "clearTab", sender: nil)
         },
             forgetTabsAndDataHandler: { [weak self] in
             self?.forgetAllWithAnimation {}
@@ -1278,19 +1288,6 @@ extension MainViewController: AutoClearWorker {
         Favicons.shared.clearCache(.tabs)
     }
     
-    func forgetCurrentTab() {
-        guard let tab = currentTab, let tabUrl = tab.url, let domain = tabUrl.host else {
-            return
-        }
-        
-        ServerTrustCache.shared.clear(forDomain: domain)
-        WebCacheManager.shared.clear(domain: domain) {
-            tab.refresh()
-            let window = UIApplication.shared.keyWindow
-            window?.showBottomToast(UserText.actionForgetTabDone, duration: 1)
-        }
-    }
-    
     func forgetData() {
         findInPageView?.done()
         
@@ -1300,12 +1297,6 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.shared.clear {
             pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
-    }
-    
-    func forgetCurrentTab(completion: (() -> Void)? = nil) {
-        let spid = Instruments.shared.startTimedEvent(.clearingData)
-        forgetCurrentTab()
-        Instruments.shared.endTimedEvent(for: spid)
     }
     
     func forgetAllWithAnimation(completion: (() -> Void)? = nil) {
@@ -1328,6 +1319,31 @@ extension MainViewController: AutoClearWorker {
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
     
+}
+
+extension MainViewController: ClearTabDelegate {
+    func commitClearTab(forController controller: ClearTabViewController, domain: String) {
+        forgetCurrentTab()
+    }
+    
+    func forgetCurrentTab(completion: (() -> Void)? = nil) {
+        let spid = Instruments.shared.startTimedEvent(.clearingData)
+        forgetCurrentTab()
+        Instruments.shared.endTimedEvent(for: spid)
+    }
+    
+    func forgetCurrentTab() {
+        guard let tab = currentTab, let tabUrl = tab.url, let domain = tabUrl.host else {
+            return
+        }
+        
+        ServerTrustCache.shared.clear(forDomain: domain)
+        WebCacheManager.shared.clear(domain: domain) {
+            tab.refresh()
+            let window = UIApplication.shared.keyWindow
+            window?.showBottomToast(UserText.actionForgetTabDone, duration: 1)
+        }
+    }
 }
 
 extension MainViewController: Themable {

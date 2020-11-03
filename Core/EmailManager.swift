@@ -17,9 +17,13 @@
 //  limitations under the License.
 //
 
-private struct EmailAliasResponse: Decodable {
-    let address: String
+public enum FetchAliasError: Error {
+    case networkError
+    case signedOut
+    case invalidResponse
 }
+
+public typealias AliasCompletion = (String?, FetchAliasError?) -> Void
 
 public class EmailManager {
     
@@ -50,12 +54,7 @@ public class EmailManager {
     public func signOut() {
         EmailKeychainManager.deleteAll()
     }
-
-    func storeToken(_ token: String, username: String) {
-        EmailKeychainManager.add(token: token, forUsername: username)
-        fetchAndStoreAlias()
-    }
-        
+    
     public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
         if let alias = alias {
             completionHandler(emailFromAlias(alias), nil)
@@ -73,32 +72,50 @@ public class EmailManager {
     }
 }
 
-// Alias managment
-extension EmailManager {
-    
-    public enum FetchAliasError: Error {
-        case networkError
-        case signedOut
-        case invalidResponse
+extension EmailManager: EmailUserScriptDelegate {
+    public func emailUserScriptDidRequestSignedInStatus(emailUserScript: EmailUserScript) -> Bool {
+        isSignedIn
     }
     
-    public typealias AliasCompletion = (String?, FetchAliasError?) -> Void
-
-    private static let aliasAPIAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
+    public func emailUserScriptDidRequestAlias(emailUserScript: EmailUserScript, completionHandler: @escaping AliasCompletion) {
+        getAliasEmailIfNeededAndConsume(completionHandler: completionHandler)
+    }
     
-    private var aliasHeaders: HTTPHeaders {
+    public func emailUserScript(_ emailUserScript: EmailUserScript, didRequestStoreToken token: String, username: String) {
+        storeToken(token, username: username)
+    }
+}
+
+// Token Management
+private extension EmailManager {
+    func storeToken(_ token: String, username: String) {
+        EmailKeychainManager.add(token: token, forUsername: username)
+        fetchAndStoreAlias()
+    }
+}
+
+// Alias managment
+private extension EmailManager {
+    
+    struct EmailAliasResponse: Decodable {
+        let address: String
+    }
+
+    static let aliasAPIAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
+    
+    var aliasHeaders: HTTPHeaders {
         guard let token = token else {
             return [:]
         }
         return ["Authorization": "Bearer " + token]
     }
     
-    private func consumeAliasAndReplace() {
+    func consumeAliasAndReplace() {
         EmailKeychainManager.deleteAlias()
         fetchAndStoreAlias()
     }
     
-    private func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
+    func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
         fetchAlias(timeoutInterval: timeoutInterval) { alias, error in
             guard let alias = alias, error == nil else {
                 completionHandler?(nil, error)
@@ -115,7 +132,7 @@ extension EmailManager {
         }
     }
         
-    private func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
+    func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
         guard isSignedIn else {
             completionHandler?(nil, .signedOut)
             return
@@ -138,7 +155,7 @@ extension EmailManager {
         }
     }
     
-    private func emailFromAlias(_ alias: String) -> String {
+    func emailFromAlias(_ alias: String) -> String {
         return alias + "@" + EmailManager.emailDomain
     }
 }

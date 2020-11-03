@@ -131,12 +131,12 @@ extension TabViewController {
     }
     
     private func buildUseNewDuckAddressAction(forLink link: Link) -> UIAlertAction? {
-        guard emailScript.isSignedIn else { return nil }
+        guard emailManager.isSignedIn else { return nil }
         let title = UserText.emailBrowsingMenuUseNewDuckAddress
         return UIAlertAction(title: title, style: .default) { [weak self] _ in
-            self?.emailScript.emailManager.getAliasEmailIfNeededAndConsume { [weak self] alias, _ in
+            self?.emailManager.getAliasEmailIfNeededAndConsume { [weak self] alias, _ in
                 guard let alias = alias else {
-                    //TODO we may want to communicate this failure to the user
+                    //we may want to communicate this failure to the user in the future
                     return
                 }
                 let pasteBoard = UIPasteboard.general

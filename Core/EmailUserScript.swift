@@ -19,18 +19,22 @@
 
 import WebKit
 
-enum EmailMessageNames: String {
-    case storeToken = "emailHandlerStoreToken"
-    case checkSignedInStatus = "emailHandlerCheckAppSignedInStatus"
-    case checkCanInjectAutofill = "emailHandlerCheckCanInjectAutoFill"
-    case getAlias = "emailHandlerGetAlias"
+public protocol EmailUserScriptDelegate: class {
+    func emailUserScriptDidRequestSignedInStatus(emailUserScript: EmailUserScript) -> Bool
+    func emailUserScriptDidRequestAlias(emailUserScript: EmailUserScript, completionHandler: @escaping AliasCompletion)
+    func emailUserScript(_ emailUserScript: EmailUserScript, didRequestStoreToken token: String, username: String)
 }
 
-
-//TODO what happens if they are signed into the app, but then sign in to a different user on web?
 public class EmailUserScript: NSObject, UserScript {
     
-    public let emailManager = EmailManager()
+    private enum EmailMessageNames: String {
+        case storeToken = "emailHandlerStoreToken"
+        case checkSignedInStatus = "emailHandlerCheckAppSignedInStatus"
+        case checkCanInjectAutofill = "emailHandlerCheckCanInjectAutoFill"
+        case getAlias = "emailHandlerGetAlias"
+    }
+    
+    public weak var delegate: EmailUserScriptDelegate?
     
     public var webView: WKWebView?
     
@@ -48,14 +52,8 @@ public class EmailUserScript: NSObject, UserScript {
         EmailMessageNames.checkCanInjectAutofill.rawValue,
         EmailMessageNames.getAlias.rawValue
     ]
-    
-    //TODO we should inject emailManager and not have this
-    public var isSignedIn: Bool {
-        emailManager.isSignedIn
-    }
         
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        print(message)
         guard let type = EmailMessageNames(rawValue: message.name) else {
             print("Receieved invalid message name")
             return
@@ -66,20 +64,24 @@ public class EmailUserScript: NSObject, UserScript {
             guard let dict = message.body as? [String: Any],
                   let token = dict["token"] as? String,
                   let username = dict["username"] as? String else { return }
+            delegate?.emailUserScript(self, didRequestStoreToken: token, username: username)
             
-            emailManager.storeToken(token, username: username)
         case .checkSignedInStatus:
-            let signedInStatus = String(emailManager.isSignedIn)
-            let properties = "checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInStatus)"
+            let signedIn = delegate?.emailUserScriptDidRequestSignedInStatus(emailUserScript: self) ?? false
+            let signedInString = String(signedIn)
+            let properties = "checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInString)"
             let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
             self.webView!.evaluateJavaScript(jsString)
+            
         case .checkCanInjectAutofill:
-            let canInject = emailManager.isSignedIn
-            let properties = "checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInject)"
+            let signedIn = delegate?.emailUserScriptDidRequestSignedInStatus(emailUserScript: self) ?? false
+            let canInjectString = String(signedIn)
+            let properties = "checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInjectString)"
             let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
             self.webView!.evaluateJavaScript(jsString)
+            
         case .getAlias:
-            emailManager.getAliasEmailIfNeededAndConsume { alias, _ in
+            delegate?.emailUserScriptDidRequestAlias(emailUserScript: self) { alias, _ in
                 guard let alias = alias else {
                     return
                 }

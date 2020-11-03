@@ -71,7 +71,7 @@ class EmailSettingsViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 0 {
             emailManager.signOut()
             self.navigationController?.popViewController(animated: true)
-            //TODO JS doesn't update automatically, so dax logo will still show until page refreshed
+            //JS doesn't update automatically, so dax logo will still show until page refreshed
             //we've decided not to handle for now
         }
     }

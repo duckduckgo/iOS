@@ -71,14 +71,14 @@ public class EmailUserScript: NSObject, UserScript {
             let signedInString = String(signedIn)
             let properties = "checkExtensionSignedInCallback: true, isAppSignedIn: \(signedInString)"
             let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
-            self.webView!.evaluateJavaScript(jsString)
+            self.webView?.evaluateJavaScript(jsString)
             
         case .checkCanInjectAutofill:
             let signedIn = delegate?.emailUserScriptDidRequestSignedInStatus(emailUserScript: self) ?? false
             let canInjectString = String(signedIn)
             let properties = "checkCanInjectAutoFillCallback: true, canInjectAutoFill: \(canInjectString)"
             let jsString = EmailUserScript.postMessageJSString(withPropertyString: properties)
-            self.webView!.evaluateJavaScript(jsString)
+            self.webView?.evaluateJavaScript(jsString)
             
         case .getAlias:
             delegate?.emailUserScriptDidRequestAlias(emailUserScript: self) { alias, _ in
@@ -86,7 +86,7 @@ public class EmailUserScript: NSObject, UserScript {
                     return
                 }
                 let jsString = EmailUserScript.postMessageJSString(withPropertyString: "type: 'getAliasResponse', alias: \"\(alias)\"")
-                self.webView!.evaluateJavaScript(jsString)
+                self.webView?.evaluateJavaScript(jsString)
             }
         }
     }

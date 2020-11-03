@@ -574,6 +574,8 @@
 		F4D349A12548329B002AAF35 /* email-style.css in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499D2548329B002AAF35 /* email-style.css */; };
 		F4D349D125502AC4002AAF35 /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */; };
 		F4D349DB25506A1E002AAF35 /* EmailKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */; };
+		F4D349F7255195F4002AAF35 /* EmailUserScriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */; };
+		F4D34A122551C810002AAF35 /* EmailManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D34A082551C7EE002AAF35 /* EmailManagerTests.swift */; };
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
@@ -2001,6 +2003,8 @@
 		F4D3499D2548329B002AAF35 /* email-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "email-style.css"; sourceTree = "<group>"; };
 		F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
 		F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailKeychainManager.swift; sourceTree = "<group>"; };
+		F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailUserScriptTests.swift; sourceTree = "<group>"; };
+		F4D34A082551C7EE002AAF35 /* EmailManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerTests.swift; sourceTree = "<group>"; };
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
@@ -3671,6 +3675,7 @@
 				83EDCC3E1F86B363005CDFCD /* API */,
 				830FA79B1F8E81FB00FCE105 /* ContentBlocker */,
 				F17D722C1E8B3563003E8B0E /* Domain */,
+				F4D349E425518F20002AAF35 /* Email */,
 				85D2186E24BF24BA004373D2 /* Favicons */,
 				F16393F31ECCA83F00DDD653 /* SiteMonitoring */,
 				F1134EC91F40E74800B73467 /* Statistics */,
@@ -3730,6 +3735,15 @@
 				F4D349622541D7D0002AAF35 /* EmailUserScript.swift */,
 				F4D3497E2541F712002AAF35 /* EmailManager.swift */,
 				F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */,
+			);
+			name = Email;
+			sourceTree = "<group>";
+		};
+		F4D349E425518F20002AAF35 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				F4D34A082551C7EE002AAF35 /* EmailManagerTests.swift */,
+				F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */,
 			);
 			name = Email;
 			sourceTree = "<group>";
@@ -4721,11 +4735,13 @@
 				859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
+				F4D34A122551C810002AAF35 /* EmailManagerTests.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
+				F4D349F7255195F4002AAF35 /* EmailUserScriptTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,

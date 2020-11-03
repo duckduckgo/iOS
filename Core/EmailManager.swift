@@ -17,6 +17,16 @@
 //  limitations under the License.
 //
 
+public protocol EmailManagerStorage: class {
+    func getUsername() -> String?
+    func getToken() -> String?
+    func getAlias() -> String?
+    func store(token: String, username: String)
+    func store(alias: String)
+    func deleteAlias()
+    func deleteAll()
+}
+
 public enum FetchAliasError: Error {
     case networkError
     case signedOut
@@ -29,14 +39,16 @@ public class EmailManager {
     
     private static let emailDomain = "duck.com"
     
+    private let storage: EmailManagerStorage
+    
     private var username: String? {
-        EmailKeychainManager.getString(forField: .username)
+        storage.getUsername()
     }
     private var token: String? {
-        EmailKeychainManager.getString(forField: .token)
+        storage.getToken()
     }
     private var alias: String? {
-        EmailKeychainManager.getString(forField: .alias)
+        storage.getAlias()
     }
     
     public var isSignedIn: Bool {
@@ -48,11 +60,12 @@ public class EmailManager {
         return username + "@" + EmailManager.emailDomain
     }
     
-    public init() {
+    public init(storage: EmailManagerStorage = EmailKeychainManager()) {
+        self.storage = storage
     }
     
     public func signOut() {
-        EmailKeychainManager.deleteAll()
+        storage.deleteAll()
     }
     
     public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
@@ -89,7 +102,7 @@ extension EmailManager: EmailUserScriptDelegate {
 // Token Management
 private extension EmailManager {
     func storeToken(_ token: String, username: String) {
-        EmailKeychainManager.add(token: token, forUsername: username)
+        storage.store(token: token, username: username)
         fetchAndStoreAlias()
     }
 }
@@ -111,23 +124,23 @@ private extension EmailManager {
     }
     
     func consumeAliasAndReplace() {
-        EmailKeychainManager.deleteAlias()
+        storage.deleteAlias()
         fetchAndStoreAlias()
     }
     
     func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
-        fetchAlias(timeoutInterval: timeoutInterval) { alias, error in
+        fetchAlias(timeoutInterval: timeoutInterval) { [weak self] alias, error in
             guard let alias = alias, error == nil else {
                 completionHandler?(nil, error)
                 return
             }
             // Check we haven't signed out whilst waiting
             // if so we don't want to save sensitive data
-            guard self.isSignedIn else {
+            guard let self = self, self.isSignedIn else {
                 completionHandler?(nil, .signedOut)
                 return
             }
-            EmailKeychainManager.add(alias: alias)
+            self.storage.store(alias: alias)
             completionHandler?(alias, nil)
         }
     }

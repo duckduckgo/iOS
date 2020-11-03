@@ -17,8 +17,41 @@
 //  limitations under the License.
 //
 
-//TODO might want a generic storage protocol and abstract this away...
-class EmailKeychainManager {
+public class EmailKeychainManager {
+    public init() {}
+}
+
+extension EmailKeychainManager: EmailManagerStorage {
+    public func getUsername() -> String? {
+        EmailKeychainManager.getString(forField: .username)
+    }
+    
+    public func getToken() -> String? {
+        EmailKeychainManager.getString(forField: .token)
+    }
+    
+    public func getAlias() -> String? {
+        EmailKeychainManager.getString(forField: .alias)
+    }
+    
+    public func store(token: String, username: String) {
+        EmailKeychainManager.add(token: token, forUsername: username)
+    }
+    
+    public func store(alias: String) {
+        EmailKeychainManager.add(alias: alias)
+    }
+    
+    public func deleteAlias() {
+        EmailKeychainManager.deleteItem(forField: .alias)
+    }
+    
+    public func deleteAll() {
+        EmailKeychainManager.deleteAll()
+    }
+}
+
+private extension EmailKeychainManager {
     
     /*
      Uses just kSecAttrService as the primary key, since we don't want to store
@@ -36,6 +69,22 @@ class EmailKeychainManager {
             return nil
         }
         return string
+    }
+    
+    static func retreiveData(forField field: EmailKeychainField) -> Data? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecAttrService as String: field.rawValue,
+            kSecReturnData as String: true]
+        
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        guard status == errSecSuccess, let existingItem = item as? Data else {
+            return nil
+        }
+
+        return existingItem
     }
     
     static func add(token: String, forUsername username: String) {
@@ -57,35 +106,7 @@ class EmailKeychainManager {
         add(data: aliasData, forField: .alias)
     }
     
-    static func deleteAlias() {
-        deleteItem(forField: .alias)
-    }
-    
-    static func deleteAll() {
-        deleteItem(forField: .username)
-        deleteItem(forField: .token)
-        deleteItem(forField: .alias)
-    }
-}
-
-extension EmailKeychainManager {
-    private static func retreiveData(forField field: EmailKeychainField) -> Data? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecAttrService as String: field.rawValue,
-            kSecReturnData as String: true]
-        
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status == errSecSuccess, let existingItem = item as? Data else {
-            return nil
-        }
-
-        return existingItem
-    }
-    
-    private static func add(data: Data, forField field: EmailKeychainField) {
+    static func add(data: Data, forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: false,
@@ -95,7 +116,13 @@ extension EmailKeychainManager {
         SecItemAdd(query as CFDictionary, nil)
     }
     
-    private static func deleteItem(forField field: EmailKeychainField) {
+    static func deleteAll() {
+        deleteItem(forField: .username)
+        deleteItem(forField: .token)
+        deleteItem(forField: .alias)
+    }
+    
+    static func deleteItem(forField field: EmailKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: field.rawValue]

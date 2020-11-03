@@ -176,30 +176,6 @@ public class WebCacheManager {
         }
 
     }
-    
-    /**
-     Save all cookies except for those set for the specified domain
-     */
-    private func extractExcludedDomains(forDomain domain: String,
-                                        cookieStore: WebCacheManagerCookieStore?,
-                                        cookieStorage: CookieStorage,
-                                        logins: PreserveLogins,
-                                        completion: @escaping () -> Void) {
-        
-        guard let cookieStore = cookieStore else {
-            completion()
-            return
-        }
-        
-        cookieStore.getAllCookies { cookies in
-            for cookie in cookies {
-                if cookie.domain != domain || logins.isAllowed(cookieDomain: cookie.domain) {
-                    cookieStorage.setCookie(cookie)
-                }
-            }
-            completion()
-        }
-    }
 
 }
 

@@ -68,12 +68,11 @@ class BookmarksSearch {
         }
     }
     
-    
     func search(query: String) -> [Link] {
         
         let bud = BookmarkUserDefaults()
         
-        let data = bud.favorites.map { ScoredLink(link: $0)} + bud.bookmarks.map{ ScoredLink(link: $0, score: -1) }
+        let data = bud.favorites.map { ScoredLink(link: $0)} + bud.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
         score(query: query, data: data)
         

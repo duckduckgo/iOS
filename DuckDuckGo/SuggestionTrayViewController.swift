@@ -196,6 +196,10 @@ class SuggestionTrayViewController: UIViewController {
         
     }
     
+    func applyContentInset(_ inset: UIEdgeInsets) {
+        autocompleteController?.tableView.contentInset = inset
+        favoritesOverlay?.collectionView.contentInset = inset
+    }
 }
 
 extension SuggestionTrayViewController: Themable {

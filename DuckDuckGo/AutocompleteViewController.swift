@@ -41,7 +41,6 @@ class AutocompleteViewController: UIViewController {
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
     fileprivate let minItems = 1
-    fileprivate let maxItems = 6
     fileprivate var selectedItem = -1
 
     var showBackground = true {
@@ -194,9 +193,6 @@ extension AutocompleteViewController: UITableViewDataSource {
         if suggestions.isEmpty {
             return firstResponse ? 0 : minItems
         }
-        if suggestions.count > maxItems {
-            return maxItems
-        }
         return suggestions.count
     }
 }
@@ -242,7 +238,7 @@ extension AutocompleteViewController {
     }
     
     private func itemCount() -> Int {
-        return min(suggestions.count, maxItems)
+        return suggestions.count
     }
 
 }

@@ -208,6 +208,18 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        
+        if let suggestionsTray = suggestionTrayController {
+            let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.view.frame, to: view)
+            
+            let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
+            if overflow > 0 {
+                suggestionTrayController?.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
+            } else {
+                suggestionTrayController?.applyContentInset(.zero)
+            }
+        }
+
         animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
     }
     

@@ -41,11 +41,10 @@ public struct AppUrls {
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
  
-        static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
-        static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
-        static let httpsExcludedDomains = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
-        static let httpsLookupService = "\(base)/smarter_encryption.js"
-
+        static let httpsBloomFilter = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-bloom.bin"
+        static let httpsBloomFilterSpec = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-bloom-spec.json"
+        static let httpsExcludedDomains = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-false-positives.json"
+        
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
     }
@@ -188,10 +187,6 @@ public struct AppUrls {
 
     public var httpsExcludedDomains: URL {
         return URL(string: Url.httpsExcludedDomains)!
-    }
-
-    public func httpsLookupServiceUrl(forPartialHost partialHashedHost: String) -> URL {
-        return URL(string: Url.httpsLookupService)!.addParam(name: Param.partialHost, value: partialHashedHost)
     }
     
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String) -> URL {

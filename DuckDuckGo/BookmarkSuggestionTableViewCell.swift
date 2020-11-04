@@ -29,9 +29,6 @@ class BookmarkSuggestionTableViewCell: UITableViewCell {
     @IBOutlet weak var typeImage: UIImageView!
 
     func updateFor(query: String, link: Link) {
-        let text = link.title
-        
-//        styleText(query: query, text: suggestion.suggestion)
     }
 
     private func styleText(query: String, text: String) {

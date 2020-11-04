@@ -150,6 +150,7 @@ class AutocompleteViewController: UIViewController {
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {
         firstResponse = false
         suggestions = newSuggestions
+        tableView.contentOffset = .zero
         tableView.reloadData()
     }
 

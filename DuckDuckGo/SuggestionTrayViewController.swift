@@ -107,7 +107,7 @@ class SuggestionTrayViewController: UIViewController {
         backgroundView.layer.shadowRadius = 120
 
         topConstraint.constant = 15
-        variableHeightConstraint.constant = 276
+        variableHeightConstraint.constant = 460
         variableWidthConstraint.constant = width
         fullWidthConstraint.isActive = false
         fullHeightConstraint.isActive = false

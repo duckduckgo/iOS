@@ -30,11 +30,18 @@ class SuggestionTableViewCell: UITableViewCell {
 
     func updateFor(query: String, suggestion: Suggestion) {
         let text = suggestion.suggestion
-        if URL.isWebUrl(text: text) {
-            typeImage.image = UIImage(named: "SuggestGlobe")
-        } else {
-            typeImage.image = UIImage(named: "SuggestLoupe")
+        
+        switch suggestion.source {
+        case .bookmark:
+            typeImage.image = UIImage(named: "BookmarkSuggestion")
+        case .remote:
+            if URL.isWebUrl(text: text) {
+                typeImage.image = UIImage(named: "SuggestGlobe")
+            } else {
+                typeImage.image = UIImage(named: "SuggestLoupe")
+            }
         }
+        
         styleText(query: query, text: suggestion.suggestion)
     }
 

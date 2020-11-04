@@ -52,6 +52,8 @@ class AutocompleteViewController: UIViewController {
     private var hidesBarsOnSwipeDefault = true
     
     private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
+    
+    private var numberOfEntriesToDisplay = 0
 
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
@@ -113,7 +115,7 @@ class AutocompleteViewController: UIViewController {
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
         let suggestion = suggestions[button.tag]
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion.suggestion)
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion)
     }
 
     private func cancelInFlightRequests() {
@@ -124,13 +126,24 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
+        let matches = BookmarksSearch().search(query: query).prefix(2)
+        
+        let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(2)
+        let localSuggestions = filteredMatches.map { Suggestion(source: .bookmark, type: "", suggestion: $0.title!, url: $0.url)}
+        if !localSuggestions.isEmpty {
+            updateSuggestions(localSuggestions)
+        }
+        
         lastRequest = AutocompleteRequest(query: query, parser: parser)
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
                 return
             }
-            self?.updateSuggestions(suggestions)
+
+            let combinedSuggestions = localSuggestions + suggestions
+            self?.numberOfEntriesToDisplay = combinedSuggestions.count
+            self?.updateSuggestions(Array(combinedSuggestions))
         }
     }
 
@@ -148,7 +161,7 @@ class AutocompleteViewController: UIViewController {
 extension AutocompleteViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if suggestions.isEmpty {
+        if indexPath.row >= suggestions.count {
             return noSuggestionsCell(forIndexPath: indexPath)
         }
         return suggestionsCell(forIndexPath: indexPath)
@@ -186,21 +199,20 @@ extension AutocompleteViewController: UITableViewDataSource {
         cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
         
+        cell.label.isHidden = indexPath.row >= suggestions.count && indexPath.row != 0
+        
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if suggestions.isEmpty {
-            return firstResponse ? 0 : minItems
-        }
-        return suggestions.count
+        return max(minItems, numberOfEntriesToDisplay)
     }
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
-        delegate?.autocomplete(selectedSuggestion: suggestion.suggestion)
+        delegate?.autocomplete(selectedSuggestion: suggestion)
     }
 }
 
@@ -222,14 +234,14 @@ extension AutocompleteViewController {
     func keyboardMoveSelectionDown() {
         guard !suggestions.isEmpty else { return }
         selectedItem = (selectedItem + 1 >= itemCount()) ? 0 : selectedItem + 1
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem])
         tableView.reloadData()
     }
 
     func keyboardMoveSelectionUp() {
         guard !suggestions.isEmpty else { return }
         selectedItem = (selectedItem - 1 < 0) ? itemCount() - 1 : selectedItem - 1
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem])
         tableView.reloadData()
     }
     

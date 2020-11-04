@@ -35,7 +35,7 @@ class AutocompleteParser {
         var suggestions = [Suggestion]()
         for element in jsonArray {
             if let type = element.keys.first, let suggestion = element[type] {
-                suggestions.append(Suggestion(type: type, suggestion: suggestion))
+                suggestions.append(Suggestion(source: .remote, type: type, suggestion: suggestion, url: nil))
             }
         }
 

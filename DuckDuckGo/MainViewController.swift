@@ -997,15 +997,24 @@ extension MainViewController: FavoritesOverlayDelegate {
 
 extension MainViewController: AutocompleteViewControllerDelegate {
 
-    func autocomplete(selectedSuggestion suggestion: String) {
+    func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        loadQuery(suggestion)
+        if let url = suggestion.url {
+            loadUrl(url)
+        } else {
+            loadQuery(suggestion.suggestion)
+        }
         showHomeRowReminder()
     }
 
-    func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
-        omniBar.textField.text = suggestion
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
+        if let url = suggestion.url {
+            omniBar.textField.text = url.absoluteString
+        } else {
+            omniBar.textField.text = suggestion.suggestion
+        }
+        omniBar.textDidChange()
     }
 
     func autocompleteWasDismissed() {

@@ -21,6 +21,13 @@ import Foundation
 
 struct Suggestion {
 
+    enum Source {
+        case remote
+        case bookmark
+    }
+    
+    let source: Source
     let type: String
     let suggestion: String
+    let url: URL?
 }

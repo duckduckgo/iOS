@@ -157,7 +157,10 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func displayAutocompleteSuggestions(forQuery query: String) -> Bool {
-        guard appSettings.autocomplete && !query.isEmpty else { return false }
+        guard appSettings.autocomplete && !query.isEmpty else {
+            removeAutocomplete()
+            return false
+        }
         
         if autocompleteController == nil {
             let controller = AutocompleteViewController.loadFromStoryboard()

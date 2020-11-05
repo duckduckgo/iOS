@@ -38,6 +38,18 @@ class BookmarksSearch {
         data = bud.favorites + bud.bookmarks
     }
     
+    func scoreSingleLetter(query: String, data: [ScoredLink]) {
+        
+        for entry in data {
+            guard let title = entry.link.title?.lowercased() else { continue }
+            
+            if title.starts(with: query) || title.contains(" \(query)") {
+                entry.score += 50
+            }
+
+        }
+    }
+    
     func score(query: String, data: [ScoredLink]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
         
@@ -74,7 +86,12 @@ class BookmarksSearch {
         
         let data = bud.favorites.map { ScoredLink(link: $0)} + bud.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
-        score(query: query, data: data)
+        let trimmed = query.trimWhitespace()
+        if trimmed.count == 1 {
+            scoreSingleLetter(query: trimmed, data: data)
+        } else {
+            score(query: query, data: data)
+        }
         
         return data.filter { $0.score > 0 }.map { $0.link }
     }

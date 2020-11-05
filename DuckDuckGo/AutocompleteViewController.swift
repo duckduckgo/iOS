@@ -126,18 +126,17 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
-        let matches = BookmarksSearch().search(query: query).prefix(2)
-        
-        let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(2)
-        let localSuggestions = filteredMatches.map { Suggestion(source: .bookmark, type: "", suggestion: $0.title!, url: $0.url)}
-        if !localSuggestions.isEmpty {
-            updateSuggestions(localSuggestions)
-        }
-        
         lastRequest = AutocompleteRequest(query: query, parser: parser)
         lastRequest!.execute { [weak self] (suggestions, error) in
+            
+            let matches = BookmarksSearch().search(query: query).prefix(2)
+            
+            let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(2)
+            let localSuggestions = filteredMatches.map { Suggestion(source: .bookmark, type: "", suggestion: $0.title!, url: $0.url)}
+            
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
+                self?.updateSuggestions(localSuggestions)
                 return
             }
 
@@ -206,7 +205,7 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(minItems, numberOfEntriesToDisplay)
+        return firstResponse ? 0 : max(minItems, numberOfEntriesToDisplay)
     }
 }
 

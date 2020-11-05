@@ -35,7 +35,7 @@ class BookmarksViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addAplicationActiveObserver()
+        registerForNotifications()
         configureTableView()
         configureSearch()
         refreshEditButton()
@@ -61,10 +61,15 @@ class BookmarksViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [shareContextualAction])
     }
 
-    private func addAplicationActiveObserver() {
+    private func registerForNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onExternalDataChange),
+                                               name: BookmarkUserDefaults.Notifications.bookmarkStoreDidChange,
                                                object: nil)
     }
 
@@ -109,6 +114,13 @@ class BookmarksViewController: UITableViewController {
     }
 
     @objc func onApplicationBecameActive(notification: NSNotification) {
+        tableView.reloadData()
+    }
+    
+    @objc func onExternalDataChange(notification: NSNotification) {
+        guard let source = notification.object as? BookmarkUserDefaults,
+              dataSource.bookmarksManager.dataStore !== source else { return }
+        
         tableView.reloadData()
     }
 

@@ -19,7 +19,7 @@
 
 import Foundation
 
-public protocol BookmarkStore {
+public protocol BookmarkStore: AnyObject {
 
     var bookmarks: [Link] { get set }
     var favorites: [Link] { get set }

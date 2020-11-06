@@ -47,14 +47,6 @@ public enum PixelName: String {
     case httpsLocalUpgrade = "m_https_lu"
     case httpsNoUpgrade = "m_https_nu"
     
-    case longPressMenuOpened = "mlp"
-    case longPressMenuNewBackgroundTabItem = "mlp_b"
-    case longPressMenuNewTabItem = "mlp_t"
-    case longPressMenuOpenItem = "mlp_o"
-    case longPressMenuReadingListItem = "mlp_r"
-    case longPressMenuCopyItem = "mlp_c"
-    case longPressMenuShareItem = "mlp_s"
-    
     case quickActionExtensionSearch = "mqe_s"
     case quickActionExtensionFire = "mqe_f"
     case quickActionExtensionBookmarks = "mqe_b"

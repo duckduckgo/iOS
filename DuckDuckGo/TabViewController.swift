@@ -672,7 +672,6 @@ class TabViewController: UIViewController {
     }
     
     private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
-        Pixel.fire(pixel: .longPressMenuOpened)
         let alert = buildLongPressMenu(atPoint: point, forUrl: url)
         present(controller: alert, fromView: webView, atPoint: point)
     }

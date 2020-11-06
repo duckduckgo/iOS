@@ -92,8 +92,6 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func float(withWidth width: CGFloat) {
-        
-        
         autocompleteController?.showBackground = false
         
         containerView.layer.cornerRadius = 16

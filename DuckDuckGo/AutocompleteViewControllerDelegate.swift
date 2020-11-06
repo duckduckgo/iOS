@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
 protocol AutocompleteViewControllerDelegate: class {
 
@@ -26,4 +26,10 @@ protocol AutocompleteViewControllerDelegate: class {
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion)
 
     func autocompleteWasDismissed()
+}
+
+protocol AutocompleteViewControllerPresentationDelegate: class {
+    
+    func autocompleteDidChangeContentHeight(height: CGFloat)
+
 }

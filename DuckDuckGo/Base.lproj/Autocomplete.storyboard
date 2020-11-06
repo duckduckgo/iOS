@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -77,51 +77,8 @@
                                             <outlet property="typeImage" destination="Dnd-CT-WA4" id="p0g-6n-9j3"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkSuggestionTableViewCell" id="cwm-9x-SJz" userLabel="Bookmark" customClass="BookmarkSuggestionTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="74" width="375" height="46"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cwm-9x-SJz" id="SCg-ha-6po">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="BookmarkSuggestion" translatesAutoresizingMaskIntoConstraints="NO" id="WnS-XH-0xJ">
-                                                    <rect key="frame" x="16" y="11" width="24" height="24"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQM-V7-ED9">
-                                                    <rect key="frame" x="48" y="6" width="311" height="16"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABi-B9-yJH">
-                                                    <rect key="frame" x="48" y="25" width="311" height="14"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
-                                                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="WnS-XH-0xJ" firstAttribute="leading" secondItem="SCg-ha-6po" secondAttribute="leading" constant="16" id="8yY-kc-7Zs"/>
-                                                <constraint firstItem="AQM-V7-ED9" firstAttribute="centerY" secondItem="SCg-ha-6po" secondAttribute="centerY" constant="-9" id="B9x-q4-RL8"/>
-                                                <constraint firstItem="WnS-XH-0xJ" firstAttribute="centerY" secondItem="SCg-ha-6po" secondAttribute="centerY" id="Mwg-h3-rmh"/>
-                                                <constraint firstItem="AQM-V7-ED9" firstAttribute="leading" secondItem="WnS-XH-0xJ" secondAttribute="trailing" constant="8" id="PFo-EL-Sdc"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="AQM-V7-ED9" secondAttribute="trailing" id="V38-Z5-0Ug"/>
-                                                <constraint firstItem="ABi-B9-yJH" firstAttribute="centerY" secondItem="SCg-ha-6po" secondAttribute="centerY" constant="9" id="VGF-nf-PBr"/>
-                                                <constraint firstItem="ABi-B9-yJH" firstAttribute="width" secondItem="AQM-V7-ED9" secondAttribute="width" id="Vk8-am-yUX"/>
-                                                <constraint firstItem="ABi-B9-yJH" firstAttribute="leading" secondItem="AQM-V7-ED9" secondAttribute="leading" id="Yux-eZ-K8H"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <outlet property="label" destination="AQM-V7-ED9" id="iwi-EH-5gG"/>
-                                            <outlet property="typeImage" destination="WnS-XH-0xJ" id="mxz-cV-0qR"/>
-                                            <outlet property="url" destination="ABi-B9-yJH" id="NFK-xT-lo5"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoSuggestionsTableViewCell" id="O6P-GP-haK" userLabel="Empty" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="375" height="46"/>
+                                        <rect key="frame" x="0.0" y="74" width="375" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O6P-GP-haK" id="snf-ah-e6i">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
@@ -181,7 +138,6 @@
     </scenes>
     <resources>
         <image name="AutoComplete" width="24" height="24"/>
-        <image name="BookmarkSuggestion" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>
     </resources>
 </document>

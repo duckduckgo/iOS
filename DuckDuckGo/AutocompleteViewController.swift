@@ -33,6 +33,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?
+    weak var presentataionDelegate: AutocompleteViewControllerPresentationDelegate?
 
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
@@ -151,6 +152,7 @@ class AutocompleteViewController: UIViewController {
         suggestions = newSuggestions
         tableView.contentOffset = .zero
         tableView.reloadData()
+        presentataionDelegate?.autocompleteDidChangeContentHeight(height: tableView.contentSize.height)
     }
 
     @IBAction func onAutocompleteDismissed(_ sender: Any) {

@@ -18,9 +18,22 @@
 //
 
 import Foundation
+import Core
 
-struct Suggestion {
+struct Suggestion: Decodable {
 
     let type: String
     let suggestion: String
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let dictionary = try container.decode([String: String].self)
+
+        if let element = dictionary.first {
+            self.type = element.key
+            self.suggestion = element.value
+        } else {
+            throw JsonError.invalidJson
+        }
+    }
 }

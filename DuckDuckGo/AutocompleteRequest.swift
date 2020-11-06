@@ -25,23 +25,20 @@ class AutocompleteRequest {
     typealias Completion = ([Suggestion]?, Error?) -> Void
 
     private let url: URL
-    private let autocompleteParser: AutocompleteParser
     private var task: URLSessionDataTask?
 
-    init(query: String, parser: AutocompleteParser) {
+    init(query: String) {
         self.url = AppUrls().autocompleteUrl(forText: query)
-        self.autocompleteParser = parser
     }
 
     func execute(completion: @escaping Completion) {
-        let parser = autocompleteParser
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = APIHeaders().defaultHeaders
 
         task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) -> Void in
             guard let weakSelf = self else { return }
             do {
-                let suggestions = try weakSelf.processResult(parser: parser, data: data, error: error)
+                let suggestions = try weakSelf.processResult(data: data, error: error)
                 weakSelf.complete(completion, withSuccess: suggestions)
             } catch {
                 weakSelf.complete(completion, withError: error)
@@ -50,10 +47,11 @@ class AutocompleteRequest {
         task?.resume()
     }
 
-    private func processResult(parser: AutocompleteParser, data: Data?, error: Error?) throws -> [Suggestion] {
+    private func processResult(data: Data?, error: Error?) throws -> [Suggestion] {
         if let error = error { throw error }
         guard let data = data else { throw ApiRequestError.noData }
-        let suggestions = try parser.convert(fromJsonData: data)
+        let suggestions = try JSONDecoder().decode([Suggestion].self, from: data)
+
         return suggestions
     }
 

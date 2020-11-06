@@ -34,7 +34,6 @@ class AutocompleteViewController: UIViewController {
 
     weak var delegate: AutocompleteViewControllerDelegate?
 
-    private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
     private var firstResponse = true
     
@@ -125,7 +124,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
-        lastRequest = AutocompleteRequest(query: query, parser: parser)
+        lastRequest = AutocompleteRequest(query: query)
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")

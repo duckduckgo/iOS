@@ -261,7 +261,7 @@ public struct UserText {
     public static let preserveLoginsRemoveAllOk = NSLocalizedString("preserveLogins.remove.all.ok", value: "OK", comment: "Confirmation button in alert")
     
     public static let preserveLoginsFireproofAsk = NSLocalizedString("preserveLogins.fireproof.message", value: "Would you like to Fireproof %@?", comment: "Paramter is a string - domain name")
-    public static let preserveLoginsFireproofConfirm = NSLocalizedString("preserveLogins.menu.confirm", value: "Fireproof Site", comment: "Confirm fireproofing action")
+    public static let preserveLoginsFireproofConfirm = NSLocalizedString("preserveLogins.menu.confirm", value: "Fireproof Website", comment: "Confirm fireproofing action")
     public static let preserveLoginsFireproofDefer = NSLocalizedString("preserveLogins.menu.defer", value: "Not Now", comment: "Deny fireproofing action")
     
     public static let preserveLoginsToast = NSLocalizedString("preserveLogins.toast", value: "%@ is now Fireproof! Visit Settings to manage.", comment: "Parameter is a string - domain name")

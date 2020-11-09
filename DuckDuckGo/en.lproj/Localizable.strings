@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "You’ve got this!\n\nRemember: Every time you browse with me a creepy ad loses its wings. 👍";
+"dax.onboarding.home.subsequent" = "You’ve got this!\n\nRemember: Every time you browse with me, a creepy ad loses its wings. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";
@@ -344,7 +344,7 @@
 "feedback.form.caption" = "Please tell us what we can improve";
 
 /* Confirmation button */
-"feedback.form.submit" = "Submit Feedback";
+"feedback.form.submit" = "Submit";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";
@@ -575,7 +575,7 @@
 "preserveLogins.fireproof.message" = "Would you like to Fireproof %@?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Fireproof Site";
+"preserveLogins.menu.confirm" = "Fireproof Website";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Not Now";

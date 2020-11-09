@@ -62,7 +62,7 @@ extension UserText {
                                                                    comment: "")
     
     public static let feedbackFormSubmit = NSLocalizedString("feedback.form.submit",
-                                                             value: "Submit Feedback",
+                                                             value: "Submit",
                                                              comment: "Confirmation button")
     
     public static let feedbackPositiveFormHeader = NSLocalizedString("feedback.positive.form.header",

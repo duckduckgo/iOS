@@ -47,11 +47,6 @@ public enum PixelName: String {
     case httpsLocalUpgrade = "m_https_lu"
     case httpsNoUpgrade = "m_https_nu"
     
-    case quickActionExtensionSearch = "mqe_s"
-    case quickActionExtensionFire = "mqe_f"
-    case quickActionExtensionBookmarks = "mqe_b"
-    case bookmarksExtensionBookmark = "mbe_b"
-    
     case bookmarkTapped = "m_b_t"
     case bookmarkRemoved = "m_b_r"
     case bookmarksEditPressed = "m_b_e"

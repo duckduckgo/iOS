@@ -95,11 +95,6 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .autoClearSettingsShown)
             return
         }
-        
-        if segue.destination is ThemeSettingsViewController {
-            Pixel.fire(pixel: .settingsThemeShown)
-            return
-        }
 
         if segue.destination is AppIconSettingsViewController {
             Pixel.fire(pixel: .settingsAppIconShown)

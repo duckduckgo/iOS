@@ -63,11 +63,6 @@ public enum PixelName: String {
     
     case settingsOpened = "ms"
     case settingsHomeRowInstructionsRequested = "ms_hr"
-    
-    case settingsThemeShown = "ms_tp"
-    case settingsThemeChangedSystemDefault = "ms_ts"
-    case settingsThemeChangedLight = "ms_tl"
-    case settingsThemeChangedDark = "ms_td"
 
     case settingsAppIconShown = "ms_ais"
     case settingsAppIconChangedPrefix = "ms_aic_"

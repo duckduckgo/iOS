@@ -91,11 +91,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is AutoClearSettingsViewController {
-            Pixel.fire(pixel: .autoClearSettingsShown)
-            return
-        }
-
         if segue.destination is UnprotectedSitesViewController {
             Pixel.fire(pixel: .settingsUnprotectedSites)
             return

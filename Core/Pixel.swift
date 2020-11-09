@@ -67,16 +67,6 @@ public enum PixelName: String {
     case settingsDoNotSellOn = "ms_dns_on"
     case settingsDoNotSellOff = "ms_dns_off"
 
-    case autoClearSettingsShown = "mac_s"
-    case autoClearActionOptionNone = "macwhat_n"
-    case autoClearActionOptionTabs = "macwhat_t"
-    case autoClearActionOptionTabsAndData = "macwhat_td"
-    case autoClearTimingOptionExit = "macwhen_x"
-    case autoClearTimingOptionExitOr5Mins = "macwhen_5"
-    case autoClearTimingOptionExitOr15Mins = "macwhen_15"
-    case autoClearTimingOptionExitOr30Mins = "macwhen_30"
-    case autoClearTimingOptionExitOr60Mins = "macwhen_60"
-
     case browsingMenuOpened = "mb"
     case browsingMenuRefresh = "mb_rf"
     case browsingMenuNewTab = "mb_tb"

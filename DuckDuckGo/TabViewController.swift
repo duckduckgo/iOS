@@ -258,7 +258,6 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
-        ContentBlockerRulesManager.shared.storageCache = storageCache
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
     }
@@ -606,8 +605,6 @@ class TabViewController: UIViewController {
 
     @objc func onStorageCacheChange() {
         DispatchQueue.main.async {
-            self.storageCache = AppDependencyProvider.shared.storageCache.current
-            ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
     }
@@ -1127,7 +1124,7 @@ extension TabViewController: WKNavigationDelegate {
 
         // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
         if #available(iOS 12, *) {
-            if allowPolicy == WKNavigationActionPolicy.allow {
+            if allowPolicy != WKNavigationActionPolicy.cancel {
                 UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
             }
         }

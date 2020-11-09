@@ -28,6 +28,7 @@ struct Favorite {
 
     let url: URL
     let domain: String
+    let title: String
     let favicon: UIImage?
 
     var isDuckDuckGo: Bool {
@@ -62,6 +63,7 @@ struct Provider: TimelineProvider {
             .map {
                 return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: $0.url),
                                 domain: $0.url.host?.dropPrefix(prefix: "www.") ?? "",
+                                title: $0.displayTitle ?? "",
                                 favicon: loadImageFromCache(forDomain: $0.url.host) )
             }
     }

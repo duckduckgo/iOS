@@ -60,8 +60,9 @@ class HTTPSUpgradeParserTests: XCTestCase {
         let data = JsonTestDataLoader().fromJsonFile("MockFiles/https_bloom_spec.json")
         let result = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data)
         XCTAssertNotNil(result)
-        XCTAssertEqual(10000000, result?.totalEntries)
+        XCTAssertEqual(1250000, result?.bitCount)
         XCTAssertEqual(0.00001, result?.errorRate)
+        XCTAssertEqual(10000000, result?.totalEntries)
         XCTAssertEqual("4d3941604", result?.sha256)
     }
 }

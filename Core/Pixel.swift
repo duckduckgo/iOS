@@ -58,12 +58,6 @@ public enum PixelName: String {
     
     case settingsOpened = "ms"
     case settingsHomeRowInstructionsRequested = "ms_hr"
-
-    case settingsKeyboardShown = "ms_ks"
-    case settingsKeyboardNewTabOn = "ms_ks_nt_on"
-    case settingsKeyboardNewTabOff = "ms_ks_nt_off"
-    case settingsKeyboardAppLaunchOn = "ms_ks_al_on"
-    case settingsKeyboardAppLaunchOff = "ms_ks_pl_off"
     
     case settingsUnprotectedSites = "ms_mw"
     case settingsLinkPreviewsOff = "ms_lp_f"

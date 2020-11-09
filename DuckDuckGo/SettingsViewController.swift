@@ -95,11 +95,6 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .autoClearSettingsShown)
             return
         }
- 
-        if segue.destination is KeyboardSettingsViewController {
-            Pixel.fire(pixel: .settingsKeyboardShown)
-            return
-        }
 
         if segue.destination is UnprotectedSitesViewController {
             Pixel.fire(pixel: .settingsUnprotectedSites)

@@ -59,15 +59,6 @@ public enum PixelName: String {
     case settingsOpened = "ms"
     case settingsHomeRowInstructionsRequested = "ms_hr"
 
-    case settingsAppIconShown = "ms_ais"
-    case settingsAppIconChangedPrefix = "ms_aic_"
-    case settingsAppIconChangedRed = "ms_aic_red"
-    case settingsAppIconChangedYellow = "ms_aic_yellow"
-    case settingsAppIconChangedGreen = "ms_aic_green"
-    case settingsAppIconChangedBlue = "ms_aic_blue"
-    case settingsAppIconChangedPurple = "ms_aic_purple"
-    case settingsAppIconChangedBlack = "ms_aic_black"
-
     case settingsKeyboardShown = "ms_ks"
     case settingsKeyboardNewTabOn = "ms_ks_nt_on"
     case settingsKeyboardNewTabOff = "ms_ks_nt_off"

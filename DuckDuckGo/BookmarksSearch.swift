@@ -31,14 +31,13 @@ class BookmarksSearch {
         }
     }
     
-    let data: [Link]
+    let bookmarksStore: BookmarkStore
     
-    init(bookmarksManager: BookmarksManager = BookmarksManager()) {
-        let bud = BookmarkUserDefaults()
-        data = bud.favorites + bud.bookmarks
+    init(bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
+        self.bookmarksStore = bookmarksStore
     }
     
-    func scoreSingleLetter(query: String, data: [ScoredLink]) {
+    private func scoreSingleLetter(query: String, data: [ScoredLink]) {
         
         for entry in data {
             guard let title = entry.link.title?.lowercased() else { continue }
@@ -50,7 +49,7 @@ class BookmarksSearch {
         }
     }
     
-    func score(query: String, data: [ScoredLink]) {
+    private func score(query: String, data: [ScoredLink]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
         
         for entry in data {
@@ -81,10 +80,8 @@ class BookmarksSearch {
     }
     
     func search(query: String) -> [Link] {
-        
-        let bud = BookmarkUserDefaults()
-        
-        let data = bud.favorites.map { ScoredLink(link: $0)} + bud.bookmarks.map { ScoredLink(link: $0, score: -1) }
+            
+        let data = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
         let trimmed = query.trimWhitespace()
         if trimmed.count == 1 {
@@ -94,31 +91,5 @@ class BookmarksSearch {
         }
         
         return data.filter { $0.score > 0 }.map { $0.link }
-    }
-    
-    func basicSearch(text: String) -> [Link] {
-        let text = text.lowercased()
-        let tokens = text.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
-
-        return data.filter { link -> Bool in
-            guard let title = link.title?.lowercased() else { return false }
-            let url = link.url.absoluteString.lowercased()
-            // Look for direct match
-            if title.contains(text) || url.contains(text) {
-                return true
-            }
-            
-            // Look if all tokens match
-            var matchesAll = true
-            for token in tokens {
-                if !title.contains(token) && !url.contains(token) {
-                    matchesAll = false
-                    break
-                }
-            }
-            
-            return matchesAll
-        }
-        
     }
 }

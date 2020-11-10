@@ -137,8 +137,9 @@ class AutocompleteViewController: UIViewController {
         lastRequest!.execute { [weak self] (suggestions, error) in
             
             let matches = BookmarksSearch().search(query: query)
-            let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(Constants.maxLocalItems)
-            let localSuggestions = filteredMatches.map { Suggestion(type: "", suggestion: $0.title!, url: $0.url)}
+            let notQueryMatches = matches.filter { $0.url.absoluteString != query }
+            let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
+            let localSuggestions = filteredMatches.map { Suggestion(type: "", suggestion: $0.displayTitle!, url: $0.url)}
             
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
@@ -206,8 +207,6 @@ extension AutocompleteViewController: UITableViewDataSource {
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
-        
-        cell.label.isHidden = indexPath.row >= suggestions.count && indexPath.row != 0
         
         return cell
     }

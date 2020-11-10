@@ -21,7 +21,7 @@ import Core
 
 class BookmarksSearch {
     
-    class ScoredLink {
+    private class ScoredLink {
         let link: Link
         var score: Int
         
@@ -31,7 +31,7 @@ class BookmarksSearch {
         }
     }
     
-    let bookmarksStore: BookmarkStore
+    private let bookmarksStore: BookmarkStore
     
     init(bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
         self.bookmarksStore = bookmarksStore
@@ -80,7 +80,6 @@ class BookmarksSearch {
     }
     
     func search(query: String) -> [Link] {
-            
         let data = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
         let trimmed = query.trimWhitespace()

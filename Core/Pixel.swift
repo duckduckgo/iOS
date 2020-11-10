@@ -138,13 +138,6 @@ public enum PixelName: String {
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
     case brokenSiteReport = "epbf"
-
-    case preserveLoginsSettingsSwitchOn = "m_pl_s_on"
-    case preserveLoginsSettingsSwitchOff = "m_pl_s_off"
-    case preserveLoginsSettingsEdit = "m_pl_s_c_e"
-    case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
-    case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
-    case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
     
     case daxDialogsSerp = "m_dx_s"
     case daxDialogsWithoutTrackers = "m_dx_wo"

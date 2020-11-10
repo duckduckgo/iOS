@@ -30,6 +30,9 @@ class AutocompleteViewController: UIViewController {
             }
             return 0.3
         }()
+        
+        static let minItems = 1
+        static let maxLocalItems = 2
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?
@@ -37,11 +40,10 @@ class AutocompleteViewController: UIViewController {
 
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
-    private var firstResponse = true
+    private var receivedResponse = false
     
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
-    fileprivate let minItems = 1
     fileprivate var selectedItem = -1
 
     var showBackground = true {
@@ -130,9 +132,8 @@ class AutocompleteViewController: UIViewController {
         lastRequest = AutocompleteRequest(query: query, parser: parser)
         lastRequest!.execute { [weak self] (suggestions, error) in
             
-            let matches = BookmarksSearch().search(query: query).prefix(2)
-            
-            let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(2)
+            let matches = BookmarksSearch().search(query: query)
+            let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(Constants.maxLocalItems)
             let localSuggestions = filteredMatches.map { Suggestion(source: .bookmark, type: "", suggestion: $0.title!, url: $0.url)}
             
             guard let suggestions = suggestions, error == nil else {
@@ -148,7 +149,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {
-        firstResponse = false
+        receivedResponse = true
         suggestions = newSuggestions
         tableView.contentOffset = .zero
         tableView.reloadData()
@@ -207,7 +208,7 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return firstResponse ? 0 : max(minItems, numberOfEntriesToDisplay)
+        return receivedResponse ? max(Constants.minItems, numberOfEntriesToDisplay) : 0
     }
 }
 

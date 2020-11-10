@@ -279,6 +279,14 @@ extension BookmarksViewController: Themable {
             overrideSystemTheme(with: theme)
             searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
         } else {
+            
+            switch theme.currentImageSet {
+            case .dark:
+                searchController.searchBar.barStyle = .black
+            case .light:
+                searchController.searchBar.barStyle = .default
+            }
+            
             searchController.searchBar.tintColor = theme.searchBarTextColor
             if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
                 searchField.layer.backgroundColor = theme.searchBarBackgroundColor.cgColor

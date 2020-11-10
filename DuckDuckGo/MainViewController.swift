@@ -747,10 +747,7 @@ class MainViewController: UIViewController {
 
         showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
             if tapped {
-                Pixel.fire(pixel: .homeRowCTAReminderTapped)
                 self.launchInstructions()
-            } else {
-                Pixel.fire(pixel: .homeRowCTAReminderDismissed)
             }
 
             self.hideNotification()

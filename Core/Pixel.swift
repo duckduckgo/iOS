@@ -84,13 +84,9 @@ public enum PixelName: String {
     case homeScreenAddFavoriteCancel = "mh_af_c"
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
-    
-    case homeRowCTAReminderTapped = "m_hc"
-    case homeRowCTAReminderDismissed = "m_hd"
-    
-    case homeRowInstructionsReplayed = "m_hv"
+
     case homeRowOnboardingMovedToBackground = "m_o_h_b"
-    
+
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     

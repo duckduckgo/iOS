@@ -46,7 +46,6 @@ class BookmarksViewController: UITableViewController {
         if tableView.isEditing {
             showEditBookmarkAlert(for: indexPath)
         } else if let link = dataSource.link(at: indexPath) {
-            Pixel.fire(pixel: .bookmarkTapped)
             selectLink(link)
         }
     }
@@ -84,7 +83,6 @@ class BookmarksViewController: UITableViewController {
     }
 
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        Pixel.fire(pixel: .bookmarksEditPressed)
         startEditing()
     }
 

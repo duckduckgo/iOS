@@ -47,11 +47,6 @@ public enum PixelName: String {
     case httpsLocalUpgrade = "m_https_lu"
     case httpsNoUpgrade = "m_https_nu"
     
-    case bookmarkTapped = "m_b_t"
-    case bookmarkRemoved = "m_b_r"
-    case bookmarksEditPressed = "m_b_e"
-    case overlayFavoriteLaunched = "m_ov_f"
-    
     case tabSwitcherNewLayoutSeen = "m_ts_n"
     case tabSwitcherListEnabled = "m_ts_l"
     case tabSwitcherGridEnabled = "m_ts_g"

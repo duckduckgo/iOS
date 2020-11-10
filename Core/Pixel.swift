@@ -137,8 +137,6 @@ public enum PixelName: String {
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
-    case brokenSiteReported = "m_bsr"
-    
     case brokenSiteReport = "epbf"
 
     case preserveLoginsSettingsSwitchOn = "m_pl_s_on"

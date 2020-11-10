@@ -38,7 +38,6 @@ class AutocompleteViewController: UIViewController {
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentataionDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
     private var receivedResponse = false
     private var pendingRequest = false
@@ -134,12 +133,12 @@ class AutocompleteViewController: UIViewController {
         tableView.reloadData()
         pendingRequest = true
         
-        lastRequest = AutocompleteRequest(query: query, parser: parser)
+        lastRequest = AutocompleteRequest(query: query)
         lastRequest!.execute { [weak self] (suggestions, error) in
             
             let matches = BookmarksSearch().search(query: query)
             let filteredMatches = matches.filter { $0.url.absoluteString != query }.prefix(Constants.maxLocalItems)
-            let localSuggestions = filteredMatches.map { Suggestion(source: .bookmark, type: "", suggestion: $0.title!, url: $0.url)}
+            let localSuggestions = filteredMatches.map { Suggestion(type: "", suggestion: $0.title!, url: $0.url)}
             
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")

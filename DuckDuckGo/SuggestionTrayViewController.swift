@@ -212,7 +212,9 @@ class SuggestionTrayViewController: UIViewController {
 extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDelegate {
     
     func autocompleteDidChangeContentHeight(height: CGFloat) {
-        removeFavorites()
+        if autocompleteController != nil {
+            removeFavorites()
+        }
         
         guard !fullHeightConstraint.isActive else { return }
         

@@ -32,7 +32,7 @@ class SuggestionTableViewCell: UITableViewCell {
         let text = suggestion.suggestion
         
         switch suggestion.source {
-        case .bookmark:
+        case .local:
             typeImage.image = UIImage(named: "BookmarkSuggestion")
         case .remote:
             if URL.isWebUrl(text: text) {

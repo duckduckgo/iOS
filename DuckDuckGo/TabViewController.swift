@@ -1124,7 +1124,7 @@ extension TabViewController: WKNavigationDelegate {
 
         // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
         if #available(iOS 12, *) {
-            if allowPolicy == WKNavigationActionPolicy.allow {
+            if allowPolicy != WKNavigationActionPolicy.cancel {
                 UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
             }
         }

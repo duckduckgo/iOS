@@ -1016,6 +1016,20 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         }
         omniBar.textDidChange()
     }
+    
+    func autocomplete(highlighted suggestion: Suggestion, for query: String) {
+        if let url = suggestion.url {
+            omniBar.textField.text = url.absoluteString
+        } else {
+            omniBar.textField.text = suggestion.suggestion
+            
+            if suggestion.suggestion.hasPrefix(query),
+               let fromPosition = omniBar.textField.position(from: omniBar.textField.beginningOfDocument, offset: query.count) {
+                omniBar.textField.selectedTextRange = omniBar.textField.textRange(from: fromPosition,
+                                                                                  to: omniBar.textField.endOfDocument)
+            }
+        }
+    }
 
     func autocompleteWasDismissed() {
         dismissOmniBar()

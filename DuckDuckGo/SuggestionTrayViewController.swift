@@ -69,7 +69,6 @@ class SuggestionTrayViewController: UIViewController {
     func willShow(for type: SuggestionType) -> Bool {
         switch type {
         case .autocomplete(let query):
-            removeFavorites()
             return displayAutocompleteSuggestions(forQuery: query)
             
         case.favorites:
@@ -213,6 +212,8 @@ class SuggestionTrayViewController: UIViewController {
 extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDelegate {
     
     func autocompleteDidChangeContentHeight(height: CGFloat) {
+        removeFavorites()
+        
         guard !fullHeightConstraint.isActive else { return }
         
         if height > variableHeightConstraint.constant {

@@ -41,6 +41,7 @@ class AutocompleteViewController: UIViewController {
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
     private var receivedResponse = false
+    private var pendingRequest = false
     
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
@@ -129,6 +130,10 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
+        selectedItem = -1
+        tableView.reloadData()
+        pendingRequest = true
+        
         lastRequest = AutocompleteRequest(query: query, parser: parser)
         lastRequest!.execute { [weak self] (suggestions, error) in
             
@@ -145,6 +150,7 @@ class AutocompleteViewController: UIViewController {
             let combinedSuggestions = localSuggestions + suggestions
             self?.numberOfEntriesToDisplay = combinedSuggestions.count
             self?.updateSuggestions(Array(combinedSuggestions))
+            self?.pendingRequest = false
         }
     }
 
@@ -235,16 +241,16 @@ extension AutocompleteViewController: Themable {
 extension AutocompleteViewController {
  
     func keyboardMoveSelectionDown() {
-        guard !suggestions.isEmpty else { return }
+        guard !pendingRequest, !suggestions.isEmpty else { return }
         selectedItem = (selectedItem + 1 >= itemCount()) ? 0 : selectedItem + 1
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem])
+        delegate?.autocomplete(highlighted: suggestions[selectedItem], for: query)
         tableView.reloadData()
     }
 
     func keyboardMoveSelectionUp() {
-        guard !suggestions.isEmpty else { return }
+        guard !pendingRequest, !suggestions.isEmpty else { return }
         selectedItem = (selectedItem - 1 < 0) ? itemCount() - 1 : selectedItem - 1
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem])
+        delegate?.autocomplete(highlighted: suggestions[selectedItem], for: query)
         tableView.reloadData()
     }
     

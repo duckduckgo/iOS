@@ -91,11 +91,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is HomeRowInstructionsViewController {
-            Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
-            return
-        }
-        
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
             return

@@ -59,10 +59,6 @@ public enum PixelName: String {
     case settingsOpened = "ms"
     case settingsHomeRowInstructionsRequested = "ms_hr"
     
-    case settingsUnprotectedSites = "ms_mw"
-    case settingsLinkPreviewsOff = "ms_lp_f"
-    case settingsLinkPreviewsOn = "ms_lp_n"
-    
     case settingsDoNotSellShown = "ms_dns"
     case settingsDoNotSellOn = "ms_dns_on"
     case settingsDoNotSellOff = "ms_dns_off"

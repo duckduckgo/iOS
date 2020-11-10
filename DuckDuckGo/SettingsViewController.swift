@@ -91,11 +91,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is UnprotectedSitesViewController {
-            Pixel.fire(pixel: .settingsUnprotectedSites)
-            return
-        }
-        
         if segue.destination is HomeRowInstructionsViewController {
             Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
             return
@@ -291,7 +286,6 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onLinkPreviewsToggle(_ sender: UISwitch) {
         appSettings.longPressPreviews = sender.isOn
-        Pixel.fire(pixel: appSettings.longPressPreviews ? .settingsLinkPreviewsOn : .settingsLinkPreviewsOff)
     }
 }
 

@@ -77,6 +77,10 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
+    var contentFrame: CGRect {
+        return containerView.frame
+    }
+    
     func didHide() {
         removeAutocomplete()
         removeFavorites()

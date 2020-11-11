@@ -38,8 +38,8 @@ class BookmarksSearch {
     }
     
     // Single letter queries should only match first character of each word from the title
-    private func scoreSingleLetter(query: String, data: [ScoredLink]) {
-        for entry in data {
+    private func scoreSingleLetter(query: String, results: [ScoredLink]) {
+        for entry in results {
             guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
             if title.starts(with: query) {
@@ -51,10 +51,10 @@ class BookmarksSearch {
     }
     
     // swiftlint:disable cyclomatic_complexity
-    private func score(query: String, data: [ScoredLink]) {
+    private func score(query: String, results: [ScoredLink]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
         
-        for entry in data {
+        for entry in results {
             guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
             let url: String
@@ -101,15 +101,15 @@ class BookmarksSearch {
     // swiftlint:enable cyclomatic_complexity
     
     func search(query: String) -> [Link] {
-        let data = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
+        let results = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
         let trimmed = query.trimWhitespace()
         if trimmed.count == 1 {
-            scoreSingleLetter(query: trimmed, data: data)
+            scoreSingleLetter(query: trimmed, results: results)
         } else {
-            score(query: query, data: data)
+            score(query: query, results: results)
         }
         
-        return data.filter { $0.score > 0 }.sorted { $0.score > $1.score } .map { $0.link }
+        return results.filter { $0.score > 0 }.sorted { $0.score > $1.score } .map { $0.link }
     }
 }

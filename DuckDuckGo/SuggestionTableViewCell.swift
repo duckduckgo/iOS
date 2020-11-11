@@ -21,6 +21,10 @@ import UIKit
 import Core
 
 class SuggestionTableViewCell: UITableViewCell {
+    
+    struct Constants {
+        static let cellHeight: CGFloat = 46.0
+    }
 
     static let reuseIdentifier = "SuggestionTableViewCell"
 

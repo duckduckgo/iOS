@@ -112,7 +112,7 @@ class SuggestionTrayViewController: UIViewController {
         
         let isFirstPresentation = fullHeightConstraint.isActive
         if isFirstPresentation {
-            variableHeightConstraint.constant = 46 * 6
+            variableHeightConstraint.constant = SuggestionTableViewCell.Constants.cellHeight * 6
         }
         
         variableWidthConstraint.constant = width
@@ -173,7 +173,7 @@ class SuggestionTrayViewController: UIViewController {
             let controller = AutocompleteViewController.loadFromStoryboard()
             install(controller: controller)
             controller.delegate = autocompleteDelegate
-            controller.presentataionDelegate = self
+            controller.presentationDelegate = self
             autocompleteController = controller
         }
         

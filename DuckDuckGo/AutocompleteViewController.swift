@@ -170,7 +170,7 @@ class AutocompleteViewController: UIViewController {
 extension AutocompleteViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row >= suggestions.count {
+        if suggestions.isEmpty {
             return noSuggestionsCell(forIndexPath: indexPath)
         }
         return suggestionsCell(forIndexPath: indexPath)

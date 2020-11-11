@@ -27,6 +27,8 @@ class BookmarksSearchTests: XCTestCase {
     let url = URL(string: "http://duckduckgo.com")!
     let simpleStore = MockBookmarkStore()
     
+    let urlStore = MockBookmarkStore()
+    
     enum Entry: String {
         case b1 = "bookmark test 1"
         case b2 = "test bookmark 2"
@@ -36,6 +38,11 @@ class BookmarksSearchTests: XCTestCase {
         case f2 = "test fav 2"
         case f12 = "fav test 12"
         case f12a = "test fav 12 a"
+        
+        case urlExample1 = "Test E 1"
+        case urlExample2 = "Test E 2"
+        case urlNasa = "Test N 1 Duck"
+        case urlDDG = "Test D 1"
     }
     
     override func setUp() {
@@ -48,6 +55,11 @@ class BookmarksSearchTests: XCTestCase {
                                  Link(title: Entry.f2.rawValue, url: url),
                                  Link(title: Entry.f12.rawValue, url: url),
                                  Link(title: Entry.f12a.rawValue, url: url)]
+        
+        urlStore.favorites = [Link(title: Entry.urlExample1.rawValue, url: URL(string: "https://example.com")!),
+                              Link(title: Entry.urlExample2.rawValue, url: URL(string: "https://example.com")!),
+                              Link(title: Entry.urlNasa.rawValue, url: URL(string: "https://www.nasa.gov")!),
+                              Link(title: Entry.urlDDG.rawValue, url: url)]
     }
 
     func testWhenSearchingSingleLetterThenOnlyFirstLettersFromWordsAreMatched() throws {
@@ -153,6 +165,33 @@ class BookmarksSearchTests: XCTestCase {
         let result = engine.search(query: "testing")
         
         XCTAssertEqual(result.count, 0)
+    }
+    
+    func testWhenMatchingURLThenDomainMatchesArePromoted() throws {
+        
+        let engine = BookmarksSearch(bookmarksStore: urlStore)
+        
+        let result = engine.search(query: "exam")
+        
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result[0].title, Entry.urlExample1.rawValue)
+        XCTAssertEqual(result[1].title, Entry.urlExample2.rawValue)
+        
+        let result2 = engine.search(query: "exam 2")
+        
+        XCTAssertEqual(result2.count, 1)
+        XCTAssertEqual(result2[0].title, Entry.urlExample2.rawValue)
+        
+        let result3 = engine.search(query: "test")
+        
+        XCTAssertEqual(result3.count, 4)
+        
+        let result4 = engine.search(query: "duck")
+        
+        XCTAssertEqual(result4.count, 2)
+        XCTAssertEqual(result4[0].title, Entry.urlDDG.rawValue)
+        XCTAssertEqual(result4[1].title, Entry.urlNasa.rawValue)
+        
     }
 
 }

@@ -52,22 +52,24 @@ class BookmarksSearch {
     
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredLink]) {
-        let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
+        let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
         
         for entry in results {
             guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
-            let url: String
+            let urlString: String
             if var components = URLComponents(url: entry.link.url, resolvingAgainstBaseURL: true) {
                 components.query = nil
                 if let baseUrl = components.url {
-                    url = baseUrl.absoluteString.lowercased()
+                    urlString = baseUrl.absoluteString.lowercased()
                 } else {
-                    url = entry.link.url.absoluteString.lowercased()
+                    urlString = entry.link.url.absoluteString.lowercased()
                 }
             } else {
-                url = entry.link.url.absoluteString.lowercased()
+                urlString = entry.link.url.absoluteString.lowercased()
             }
+            
+            // Exact matches - full query
             
             if title.starts(with: query) { // High score for exact match from the begining of the title
                 entry.score += 200
@@ -77,10 +79,12 @@ class BookmarksSearch {
                 entry.score += 100
             }
             
+            // Tokenized matches
+            
             if tokens.count > 1 {
                 var matchesAllTokens = true
                 for token in tokens {
-                    if !title.contains(token) && !url.contains(token) {
+                    if !title.contains(token) && !urlString.contains(token) {
                         matchesAllTokens = false
                         break
                     }
@@ -90,10 +94,19 @@ class BookmarksSearch {
                     // Score tokenized matches
                     entry.score += 10
                     
-                    // Boost score if first token matches begining of the title
-                    if let firstToken = tokens.first, title.starts(with: firstToken) {
-                        entry.score += 50
+                    // Boost score if first token matches:
+                    if let firstToken = tokens.first { // domain - high score boost
+                        if let domain = entry.link.url.host, domain.starts(with: firstToken) {
+                            entry.score += 300
+                        } else if title.starts(with: firstToken) { // begining of the title - moderate score boost
+                            entry.score += 50
+                        }
                     }
+                }
+            } else {
+                // High score for matching domain in the URL
+                if let domain = entry.link.url.host, let firstToken = tokens.first, domain.starts(with: firstToken) {
+                    entry.score += 300
                 }
             }
         }

@@ -37,15 +37,14 @@ class BookmarksSearch {
         self.bookmarksStore = bookmarksStore
     }
     
+    // Single letter queries should only match first character of each word from the title
     private func scoreSingleLetter(query: String, data: [ScoredLink]) {
-        
         for entry in data {
-            guard let title = entry.link.title?.lowercased() else { continue }
+            guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
             if title.starts(with: query) || title.contains(" \(query)") {
                 entry.score += 50
             }
-
         }
     }
     
@@ -56,24 +55,25 @@ class BookmarksSearch {
             guard let title = entry.link.title?.lowercased() else { continue }
             let url = entry.link.url.absoluteString.lowercased()
             
+            // Check exact match in title
             if title.contains(query) {
                 entry.score += 50
             }
             
+            // Check exact match in url
             if url.contains(query) {
                 entry.score += 50
             }
             
-            // Look if all tokens match
-            var matchesAll = true
+            var matchesAllTokens = true
             for token in tokens {
                 if !title.contains(token) && !url.contains(token) {
-                    matchesAll = false
+                    matchesAllTokens = false
                     break
                 }
             }
             
-            if matchesAll {
+            if matchesAllTokens {
                 entry.score += 10
             }
         }

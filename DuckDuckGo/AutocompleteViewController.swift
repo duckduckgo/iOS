@@ -55,8 +55,6 @@ class AutocompleteViewController: UIViewController {
     private var hidesBarsOnSwipeDefault = true
     
     private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
-    
-    private var numberOfEntriesToDisplay = 0
 
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
@@ -148,7 +146,6 @@ class AutocompleteViewController: UIViewController {
             }
 
             let combinedSuggestions = localSuggestions + suggestions
-            self?.numberOfEntriesToDisplay = combinedSuggestions.count
             self?.updateSuggestions(Array(combinedSuggestions))
             self?.pendingRequest = false
         }
@@ -212,7 +209,7 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return receivedResponse ? max(Constants.minItems, numberOfEntriesToDisplay) : 0
+        return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
     }
 }
 

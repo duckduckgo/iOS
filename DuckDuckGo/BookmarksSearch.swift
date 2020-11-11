@@ -53,7 +53,18 @@ class BookmarksSearch {
         
         for entry in data {
             guard let title = entry.link.title?.lowercased() else { continue }
-            let url = entry.link.url.absoluteString.lowercased()
+            
+            let url: String
+            if var components = URLComponents(url: entry.link.url, resolvingAgainstBaseURL: true) {
+                components.query = nil
+                if let baseUrl = components.url {
+                    url = baseUrl.absoluteString.lowercased()
+                } else {
+                    url = entry.link.url.absoluteString.lowercased()
+                }
+            } else {
+                url = entry.link.url.absoluteString.lowercased()
+            }
             
             // Check exact match in title
             if title.contains(query) {

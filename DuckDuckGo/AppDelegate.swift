@@ -175,10 +175,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         showKeyboardIfSettingOn = false
     }
     
-    func applicationWillResignActive(_ application: UIApplication) {
-        displayBlankSnapshotWindow()
-    }
-    
     private func onApplicationLaunch(_ application: UIApplication) {
         beginAuthentication()
         initialiseBackgroundFetch(application)
@@ -196,6 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        displayBlankSnapshotWindow()
         autoClear?.applicationDidEnterBackground()
     }
 

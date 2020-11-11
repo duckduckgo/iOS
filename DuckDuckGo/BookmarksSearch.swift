@@ -42,17 +42,20 @@ class BookmarksSearch {
         for entry in data {
             guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
-            if title.starts(with: query) || title.contains(" \(query)") {
+            if title.starts(with: query) {
                 entry.score += 50
+            } else if title.contains(" \(query)") {
+                entry.score += 10
             }
         }
     }
     
+    // swiftlint:disable cyclomatic_complexity
     private func score(query: String, data: [ScoredLink]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
         
         for entry in data {
-            guard let title = entry.link.title?.lowercased() else { continue }
+            guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
             let url: String
             if var components = URLComponents(url: entry.link.url, resolvingAgainstBaseURL: true) {
@@ -66,29 +69,36 @@ class BookmarksSearch {
                 url = entry.link.url.absoluteString.lowercased()
             }
             
-            // Check exact match in title
-            if title.contains(query) {
-                entry.score += 50
+            if title.starts(with: query) { // High score for exact match from the begining of the title
+                entry.score += 200
+            } else if title.contains(" \(query)") { // Exact match from the begining of the word within string.
+                entry.score += 150
+            } else if title.contains(query) { // Slightly lower score for 'contains' exact match.
+                entry.score += 100
             }
             
-            // Check exact match in url
-            if url.contains(query) {
-                entry.score += 50
-            }
-            
-            var matchesAllTokens = true
-            for token in tokens {
-                if !title.contains(token) && !url.contains(token) {
-                    matchesAllTokens = false
-                    break
+            if tokens.count > 1 {
+                var matchesAllTokens = true
+                for token in tokens {
+                    if !title.contains(token) && !url.contains(token) {
+                        matchesAllTokens = false
+                        break
+                    }
                 }
-            }
-            
-            if matchesAllTokens {
-                entry.score += 10
+                
+                if matchesAllTokens {
+                    // Score tokenized matches
+                    entry.score += 10
+                    
+                    // Boost score if first token matches begining of the title
+                    if let firstToken = tokens.first, title.starts(with: firstToken) {
+                        entry.score += 50
+                    }
+                }
             }
         }
     }
+    // swiftlint:enable cyclomatic_complexity
     
     func search(query: String) -> [Link] {
         let data = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
@@ -100,6 +110,6 @@ class BookmarksSearch {
             score(query: query, data: data)
         }
         
-        return data.filter { $0.score > 0 }.map { $0.link }
+        return data.filter { $0.score > 0 }.sorted { $0.score > $1.score } .map { $0.link }
     }
 }

@@ -28,32 +28,81 @@ class BookmarksSearchTests: XCTestCase {
     let simpleStore = MockBookmarkStore()
     
     enum Entry: String {
-        case b1 = "test bookmark 1"
+        case b1 = "bookmark test 1"
         case b2 = "test bookmark 2"
-        case b12 = "test bookmark 12"
-        case f1 = "test fav 1"
+        case b12 = "bookmark test 12"
+        case b12a = "test bookmark 12 a"
+        case f1 = "fav test 1"
         case f2 = "test fav 2"
-        case f12 = "test fav 12"
+        case f12 = "fav test 12"
+        case f12a = "test fav 12 a"
     }
     
     override func setUp() {
         simpleStore.bookmarks = [Link(title: Entry.b1.rawValue, url: url),
                                  Link(title: Entry.b2.rawValue, url: url),
-                                 Link(title: Entry.b12.rawValue, url: url)]
+                                 Link(title: Entry.b12.rawValue, url: url),
+                                 Link(title: Entry.b12a.rawValue, url: url)]
         
         simpleStore.favorites = [Link(title: Entry.f1.rawValue, url: url),
                                  Link(title: Entry.f2.rawValue, url: url),
-                                 Link(title: Entry.f12.rawValue, url: url)]
+                                 Link(title: Entry.f12.rawValue, url: url),
+                                 Link(title: Entry.f12a.rawValue, url: url)]
     }
 
     func testWhenSearchingSingleLetterThenOnlyFirstLettersFromWordsAreMatched() throws {
         
         let engine = BookmarksSearch(bookmarksStore: simpleStore)
         
-        XCTAssertEqual(engine.search(query: "t").count, 6)
-        XCTAssertEqual(engine.search(query: "b").count, 3)
-        XCTAssertEqual(engine.search(query: "1").count, 4)
+        XCTAssertEqual(engine.search(query: "t").count, 8)
+        XCTAssertEqual(engine.search(query: "b").count, 4)
+        XCTAssertEqual(engine.search(query: "1").count, 6)
+        XCTAssertEqual(engine.search(query: "a").count, 2)
         XCTAssertEqual(engine.search(query: "e").count, 0)
+    }
+    
+    func testWhenSearchingThenBeginingOfTitlesArePromoted() throws {
+        
+        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        
+        let resultSingleLetter = engine.search(query: "t")
+        XCTAssertEqual(resultSingleLetter[0].title, Entry.f2.rawValue)
+        XCTAssertEqual(resultSingleLetter[1].title, Entry.f12a.rawValue)
+        
+        XCTAssertEqual(resultSingleLetter[2].title, Entry.b2.rawValue)
+        XCTAssertEqual(resultSingleLetter[3].title, Entry.b12a.rawValue)
+        
+        XCTAssertEqual(resultSingleLetter[4].title, Entry.f1.rawValue)
+        XCTAssertEqual(resultSingleLetter[5].title, Entry.f12.rawValue)
+        
+        XCTAssertEqual(resultSingleLetter[6].title, Entry.b1.rawValue)
+        XCTAssertEqual(resultSingleLetter[7].title, Entry.b12.rawValue)
+        
+        let resultWord = engine.search(query: "tes")
+        
+        XCTAssertEqual(resultWord[0].title, Entry.f2.rawValue)
+        XCTAssertEqual(resultWord[1].title, Entry.f12a.rawValue)
+        
+        XCTAssertEqual(resultWord[2].title, Entry.b2.rawValue)
+        XCTAssertEqual(resultWord[3].title, Entry.b12a.rawValue)
+        
+        XCTAssertEqual(resultWord[4].title, Entry.f1.rawValue)
+        XCTAssertEqual(resultWord[5].title, Entry.f12.rawValue)
+        
+        XCTAssertEqual(resultWord[6].title, Entry.b1.rawValue)
+        XCTAssertEqual(resultWord[7].title, Entry.b12.rawValue)
+        
+        let resultFullWord = engine.search(query: "bookmark")
+        XCTAssertEqual(resultFullWord[0].title, Entry.b1.rawValue)
+        XCTAssertEqual(resultFullWord[1].title, Entry.b12.rawValue)
+        XCTAssertEqual(resultFullWord[2].title, Entry.b2.rawValue)
+        XCTAssertEqual(resultFullWord[3].title, Entry.b12a.rawValue)
+        
+        let resultSentence = engine.search(query: "tes fav")
+        XCTAssertEqual(resultSentence[0].title, Entry.f2.rawValue)
+        XCTAssertEqual(resultSentence[1].title, Entry.f12a.rawValue)
+        XCTAssertEqual(resultSentence[2].title, Entry.f1.rawValue)
+        XCTAssertEqual(resultSentence[3].title, Entry.f12.rawValue)
     }
     
     func testWhenSearchingFullStringThenExactMatchesAreFirst() throws {
@@ -62,9 +111,10 @@ class BookmarksSearchTests: XCTestCase {
         
         let result = engine.search(query: "fav 1")
         
-        XCTAssertEqual(result.count, 2)
-        XCTAssertEqual(result[0].title, Entry.f1.rawValue)
-        XCTAssertEqual(result[1].title, Entry.f12.rawValue)
+        XCTAssertEqual(result.count, 3)
+        XCTAssertEqual(result[0].title, Entry.f12a.rawValue)
+        XCTAssertEqual(result[1].title, Entry.f1.rawValue)
+        XCTAssertEqual(result[2].title, Entry.f12.rawValue)
     }
     
     func testWhenSearchingThenFavoritesAreFirst() throws {
@@ -73,11 +123,13 @@ class BookmarksSearchTests: XCTestCase {
         
         let result = engine.search(query: "1")
         
-        XCTAssertEqual(result.count, 4)
+        XCTAssertEqual(result.count, 6)
         XCTAssertEqual(result[0].title, Entry.f1.rawValue)
         XCTAssertEqual(result[1].title, Entry.f12.rawValue)
-        XCTAssertEqual(result[2].title, Entry.b1.rawValue)
-        XCTAssertEqual(result[3].title, Entry.b12.rawValue)
+        XCTAssertEqual(result[2].title, Entry.f12a.rawValue)
+        XCTAssertEqual(result[3].title, Entry.b1.rawValue)
+        XCTAssertEqual(result[4].title, Entry.b12.rawValue)
+        XCTAssertEqual(result[5].title, Entry.b12a.rawValue)
     }
 
     func testWhenSearchingMultipleWordsThenAllMustBeFound() throws {
@@ -86,10 +138,12 @@ class BookmarksSearchTests: XCTestCase {
         
         let result = engine.search(query: "te bo")
         
-        XCTAssertEqual(result.count, 3)
-        XCTAssertEqual(result[0].title, Entry.b1.rawValue)
-        XCTAssertEqual(result[1].title, Entry.b2.rawValue)
-        XCTAssertEqual(result[2].title, Entry.b12.rawValue)
+        XCTAssertEqual(result.count, 4)
+        // Prioritize if first word match the begining of the title
+        XCTAssertEqual(result[0].title, Entry.b2.rawValue)
+        XCTAssertEqual(result[1].title, Entry.b12a.rawValue)
+        XCTAssertEqual(result[2].title, Entry.b1.rawValue)
+        XCTAssertEqual(result[3].title, Entry.b12.rawValue)
     }
     
     func testWhenSearchingThenNotFindingAnythingIsAlsoValid() throws {

@@ -1010,7 +1010,11 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
-            omniBar.textField.text = url.absoluteString
+            if AppUrls().isDuckDuckGoSearch(url: url) {
+                omniBar.textField.text = suggestion.suggestion
+            } else {
+                omniBar.textField.text = url.absoluteString
+            }
         } else {
             omniBar.textField.text = suggestion.suggestion
         }

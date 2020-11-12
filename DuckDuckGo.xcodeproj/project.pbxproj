@@ -566,12 +566,8 @@
 		F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */; };
 		F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */; };
 		F4D349632541D7D0002AAF35 /* EmailUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349622541D7D0002AAF35 /* EmailUserScript.swift */; };
-		F4D349752541EF2D002AAF35 /* email.js in Resources */ = {isa = PBXBuildFile; fileRef = F4D349742541EF2D002AAF35 /* email.js */; };
 		F4D3497F2541F712002AAF35 /* EmailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3497E2541F712002AAF35 /* EmailManager.swift */; };
-		F4D3499E2548329B002AAF35 /* ProximaNova-Reg-webfont.woff in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499A2548329A002AAF35 /* ProximaNova-Reg-webfont.woff */; };
 		F4D3499F2548329B002AAF35 /* email-autofill.js in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499B2548329B002AAF35 /* email-autofill.js */; };
-		F4D349A02548329B002AAF35 /* ddg-logo-borderless.svg in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499C2548329B002AAF35 /* ddg-logo-borderless.svg */; };
-		F4D349A12548329B002AAF35 /* email-style.css in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499D2548329B002AAF35 /* email-style.css */; };
 		F4D349D125502AC4002AAF35 /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */; };
 		F4D349DB25506A1E002AAF35 /* EmailKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */; };
 		F4D349F7255195F4002AAF35 /* EmailUserScriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */; };
@@ -1995,12 +1991,8 @@
 		F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsViewController.swift; sourceTree = "<group>"; };
 		F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsDetailsViewController.swift; sourceTree = "<group>"; };
 		F4D349622541D7D0002AAF35 /* EmailUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUserScript.swift; sourceTree = "<group>"; };
-		F4D349742541EF2D002AAF35 /* email.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = email.js; sourceTree = "<group>"; };
 		F4D3497E2541F712002AAF35 /* EmailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailManager.swift; sourceTree = "<group>"; };
-		F4D3499A2548329A002AAF35 /* ProximaNova-Reg-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Reg-webfont.woff"; sourceTree = "<group>"; };
 		F4D3499B2548329B002AAF35 /* email-autofill.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "email-autofill.js"; sourceTree = "<group>"; };
-		F4D3499C2548329B002AAF35 /* ddg-logo-borderless.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ddg-logo-borderless.svg"; sourceTree = "<group>"; };
-		F4D3499D2548329B002AAF35 /* email-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "email-style.css"; sourceTree = "<group>"; };
 		F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
 		F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailKeychainManager.swift; sourceTree = "<group>"; };
 		F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailUserScriptTests.swift; sourceTree = "<group>"; };
@@ -3727,11 +3719,7 @@
 		F4D349572541C44B002AAF35 /* Email */ = {
 			isa = PBXGroup;
 			children = (
-				F4D349742541EF2D002AAF35 /* email.js */,
-				F4D3499C2548329B002AAF35 /* ddg-logo-borderless.svg */,
 				F4D3499B2548329B002AAF35 /* email-autofill.js */,
-				F4D3499D2548329B002AAF35 /* email-style.css */,
-				F4D3499A2548329A002AAF35 /* ProximaNova-Reg-webfont.woff */,
 				F4D349622541D7D0002AAF35 /* EmailUserScript.swift */,
 				F4D3497E2541F712002AAF35 /* EmailManager.swift */,
 				F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */,
@@ -4318,12 +4306,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4D349A02548329B002AAF35 /* ddg-logo-borderless.svg in Resources */,
 				987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */,
-				F4D349A12548329B002AAF35 /* email-style.css in Resources */,
 				98B001B0251EABB40090EC07 /* InfoPlist.strings in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
-				F4D349752541EF2D002AAF35 /* email.js in Resources */,
 				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
 				02C57C5F251533CE009E5129 /* donotsell.js in Resources */,
 				850559C923C61B5D0055C0D5 /* login-form-detection.js in Resources */,
@@ -4333,7 +4318,6 @@
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
-				F4D3499E2548329B002AAF35 /* ProximaNova-Reg-webfont.woff in Resources */,
 				F4D3499F2548329B002AAF35 /* email-autofill.js in Resources */,
 				8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */,
 				02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */,

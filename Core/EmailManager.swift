@@ -72,6 +72,7 @@ public class EmailManager {
     
     public func signOut() {
         storage.deleteAll()
+        Pixel.fire(pixel: .emailUserSignedOut)
     }
     
     public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
@@ -107,6 +108,7 @@ extension EmailManager: EmailUserScriptDelegate {
     }
     
     public func emailUserScript(_ emailUserScript: EmailUserScript, didRequestStoreToken token: String, username: String) {
+        Pixel.fire(pixel: .emailUserSignedIn)
         storeToken(token, username: username)
     }
 }
@@ -187,6 +189,7 @@ private extension EmailManager {
             do {
                 let decoder = JSONDecoder()
                 let alias = try decoder.decode(EmailAliasResponse.self, from: data).address
+                Pixel.fire(pixel: .emailAliasGenerated)
                 completionHandler?(alias, nil)
             } catch {
                 completionHandler?(nil, .invalidResponse)

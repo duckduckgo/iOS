@@ -218,6 +218,15 @@ public enum PixelName: String {
     case widgetsOnboardingCTAPressed = "m_o_w_a"
     case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
     case widgetsOnboardingMovedToBackground = "m_o_w_b"
+    
+    case emailSignoutSettingShown = "m_e_so_s"
+    case emailUserSignedOut = "m_e_so"
+    case emailUserSignedIn = "m_e_si"
+    case emailTooltipShown = "m_e_t_s"
+    case emailUserPressedUseAlias = "m_e_ua"
+    case emailUserPressedDoNotUse = "m_e_du"
+    case emailAliasGenerated = "m_e_ag"
+    case emailAliasCopiedToClipboard = "m_e_cc"
 
     // MARK: debug pixels
     

@@ -45,6 +45,12 @@ class EmailSettingsViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Pixel.fire(pixel: .emailSignoutSettingShown)
+        
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         

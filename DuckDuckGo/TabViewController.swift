@@ -262,6 +262,7 @@ class TabViewController: UIViewController {
         }
         
         //TODO  this
+        //TODO settigns copy finalisation
         //if emailScript.isSignedIn {
             generalScripts.append(emailScript)
         //}
@@ -1350,26 +1351,34 @@ extension TabViewController: FaviconUserScriptDelegate {
 
 extension TabViewController: EmailManagerPresentationDelegate {
     func emailManager(_ emailManager: EmailManager, didRequestPermissionToProvideAlias alias: String, completionHandler: @escaping (Bool) -> Void) {
+        
         let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
+        
         let actionTitle =  String(format: UserText.emailAliasAlertConfirm, alias)
         alert.addAction(title: actionTitle) {
+            Pixel.fire(pixel: .emailUserPressedUseAlias)
             completionHandler(true)
         }
         alert.addAction(title: UserText.emailAliasAlertDecline) {
+            Pixel.fire(pixel: .emailUserPressedDoNotUse)
             completionHandler(false)
         }
+        
         if UIDevice.current.userInterfaceIdiom == .pad {
             //make sure the completion handler is called if the alert is dismissed by tapping outside the alert
             alert.addAction(title: "", style: .cancel) {
                 completionHandler(false)
             }
         }
+        
         alert.popoverPresentationController?.permittedArrowDirections = []
         alert.popoverPresentationController?.delegate = self
         let bounds = view.bounds
         let point = Point(x: Int((bounds.maxX - bounds.minX) / 2.0), y: Int(bounds.maxY))
         present(controller: alert, fromView: view, atPoint: point)
+        
+        Pixel.fire(pixel: .emailTooltipShown)
     }
 }
 

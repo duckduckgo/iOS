@@ -141,6 +141,7 @@ extension TabViewController {
                 }
                 let pasteBoard = UIPasteboard.general
                 pasteBoard.string = alias
+                Pixel.fire(pixel: .emailAliasCopiedToClipboard)
                 self?.view.showBottomToast(UserText.emailBrowsingMenuAlert)
             }
         }

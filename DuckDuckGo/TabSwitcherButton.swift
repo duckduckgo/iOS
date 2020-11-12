@@ -155,10 +155,6 @@ class TabSwitcherButton: UIView {
 
         workItem?.cancel()
         guard workItem != nil else { return }
-
-        // unncessary because if it's a long press it'll happen anyway, if it's a tap it needs to happen
-//        guard let touch = touches.first else { return }
-        // guard point(inside: touch.location(in: self), with: event) else { return }
         delegate?.showTabSwitcher(self)
     }
     

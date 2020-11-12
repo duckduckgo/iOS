@@ -157,7 +157,7 @@ class TabSwitcherButton: UIView {
         guard workItem != nil else { return }
 
         guard let touch = touches.first else { return }
-        guard point(inside: touch.location(in: self), with: event) else { return }
+        // guard point(inside: touch.location(in: self), with: event) else { return }
         delegate?.showTabSwitcher(self)
     }
     

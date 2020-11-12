@@ -22,17 +22,14 @@ import UIKit
 class CustomToolbar: UIToolbar {
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        print(#function, event)
-
-        guard let touch = event?.allTouches?.first else { return super.hitTest(point, with: event) }
 
         let item = items?.first(where: {
             guard let customView = $0.customView else { return false }
-            let location = touch.location(in: customView)
-            print($0, location)
-            return false
+            let location = convert(point, to: customView)
+            print(location, "vs", $0.customView)
+            return location.x > 0 && location.x <= 45 && location.y > 0 && location.y <= 45
         })
-
+        print("---")
         return item?.customView ?? super.hitTest(point, with: event)
     }
 

@@ -857,7 +857,7 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
-        chromeDelegate?.omniBar.startLoadingAnimation()
+        chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         
         detectedNewNavigation()
     }

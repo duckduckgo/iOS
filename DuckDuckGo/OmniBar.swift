@@ -159,8 +159,8 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
-    public func startLoadingAnimation() {
-        trackersAnimator.startLoadingAnimation(in: self)
+    public func startLoadingAnimation(for url: URL?) {
+        trackersAnimator.startLoadingAnimation(in: self, for: url)
     }
     
     public func startTrackersAnimation(_ trackers: [DetectedTracker], collapsing: Bool) {

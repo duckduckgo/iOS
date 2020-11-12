@@ -94,7 +94,13 @@ class TrackersAnimator {
         return true
     }
     
-    func startLoadingAnimation(in omniBar: OmniBar) {
+    func startLoadingAnimation(in omniBar: OmniBar, for url: URL?) {
+        
+        guard let url = url, !AppUrls().isDuckDuckGoSearch(url: url) else {
+            omniBar.siteRatingView.mode = .ready
+            return
+        }
+        
         let animation = CAKeyframeAnimation()
         animation.keyPath = "transform.scale"
         animation.values = [1, 0.9, 1, 0.9, 1]

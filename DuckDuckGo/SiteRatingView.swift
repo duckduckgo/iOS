@@ -75,14 +75,18 @@ public class SiteRatingView: UIView {
             return
         }
         
-        let grades = siteRating.scores
-        let grade: Grade.Score
+        guard !AppUrls().isDuckDuckGoSearch(url: siteRating.url) else {
+            circleIndicator.image = UIImage(named: "LogoIcon")
+            return
+        }
+        
         switch mode {
         case .loading:
             circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
                                                                                   iconSize: circleIndicator.bounds.size)
         case .ready:
-            grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
+            let grades = siteRating.scores
+            let grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
             circleIndicator.accessibilityLabel = UserText.privacyGrade(grade.grade.rawValue.uppercased())

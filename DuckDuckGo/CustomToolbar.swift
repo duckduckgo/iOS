@@ -21,13 +21,19 @@ import UIKit
 
 class CustomToolbar: UIToolbar {
 
+    static let hitWidth: CGFloat = 45
+
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
         let item = items?.first(where: {
             guard let customView = $0.customView else { return false }
             let location = convert(point, to: customView)
-            print(location, "vs", $0.customView)
-            return location.x > 0 && location.x <= 45 && location.y > 0 && location.y <= 45
+
+            let extra = 45 - customView.frame.width
+            print(location, "vs", $0.customView as Any, extra)
+
+            return location.x >= -extra && location.x <= Self.hitWidth
+                && location.y > 0 && location.y <= customView.frame.height
         })
         print("---")
         return item?.customView ?? super.hitTest(point, with: event)

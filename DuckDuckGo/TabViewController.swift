@@ -261,7 +261,7 @@ class TabViewController: UIViewController {
             generalScripts.append(doNotSellScript)
         }
         
-        //TODO this
+        //TODO  this
         //TODO settigns copy finalisation
         //if emailScript.isSignedIn {
             generalScripts.append(emailScript)

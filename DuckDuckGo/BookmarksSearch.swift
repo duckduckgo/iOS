@@ -37,19 +37,6 @@ class BookmarksSearch {
         self.bookmarksStore = bookmarksStore
     }
     
-    // Single letter queries should only match first character of each word from the title
-    private func scoreSingleLetter(query: String, results: [ScoredLink]) {
-        for entry in results {
-            guard let title = entry.link.displayTitle?.lowercased() else { continue }
-            
-            if title.starts(with: query) {
-                entry.score += 50
-            } else if title.contains(" \(query)") {
-                entry.score += 10
-            }
-        }
-    }
-    
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredLink]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
@@ -57,34 +44,22 @@ class BookmarksSearch {
         for entry in results {
             guard let title = entry.link.displayTitle?.lowercased() else { continue }
             
-            let urlString: String
-            if var components = URLComponents(url: entry.link.url, resolvingAgainstBaseURL: true) {
-                components.query = nil
-                if let baseUrl = components.url {
-                    urlString = baseUrl.absoluteString.lowercased()
-                } else {
-                    urlString = entry.link.url.absoluteString.lowercased()
-                }
-            } else {
-                urlString = entry.link.url.absoluteString.lowercased()
-            }
-            
             // Exact matches - full query
-            
             if title.starts(with: query) { // High score for exact match from the begining of the title
                 entry.score += 200
             } else if title.contains(" \(query)") { // Exact match from the begining of the word within string.
-                entry.score += 150
-            } else if title.contains(query) { // Slightly lower score for 'contains' exact match.
                 entry.score += 100
             }
+            
+            let domain = entry.link.url.host ?? ""
             
             // Tokenized matches
             
             if tokens.count > 1 {
                 var matchesAllTokens = true
                 for token in tokens {
-                    if !title.contains(token) && !urlString.contains(token) {
+                    // Match only from the begining of the word to avoid unintuitive matches.
+                    if !title.starts(with: token) && !title.contains(" \(token)") && !domain.starts(with: token) {
                         matchesAllTokens = false
                         break
                     }
@@ -96,7 +71,7 @@ class BookmarksSearch {
                     
                     // Boost score if first token matches:
                     if let firstToken = tokens.first { // domain - high score boost
-                        if let domain = entry.link.url.host, domain.starts(with: firstToken) {
+                        if domain.starts(with: firstToken) {
                             entry.score += 300
                         } else if title.starts(with: firstToken) { // begining of the title - moderate score boost
                             entry.score += 50
@@ -105,7 +80,7 @@ class BookmarksSearch {
                 }
             } else {
                 // High score for matching domain in the URL
-                if let domain = entry.link.url.host, let firstToken = tokens.first, domain.starts(with: firstToken) {
+                if let firstToken = tokens.first, domain.starts(with: firstToken) {
                     entry.score += 300
                 }
             }
@@ -117,11 +92,7 @@ class BookmarksSearch {
         let results = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
         let trimmed = query.trimWhitespace()
-        if trimmed.count == 1 {
-            scoreSingleLetter(query: trimmed, results: results)
-        } else {
-            score(query: query, results: results)
-        }
+        score(query: trimmed, results: results)
         
         return results.filter { $0.score > 0 }.sorted { $0.score > $1.score } .map { $0.link }
     }

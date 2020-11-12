@@ -62,7 +62,7 @@ class BookmarksSearchTests: XCTestCase {
                               Link(title: Entry.urlDDG.rawValue, url: url)]
     }
 
-    func testWhenSearchingSingleLetterThenOnlyFirstLettersFromWordsAreMatched() throws {
+    func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() throws {
         
         let engine = BookmarksSearch(bookmarksStore: simpleStore)
         
@@ -70,6 +70,7 @@ class BookmarksSearchTests: XCTestCase {
         XCTAssertEqual(engine.search(query: "b").count, 4)
         XCTAssertEqual(engine.search(query: "1").count, 6)
         XCTAssertEqual(engine.search(query: "a").count, 2)
+        XCTAssertEqual(engine.search(query: "k").count, 0)
         XCTAssertEqual(engine.search(query: "e").count, 0)
     }
     

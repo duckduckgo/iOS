@@ -1833,12 +1833,11 @@ class DDGAutofill extends HTMLElement {
         this.input.addEventListener('focus', () => {
             if (this.areAllInputsEmpty()) {
                 this.autofillInputs()
-                this.showTooltip()
             }
         }, {once: true})
 
         this.trigger.addEventListener('click', () => {
-            this.showTooltip()
+            this.autofillInputs()
         })
         this.dismissButton.addEventListener('click', (e) => {
             e.stopImmediatePropagation()

@@ -76,10 +76,10 @@ public class EmailManager {
     
     public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
         getAliasEmailIfNeeded(timeoutInterval: timeoutInterval) { [weak self] newAlias, error in
+            completionHandler(newAlias, error)
             if error == nil {
                 self?.consumeAliasAndReplace()
             }
-            completionHandler(newAlias, error)
         }
     }
 }

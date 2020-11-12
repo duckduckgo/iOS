@@ -56,11 +56,13 @@ public struct AppUrls {
         static let setAtb = "set_atb"
         static let activityType = "at"
         static let partialHost = "pv1"
+        static let searchHeader = "ko"
     }
 
     private struct ParamValue {
         static let source = "ddg_ios"
         static let appUsage = "app_use"
+        static let searchHeader = "-1"
     }
 
     let statisticsStore: StatisticsStore
@@ -175,6 +177,15 @@ public struct AppUrls {
             return atbWithVariant == url.getParam(name: Param.atb)
         }
         return true
+    }
+    
+    public func applySearchHederParams(for url: URL) -> URL {
+        return url.addParam(name: Param.searchHeader, value: ParamValue.searchHeader)
+    }
+    
+    public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
+        guard let header = url.getParam(name: Param.searchHeader) else { return false }
+        return header == ParamValue.searchHeader
     }
     
     public var httpsBloomFilter: URL {

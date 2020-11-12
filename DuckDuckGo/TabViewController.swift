@@ -414,12 +414,13 @@ class TabViewController: UIViewController {
     }
     
     private func shouldReissueSearch(for url: URL) -> Bool {
-        return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasCorrectMobileStatsParams(url: url)
+        guard appUrls.isDuckDuckGoSearch(url: url) else { return false }
+        return  !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
     }
     
-    private func reissueSearchWithStatsParams(for url: URL) {
+    private func reissueSearchWithRequiredParams(for url: URL) {
         let mobileSearch = appUrls.applyStatsParams(for: url)
-        load(url: mobileSearch)
+        load(url: appUrls.applySearchHederParams(for: mobileSearch))
     }
     
     private func showProgressIndicator() {
@@ -1111,7 +1112,7 @@ extension TabViewController: WKNavigationDelegate {
                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if shouldReissueSearch(for: url) {
-            reissueSearchWithStatsParams(for: url)
+            reissueSearchWithRequiredParams(for: url)
             completion(.cancel)
             return
         }

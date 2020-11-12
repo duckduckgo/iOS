@@ -911,8 +911,12 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        if updatedQuery.isEmpty && homeController == nil {
-            showSuggestionTray(.favorites)
+        if updatedQuery.isEmpty {
+            if homeController != nil {
+                hideSuggestionTray()
+            } else {
+                showSuggestionTray(.favorites)
+            }
         } else {
             showSuggestionTray(.autocomplete(query: updatedQuery))
         }

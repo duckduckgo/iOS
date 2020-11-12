@@ -27,19 +27,25 @@ public protocol EmailManagerStorage: class {
     func deleteAll()
 }
 
-public enum FetchAliasError: Error {
+public protocol EmailManagerPresentationDelegate: class {
+    func emailManager(_ emailManager: EmailManager, didRequestPermissionToProvideAlias alias: String, completionHandler: @escaping (Bool) -> Void)
+}
+
+public enum AliasRequestError: Error {
     case networkError
     case signedOut
     case invalidResponse
+    case userRefused
 }
 
-public typealias AliasCompletion = (String?, FetchAliasError?) -> Void
+public typealias AliasCompletion = (String?, AliasRequestError?) -> Void
 
 public class EmailManager {
     
     private static let emailDomain = "duck.com"
     
     private let storage: EmailManagerStorage
+    public weak var delegate: EmailManagerPresentationDelegate?
     
     private var username: String? {
         storage.getUsername()
@@ -69,18 +75,11 @@ public class EmailManager {
     }
     
     public func getAliasEmailIfNeededAndConsume(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
-        if let alias = alias {
-            completionHandler(emailFromAlias(alias), nil)
-            consumeAliasAndReplace()
-            return
-        }
-        fetchAndStoreAlias(timeoutInterval: timeoutInterval) { [weak self] newAlias, error in
-            guard let newAlias = newAlias, error == nil  else {
-                completionHandler(nil, error)
-                return
+        getAliasEmailIfNeeded(timeoutInterval: timeoutInterval) { [weak self] newAlias, error in
+            if error == nil {
+                self?.consumeAliasAndReplace()
             }
-            completionHandler(self?.emailFromAlias(newAlias), nil)
-            self?.consumeAliasAndReplace()
+            completionHandler(newAlias, error)
         }
     }
 }
@@ -91,7 +90,20 @@ extension EmailManager: EmailUserScriptDelegate {
     }
     
     public func emailUserScriptDidRequestAlias(emailUserScript: EmailUserScript, completionHandler: @escaping AliasCompletion) {
-        getAliasEmailIfNeededAndConsume(completionHandler: completionHandler)
+        getAliasEmailIfNeeded { [weak self] newAlias, error in
+            guard let newAlias = newAlias, error == nil, let self = self else {
+                completionHandler(nil, error)
+                return
+            }
+            self.delegate?.emailManager(self, didRequestPermissionToProvideAlias: newAlias) { [weak self] permissionsGranted in
+                if permissionsGranted {
+                    completionHandler(newAlias, nil)
+                    self?.consumeAliasAndReplace()
+                } else {
+                    completionHandler(nil, .userRefused)
+                }
+            }
+        }
     }
     
     public func emailUserScript(_ emailUserScript: EmailUserScript, didRequestStoreToken token: String, username: String) {
@@ -126,6 +138,20 @@ private extension EmailManager {
     func consumeAliasAndReplace() {
         storage.deleteAlias()
         fetchAndStoreAlias()
+    }
+    
+    func getAliasEmailIfNeeded(timeoutInterval: TimeInterval = 4.0, completionHandler: @escaping AliasCompletion) {
+        if let alias = alias {
+            completionHandler(emailFromAlias(alias), nil)
+            return
+        }
+        fetchAndStoreAlias(timeoutInterval: timeoutInterval) { [weak self] newAlias, error in
+            guard let newAlias = newAlias, error == nil  else {
+                completionHandler(nil, error)
+                return
+            }
+            completionHandler(self?.emailFromAlias(newAlias), nil)
+        }
     }
     
     func fetchAndStoreAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {

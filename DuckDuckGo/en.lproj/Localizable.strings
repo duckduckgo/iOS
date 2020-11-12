@@ -239,6 +239,15 @@
 "donotsell.info.headertext" = "Your data shouldn't be for sale. At DuckDuckGo, we agree. Activate the \"Global Privacy Control\" (GPC) setting and we'll signal to websites your preference to:\n\n• Not sell your personal data.\n• Limit sharing of your personal data to other companies.";
 
 /* No comment provided by engineer. */
+"email.aliasAlert.confirm" = "Use %@";
+
+/* No comment provided by engineer. */
+"email.aliasAlert.decline" = "Don't Use";
+
+/* No comment provided by engineer. */
+"email.aliasAlert.title" = "For added privacy, use a Duck Address.";
+
+/* No comment provided by engineer. */
 "email.browsingMenu.alert" = "New alias copied to your clipboard";
 
 /* No comment provided by engineer. */

@@ -327,4 +327,7 @@ public struct UserText {
     
     public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Use a new Duck Address", comment: "")
     public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New alias copied to your clipboard", comment: "")
+    public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "For added privacy, use a Duck Address.", comment: "")
+    public static let emailAliasAlertConfirm = NSLocalizedString("email.aliasAlert.confirm", value: "Use %@", comment: "")
+    public static let emailAliasAlertDecline = NSLocalizedString("email.aliasAlert.decline", value: "Don't Use", comment: "")
 }

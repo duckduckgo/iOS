@@ -194,7 +194,7 @@
 		856D57C720656A28000170B5 /* TLDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856D57C620656A28000170B5 /* TLDTests.swift */; };
 		8570656E1F6AAE270044DCB1 /* DetectedTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
-		8577A1C5255D2C0D00D43FCD /* CustomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577A1C4255D2C0D00D43FCD /* CustomToolbar.swift */; };
+		8577A1C5255D2C0D00D43FCD /* HitTestingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */; };
 		8577B0AE2225CA4F009CCC71 /* OnboardingPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577B0AD2225CA4F009CCC71 /* OnboardingPadViewController.swift */; };
 		857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DC8223A9E7D00833940 /* MockAppSettings.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
@@ -876,7 +876,7 @@
 		856D57C620656A28000170B5 /* TLDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLDTests.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedTrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
-		8577A1C4255D2C0D00D43FCD /* CustomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolbar.swift; sourceTree = "<group>"; };
+		8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTestingToolbar.swift; sourceTree = "<group>"; };
 		8577B0AD2225CA4F009CCC71 /* OnboardingPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPadViewController.swift; sourceTree = "<group>"; };
 		857D1DC8223A9E7D00833940 /* MockAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppSettings.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
@@ -3584,7 +3584,7 @@
 				8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */,
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
 				85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */,
-				8577A1C4255D2C0D00D43FCD /* CustomToolbar.swift */,
+				8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -4461,7 +4461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */,
-				8577A1C5255D2C0D00D43FCD /* CustomToolbar.swift in Sources */,
+				8577A1C5255D2C0D00D43FCD /* HitTestingToolbar.swift in Sources */,
 				853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */,
 				984E291922CD67B500EE7154 /* PrivacyProtectionHomeCell.swift in Sources */,
 				9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */,

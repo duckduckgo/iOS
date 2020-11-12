@@ -1,5 +1,5 @@
 //
-//  CustomToolbar.swift
+//  HitTestingToolbar.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import UIKit
 
-class CustomToolbar: UIToolbar {
+class HitTestingToolbar: UIToolbar {
 
     static let hitWidth: CGFloat = 45
 
@@ -28,14 +28,10 @@ class CustomToolbar: UIToolbar {
         let item = items?.first(where: {
             guard let customView = $0.customView else { return false }
             let location = convert(point, to: customView)
-
-            let extra = 45 - customView.frame.width
-            print(location, "vs", $0.customView as Any, extra)
-
+            let extra = max(0, Self.hitWidth - customView.frame.width)
             return location.x >= -extra && location.x <= Self.hitWidth
                 && location.y > 0 && location.y <= customView.frame.height
         })
-        print("---")
         return item?.customView ?? super.hitTest(point, with: event)
     }
 

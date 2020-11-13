@@ -21,6 +21,10 @@ import UIKit
 import Core
 
 class SuggestionTableViewCell: UITableViewCell {
+    
+    struct Constants {
+        static let cellHeight: CGFloat = 46.0
+    }
 
     static let reuseIdentifier = "SuggestionTableViewCell"
 
@@ -30,11 +34,18 @@ class SuggestionTableViewCell: UITableViewCell {
 
     func updateFor(query: String, suggestion: Suggestion) {
         let text = suggestion.suggestion
-        if URL.isWebUrl(text: text) {
-            typeImage.image = UIImage(named: "SuggestGlobe")
-        } else {
-            typeImage.image = UIImage(named: "SuggestLoupe")
+        
+        switch suggestion.source {
+        case .local:
+            typeImage.image = UIImage(named: "BookmarkSuggestion")
+        case .remote:
+            if URL.isWebUrl(text: text) {
+                typeImage.image = UIImage(named: "SuggestGlobe")
+            } else {
+                typeImage.image = UIImage(named: "SuggestLoupe")
+            }
         }
+        
         styleText(query: query, text: suggestion.suggestion)
     }
 

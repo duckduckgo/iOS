@@ -33,7 +33,7 @@ class FavoritesOverlay: UIViewController {
     }
     
     private let layout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
     
     private var theme: Theme!

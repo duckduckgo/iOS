@@ -22,16 +22,32 @@ import Core
 
 struct Suggestion: Decodable {
 
+    enum Source {
+        case remote
+        case local
+    }
+    
+    let source: Source
     let type: String
     let suggestion: String
+    let url: URL?
+    
+    init(source: Source = .local, type: String, suggestion: String, url: URL?) {
+        self.source = source
+        self.type = type
+        self.suggestion = suggestion
+        self.url = url
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let dictionary = try container.decode([String: String].self)
 
         if let element = dictionary.first {
+            self.source = .remote
             self.type = element.key
             self.suggestion = element.value
+            self.url = nil
         } else {
             throw JsonError.invalidJson
         }

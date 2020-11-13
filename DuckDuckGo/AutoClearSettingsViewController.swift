@@ -58,7 +58,6 @@ class AutoClearSettingsViewController: UITableViewController {
         
         let oldSettings = loadClearDataSettings()
         if oldSettings != clearDataSettings {
-            sendPixels(oldState: oldSettings)
             store()
         }
     }
@@ -70,35 +69,6 @@ class AutoClearSettingsViewController: UITableViewController {
         } else {
             appSettings.autoClearAction = AutoClearSettingsModel.Action()
             appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination
-        }
-    }
-    
-    private func sendPixels(oldState: AutoClearSettingsModel?) {
-        if let settings = clearDataSettings {
-            if settings.action != oldState?.action {
-                if settings.action.contains(.clearData) {
-                    Pixel.fire(pixel: .autoClearActionOptionTabsAndData)
-                } else if settings.action.contains(.clearTabs) {
-                    Pixel.fire(pixel: .autoClearActionOptionTabs)
-                }
-            }
-            
-            if settings.timing != oldState?.timing {
-                switch settings.timing {
-                case .termination:
-                    Pixel.fire(pixel: .autoClearTimingOptionExit)
-                case .delay5min:
-                    Pixel.fire(pixel: .autoClearTimingOptionExitOr5Mins)
-                case .delay15min:
-                    Pixel.fire(pixel: .autoClearTimingOptionExitOr15Mins)
-                case .delay30min:
-                    Pixel.fire(pixel: .autoClearTimingOptionExitOr30Mins)
-                case .delay60min:
-                    Pixel.fire(pixel: .autoClearTimingOptionExitOr60Mins)
-                }
-            }
-        } else {
-            Pixel.fire(pixel: .autoClearActionOptionNone)
         }
     }
     

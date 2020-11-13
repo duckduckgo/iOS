@@ -84,6 +84,9 @@ public enum PixelName: String {
     case homeScreenAddFavoriteCancel = "mh_af_c"
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
+    
+    case autocompleteSelectedLocal = "m_au_l"
+    case autocompleteSelectedRemote = "m_au_r"
 
     case homeRowOnboardingMovedToBackground = "m_o_h_b"
 
@@ -177,6 +180,9 @@ public struct PixelParameters {
     public static let duration = "dur"
     static let test = "test"
     static let appVersion = "appVersion"
+    
+    public static let autocompleteBookmarkCapable = "bc"
+    public static let autocompleteIncludedLocalResults = "sb"
     
     static let applicationState = "as"
     static let dataAvailiability = "dp"

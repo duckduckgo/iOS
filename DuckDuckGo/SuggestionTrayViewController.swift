@@ -70,10 +70,15 @@ class SuggestionTrayViewController: UIViewController {
         switch type {
         case .autocomplete(let query):
             return displayAutocompleteSuggestions(forQuery: query)
-            
         case.favorites:
-            removeAutocomplete()
-            return displayFavorites()
+            if isPad {
+                removeAutocomplete()
+                return displayFavorites()
+            } else {
+                return displayFavorites { [weak self] in
+                    self?.removeAutocomplete()
+                }
+            }
         }
     }
     
@@ -150,13 +155,13 @@ class SuggestionTrayViewController: UIViewController {
         containerView.addGestureRecognizer(foregroundTap)
     }
     
-    private func displayFavorites() -> Bool {
+    private func displayFavorites(onInstall: @escaping () -> Void = {}) -> Bool {
         guard !bookmarkStore.favorites.isEmpty else { return false }
 
         if favoritesOverlay == nil {
             let controller = FavoritesOverlay()
             controller.delegate = favoritesOverlayDelegate
-            install(controller: controller)
+            install(controller: controller, completion: onInstall)
             favoritesOverlay = controller
         }
         
@@ -195,16 +200,17 @@ class SuggestionTrayViewController: UIViewController {
         favoritesOverlay = nil
     }
     
-    private func install(controller: UIViewController) {
+    private func install(controller: UIViewController, completion: @escaping () -> Void = {}) {
         addChild(controller)
         controller.view.frame = containerView.bounds
         containerView.addSubview(controller.view)
         controller.didMove(toParent: self)
         controller.view.alpha = 0
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2, animations: {
             controller.view.alpha = 1
-        }
-        
+        }, completion: { _ in
+            completion()
+        })
     }
     
     func applyContentInset(_ inset: UIEdgeInsets) {

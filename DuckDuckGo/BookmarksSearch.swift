@@ -55,7 +55,7 @@ class BookmarksSearch {
                 entry.score += 100
             }
             
-            let domain = entry.link.url.host ?? ""
+            let domain = entry.link.url.host?.dropPrefix(prefix: "www.") ?? ""
             
             // Tokenized matches
             

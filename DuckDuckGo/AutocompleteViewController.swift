@@ -115,6 +115,19 @@ class AutocompleteViewController: UIViewController {
             self?.requestSuggestions(query: query)
         }
     }
+    
+    func willDismiss(with query: String) {
+        guard selectedItem != -1, selectedItem < suggestions.count else { return }
+        
+        let suggestion = suggestions[selectedItem]
+        if let url = suggestion.url {
+            if query == url.absoluteString {
+                firePixel(selectedSuggestion: suggestion)
+            }
+        } else if query == suggestion.suggestion {
+            firePixel(selectedSuggestion: suggestion)
+        }
+    }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
         let suggestion = suggestions[button.tag]

@@ -104,7 +104,6 @@ class FavoritesOverlay: UIViewController {
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
-        Pixel.fire(pixel: .overlayFavoriteLaunched)
         delegate?.favoritesOverlay(self, didSelect: link)
     }
     

@@ -45,6 +45,8 @@ class AutocompleteViewController: UIViewController {
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
+    
+    private let bookmarksSearch = BookmarksSearch()
 
     var showBackground = true {
         didSet {
@@ -113,6 +115,19 @@ class AutocompleteViewController: UIViewController {
             self?.requestSuggestions(query: query)
         }
     }
+    
+    func willDismiss(with query: String) {
+        guard selectedItem != -1, selectedItem < suggestions.count else { return }
+        
+        let suggestion = suggestions[selectedItem]
+        if let url = suggestion.url {
+            if query == url.absoluteString {
+                firePixel(selectedSuggestion: suggestion)
+            }
+        } else if query == suggestion.suggestion {
+            firePixel(selectedSuggestion: suggestion)
+        }
+    }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
         let suggestion = suggestions[button.tag]
@@ -133,8 +148,9 @@ class AutocompleteViewController: UIViewController {
         
         lastRequest = AutocompleteRequest(query: query)
         lastRequest!.execute { [weak self] (suggestions, error) in
+            guard let strongSelf = self else { return }
             
-            let matches = BookmarksSearch().search(query: query)
+            let matches = strongSelf.bookmarksSearch.search(query: query)
             let notQueryMatches = matches.filter { $0.url.absoluteString != query }
             let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
             let localSuggestions = filteredMatches.map { Suggestion(type: "", suggestion: $0.displayTitle!, url: $0.url)}
@@ -146,8 +162,8 @@ class AutocompleteViewController: UIViewController {
             }
 
             let combinedSuggestions = localSuggestions + suggestions
-            self?.updateSuggestions(Array(combinedSuggestions))
-            self?.pendingRequest = false
+            strongSelf.updateSuggestions(Array(combinedSuggestions))
+            strongSelf.pendingRequest = false
         }
     }
 
@@ -211,11 +227,30 @@ extension AutocompleteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
     }
+    
+    private func firePixel(selectedSuggestion: Suggestion) {
+        let resultsIncludeBookmarks: Bool
+        if let firstSuggestion = suggestions.first {
+            resultsIncludeBookmarks = firstSuggestion.source == .local
+        } else {
+            resultsIncludeBookmarks = false
+        }
+        
+        let params = [PixelParameters.autocompleteBookmarkCapable: bookmarksSearch.hasData ? "true" : "false",
+                      PixelParameters.autocompleteIncludedLocalResults: resultsIncludeBookmarks ? "true" : "false"]
+        
+        if selectedSuggestion.source == .local {
+            Pixel.fire(pixel: .autocompleteSelectedLocal, withAdditionalParameters: params)
+        } else {
+            Pixel.fire(pixel: .autocompleteSelectedRemote, withAdditionalParameters: params)
+        }
+    }
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
+        firePixel(selectedSuggestion: suggestion)
         delegate?.autocomplete(selectedSuggestion: suggestion)
     }
 }

@@ -82,6 +82,14 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
+    func willDismiss(with query: String) {
+        guard !query.isEmpty else { return }
+        
+        if let autocomplete = autocompleteController {
+            autocomplete.willDismiss(with: query)
+        }
+    }
+    
     var contentFrame: CGRect {
         return containerView.frame
     }

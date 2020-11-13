@@ -397,6 +397,11 @@ extension OmniBar: UITextFieldDelegate {
             self.textField.selectAll(nil)
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        omniDelegate?.onEnterPressed()
+        return true
+    }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         omniDelegate?.onDismissed()

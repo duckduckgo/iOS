@@ -943,6 +943,12 @@ extension MainViewController: OmniBarDelegate {
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
+    
+    func onEnterPressed() {
+        guard !suggestionTrayContainer.isHidden else { return }
+        
+        suggestionTrayController?.willDismiss(with: omniBar.textField.text ?? "")
+    }
 
     func onDismissed() {
         dismissOmniBar()

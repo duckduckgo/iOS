@@ -37,6 +37,10 @@ class BookmarksSearch {
         self.bookmarksStore = bookmarksStore
     }
     
+    var hasData: Bool {
+        return !bookmarksStore.bookmarks.isEmpty || !bookmarksStore.favorites.isEmpty
+    }
+    
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredLink]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
@@ -51,7 +55,7 @@ class BookmarksSearch {
                 entry.score += 100
             }
             
-            let domain = entry.link.url.host ?? ""
+            let domain = entry.link.url.host?.dropPrefix(prefix: "www.") ?? ""
             
             // Tokenized matches
             
@@ -89,6 +93,10 @@ class BookmarksSearch {
     // swiftlint:enable cyclomatic_complexity
     
     func search(query: String) -> [Link] {
+        guard hasData else {
+            return []
+        }
+        
         let results = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
         
         let trimmed = query.trimWhitespace()

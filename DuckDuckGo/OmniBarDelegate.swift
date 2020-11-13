@@ -36,6 +36,8 @@ protocol OmniBarDelegate: class {
     func onSettingsPressed()
     
     func onCancelPressed()
+    
+    func onEnterPressed()
 
     func onRefreshPressed()
     

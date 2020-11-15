@@ -87,22 +87,12 @@ class AppIconWorker {
                 return
             }
 
-            self.firePixel(with: appIcon)
             DispatchQueue.main.async {
                 completion(false)
             }
         }
     }
 
-    private func firePixel(with appIcon: AppIcon) {
-        let pixelNameString = PixelName.settingsAppIconChangedPrefix.rawValue + appIcon.rawValue
-
-        guard let pixel = PixelName(rawValue: pixelNameString) else {
-            fatalError("Could not match AppIcon with Pixel")
-        }
-        
-        Pixel.fire(pixel: pixel)
-    }
 }
 
 extension AppIconSettingsViewController: Themable {

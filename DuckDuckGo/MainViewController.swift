@@ -208,6 +208,18 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        
+        if let suggestionsTray = suggestionTrayController {
+            let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
+            
+            let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
+            if overflow > 0 {
+                suggestionTrayController?.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
+            } else {
+                suggestionTrayController?.applyContentInset(.zero)
+            }
+        }
+
         animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
     }
     
@@ -680,7 +692,6 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchSettings() {
-        Pixel.fire(pixel: .settingsOpened)
         performSegue(withIdentifier: "Settings", sender: self)
     }
 
@@ -748,10 +759,7 @@ class MainViewController: UIViewController {
 
         showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
             if tapped {
-                Pixel.fire(pixel: .homeRowCTAReminderTapped)
                 self.launchInstructions()
-            } else {
-                Pixel.fire(pixel: .homeRowCTAReminderDismissed)
             }
 
             self.hideNotification()
@@ -899,8 +907,12 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        if updatedQuery.isEmpty && homeController == nil {
-            showSuggestionTray(.favorites)
+        if updatedQuery.isEmpty {
+            if homeController != nil {
+                hideSuggestionTray()
+            } else {
+                showSuggestionTray(.favorites)
+            }
         } else {
             showSuggestionTray(.autocomplete(query: updatedQuery))
         }
@@ -930,6 +942,12 @@ extension MainViewController: OmniBarDelegate {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
+    }
+    
+    func onEnterPressed() {
+        guard !suggestionTrayContainer.isHidden else { return }
+        
+        suggestionTrayController?.willDismiss(with: omniBar.textField.text ?? "")
     }
 
     func onDismissed() {
@@ -985,15 +1003,42 @@ extension MainViewController: FavoritesOverlayDelegate {
 
 extension MainViewController: AutocompleteViewControllerDelegate {
 
-    func autocomplete(selectedSuggestion suggestion: String) {
+    func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        loadQuery(suggestion)
+        if let url = suggestion.url {
+            loadUrl(url)
+        } else {
+            loadQuery(suggestion.suggestion)
+        }
         showHomeRowReminder()
     }
 
-    func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
-        omniBar.textField.text = suggestion
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
+        if let url = suggestion.url {
+            if AppUrls().isDuckDuckGoSearch(url: url) {
+                omniBar.textField.text = suggestion.suggestion
+            } else {
+                omniBar.textField.text = url.absoluteString
+            }
+        } else {
+            omniBar.textField.text = suggestion.suggestion
+        }
+        omniBar.textDidChange()
+    }
+    
+    func autocomplete(highlighted suggestion: Suggestion, for query: String) {
+        if let url = suggestion.url {
+            omniBar.textField.text = url.absoluteString
+        } else {
+            omniBar.textField.text = suggestion.suggestion
+            
+            if suggestion.suggestion.hasPrefix(query),
+               let fromPosition = omniBar.textField.position(from: omniBar.textField.beginningOfDocument, offset: query.count) {
+                omniBar.textField.selectedTextRange = omniBar.textField.textRange(from: fromPosition,
+                                                                                  to: omniBar.textField.endOfDocument)
+            }
+        }
     }
 
     func autocompleteWasDismissed() {

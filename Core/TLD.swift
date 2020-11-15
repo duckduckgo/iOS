@@ -24,7 +24,7 @@ public class TLD {
     private(set) var tlds: [String: Int] = [:]
 
     var json: String {
-        guard let data = try? JSONSerialization.data(withJSONObject: tlds, options: []) else { return "{}" }
+        guard let data = try? JSONEncoder().encode(tlds) else { return "{}" }
         guard let json = String(data: data, encoding: .utf8) else { return "{}" }
         return json
     }
@@ -32,8 +32,7 @@ public class TLD {
     public init(bundle: Bundle = Bundle.core) {
         guard let url = bundle.url(forResource: "tlds", withExtension: "json") else { return }
         guard let data = try? Data(contentsOf: url) else { return }
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-        guard let tlds = json as? [String: Int] else { return }
+        guard let tlds = try? JSONDecoder().decode([String: Int].self, from: data) else { return }
         self.tlds = tlds
     }
 

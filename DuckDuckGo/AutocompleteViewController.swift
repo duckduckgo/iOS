@@ -30,19 +30,23 @@ class AutocompleteViewController: UIViewController {
             }
             return 0.3
         }()
+        
+        static let minItems = 1
+        static let maxLocalItems = 2
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?
+    weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
-    private var firstResponse = true
+    private var receivedResponse = false
+    private var pendingRequest = false
     
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
-    fileprivate let minItems = 1
-    fileprivate let maxItems = 6
     fileprivate var selectedItem = -1
+    
+    private let bookmarksSearch = BookmarksSearch()
 
     var showBackground = true {
         didSet {
@@ -111,10 +115,23 @@ class AutocompleteViewController: UIViewController {
             self?.requestSuggestions(query: query)
         }
     }
+    
+    func willDismiss(with query: String) {
+        guard selectedItem != -1, selectedItem < suggestions.count else { return }
+        
+        let suggestion = suggestions[selectedItem]
+        if let url = suggestion.url {
+            if query == url.absoluteString {
+                firePixel(selectedSuggestion: suggestion)
+            }
+        } else if query == suggestion.suggestion {
+            firePixel(selectedSuggestion: suggestion)
+        }
+    }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
         let suggestion = suggestions[button.tag]
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion.suggestion)
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion)
     }
 
     private func cancelInFlightRequests() {
@@ -125,20 +142,37 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
-        lastRequest = AutocompleteRequest(query: query, parser: parser)
+        selectedItem = -1
+        tableView.reloadData()
+        pendingRequest = true
+        
+        lastRequest = AutocompleteRequest(query: query)
         lastRequest!.execute { [weak self] (suggestions, error) in
+            guard let strongSelf = self else { return }
+            
+            let matches = strongSelf.bookmarksSearch.search(query: query)
+            let notQueryMatches = matches.filter { $0.url.absoluteString != query }
+            let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
+            let localSuggestions = filteredMatches.map { Suggestion(type: "", suggestion: $0.displayTitle!, url: $0.url)}
+            
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
+                self?.updateSuggestions(localSuggestions)
                 return
             }
-            self?.updateSuggestions(suggestions)
+
+            let combinedSuggestions = localSuggestions + suggestions
+            strongSelf.updateSuggestions(Array(combinedSuggestions))
+            strongSelf.pendingRequest = false
         }
     }
 
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {
-        firstResponse = false
+        receivedResponse = true
         suggestions = newSuggestions
+        tableView.contentOffset = .zero
         tableView.reloadData()
+        presentationDelegate?.autocompleteDidChangeContentHeight(height: tableView.contentSize.height)
     }
 
     @IBAction func onAutocompleteDismissed(_ sender: Any) {
@@ -191,20 +225,33 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if suggestions.isEmpty {
-            return firstResponse ? 0 : minItems
+        return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
+    }
+    
+    private func firePixel(selectedSuggestion: Suggestion) {
+        let resultsIncludeBookmarks: Bool
+        if let firstSuggestion = suggestions.first {
+            resultsIncludeBookmarks = firstSuggestion.source == .local
+        } else {
+            resultsIncludeBookmarks = false
         }
-        if suggestions.count > maxItems {
-            return maxItems
+        
+        let params = [PixelParameters.autocompleteBookmarkCapable: bookmarksSearch.hasData ? "true" : "false",
+                      PixelParameters.autocompleteIncludedLocalResults: resultsIncludeBookmarks ? "true" : "false"]
+        
+        if selectedSuggestion.source == .local {
+            Pixel.fire(pixel: .autocompleteSelectedLocal, withAdditionalParameters: params)
+        } else {
+            Pixel.fire(pixel: .autocompleteSelectedRemote, withAdditionalParameters: params)
         }
-        return suggestions.count
     }
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
-        delegate?.autocomplete(selectedSuggestion: suggestion.suggestion)
+        firePixel(selectedSuggestion: suggestion)
+        delegate?.autocomplete(selectedSuggestion: suggestion)
     }
 }
 
@@ -224,16 +271,16 @@ extension AutocompleteViewController: Themable {
 extension AutocompleteViewController {
  
     func keyboardMoveSelectionDown() {
-        guard !suggestions.isEmpty else { return }
+        guard !pendingRequest, !suggestions.isEmpty else { return }
         selectedItem = (selectedItem + 1 >= itemCount()) ? 0 : selectedItem + 1
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
+        delegate?.autocomplete(highlighted: suggestions[selectedItem], for: query)
         tableView.reloadData()
     }
 
     func keyboardMoveSelectionUp() {
-        guard !suggestions.isEmpty else { return }
+        guard !pendingRequest, !suggestions.isEmpty else { return }
         selectedItem = (selectedItem - 1 < 0) ? itemCount() - 1 : selectedItem - 1
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
+        delegate?.autocomplete(highlighted: suggestions[selectedItem], for: query)
         tableView.reloadData()
     }
     
@@ -242,7 +289,7 @@ extension AutocompleteViewController {
     }
     
     private func itemCount() -> Int {
-        return min(suggestions.count, maxItems)
+        return suggestions.count
     }
 
 }

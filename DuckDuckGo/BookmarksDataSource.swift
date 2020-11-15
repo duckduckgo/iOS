@@ -169,30 +169,11 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
 class SearchBookmarksDataSource: BookmarksDataSource {
     
     var searchResults = [Link]()
+    private let searchEngine = BookmarksSearch()
     
-    func performSearch(text: String, data: [Link]) {
-        let text = text.lowercased()
-        let tokens = text.split(separator: " ").filter { !$0.isEmpty }.map { String($0) }
-
-        searchResults = data.filter { link -> Bool in
-            guard let title = link.title?.lowercased() else { return false }
-            let url = link.url.absoluteString.lowercased()
-            // Look for direct match
-            if title.contains(text) || url.contains(text) {
-                return true
-            }
-            
-            // Look if all tokens match
-            var matchesAll = true
-            for token in tokens {
-                if !title.contains(token) && !url.contains(token) {
-                    matchesAll = false
-                    break
-                }
-            }
-            
-            return matchesAll
-        }
+    func performSearch(query: String) {
+        let query = query.lowercased()
+        searchResults = searchEngine.search(query: query, sortByRelevance: false)
     }
 
     override var isEmpty: Bool {

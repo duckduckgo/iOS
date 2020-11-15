@@ -253,7 +253,7 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
         
-        searchDataSource.performSearch(text: searchText, data: dataSource.bookmarksManager.allLinks)
+        searchDataSource.performSearch(query: searchText)
         tableView.reloadData()
     }
     

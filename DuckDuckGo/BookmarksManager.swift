@@ -35,10 +35,6 @@ class BookmarksManager {
     var favoritesCount: Int {
         return dataStore.favorites.count
     }
-    
-    var allLinks: [Link] {
-        return dataStore.favorites + dataStore.bookmarks
-    }
 
     func bookmark(atIndex index: Int) -> Link? {
         return link(at: index, in: dataStore.bookmarks)

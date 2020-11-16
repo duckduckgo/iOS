@@ -165,8 +165,7 @@ class TabViewController: UIViewController {
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var debugScript = DebugUserScript()
     
-    private var generalScripts: [UserScript] = []
-    private var ddgScripts: [UserScript] = []
+    private var userScripts: [UserScript] = []
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -225,7 +224,7 @@ class TabViewController: UIViewController {
 
     func initUserScripts() {
         
-        generalScripts = [
+        userScripts = [
             debugScript,
             findInPageScript,
             navigatorPatchScript,
@@ -235,23 +234,17 @@ class TabViewController: UIViewController {
             fullScreenVideoScript
         ]
         
-        ddgScripts = [
-            debugScript,
-            findInPageScript
-        ]
-        
         if #available(iOS 13, *) {
             if PreserveLogins.shared.loginDetectionEnabled {
                 loginFormDetectionScript.delegate = self
-                generalScripts.append(loginFormDetectionScript)
+                userScripts.append(loginFormDetectionScript)
             }
         } else {
-            generalScripts.append(documentScript)
-            ddgScripts.append(documentScript)
+            userScripts.append(documentScript)
         }
         
         if appSettings.sendDoNotSell {
-            generalScripts.append(doNotSellScript)
+            userScripts.append(doNotSellScript)
         }
         
         faviconScript.delegate = self
@@ -501,14 +494,7 @@ class TabViewController: UIViewController {
         
         initUserScripts()
         
-        let scripts: [UserScript]
-        if let url = url, appUrls.isDuckDuckGo(url: url) {
-            scripts = ddgScripts
-        } else {
-            scripts = generalScripts
-        }
-        
-        scripts.forEach { script in
+        userScripts.forEach { script in
             webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
@@ -711,7 +697,7 @@ class TabViewController: UIViewController {
     
     private func removeMessageHandlers() {
         let controller = webView.configuration.userContentController
-        generalScripts.forEach { script in
+        userScripts.forEach { script in
             script.messageNames.forEach { messageName in
                 controller.removeScriptMessageHandler(forName: messageName)
             }

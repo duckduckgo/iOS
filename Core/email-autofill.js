@@ -1831,9 +1831,7 @@ class DDGAutofill extends HTMLElement {
         }
 
         this.input.addEventListener('focus', () => {
-            if (this.areAllInputsEmpty()) {
-                this.autofillInputs()
-            }
+            this.autofillInputs()
         }, {once: true})
 
         this.trigger.addEventListener('click', () => {

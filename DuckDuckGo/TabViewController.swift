@@ -238,7 +238,8 @@ class TabViewController: UIViewController {
             contentBlockerScript,
             contentBlockerRulesScript,
             faviconScript,
-            fullScreenVideoScript
+            fullScreenVideoScript,
+            emailScript
         ]
         
         ddgScripts = [
@@ -260,12 +261,6 @@ class TabViewController: UIViewController {
         if appSettings.sendDoNotSell {
             generalScripts.append(doNotSellScript)
         }
-        
-        //TODO  this
-        //TODO settigns copy finalisation
-        //if emailScript.isSignedIn {
-            generalScripts.append(emailScript)
-        //}
         
         faviconScript.delegate = self
         debugScript.instrumentation = instrumentation

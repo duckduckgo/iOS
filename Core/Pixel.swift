@@ -47,68 +47,13 @@ public enum PixelName: String {
     case httpsLocalUpgrade = "m_https_lu"
     case httpsNoUpgrade = "m_https_nu"
     
-    case longPressMenuOpened = "mlp"
-    case longPressMenuNewBackgroundTabItem = "mlp_b"
-    case longPressMenuNewTabItem = "mlp_t"
-    case longPressMenuOpenItem = "mlp_o"
-    case longPressMenuReadingListItem = "mlp_r"
-    case longPressMenuCopyItem = "mlp_c"
-    case longPressMenuShareItem = "mlp_s"
-    
-    case quickActionExtensionSearch = "mqe_s"
-    case quickActionExtensionFire = "mqe_f"
-    case quickActionExtensionBookmarks = "mqe_b"
-    case bookmarksExtensionBookmark = "mbe_b"
-    
-    case bookmarkTapped = "m_b_t"
-    case bookmarkRemoved = "m_b_r"
-    case bookmarksEditPressed = "m_b_e"
-    case overlayFavoriteLaunched = "m_ov_f"
-    
     case tabSwitcherNewLayoutSeen = "m_ts_n"
     case tabSwitcherListEnabled = "m_ts_l"
     case tabSwitcherGridEnabled = "m_ts_g"
     
-    case settingsOpened = "ms"
-    case settingsHomeRowInstructionsRequested = "ms_hr"
-    
-    case settingsThemeShown = "ms_tp"
-    case settingsThemeChangedSystemDefault = "ms_ts"
-    case settingsThemeChangedLight = "ms_tl"
-    case settingsThemeChangedDark = "ms_td"
-
-    case settingsAppIconShown = "ms_ais"
-    case settingsAppIconChangedPrefix = "ms_aic_"
-    case settingsAppIconChangedRed = "ms_aic_red"
-    case settingsAppIconChangedYellow = "ms_aic_yellow"
-    case settingsAppIconChangedGreen = "ms_aic_green"
-    case settingsAppIconChangedBlue = "ms_aic_blue"
-    case settingsAppIconChangedPurple = "ms_aic_purple"
-    case settingsAppIconChangedBlack = "ms_aic_black"
-
-    case settingsKeyboardShown = "ms_ks"
-    case settingsKeyboardNewTabOn = "ms_ks_nt_on"
-    case settingsKeyboardNewTabOff = "ms_ks_nt_off"
-    case settingsKeyboardAppLaunchOn = "ms_ks_al_on"
-    case settingsKeyboardAppLaunchOff = "ms_ks_pl_off"
-    
-    case settingsUnprotectedSites = "ms_mw"
-    case settingsLinkPreviewsOff = "ms_lp_f"
-    case settingsLinkPreviewsOn = "ms_lp_n"
-    
     case settingsDoNotSellShown = "ms_dns"
     case settingsDoNotSellOn = "ms_dns_on"
     case settingsDoNotSellOff = "ms_dns_off"
-
-    case autoClearSettingsShown = "mac_s"
-    case autoClearActionOptionNone = "macwhat_n"
-    case autoClearActionOptionTabs = "macwhat_t"
-    case autoClearActionOptionTabsAndData = "macwhat_td"
-    case autoClearTimingOptionExit = "macwhen_x"
-    case autoClearTimingOptionExitOr5Mins = "macwhen_5"
-    case autoClearTimingOptionExitOr15Mins = "macwhen_15"
-    case autoClearTimingOptionExitOr30Mins = "macwhen_30"
-    case autoClearTimingOptionExitOr60Mins = "macwhen_60"
 
     case browsingMenuOpened = "mb"
     case browsingMenuRefresh = "mb_rf"
@@ -140,12 +85,11 @@ public enum PixelName: String {
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
     
-    case homeRowCTAReminderTapped = "m_hc"
-    case homeRowCTAReminderDismissed = "m_hd"
-    
-    case homeRowInstructionsReplayed = "m_hv"
+    case autocompleteSelectedLocal = "m_au_l"
+    case autocompleteSelectedRemote = "m_au_r"
+
     case homeRowOnboardingMovedToBackground = "m_o_h_b"
-    
+
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     
@@ -180,19 +124,7 @@ public enum PixelName: String {
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
-    case notificationOptIn = "m_ne"
-    case notificationOptOut = "m_nd"
-    
-    case brokenSiteReported = "m_bsr"
-    
     case brokenSiteReport = "epbf"
-
-    case preserveLoginsSettingsSwitchOn = "m_pl_s_on"
-    case preserveLoginsSettingsSwitchOff = "m_pl_s_off"
-    case preserveLoginsSettingsEdit = "m_pl_s_c_e"
-    case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
-    case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
-    case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
     
     case daxDialogsSerp = "m_dx_s"
     case daxDialogsWithoutTrackers = "m_dx_wo"
@@ -248,6 +180,9 @@ public struct PixelParameters {
     public static let duration = "dur"
     static let test = "test"
     static let appVersion = "appVersion"
+    
+    public static let autocompleteBookmarkCapable = "bc"
+    public static let autocompleteIncludedLocalResults = "sb"
     
     static let applicationState = "as"
     static let dataAvailiability = "dp"

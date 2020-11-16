@@ -681,7 +681,7 @@ class TabViewController: UIViewController {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
-                self.view.showBottomToast(UserText.failedToOpenExternally)
+                self.view.window?.showBottomToast(UserText.failedToOpenExternally)
             }
 
             // just showing a blank tab at this point, so close it
@@ -984,13 +984,13 @@ extension TabViewController: WKNavigationDelegate {
         lastError = error
         let error = error as NSError
 
-        // prevent loops where a site keeps redirecting to itself (e.g. bbc)
         if let url = url,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {
+            // prevent loops where a site keeps redirecting to itself (e.g. bbc)
             failingUrls.insert(domain)
 
-            // Reset the URL
+            // Reset the URL, e.g if opened externally
             self.url = webView.url
         }
 
@@ -1192,11 +1192,12 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func showErrorNow() {
-        guard let error = lastError else { return }
+        guard let error = lastError as NSError? else { return }
         hideProgressIndicator()
         ViewHighlighter.hideAll()
 
-        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
+        if !(error.failedUrl?.isCustomURLScheme() ?? false) {
+            url = error.failedUrl
             showError(message: error.localizedDescription)
         }
 

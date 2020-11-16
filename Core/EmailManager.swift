@@ -47,6 +47,9 @@ public class EmailManager {
     private let storage: EmailManagerStorage
     public weak var delegate: EmailManagerPresentationDelegate?
     
+    private lazy var appUrls = AppUrls()
+    private lazy var aliasAPIURL = appUrls.emailAliasAPI
+    
     private var username: String? {
         storage.getUsername()
     }
@@ -127,8 +130,6 @@ private extension EmailManager {
     struct EmailAliasResponse: Decodable {
         let address: String
     }
-
-    static let aliasAPIAddress = URL(string: "https://quackdev.duckduckgo.com/api/email/addresses")!
     
     var aliasHeaders: HTTPHeaders {
         guard let token = token else {
@@ -172,13 +173,13 @@ private extension EmailManager {
             completionHandler?(alias, nil)
         }
     }
-        
+
     func fetchAlias(timeoutInterval: TimeInterval = 60.0, completionHandler: AliasCompletion? = nil) {
         guard isSignedIn else {
             completionHandler?(nil, .signedOut)
             return
         }
-        APIRequest.request(url: EmailManager.aliasAPIAddress,
+        APIRequest.request(url: aliasAPIURL,
                            method: .post,
                            headers: aliasHeaders,
                            timeoutInterval: timeoutInterval) { response, error in

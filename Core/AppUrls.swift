@@ -48,6 +48,8 @@ public struct AppUrls {
 
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
+        
+        static let emailAlias = "https://quack.duckduckgo.com/api/email/addresses"
     }
 
     private struct Param {
@@ -198,6 +200,10 @@ public struct AppUrls {
         var url = URL(string: Url.pixel.format(arguments: pixelName, formFactor))!
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         return url
+    }
+    
+    public var emailAliasAPI: URL {
+        return URL(string: Url.emailAlias)!
     }
     
     public func removeATBAndSource(fromUrl url: URL) -> URL {

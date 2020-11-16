@@ -18,6 +18,8 @@
 		02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */; };
 		02CA904B24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */; };
 		02CA904D24FD2DB000D41DDF /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
+		02DC6A52255D8C0A00B03BC2 /* fingerprint.js in Resources */ = {isa = PBXBuildFile; fileRef = 02DC6A51255D8C0A00B03BC2 /* fingerprint.js */; };
+		02DC6A64255D8C5000B03BC2 /* FingerprintUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */; };
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
@@ -700,6 +702,8 @@
 		02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = navigatorsharepatch.js; sourceTree = "<group>"; };
 		02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorSharePatchUserScript.swift; sourceTree = "<group>"; };
 		02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockingRulesTests.swift; sourceTree = "<group>"; };
+		02DC6A51255D8C0A00B03BC2 /* fingerprint.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fingerprint.js; sourceTree = "<group>"; };
+		02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerprintUserScript.swift; sourceTree = "<group>"; };
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -2093,6 +2097,14 @@
 			name = ContentBlockerRules;
 			sourceTree = "<group>";
 		};
+		02DC6A50255D8BE700B03BC2 /* fingerprinting */ = {
+			isa = PBXGroup;
+			children = (
+				02DC6A51255D8C0A00B03BC2 /* fingerprint.js */,
+			);
+			name = fingerprinting;
+			sourceTree = "<group>";
+		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -3280,6 +3292,7 @@
 				836A941C247F23C600BF8EF5 /* UserAgentManager.swift */,
 				02C57C5425153330009E5129 /* DoNotSellUserScript.swift */,
 				4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */,
+				02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3425,6 +3438,7 @@
 		F18608DE1E5E648100361C30 /* Javascript */ = {
 			isa = PBXGroup;
 			children = (
+				02DC6A50255D8BE700B03BC2 /* fingerprinting */,
 				835750931F8E9A610059E07B /* contentblocking */,
 				F18608DF1E5E649400361C30 /* document.js */,
 			);
@@ -4280,6 +4294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83E2D2B4253CC16B005605F5 /* httpsMobileV2BloomSpec.json in Resources */,
+				02DC6A52255D8C0A00B03BC2 /* fingerprint.js in Resources */,
 				987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */,
 				98B001B0251EABB40090EC07 /* InfoPlist.strings in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
@@ -4805,6 +4820,7 @@
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
+				02DC6A64255D8C5000B03BC2 /* FingerprintUserScript.swift in Sources */,
 				85BDC31224339E080053DB07 /* DocumentUserScript.swift in Sources */,
 				0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,

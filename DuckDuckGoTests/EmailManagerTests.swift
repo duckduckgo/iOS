@@ -24,6 +24,11 @@ import OHHTTPStubsSwift
 
 class EmailManagerTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        stubGetAliasTest()
+    }
+    
     override func tearDown() {
         HTTPStubs.removeAllStubs()
         super.tearDown()
@@ -79,7 +84,7 @@ class EmailManagerTests: XCTestCase {
         let storage = storageForGetAliasTest(signedIn: true, storedAlias: true, fulfullOnFirstStorageEvent: true, expectationToFulfill: expect)
         let emailManager = EmailManager(storage: storage)
 
-        stubGetAliasTest()
+        responseAliases = ["testAlias2", "testAlias3"]
         events.removeAll()
         
         // When an alias is stored
@@ -110,7 +115,7 @@ class EmailManagerTests: XCTestCase {
         let storage = storageForGetAliasTest(signedIn: true, storedAlias: false, fulfullOnFirstStorageEvent: false, expectationToFulfill: expect)
         let emailManager = EmailManager(storage: storage)
                 
-        stubGetAliasTest()
+        responseAliases = ["testAlias2", "testAlias3"]
         events.removeAll()
         
         // Test when no alias is stored
@@ -143,7 +148,7 @@ class EmailManagerTests: XCTestCase {
         let storage = storageForGetAliasTest(signedIn: false, storedAlias: false, fulfullOnFirstStorageEvent: false, expectationToFulfill: expect)
         let emailManager = EmailManager(storage: storage)
                 
-        stubGetAliasTest()
+        responseAliases = ["testAlias2", "testAlias3"]
         events.removeAll()
         
         let expectedEvents: [AliasFetchingTestEvent] = [
@@ -167,7 +172,7 @@ class EmailManagerTests: XCTestCase {
         let storage = storageForGetAliasTest(signedIn: true, storedAlias: false, fulfullOnFirstStorageEvent: true, expectationToFulfill: expect)
         let emailManager = EmailManager(storage: storage)
         
-        stubGetAliasTest()
+        responseAliases = ["testAlias2", "testAlias3"]
         events.removeAll()
         
         let expectedEvents: [AliasFetchingTestEvent] = [
@@ -226,7 +231,6 @@ class EmailManagerTests: XCTestCase {
     }
     
     private func stubGetAliasTest() {
-        responseAliases = ["testAlias2", "testAlias3"]
         stub(condition: { request -> Bool in
             guard !(request.url!.absoluteString.contains("improving.duckduckgo.com")) else { return false }
             

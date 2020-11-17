@@ -28,7 +28,7 @@ import BackgroundTasks
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private static let ShowKeyboardOnLaunchThreshold = TimeInterval(45)
+    private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"

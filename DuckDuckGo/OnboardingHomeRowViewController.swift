@@ -111,9 +111,7 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     }
     
     deinit {
-        // swiftlint:disable unneeded_notification_center_removal
         NotificationCenter.default.removeObserver(self)
-        // swiftlint:enable unneeded_notification_center_removal
     }
 }
 

@@ -1363,6 +1363,7 @@ extension TabViewController: EmailManagerPresentationDelegate {
         if UIDevice.current.userInterfaceIdiom == .pad {
             //make sure the completion handler is called if the alert is dismissed by tapping outside the alert
             alert.addAction(title: "", style: .cancel) {
+                Pixel.fire(pixel: .emailUserPressedDoNotUse)
                 completionHandler(false)
             }
         }

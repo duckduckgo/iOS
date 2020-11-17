@@ -23,6 +23,11 @@ import OHHTTPStubsSwift
 @testable import Core
 
 class EmailManagerTests: XCTestCase {
+    
+    override func tearDown() {
+        HTTPStubs.removeAllStubs()
+        super.tearDown()
+    }
 
     func testWhenSignOutThenDeletesAllStorage() {
         
@@ -80,8 +85,8 @@ class EmailManagerTests: XCTestCase {
         // When an alias is stored
         // should call completion with stored alias
         // then delete alias
-        //  then there should be a request for a new alias
-        //and it should store the new one
+        // then there should be a request for a new alias
+        // and it should store the new one
         let expectedEvents: [AliasFetchingTestEvent] = [
             .getAliasCallbackCalled,
             .deleteAliasCalled,

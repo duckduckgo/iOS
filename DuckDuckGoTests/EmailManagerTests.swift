@@ -223,8 +223,10 @@ class EmailManagerTests: XCTestCase {
     private func stubGetAliasTest() {
         responseAliases = ["testAlias2", "testAlias3"]
         stub(condition: { request -> Bool in
+            guard !(request.url!.absoluteString.contains("improving.duckduckgo.com")) else { return false }
+            
             // Tests has correct header
-            XCTAssertEqual(request.url!.absoluteString, "https://quackdev.duckduckgo.com/api/email/addresses")
+            XCTAssertEqual(request.url!.absoluteString, "https://quack.duckduckgo.com/api/email/addresses")
             let value = request.allHTTPHeaderFields!["Authorization"]
             XCTAssertEqual(value, "Bearer testToken")
 

@@ -95,36 +95,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is AutoClearSettingsViewController {
-            Pixel.fire(pixel: .autoClearSettingsShown)
-            return
-        }
-        
-        if segue.destination is ThemeSettingsViewController {
-            Pixel.fire(pixel: .settingsThemeShown)
-            return
-        }
-
-        if segue.destination is AppIconSettingsViewController {
-            Pixel.fire(pixel: .settingsAppIconShown)
-            return
-        }
- 
-        if segue.destination is KeyboardSettingsViewController {
-            Pixel.fire(pixel: .settingsKeyboardShown)
-            return
-        }
-
-        if segue.destination is UnprotectedSitesViewController {
-            Pixel.fire(pixel: .settingsUnprotectedSites)
-            return
-        }
-        
-        if segue.destination is HomeRowInstructionsViewController {
-            Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
-            return
-        }
-        
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
             return
@@ -324,7 +294,6 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onLinkPreviewsToggle(_ sender: UISwitch) {
         appSettings.longPressPreviews = sender.isOn
-        Pixel.fire(pixel: appSettings.longPressPreviews ? .settingsLinkPreviewsOn : .settingsLinkPreviewsOff)
     }
 }
 

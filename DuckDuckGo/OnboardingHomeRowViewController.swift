@@ -27,8 +27,6 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     
     @IBOutlet weak var playButton: UIImageView!
     
-    private var userInteracted = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addVideo()
@@ -67,11 +65,6 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     
     @IBAction func playVideo() {
         guard let player = player else { return }
-        
-        if !userInteracted {
-            userInteracted = true
-            Pixel.fire(pixel: .homeRowInstructionsReplayed)
-        }
         
         player.seek(to: CMTime(seconds: 0.0, preferredTimescale: player.currentTime().timescale))
         startVideo()
@@ -118,9 +111,7 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     }
     
     deinit {
-        // swiftlint:disable unneeded_notification_center_removal
         NotificationCenter.default.removeObserver(self)
-        // swiftlint:enable unneeded_notification_center_removal
     }
 }
 

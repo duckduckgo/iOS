@@ -26,14 +26,13 @@ protocol ContentBlockerRemoteDataSource {
     func request(_ configuration: ContentBlockerRequest.Configuration, completion:@escaping (ContentBlockerRequest.Response) -> Void)
 }
 
-class ContentBlockerRequest: ContentBlockerRemoteDataSource {
-    
+public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
     enum Response {
         case error
         case success(etag: String?, data: Data)
     }
 
-    enum Configuration: String {
+    public enum Configuration: String {
         case httpsBloomFilterSpec
         case httpsBloomFilter
         case httpsExcludedDomains
@@ -50,7 +49,7 @@ class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         self.etagStorage = etagStorage
     }
     
-    func request(_ configuration: Configuration, completion:@escaping (Response) -> Void) {
+    func request(_ configuration: Configuration, completion: @escaping (Response) -> Void) {
         requestCount += 1
         
         let spid = Instruments.shared.startTimedEvent(.fetchingContentBlockerData, info: configuration.rawValue)

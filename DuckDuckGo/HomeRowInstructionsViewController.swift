@@ -34,8 +34,6 @@ class HomeRowInstructionsViewController: UIViewController {
 
     var layer: AVPlayerLayer?
     var player: AVPlayer?
-    
-    private var userInteracted = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,12 +47,7 @@ class HomeRowInstructionsViewController: UIViewController {
 
     @IBAction func playVideo() {
         guard let player = player else { return }
-        
-        if !userInteracted {
-            userInteracted = true
-            Pixel.fire(pixel: .homeRowInstructionsReplayed)
-        }
-        
+
         player.seek(to: CMTime(seconds: 0.0, preferredTimescale: player.currentTime().timescale))
         startVideo()
     }
@@ -112,8 +105,6 @@ class HomeRowInstructionsViewController: UIViewController {
     }
     
     deinit {
-        // swiftlint:disable unneeded_notification_center_removal
         NotificationCenter.default.removeObserver(self)
-        // swiftlint:enable unneeded_notification_center_removal
     }
 }

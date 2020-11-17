@@ -45,8 +45,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     @IBAction func startEditing() {
-        Pixel.fire(pixel: .preserveLoginsSettingsEdit)
-        
         navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.setRightBarButton(doneButton, animated: true)
         
@@ -142,9 +140,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-        
-        Pixel.fire(pixel: tableView.isEditing ? .preserveLoginsSettingsDeleteEditing : .preserveLoginsSettingsDeleteNotEditing)
-        
+
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
@@ -163,7 +159,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == Section.removeAll.rawValue {
-            Pixel.fire(pixel: .preserveLoginsSettingsClearAll)
             clearAll()
             tableView.deselectRow(at: indexPath, animated: true)
         }
@@ -251,7 +246,6 @@ class PreserveLoginsSwitchCell: UITableViewCell {
     weak var controller: PreserveLoginsSettingsViewController!
 
     @IBAction func onToggle() {
-        Pixel.fire(pixel: toggle.isOn ? .preserveLoginsSettingsSwitchOn : .preserveLoginsSettingsSwitchOff)
         PreserveLogins.shared.loginDetectionEnabled = toggle.isOn
     }
 

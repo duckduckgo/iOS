@@ -266,7 +266,6 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         contentBlockerScript.storageCache = storageCache
         contentBlockerScript.delegate = self
-        ContentBlockerRulesManager.shared.storageCache = storageCache
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
         emailScript.webView = webView
@@ -616,8 +615,6 @@ class TabViewController: UIViewController {
 
     @objc func onStorageCacheChange() {
         DispatchQueue.main.async {
-            self.storageCache = AppDependencyProvider.shared.storageCache.current
-            ContentBlockerRulesManager.shared.storageCache = self.storageCache
             self.reload(scripts: true)
         }
     }
@@ -685,7 +682,6 @@ class TabViewController: UIViewController {
     }
     
     private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
-        Pixel.fire(pixel: .longPressMenuOpened)
         let alert = buildLongPressMenu(atPoint: point, forUrl: url)
         present(controller: alert, fromView: webView, atPoint: point)
     }
@@ -1137,7 +1133,7 @@ extension TabViewController: WKNavigationDelegate {
 
         // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
         if #available(iOS 12, *) {
-            if allowPolicy == WKNavigationActionPolicy.allow {
+            if allowPolicy != WKNavigationActionPolicy.cancel {
                 UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
             }
         }

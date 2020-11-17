@@ -45,25 +45,6 @@ class ThemeSettingsViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        sendPixel()
-    }
-    
-    private func sendPixel() {
-        guard appSettings.currentThemeName != previousTheme else { return }
-        
-        switch appSettings.currentThemeName {
-        case .systemDefault:
-            Pixel.fire(pixel: .settingsThemeChangedSystemDefault)
-        case .light:
-            Pixel.fire(pixel: .settingsThemeChangedLight)
-        case .dark:
-            Pixel.fire(pixel: .settingsThemeChangedDark)
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return availableThemes.count
     }

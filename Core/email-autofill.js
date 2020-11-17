@@ -2239,10 +2239,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     };
     
     var handleMessageFromIOSApp = function handleMessageFromIOSApp(event) {
-        console.log("received iOS message")
         
         if (event.data.checkExtensionSignedInCallback) {
-            console.log("handling checkExtensionSignedInCallback from iOS app")
             var userData = event.data.isAppSignedIn;
             notifyWebApp({
                 extensionSignedIn: {
@@ -2252,7 +2250,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
 
         if (event.data.checkCanInjectAutoFillCallback) {
-            console.log("handling checkCanInjectAutoFilCallback from iOS app")
             var userData = event.data.canInjectAutoFill;
             if (userData) {
                 injectEmailAutofill();
@@ -2266,7 +2263,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     };
 
     window.addEventListener('message', function (event) {
-        console.log("Received message")
         
         if (event.data.fromIOSApp) {
             handleMessageFromIOSApp(event);
@@ -2275,16 +2271,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         
         if (!event.origin.match(ddgDomainRegex)) return; // The web app notifies us that the user signed in
 
-        console.log("Received web app message")
-        console.log(event)
-
         if (event.data.addUserData) {
-            console.log(("adduserdata"));
           window.webkit.messageHandlers["emailHandlerStoreToken"].postMessage({ token: event.data.addUserData.token, username: event.data.addUserData.userName });
         } // The web app wants to know if the user is signed in
 
         if (event.data.checkExtensionSignedIn) {
-          console.log("checkExtensionSignedIn")
           window.webkit.messageHandlers["emailHandlerCheckAppSignedInStatus"].postMessage({});
         }
     }); // Check if we already have user data

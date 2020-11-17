@@ -14,7 +14,7 @@
 "2xP-ZS-UtN.normalTitle" = "Hatalı Siteyi Bildir";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "İZLEYİCİ AĞ ÜSTÜ TEKLİFLER";
+"3UG-EO-bt5.text" = "İZLEYİCİ AĞ İLK SIRADAKİ SUÇLULARI";
 
 /* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "İnternet bağlantınızı kontrol edip tekrar deneyin.";
@@ -38,16 +38,16 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Gizlilik Uygulamaları";
+"25V-p3-wsn.text" = "GİZLİLİK UYGULAMALARI";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "İzleyici Ağ İstatistiklerini Sıfırla";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "İZLEYİCİ AĞ ÜSTÜ TEKLİFLER";
+"aD3-hP-MUU.text" = "İZLEYİCİ AĞ İLK SIRADAKİ SUÇLULARI";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Şifreli Bağlantı";
+"dZC-7f-pp3.text" = "ŞİFRELİ BAĞLANTI";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -68,7 +68,7 @@
 "iF1-sO-WXk.text" = "Gizlilik Uygulamaları";
 
 /* Class = "UILabel"; text = "Top Offenders"; ObjectID = "IPS-SD-65t"; */
-"IPS-SD-65t.text" = "En Çok Takip Edenler";
+"IPS-SD-65t.text" = "İlk Sıradaki Suçlular";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
 "J3L-KE-1Vb.text" = "Label";
@@ -92,13 +92,13 @@
 "pW9-ic-ro9.text" = "Site Gizlilik Koruması";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "İZLEYİCİ AĞ ÜSTÜ TEKLİFLER";
+"rXM-kA-bL0.text" = "İZLEYİCİ AĞ İLK SIRADAKİ SUÇLULARI";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
 "sr7-Qg-P74.text" = "Site Gizlilik Koruması";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "İZLEYİCİ AĞ ÜSTÜ TEKLİFLER";
+"tpT-I9-kDk.text" = "İZLEYİCİ AĞ İLK SIRADAKİ SUÇLULARI";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Şifreli Bağlantı";

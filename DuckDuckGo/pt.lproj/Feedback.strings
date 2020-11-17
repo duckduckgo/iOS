@@ -32,7 +32,7 @@
 "jr6-Al-4fr.title" = "Submeter";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "SUBMETER COMENTÁRIOS";
+"lsB-Kq-U8p.normalTitle" = "Submeter comentários";
 
 /* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
 "lY6-5c-iu4.title" = "Enviar comentário";

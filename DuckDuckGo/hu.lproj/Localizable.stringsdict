@@ -17,77 +17,19 @@
 
 Blokkoltam őket!
 
-☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új weboldalra látogatsz.</string>
+☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* és *további %1$d* próbált itt követni.
+			<string>*%2$@, %3$@* és *további %d* próbált itt követni.
 
 Blokkoltam őket!
 
-☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új weboldalra látogatsz.</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d nagy nyomkövető található</string>
-			<key>other</key>
-			<string>%1$d nagy nyomkövető található</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d nagy nyomkövető letiltva</string>
-			<key>other</key>
-			<string>%1$d nagy nyomkövető letiltva</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d nyomkövető megtalálva</string>
-			<key>other</key>
-			<string>%1$d nyomkövető megtalálva</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%1$d nyomkövető letiltva</string>
-			<key>other</key>
-			<string>%1$d nyomkövető letiltva</string>
+☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.</string>
+			<key>zero</key>
+			<string>*%2$@ és %3$@* próbált itt követni.
+
+Blokkoltam őket!
+
+☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.</string>
 		</dict>
 	</dict>
 	<key>number.of.tabs</key>
@@ -101,9 +43,75 @@ Blokkoltam őket!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d privát lap</string>
+			<string>%d privát lap</string>
 			<key>other</key>
-			<string>%1$d privát lap</string>
+			<string>%d privát lap</string>
+			<key>zero</key>
+			<string>Nincsenek privát lapok</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d nagy nyomkövető letiltva</string>
+			<key>other</key>
+			<string>%d nagy nyomkövető letiltva</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d nagy nyomkövető található</string>
+			<key>other</key>
+			<string>%d nagy nyomkövető található</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d nyomkövető blokkolva</string>
+			<key>other</key>
+			<string>%d nyomkövető blokkolva</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d nyomkövető található</string>
+			<key>other</key>
+			<string>%d nyomkövető található</string>
 		</dict>
 	</dict>
 </dict>

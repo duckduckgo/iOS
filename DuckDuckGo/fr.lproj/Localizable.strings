@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Ouvrir dans un nouvel onglet";
 
 /* Open action */
-"action.title.open" = "Ouvert";
+"action.title.open" = "Ouvrir";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Coller et valider";
@@ -44,7 +44,7 @@
 "action.title.refresh" = "Actualiser";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Signaler un site cassé";
+"action.title.reportBrokenSite" = "Signaler un problème de site";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Afficher en version ordinateur";
@@ -77,7 +77,7 @@
 "alert.title.disable.protection" = "Ajouter aux sites non protégés";
 
 /* Disable potection alert placeholder - leave as it is */
-"alert.title.disable.protection.placeholder" = "www.example.com";
+"alert.title.disable.protection.placeholder" = "www.exemple.com";
 
 /* Edit Bookmark action */
 "alert.title.edit.bookmark" = "Modifier le signet";
@@ -116,7 +116,7 @@
 "autoclear.on" = "Activé";
 
 /* Placeholder in the add bookmark form */
-"bookmark.address.placeholder" = "www.example.com";
+"bookmark.address.placeholder" = "www.exemple.com";
 
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titre du site Web";
@@ -155,22 +155,22 @@
 "brokensite.category.videos" = "La vidéo n'a pas été lue";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Décrivez ce qui s'est passé";
+"brokensite.sectionTitle" = "DÉCRIVEZ CE QU'IL S'EST PASSÉ";
 
 /* No comment provided by engineer. */
-"dax.hide.button" = "Masquer les conseils pour toujours";
+"dax.hide.button" = "Masquer les conseils définitivement";
 
 /* No comment provided by engineer. */
 "dax.hide.cancel" = "Annuler";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Il n'y en a que quelques-uns, et nous avons essayé de les rendre informatifs.";
+"dax.hide.message" = "Il n'y en a que quelques-uns et nous avons essayé de les rendre aussi utiles que possible.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "Masquer les conseils restants ?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Vos recherches effectuées sur DuckDuckGo sont confidentielles et je ne conserve jamais votre historique de recherche. Jamais. 🙌";
+"dax.onboarding.browsing.after.search" = "Les recherches effectuées sur DuckDuckGo sont anonymes et je ne conserve jamais votre historique de recherche. Jamais. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Ouf !";
@@ -179,13 +179,13 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "Bien joué !";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Bien joué !";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* essayait de vous traquer ici.\n\nJe l'ai bloqué !\n\n☝️ Vous pouvez voir dans la barre d'adresse URL qui essaie de vous traquer lorsque vous visitez un nouveau site.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "Bien joué !";
+"dax.onboarding.browsing.one.tracker.cta" = "Bien joué !";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Attention ! Je ne peux pas empêcher %1$@ de voir votre activité sur %2$@.\n\nSi vous naviguez avec moi, je peux réduire les données récoltées par %1$@ en bloquant ses traqueurs sur de nombreux autres sites.";
@@ -209,7 +209,7 @@
 "dax.onboarding.home.add.favorite" = "Consultez vos sites préférés en un clin d'œil !\n\nRendez-vous sur un site que vous aimez particulièrement. Appuyez sur l'icône « ⋯ » et sélectionnez *Ajouter aux favoris*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Consultez vos sites préférés en un clin d'œil !\n\n Rendez-vous sur l'un de vos sites préférés. Appuyez sur le bouton pour ouvrir le menu et sélectionnez Ajouter aux favoris.";
+"dax.onboarding.home.add.favorite.accessible" = "Consultez vos sites préférés en un clin d'œil ! Rendez-vous sur l'un de vos sites préférés. Appuyez sur le bouton pour ouvrir le menu et sélectionnez Ajouter aux favoris.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Maintenant, essayez de visiter un de vos sites préférés !\n\nJe bloquerai les traqueurs afin qu'ils ne puissent pas vous espionner. J'améliorerai également la sécurité de votre connexion dans la mesure du possible. 🔒";
@@ -244,6 +244,9 @@
 /* Empty list state placholder */
 "empty.favorites" = "Pas encore de favoris";
 
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Aucune correspondance trouvée";
+
 /* No comment provided by engineer. */
 "favorite" = "Favori";
 
@@ -263,7 +266,7 @@
 "feedback.browserFeatures.caption" = "Quelle fonctionnalité de navigation pouvons-nous ajouter ou améliorer ?";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.description" = "Problèmes de fonctionnalités du navigateur";
+"feedback.browserFeatures.description" = "Problèmes liés aux fonctionnalités du navigateur";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.entry" = "Des fonctionnalités de navigation sont manquantes ou peu satisfaisantes";
@@ -305,7 +308,7 @@
 "feedback.customization.tabs" = "L'affichage des onglets";
 
 /* No comment provided by engineer. */
-"feedback.customization.ui" = "L'aspect visuel de l'application";
+"feedback.customization.ui" = "L'apparence de l'application";
 
 /* No comment provided by engineer. */
 "feedback.customization.whatIsCleared" = "Les données qui sont effacées";
@@ -320,7 +323,7 @@
 "feedback.ddgSearch.caption" = "Quelle fonctionnalité de recherche pouvons-nous ajouter ou améliorer ?";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.description" = "Problèmes de recherche DuckDuckGo";
+"feedback.ddgSearch.description" = "Problèmes liés à la recherche DuckDuckGo";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.entry" = "La recherche DuckDuckGo n’est pas satisfaisante";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Dites-nous ce que nous pouvons améliorer";
 
 /* Confirmation button */
-"feedback.form.submit" = "ENVOYER UN COMMENTAIRE";
+"feedback.form.submit" = "Envoyer un commentaire";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Veuillez être aussi précis que possible";
@@ -410,7 +413,7 @@
 "feedback.start.header" = "Commençons !";
 
 /* No comment provided by engineer. */
-"feedback.start.supplementary" = "Comment catégoriseriez-vous vos commentaires ?";
+"feedback.start.supplementary" = "Comment qualifieriez-vous vos commentaires ?";
 
 /* No comment provided by engineer. */
 "feedback.submitted.confirmation" = "Merci ! Commentaire envoyé.";
@@ -446,7 +449,7 @@
 "home.message.subheader" = "Des liens ouverts en toute tranquillité d'esprit, à chaque fois.";
 
 /* No comment provided by engineer. */
-"home.message.topText" = "NOUVEAUTÉS DE L'IOS 14";
+"home.message.topText" = "NOUVEAUTÉS IOS 14";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Ajoutez DuckDuckGo à votre écran d'accueil !";
@@ -455,7 +458,7 @@
 "home.row.reminder.message" = "Ajoutez DuckDuckGo à votre Dock pour y accéder facilement !";
 
 /* Home is this context is the bottom home row (dock) */
-"home.row.reminder.title" = "Ajoutez DuckDuckGo à vos favoris";
+"home.row.reminder.title" = "Ajouter DuckDuckGo à votre écran d'accueil";
 
 /* This describes empty tab, on which you can search or navigate to favorites */
 "homeTab.searchAndFavorites" = "Effectuez des recherches et consultez vos favoris dans un nouvel onglet";
@@ -479,7 +482,7 @@
 "keyCommandClose" = "Fermer";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Fermer onglet";
+"keyCommandCloseTab" = "Fermer l'onglet";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Rechercher dans la page";
@@ -494,7 +497,7 @@
 "keyCommandFire" = "Effacer tous les onglets et données";
 
 /* No comment provided by engineer. */
-"keyCommandLocation" = "Chercher ou saisir une adresse";
+"keyCommandLocation" = "Rechercher ou saisir une adresse";
 
 /* No comment provided by engineer. */
 "keyCommandNewTab" = "Nouvel onglet";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Afficher tous les onglets";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Bienvenue sur DuckDuckGo !";
+"launchscreenWelcomeMessage" = "Bienvenue sur\nDuckDuckGo !";
 
 /* Edit button */
 "navigation.title.edit" = "Modifier";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Ajouter un widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "L'utilisation de DuckDuckGo a été simplifiée.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Peut-être plus tard";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Continuer";
@@ -575,7 +587,7 @@
 "preserveLogins.remove.all" = "Tout supprimer";
 
 /* Confirmation button in alert */
-"preserveLogins.remove.all.ok" = "Ok";
+"preserveLogins.remove.all.ok" = "OK";
 
 /* Ask to Fireproof Websites */
 "preserveLogins.switch.title" = "Demander à placer des sites Web en mode coupe-feu";
@@ -689,10 +701,10 @@
 "privacy.protection.main.disabled" = "PROTECTION DU SITE DÉSACTIVÉE";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "AMÉLIORÉ DE $1 à 2$";
+"privacy.protection.main.enhanced" = "AMÉLIORÉ DE $1 À $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Degré de confidentialité";
+"privacy.protection.main.grade" = "DEGRÉ DE CONFIDENTIALITÉ";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -722,7 +734,7 @@
 "privacy.protection.site.grade" = "Degré de confidentialité %@";
 
 /* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Appuyer pour activer la protection de la confidentialité";
+"privacy.protection.site.hint" = "Appuyer pour accéder à l'écran de protection de la confidentialité";
 
 /* No comment provided by engineer. */
 "privacy.protection.top.offenders.info" = "Ces statistiques sont uniquement enregistrées sur votre appareil et ne seront envoyées nulle part. Jamais.";
@@ -731,16 +743,16 @@
 "privacy.protection.tos.good" = "Bonnes pratiques de confidentialité";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "« Pratiques de confidentialité mixtes »";
+"privacy.protection.tos.mixed" = "Pratiques de confidentialité mixtes";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "« Mauvaises pratiques de confidentialité »";
+"privacy.protection.tos.poor" = "Mauvaises pratiques de confidentialité";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Pratiques de confidentialité inconnues";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Les réseaux de trackers regroupent votre historique Web dans un profil de données vous concernant. Les réseaux majeurs de trackers sont plus nuisibles, car ils peuvent vous suivre et vous cibler sur une plus grande partie du Web.";
+"privacy.protection.tracker.networks.info" = "Les réseaux de traqueurs regroupent votre historique Web dans un profil de données vous concernant. Les réseaux majeurs de traqueurs sont plus nuisibles, car ils peuvent vous suivre et vous cibler sur une plus grande partie du Web.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
@@ -764,7 +776,7 @@
 "report.brokensite.header" = "La soumission d'un rapport anonyme pour signaler le mauvais fonctionnement du site nous aide à déboguer ces problèmes et à améliorer l'extension.";
 
 /* No comment provided by engineer. */
-"search.hint.duckduckgo" = "Chercher ou saisir une adresse";
+"search.hint.duckduckgo" = "Rechercher ou saisir une adresse";
 
 /* No comment provided by engineer. */
 "section.title.bookmarks" = "Signets";

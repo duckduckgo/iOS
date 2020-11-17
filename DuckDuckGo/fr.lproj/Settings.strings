@@ -71,7 +71,7 @@
 "dud-qo-Ces.text" = "Label";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
-"Dyd-bm-goj.title" = "Préférences";
+"Dyd-bm-goj.title" = "Paramètres";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Label";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Défaut";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Votre confidentialité, simplifiée. ";
+"gji-Fs-EET.text" = "La confidentialité, simplifiée. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Thème";
@@ -122,7 +122,7 @@
 "jbD-Oy-Cmw.title" = "Icône";
 
 /* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Envoyez vos remarques";
+"m23-t6-9cb.text" = "Envoyer vos remarques";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Si vous l'activez, les sites Web s'ouvriront automatiquement dans DuckDuckGo.";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Nouvel onglet";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Ces sites non protégés ne bénéficieront pas\nde la protection de la confidentialité.";
+"zvh-2e-Wmz.text" = "Ces sites non protégés ne bénéficieront pas de la protection de la confidentialité.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Écran d'accueil";

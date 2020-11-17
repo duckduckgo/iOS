@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Site is Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
-"0ax-Nd-tDU.text" = "Web-mjesto je glavna mreža za praćenje";
+"0ax-Nd-tDU.text" = "Web-mjesto glavna je mreža za praćenje";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
 "0SO-8y-5QH.text" = "www.example.com";
@@ -11,10 +11,10 @@
 "2T4-dB-Wu0.text" = "Vaši podaci su ranjivi";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
-"2xP-ZS-UtN.normalTitle" = "Prijavi neispravnu web stranicu";
+"2xP-ZS-UtN.normalTitle" = "Prijavi neispravno web-mjesto";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "NAJVEĆI PREKRŠITELJI OD MREŽA ZA PRAĆENJE";
+"3UG-EO-bt5.text" = "NAJČEŠĆI MREŽNI TRAGAČI";
 
 /* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Provjeri svoju internetsku vezu i pokušaj ponovo.";
@@ -44,25 +44,25 @@
 "953-jn-tmN.normalTitle" = "Poništi mrežnu statistiku tragača";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "NAJVEĆI PREKRŠITELJI OD MREŽA ZA PRAĆENJE";
+"aD3-hP-MUU.text" = "NAJČEŠĆI MREŽNI TRAGAČI";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Šifrirana veza";
+"dZC-7f-pp3.text" = "ŠIFRIRANA VEZA";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "fqL-1Q-ilH"; */
-"fqL-1Q-ilH.normalTitle" = "Nezaštićena mrežna mjesta";
+"fqL-1Q-ilH.normalTitle" = "Nezaštićena web-mjesta";
 
 /* Class = "UILabel"; text = "Networks Blocked"; ObjectID = "Ge6-9h-2z5"; */
-"Ge6-9h-2z5.text" = "Mreže blokirane";
+"Ge6-9h-2z5.text" = "Blokirane mreže";
 
 /* Class = "UILabel"; text = "8 Trackers Blocked"; ObjectID = "GZ4-PW-wOG"; */
 "GZ4-PW-wOG.text" = "Blokirano 8 tragača";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "hDv-jp-eaS"; */
-"hDv-jp-eaS.normalTitle" = "Prijavi neispravnu web stranicu";
+"hDv-jp-eaS.normalTitle" = "Prijavi neispravno web-mjesto";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
 "iF1-sO-WXk.text" = "Prakse zaštite privatnosti";
@@ -74,10 +74,10 @@
 "J3L-KE-1Vb.text" = "Label";
 
 /* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
-"k0S-dU-EUe.text" = "Nisu pronađene prakse privatnosti";
+"k0S-dU-EUe.text" = "Nisu pronađene prakse zaštite privatnosti";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
-"Kme-pZ-l7N.normalTitle" = "Nezaštićena mrežna mjesta";
+"Kme-pZ-l7N.normalTitle" = "Nezaštićena web-mjesta";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
 "Mv2-oP-SQd.text" = "Label";
@@ -89,22 +89,22 @@
 "oyz-09-obQ.text" = "Dobre prakse zaštite privatnosti";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "pW9-ic-ro9"; */
-"pW9-ic-ro9.text" = "Zaštita privatnosti web stranice";
+"pW9-ic-ro9.text" = "Zaštita privatnosti web-mjesta";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "NAJVEĆI PREKRŠITELJI OD MREŽA ZA PRAĆENJE";
+"rXM-kA-bL0.text" = "NAJČEŠĆI MREŽNI TRAGAČI";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
-"sr7-Qg-P74.text" = "Zaštita privatnosti web stranice";
+"sr7-Qg-P74.text" = "Zaštita privatnosti web-mjesta";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "NAJVEĆI PREKRŠITELJI OD MREŽA ZA PRAĆENJE";
+"tpT-I9-kDk.text" = "NAJČEŠĆI MREŽNI TRAGAČI";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Šifrirana veza";
 
 /* Class = "UILabel"; text = "Major Networks Blocked"; ObjectID = "XzQ-fW-tzk"; */
-"XzQ-fW-tzk.text" = "Glavne mreže su blokirane";
+"XzQ-fW-tzk.text" = "Glavne su mreže blokirane";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK FREQUENCY"; ObjectID = "Y3q-u7-IeX"; */
 "Y3q-u7-IeX.text" = "UČESTALOST MREŽNIH TRAGAČA";

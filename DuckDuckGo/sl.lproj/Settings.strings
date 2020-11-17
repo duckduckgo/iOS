@@ -122,7 +122,7 @@
 "jbD-Oy-Cmw.title" = "Ikona";
 
 /* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Pošlite povratne informacije";
+"m23-t6-9cb.text" = "Pošljite povratne informacije";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Ko je to omogočeno, se spletna mesta samodejno odprejo v DuckDuckGo.";
@@ -167,7 +167,7 @@
 "xof-5k-PkI.text" = "Nastavite za privzeti brskalnik";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Spletne stran s požarno zaščito";
+"xUX-nF-HOl.title" = "Spletne strani s požarno zaščito";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tipkovnica";

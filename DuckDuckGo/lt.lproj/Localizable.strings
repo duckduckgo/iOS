@@ -80,7 +80,7 @@
 "alert.title.disable.protection.placeholder" = "www.example.com";
 
 /* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Redaguoti žymelę";
+"alert.title.edit.bookmark" = "Redaguoti žymę";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Įrašyti žymę";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Vaizdo įrašas nepaleistas";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Aprašykite, kas atsitiko";
+"brokensite.sectionTitle" = "APRAŠYKITE, KAS ATSITIKO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Slėpti patarimus visam laikui";
@@ -244,6 +244,9 @@
 /* Empty list state placholder */
 "empty.favorites" = "Mėgstamų dar nėra";
 
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Atitikmenų nerasta";
+
 /* No comment provided by engineer. */
 "favorite" = "Mėgstamas";
 
@@ -254,7 +257,7 @@
 "favorite.menu.edit" = "Redaguoti";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.ads" = "Reklamų ir iššokančių langų blokavimas";
+"feedback.browserFeatures.ads" = "Reklamų ir iššokančiųjų langų blokavimas";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.bookmarks" = "Žymelių kūrimas ir tvarkymas";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Papasakokite, ką galime patobulinti";
 
 /* Confirmation button */
-"feedback.form.submit" = "PATEIKTI ATSILIEPIMĄ";
+"feedback.form.submit" = "Pateikti atsiliepimą";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Nurodykite kuo konkrečiau";
@@ -464,7 +467,7 @@
 "homeTab.title" = "Pagrindinis";
 
 /* No comment provided by engineer. */
-"keyCommandAddBookmark" = "Pridėti žymelę";
+"keyCommandAddBookmark" = "Pridėti žymę";
 
 /* No comment provided by engineer. */
 "keyCommandAddFavorite" = "Pridėti mėgstamą";
@@ -479,7 +482,7 @@
 "keyCommandClose" = "Uždaryti";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Uždaryti kortelė";
+"keyCommandCloseTab" = "Uždaryti kortelę";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Rasti puslapyje";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Rodyti visus skirtukus";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Sveiki atvykę į „DUCKDUCKGO“";
+"launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
 /* Edit button */
 "navigation.title.edit" = "Redaguoti";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Pridėti valdiklį";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Naudotis „DuckDuckGo“ tapo dar lengviau.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Galbūt vėliau";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Tęsti";
@@ -551,7 +563,7 @@
 "onboardingStartBrowsing" = "Pradėti naršyti";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Sveiki atvykę į „DUCKDUCKGO“";
+"onboardingWelcomeHeader" = "Sveiki atvykę į „DuckDuckGo“!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Apgailestaujame, jokia programa negali atidaryti šios nuorodos.";
@@ -575,7 +587,7 @@
 "preserveLogins.remove.all" = "Pašalinti visus";
 
 /* Confirmation button in alert */
-"preserveLogins.remove.all.ok" = "Gerai";
+"preserveLogins.remove.all.ok" = "GERAI";
 
 /* Ask to Fireproof Websites */
 "preserveLogins.switch.title" = "Prašyti apsaugoti svetaines";
@@ -599,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Efektyvus dydis";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "El.paštas";
+"privacy.protection.encryption.email" = "El. paštas";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Šifruotas ryšys";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "PATOBULINTA NUO $1 IKI $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Privatumo laipsnis";
+"privacy.protection.main.grade" = "PRIVATUMO LAIPSNIS";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";

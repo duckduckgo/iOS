@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Otevřít v nové kartě";
 
 /* Open action */
-"action.title.open" = "Åben";
+"action.title.open" = "Otevřít";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Vložit a jít";
@@ -104,7 +104,7 @@
 "auth.alert.password.placeholder" = "Heslo";
 
 /* Authentication Alert Title */
-"auth.alert.title" = "Je vyžadována autentizace";
+"auth.alert.title" = "Je vyžadováno ověření";
 
 /* Authentication User name field placeholder */
 "auth.alert.username.placeholder" = "Uživatelské jméno";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video se nepřehrálo";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Popište, co se stalo";
+"brokensite.sectionTitle" = "POPIŠTE, CO SE STALO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Navždy skrýt tipy";
@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Mám to";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Upozornění! Vzhledem k tomu, že %2$@ vlastní %1$@, nemůžeme jim zabránit, aby viděli vaši aktivitu tady.Ale procházejte s námi a budeme moci omezit, co o vás celkově %2$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Upozornění! Vzhledem k tomu, že %2$@ vlastní %1$@, nemůžeme jim zabránit, aby tady viděli vaši aktivitu.\n\nAle projděte se se mnou a společně omezíme, co o vás celkově %2$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Mám to";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Zatím žádné oblíbené";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nenalezeny žádné shody";
 
 /* No comment provided by engineer. */
 "favorite" = "Oblíbené";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Řekněte nám prosím, co můžeme zlepšit";
 
 /* Confirmation button */
-"feedback.form.submit" = "ODESLAT ZPĚTNOU VAZBU";
+"feedback.form.submit" = "Odeslat zpětnou vazbu";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Buďte co nejkonkrétnější.";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Zobrazit všechny karty";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Vítejte v DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Upravit";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Přidat widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Používání DuckDuckGo je nyní snadnější.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Možná později";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Pokračovat";
@@ -575,7 +587,7 @@
 "preserveLogins.remove.all" = "Odstranit vše";
 
 /* Confirmation button in alert */
-"preserveLogins.remove.all.ok" = "Dobře";
+"preserveLogins.remove.all.ok" = "DOBŘE";
 
 /* Ask to Fireproof Websites */
 "preserveLogins.switch.title" = "Požádat o ochranu webových stránek";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "VYLEPŠENO Z $1 NA $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Hodnocení ochrany soukromí";
+"privacy.protection.main.grade" = "HODNOCENÍ OCHRANY SOUKROMÍ";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -782,7 +794,7 @@
 "settings.tutorial.navigate" = "Přejděte na *Safari*, potom *Vyhledávač*";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Otevřřete aplikaci *Nastavení*";
+"settings.tutorial.open" = "Otevřete aplikaci *Nastavení*";
 
 /* No comment provided by engineer. */
 "settings.tutorial.select" = "Vyberte *DuckDuckGo*";

@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "A videót nem játszotta le";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Az esemény leírása";
+"brokensite.sectionTitle" = "ESEMÉNY LEÍRÁSA";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ötletek elrejtése örökre";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Pacsi!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* itt próbált követni.\n\nBlokkoltam őket!\n\n☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* itt próbált követni.\n\nBlokkoltam!\n\n☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Pacsi!";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Még nincsenek kedvencek";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nincs találat";
 
 /* No comment provided by engineer. */
 "favorite" = "Kedvenc";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Kérjük, mondd el, min tudunk még javítani.";
 
 /* Confirmation button */
-"feedback.form.submit" = "VISSZAJELZÉS ELKÜLDÉSE";
+"feedback.form.submit" = "Visszajelzés küldése";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Kérjük, a lehető legpontosabban írj meg mindent";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Összes lap megjelenítése";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Üdvözlünk a DuckDuckGo-ban!";
+"launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "lapok.száma";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Minialkalmazás hozzáadása";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "A DuckDuckGo használata még könnyebb lett.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Talán később";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Folytatás";
@@ -557,7 +569,7 @@
 "open.externally.failed" = "Sajnáljuk, egyetlen alkalmazás sem tudja kezelni ezt a hivatkozást.";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Fire gomb használata után is bejelentkezve maradsz.";
+"preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Tűz gomb használata után is bejelentkezve maradsz.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Weboldalak";
@@ -689,10 +701,10 @@
 "privacy.protection.main.disabled" = "WEBOLDAL VÉDELME LETILTVA";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTETT ERRŐL: $1, ERRE: $2";
+"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTVE ERRŐL: $1, ERRE: $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Adatvédelmi fokozat";
+"privacy.protection.main.grade" = "ADATVÉDELMI FOKOZAT";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";

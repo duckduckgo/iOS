@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Νέα καρτέλα";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Αυτοί οι μη προστατευόμενοι ιστότοποι δεν θα\nενισχυθούν από την Προστασία προσωπικών δεδομένων.";
+"zvh-2e-Wmz.text" = "Αυτοί οι μη προστατευόμενοι ιστότοποι δεν θα ενισχυθούν από την Προστασία προσωπικών δεδομένων.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Αρχική οθόνη";

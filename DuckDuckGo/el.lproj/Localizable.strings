@@ -89,7 +89,7 @@
 "alert.title.save.favorite" = "Αποθήκευση αγαπημένου";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo!";
+"app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo";
 
 /* Authentication Alert Log In Button */
 "auth.alert.login.button" = "Σύνδεση";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Το βίντεο δεν αναπαράχθηκε";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Περιγράψτε τι συνέβη";
+"brokensite.sectionTitle" = "ΠΕΡΙΓΡΑΨΤΕ ΤΙ ΣΥΝΕΒΗ";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Απόκρυψη συμβουλών για πάντα";
@@ -209,13 +209,13 @@
 "dax.onboarding.home.add.favorite" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\nΜεταβείτε σε έναν ιστότοπο που αγαπάτε. Έπειτα, πατήστε το εικονίδιο \"⋯\" και επιλέξτε *Προσθήκη στα αγαπημένα*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\n Επισκεφθείτε έναν από τους αγαπημένους σας ιστότοπους. Έπειτα, πατήστε το κουμπί Άνοιγμα μενού και επιλέξτε Προσθήκη στα αγαπημένα.";
+"dax.onboarding.home.add.favorite.accessible" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! Επισκεφθείτε έναν από τους αγαπημένους σας ιστότοπους. Έπειτα, πατήστε το κουμπί Άνοιγμα μενού και επιλέξτε Προσθήκη στα αγαπημένα.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Στη συνέχεια, δοκιμάστε να επισκεφτείτε έναν από τους αγαπημένους σας ιστότοπους!\n\nΘα εμποδίσω τις εφαρμογές παρακολούθησης ώστε να μην μπορούν να σας κατασκοπεύουν. Επίσης, θα αναβαθμίσω την ασφάλεια της σύνδεσής σας, εάν είναι εφικτό. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Το έχετε!\n\nΝα θυμάστε: κάθε φορά που περιηγείστε μαζί μου, μια ανατριχιαστική διαφήμιση χάνει τη δύναμή της! 👍";
+"dax.onboarding.home.subsequent" = "Το έχετε!\n\nΝα θυμάστε: κάθε φορά που περιηγείστε μαζί μου, μια ανατριχιαστική διαφήμιση χάνει τη δύναμή της. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Το Διαδίκτυο μπορεί να είναι κάπως ανατριχιαστικό.\n\nΜην ανησυχείτε! Το να πραγματοποιείτε αναζήτηση και περιήγηση ιδιωτικά είναι πιο εύκολο απ' όσο νομίζετε.";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Δεν υπάρχουν ακόμα αγαπημένα";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Δεν βρέθηκαν αντιστοιχίες";
 
 /* No comment provided by engineer. */
 "favorite" = "Αγαπημένο";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Πείτε μας τι μπορούμε να βελτιώσουμε";
 
 /* Confirmation button */
-"feedback.form.submit" = "ΥΠΟΒΟΛΗ ΣΧΟΛΙΩΝ";
+"feedback.form.submit" = "Υποβολή σχολίων";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Να είστε όσο το δυνατόν πιο συγκεκριμένοι";
@@ -398,7 +401,7 @@
 "feedback.positive.header" = "Αυτό μας κάνει πολύ χαρούμενους!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "Όχι ευχαριστώ! Τελείωσα.";
+"feedback.positive.noThanks" = "Όχι ευχαριστώ! Τελείωσα";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Μοιραστείτε τις λεπτομέρειες";
@@ -452,7 +455,7 @@
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Προσθήκη του DuckDuckGo στο Dock σας για εύκολη πρόσβαση.";
+"home.row.reminder.message" = "Προσθήκη του DuckDuckGo στο Dock σας για εύκολη πρόσβαση!";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη";
@@ -479,7 +482,7 @@
 "keyCommandClose" = "Κλείσιμο";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Κλείσιμο καρτέλα";
+"keyCommandCloseTab" = "Κλείσιμο καρτέλας";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Εύρεση στη σελίδα";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Προβολή όλων των καρτελών";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Καλώς ορίσατε στον DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Η χρήση του DuckDuckGo μόλις έγινε πιο εύκολη.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Ισως αργότερα";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Συνέχεια";
@@ -596,7 +608,7 @@
 "privacy.protection.encryption.common.name" = "Κοινό όνομα";
 
 /* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Μέγεθος ισχύος";
+"privacy.protection.encryption.effective.size" = "Πραγματικό μέγεθος";
 
 /* Part of certificate info */
 "privacy.protection.encryption.email" = "ηλεκτρονικό ταχυδρομείο";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "ΒΕΛΤΙΩΘΗΚΕ ΑΠΟ $1 ΣΕ $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Βαθμολογία ιδιωτικότητας";
+"privacy.protection.main.grade" = "ΒΑΘΜΟΣ ΠΡΟΣΤΑΣΙΑΣ ΠΡΟΣΩΠΙΚΩΝ ΔΕΔΟΜΕΝΩΝ";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -701,7 +713,7 @@
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Τα δίκτυα εφαρμογών παρακολούθησης βρέθηκαν στο %1$@%% των ιστότοπων που έχετε επισκεφτεί από %2$@.";
+"privacy.protection.network.leaderboard" = "Βρέθηκαν δίκτυα εφαρμογών παρακολούθησης στο %1$@%% των ιστότοπων που έχετε επισκεφτεί από %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Εξακολουθούμε να συλλέγουμε δεδομένα για να δείξουμε\nπόσες εφαρμογές παρακολούθησης έχουμε αποκλείσει.";

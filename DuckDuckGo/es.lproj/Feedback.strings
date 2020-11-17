@@ -32,7 +32,7 @@
 "jr6-Al-4fr.title" = "Enviar";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "ENVIAR OPINIÓN";
+"lsB-Kq-U8p.normalTitle" = "Enviar opinión";
 
 /* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
 "lY6-5c-iu4.title" = "Enviar comentarios";
@@ -53,13 +53,13 @@
 "Rvx-dM-etJ.title" = "Enviar comentarios";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "¿Qué sitio web no se carga?";
+"TMj-NM-j3b.placeholder" = "¿Qué sitio web no funciona?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Reportar sitio web roto";
+"WjT-HM-yim.title" = "Informar de sitio web dañado";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
-"Wx3-Vb-ItS.text" = "Motivo de página dañada";
+"Wx3-Vb-ItS.text" = "Motivo de sitio dañado";
 
 /* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
 "Xb0-Zu-opM.title" = "Enviar comentarios";

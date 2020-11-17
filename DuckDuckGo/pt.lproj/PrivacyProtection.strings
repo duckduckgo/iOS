@@ -2,7 +2,7 @@
 "0ax-Nd-tDU.text" = "O site é uma rede principal de rastreamento";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
-"0SO-8y-5QH.text" = "www.example.com";
+"0SO-8y-5QH.text" = "www.exemplo.com";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Tentar novamente";
@@ -29,7 +29,7 @@
 "7k3-Qj-oya.text" = "Oh, não funcionou.";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "7nh-8f-M2e"; */
-"7nh-8f-M2e.text" = "www.example.com";
+"7nh-8f-M2e.text" = "www.exemplo.com";
 
 /* Class = "UILabel"; text = "Privacy Grade"; ObjectID = "7xH-3L-wpf"; */
 "7xH-3L-wpf.text" = "Grau de privacidade";
@@ -47,10 +47,10 @@
 "aD3-hP-MUU.text" = "PRINCIPAIS INFRATORES DA REDE DE RASTREAMENTO";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Ligação encriptada";
+"dZC-7f-pp3.text" = "LIGAÇÃO ENCRIPTADA";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
-"F5w-e3-JfY.text" = "www.example.com";
+"F5w-e3-JfY.text" = "www.exemplo.com";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "fqL-1Q-ilH"; */
 "fqL-1Q-ilH.normalTitle" = "Sites desprotegidos";

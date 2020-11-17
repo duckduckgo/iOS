@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Site-uri ignifuge";
+"0DQ-yq-UuT.text" = "Site-uri cu ștergerea activității și istoricului din browser la ieșire";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Dezactivează pentru a preveni deschiderea automată a linkurilor în alte aplicații instalate.";
@@ -167,7 +167,7 @@
 "xof-5k-PkI.text" = "Setare ca browser implicit";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Site-uri ignifuge";
+"xUX-nF-HOl.title" = "Site-uri cu ștergerea activității și istoricului din browser la ieșire";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tastatură";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Filă nouă";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Aceste site-uri neprotejate nu vor fi\nîmbunătățite de protecția confidențialității.";
+"zvh-2e-Wmz.text" = "Aceste site-uri neprotejate nu vor fi îmbunătățite de protecția confidențialității.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Ecranul de pornire";

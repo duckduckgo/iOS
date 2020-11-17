@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Privatumo praktika";
+"25V-p3-wsn.text" = "PRIVATUMO PRAKTIKA";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Iš naujo nustatykite stebėjimo priemonės tinklo statistiką";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "DAŽNIAUSI PAŽEIDĖJAI SEKIKLIŲ TINKLE";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Šifruotas ryšys";
+"dZC-7f-pp3.text" = "ŠIFRUOTAS RYŠYS";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";

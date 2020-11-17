@@ -2118,7 +2118,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   }; // Listen for sign in message from the ddg email page
 
     var injectEmailAutofill = function injectEmailAutofill() {
-        console.log("injectEmailAutofill function run")
       // Here we store a map of input -> button associations
       var inputButtonMap = new Map();
       var forms = new Map();

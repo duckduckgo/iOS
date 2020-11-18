@@ -1808,8 +1808,6 @@ class DDGAutofill extends HTMLElement {
             sendAndWaitForAnswer({getAlias: true}, 'getAliasResponse').then(res => {
                 if (res.alias) {
                     this.execOnInputs(input => {
-                        if (input.classList.contains('ddg-autofilled')) return
-
                         input.value = res.alias
                         input.classList.add('ddg-autofilled')
 

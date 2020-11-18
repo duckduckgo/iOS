@@ -65,7 +65,7 @@ class AppConfigurationFetch {
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
-    private var lastConfigurationRefreshDate: Date
+    static private var lastConfigurationRefreshDate: Date
 
     @UserDefaultsWrapper(key: .backgroundFetchTaskExpirationCount, defaultValue: 0)
     static private var backgroundFetchTaskExpirationCount: Int
@@ -88,13 +88,13 @@ class AppConfigurationFetch {
     @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
     private var downloadedTemporaryUnprotectedSitesCount: Int
 
-    var shouldRefresh: Bool {
-        return Date().timeIntervalSince(lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
+    static private var shouldRefresh: Bool {
+        return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
     
     func start(isBackgroundFetch: Bool = false,
                completion: AppConfigurationCompletion?) {
-        guard shouldRefresh else {
+        guard Self.shouldRefresh else {
             // Statistics are not sent after a successful background refresh in order to reduce the time spent in the background, so they are checked
             // here in case a background refresh has happened recently.
             Self.fetchQueue.async {
@@ -130,15 +130,21 @@ class AppConfigurationFetch {
             forTaskWithIdentifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier,
             using: fetchQueue) { (task) in
 
+            guard shouldRefresh else {
+                task.setTaskCompleted(success: true)
+                scheduleBackgroundRefreshTask()
+                return
+            }
+
             task.expirationHandler = {
                 backgroundFetchTaskExpirationCount += 1
                 scheduleBackgroundRefreshTask()
             }
 
             AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
-            scheduleBackgroundRefreshTask()
 
             task.setTaskCompleted(success: true)
+            scheduleBackgroundRefreshTask()
         }
     }
 
@@ -221,7 +227,7 @@ class AppConfigurationFetch {
             }
         }
 
-        lastConfigurationRefreshDate = Date()
+        Self.lastConfigurationRefreshDate = Date()
     }
     
     private func sendStatistics(completion: () -> Void ) {

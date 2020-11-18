@@ -128,7 +128,7 @@ class AppConfigurationFetch {
     static func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier,
-            using: fetchQueue) { (task) in
+            using: nil) { (task) in
 
             guard shouldRefresh else {
                 task.setTaskCompleted(success: true)
@@ -138,13 +138,15 @@ class AppConfigurationFetch {
 
             task.expirationHandler = {
                 backgroundFetchTaskExpirationCount += 1
+                task.setTaskCompleted(success: false)
                 scheduleBackgroundRefreshTask()
             }
 
-            AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
-
-            task.setTaskCompleted(success: true)
-            scheduleBackgroundRefreshTask()
+            fetchQueue.async {
+                AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
+                task.setTaskCompleted(success: true)
+                scheduleBackgroundRefreshTask()
+            }
         }
     }
 

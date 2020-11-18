@@ -1328,7 +1328,7 @@ extension TabViewController: FaviconUserScriptDelegate {
 extension TabViewController: EmailManagerPresentationDelegate {
     func emailManager(_ emailManager: EmailManager, didRequestPermissionToProvideAlias alias: String, completionHandler: @escaping (Bool) -> Void) {
         
-        let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: UserText.emailAliasAlertMessage, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
         
         let actionTitle =  String(format: UserText.emailAliasAlertConfirm, alias)

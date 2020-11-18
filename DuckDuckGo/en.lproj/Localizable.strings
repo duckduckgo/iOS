@@ -245,13 +245,16 @@
 "email.aliasAlert.decline" = "Don't Use";
 
 /* No comment provided by engineer. */
-"email.aliasAlert.title" = "For added privacy, use a Duck Address.";
+"email.aliasAlert.message" = "This address can be used to communicate with you, but won’t reveal your real email.";
 
 /* No comment provided by engineer. */
-"email.browsingMenu.alert" = "New alias copied to your clipboard";
+"email.aliasAlert.title" = "For more privacy, use a Duck Address.";
 
 /* No comment provided by engineer. */
-"email.browsingMenu.useNewDuckAddress" = "Use a new Duck Address";
+"email.browsingMenu.alert" = "New address copied to your clipboard";
+
+/* No comment provided by engineer. */
+"email.browsingMenu.useNewDuckAddress" = "New Duck Address";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks yet";

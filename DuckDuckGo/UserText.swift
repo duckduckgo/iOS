@@ -325,9 +325,10 @@ public struct UserText {
     public static let doNotSellEnabled = NSLocalizedString("donotsell.enabled", value: "Enabled", comment: "GPC Setting state")
     public static let doNotSellDisabled = NSLocalizedString("donotsell.disabled", value: "Disabled", comment: "GPC Setting state")
     
-    public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Use a new Duck Address", comment: "")
-    public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New alias copied to your clipboard", comment: "")
-    public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "For added privacy, use a Duck Address.", comment: "")
+    public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "New Duck Address", comment: "")
+    public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New address copied to your clipboard", comment: "")
+    public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "For more privacy, use a Duck Address.", comment: "")
+    public static let emailAliasAlertMessage = NSLocalizedString("email.aliasAlert.message", value: "This address can be used to communicate with you, but won’t reveal your real email.", comment: "")
     public static let emailAliasAlertConfirm = NSLocalizedString("email.aliasAlert.confirm", value: "Use %@", comment: "")
     public static let emailAliasAlertDecline = NSLocalizedString("email.aliasAlert.decline", value: "Don't Use", comment: "")
 }

@@ -81,6 +81,13 @@ class EmailSettingsViewController: UITableViewController {
             //we've decided not to handle for now
         }
     }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let theme = ThemeManager.shared.currentTheme
+        cell.decorate(with: theme)
+        return cell
+    }
 }
 
 extension EmailSettingsViewController: Themable {

@@ -663,9 +663,16 @@ class TabViewController: UIViewController {
     }
     
     private func openExternally(url: URL) {
+        self.url = webView.url
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
-                self.view.showBottomToast(UserText.failedToOpenExternally)
+                self.view.window?.showBottomToast(UserText.failedToOpenExternally)
+            }
+
+            // just showing a blank tab at this point, so close it
+            if self.webView.url == nil {
+                self.delegate?.tabDidRequestClose(self)
             }
         }
     }
@@ -678,7 +685,13 @@ class TabViewController: UIViewController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.overrideUserInterfaceStyle()
-        alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+        alert.addAction(UIAlertAction(title: dontOpen, style: .cancel, handler: { _ in
+            if self.webView.url == nil {
+                self.delegate?.tabDidRequestClose(self)
+            } else {
+                self.url = self.webView.url
+            }
+        }))
         alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
             self.openExternally(url: url)
         }))
@@ -956,20 +969,23 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
-        
-        // prevent loops where a site keeps redirecting to itself (e.g. bbc)
+
         if let url = url,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {
+            // prevent loops where a site keeps redirecting to itself (e.g. bbc)
             failingUrls.insert(domain)
+
+            // Reset the URL, e.g if opened externally
+            self.url = webView.url
         }
-        
+
         // wait before showing errors in case they recover automatically
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showErrorNow()
         }
     }
-    
+
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
@@ -1162,11 +1178,12 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func showErrorNow() {
-        guard let error = lastError else { return }
+        guard let error = lastError as NSError? else { return }
         hideProgressIndicator()
         ViewHighlighter.hideAll()
 
-        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
+        if !(error.failedUrl?.isCustomURLScheme() ?? false) {
+            url = error.failedUrl
             showError(message: error.localizedDescription)
         }
 

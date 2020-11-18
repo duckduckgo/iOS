@@ -232,7 +232,7 @@ class EmailManagerTests: XCTestCase {
     
     private func stubGetAliasTest() {
         stub(condition: { request -> Bool in
-            guard !(request.url!.absoluteString.contains("improving.duckduckgo.com")) else { return false }
+            guard request.url!.absoluteString == "https://quack.duckduckgo.com/api/email/addresses" else { return false }
             
             // Tests has correct header
             XCTAssertEqual(request.url!.absoluteString, "https://quack.duckduckgo.com/api/email/addresses")

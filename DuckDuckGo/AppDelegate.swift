@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            _ = UserAgentManager.shared
             Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true

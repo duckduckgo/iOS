@@ -100,6 +100,12 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
     private var trackersInfoWorkItem: DispatchWorkItem?
+
+    // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
+    private var woShownRecently = false
+
+    // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
+    private var fireWoFollowUp = false
     
     public var url: URL? {
         didSet {
@@ -195,8 +201,10 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         showMenuHighlighterIfNeeded()
+
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -534,6 +542,7 @@ class TabViewController: UIViewController {
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
             controller.spec = sender as? DaxDialogs.BrowsingSpec
+            controller.woShown = woShownRecently
             controller.delegate = self
             
             if controller.spec?.highlightAddressBar ?? false {
@@ -804,7 +813,10 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         os_log("webpageLoading started", log: generalLog, type: .debug)
-        
+
+        // Only fire when on the same page that the without trackers Dax Dialog was shown
+        self.fireWoFollowUp = false
+
         self.httpsForced = httpsForced
         delegate?.showBars()
 
@@ -920,6 +932,11 @@ extension TabViewController: WKNavigationDelegate {
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+
+            if spec == DaxDialogs.BrowsingSpec.withoutTrackers {
+                self?.woShownRecently = true
+                self?.fireWoFollowUp = true
+            }
         }
     }
     
@@ -1297,6 +1314,12 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
     }
     
     func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
+
+        if tracker.blocked && fireWoFollowUp {
+            fireWoFollowUp = false
+            Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
+        }
+
         siteRating?.trackerDetected(tracker)
         onSiteRatingChanged()
 

@@ -1828,8 +1828,11 @@ class DDGAutofill extends HTMLElement {
             })
         }
         this.input.addEventListener('mousedown', (e) => {
-           e.preventDefault()
-            this.autofillInputs()
+          const focusedEl = document.querySelector(':focus')
+          if (focusedEl) focusedEl.blur()
+          e.preventDefault()
+          e.stopImmediatePropagation()
+          this.autofillInputs()
         }, {once: true})
 
         this.trigger.addEventListener('click', () => {

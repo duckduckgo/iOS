@@ -26,6 +26,7 @@ class EmailSettingsViewController: UITableViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerTextView: UITextView!
+    @IBOutlet weak var signOutCellLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,8 @@ class EmailSettingsViewController: UITableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let theme = ThemeManager.shared.currentTheme
         cell.decorate(with: theme)
+        signOutCellLabel.textColor = theme.destructiveColor
+        
         return cell
     }
 }

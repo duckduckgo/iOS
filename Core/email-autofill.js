@@ -1827,8 +1827,8 @@ class DDGAutofill extends HTMLElement {
                 input.classList.remove('ddg-autofilled')
             })
         }
-
-        this.input.addEventListener('focus', () => {
+        this.input.addEventListener('mousedown', (e) => {
+           e.preventDefault()
             this.autofillInputs()
         }, {once: true})
 

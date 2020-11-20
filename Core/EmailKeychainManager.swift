@@ -58,9 +58,9 @@ private extension EmailKeychainManager {
      multiple accounts/tokens at the same time
     */
     enum EmailKeychainField: String {
-        case username = "email.duckduckgo.com.username"
-        case token = "email.duckduckgo.com.token"
-        case alias = "email.duckduckgo.com.alias"
+        case username = "com.duckduckgo.email.username"
+        case token = "com.duckduckgo.email.token"
+        case alias = "com.duckduckgo.email.alias"
     }
     
     static func getString(forField field: EmailKeychainField) -> String? {

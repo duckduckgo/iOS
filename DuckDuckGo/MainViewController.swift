@@ -384,12 +384,13 @@ class MainViewController: UIViewController {
 
     @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
-        currentTab?.tapLinkDestination = .currentTab
+        tabManager.tabControllerCache.forEach { $0.tapLinkDestination = .currentTab }
+
         if event?.modifierFlags.contains(.command) ?? false {
             if event?.modifierFlags.contains(.shift) ?? false {
-                currentTab?.tapLinkDestination = .newTab
+                tabManager.tabControllerCache.forEach { $0.tapLinkDestination = .newTab }
             } else {
-                currentTab?.tapLinkDestination = .backgroundTab
+                tabManager.tabControllerCache.forEach { $0.tapLinkDestination = .backgroundTab }
             }
         }
     }

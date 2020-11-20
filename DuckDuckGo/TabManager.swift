@@ -25,7 +25,7 @@ class TabManager {
 
     private(set) var model: TabsModel
     
-    private var tabControllerCache = [TabViewController]()
+    private(set) var tabControllerCache = [TabViewController]()
 
     private var previewsSource: TabPreviewsSource
     weak var delegate: TabDelegate?

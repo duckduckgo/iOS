@@ -100,6 +100,12 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
     private var trackersInfoWorkItem: DispatchWorkItem?
+
+    // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
+    private var woShownRecently = false
+
+    // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
+    private var fireWoFollowUp = false
     
     public var url: URL? {
         didSet {
@@ -201,8 +207,10 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         showMenuHighlighterIfNeeded()
+
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -543,6 +551,7 @@ class TabViewController: UIViewController {
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
             controller.spec = sender as? DaxDialogs.BrowsingSpec
+            controller.woShown = woShownRecently
             controller.delegate = self
             
             if controller.spec?.highlightAddressBar ?? false {
@@ -672,9 +681,16 @@ class TabViewController: UIViewController {
     }
     
     private func openExternally(url: URL) {
+        self.url = webView.url
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
-                self.view.showBottomToast(UserText.failedToOpenExternally)
+                self.view.window?.showBottomToast(UserText.failedToOpenExternally)
+            }
+
+            // just showing a blank tab at this point, so close it
+            if self.webView.url == nil {
+                self.delegate?.tabDidRequestClose(self)
             }
         }
     }
@@ -687,7 +703,13 @@ class TabViewController: UIViewController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.overrideUserInterfaceStyle()
-        alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+        alert.addAction(UIAlertAction(title: dontOpen, style: .cancel, handler: { _ in
+            if self.webView.url == nil {
+                self.delegate?.tabDidRequestClose(self)
+            } else {
+                self.url = self.webView.url
+            }
+        }))
         alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
             self.openExternally(url: url)
         }))
@@ -800,7 +822,10 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         os_log("webpageLoading started", log: generalLog, type: .debug)
-        
+
+        // Only fire when on the same page that the without trackers Dax Dialog was shown
+        self.fireWoFollowUp = false
+
         self.httpsForced = httpsForced
         delegate?.showBars()
 
@@ -916,6 +941,11 @@ extension TabViewController: WKNavigationDelegate {
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+
+            if spec == DaxDialogs.BrowsingSpec.withoutTrackers {
+                self?.woShownRecently = true
+                self?.fireWoFollowUp = true
+            }
         }
     }
     
@@ -965,20 +995,23 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
-        
-        // prevent loops where a site keeps redirecting to itself (e.g. bbc)
+
         if let url = url,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {
+            // prevent loops where a site keeps redirecting to itself (e.g. bbc)
             failingUrls.insert(domain)
+
+            // Reset the URL, e.g if opened externally
+            self.url = webView.url
         }
-        
+
         // wait before showing errors in case they recover automatically
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showErrorNow()
         }
     }
-    
+
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
@@ -1171,11 +1204,12 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func showErrorNow() {
-        guard let error = lastError else { return }
+        guard let error = lastError as NSError? else { return }
         hideProgressIndicator()
         ViewHighlighter.hideAll()
 
-        if !((error as NSError).failedUrl?.isCustomURLScheme() ?? false) {
+        if !(error.failedUrl?.isCustomURLScheme() ?? false) {
+            url = error.failedUrl
             showError(message: error.localizedDescription)
         }
 
@@ -1289,6 +1323,12 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
     }
     
     func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
+
+        if tracker.blocked && fireWoFollowUp {
+            fireWoFollowUp = false
+            Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
+        }
+
         siteRating?.trackerDetected(tracker)
         onSiteRatingChanged()
 

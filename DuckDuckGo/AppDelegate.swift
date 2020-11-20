@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        _ = UserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             _ = UserAgentManager.shared
@@ -61,8 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-
-        _ = UserAgentManager.shared
 
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()

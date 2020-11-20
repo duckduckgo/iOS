@@ -30,6 +30,8 @@ class EmailSettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let fontSize = fontSizeForHeaderView()
                 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
@@ -39,7 +41,7 @@ class EmailSettingsViewController: UITableViewController {
             attributes: [
                 NSAttributedString.Key.kern: -0.08,
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13)
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
             ])
         
         headerTextView.backgroundColor = .clear
@@ -84,6 +86,38 @@ class EmailSettingsViewController: UITableViewController {
         signOutCellLabel.textColor = theme.destructiveColor
         
         return cell
+    }
+    
+    private func fontSizeForHeaderView() -> CGFloat {
+        let contentSize = UIApplication.shared.preferredContentSizeCategory
+        switch contentSize {
+        case .extraSmall:
+            return 12
+        case .small:
+            return 12
+        case .medium:
+            return 12
+        case .large:
+            return 13
+        case .extraLarge:
+            return 15
+        case .extraExtraLarge:
+            return 17
+        case .extraExtraExtraLarge:
+            return 19
+        case .accessibilityMedium:
+            return 23
+        case .accessibilityLarge:
+            return 27
+        case .accessibilityExtraLarge:
+            return 33
+        case .accessibilityExtraExtraLarge:
+            return 38
+        case .accessibilityExtraExtraExtraLarge:
+            return 44
+        default:
+            return 13
+        }
     }
 }
 

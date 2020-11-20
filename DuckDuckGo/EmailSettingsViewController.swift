@@ -88,6 +88,7 @@ class EmailSettingsViewController: UITableViewController {
         return cell
     }
     
+    // swiftlint:disable cyclomatic_complexity
     private func fontSizeForHeaderView() -> CGFloat {
         let contentSize = UIApplication.shared.preferredContentSizeCategory
         switch contentSize {
@@ -119,6 +120,7 @@ class EmailSettingsViewController: UITableViewController {
             return 13
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 }
 
 extension EmailSettingsViewController: Themable {

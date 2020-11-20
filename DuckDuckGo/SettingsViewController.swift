@@ -99,6 +99,11 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
             return
         }
+        
+        if segue.destination is EmailSettingsViewController {
+            Pixel.fire(pixel: .emailSignoutSettingShown)
+            return
+        }
                 
         if let navController = segue.destination as? UINavigationController, navController.topViewController is FeedbackViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {

@@ -32,6 +32,8 @@ class DefaultFaviconSourcesProvider: FaviconSourcesProvider {
     enum ImageNames: String {
         
         case appleTouch = "apple-touch-icon.png"
+        case favicon = "faviconn.ico"
+        
         
     }
     
@@ -40,7 +42,10 @@ class DefaultFaviconSourcesProvider: FaviconSourcesProvider {
     }
     
     func additionalSources(forDomain domain: String) -> [URL] {
-        return [].compactMap { $0 }
+        return [
+            imageSource(forDomain: domain, imageName: ImageNames.favicon, secure: true),
+            imageSource(forDomain: domain, imageName: ImageNames.favicon, secure: false)
+        ].compactMap { $0 }
     }
     
     private func imageSource(forDomain domain: String, imageName: ImageNames, secure: Bool) -> URL? {

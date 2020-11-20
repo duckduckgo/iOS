@@ -142,9 +142,8 @@ class AppConfigurationFetch {
 
             let refreshStartDate = Date()
 
-            task.expirationHandler = {
-                backgroundFetchTaskExpirationCount += 1
-                task.setTaskCompleted(success: false)
+            let taskCompletion = { (success: Bool) in
+                task.setTaskCompleted(success: success)
                 scheduleBackgroundRefreshTask()
 
                 let refreshEndDate = Date()
@@ -152,14 +151,14 @@ class AppConfigurationFetch {
                 backgroundFetchTaskDuration += Int(difference)
             }
 
+            task.expirationHandler = {
+                backgroundFetchTaskExpirationCount += 1
+                taskCompletion(false)
+            }
+
             fetchQueue.async {
                 AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
-                task.setTaskCompleted(success: true)
-                scheduleBackgroundRefreshTask()
-
-                let refreshEndDate = Date()
-                let difference = refreshEndDate.timeIntervalSince(refreshStartDate)
-                backgroundFetchTaskDuration += Int(difference)
+                taskCompletion(true)
             }
         }
     }

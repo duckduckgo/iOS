@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = UserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            _ = UserAgentManager.shared
             Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true

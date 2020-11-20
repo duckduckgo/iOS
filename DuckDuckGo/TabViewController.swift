@@ -169,6 +169,12 @@ class TabViewController: UIViewController {
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
+    lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.delegate = self
+        return emailManager
+    }()
+    private var emailScript = EmailUserScript()
     private var debugScript = DebugUserScript()
     
     private var userScripts: [UserScript] = []
@@ -239,7 +245,8 @@ class TabViewController: UIViewController {
             contentBlockerScript,
             contentBlockerRulesScript,
             faviconScript,
-            fullScreenVideoScript
+            fullScreenVideoScript,
+            emailScript
         ]
         
         if #available(iOS 13, *) {
@@ -261,6 +268,8 @@ class TabViewController: UIViewController {
         contentBlockerScript.delegate = self
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
+        emailScript.webView = webView
+        emailScript.delegate = emailManager
     }
     
     func updateTabModel() {
@@ -1354,6 +1363,40 @@ extension TabViewController: FaviconUserScriptDelegate {
         tabModel.didUpdateFavicon()
     }
     
+}
+
+extension TabViewController: EmailManagerPresentationDelegate {
+    func emailManager(_ emailManager: EmailManager, didRequestPermissionToProvideAlias alias: String, completionHandler: @escaping (Bool) -> Void) {
+        
+        let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: UserText.emailAliasAlertMessage, preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle()
+        
+        let actionTitle =  String(format: UserText.emailAliasAlertConfirm, alias)
+        alert.addAction(title: actionTitle) {
+            Pixel.fire(pixel: .emailUserPressedUseAlias)
+            completionHandler(true)
+        }
+        alert.addAction(title: UserText.emailAliasAlertDecline) {
+            Pixel.fire(pixel: .emailUserPressedDoNotUse)
+            completionHandler(false)
+        }
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            //make sure the completion handler is called if the alert is dismissed by tapping outside the alert
+            alert.addAction(title: "", style: .cancel) {
+                Pixel.fire(pixel: .emailUserPressedDoNotUse)
+                completionHandler(false)
+            }
+        }
+        
+        alert.popoverPresentationController?.permittedArrowDirections = []
+        alert.popoverPresentationController?.delegate = self
+        let bounds = view.bounds
+        let point = Point(x: Int((bounds.maxX - bounds.minX) / 2.0), y: Int(bounds.maxY))
+        present(controller: alert, fromView: view, atPoint: point)
+        
+        Pixel.fire(pixel: .emailTooltipShown)
+    }
 }
 
 extension TabViewController: Themable {

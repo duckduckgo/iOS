@@ -53,6 +53,10 @@ extension TabViewController {
                 self.onShareAction(forLink: link, fromView: menu)
             }
             
+            if let action = buildUseNewDuckAddressAction(forLink: link) {
+                alert.addAction(action)
+            }
+            
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
             alert.addAction(title: title) { [weak self] in
                 self?.onToggleDesktopSiteAction(forUrl: link.url)
@@ -124,6 +128,23 @@ extension TabViewController {
         }
         action.accessibilityLabel = UserText.actionSaveFavorite
         return action
+    }
+    
+    private func buildUseNewDuckAddressAction(forLink link: Link) -> UIAlertAction? {
+        guard emailManager.isSignedIn else { return nil }
+        let title = UserText.emailBrowsingMenuUseNewDuckAddress
+        return UIAlertAction(title: title, style: .default) { [weak self] _ in
+            self?.emailManager.getAliasEmailIfNeededAndConsume { [weak self] alias, _ in
+                guard let alias = alias else {
+                    //we may want to communicate this failure to the user in the future
+                    return
+                }
+                let pasteBoard = UIPasteboard.general
+                pasteBoard.string = alias
+                Pixel.fire(pixel: .emailAliasCopiedToClipboard)
+                self?.view.showBottomToast(UserText.emailBrowsingMenuAlert)
+            }
+        }
     }
 
     func onShareAction(forLink link: Link, fromView view: UIView) {

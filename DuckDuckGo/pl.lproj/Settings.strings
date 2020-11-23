@@ -62,7 +62,7 @@
 "dj9-vh-Rig.headerTitle" = "Spersonalizuj";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Jeśli ustawiono Touch ID, Face ID lub hasło systemowe, zostaniesz poproszony(-a) o odblokowanie aplikacji podczas otwierania.";
+"dOj-jn-mSN.footerTitle" = "Jeśli ustawiono Touch ID, Face ID lub hasło systemowe, pojawi się prośba o odblokowanie aplikacji podczas otwierania.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Prywatność i bezpieczeństwo";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Domyślny";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Prywatność — jeszcze prostsza. ";
+"gji-Fs-EET.text" = "Prywatność – jeszcze prostsza. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Motyw";
@@ -167,13 +167,13 @@
 "xof-5k-PkI.text" = "Ustaw jako domyślną przeglądarkę";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Bezpieczne strony internetowe";
+"xUX-nF-HOl.title" = "Bezpieczne witryny internetowe";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Klawiatura";
 
 /* Class = "UILabel"; text = "Add DuckDuckGo to your dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "Dodaj DuckDuckGo do stacji dokującej";
+"yvj-LL-MiR.text" = "Dodaj DuckDuckGo do Docka";
 
 /* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
 "zMK-jc-4bJ.headerTitle" = "Pomoc";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Nowa karta";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Te niezabezpieczone miejsca nie zostaną \n wzmocnione poprzez ochronę prywatności.";
+"zvh-2e-Wmz.text" = "Te niezabezpieczone miejsca nie zostaną wzmocnione poprzez ochronę prywatności.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Ekran główny";

@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "In neuem Tab öffnen";
 
 /* Open action */
-"action.title.open" = "Offen";
+"action.title.open" = "Öffnen";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Einfügen & los";
@@ -44,7 +44,7 @@
 "action.title.refresh" = "Aktualisieren";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Fehlerhafte Website melden";
+"action.title.reportBrokenSite" = "Fehlerhafte Seite melden";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Desktop-Seite neu laden";
@@ -62,10 +62,10 @@
 "action.title.save.favorite" = "Zu Favoriten hinzufügen";
 
 /* Settings action */
-"action.title.settings" = "Einstellungen...";
+"action.title.settings" = "Einstellungen …";
 
 /* Share action */
-"action.title.share" = "Teilen...";
+"action.title.share" = "Teilen …";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Bestehende Lesezeichen werden nicht kopiert.";
@@ -146,7 +146,7 @@
 "brokensite.category.other" = "Etwas anderes";
 
 /* Broken Site Category */
-"brokensite.category.paywall" = "Die Seite hat mich aufgefordert, zu deaktivieren";
+"brokensite.category.paywall" = "Die Seite hat mich aufgefordert zu deaktivieren";
 
 /* Broken Site Category */
 "brokensite.category.unsupported" = "Der Browser ist nicht kompatibel";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video wurde nicht abgespielt";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Beschreiben, was passiert ist";
+"brokensite.sectionTitle" = "BESCHREIBE, WAS PASSIERT IST";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Tipps für immer ausblenden";
@@ -164,13 +164,13 @@
 "dax.hide.cancel" = "Abbrechen";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Es gibt nur wenige, und wir haben versucht, sie informativ zu gestalten.";
+"dax.hide.message" = "Es gibt nur wenige und wir haben versucht, sie informativ zu gestalten.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "Verbleibende Tipps ausblenden?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Ihre DuckDuckGo-Suchanfragen sind anonym und ich speichere niemals Ihren Suchverlauf. Nie. 🙌";
+"dax.onboarding.browsing.after.search" = "Deine DuckDuckGo-Suchanfragen sind anonym und ich speichere niemals deinen Suchverlauf. Nie. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
@@ -182,19 +182,19 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Schlag ein!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* hat versucht, dich hier zu tracken.\n\nIch habe sie blockiert.\n\n☝️Du kannst auf der URL-Leiste sehen, wer dich beim Besuch einer neuen Website tracken will.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* hat versucht, dich hier zu tracken.\n\nIch habe sie blockiert.\n\n☝️ Du kannst in der URL-Leiste sehen, wer dich beim Besuch einer neuen Website tracken will.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Schlag ein!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
-"dax.onboarding.browsing.site.is.major.tracker" = "Warnung! Ich kann nicht verhindern, dass für %1$@ deine Aktivität auf %2$@ sichtbar ist.\n\nDu kannst aber mit mir browsen, wenn ich dafür sorgen soll, dass %1$@ insgesamt weniger über dich erfährt – indem ich die entsprechenden Tracker auf vielen anderen Websites blockiere.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Warnung! Ich kann nicht verhindern, dass für %1$@ deine Aktivität auf %2$@ sichtbar ist.\n\nDu kannst aber mit mir browsen, wenn ich dafür sorgen soll, dass %1$@ insgesamt weniger über dich erfährt – indem ich die entsprechenden Tracker auf vielen anderen Websites blockiere.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Verstanden";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Warnung! Da %2$@ %1$@ gehört, kann ich nicht verhindern, dass deine Aktivität hier für sie sichtbar ist.Du kannst aber mit mir browsen, wenn ich dafür sorgen soll, dass %2$@ insgesamt weniger über dich erfährt – indem ich die entsprechende Tracker auf vielen anderen Websites blockiere.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Warnung! Da %2$@ %1$@ gehört, kann ich nicht verhindern, dass deine Aktivität hier für sie sichtbar ist.\n\nDu kannst aber mit mir browsen, wenn ich dafür sorgen soll, dass %2$@ insgesamt weniger über dich erfährt – indem ich die entsprechenden Tracker auf vielen anderen Websites blockiere.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Verstanden";
@@ -206,19 +206,19 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Verstanden";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Mit nur einem Klick auf Ihre Lieblingswebsites zugreifen!\n\nGehen Sie auf eine Website, die Sie oft besuchen. Tippen Sie dann auf das Symbol „⋯“ und wählen Sie *Zu Favoriten hinzufügen* aus.";
+"dax.onboarding.home.add.favorite" = "Greife mit nur einem Klick auf deine Lieblingswebsites zu!\n\nGehe auf eine Website, die du oft besuchst. Tippe dann auf das Symbol „⋯“ und wähle *Zu Favoriten hinzufügen* aus.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Mit nur einem Klick auf Ihre Lieblingswebsites zugreifen! Gehen Sie auf eine Ihrer Lieblingswebsites. Tippen Sie dann auf die Schaltfläche zum Öffnen des Menüs und wählen Sie Zu Favoriten hinzufügen aus.";
+"dax.onboarding.home.add.favorite.accessible" = "Greife mit nur einem Klick auf deine Lieblingswebsites zu! Gehe auf eine deiner Lieblingswebsites. Tippe dann auf die Schaltfläche zum Öffnen des Menüs und wähle „Zu Favoriten hinzufügen“ aus.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.home.initial" = "Versuche als nächstes, eine deiner Lieblingsseiten zu besuchen.\n\nIch blockiere Tracker, damit sie dich nicht ausspionieren können. Ich werde auch die Sicherheit deiner Verbindung verbessern, wenn das möglich ist. 🔒";
+"dax.onboarding.home.initial" = "Versuche als Nächstes, eine deiner Lieblingsseiten zu besuchen.\n\nIch blockiere Tracker, damit sie dich nicht ausspionieren können. Ich werde auch die Sicherheit deiner Verbindung verbessern, wenn das möglich ist. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Gut gemacht!\n\nHinweis: Jedes Mal, wenn du mit mir browst, verliert eine gruselige Anzeige seinen Schrecken. 👍";
+"dax.onboarding.home.subsequent" = "Gut gemacht!\n\nHinweis: Jedes Mal, wenn du mit mir browst, verliert eine gruselige Anzeige ihren Schrecken. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Das Internet kann ein bisschen gruselig sein.\n\nKeine Sorge! Privat zu suchen und zu browsen ist einfacher als du denkst.";
+"dax.onboarding.message" = "Das Internet kann ein bisschen gruselig sein.\n\nKeine Sorge! Privat zu suchen und zu browsen ist einfacher, als du denkst.";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Deaktiviert";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Aktiviert";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Ihre Daten sollten nicht zum Verkauf stehen. Und bei DuckDuckGo vertreten wir eben diese Meinung. Aktivieren Sie die Einstellung „Global Privacy Control“ (GPC) und wir teilen Websites Folgendes mit:\n\n• Persönliche Daten nicht verkaufen.\n• Persönliche Daten wenn möglich nicht an andere Unternehmen weiterleiten.";
+"donotsell.info.headertext" = "Deine Daten sollten nicht zum Verkauf stehen. Und bei DuckDuckGo vertreten wir ebendiese Meinung. Aktiviere die Einstellung „Global Privacy Control“ (GPC) und wir teilen Websites Folgendes mit:\n\n• Persönliche Daten nicht verkaufen.\n• Persönliche Daten wenn möglich nicht an andere Unternehmen weiterleiten.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Bisher keine Lesezeichen";
 
 /* Empty list state placholder */
 "empty.favorites" = "Bisher keine Favoriten";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Keine Treffer gefunden";
 
 /* No comment provided by engineer. */
 "favorite" = "Favorit";
@@ -275,7 +278,7 @@
 "feedback.browserFeatures.navigation" = "Vorwärts, rückwärts navigieren und/oder aktualisieren";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.other" = "Keine davon";
+"feedback.browserFeatures.other" = "Nichts davon";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.tabs" = "Tabs erstellen und verwalten";
@@ -299,7 +302,7 @@
 "feedback.customization.homeScreen" = "Konfiguration des Startbildschirms";
 
 /* No comment provided by engineer. */
-"feedback.customization.other" = "Keine davon";
+"feedback.customization.other" = "Nichts davon";
 
 /* No comment provided by engineer. */
 "feedback.customization.tabs" = "Wie Tabs angezeigt werden";
@@ -335,7 +338,7 @@
 "feedback.ddgSearch.loadTime" = "Schnellere Ladezeit";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.other" = "Keine davon";
+"feedback.ddgSearch.other" = "Nichts davon";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.technical" = "Programmierung/technische Suche";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Teile uns bitte mit, was wir verbessern können";
 
 /* Confirmation button */
-"feedback.form.submit" = "FEEDBACK ABSENDEN";
+"feedback.form.submit" = "Feedback absenden";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Bitte sei so genau wie möglich";
@@ -362,7 +365,7 @@
 "feedback.other.description" = "Andere Probleme";
 
 /* No comment provided by engineer. */
-"feedback.other.entry" = "Keine davon";
+"feedback.other.entry" = "Nichts davon";
 
 /* No comment provided by engineer. */
 "feedback.performance.caption" = "Welches Problem tritt auf?";
@@ -377,7 +380,7 @@
 "feedback.performance.entry" = "Die App ist langsam, fehlerhaft oder stürzt ab";
 
 /* No comment provided by engineer. */
-"feedback.performance.other" = "Keine davon";
+"feedback.performance.other" = "Nichts davon";
 
 /* No comment provided by engineer. */
 "feedback.performance.playback" = "Video- oder Medienwiedergabefehler";
@@ -398,7 +401,7 @@
 "feedback.positive.header" = "Das freut uns!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "Nein danke. Ich bin fertig";
+"feedback.positive.noThanks" = "Nein danke. Ich bin fertig.";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Weitere Informationen teilen";
@@ -443,7 +446,7 @@
 "home.message.header" = "Stelle DuckDuckGo als Standard-Browser ein.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Öffnen Sie Links jederzeit sicher und ohne Sorge.";
+"home.message.subheader" = "Öffne Links jederzeit sicher und ohne Sorge.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NEU BEI IOS 14";
@@ -452,7 +455,7 @@
 "home.row.onboarding.header" = "Füge DuckDuckGo zu deinem Startbildschirm hinzu!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Füge DuckDuckGo für einfachen Zugang zu deinem Dock für hinzu.";
+"home.row.reminder.message" = "Füge DuckDuckGo für einfachen Zugang zu deinem Dock hinzu.";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "DuckDuckGo zur Schnellstartleiste hinzufügen";
@@ -479,7 +482,7 @@
 "keyCommandClose" = "Schließen";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Alle tab";
+"keyCommandCloseTab" = "Tab schließen";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Auf Seite suchen";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Alle Tabs anzeigen";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "WILLKOMMEN BEI DUCKDUCKGO!";
+"launchscreenWelcomeMessage" = "Willkommen bei\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Bearbeiten";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Widget hinzufügen";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGo ist jetzt noch benutzerfreundlicher.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Vielleicht später";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Fortsetzen";
@@ -551,7 +563,7 @@
 "onboardingStartBrowsing" = "Mit dem Browsen beginnen";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "WILLKOMMEN BEI DUCKDUCKGO!";
+"onboardingWelcomeHeader" = "Willkommen bei DuckDuckGo!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Tut uns leid, keine App kann diesen Link verarbeiten.";
@@ -566,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Möchtest du %@ feuerfest machen?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Feuersichere Website";
+"preserveLogins.menu.confirm" = "Feuerfeste Website";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Jetzt nicht";
@@ -620,7 +632,7 @@
 "privacy.protection.encryption.issuer" = "Herausgeber";
 
 /* Part of certificate info */
-"privacy.protection.encryption.key" = "Public Key";
+"privacy.protection.encryption.key" = "Öffentlicher Schlüssel";
 
 /* Part of certificate info */
 "privacy.protection.encryption.key.size" = "Schlüssellänge";
@@ -638,7 +650,7 @@
 "privacy.protection.encryption.permanent" = "Dauerhaft";
 
 /* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Public Key";
+"privacy.protection.encryption.public.key" = "Öffentlicher Schlüssel";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.standard.message" = "Eine verschlüsselte Verbindung verhindert, dass persönliche Daten abgehört werden, die du an eine Website sendest.";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "VON $1 AUF $2 VERBESSERT";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Datenschutzstufe";
+"privacy.protection.main.grade" = "DATENSCHUTZ-STUFE";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -740,7 +752,7 @@
 "privacy.protection.tos.unknown" = "Unbekannte Datenschutzpraktiken";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Tracker-Netzwerke fassen deinen Browserverlauf in einem Datenprofil über dich zusammen. Große Tracker-Netzwerke sind schädlicher, da sie dich weiter im Internet verfolgen und gezielt ansprechen können.";
+"privacy.protection.tracker.networks.info" = "Tracker-Netzwerke fassen deinen Browserverlauf in einem Datenprofil über dich zusammen. Große Tracker-Netzwerke sind schädlicher, da sie dich gezielter und in mehr Bereichen des Internets tracken können.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
@@ -794,7 +806,7 @@
 "siteFeedback.domainInfo" = "Domain der fehlerhaften Seite:";
 
 /* No comment provided by engineer. */
-"siteFeedback.messagePlaceholder" = "Welche Inhalte oder Funktion sind fehlerhaft?";
+"siteFeedback.messagePlaceholder" = "Welche Inhalte oder Funktionen sind fehlerhaft?";
 
 /* No comment provided by engineer. */
 "siteFeedback.subtitle" = "Berichte über fehlerhafte Seiten sind völlig anonym und helfen uns, die App zu verbessern.";
@@ -854,7 +866,7 @@
 "web.url.save.bookmark.exists" = "Lesezeichen wurde bereits gespeichert";
 
 /* Floating message indicating failure */
-"web.url.save.bookmark.none" = "Keine Website als Lesezeichen zu markieren";
+"web.url.save.bookmark.none" = "Keine Webseite zum Markieren als Lesezeichen vorhanden";
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit wurde gespeichert";

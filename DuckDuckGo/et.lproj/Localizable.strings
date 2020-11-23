@@ -11,10 +11,10 @@
 "action.title.copy" = "Kopeeri";
 
 /* Disable protection action */
-"action.title.disable.protection" = "Keela Eraelu puutumatuse kaitse";
+"action.title.disable.protection" = "Keela privaatsuse kaitse";
 
 /* Enable protection action */
-"action.title.enable.protection" = "Luba Eraelu puutumatuse kaitse";
+"action.title.enable.protection" = "Luba privaatsuse kaitse";
 
 /* No comment provided by engineer. */
 "action.title.forgetAll" = "Sulge vahekaardid ja kustuta andmed";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videot ei esitatud";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Kirjeldage toimunut";
+"brokensite.sectionTitle" = "KIRJELDAGE TOIMUNUT";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Peida näpunäited igaveseks";
@@ -188,13 +188,13 @@
 "dax.onboarding.browsing.one.tracker.cta" = "Viska viis!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
-"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! Ma ei saa takistada %1$@ nägemast sinu tegevust %2$@.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälitajad paljudel teistel lehtedel.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! Ma ei saa takistada %1$@ nägemast sinu tegevust %2$@.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %1$@ sinust üldiselt teab, blokeerides tema jälitajad paljudel teistel lehtedel.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Sain aru";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Ettevaatust! Kuna %2$@ on %1$@ omanik, ei saa ma takistada teda jälgimast sinu tegevust siin.Kuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälgijad paljudel teistel lehtedel.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Ettevaatust! Kuna %2$@ on %1$@ omanik, ei saa ma takistada teda jälgimast sinu tegevust siin.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälgijad paljudel teistel lehtedel.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Sain aru";
@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "Järgmisena proovi külastada ühte oma lemmiksaitidest!\n\nMina aga blokeerin jälgijaid, et nad ei saaks sind luurata. Võimaluse korral parandan ka sinu ühenduse turvalisust. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Said selle!\n\nPea meeles: iga kord kui minuga sirvid, kaotab jube reklaam oma tiivad. 👍";
+"dax.onboarding.home.subsequent" = "Käpas! <br/><br/>Pidage meeles: iga kord, kui minuga sirvite, kaotab jube reklaam tiivad. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet võib olla üsna jube.\n\nÄra muretse! Privaatselt otsimine ja sirvimine on lihtsam kui arvad.";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Lemmikuid pole veel";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Ühtegi vastet ei leitud";
 
 /* No comment provided by engineer. */
 "favorite" = "Lemmik";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Ütle meile, mida saaksime parandada.";
 
 /* Confirmation button */
-"feedback.form.submit" = "SAADA TAGASISIDE";
+"feedback.form.submit" = "Saatke tagasisidet";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Palun olge võimalikult konkreetne";
@@ -437,16 +440,16 @@
 "findinpage.title" = "Otsi lehel";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Määrake vaikebrauseriks";
+"home.message.buttonText" = "Määra vaikebrauseriks";
 
 /* No comment provided by engineer. */
 "home.message.header" = "Muutke DuckDuckGo oma vaikimisi brauseriks.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Avage linke igal ajal, rahuliku meelega.";
+"home.message.subheader" = "Ava linke igal ajal, rahuliku meelega.";
 
 /* No comment provided by engineer. */
-"home.message.topText" = "UUS IOS 14-s";
+"home.message.topText" = "UUS IOS 14-S";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisa DuckDuckGo oma avaekraanile!";
@@ -515,7 +518,7 @@
 "keyCommandPrint" = "Prindi";
 
 /* No comment provided by engineer. */
-"keyCommandReload" = "Laadige uuesti";
+"keyCommandReload" = "Laadi uuesti";
 
 /* No comment provided by engineer. */
 "keyCommandSelect" = "Vali";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Kuva kõik vahekaardid";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Tere tulemast DuckDuckGo kasutajaks!";
+"launchscreenWelcomeMessage" = "Tere tulemast\nDuckDuckGo kasutajaks!";
 
 /* Edit button */
 "navigation.title.edit" = "Redigeeri";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Lisage vidin";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGo kasutamine on nüüd lihtsam.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Võib-olla hiljem";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Jätka";
@@ -554,7 +566,7 @@
 "onboardingWelcomeHeader" = "Tere tulemast DuckDuckGo kasutajaks!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Vabandus, mitte ükski rakendus ei saa seda linki hallata.";
+"open.externally.failed" = "Vabandust, mitte ükski rakendus ei saa seda linki hallata.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Veebisaidid kasutavad küpsiseid, et hoida sind sisse logitud. Kui teed saidi tulekindlaks, ei kustutata küpsiseid ja sa jääd sisse logituks isegi pärast tulenupu kasutamist.";
@@ -578,7 +590,7 @@
 "preserveLogins.remove.all.ok" = "OK";
 
 /* Ask to Fireproof Websites */
-"preserveLogins.switch.title" = "Palu tulekindlaid veebisaite";
+"preserveLogins.switch.title" = "Küsi tulekindlaid veebisaite";
 
 /* Paramter is a string - domain name */
 "preserveLogins.toast" = "%@ on nüüd tulekindel! Eemaldamiseks mine sätetesse.";
@@ -686,13 +698,13 @@
 "privacy.protection.encryption.yes" = "Jah";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "Saidi kaitse on keelatud";
+"privacy.protection.main.disabled" = "SAIDI KAITSE ON KEELATUD";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
 "privacy.protection.main.enhanced" = "ÜLENDATUD $1-lt $2-le";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Privaatsusaste";
+"privacy.protection.main.grade" = "PRIVAATSUSASTE";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -800,7 +812,7 @@
 "siteFeedback.subtitle" = "Mittetoimivast saidist teatamine on täiesti anonüümne ja aitab meil parandada rakendust!";
 
 /* This is a form title */
-"siteFeedback.title" = "Teatage katkisest saidist";
+"siteFeedback.title" = "Teata katkisest saidist";
 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Milline veebisait on katki?";

@@ -8,7 +8,7 @@
 "46v-cB-2YV.title" = "Wyślij opinię";
 
 /* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
-"A1s-GY-hbq.normalTitle" = "Nie, dziękuję! Skończyłem(-am).";
+"A1s-GY-hbq.normalTitle" = "Nie, dziękuję, skończyłem(-am)";
 
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
 "cZl-qB-kSL.title" = "Zamknij";
@@ -29,7 +29,7 @@
 "JF8-Ow-zXL.title" = "Wstecz";
 
 /* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
-"jr6-Al-4fr.title" = "Wyślij";
+"jr6-Al-4fr.title" = "Prześlij";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
 "lsB-Kq-U8p.normalTitle" = "PRZEKAŻ OPINIĘ";
@@ -53,7 +53,7 @@
 "Rvx-dM-etJ.title" = "Wyślij opinię";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Która strona nie działa poprawnie?”";
+"TMj-NM-j3b.placeholder" = "Która strona nie działa poprawnie?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
 "WjT-HM-yim.title" = "Zgłoś uszkodzoną witrynę";

@@ -86,7 +86,7 @@
 "eMH-uv-Kms.title" = "Icono de la aplicación";
 
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Temas";
+"f1O-6u-LFY.text" = "Tema";
 
 /* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Salir de la aplicación";
@@ -110,13 +110,13 @@
 "gji-Fs-EET.text" = "La privacidad, simplificada. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Temas";
+"gS2-mg-l7R.title" = "Tema";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Vistas previas con pulsación larga";
 
 /* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
-"Hu1-5i-vjL.text" = "Protección de Privacidad habilitada para todos los sitios.";
+"Hu1-5i-vjL.text" = "Todavía no hay sitios desprotegidos";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icono";
@@ -134,7 +134,7 @@
 "OHV-qC-tL9.title" = "Sitios no protegidos";
 
 /* Class = "UILabel"; text = "About"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Sobre";
+"oM7-1o-9oY.text" = "Acerca de";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Etiqueta";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Acción";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Mostrar sugerencias de autocompletado";
+"U8i-cQ-5WW.text" = "Sugerencias de autocompletado";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Eliminar todos los sitios web a prueba de fuego";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Nueva pestaña";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Estas páginas desprotegidas no se verán\nmejoradas por la protección de privacidad.";
+"zvh-2e-Wmz.text" = "La protección de privacidad está deshabilitada para estos sitios desprotegidos.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Pantalla de inicio";

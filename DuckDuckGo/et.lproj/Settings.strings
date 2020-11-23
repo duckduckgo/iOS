@@ -2,7 +2,7 @@
 "0DQ-yq-UuT.text" = "Tulekindlad veebisaidid";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Keela linkide automaatse avamise takistamiseks teistes installitud rakendustes.";
+"0gU-rZ-pRc.footerTitle" = "Keela, et takistada linkide automaatset avanemist teistes installitud rakendustes.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Versioon";
@@ -14,7 +14,7 @@
 "3WZ-Fi-HIH.text" = "Kustuta ainult vahekaardid";
 
 /* Class = "UILabel"; text = "App exit, inactive for 30min"; ObjectID = "5Yd-7i-bey"; */
-"5Yd-7i-bey.text" = "Rakendusest väljumisel, 30-minutilise passiivsuse järel";
+"5Yd-7i-bey.text" = "Rakendusest väljumine, 30-minutilise passiivsuse järel";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Kustuta andmed automaatselt";
@@ -23,7 +23,7 @@
 "7nt-uS-sOh.normalTitle" = "Lisateave: duckduckgo.com/about";
 
 /* Class = "UILabel"; text = "App exit, inactive for 60min"; ObjectID = "9EC-lx-77p"; */
-"9EC-lx-77p.text" = "Rakendusest väljumisel, 60-minutilise passiivsuse järel";
+"9EC-lx-77p.text" = "Rakendusest väljumine, 60-minutilise passiivsuse järel";
 
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Kustuta vahekaardid ja andmed";
@@ -50,7 +50,7 @@
 "cW7-OM-2oW.text" = "Üleilmne privaatsuskontroll (Global Privacy Control (GPC))";
 
 /* Class = "UILabel"; text = "App exit, inactive for 15min"; ObjectID = "D0R-jp-UY8"; */
-"D0R-jp-UY8.text" = "Rakendusest väljumisel, 15-minutilise passiivsuse järel";
+"D0R-jp-UY8.text" = "Rakendusest väljumine 15-minutilise passiivsuse järel";
 
 /* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
 "d5n-vG-8kF.text" = "10.0.1 (Versioon 10005)";
@@ -62,25 +62,25 @@
 "dj9-vh-Rig.headerTitle" = "Kohanda";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Kui on määratud Touch ID, Face ID või süsteemi parool, palutakse sul vabastada rakendus avamisel.";
+"dOj-jn-mSN.footerTitle" = "Kui on määratud Touch ID, Face ID või süsteemi pääsukood, palutakse teil avamisel rakendus avada.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Privaatsus ja turvalisus";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
-"dud-qo-Ces.text" = "Label";
+"dud-qo-Ces.text" = "Silt";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Seaded";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
-"EIq-Ev-nfj.text" = "Label";
+"EIq-Ev-nfj.text" = "Silt";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
 "ekF-SJ-PAQ.text" = "Kustuta andmed automaatselt";
 
 /* Class = "UILabel"; text = "App exit, inactive for 5min"; ObjectID = "ElX-yE-4PX"; */
-"ElX-yE-4PX.text" = "Rakendusest väljumisel, 15-minutilise passiivsuse järel";
+"ElX-yE-4PX.text" = "Rakendusest väljumine, 5 minutilise passiivsuse järel";
 
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
 "eMH-uv-Kms.title" = "Rakenduse ikoon";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Vaikimisi";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Privaatsus, lihtsalt. ";
+"gji-Fs-EET.text" = "Privaatsus, lihtsustatud. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Teema";
@@ -158,7 +158,7 @@
 "vPz-uO-6gB.text" = "Üleilmne privaatsuskontroll (Global Privacy Control (GPC))";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
-"vSJ-YJ-bBs.footerTitle" = "Rakendusest väljumise määratlemiseks pühi rakendust selle sulgemiseks tegevusetuse ajal, kui rakendus on taustal.";
+"vSJ-YJ-bBs.footerTitle" = "Kui rakendus töötab taustal, siis selle sulgemiseks tegevusetuse ajal määratletakse rakenduse pühkimine.";
 
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Soovitud ajastus";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Uus vaheleht";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Nendele kaitseta saitidele ei laiene\ntäiustatud eraelu puutumatuse kaitse.";
+"zvh-2e-Wmz.text" = "Nendele kaitseta saitidele ei laiene Privaatsuse kaitse.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Avaekraan";

@@ -32,7 +32,7 @@
 "jr6-Al-4fr.title" = "Trimite";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "TRIMITERE FEEDBACK";
+"lsB-Kq-U8p.normalTitle" = "Trimite feedback";
 
 /* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
 "lY6-5c-iu4.title" = "Trimite feedback";
@@ -53,10 +53,10 @@
 "Rvx-dM-etJ.title" = "Trimite feedback";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Ce site este defect?”";
+"TMj-NM-j3b.placeholder" = "Ce site este defect?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Raportați Site-ul Distrus";
+"WjT-HM-yim.title" = "Raportează site-ul defect";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Motivul pentru care site-ul nu funcționează";

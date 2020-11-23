@@ -44,7 +44,7 @@
 "action.title.refresh" = "Uppdatera";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Rapportera bruten webbplats";
+"action.title.reportBrokenSite" = "Rapportera skadad webbplats";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Begär stationär datorwebbplats";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videon spelades inte upp";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Berätta vad som hände:";
+"brokensite.sectionTitle" = "BESKRIV VAD SOM HÄNDE";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Dölj tipsen för alltid";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Aktiverad";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Dina uppgifter ska inte vara till salu. Vi på DuckDuckGo håller med. Aktivera inställningen \"Global Privacy Control\" (GPC) så meddelar vi webbplatser att du föredrar att:<br/><br/> • Dina personuppgifter inte ska säljas.<br/>• Delning av dina personuppgifter med andra företag ska begränsas.";
+"donotsell.info.headertext" = "Dina uppgifter ska inte vara till salu. Vi på DuckDuckGo håller med. Aktivera inställningen Global Privacy Control (GPC) så meddelar vi webbplatser att du föredrar att:\n\n • Dina personuppgifter inte ska säljas.\n• Delning av dina personuppgifter med andra företag ska begränsas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Inga bokmärken ännu";
 
 /* Empty list state placholder */
 "empty.favorites" = "Inga favoriter ännu";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Inga träffar hittades";
 
 /* No comment provided by engineer. */
 "favorite" = "Favorit";
@@ -290,7 +293,7 @@
 "feedback.customization.caption" = "Vilket anpassningsalternativ kan vi lägga till eller förbättra?";
 
 /* No comment provided by engineer. */
-"feedback.customization.description" = "Problem med personanpassningsfunktion";
+"feedback.customization.description" = "Anpassningsproblem";
 
 /* No comment provided by engineer. */
 "feedback.customization.entry" = "Det finns inte tillräckligt många sätt att anpassa appen på";
@@ -314,7 +317,7 @@
 "feedback.customization.whenIsCleared" = "När data rensas";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.autocomplete" = "Bättre autoslutförfunktion";
+"feedback.ddgSearch.autocomplete" = "Förbättring av Komplettera automatiskt";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.caption" = "Vilken sökfunktion kan vi lägga till eller förbättra?";
@@ -329,7 +332,7 @@
 "feedback.ddgSearch.languageOrRegion" = "Sökning på ett specifikt språk eller i en viss region";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.layout" = "Layouten ska vara mer lik Googles";
+"feedback.ddgSearch.layout" = "Layouten borde vara mer lik Googles";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.loadTime" = "Snabbare laddningstid";
@@ -341,10 +344,10 @@
 "feedback.ddgSearch.technical" = "Programmering/teknisk sökning";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Berätta vad vi kan förbättra.";
+"feedback.form.caption" = "Berätta vad vi kan förbättra";
 
 /* Confirmation button */
-"feedback.form.submit" = "SKICKA ÅTERKOPPLING";
+"feedback.form.submit" = "Skicka återkoppling";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Beskriv så noggrant som möjligt";
@@ -443,7 +446,7 @@
 "home.message.header" = "Gör DuckDuckGo till din standardwebbläsare.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Öppna länkar utan att behöva oroa dig, varje gång.";
+"home.message.subheader" = "Sluta oroa dig varje gång du öppnar länkar.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NYTT I IOS 14";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Visa alla flikar";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "VÄLKOMMEN TILL DUCKDUCKGO";
+"launchscreenWelcomeMessage" = "Välkommen till\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Redigera";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Lägg till widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Nu är det ännu enklare att använda DuckDuckGo.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Kanske senare";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Fortsätt";
@@ -551,7 +563,7 @@
 "onboardingStartBrowsing" = "Börja bläddra";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "VÄLKOMMEN TILL DUCKDUCKGO";
+"onboardingWelcomeHeader" = "Välkommen till DuckDuckGo!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Tyvärr kan ingen app hantera denna länk.";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "FÖRBÄTTRAD FRÅN $1 TILL $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Sekretessklass";
+"privacy.protection.main.grade" = "SEKRETESSKLASS";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -773,7 +785,7 @@
 "section.title.favorites" = "Favoriter";
 
 /* No comment provided by engineer. */
-"settings.about.text" = "På DuckDuckGo sätter vi en ny standard för förtroende på nätet.\n\nDuckDuckGo Privacy Browser tillhandahåller alla de grundläggande sekretesstjänster du behöver för att skydda dig själv när du söker och surfar på nätet, inklusive blockering av spårare, smartare kryptering och DuckDuckGo privat sökning.\n\nInternet borde ju trots allt inte kännas obehagligt och att få den sekretess du förtjänar online bör vara lika enkelt som att stänga persiennerna.";
+"settings.about.text" = "På DuckDuckGo sätter vi en ny standard för förtroende på nätet.\n\nDuckDuckGo Privacy Browser tillhandahåller alla de grundläggande sekretesstjänster du behöver för att skydda dig själv när du söker och surfar på nätet, inklusive blockering av spårare, smartare kryptering och DuckDuckGo privat sökning.\n\nInternet borde ju trots allt inte kännas så skrämmande och det bör vara lika enkelt att få det integritetsskydd du förtjänar som det är att dra ner rullgardinen.";
 
 /* No comment provided by engineer. */
 "settings.tutorial.info" = "Andra sökmotorer spårar dina sökningar även när du bytt till privat surfningsläge. Vi spårar dig inte. Punkt.";

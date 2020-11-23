@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videota ei toistettu";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Kuvaile mitä tapahtui";
+"brokensite.sectionTitle" = "KUVAILE MITÄ TAPAHTUI";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Piilota vinkit ikuisesti";
@@ -194,13 +194,13 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Selvä";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Huomio! Koska %2$@ omistaa palvelun %1$@, en voi estää heitä näkemästä, mitä teet täällä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %2$@ saa tietää sinusta estämällä heidän seurantansa monilla muilla sivustoilla.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Huomio! Koska %2$@ omistaa palvelun %1$@, en voi estää heitä näkemästä, mitä teet täällä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %2$@ saa tietää sinusta, estämällä heidän seurantansa monilla muilla sivustoilla.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Selvä";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers" = "Kun napautat ja selaat, estän ikävät seurantaohjelmat.\nEli jatka vain selaamista!";
+"dax.onboarding.browsing.without.trackers" = "Kun napautat ja selaat, estän ikävät seurantaohjelmat.\n\nEli jatka vain selaamista!";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Selvä";
@@ -218,7 +218,7 @@
 "dax.onboarding.home.subsequent" = "Hyvin menee!\n\nMuista, että joka kerta kun käytät minua selaamiseen, rasittavat mainokset katoavat. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Internet voi olla pelottava paikka.<br/><br/>Mutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
+"dax.onboarding.message" = "Internet voi olla pelottava paikka.\n\nMutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Pois käytöstä";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Ei vielä suosikkeja";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Ei hakutuloksia";
 
 /* No comment provided by engineer. */
 "favorite" = "Suosikki";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Kerro meille, mitä voimme parantaa";
 
 /* Confirmation button */
-"feedback.form.submit" = "LÄHETÄ PALAUTE";
+"feedback.form.submit" = "Lähetä palaute";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Kerro mahdollisimman tarkasti";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Näytä kaikki välilehdet";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Tervetuloa DuckDuckGo-sovellukseen!";
+"launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
 
 /* Edit button */
 "navigation.title.edit" = "Muokkaa";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Lisää widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGon käyttö on nyt helpompaa.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Ehkä myöhemmin";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Jatka";
@@ -632,7 +644,7 @@
 "privacy.protection.encryption.mixed.message" = "Tällä sivustolla on yhdistetty salaus, sillä osa sisällöstä tarjotaan salaamattomalla yhteydellä.";
 
 /* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "ei";
+"privacy.protection.encryption.no" = "Ei";
 
 /* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
 "privacy.protection.encryption.permanent" = "Pysyvä";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "PARANNETTU ARVOSTA $1 ARVOON $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Tietosuoja-arvosana";
+"privacy.protection.main.grade" = "TIETOSUOJA-ARVOSANA";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -749,7 +761,7 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "ei";
+"prompt.custom.url.scheme.dontopen" = "Ei";
 
 /* Confirm action */
 "prompt.custom.url.scheme.open" = "Kyllä";

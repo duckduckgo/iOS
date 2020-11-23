@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Πρακτικές ιδιωτικότητας";
+"25V-p3-wsn.text" = "ΠΡΑΚΤΙΚΕΣ ΙΔΙΩΤΙΚΟΤΗΤΑΣ";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Επαναφορά στατιστικών δικτύου παρακολούθησης";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "ΚΟΡΥΦΑΙΟΙ ΠΑΡΑΒΑΤΕΣ ΤΟΥ ΔΙΚΤΥΟΥ ΠΑΡΑΚΟΛΟΥΘΗΣΗΣ";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Κρυπτογραφημένη σύνδεση";
+"dZC-7f-pp3.text" = "ΚΡΥΠΤΟΓΡΑΦΗΜΕΝΗ ΣΥΝΔΕΣΗ";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";

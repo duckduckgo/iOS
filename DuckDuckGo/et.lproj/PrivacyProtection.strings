@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Site is Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
-"0ax-Nd-tDU.text" = "Sait on suur jälgimisvõrk";
+"0ax-Nd-tDU.text" = "Sait on peamine jälgimisvõrk";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
 "0SO-8y-5QH.text" = "www.example.com";
@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Privaatsuspraktikad";
+"25V-p3-wsn.text" = "PRIVAATSUSTAVAD";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Lähtesta jälgimisvõrkude statistika";
@@ -47,13 +47,13 @@
 "aD3-hP-MUU.text" = "JÄLGIMISVÕRGU SUURIMAD RIKKUJAD";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Krüptitud ühendus";
+"dZC-7f-pp3.text" = "KRÜPTITUD ÜHENDUS";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "fqL-1Q-ilH"; */
-"fqL-1Q-ilH.normalTitle" = "Kaitseta saidid";
+"fqL-1Q-ilH.normalTitle" = "Kaitseta saite";
 
 /* Class = "UILabel"; text = "Networks Blocked"; ObjectID = "Ge6-9h-2z5"; */
 "Ge6-9h-2z5.text" = "Võrgud blokeeritud";
@@ -71,16 +71,16 @@
 "IPS-SD-65t.text" = "Suurimad rikkujad";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
-"J3L-KE-1Vb.text" = "Label";
+"J3L-KE-1Vb.text" = "Silt";
 
 /* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Privaatsustavasid ei leitud";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
-"Kme-pZ-l7N.normalTitle" = "Kaitseta saidid";
+"Kme-pZ-l7N.normalTitle" = "Kaitseta saite";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
-"Mv2-oP-SQd.text" = "Label";
+"Mv2-oP-SQd.text" = "Silt";
 
 /* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; Note = "Placeholder string, do not translate"; */
 "OHN-Tz-cdk.text" = "n JÄLGIJA VÕRGUD BLOKEERITUD";

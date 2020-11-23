@@ -1,8 +1,8 @@
 /* Class = "UIButton"; accessibilityLabel = "close"; ObjectID = "202-p3-edP"; */
-"202-p3-edP.accessibilityLabel" = "Zatvori";
+"202-p3-edP.accessibilityLabel" = "zatvori";
 
 /* Class = "UIButton"; normalTitle = "Got it!"; ObjectID = "DBH-J5-aEO"; Note = "In a sense of \"I understand\""; */
-"DBH-J5-aEO.normalTitle" = "Kužim!";
+"DBH-J5-aEO.normalTitle" = "Shvaćam!";
 
 /* Class = "UILabel"; text = "Add DuckDuckGo to your dock for quick and easy access."; ObjectID = "f6f-QY-3H3"; */
 "f6f-QY-3H3.text" = "Dodaj DuckDuckGo na svoju traku izbornika za brz i jednostavan pristup.";

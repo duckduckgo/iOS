@@ -146,7 +146,7 @@
 "brokensite.category.other" = "Niečo iné";
 
 /* Broken Site Category */
-"brokensite.category.paywall" = "Táto stránka ma požiadala o deaktiváciu";
+"brokensite.category.paywall" = "Táto stránka ma požiadala o inaktiváciu";
 
 /* Broken Site Category */
 "brokensite.category.unsupported" = "Prehliadač je nekompatibilný";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video sa neprehráva";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Popíšte, čo sa stalo";
+"brokensite.sectionTitle" = "POPÍŠTE, ČO SA STALO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Navždy skryť tipy";
@@ -173,19 +173,19 @@
 "dax.onboarding.browsing.after.search" = "Vaše vyhľadávanie v aplikácii DuckDuckGo je anonymné. Nikdy nebudeme uchovávať vašu históriu vyhľadávania. Nikdy. 🙌";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search.cta" = "Uf!";
+"dax.onboarding.browsing.after.search.cta" = "Ľutujeme!";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "High Five!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Ruku na to!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* sa vás tu pokúsil sledovať.\n\nZablokoval som ich!\n\n☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️";
+"dax.onboarding.browsing.one.tracker" = "Služba *%1$@* sa vás tu pokúsila sledovať.\n\nZablokoval som ju!\n\n☝️ Môžete skontrolovať panel s adresou URL a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú stránku.️";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "High Five!";
+"dax.onboarding.browsing.one.tracker.cta" = "Ruku na to!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Hlavu hore! Nemôžem zabrániť službe %1$@ v tom, aby videla vašu aktivitu na %2$@.\n\nPrehliadajte so mnou a môžem obmedziť to, čo o vás služba %1$@ celkovo vie, zablokovaním jej sledovacích zariadení na mnohých ďalších stránkach.";
@@ -194,25 +194,25 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Mám to";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Hlavu hore! Pretože %2$@ vlastní %1$@, nemôžem im zabrániť v tom, aby tu videli vašu aktivitu.\n\nPrehliadajte so mnou a môžem obmedziť to, čo o vás %2$@ celkovo vie, zablokovaním ich sledovacích zariadení na mnohých ďalších stránkach.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Hlavu hore! Keďže spoločnosť %2$@ vlastní službu %1$@, nemôžem jej zabrániť v tom, aby tu videla vašu aktivitu.\n\nPrehliadajte so mnou a môžem obmedziť to, čo o vás spoločnosť %2$@ celkovo vie, zablokovaním jej sledovacích zariadení na mnohých ďalších stránkach.";
 
 /* Got It */
-"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Mám to";
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Rozumiem";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers" = "Počas toho, ako budete ťukať a posúvať, zablokujem nepríjemné sledovacie zariadenia.\n\nNeprestávajte - pokračujte v prehľadávaní!";
+"dax.onboarding.browsing.without.trackers" = "Počas toho, ako budete ťukať a posúvať, zablokujem nepríjemné sledovacie zariadenia.\n\nNeprestávajte – pokračujte v prehliadaní!";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers.cta" = "Mám to";
+"dax.onboarding.browsing.without.trackers.cta" = "Rozumiem";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Navštívte svoje obľúbené stránky bleskurýchlo!\n\nPrejdite na stránku, ktorá sa vám páči. Potom kliknite na ikonu „⋯“ a vyberte *Pridať k obľúbeným*.";
+"dax.onboarding.home.add.favorite" = "Navštívte svoje obľúbené stránky bleskurýchlo!\n\nPrejdite na stránku, ktorá sa vám páči. Potom kliknite na ikonu „⋯“ a vyberte možnosť *Pridať k obľúbeným*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Navštívte svoje obľúbené stránky bleskurýchlo! Navštívte jednu z vašich obľúbených stránok. Potom kliknite na tlačidlo otvorenej ponuky a vyberte možnosť Pridať k obľúbeným.";
+"dax.onboarding.home.add.favorite.accessible" = "Navštívte svoje obľúbené stránky bleskurýchlo! Navštívte jednu zo svojich obľúbených stránok. Potom kliknite na tlačidlo otvorenej ponuky a vyberte možnosť Pridať k obľúbeným.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.home.initial" = "Nabudúce skúste navštíviť jednu z vašich obľúbených webových stránok!\n\nZablokujem sledovacie zariadenia, ktoré by vás mohli špehovať. Ak to bude možné, dokážem tiež zlepšiť zabezpečenie vášho pripojenia. 🔒";
+"dax.onboarding.home.initial" = "Nabudúce skúste navštíviť jednu zo svojich obľúbených webových stránok!\n\nZablokujem sledovacie zariadenia, ktoré by vás mohli špehovať. Ak to bude možné, zlepším tiež zabezpečenie vášho pripojenia. 🔒";
 
 /* ad = advertisment */
 "dax.onboarding.home.subsequent" = "Hotovo!\n\nPamätajte: zakaždým, keď prehliadate v našej aplikácii, divnej reklame pristrihávate krídla. 👍";
@@ -224,7 +224,7 @@
 "donotsell.disabled" = "Zakázané";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Pretože Globálna kontrola súkromia (GPC) je novým štandardom, väčšina webových stránok ho ešte nerozpozná, ale usilovne pracujeme na tom, aby sa stal celosvetovo akceptovaným.";
+"donotsell.disclaimer.footertext" = "Keďže Globálna kontrola súkromia (GPC) je novým štandardom, väčšina webových stránok ho ešte nerozpozná, ale usilovne pracujeme na tom, aby sa stal celosvetovo akceptovaným.";
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Zistite viac";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Povolené";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Vaše údaje by nemali byť na predaj. V DuckDuckGo, súhlasíme. Aktivujte nastavenie „Globálna kontrola súkromia“ (GPC) a webovým serverom oznámime, že uprednostňujete:\n\n• Nepredávať vaše osobné údaje.\n• Obmedzte zdieľanie svojich osobných údajov s inými spoločnosťami.";
+"donotsell.info.headertext" = "Vaše údaje by nemali byť na predaj. V DuckDuckGo s tým súhlasíme. Aktivujte nastavenie „Globálna kontrola súkromia“ (GPC) a webovým serverom oznámime, že uprednostňujete:\n\n• Nepredávať vaše osobné údaje.\n• Obmedzte zdieľanie svojich osobných údajov s inými spoločnosťami.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatiaľ sa tu nenachádzajú žiadne záložky";
 
 /* Empty list state placholder */
 "empty.favorites" = "Zatiaľ sa tu nenachádzajú žiadne obľúbené položky";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nenašli sa žiadne zhody";
 
 /* No comment provided by engineer. */
 "favorite" = "Obľúbené položky";
@@ -251,7 +254,7 @@
 "favorite.menu.delete" = "Vymazať";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Editovať";
+"favorite.menu.edit" = "Upraviť";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokovanie reklám a automaticky otváraných okien";
@@ -341,10 +344,10 @@
 "feedback.ddgSearch.technical" = "Programovanie/technické vyhľadávanie";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Povedzte nám, čo sa dá zdokonaliť.";
+"feedback.form.caption" = "Povedzte nám, čo sa dá zlepšiť.";
 
 /* Confirmation button */
-"feedback.form.submit" = "ODOSLAŤ SPÄTNÚ VÄZBU";
+"feedback.form.submit" = "Odoslať spätnú väzbu";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Buďte čo najkonkrétnejší";
@@ -362,7 +365,7 @@
 "feedback.other.description" = "Iné problémy";
 
 /* No comment provided by engineer. */
-"feedback.other.entry" = "Žiadne z uvedených";
+"feedback.other.entry" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.performance.caption" = "Na aký problém ste natrafili?";
@@ -377,7 +380,7 @@
 "feedback.performance.entry" = "Aplikácia je pomalá, chybná alebo zlyháva";
 
 /* No comment provided by engineer. */
-"feedback.performance.other" = "Žiadne z uvedených";
+"feedback.performance.other" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.performance.playback" = "Chyby prehrávania videa alebo médií";
@@ -431,7 +434,7 @@
 "feedback.websiteLoading.form.urlPlaceholder" = "Ktorá webová stránka má problémy?";
 
 /* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
-"findinpage.count" = "%1$d of %2$d";
+"findinpage.count" = "%1$d z %2$d";
 
 /* No comment provided by engineer. */
 "findinpage.title" = "Hľadať na stránke";
@@ -506,7 +509,7 @@
 "keyCommandOpenInNewBackgroundTab" = "Otvoriť odkaz na pozadí";
 
 /* No comment provided by engineer. */
-"keyCommandOpenInNewTab" = "Otvorte odkaz v novej karte";
+"keyCommandOpenInNewTab" = "Otvorte odkaz na novej karte";
 
 /* No comment provided by engineer. */
 "keyCommandPreviousTab" = "Predchádzajúca karta";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Zobraziť všetky karty";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Vitajte v aplikácii DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
 /* Edit button */
-"navigation.title.edit" = "Editovať";
+"navigation.title.edit" = "Upraviť";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Pridať miniaplikáciu";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Používanie DuckDuckGo je teraz jednoduchšie.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Možno neskôr";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Ďalej";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "ROZŠÍRENÉ Z $1 NA $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Stupeň ochrany súkromia";
+"privacy.protection.main.grade" = "STUPEŇ OCHRANY SÚKROMIA";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Naďalej zhromažďujeme údaje s cieľom zistiť,\nkoľko sledovacích zariadení sme zablokovali.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Používanie informácií o ochrane súkromia z ToS; DR";
+"privacy.protection.practices.footer.info" = "Používanie informácií o ochrane súkromia z ToS;DR";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Spôsoby ochrany súkromia naznačujú mieru ochrany osobných údajov, ktoré zdieľate s webovými stránkami.";
@@ -761,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Otvoriť v inej aplikácii?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Odoslaním anonymného hlásenia o nefunkčnom webe nám pomôžete tieto problémy odstrániť a vylepšiť rozšírenie.";
+"report.brokensite.header" = "Odoslaním anonymného hlásenia o nefunkčnom webe nám pomôžete tieto problémy odstrániť a zlepšiť rozšírenie.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Vyhľadajte alebo zadajte adresu";

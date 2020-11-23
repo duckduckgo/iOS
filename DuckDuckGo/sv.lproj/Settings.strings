@@ -89,7 +89,7 @@
 "f1O-6u-LFY.text" = "Tema";
 
 /* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
-"Fal-1Y-o2S.text" = "Gå bara ur appen";
+"Fal-1Y-o2S.text" = "Lämna endast appen";
 
 /* Class = "UITableViewController"; title = "Auto Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Rensa data automatiskt";
@@ -122,7 +122,7 @@
 "jbD-Oy-Cmw.title" = "Ikon";
 
 /* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Skicka feedback";
+"m23-t6-9cb.text" = "Skicka återkoppling";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "När det är aktiverat öppnas webbplatser automatiskt i DuckDuckGo.";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Handling";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Visa Autoslutför förslag";
+"U8i-cQ-5WW.text" = "Komplettera automatiskt-förslag";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Ta bort alla brandsäkra webbplatser";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Ny flik";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Dessa oskyddade webbplatser kommer inte att\nförbättras av integritetsskydd.";
+"zvh-2e-Wmz.text" = "Dessa oskyddade webbplatser kommer inte att förbättras av integritetsskydd.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Hemskärm";

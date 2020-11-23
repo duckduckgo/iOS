@@ -17,53 +17,13 @@
 
 Onları engelledim!
 
-☝️Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını URL çubuğundan görebilirsiniz.</string>
+☝️ Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını görmek için URL çubuğunu kontrol edebilirsiniz.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* ve *%d diğer* site sizi burada izlemeye çalışıyordu.
+			<string>*%2$@, %3$@* ve *%1$d diğer* site sizi burada izlemeye çalışıyordu.
 
 Onları engelledim!
 
-☝️Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını URL çubuğundan görebilirsiniz.</string>
-			<key>zero</key>
-			<string>*%2$@ ve %3$@* sizi burada izlemeye çalışıyordu.
-
-Onları engelledim!
-
-☝️Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını URL çubuğundan görebilirsiniz.</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Gizli Sekme</string>
-			<key>other</key>
-			<string>%d Gizli Sekme</string>
-			<key>zero</key>
-			<string>Gizli Sekme Yok</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Başlıca İzleyici Engellendi</string>
-			<key>other</key>
-			<string>%d Başlıca İzleyici Engellendi</string>
+☝️Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını görmek için URL çubuğunu kontrol edebilirsiniz.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -77,12 +37,12 @@ Onları engelledim!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Başlıca İzleyici Bulundu</string>
+			<string>%1$d Başlıca İzleyici Bulundu</string>
 			<key>other</key>
-			<string>%d Başlıca İzleyici Bulundu</string>
+			<string>%1$d Başlıca İzleyici Bulundu</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -93,9 +53,9 @@ Onları engelledim!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d İzleyici Engellendi</string>
+			<string>%1$d Başlıca İzleyici Engellendi</string>
 			<key>other</key>
-			<string>%d İzleyici Engellendi</string>
+			<string>%1$d Başlıca İzleyici Engellendi</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -109,9 +69,41 @@ Onları engelledim!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d İzleyici Bulundu</string>
+			<string>%1$d İzleyici Bulundu</string>
 			<key>other</key>
-			<string>%d İzleyici Bulundu</string>
+			<string>%1$d İzleyici Bulundu</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d İzleyici Engellendi</string>
+			<key>other</key>
+			<string>%1$d İzleyici Engellendi</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d Gizli Sekme</string>
+			<key>other</key>
+			<string>%1$d Gizli Sekme</string>
 		</dict>
 	</dict>
 </dict>

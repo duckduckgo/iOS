@@ -12,78 +12,30 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
-			<key>many</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
-
-I blocked them!
-
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
 			<key>one</key>
 			<string>*%2$@, %3$@* и еще *1 сервис* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
-			<key>other</key>
-			<string>*%2$@ и %3$@* вместе с *%d другими сервисами* пытались вести за вами слежку.
+			<key>few</key>
+			<string>*%2$@, %3$@* и еще *%1$d сервиса* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
-			<key>zero</key>
-			<string>*%2$@ и %3$@* пытались вести за вами слежку.
+			<key>many</key>
+			<string>*%2$@, %3$@* и еще *%1$d сервисов* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
-		</dict>
-	</dict>
-	<key>number.of.tabs</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d Private Tabs</string>
-			<key>many</key>
-			<string>%d Private Tabs</string>
-			<key>one</key>
-			<string>Приватных вкладок: %d</string>
 			<key>other</key>
-			<string>Приватных вкладок: %d</string>
-			<key>zero</key>
-			<string>Приватных вкладок нет</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d Major Trackers Blocked</string>
-			<key>many</key>
-			<string>%d Major Trackers Blocked</string>
-			<key>one</key>
-			<string>Заблокировано крупных трекеров: %d</string>
-			<key>other</key>
-			<string>Заблокировано крупных трекеров: %d</string>
+			<string>*%2$@, %3$@* и еще *%1$d сервиса* пытались вести за вами слежку.
+
+Но мы их заблокировали!
+
+☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -96,17 +48,17 @@ I blocked them!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d Major Trackers Found</string>
-			<key>many</key>
-			<string>%d Major Trackers Found</string>
 			<key>one</key>
-			<string>Обнаружено крупных трекеров: %d</string>
+			<string>Обнаружен %1$d крупный трекер</string>
+			<key>few</key>
+			<string>Обнаружено %1$d крупных трекера</string>
+			<key>many</key>
+			<string>Обнаружено %1$d крупных трекеров</string>
 			<key>other</key>
-			<string>Обнаружено крупных трекеров: %d</string>
+			<string>Обнаружено крупных трекеров: %1$d</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.blocked</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -116,14 +68,14 @@ I blocked them!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d Trackers Blocked</string>
-			<key>many</key>
-			<string>%d Trackers Blocked</string>
 			<key>one</key>
-			<string>Заблокировано трекеров: %d</string>
+			<string>Заблокирован %1$d крупный трекер</string>
+			<key>few</key>
+			<string>Заблокировано %1$d крупных трекера</string>
+			<key>many</key>
+			<string>Заблокировано %1$d крупных трекеров</string>
 			<key>other</key>
-			<string>Заблокировано трекеров: %d</string>
+			<string>Заблокировано крупных трекеров: %1$d</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -136,14 +88,54 @@ I blocked them!
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d Trackers Found</string>
-			<key>many</key>
-			<string>%d Trackers Found</string>
 			<key>one</key>
-			<string>Обнаружено трекеров: %d</string>
+			<string>Найден %1$d трекер</string>
+			<key>few</key>
+			<string>Найдено %1$d трекера</string>
+			<key>many</key>
+			<string>Найдено %1$d трекеров</string>
 			<key>other</key>
-			<string>Обнаружено трекеров: %d</string>
+			<string>Найдены %1$d трекеры</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Заблокирован %1$d трекер</string>
+			<key>few</key>
+			<string>Заблокировано %1$d трекера</string>
+			<key>many</key>
+			<string>Заблокировано %1$d трекеров</string>
+			<key>other</key>
+			<string>Заблокированы %1$d трекеры</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d приватная вкладка</string>
+			<key>few</key>
+			<string>%1$d приватных вкладки</string>
+			<key>many</key>
+			<string>%1$d приватных вкладок</string>
+			<key>other</key>
+			<string>Приватных вкладок: %1$d</string>
 		</dict>
 	</dict>
 </dict>

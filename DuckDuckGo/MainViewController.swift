@@ -99,6 +99,8 @@ class MainViewController: UIViewController {
     var currentTab: TabViewController? {
         return tabManager?.current
     }
+
+    var tapLinkDestination: TabViewController.LinkDestination = .currentTab
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -384,13 +386,13 @@ class MainViewController: UIViewController {
 
     @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
-        tabManager.tabControllerCache.forEach { $0.tapLinkDestination = .currentTab }
+        self.tapLinkDestination = .currentTab
 
         if event?.modifierFlags.contains(.command) ?? false {
             if event?.modifierFlags.contains(.shift) ?? false {
-                tabManager.tabControllerCache.forEach { $0.tapLinkDestination = .newTab }
+                self.tapLinkDestination = .newTab
             } else {
-                tabManager.tabControllerCache.forEach { $0.tapLinkDestination = .backgroundTab }
+                self.tapLinkDestination = .backgroundTab
             }
         }
     }
@@ -1121,6 +1123,10 @@ extension MainViewController: TabDelegate {
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
         previewsSource.update(preview: preview, forTab: tab.tabModel)
+    }
+
+    func tabWillRequestNewTab(_ tab: TabViewController) -> TabViewController.LinkDestination {
+        tapLinkDestination
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

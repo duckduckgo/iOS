@@ -43,8 +43,6 @@ class TabViewController: UIViewController {
         
     }
     
-    var tapLinkDestination: LinkDestination = .currentTab
-    
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
@@ -1046,7 +1044,9 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
-            switch tapLinkDestination {
+            let destination = delegate?.tabWillRequestNewTab(self) ?? .currentTab
+
+            switch destination {
             case .newTab:
                 decisionHandler(.cancel)
                 delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)

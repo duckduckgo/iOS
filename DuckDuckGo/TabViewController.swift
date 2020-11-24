@@ -35,14 +35,6 @@ class TabViewController: UIViewController {
         static let secGPCHeader = "Sec-GPC"
     }
     
-    enum LinkDestination {
-        
-        case currentTab
-        case newTab
-        case backgroundTab
-        
-    }
-    
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
@@ -1044,20 +1036,18 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
-            let destination = delegate?.tabWillRequestNewTab(self) ?? .currentTab
+            let modifierFlags = delegate?.tabWillRequestNewTab(self)
 
-            switch destination {
-            case .newTab:
-                decisionHandler(.cancel)
-                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
-                return
-
-            case .backgroundTab:
-                decisionHandler(.cancel)
-                delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
-                return
-                
-            default: break
+            if modifierFlags?.contains(.command) ?? false {
+                if modifierFlags?.contains(.shift) ?? false {
+                    decisionHandler(.cancel)
+                    delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+                    return
+                } else {
+                    decisionHandler(.cancel)
+                    delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+                    return
+                }
             }
         }
         

@@ -100,7 +100,7 @@ class MainViewController: UIViewController {
         return tabManager?.current
     }
 
-    var tapLinkDestination: TabViewController.LinkDestination = .currentTab
+    var keyModifierFlags: UIKeyModifierFlags?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -386,15 +386,7 @@ class MainViewController: UIViewController {
 
     @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
-        self.tapLinkDestination = .currentTab
-
-        if event?.modifierFlags.contains(.command) ?? false {
-            if event?.modifierFlags.contains(.shift) ?? false {
-                self.tapLinkDestination = .newTab
-            } else {
-                self.tapLinkDestination = .backgroundTab
-            }
-        }
+        keyModifierFlags = event?.modifierFlags
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
@@ -1125,8 +1117,8 @@ extension MainViewController: TabDelegate {
         previewsSource.update(preview: preview, forTab: tab.tabModel)
     }
 
-    func tabWillRequestNewTab(_ tab: TabViewController) -> TabViewController.LinkDestination {
-        tapLinkDestination
+    func tabWillRequestNewTab(_ tab: TabViewController) -> UIKeyModifierFlags? {
+        keyModifierFlags
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

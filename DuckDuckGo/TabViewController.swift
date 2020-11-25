@@ -1035,11 +1035,12 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
-            let modifierFlags = delegate?.tabWillRequestNewTab(self)
+        if navigationAction.navigationType == .linkActivated,
+           let url = navigationAction.request.url,
+           let modifierFlags = delegate?.tabWillRequestNewTab(self) {
 
-            if modifierFlags?.contains(.command) ?? false {
-                if modifierFlags?.contains(.shift) ?? false {
+            if modifierFlags.contains(.command) {
+                if modifierFlags.contains(.shift) {
                     decisionHandler(.cancel)
                     delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
                     return

@@ -68,13 +68,13 @@
 "dOj-jn-mSN.headerTitle" = "Поверителност и сигурност";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
-"dud-qo-Ces.text" = "Label";
+"dud-qo-Ces.text" = "Етикет";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Настройки";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
-"EIq-Ev-nfj.text" = "Label";
+"EIq-Ev-nfj.text" = "Етикет";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
 "ekF-SJ-PAQ.text" = "Автоматично изчистване на данните";
@@ -125,7 +125,7 @@
 "m23-t6-9cb.text" = "Изпратете отзив";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Уебсайтовете автоматично ще отварят DuckDuckGo, когато програмата е активирана.";
+"NRb-Cc-1d6.footerTitle" = "Уебсайтовете автоматично ще се отварят в DuckDuckGo, когато програмата е активирана.";
 
 /* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Няма";
@@ -137,7 +137,7 @@
 "oM7-1o-9oY.text" = "За нас";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
+"qeN-SV-zy7.text" = "Етикет";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Показване на клавиатура в";
@@ -179,10 +179,10 @@
 "zMK-jc-4bJ.headerTitle" = "Помощ";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
-"Zpg-h0-rYv.text" = "Нов подпрозорец";
+"Zpg-h0-rYv.text" = "Нов раздел";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Към тези незащитени сайтове няма да бъде приложена\nзащита на поверителността.";
+"zvh-2e-Wmz.text" = "Към тези незащитени сайтове няма да бъде приложена защита на поверителността.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Начален екран";

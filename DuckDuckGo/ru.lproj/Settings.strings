@@ -17,10 +17,10 @@
 "5Yd-7i-bey.text" = "После выхода, через 30 мин. бездействия";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
-"5YD-Od-uDU.text" = "Удалять данные автоматически";
+"5YD-Od-uDU.text" = "Автоудаление данных";
 
 /* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
-"7nt-uS-sOh.normalTitle" = "Больше информации см. по адресу https://duckduckgo.com/about";
+"7nt-uS-sOh.normalTitle" = "Подробнее на https://duckduckgo.com/about";
 
 /* Class = "UILabel"; text = "App exit, inactive for 60min"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "После выхода, через 60 мин. бездействия";
@@ -77,7 +77,7 @@
 "EIq-Ev-nfj.text" = "Метка";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
-"ekF-SJ-PAQ.text" = "Удалять данные автоматически";
+"ekF-SJ-PAQ.text" = "Автоудаление данных";
 
 /* Class = "UILabel"; text = "App exit, inactive for 5min"; ObjectID = "ElX-yE-4PX"; */
 "ElX-yE-4PX.text" = "После выхода, через 5 мин. бездействия";
@@ -92,7 +92,7 @@
 "Fal-1Y-o2S.text" = "Только после выхода из приложения";
 
 /* Class = "UITableViewController"; title = "Auto Clear Data"; ObjectID = "fdJ-b1-Des"; */
-"fdJ-b1-Des.title" = "Автоматически удалять данные";
+"fdJ-b1-Des.title" = "Автоудаление данных";
 
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
 "FHC-1z-Z3v.text" = "Незащищенные сайты";
@@ -122,13 +122,13 @@
 "jbD-Oy-Cmw.title" = "Значок";
 
 /* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Отправить сообщение";
+"m23-t6-9cb.text" = "Отправить отзыв";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "При активации этой функции сайты будут автоматически открываться в DuckDuckGo.";
 
 /* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Ничего";
+"OfP-Kw-IOk.text" = "Отсутствуют";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Незащищенные сайты";

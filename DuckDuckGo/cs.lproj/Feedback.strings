@@ -32,7 +32,7 @@
 "jr6-Al-4fr.title" = "Odeslat";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "ODESLAT ZPĚTNOU VAZBU";
+"lsB-Kq-U8p.normalTitle" = "Odeslat zpětnou vazbu";
 
 /* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
 "lY6-5c-iu4.title" = "Odeslat zpětnou vazbu";

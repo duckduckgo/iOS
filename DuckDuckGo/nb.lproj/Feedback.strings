@@ -23,7 +23,7 @@
 "h2M-TW-0QG.title" = "Tilbake";
 
 /* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
-"iVe-E1-jAH.accessibilityHint" = "Din tilbakemelding";
+"iVe-E1-jAH.accessibilityHint" = "Din tilbakemelding.";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Tilbake";
@@ -32,7 +32,7 @@
 "jr6-Al-4fr.title" = "Send";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "SEND INN TILBAKEMELDING";
+"lsB-Kq-U8p.normalTitle" = "Send inn tilbakemelding";
 
 /* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
 "lY6-5c-iu4.title" = "Send tilbakemelding";
@@ -53,10 +53,10 @@
 "Rvx-dM-etJ.title" = "Send tilbakemelding";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Hvilket nettsted er ødelagt?";
+"TMj-NM-j3b.placeholder" = "Hvilket nettsted fungerer ikke?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Rapporter ødelagt nettsted";
+"WjT-HM-yim.title" = "Rapporter nettstedfeil";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Årsak til nettstedfeil";

@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Adicionar aos favoritos";
 
 /* Settings action */
-"action.title.settings" = "Definições";
+"action.title.settings" = "Definições…";
 
 /* Share action */
 "action.title.share" = "Partilhar...";
@@ -77,7 +77,7 @@
 "alert.title.disable.protection" = "Adicionar a sites não seguros";
 
 /* Disable potection alert placeholder - leave as it is */
-"alert.title.disable.protection.placeholder" = "www.example.com";
+"alert.title.disable.protection.placeholder" = "www.exemplo.com";
 
 /* Edit Bookmark action */
 "alert.title.edit.bookmark" = "Editar marcador";
@@ -116,7 +116,7 @@
 "autoclear.on" = "Ligado";
 
 /* Placeholder in the add bookmark form */
-"bookmark.address.placeholder" = "www.example.com";
+"bookmark.address.placeholder" = "www.exemplo.com";
 
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Título do website";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "O vídeo não foi reproduzido";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Descrever o que aconteceu";
+"brokensite.sectionTitle" = "DESCREVER O QUE ACONTECEU";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ocultar dicas para sempre";
@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Entendi";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Alerta! Uma vez que %2$@ possui %1$@, eu não consigo impedi-los de verem a sua atividade aqui.\n\nMas navegue comigo, e eu consigo reduzir o que %2$@  sabe sobre si na generalidade, bloqueando os seus rastreadores em muitos outros sites.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Alerta! Uma vez que %2$@ possui %1$@, eu não consigo impedi-los de verem a sua atividade aqui.\n\nMas navegue comigo, e eu consigo reduzir o que %2$@ sabe sobre si na generalidade, bloqueando os seus rastreadores em muitos outros sites.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Entendi";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Ativado";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Os seus dados não devem estar à venda. Na DuckDuckGo, concordamos. Ative a configuração de ''Controlo Global de Privacidade'' (CGP) e enviaremos um sinal aos sites da sua preferência para:<br/><br/> • Não vender os seus dados pessoais.<br/>• Limite a partilha dos seus dados pessoais com outras empresas.";
+"donotsell.info.headertext" = "Os seus dados não devem estar à venda. Na DuckDuckGo, concordamos. Ative a configuração do ''Controlo Global de Privacidade'' (CGP) e enviaremos um sinal aos sites da sua preferência para:\n\n• Não vender os seus dados pessoais.\n• Limite a partilha dos seus dados pessoais com outras empresas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda sem marcadores";
 
 /* Empty list state placholder */
 "empty.favorites" = "Ainda sem favoritos";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nenhuma correspondência encontrada";
 
 /* No comment provided by engineer. */
 "favorite" = "Favorito";
@@ -341,10 +344,10 @@
 "feedback.ddgSearch.technical" = "Programação/pesquisa técnica";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Diga-nos o que podemos melhorar.";
+"feedback.form.caption" = "Diga-nos o que podemos melhorar";
 
 /* Confirmation button */
-"feedback.form.submit" = "SUBMETER COMENTÁRIOS";
+"feedback.form.submit" = "Submeter comentários";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Seja o mais específico possível";
@@ -404,7 +407,7 @@
 "feedback.positive.submit" = "Partilhar detalhes";
 
 /* No comment provided by engineer. */
-"feedback.start.footer" = "Os seus comentários anônimos são importantes para nós.";
+"feedback.start.footer" = "Os seus comentários anónimos são importantes para nós.";
 
 /* No comment provided by engineer. */
 "feedback.start.header" = "Vamos começar!";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Mostrar todos os separadores";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Bem-vindo(a) ao DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Bem-vindo(a) ao\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Editar";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Adicionar widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Usar DuckDuckGo ficou mais fácil.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Talvez mais tarde";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Continuar";
@@ -581,7 +593,7 @@
 "preserveLogins.switch.title" = "Pedir para usar barreiras de segurança em websites";
 
 /* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ já tem uma barreira de segurança! Visitar definições para remover.";
+"preserveLogins.toast" = "%@ já tem uma barreira de segurança! Visite as definições para remover.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";
@@ -599,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Tamanho efetivo";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "E-Mail";
+"privacy.protection.encryption.email" = "E-mail";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Ligação encriptada";
@@ -689,10 +701,10 @@
 "privacy.protection.main.disabled" = "PROTEÇÃO DO SITE DESATIVADA";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "Melhorado de $1 para $2";
+"privacy.protection.main.enhanced" = "MELHORADO DE $1 PARA $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Grau de privacidade";
+"privacy.protection.main.grade" = "GRAU DE PRIVACIDADE";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Ainda estamos a recolher dados para mostrar\nquantos rastreadores bloqueámos.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Usando informações de práticas de privacidade de ToS;DR";
+"privacy.protection.practices.footer.info" = "Usar informações de práticas de privacidade de ToS;DR";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "As práticas de privacidade indicam o nível de proteção das informações pessoais que partilha com um site.";
@@ -722,7 +734,7 @@
 "privacy.protection.site.grade" = "Grau de privacidade %@";
 
 /* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Pressionar para abrir a tela de Proteção de Privacidade";
+"privacy.protection.site.hint" = "Premir para abrir o ecrã de Proteção de Privacidade";
 
 /* No comment provided by engineer. */
 "privacy.protection.top.offenders.info" = "Estas estatísticas são apenas armazenadas no seu dispositivo e não são enviadas para lado nenhum. Nunca.";

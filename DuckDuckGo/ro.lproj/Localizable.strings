@@ -44,7 +44,7 @@
 "action.title.refresh" = "Reîmprospătare";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Raportați Site-ul Distrus";
+"action.title.reportBrokenSite" = "Raportează site-ul defect";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Solicită versiunea desktop";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videoclipul nu s-a redat";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Descrie ce s-a întâmplat";
+"brokensite.sectionTitle" = "DESCRIE CE S-A INTAMPLAT";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ascunde sfaturile definitiv";
@@ -179,13 +179,13 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "Bate Palma!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Bate palma!";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* încercau să te urmărească aici.\n\nI-am blocat!\n\n☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "Bate Palma!";
+"dax.onboarding.browsing.one.tracker.cta" = "Bate palma!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Atenție! Nu pot împiedica %1$@ să îți vadă activitatea pe %2$@.\n\nDar navighează cu mine și pot reduce ceea ce %1$@ cunoaște despre tine în general, blocând instrumentele lor de urmărire pe o mulțime de alte site-uri.";
@@ -206,7 +206,7 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Am înțeles";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Vizitează site-urile preferate într-o clipă!Accesează un site care îți place. Apoi atinge pictograma „⋯” și selectează *Adaugă la preferințe*.";
+"dax.onboarding.home.add.favorite" = "Vizitează site-urile preferate într-o clipă!\n\nAccesează un site care îți place. Apoi atinge pictograma „⋯” și selectează *Adaugă la preferințe*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
 "dax.onboarding.home.add.favorite.accessible" = "Vizitează site-urile preferate într-o clipă! Vizitează unul dintre site-urile preferate. Apoi atinge butonul meniului de deschidere și selectează Adaugă la preferințe.";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Nicio preferință încă";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nu s-au găsit potriviri";
 
 /* No comment provided by engineer. */
 "favorite" = "Preferință";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Te rugăm să ne spui ce putem îmbunătăți";
 
 /* Confirmation button */
-"feedback.form.submit" = "TRIMITERE FEEDBACK";
+"feedback.form.submit" = "Trimite feedback";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Vă rugăm să furnizați detalii cât mai concrete";
@@ -443,7 +446,7 @@
 "home.message.header" = "Setează DuckDuckGo ca browser implicit.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Deschide link-urile cu liniște sufletească, de fiecare dată.";
+"home.message.subheader" = "Deschide link-urile liniștit, de fiecare dată.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NOU ÎN IOS 14";
@@ -479,7 +482,7 @@
 "keyCommandClose" = "Închidere";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Închidere nouă";
+"keyCommandCloseTab" = "Închide fila";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Găsire în pagină";
@@ -524,7 +527,7 @@
 "keyCommandShowAllTabs" = "Afișează toate filele";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Bine ai venit la DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Bine ai venit la\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Editați";
@@ -533,10 +536,19 @@
 "number.of.tabs" = "number.of.tabs";
 
 /* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Adăugare widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Folosirea DuckDuckGo a devenit mai ușoară.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Poate mai târziu";
+
+/* No comment provided by engineer. */
 "onboardingContinue" = "Continuați";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserMaybeLater" = "Poate Mai Târziu";
+"onboardingDefaultBrowserMaybeLater" = "Poate mai târziu";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserTitle" = "Setează DuckDuckGo ca browser implicit.";
@@ -545,7 +557,7 @@
 "onboardingSetAsDefaultBrowser" = "Setare ca browser implicit";
 
 /* No comment provided by engineer. */
-"onboardingSkip" = "IGNORARE";
+"onboardingSkip" = "Ignorare";
 
 /* This is on a button presented on the last of the onboarding screens. */
 "onboardingStartBrowsing" = "Începe navigarea";
@@ -566,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Dorești să ștergi activitatea și istoricul pentru %@?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Website ignifug";
+"preserveLogins.menu.confirm" = "Site cu ștergerea activității și istoricului din browser la ieșire";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Nu acum";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "MĂRIT DE LA $1 LA $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Grad de confidențialitate";
+"privacy.protection.main.grade" = "GRAD DE CONFIDENȚIALITATE";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -710,7 +722,7 @@
 "privacy.protection.practices.footer.info" = "Utilizează informațiile despre practicile de confidențialitate de la ToS;DR";
 
 /* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Practicile privind confidențialitatea indică în ce măsură datele cu caracter personal pe care le partajați cu un site web sunt protejate.";
+"privacy.protection.practices.header.info" = "Practicile privind confidențialitatea indică în ce măsură datele cu caracter personal pe care le partajezi cu un site web sunt protejate.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.reviewed.info" = "Acest site web te va anunța înainte de a transfera informațiile tale în cazul unei fuziuni sau achiziții";
@@ -803,7 +815,7 @@
 "siteFeedback.title" = "Raportare site defect";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "Ce site este defect?”";
+"siteFeedback.urlPlaceholder" = "Ce site este defect?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Închide fila de pornire";
@@ -821,7 +833,7 @@
 "tab.switcher.accessibility.label" = "Comutator între file";
 
 /* Dark Theme entry */
-"theme.acc.dark" = "Dark";
+"theme.acc.dark" = "Întunecat";
 
 /* Short entry for Default System theme */
 "theme.acc.default" = "Sistem";
@@ -830,7 +842,7 @@
 "theme.acc.light" = "Lumină";
 
 /* Dark Theme entry */
-"theme.name.dark" = "Dark";
+"theme.name.dark" = "Întunecat";
 
 /* Entry for Default System theme */
 "theme.name.default" = "Setare implicită de sistem";

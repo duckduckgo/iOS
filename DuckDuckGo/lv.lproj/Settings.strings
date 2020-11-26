@@ -86,7 +86,7 @@
 "eMH-uv-Kms.title" = "Lietotnes ikona";
 
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Fons";
+"f1O-6u-LFY.text" = "Motīvs";
 
 /* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Tikai iziešana no lietotnes";
@@ -98,7 +98,7 @@
 "FHC-1z-Z3v.text" = "Neaizsargātas vietnes";
 
 /* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "Citi";
+"FpT-1C-xtx.headerTitle" = "Cits";
 
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Globālā privātuma kontrole (GPC)";
@@ -107,28 +107,28 @@
 "Gbx-kl-uOO.text" = "Noklusējums";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Privātums – vienkāršots. ";
+"gji-Fs-EET.text" = "Privātums – vienkāršots. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Fons";
+"gS2-mg-l7R.title" = "Motīvs";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Ilgas nospiešanas rezultātu priekšskatījumi";
 
 /* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
-"Hu1-5i-vjL.text" = "Pagaidām nav neaizsargātu vietņu";
+"Hu1-5i-vjL.text" = "Vēl nav neaizsargātu vietņu";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikona";
 
 /* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Iesniegt atsauksmes";
+"m23-t6-9cb.text" = "Sūtīt atsauksmi";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Pēc iespējošanas vietnes tiks automātiski atvērtas DuckDuckGo.";
 
 /* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Neko";
+"OfP-Kw-IOk.text" = "Nav";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Neaizsargātas vietnes";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Darbība";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Automātiski aizpildīt ieteikumus";
+"U8i-cQ-5WW.text" = "Automātiski pabeigt ieteikumus";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Noņemt visas ugunsdrošās vietnes";
@@ -167,7 +167,7 @@
 "xof-5k-PkI.text" = "Iestatīt kā noklusējuma pārlūku";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Ugunsdrošas tīmekļa vietnes";
+"xUX-nF-HOl.title" = "Ugunsdrošas vietnes";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tastatūra";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Jauna cilne";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Šīs neaizsargātās vietnes netiks\nuzlabotas ar privātuma aizsardzību.";
+"zvh-2e-Wmz.text" = "Šīs neaizsargātās vietnes netiks uzlabotas ar privātuma aizsardzību.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Sākuma ekrāns";

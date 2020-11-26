@@ -33,13 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
-    
-    static var shared: AppDelegate {
-        // swiftlint:disable force_cast
-        return UIApplication.shared.delegate as! AppDelegate
-        // swiftlint:enable force_cast
-    }
-    
+
     private var testing = false
     var appIsLaunching = false
     var overlayWindow: UIWindow?

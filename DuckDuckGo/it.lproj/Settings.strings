@@ -68,13 +68,13 @@
 "dOj-jn-mSN.headerTitle" = "Privacy e sicurezza";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
-"dud-qo-Ces.text" = "Label";
+"dud-qo-Ces.text" = "Etichetta";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Impostazioni";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
-"EIq-Ev-nfj.text" = "Label";
+"EIq-Ev-nfj.text" = "Etichetta";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
 "ekF-SJ-PAQ.text" = "Cancellazione automatica dei dati";
@@ -89,7 +89,7 @@
 "f1O-6u-LFY.text" = "Tema";
 
 /* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
-"Fal-1Y-o2S.text" = "solo in caso di uscita dall'app";
+"Fal-1Y-o2S.text" = "Solo in caso di uscita dall'app";
 
 /* Class = "UITableViewController"; title = "Auto Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Cancellazione automatica dei dati";
@@ -125,7 +125,7 @@
 "m23-t6-9cb.text" = "Invia feedback";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Quando l'opzione è attivata, i siti Web verranno aperti automaticamente in DuckDuckGo.";
+"NRb-Cc-1d6.footerTitle" = "Quando l'opzione è attivata, i siti web verranno aperti automaticamente in DuckDuckGo.";
 
 /* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Niente";
@@ -134,10 +134,10 @@
 "OHV-qC-tL9.title" = "Siti non protetti";
 
 /* Class = "UILabel"; text = "About"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Al riguardo";
+"oM7-1o-9oY.text" = "Informazioni";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
+"qeN-SV-zy7.text" = "Etichetta";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Visualizza tastiera su";
@@ -164,7 +164,7 @@
 "vSJ-YJ-bBs.headerTitle" = "Intervallo desiderato";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Imposta come Browser predefinito";
+"xof-5k-PkI.text" = "Imposta come browser predefinito";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Siti web a prova di bomba";
@@ -173,7 +173,7 @@
 "yoZ-jw-Cu3.text" = "Tastiera";
 
 /* Class = "UILabel"; text = "Add DuckDuckGo to your dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "Aggiungi DuckDuckGo al tuo Dock";
+"yvj-LL-MiR.text" = "Aggiungi DuckDuckGo al tuo dock";
 
 /* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
 "zMK-jc-4bJ.headerTitle" = "Aiuto";

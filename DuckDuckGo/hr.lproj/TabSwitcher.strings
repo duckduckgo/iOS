@@ -5,7 +5,7 @@
 "2aH-nO-H3f.accessibilityLabel" = "Dodaj sve kartice kao knjižne oznake";
 
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
-"2en-CB-bYH.accessibilityLabel" = "Zatvori kartica";
+"2en-CB-bYH.accessibilityLabel" = "Zatvori karticu";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
 "2GU-MM-UwX.text" = "Naslov";
@@ -20,7 +20,7 @@
 "cYd-YU-sSj.accessibilityLabel" = "Dodaj novu karticu";
 
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
-"G2C-qh-g3T.accessibilityLabel" = "Zatvori kartica";
+"G2C-qh-g3T.accessibilityLabel" = "Zatvori karticu";
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
 "Gyy-py-IOg.accessibilityLabel" = "Kartica Nepročitano";

@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videoen blev ikke spillet";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Beskriv hvad der skete";
+"brokensite.sectionTitle" = "BESKRIV, HVAD DER SKETE";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skjul tip for evigt";
@@ -206,10 +206,10 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Forstået";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Besøg dine foretrukne websteder på et splitsekund!Gå til et websted, du elsker. Tryk derefter på ikonet \"⋯\", og vælg *Føj til favoritter*.";
+"dax.onboarding.home.add.favorite" = "Besøg dine foretrukne websteder på et splitsekund!\n\nGå til et websted, du elsker. Tryk derefter på ikonet \"⋯\", og vælg *Føj til favoritter*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Besøg dine foretrukne websteder på et splitsekund! Besøg et af dine foretrukne websteder.\n\n Tryk derefter på det åbne menu-ikon, og vælg Føj til favoritter.";
+"dax.onboarding.home.add.favorite.accessible" = "Besøg dine foretrukne websteder på et splitsekund! Besøg et af dine foretrukne websteder. Tryk derefter på det åbne menu-ikon, og vælg Føj til favoritter.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Prøv derefter at besøge et af dine foretrukne websteder!\n\nJeg blokerer trackere, så de ikke kan udspionere dig. Jeg opgraderer også din forbindelsessikkerhed, hvis det er muligt. 🔒";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Der er endnu ingen favoritter";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Ingen match fundet";
 
 /* No comment provided by engineer. */
 "favorite" = "Favorit";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Fortæl os, hvad vi kan forbedre.";
 
 /* Confirmation button */
-"feedback.form.submit" = "SEND FEEDBACK";
+"feedback.form.submit" = "Send feedback";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Vær så specifik som muligt";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Vis alle faner";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Velkommen til DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Rediger";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "antal.af.faner";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Tilføj widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Brug af DuckDuckGo er lige blevet nemmere.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Måske senere";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Forsæt";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "FORSTÆRKET FRA $1 TIL $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Grad af privatliv";
+"privacy.protection.main.grade" = "GRAD AF PRIVATLIV";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";

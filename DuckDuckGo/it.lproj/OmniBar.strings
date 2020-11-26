@@ -11,7 +11,7 @@
 "hor-Jd-3kw.accessibilityLabel" = "Condividi";
 
 /* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
-"i9n-fD-ncJ.accessibilityLabel" = "Torna indietro";
+"i9n-fD-ncJ.accessibilityLabel" = "Vai indietro";
 
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
 "IHT-9R-ERy.normalTitle" = "Annulla";

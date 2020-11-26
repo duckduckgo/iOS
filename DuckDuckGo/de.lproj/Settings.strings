@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Feuersichere Websites";
+"0DQ-yq-UuT.text" = "Feuerfeste Websites";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Aktivieren, damit sich Links nicht automatisch in anderen installierten Apps öffnen.";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Standard";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Datenschutz – leicht gemacht. ";
+"gji-Fs-EET.text" = "Datenschutz leicht gemacht. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Thema";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Aktion";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Vorschläge für die Autovervollständigung anzeigen";
+"U8i-cQ-5WW.text" = "Vorschläge für die Autovervollständigung";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Alle feuerfesten Websites entfernen";
@@ -167,7 +167,7 @@
 "xof-5k-PkI.text" = "Als Standard-Browser festlegen";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Feuersichere Websites";
+"xUX-nF-HOl.title" = "Feuerfeste Websites";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tastatur";
@@ -182,7 +182,7 @@
 "Zpg-h0-rYv.text" = "Neuer Tab";
 
 /* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Für diese ungeschützten Websites ist\nder Datenschutz nicht aktiviert.";
+"zvh-2e-Wmz.text" = "Für diese ungeschützten Websites ist der Datenschutz nicht aktiviert.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Startbildschirm";

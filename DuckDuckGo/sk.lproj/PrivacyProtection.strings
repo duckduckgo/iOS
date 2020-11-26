@@ -23,7 +23,7 @@
 "5dV-qp-Hz5.text" = "Posilnený stupeň";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
-"6os-4h-chg.text" = "Label";
+"6os-4h-chg.text" = "Označenie";
 
 /* Class = "UILabel"; text = "Uh-oh, that didn’t work."; ObjectID = "7k3-Qj-oya"; */
 "7k3-Qj-oya.text" = "Och, nefungovalo to.";
@@ -71,7 +71,7 @@
 "IPS-SD-65t.text" = "Top prenasledovatelia";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
-"J3L-KE-1Vb.text" = "Label";
+"J3L-KE-1Vb.text" = "Označenie";
 
 /* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Nenašli sa žiadne postupy ochrany súkromia";
@@ -80,7 +80,7 @@
 "Kme-pZ-l7N.normalTitle" = "Nezabezpečené webové stránky";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
-"Mv2-oP-SQd.text" = "Label";
+"Mv2-oP-SQd.text" = "Označenie";
 
 /* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; Note = "Placeholder string, do not translate"; */
 "OHN-Tz-cdk.text" = "ZABLOKOVANÉ SLEDOVACIE SIETE";

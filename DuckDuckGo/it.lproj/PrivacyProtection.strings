@@ -20,7 +20,7 @@
 "3uo-s0-uRc.text" = "Verifica la tua connessione a Internet e riprova.";
 
 /* Class = "UILabel"; text = "Enhanced Grade"; ObjectID = "5dV-qp-Hz5"; */
-"5dV-qp-Hz5.text" = "Punteggio migliorato";
+"5dV-qp-Hz5.text" = "Valutazione migliorata";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
 "6os-4h-chg.text" = "Label";
@@ -32,22 +32,22 @@
 "7nh-8f-M2e.text" = "www.example.com";
 
 /* Class = "UILabel"; text = "Privacy Grade"; ObjectID = "7xH-3L-wpf"; */
-"7xH-3L-wpf.text" = "Punteggio sulla privacy";
+"7xH-3L-wpf.text" = "Valutazione dell’affidabilità dei siti";
 
 /* Class = "UITableViewController"; title = "xxx"; ObjectID = "7Z1-eg-OWQ"; */
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Pratiche sulla privacy";
+"25V-p3-wsn.text" = "PRATICHE DI PRIVACY";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
-"953-jn-tmN.normalTitle" = "Reimposta le statistiche della rete del sistema di tracciamento";
+"953-jn-tmN.normalTitle" = "Reimposta le statistiche sulle reti dei sistemi di tracciamento";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
 "aD3-hP-MUU.text" = "PRINCIPALI MINACCE DELLE RETI DI TRACCIAMENTO";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Connessione crittografata";
+"dZC-7f-pp3.text" = "CONNESSIONE CRITTOGRAFATA";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -65,28 +65,28 @@
 "hDv-jp-eaS.normalTitle" = "Segnala sito danneggiato";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
-"iF1-sO-WXk.text" = "Pratiche sulla privacy";
+"iF1-sO-WXk.text" = "Pratiche di privacy";
 
 /* Class = "UILabel"; text = "Top Offenders"; ObjectID = "IPS-SD-65t"; */
 "IPS-SD-65t.text" = "Minacce principali";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
-"J3L-KE-1Vb.text" = "Label";
+"J3L-KE-1Vb.text" = "Etichetta";
 
 /* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
-"k0S-dU-EUe.text" = "Pratiche sulla privacy non trovate";
+"k0S-dU-EUe.text" = "Pratiche di privacy non trovate";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
 "Kme-pZ-l7N.normalTitle" = "Siti non protetti";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
-"Mv2-oP-SQd.text" = "Label";
+"Mv2-oP-SQd.text" = "Etichetta";
 
 /* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; Note = "Placeholder string, do not translate"; */
 "OHN-Tz-cdk.text" = "n TRACKER NETWORKS BLOCKED";
 
 /* Class = "UILabel"; text = "Good Privacy Practices"; ObjectID = "oyz-09-obQ"; */
-"oyz-09-obQ.text" = "Buone pratiche sulla privacy";
+"oyz-09-obQ.text" = "Buone pratiche di privacy";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "pW9-ic-ro9"; */
 "pW9-ic-ro9.text" = "Protezione della privacy del sito";

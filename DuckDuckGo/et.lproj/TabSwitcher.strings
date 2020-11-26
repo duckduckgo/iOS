@@ -11,7 +11,7 @@
 "2GU-MM-UwX.text" = "Pealkiri";
 
 /* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
-"5nO-MZ-vSY.accessibilityLabel" = "Sulge kõik vahekaardid ja kustuta andmed";
+"5nO-MZ-vSY.accessibilityLabel" = "Sulge kõik vahelehed ja kustuta andmed";
 
 /* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
 "Cy7-Lb-veV.text" = "Vahelehed";
@@ -23,7 +23,7 @@
 "G2C-qh-g3T.accessibilityLabel" = "Sulge vaheleht";
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
-"Gyy-py-IOg.accessibilityLabel" = "Vahekaart lugemata";
+"Gyy-py-IOg.accessibilityLabel" = "Vaheleht lugemata";
 
 /* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "h1S-c2-Spf"; */
 "h1S-c2-Spf.title" = "Sulge kõik vahekaardid ja kustuta andmed";
@@ -35,7 +35,7 @@
 "kW3-ZC-Axl.normalTitle" = "Valmis";
 
 /* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
-"L7l-vl-rDZ.accessibilityLabel" = "Vahelda ruudustiku- ja loendivaadet";
+"L7l-vl-rDZ.accessibilityLabel" = "Võrgu- ja loendivaate vahel vahetamine";
 
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
 "LbT-NO-T0G.text" = "Link";

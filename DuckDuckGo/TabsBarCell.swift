@@ -47,7 +47,7 @@ class TabsBarCell: UICollectionViewCell {
         
         if #available(iOS 13.4, *) {
             removeButton.isPointerInteractionEnabled = true
-            removeButton.pointerStyleProvider = { button, effect, shape -> UIPointerStyle? in
+            removeButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
                 return .init(effect: .lift(.init(view: button)))
             }
             

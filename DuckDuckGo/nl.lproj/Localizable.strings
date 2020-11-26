@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Openen in nieuw tabblad";
 
 /* Open action */
-"action.title.open" = "Open";
+"action.title.open" = "Openen";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Plakken en gaan";
@@ -41,7 +41,7 @@
 "action.title.readingList" = "Toevoegen aan leeslijst";
 
 /* Refresh action - button shown in alert */
-"action.title.refresh" = "Opnieuw laden";
+"action.title.refresh" = "Vernieuwen";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Defecte website melden";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video werd niet afgespeeld";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Beschrijf wat er is gebeurd";
+"brokensite.sectionTitle" = "BESCHRIJF WAT ER IS GEBEURD";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Tips voor altijd verbergen";
@@ -170,7 +170,7 @@
 "dax.hide.title" = "Resterende tips verbergen?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Uw DuckDuckGo-zoekopdrachten zijn anoniem en ik sla uw zoekgeschiedenis nooit op. Nooit. 🙌";
+"dax.onboarding.browsing.after.search" = "Je DuckDuckGo-zoekopdrachten zijn anoniem en ik sla je zoekgeschiedenis nooit op. Nooit. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";
@@ -179,22 +179,22 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "High Five!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "High five!";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* probeerde je hier te volgen.\n\nDat heb ik geblokkeerd!\n\n☝️ Check de URL-balk om te zien wie je probeert te volgen wanneer je een nieuwe site bezoekt.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "High Five!";
+"dax.onboarding.browsing.one.tracker.cta" = "High five!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
-"dax.onboarding.browsing.site.is.major.tracker" = "Opgelet! Ik kan niet voorkomen dat %1$@ jouw activiteit op %2$@ kan zien.\n\nMaar als je met mij surft, kan ik ervoor zorgen dat %1$@ minder over je te weten komt door hun trackers op veel andere sites te blokkeren.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Opgelet! Ik kan niet voorkomen dat %1$@ jouw activiteit op %2$@ kan zien.\n\nMaar als je met mij browset, kan ik ervoor zorgen dat %1$@ minder over je te weten komt door hun trackers op veel andere sites te blokkeren.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Ik snap het";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Opgelet! Omdat %2$@ eigenaar is van %1$@ kan ik niet voorkomen dat ze jouw activiteit hier kunnen zien.\n\nMaar als je met mij surft, kan ik ervoor zorgen dat %2$@ minder over je te weten komt door hun trackers op veel andere sites te blokkeren.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Opgelet! Omdat %2$@ eigenaar is van %1$@ kan ik niet voorkomen dat ze jouw activiteit hier kunnen zien.\n\nMaar als je met mij browset, kan ik ervoor zorgen dat %2$@ minder over je te weten komt door hun trackers op veel andere sites te blokkeren.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Ik snap het";
@@ -209,7 +209,7 @@
 "dax.onboarding.home.add.favorite" = "Bezoek je favoriete websites in een oogwenk!\n\nGa naar een van je favoriete sites, tik op het pictogram '⋯' en selecteer *Toevoegen aan favorieten*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Bezoek je favoriete websites in een oogwenk!\n\n Ga naar een van je favoriete sites, tik op de knop om het menu te openen en selecteer Toevoegen aan favorieten.";
+"dax.onboarding.home.add.favorite.accessible" = "Bezoek je favoriete websites in een oogwenk! Ga naar een van je favoriete sites, tik op de knop om het menu te openen en selecteer Toevoegen aan favorieten.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Probeer vervolgens een van je favoriete sites te bezoeken!\n\nIk blokkeer trackers zodat ze je niet kunnen bespioneren. Indien mogelijk upgrade ik ook de beveiliging van je verbinding. 🔒";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Nog geen favorieten";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Geen overeenkomsten gevonden";
 
 /* No comment provided by engineer. */
 "favorite" = "Favoriet";
@@ -320,7 +323,7 @@
 "feedback.ddgSearch.caption" = "Welke zoekfunctie kunnen we toevoegen of verbeteren?";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.description" = "DuckDuckGo zoekproblemen";
+"feedback.ddgSearch.description" = "DuckDuckGo-zoekproblemen";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.entry" = "DuckDuckGo-zoekfunctie is niet goed genoeg";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Vertel ons wat we kunnen verbeteren";
 
 /* Confirmation button */
-"feedback.form.submit" = "FEEDBACK VERSTUREN";
+"feedback.form.submit" = "Feedback versturen";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Wees zo specifiek mogelijk";
@@ -443,7 +446,7 @@
 "home.message.header" = "Stel DuckDuckGo in als standaardbrowser.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Elke keer links in een rustige toestand openen.";
+"home.message.subheader" = "Open links altijd met een gerust hart.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NIEUW VOOR IOS 14";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Alle tabbladen weergeven";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "WELKOM BIJ DUCKDUCKGO!";
+"launchscreenWelcomeMessage" = "Welkom bij\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Bewerken";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Widget toevoegen";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGo is nu nog gemakkelijker om te gebruiken.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Later misschien";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Doorgaan";
@@ -551,10 +563,10 @@
 "onboardingStartBrowsing" = "Beginnen met browsen";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "WELKOM BIJ DUCKDUCKGO!";
+"onboardingWelcomeHeader" = "Welkom bij DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Sorry, geen app kan deze link verwerken.";
+"open.externally.failed" = "Sorry, geen enkele app kan deze link verwerken.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites gebruiken cookies om te zorgen dat je ingelogd blijft. Als je een site brandveilig maakt, worden de cookies niet gewist en blijf je ingelogd, zelfs nadat je de vuurknop hebt gebruikt.";
@@ -581,7 +593,7 @@
 "preserveLogins.switch.title" = "Vragen om websites brandveilig te maken";
 
 /* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ is nu brandveilig! Ga naar instellingen om deze te verwijderen.";
+"preserveLogins.toast" = "%@ is nu brandveilig! Ga naar instellingen om te verwijderen.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "VERBETERD VAN $1 NAAR $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Privacyniveau";
+"privacy.protection.main.grade" = "PRIVACYKLASSE";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -710,7 +722,7 @@
 "privacy.protection.practices.footer.info" = "Met de informatie over privacypraktijken van ToS;DR";
 
 /* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Privacypraktijken geven aan in hoeverre de persoonsgegevens die u deelt met een website beschermd zijn.";
+"privacy.protection.practices.header.info" = "Privacypraktijken geven aan in hoeverre de persoonsgegevens die je deelt met een website beschermd zijn.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.reviewed.info" = "Deze website stuurt je een melding voordat je gegevens worden overdragen in het geval van een fusie of overname";
@@ -719,7 +731,7 @@
 "privacy.protection.practices.unknown.info" = "De privacypraktijken van deze website zijn niet gecontroleerd.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privacyniveau %@";
+"privacy.protection.site.grade" = "Privacyklasse %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Druk hierop om het scherm Privacybescherming te openen";

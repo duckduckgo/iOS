@@ -1,11 +1,11 @@
 /* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Zaštićena mrežna mjesta";
+"0DQ-yq-UuT.text" = "Zaštićena web-mjesta";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
-"2ky-s9-1aZ.text" = "Inačica";
+"2ky-s9-1aZ.text" = "Verzija";
 
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Tipkovnica";
@@ -95,7 +95,7 @@
 "fdJ-b1-Des.title" = "Automatsko brisanje podataka";
 
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Nezaštićena mrežna mjesta";
+"FHC-1z-Z3v.text" = "Nezaštićena web-mjesta";
 
 /* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
 "FpT-1C-xtx.headerTitle" = "Ostalo";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Zadano";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Zaštita privatnosti, pojednostavljeno. ";
+"gji-Fs-EET.text" = "Zaštita privatnosti, na jednostavan način. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Tema";
@@ -116,7 +116,7 @@
 "HLr-R8-xxF.text" = "Pretpregledi na dugi pritisak";
 
 /* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
-"Hu1-5i-vjL.text" = "Još nema nezaštićenih mrežnih mjesta";
+"Hu1-5i-vjL.text" = "Još nema nezaštićenih web-mjesta";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikona";
@@ -125,16 +125,16 @@
 "m23-t6-9cb.text" = "Pošalji povratnu informaciju";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Kad je omogućeno, mrežna će se mjesta automatski otvoriti u pregledniku DuckDuckGo.";
+"NRb-Cc-1d6.footerTitle" = "Kad je omogućeno, web-mjesta automatski će se otvoriti u pregledniku DuckDuckGo.";
 
 /* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Nijedno";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
-"OHV-qC-tL9.title" = "Nezaštićena mrežna mjesta";
+"OHV-qC-tL9.title" = "Nezaštićena web-mjesta";
 
 /* Class = "UILabel"; text = "About"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "O";
+"oM7-1o-9oY.text" = "O nama";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Label";
@@ -152,7 +152,7 @@
 "U8i-cQ-5WW.text" = "Prikaži prijedloge za automatsko ispunjavanje";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
-"UZx-52-aer.text" = "Ukloni sve web stranice označene kao vatrootporne";
+"UZx-52-aer.text" = "Ukloni sva web-mjesta označena kao vatrootporne";
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
 "vPz-uO-6gB.text" = "Globalna kontrola privatnosti (GPC)";
@@ -167,7 +167,7 @@
 "xof-5k-PkI.text" = "Postavi kao zadani preglednik";
 
 /* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Vatrootporne web stranice";
+"xUX-nF-HOl.title" = "Zaštićena web-mjesta";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tipkovnica";

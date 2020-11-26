@@ -2,19 +2,19 @@
 "0ax-Nd-tDU.text" = "Strona stanowi główną sieć skryptów śledzących";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
-"0SO-8y-5QH.text" = "www.example.com";
+"0SO-8y-5QH.text" = "www.domena.pl";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Spróbuj ponownie";
 
 /* Class = "UILabel"; text = "Your Data is Vulnerable"; ObjectID = "2T4-dB-Wu0"; */
-"2T4-dB-Wu0.text" = "Twoje dane są wrażliwe";
+"2T4-dB-Wu0.text" = "Twoje dane są narażone na niebezpieczeństwo";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
 "2xP-ZS-UtN.normalTitle" = "Zgłoś uszkodzoną witrynę";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI ZŁOCZYŃCY";
+"3UG-EO-bt5.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI SPRAWCY";
 
 /* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Sprawdź połączenie internetowe i spróbuj ponownie.";
@@ -29,7 +29,7 @@
 "7k3-Qj-oya.text" = "Niestety to nie zadziałało.";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "7nh-8f-M2e"; */
-"7nh-8f-M2e.text" = "www.example.com";
+"7nh-8f-M2e.text" = "www.domena.pl";
 
 /* Class = "UILabel"; text = "Privacy Grade"; ObjectID = "7xH-3L-wpf"; */
 "7xH-3L-wpf.text" = "Poziom prywatności";
@@ -38,19 +38,19 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Polityka prywatności";
+"25V-p3-wsn.text" = "POLITYKA PRYWATNOŚCI";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Zresetuj statystyki sieciowe modułu śledzącego";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI ZŁOCZYŃCY";
+"aD3-hP-MUU.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI SPRAWCY";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Połączenie zaszyfrowane";
+"dZC-7f-pp3.text" = "POŁĄCZENIE ZASZYFROWANE";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
-"F5w-e3-JfY.text" = "www.example.com";
+"F5w-e3-JfY.text" = "www.domena.pl";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "fqL-1Q-ilH"; */
 "fqL-1Q-ilH.normalTitle" = "Niezabezpieczone witryny";
@@ -74,7 +74,7 @@
 "J3L-KE-1Vb.text" = "Etykieta";
 
 /* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
-"k0S-dU-EUe.text" = "Nie znaleziono praktyk dotyczących prywatności";
+"k0S-dU-EUe.text" = "Nie znaleziono polityk prywatności";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
 "Kme-pZ-l7N.normalTitle" = "Niezabezpieczone witryny";
@@ -92,13 +92,13 @@
 "pW9-ic-ro9.text" = "Ochrona prywatności witryny";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI ZŁOCZYŃCY";
+"rXM-kA-bL0.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI SPRAWCY";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
 "sr7-Qg-P74.text" = "Ochrona prywatności witryny";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI ZŁOCZYŃCY";
+"tpT-I9-kDk.text" = "SIECI SKRYPTÓW ŚLEDZĄCYCH – NAJWIĘKSI SPRAWCY";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Połączenie zaszyfrowane";

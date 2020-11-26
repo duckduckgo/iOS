@@ -11,7 +11,7 @@
 "2T4-dB-Wu0.text" = "Datele tale sunt vulnerabile";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
-"2xP-ZS-UtN.normalTitle" = "Raportați Site-ul Distrus";
+"2xP-ZS-UtN.normalTitle" = "Raportează site-ul defect";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
 "3UG-EO-bt5.text" = "CEI MAI MARI INFRACTORI PRIVIND REȚELELE DE COOKIE-URI DE URMĂRIRE";
@@ -62,7 +62,7 @@
 "GZ4-PW-wOG.text" = "8 instrumente de urmărire blocate";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "hDv-jp-eaS"; */
-"hDv-jp-eaS.normalTitle" = "Raportați Site-ul Distrus";
+"hDv-jp-eaS.normalTitle" = "Raportează site-ul defect";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
 "iF1-sO-WXk.text" = "Practici privind confidențialitatea";

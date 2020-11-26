@@ -1,2 +1,1 @@
-• Our widgets are now more accessible if you're blind or have low vision.
 • Bug fixes and other improvements.

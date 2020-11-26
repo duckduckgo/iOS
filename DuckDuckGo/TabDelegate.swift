@@ -22,6 +22,8 @@ import Core
 
 protocol TabDelegate: class {
 
+    func tabWillRequestNewTab(_ tab: TabViewController) -> UIKeyModifierFlags?
+
     func tabDidRequestNewTab(_ tab: TabViewController)
 
     func tab(_ tab: TabViewController,

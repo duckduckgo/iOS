@@ -32,7 +32,7 @@
 "jr6-Al-4fr.title" = "Pošalji";
 
 /* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "POŠALJI POVRATNE INFORMACIJE";
+"lsB-Kq-U8p.normalTitle" = "Pošalji povratne informacije";
 
 /* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
 "lY6-5c-iu4.title" = "Pošalji povratnu informaciju";
@@ -56,7 +56,7 @@
 "TMj-NM-j3b.placeholder" = "Koje je web-mjesto neispravno?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Prijavi neispravnu web stranicu";
+"WjT-HM-yim.title" = "Prijavi neispravno web-mjesto";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Razlog za neispravno web-mjesto";

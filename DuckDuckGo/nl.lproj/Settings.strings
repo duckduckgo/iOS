@@ -113,7 +113,7 @@
 "gS2-mg-l7R.title" = "Thema";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Voorvertoning bij lang indrukken";
+"HLr-R8-xxF.text" = "Voorbeeldweergave bij lang indrukken";
 
 /* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Nog geen onbeschermde sites";

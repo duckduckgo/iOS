@@ -11,10 +11,10 @@
 "action.title.copy" = "Copiar";
 
 /* Disable protection action */
-"action.title.disable.protection" = "Deshabilitar Protección";
+"action.title.disable.protection" = "Desactivar la protección de privacidad";
 
 /* Enable protection action */
-"action.title.enable.protection" = "Habilitar Protección";
+"action.title.enable.protection" = "Activar la protección de privacidad";
 
 /* No comment provided by engineer. */
 "action.title.forgetAll" = "Cerrar pestañas y borrar datos";
@@ -44,7 +44,7 @@
 "action.title.refresh" = "Actualizar";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Reportar sitio web roto";
+"action.title.reportBrokenSite" = "Informar de sitio web dañado";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Solicitar versión de escritorio del sitio web";
@@ -149,13 +149,13 @@
 "brokensite.category.paywall" = "El sitio me pidió que desactivara";
 
 /* Broken Site Category */
-"brokensite.category.unsupported" = "El navegador es incompatible.";
+"brokensite.category.unsupported" = "El navegador es incompatible";
 
 /* Broken Site Category */
 "brokensite.category.videos" = "No se ha reproducido el vídeo";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Describe qué pasó";
+"brokensite.sectionTitle" = "DESCRIBE QUÉ HA PASADO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ocultar consejos para siempre";
@@ -164,16 +164,16 @@
 "dax.hide.cancel" = "Cancelar";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Sólo hay unos cuantos, y tratamos de hacerlos informativos.";
+"dax.hide.message" = "Solo hay unos cuantos, e intentamos que sean informativos.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "¿Ocultar los consejos restantes?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Tus búsquedas con DuckDuckGo son anónimas y nunca almaceno tu historial de búsqueda. Nunca. 🙌";
+"dax.onboarding.browsing.after.search" = "Tus búsquedas con DuckDuckGo son anónimas y nunca almaceno tu historial de búsquedas. Nunca. 🙌";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search.cta" = "¡Genial!";
+"dax.onboarding.browsing.after.search.cta" = "¡Uf!";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "¡Choca esos cinco!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* ha intentado rastrearte aquí.\n\nLo he bloqueado\n\n☝️ Puedes consultar la barra de navegación para ver quién trata de rastrearte cuando visitas un nuevo sitio.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* ha intentado rastrearte aquí.\n\nLo he bloqueado.\n\n☝️ Puedes consultar la barra de navegación para ver quién trata de rastrearte cuando visitas un nuevo sitio.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "¡Choca esos cinco!";
@@ -209,7 +209,7 @@
 "dax.onboarding.home.add.favorite" = "¡Visita tus sitios web favoritos en un instante!\n\nVe a un sitio que te guste. Y luego pulsa el icono \"...\" y selecciona *Añadir a Favoritos*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "¡Visita tus sitios web favoritos en un instante!\n\n Visita uno de tus sitios favoritos. Luego pulsa el botón Abrir menú y selecciona Añadir a favoritos.";
+"dax.onboarding.home.add.favorite.accessible" = "¡Visita tus sitios web favoritos en un instante! Visita uno de tus sitios favoritos. Luego pulsa el botón Abrir menú y selecciona Añadir a favoritos.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "A continuación, intenta visitar uno de tus sitios favoritos.\n\nBloquearé los rastreadores para que no puedan espiarte. También mejoraré la seguridad de tu conexión, si es posible. 🔒";
@@ -218,7 +218,7 @@
 "dax.onboarding.home.subsequent" = "¡Lo estás haciendo muy bien!\n\nRecuerda: cada vez que navegas conmigo corto las alas a un anuncio horrible. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Internet puede ser un poco horrible.\n\nNo te preocupes. Buscar y navegar de forma privada es más fácil de lo que piensas.";
+"dax.onboarding.message" = "Internet puede ser un lugar horrible.\n\nNo te preocupes. Buscar y navegar de forma privada es más fácil de lo que piensas.";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Desactivado";
@@ -243,6 +243,9 @@
 
 /* Empty list state placholder */
 "empty.favorites" = "Todavía no hay favoritos";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "No se han encontrado coincidencias";
 
 /* No comment provided by engineer. */
 "favorite" = "Favorito";
@@ -326,7 +329,7 @@
 "feedback.ddgSearch.entry" = "La búsqueda DuckDuckGo no es lo suficientemente buena";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.languageOrRegion" = "Buscar en un idioma o región específicos";
+"feedback.ddgSearch.languageOrRegion" = "Buscar en un idioma o región en particular";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.layout" = "El diseño debería parecerse más al de Google";
@@ -344,10 +347,10 @@
 "feedback.form.caption" = "Dinos cómo podemos mejorar";
 
 /* Confirmation button */
-"feedback.form.submit" = "ENVIAR OPINIÓN";
+"feedback.form.submit" = "Enviar opinión";
 
 /* No comment provided by engineer. */
-"feedback.negative.form.genericPlaceholder" = "Sé lo más concreto posible.";
+"feedback.negative.form.genericPlaceholder" = "Concreta lo máximo posible";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.placeholder" = "¿Hay algún detalle que quieras incluir?";
@@ -368,10 +371,10 @@
 "feedback.performance.caption" = "¿Qué problema estás experimentando?";
 
 /* No comment provided by engineer. */
-"feedback.performance.crashes" = "La aplicación se bloquea o deja de funcionar";
+"feedback.performance.crashes" = "La aplicación se bloquea o se detiene";
 
 /* No comment provided by engineer. */
-"feedback.performance.description" = "Problemas de funcionamiento";
+"feedback.performance.description" = "Problemas de rendimiento";
 
 /* No comment provided by engineer. */
 "feedback.performance.entry" = "La aplicación va lenta, contiene errores o se bloquea";
@@ -383,7 +386,7 @@
 "feedback.performance.playback" = "Problemas al reproducir vídeos o contenido multimedia";
 
 /* No comment provided by engineer. */
-"feedback.performance.slowLoading" = "Los resultados de búsqueda o páginas web tardan en cargarse";
+"feedback.performance.slowLoading" = "Los resultados de búsqueda o los sitios web tardan en cargarse";
 
 /* Header above input field */
 "feedback.positive.form.header" = "Compartir detalles";
@@ -395,7 +398,7 @@
 "feedback.positive.form.supplementary" = "¿Hay algún detalle que quieras compartir con el equipo?";
 
 /* No comment provided by engineer. */
-"feedback.positive.header" = "¡Genial! Gracias por contarlo.";
+"feedback.positive.header" = "¡Es fantástico oír eso!";
 
 /* No comment provided by engineer. */
 "feedback.positive.noThanks" = "No, gracias. He terminado";
@@ -410,7 +413,7 @@
 "feedback.start.header" = "¡Empecemos!";
 
 /* No comment provided by engineer. */
-"feedback.start.supplementary" = "¿Cómo calificarías tu opinión?";
+"feedback.start.supplementary" = "¿En qué categoría incluirías tu opinión?";
 
 /* No comment provided by engineer. */
 "feedback.submitted.confirmation" = "Gracias, se han enviado tus opiniones.";
@@ -440,7 +443,7 @@
 "home.message.buttonText" = "Definir como navegador predeterminado";
 
 /* No comment provided by engineer. */
-"home.message.header" = "Haz que DuckDuckGo sea tu navegador predeterminado.";
+"home.message.header" = "Establece DuckDuckGo como tu navegador predeterminado.";
 
 /* No comment provided by engineer. */
 "home.message.subheader" = "Abre los enlaces con tranquilidad, siempre.";
@@ -449,7 +452,7 @@
 "home.message.topText" = "NUEVO EN IOS 14";
 
 /* No comment provided by engineer. */
-"home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio";
+"home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio.";
 
 /* No comment provided by engineer. */
 "home.row.reminder.message" = "Añade DuckDuckGo a tu inicio para acceder más fácilmente.";
@@ -524,7 +527,7 @@
 "keyCommandShowAllTabs" = "Mostrar todas las pestañas";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "¡Bienvenido a DuckDuckGo!";
+"launchscreenWelcomeMessage" = "¡Bienvenido a\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Editar";
@@ -533,13 +536,22 @@
 "number.of.tabs" = "number.of.tabs";
 
 /* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Añadir widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Utilizar DuckDuckGo ahora es más fácil.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Quizá más tarde";
+
+/* No comment provided by engineer. */
 "onboardingContinue" = "Continuar";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserMaybeLater" = "Quizás más tarde";
+"onboardingDefaultBrowserMaybeLater" = "Quizá más tarde";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserTitle" = "Haz que DuckDuckGo sea tu navegador predeterminado.";
+"onboardingDefaultBrowserTitle" = "Establece DuckDuckGo como tu navegador predeterminado.";
 
 /* No comment provided by engineer. */
 "onboardingSetAsDefaultBrowser" = "Definir como navegador predeterminado";
@@ -581,7 +593,7 @@
 "preserveLogins.switch.title" = "Preguntar antes de marcar sitios web como a prueba de fuego";
 
 /* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ ya está a prueba de fuego Entra en los ajustes para eliminarlo.";
+"preserveLogins.toast" = "%@ ya está a prueba de fuego. Entra en los ajustes para eliminarlo.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";
@@ -599,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Tamaño efectivo";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "correo electrónico";
+"privacy.protection.encryption.email" = "Correo electrónico";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Conexión cifrada";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "MEJORADA DE $1 A $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Nivel de privacidad";
+"privacy.protection.main.grade" = "GRADO DE PRIVACIDAD";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -734,7 +746,7 @@
 "privacy.protection.tos.mixed" = "Prácticas de privacidad mixtas";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "«Prácticas de privacidad deficientes»";
+"privacy.protection.tos.poor" = "Prácticas de privacidad deficientes";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Prácticas de privacidad desconocidas";
@@ -773,7 +785,7 @@
 "section.title.favorites" = "Favoritos";
 
 /* No comment provided by engineer. */
-"settings.about.text" = "En DuckDuckGo estamos estableciendo el nuevo estándar de confianza en línea.\n\nEl navegador privado de DuckDuckGo ofrece todas los funciones esenciales de privacidad que necesitas para protegerte mientras realizas búsquedas y navegas en Internet, incluyendo bloqueo de rastreadores, cifrado más inteligente y búsquedas privadas de DuckDuckGo.\n\nDespués de todo, Internet no debería percibirse como una amenaza y disfrutar de la privacidad en línea que mereces debería ser lo más fácil posible.";
+"settings.about.text" = "En DuckDuckGo, estamos estableciendo el nuevo estándar de confianza en línea.\n\nEl navegador privado de DuckDuckGo ofrece todos los Privacy Essentials que necesitas para protegerte mientras realizas búsquedas y navegas en Internet, incluyendo bloqueo de rastreadores, cifrado más inteligente y búsquedas privadas de DuckDuckGo.\n\nDespués de todo, Internet no tiene por qué ser tan horrible y disfrutar de la privacidad en línea que mereces debería ser lo más fácil posible.";
 
 /* No comment provided by engineer. */
 "settings.tutorial.info" = "Otros motores de búsqueda te rastrean incluso cuando estás en modo de búsqueda privada. Nosotros no te rastreamos. Punto final.";
@@ -800,10 +812,10 @@
 "siteFeedback.subtitle" = "La notificación de sitios web dañados es completamente anónima y nos ayuda a mejorar la aplicación.";
 
 /* This is a form title */
-"siteFeedback.title" = "Notificar un sitio web no operativo";
+"siteFeedback.title" = "Notificar un sitio web dañado";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "¿Qué sitio web no se carga?";
+"siteFeedback.urlPlaceholder" = "¿Qué sitio web no funciona?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Cerrar la pestaña inicio";
@@ -854,7 +866,7 @@
 "web.url.save.bookmark.exists" = "Marcador ya guardado";
 
 /* Floating message indicating failure */
-"web.url.save.bookmark.none" = "No hay ningún sitio web para añadir a marcadores";
+"web.url.save.bookmark.none" = "No hay ninguna página web para añadir a marcadores";
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorito guardado";

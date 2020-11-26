@@ -26,10 +26,10 @@
 "action.title.newBackgroundTabForUrl" = "Arka Planda Aç";
 
 /* Create New Tab action */
-"action.title.newTab" = "Yeni sekme";
+"action.title.newTab" = "Yeni Sekme";
 
 /* Open in New Tab action */
-"action.title.newTabForUrl" = "Yeni sekmede aç";
+"action.title.newTabForUrl" = "Yeni Sekmede Aç";
 
 /* Open action */
 "action.title.open" = "Aç";
@@ -47,10 +47,10 @@
 "action.title.reportBrokenSite" = "Hatalı Siteyi Bildir";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Masaüstü Sitesini Yükle";
+"action.title.request.desktop.site" = "Masaüstü Sitesini İste";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Mobil Siteyi Yükle";
+"action.title.request.mobile.site" = "Mobil Siteyi İste";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Kaydet";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video oynatılamadı";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Ne olduğunu açıklayın";
+"brokensite.sectionTitle" = "NE OLDUĞUNU AÇIKLAYIN";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "İpuçlarını sonsuza kadar gizle";
@@ -164,7 +164,7 @@
 "dax.hide.cancel" = "Vazgeç";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Sadece birkaç tane var ve onları da bilgilendirici hale getirmeye çalıştık.";
+"dax.hide.message" = "Sadece birkaç tane var ve onları da bilgilendirici hâle getirmeye çalıştık.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "Kalan ipuçları gizlensin mi?";
@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Anladım";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Dikkat! %1$@ sitesinin sahibi %2$@ olduğundan, buradaki etkinliğinizi görmesini engelleyemem.\n\nAma benimle gezinirseniz diğer sitelerdeki pek çok izleyicisini engelleyerek sizinle ilgili olarak %1$@ tarafından toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Dikkat! %1$@ sitesinin sahibi %2$@ olduğundan, buradaki etkinliğinizi görmesini engelleyemem.\n\nAma benimle gezinirseniz diğer sitelerdeki pek çok izleyicisini engelleyerek sizinle ilgili olarak %2$@ tarafından toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Anladım";
@@ -206,10 +206,10 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Anladım";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "En sevdiğiniz siteleri anında ziyaret edin!\n\nSevdiğiniz bir siteye gidin. Ardından \"...\" simgesine dokunun ve *Favorilere Ekle* öğesini seçin.";
+"dax.onboarding.home.add.favorite" = "En sevdiğiniz siteleri anında ziyaret edin!\n\nSevdiğiniz bir siteye gidin. Ardından \"...\" simgesine dokunun ve *Favorilere Ekle* ögesini seçin.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "En sevdiğiniz siteleri anında ziyaret edin!\n\n En sevdiğiniz sitelerden birini ziyaret edin. Ardından, menü düğmesine dokunun ve Favorilere Ekle'yi seçin.";
+"dax.onboarding.home.add.favorite.accessible" = "En sevdiğiniz siteleri anında ziyaret edin! En sevdiğiniz sitelerden birini ziyaret edin. Ardından, menü düğmesine dokunun ve Favorilere Ekle'yi seçin.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Şimdi favori sitelerinizden birini ziyaret etmeyi deneyin!\n\nSizi gözetlemelerini önlemek için izleyicileri engelleyeceğim. Mümkünse bağlantınızın güvenlik seviyesini de yükselteceğim. 🔒";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Etkin";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Verileriniz satılık olmamalı. DuckDuckGo'da aynı fikirdeyiz. \"Küresel Gizlilik Kontrolü\" (GPC) ayarını etkinleştirirseniz web sitelerine şu tercihleri yaptığınızı bildiririz:<br/><br/> • Kişisel verilerinizin satılmasını istemediğinizi.<br/>• Kişisel verilerinizin diğer şirketlerle paylaşımının sınırlandırılmasını istediğinizi.";
+"donotsell.info.headertext" = "Verileriniz satılık olmamalı. DuckDuckGo'da aynı fikirdeyiz. \"Küresel Gizlilik Kontrolü\" (GPC) ayarını etkinleştirirseniz web sitelerine şu tercihleri yaptığınızı bildiririz:\n\n • Kişisel verilerinizin satılmasını istemediğinizi.\n• Kişisel verilerinizin diğer şirketlerle paylaşımının sınırlandırılmasını istediğinizi.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi yok";
 
 /* Empty list state placholder */
 "empty.favorites" = "Henüz favori yok";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Eşleşme bulunamadı";
 
 /* No comment provided by engineer. */
 "favorite" = "Favori";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Neleri geliştirebileceğimizi lütfen bize söyleyin";
 
 /* Confirmation button */
-"feedback.form.submit" = "GERİ BİLDİRİM GÖNDER";
+"feedback.form.submit" = "Geri Bildirim gönder";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Lütfen mümkün olduğunca spesifik olun";
@@ -359,7 +362,7 @@
 "feedback.negative.supplementary" = "En çok ne ile ilgili sıkıntı yaşadınız?";
 
 /* No comment provided by engineer. */
-"feedback.other.description" = "Diğer sorunlar";
+"feedback.other.description" = "Diğer Sorunlar";
 
 /* No comment provided by engineer. */
 "feedback.other.entry" = "Bunların hiçbiri";
@@ -371,7 +374,7 @@
 "feedback.performance.crashes" = "Uygulama çöküyor veya donuyor";
 
 /* No comment provided by engineer. */
-"feedback.performance.description" = "Performans sorunları";
+"feedback.performance.description" = "Performans Sorunları";
 
 /* No comment provided by engineer. */
 "feedback.performance.entry" = "Uygulama yavaş, hatalı veya kilitleniyor";
@@ -416,7 +419,7 @@
 "feedback.submitted.confirmation" = "Teşekkürler! Geri bildirim gönderildi.";
 
 /* No comment provided by engineer. */
-"feedback.websiteLoading.description" = "Web sitesi yükleme Sorunları";
+"feedback.websiteLoading.description" = "Web Sitesi Yükleme Sorunları";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.entry" = "Bazı web siteleri düzgün yüklenmiyor";
@@ -437,7 +440,7 @@
 "findinpage.title" = "Sayfada bul";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Varsayılan tarayıcı olarak ayarla";
+"home.message.buttonText" = "Varsayılan Tarayıcı olarak ayarla";
 
 /* No comment provided by engineer. */
 "home.message.header" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
@@ -464,7 +467,7 @@
 "homeTab.title" = "Ana Sayfa";
 
 /* No comment provided by engineer. */
-"keyCommandAddBookmark" = "Yer imi ekle";
+"keyCommandAddBookmark" = "Yer İmi Ekle";
 
 /* No comment provided by engineer. */
 "keyCommandAddFavorite" = "Favori Ekle";
@@ -479,13 +482,13 @@
 "keyCommandClose" = "Kapat";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Sekmeyi kapat";
+"keyCommandCloseTab" = "Sekmeyi Kapat";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Sayfada bul";
 
 /* No comment provided by engineer. */
-"keyCommandFindNext" = "Sonraki bul";
+"keyCommandFindNext" = "Sonrakini bul";
 
 /* No comment provided by engineer. */
 "keyCommandFindPrevious" = "Öncekini bul";
@@ -497,7 +500,7 @@
 "keyCommandLocation" = "Adres Ara veya Gir";
 
 /* No comment provided by engineer. */
-"keyCommandNewTab" = "Yeni sekme";
+"keyCommandNewTab" = "Yeni Sekme";
 
 /* No comment provided by engineer. */
 "keyCommandNextTab" = "Sonraki Sekme";
@@ -524,7 +527,7 @@
 "keyCommandShowAllTabs" = "Tüm Sekmeleri Göster";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "DuckDuckGo'ya hoş geldiniz!";
+"launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
 
 /* Edit button */
 "navigation.title.edit" = "Düzenle";
@@ -533,16 +536,25 @@
 "number.of.tabs" = "number.of.tabs";
 
 /* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Widget Ekle";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGo'yu kullanmak artık daha kolay.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Belki Sonra";
+
+/* No comment provided by engineer. */
 "onboardingContinue" = "Devam et";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserMaybeLater" = "Belki sonra";
+"onboardingDefaultBrowserMaybeLater" = "Belki Sonra";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserTitle" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
 
 /* No comment provided by engineer. */
-"onboardingSetAsDefaultBrowser" = "Varsayılan tarayıcı olarak ayarla";
+"onboardingSetAsDefaultBrowser" = "Varsayılan Tarayıcı olarak ayarla";
 
 /* No comment provided by engineer. */
 "onboardingSkip" = "Atla";
@@ -551,25 +563,25 @@
 "onboardingStartBrowsing" = "Gezinmeye Başla";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "DuckDuckGo'ya hoş geldiniz!";
+"onboardingWelcomeHeader" = "DuckDuckGo'ya Hoş Geldiniz!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Üzgünüz, bu bağlantıyı açacak uygulama yok.";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Web siteleri oturumunuzu açık tutmak için çerezler kullanır. Bir siteyi Yanmaya Dayanıklı yaptığınızda çerezler silinmez ve Yangın Düğmesi'ni kullandıktan sonra bile oturumunuz açık kalır.";
+"preserveLogins.domain.list.footer" = "Web siteleri oturumunuzu açık tutmak için çerezler kullanır. Bir siteyi Korumalı yaptığınızda çerezler silinmez ve Yangın Düğmesi'ni kullandıktan sonra bile oturumunuz açık kalır.";
 
 /* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Web siteleri";
+"preserveLogins.domain.list.title" = "Web Siteleri";
 
 /* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "%@ sitesini Yanmaya Dayanıklı yapmak ister misiniz?";
+"preserveLogins.fireproof.message" = "%@ sitesini Korumalı yapmak ister misiniz?";
 
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Korumalı Web Sitesi";
 
 /* Deny fireproofing action */
-"preserveLogins.menu.defer" = "Şimdi değil";
+"preserveLogins.menu.defer" = "Şimdi Değil";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Tümünü Kaldır";
@@ -578,10 +590,10 @@
 "preserveLogins.remove.all.ok" = "Tamam";
 
 /* Ask to Fireproof Websites */
-"preserveLogins.switch.title" = "Siteleri Yanmaya Dayanıklı Yapmadan Önce Sor";
+"preserveLogins.switch.title" = "Siteleri Korumalı Yapmadan Önce Sor";
 
 /* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ artık Yanmaya Dayanıklı! Bunu değiştirmek için ayarlara gidin.";
+"preserveLogins.toast" = "%@ artık Korumalı! Bunu değiştirmek için ayarlara gidin.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritma";
@@ -614,7 +626,7 @@
 "privacy.protection.encryption.header" = "Şifreli bağlantı, web sitelerine gönderdiğiniz kişisel bilgilerin ele geçirilmesini önler.";
 
 /* Part of certificate info */
-"privacy.protection.encryption.id" = "Subject Key Identifier";
+"privacy.protection.encryption.id" = "Konu Anahtarı Tanımlayıcısı";
 
 /* Part of certificate info */
 "privacy.protection.encryption.issuer" = "Sertifikayı Veren";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "YÜKSELTİLDİ: $1 -> $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Gizlilik Derecesi";
+"privacy.protection.main.grade" = "GİZLİLİK DERECESİ";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -701,7 +713,7 @@
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "%2$@ yılından beri ziyaret ettiğiniz web sitelerin %%%1$@ kadarında izleyici ağları bulundu.";
+"privacy.protection.network.leaderboard" = "%2$@ tarihinden beri ziyaret ettiğiniz web sitelerin %%%1$@ kadarında izleyici ağları bulundu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Kaç izleyiciyi engellediğimizi göstermek için\nhâlâ veri topluyoruz.";
@@ -767,7 +779,7 @@
 "search.hint.duckduckgo" = "Adres ara veya gir";
 
 /* No comment provided by engineer. */
-"section.title.bookmarks" = "Yer imleri";
+"section.title.bookmarks" = "Yer İmleri";
 
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriler";

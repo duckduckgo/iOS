@@ -222,6 +222,7 @@
 		85A1B3B220C6CD9900C18F15 /* CookieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */; };
 		85A1B3B420C6D07100C18F15 /* CookieStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */; };
 		85A313972028E78A00327D00 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 85A313962028E78A00327D00 /* release_notes.txt */; };
+		85A34DA825712BBE001895E6 /* DDGWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A34DA725712BBE001895E6 /* DDGWebView.swift */; };
 		85A53ECA200D1FA20010D13F /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* FileStore.swift */; };
 		85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A9C37820E0E00C00073340 /* HomeRow.xcassets */; };
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
@@ -902,6 +903,7 @@
 		85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorage.swift; sourceTree = "<group>"; };
 		85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorageTests.swift; sourceTree = "<group>"; };
 		85A313962028E78A00327D00 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = release_notes.txt; path = fastlane/metadata/default/release_notes.txt; sourceTree = "<group>"; };
+		85A34DA725712BBE001895E6 /* DDGWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDGWebView.swift; sourceTree = "<group>"; };
 		85A53EC9200D1FA20010D13F /* FileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStore.swift; sourceTree = "<group>"; };
 		85A9C37820E0E00C00073340 /* HomeRow.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeRow.xcassets; sourceTree = "<group>"; };
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
@@ -3160,9 +3162,10 @@
 		F13B4BF41F18C74500814661 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				85A34DA725712BBE001895E6 /* DDGWebView.swift */,
 				8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */,
-				F1617C141E57336D00DEDCAF /* TabManager.swift */,
 				F13B4BF51F18C75D00814661 /* Model */,
+				F1617C141E57336D00DEDCAF /* TabManager.swift */,
 				F13B4BF61F18C76600814661 /* UI */,
 			);
 			name = Tabs;
@@ -4489,6 +4492,7 @@
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
+				85A34DA825712BBE001895E6 /* DDGWebView.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */,
 				98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */,

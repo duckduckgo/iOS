@@ -44,7 +44,7 @@ class DDGWebView: WKWebView {
 
     override func reload() -> WKNavigation? {
         guard let url = url else {
-            // returning nil would probably ok here too, but just let WKWebView do it's thing
+            // returning nil would probably ok here too, but just let WKWebView do its thing
             return super.reload()
         }
         return load(URLRequest(url: url))

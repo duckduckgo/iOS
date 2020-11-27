@@ -1618,6 +1618,8 @@ const sendAndWaitForAnswer = (msg, responseType) => {
         window.addEventListener('message', handler)
     })
 }
+// Access the original setter (needed to bypass React's implementation)
+const setValue = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     
 class DDGAutofill extends HTMLElement {
     constructor (input, associatedForm) {
@@ -1810,7 +1812,9 @@ class DDGAutofill extends HTMLElement {
             sendAndWaitForAnswer({getAlias: true}, 'getAliasResponse').then(res => {
                 if (res.alias) {
                     this.execOnInputs(input => {
-                        input.value = res.alias
+                        setValue.call(input, res.alias);
+                        const ev = new Event('input', {bubbles: true})
+                        input.dispatchEvent(ev)
                         input.classList.add('ddg-autofilled')
 
                         // If the user changes the alias, remove the decoration

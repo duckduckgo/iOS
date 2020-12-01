@@ -1109,6 +1109,8 @@ extension TabViewController: WKNavigationDelegate {
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
+            } else {
+                presentOpenInExternalAppAlert(url: url)
             }
             completion(.cancel)
         }

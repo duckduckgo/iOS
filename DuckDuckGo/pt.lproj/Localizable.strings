@@ -179,13 +179,13 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "Dá cá mais cinco!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Dá cá cinco!";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* estava a tentar rastreá-lo aqui.\n\nEu bloqueei-o!\n\n☝️Pode verificar a barra de endereços para ver quem está a tentar rastreá-lo quando visita um site novo.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "Dá cá mais cinco!";
+"dax.onboarding.browsing.one.tracker.cta" = "Dá cá cinco!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Alerta! Não consigo que %1$@ veja a sua atividade no %2$@.\n\nMas navegue comigo, e eu consigo reduzir o que %1$@ sabe sobre si em geral ao bloquear os seus rastreadores em muitos outros sites.";

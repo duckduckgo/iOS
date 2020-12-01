@@ -167,7 +167,7 @@
 "dax.hide.message" = "Csak néhány van, és megpróbáltuk őket informatívvá tenni.";
 
 /* Title in Hide Dax dialog */
-"dax.hide.title" = "Elrejted a többi tippet?";
+"dax.hide.title" = "Elrejti a többi tippet?";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search" = "A DuckDuckGo keresések névtelenek, és én soha nem tárolom el a keresési előzményeket. Soha. 🙌";
@@ -701,7 +701,7 @@
 "privacy.protection.main.disabled" = "WEBOLDAL VÉDELME LETILTVA";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTETT ERRŐL: $1, ERRE: $2";
+"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTVE ERRŐL: $1, ERRE: $2";
 
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "ADATVÉDELMI FOKOZAT";
@@ -743,10 +743,10 @@
 "privacy.protection.tos.good" = "Jó adatvédelmi gyakorlatok";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Vegyes adatvédelmi gyakorlatok";
+"privacy.protection.tos.mixed" = "Vegyes adatvédelmi gyakorlatok”";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Rossz adatvédelmi gyakorlatok";
+"privacy.protection.tos.poor" = "„Rossz adatvédelmi gyakorlatok”";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Ismeretlen adatvédelmi gyakorlatok";

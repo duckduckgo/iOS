@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Deschide într-o filă nouă";
 
 /* Open action */
-"action.title.open" = "Deschideți";
+"action.title.open" = "Deschide";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Lipește și pornește";
@@ -44,7 +44,7 @@
 "action.title.refresh" = "Reîmprospătare";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Raportați Site-ul Distrus";
+"action.title.reportBrokenSite" = "Raportați site-ul defect";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Solicită versiunea desktop";
@@ -179,13 +179,13 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "Bate Palma!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Bate palma!";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* încercau să te urmărească aici.\n\nI-am blocat!\n\n☝️ Poți verifica bara de adrese pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "Bate Palma!";
+"dax.onboarding.browsing.one.tracker.cta" = "Bate palma!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Atenție! Nu pot împiedica %1$@ să îți vadă activitatea pe %2$@.\n\nDar navighează cu mine și pot reduce ceea ce %1$@ cunoaște despre tine în general, blocând instrumentele lor de urmărire pe o mulțime de alte site-uri.";
@@ -446,7 +446,7 @@
 "home.message.header" = "Setează DuckDuckGo ca browser implicit.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Deschide link-urile cu liniște sufletească, de fiecare dată.";
+"home.message.subheader" = "Deschide link-urile în siguranță, de fiecare dată.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NOU ÎN IOS 14";
@@ -482,7 +482,7 @@
 "keyCommandClose" = "Închidere";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Închidere nouă";
+"keyCommandCloseTab" = "Închidere filă";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Găsire în pagină";
@@ -548,7 +548,7 @@
 "onboardingContinue" = "Continuați";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserMaybeLater" = "Poate Mai Târziu";
+"onboardingDefaultBrowserMaybeLater" = "Poate mai târziu";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserTitle" = "Setează DuckDuckGo ca browser implicit.";
@@ -578,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Dorești să ștergi activitatea și istoricul pentru %@?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Website ignifug";
+"preserveLogins.menu.confirm" = "Site cu ștergerea activității și istoricului din browser la ieșire";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Nu acum";
@@ -815,7 +815,7 @@
 "siteFeedback.title" = "Raportare site defect";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "Ce site este defect?”";
+"siteFeedback.urlPlaceholder" = "Ce site este defect?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Închide fila de pornire";
@@ -827,7 +827,7 @@
 "tab.open.home" = "Deschide fila de pornire";
 
 /* Accesibility label: first string is website title, second is address */
-"tab.open.with.title.and.address" = "Deschideți \"%1$@\" la %2$@";
+"tab.open.with.title.and.address" = "Deschide \"%1$@\" la %2$@";
 
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Comutator între file";

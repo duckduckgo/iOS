@@ -56,7 +56,7 @@
 "TMj-NM-j3b.placeholder" = "Quel site Web pose problème ?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Signaler un site cassé";
+"WjT-HM-yim.title" = "Signaler un problème de site";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Raison du mauvais fonctionnement du site";

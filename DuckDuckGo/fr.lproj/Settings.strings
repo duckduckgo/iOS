@@ -71,7 +71,7 @@
 "dud-qo-Ces.text" = "Label";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
-"Dyd-bm-goj.title" = "Préférences";
+"Dyd-bm-goj.title" = "Paramètres";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Label";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Défaut";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Votre confidentialité, simplifiée. ";
+"gji-Fs-EET.text" = "La confidentialité, simplifiée. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Thème";

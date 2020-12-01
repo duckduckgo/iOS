@@ -23,7 +23,7 @@
 "h2M-TW-0QG.title" = "Natrag";
 
 /* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
-"iVe-E1-jAH.accessibilityHint" = "Vaše povratne informacije.";
+"iVe-E1-jAH.accessibilityHint" = "Tvoje povratne informacije.";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Natrag";
@@ -56,7 +56,7 @@
 "TMj-NM-j3b.placeholder" = "Koje je web-mjesto neispravno?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Prijavi neispravnu web stranicu";
+"WjT-HM-yim.title" = "Prijavi neispravno web-mjesto";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Razlog za neispravno web-mjesto";

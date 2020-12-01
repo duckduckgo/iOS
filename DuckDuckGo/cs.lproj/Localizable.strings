@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Otevřít v nové kartě";
 
 /* Open action */
-"action.title.open" = "Åben";
+"action.title.open" = "Otevřít";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Vložit a jít";

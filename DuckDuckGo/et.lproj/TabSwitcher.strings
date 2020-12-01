@@ -35,7 +35,7 @@
 "kW3-ZC-Axl.normalTitle" = "Valmis";
 
 /* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
-"L7l-vl-rDZ.accessibilityLabel" = "Vahelda ruudustiku- ja loendivaadet";
+"L7l-vl-rDZ.accessibilityLabel" = "Võrgu- ja loendivaate vahel vahetamine";
 
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
 "LbT-NO-T0G.text" = "Link";

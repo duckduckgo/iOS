@@ -44,7 +44,7 @@
 "bIg-0T-UWq.text" = "La conectare";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
-"cKo-er-HNj.text" = "Pictograma Aplicației";
+"cKo-er-HNj.text" = "Pictograma aplicației";
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Global Privacy Control (GPC)";
@@ -83,7 +83,7 @@
 "ElX-yE-4PX.text" = "Ieșire din aplicație, inactiv timp de 5 minute";
 
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
-"eMH-uv-Kms.title" = "Pictograma Aplicației";
+"eMH-uv-Kms.title" = "Pictograma aplicației";
 
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
 "f1O-6u-LFY.text" = "Temă";

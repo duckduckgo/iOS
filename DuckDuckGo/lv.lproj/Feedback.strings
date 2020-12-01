@@ -1,8 +1,8 @@
 /* Class = "UIImageView"; accessibilityLabel = "Negative Feedback"; ObjectID = "1RQ-bi-6hU"; */
-"1RQ-bi-6hU.accessibilityLabel" = "Negatīvas atsauksmes";
+"1RQ-bi-6hU.accessibilityLabel" = "Negatīva atsauksme";
 
 /* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
-"7zN-Xh-yYi.normalTitle" = "Kopīgot atsauksmes";
+"7zN-Xh-yYi.normalTitle" = "Kopīgot atsauksmi";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
 "46v-cB-2YV.title" = "Kopīgot atsauksmi";

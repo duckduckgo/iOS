@@ -53,7 +53,7 @@
 "D0R-jp-UY8.text" = "Beim Verlassen der App, 15 Minuten lang inaktiv";
 
 /* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
-"d5n-vG-8kF.text" = "10.0.1 (Build 10005)";
+"d5n-vG-8kF.text" = "10.0.1 (Build 10005)";
 
 /* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
 "dBZ-yq-FYj.text" = "Anwendungssperre";
@@ -65,7 +65,7 @@
 "dOj-jn-mSN.footerTitle" = "Wenn Touch ID, Face ID oder ein Systempasswort eingestellt sind, wirst du aufgefordert, die App beim Öffnen zu entsperren.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Datenschutz & Sicherheit";
+"dOj-jn-mSN.headerTitle" = "Datenschutz & Sicherheit";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Label";
@@ -86,7 +86,7 @@
 "eMH-uv-Kms.title" = "App-Symbol";
 
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Thema";
+"f1O-6u-LFY.text" = "Design";
 
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Nur beim Verlassen der App";
@@ -107,10 +107,10 @@
 "Gbx-kl-uOO.text" = "Standard";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Datenschutz – leicht gemacht. ";
+"gji-Fs-EET.text" = "Datenschutz, vereinfacht. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Thema";
+"gS2-mg-l7R.title" = "Design";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Vorschau durch langes Tippen";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Aktion";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Vorschläge für die Autovervollständigung anzeigen";
+"U8i-cQ-5WW.text" = "Vorschläge für die Autovervollständigung";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Alle feuerfesten Seiten entfernen";

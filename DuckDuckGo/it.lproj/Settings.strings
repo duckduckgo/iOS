@@ -68,13 +68,13 @@
 "dOj-jn-mSN.headerTitle" = "Privacy e sicurezza";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
-"dud-qo-Ces.text" = "Label";
+"dud-qo-Ces.text" = "Etichetta";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Impostazioni";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
-"EIq-Ev-nfj.text" = "Label";
+"EIq-Ev-nfj.text" = "Etichetta";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
 "ekF-SJ-PAQ.text" = "Cancellazione automatica dei dati";
@@ -125,7 +125,7 @@
 "m23-t6-9cb.text" = "Condividi feedback";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Quando l'opzione è attivata, i siti Web verranno aperti automaticamente in DuckDuckGo.";
+"NRb-Cc-1d6.footerTitle" = "Quando l'opzione è attivata, i siti web verranno aperti automaticamente in DuckDuckGo.";
 
 /* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Nessun sito protetto";
@@ -137,7 +137,7 @@
 "oM7-1o-9oY.text" = "Info su DuckDuckGo";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
+"qeN-SV-zy7.text" = "Etichetta";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Visualizza tastiera su";
@@ -164,7 +164,7 @@
 "vSJ-YJ-bBs.headerTitle" = "Intervallo desiderato";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Imposta come Browser predefinito";
+"xof-5k-PkI.text" = "Imposta come browser predefinito";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Siti protetti";

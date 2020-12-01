@@ -14,11 +14,11 @@
 "widget.gallery.search.display.name" = "Pesquisar";
 
 /* CTA shown in the favorites widget empty state. */
-"widget.no.favorites.cta" = "Adicione Favoritos";
+"widget.no.favorites.cta" = "Adicionar Favoritos";
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Visite rapidamente os seus sites favoritos.";
 
 /* Placeholder text in search field on the search and favorites widget */
-"widget.search.duckduckgo" = "Procurar em DuckDuckGo";
+"widget.search.duckduckgo" = "Pesquisar no DuckDuckGo";
 

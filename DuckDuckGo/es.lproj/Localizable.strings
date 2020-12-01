@@ -11,10 +11,10 @@
 "action.title.copy" = "Copiar";
 
 /* Disable protection action */
-"action.title.disable.protection" = "Deshabilitar Protección";
+"action.title.disable.protection" = "Desactivar la protección de privacidad";
 
 /* Enable protection action */
-"action.title.enable.protection" = "Habilitar Protección";
+"action.title.enable.protection" = "Activar la protección de privacidad";
 
 /* No comment provided by engineer. */
 "action.title.forgetAll" = "Cerrar pestañas y borrar datos";
@@ -44,7 +44,7 @@
 "action.title.refresh" = "Actualizar";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Reportar sitio web roto";
+"action.title.reportBrokenSite" = "Informar de sitio web dañado";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Solicitar versión de escritorio del sitio web";
@@ -149,7 +149,7 @@
 "brokensite.category.paywall" = "El sitio me pidió que desactivara";
 
 /* Broken Site Category */
-"brokensite.category.unsupported" = "El navegador es incompatible.";
+"brokensite.category.unsupported" = "El navegador es incompatible";
 
 /* Broken Site Category */
 "brokensite.category.videos" = "No se ha reproducido el vídeo";
@@ -164,16 +164,16 @@
 "dax.hide.cancel" = "Cancelar";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Sólo hay unos cuantos, y tratamos de hacerlos informativos.";
+"dax.hide.message" = "Solo hay unos cuantos, e intentamos que sean informativos.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "¿Ocultar los consejos restantes?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Tus búsquedas con DuckDuckGo son anónimas y nunca almaceno tu historial de búsqueda. Nunca. 🙌";
+"dax.onboarding.browsing.after.search" = "Tus búsquedas con DuckDuckGo son anónimas y nunca almaceno tu historial de búsquedas. Nunca. 🙌";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search.cta" = "¡Genial!";
+"dax.onboarding.browsing.after.search.cta" = "¡Uf!";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -218,7 +218,7 @@
 "dax.onboarding.home.subsequent" = "¡Lo estás haciendo muy bien!\n\nRecuerda: cada vez que navegas conmigo corto las alas a un anuncio horrible. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Internet puede ser un poco horrible.\n\nNo te preocupes. Buscar y navegar de forma privada es más fácil de lo que piensas.";
+"dax.onboarding.message" = "Internet puede ser un lugar horrible.\n\nNo te preocupes. Buscar y navegar de forma privada es más fácil de lo que piensas.";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Desactivado";
@@ -326,7 +326,7 @@
 "feedback.ddgSearch.description" = "Problemas al buscar con DuckDuckGo";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.entry" = "La búsqueda DuckDuckGo no es lo suficientemente buena";
+"feedback.ddgSearch.entry" = "La búsqueda de DuckDuckGo no es lo suficientemente buena";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.languageOrRegion" = "Buscar en un idioma o región específicos";
@@ -350,7 +350,7 @@
 "feedback.form.submit" = "Enviar";
 
 /* No comment provided by engineer. */
-"feedback.negative.form.genericPlaceholder" = "Sé lo más concreto posible.";
+"feedback.negative.form.genericPlaceholder" = "Concreta lo máximo posible";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.placeholder" = "¿Hay algún detalle que quieras incluir?";
@@ -386,7 +386,7 @@
 "feedback.performance.playback" = "Problemas al reproducir vídeos o contenido multimedia";
 
 /* No comment provided by engineer. */
-"feedback.performance.slowLoading" = "Los resultados de búsqueda o páginas web tardan en cargarse";
+"feedback.performance.slowLoading" = "Los resultados de búsqueda o las páginas web tardan en cargarse";
 
 /* Header above input field */
 "feedback.positive.form.header" = "Compartir detalles";
@@ -413,7 +413,7 @@
 "feedback.start.header" = "¡Empecemos!";
 
 /* No comment provided by engineer. */
-"feedback.start.supplementary" = "¿Cómo calificarías tu opinión?";
+"feedback.start.supplementary" = "¿En qué categoría incluirías tu opinión?";
 
 /* No comment provided by engineer. */
 "feedback.submitted.confirmation" = "Gracias, se han enviado tus opiniones.";
@@ -443,7 +443,7 @@
 "home.message.buttonText" = "Definir como navegador predeterminado";
 
 /* No comment provided by engineer. */
-"home.message.header" = "Haz que DuckDuckGo sea tu navegador predeterminado.";
+"home.message.header" = "Establece DuckDuckGo como tu navegador predeterminado.";
 
 /* No comment provided by engineer. */
 "home.message.subheader" = "Abre los enlaces con tranquilidad, siempre.";
@@ -452,13 +452,13 @@
 "home.message.topText" = "NUEVO EN IOS 14";
 
 /* No comment provided by engineer. */
-"home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio";
+"home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio.";
 
 /* No comment provided by engineer. */
 "home.row.reminder.message" = "Añade DuckDuckGo a tu inicio para acceder más fácilmente.";
 
 /* Home is this context is the bottom home row (dock) */
-"home.row.reminder.title" = "Lleva a DuckDuckGo contigo";
+"home.row.reminder.title" = "Lleva DuckDuckGo contigo";
 
 /* This describes empty tab */
 "homeTab.searchAndFavorites" = "Buscar o introducir dirección";
@@ -548,10 +548,10 @@
 "onboardingContinue" = "Continuar";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserMaybeLater" = "Quizás más tarde";
+"onboardingDefaultBrowserMaybeLater" = "Quizá más tarde";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserTitle" = "Haz que DuckDuckGo sea tu navegador predeterminado.";
+"onboardingDefaultBrowserTitle" = "Establece DuckDuckGo como tu navegador predeterminado.";
 
 /* No comment provided by engineer. */
 "onboardingSetAsDefaultBrowser" = "Definir como navegador predeterminado";
@@ -578,7 +578,7 @@
 "preserveLogins.fireproof.message" = "¿Quieres marcar %@ como a prueba de fuego?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Sitio web a prueba de fuego";
+"preserveLogins.menu.confirm" = "Marcar el sitio web como a prueba de fuego";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ahora no";
@@ -611,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Tamaño efectivo";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "correo electrónico";
+"privacy.protection.encryption.email" = "Correo electrónico";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Conexión cifrada";
@@ -746,7 +746,7 @@
 "privacy.protection.tos.mixed" = "Prácticas de privacidad mixtas";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "«Prácticas de privacidad deficientes»";
+"privacy.protection.tos.poor" = "Prácticas de privacidad deficientes";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Prácticas de privacidad desconocidas";
@@ -812,10 +812,10 @@
 "siteFeedback.subtitle" = "La notificación de sitios web dañados es completamente anónima y nos ayuda a mejorar la aplicación.";
 
 /* This is a form title */
-"siteFeedback.title" = "Notificar un sitio web no operativo";
+"siteFeedback.title" = "Notificar un sitio web dañado";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "¿Qué sitio web no se carga?";
+"siteFeedback.urlPlaceholder" = "¿Qué sitio web no funciona?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Cerrar la pestaña inicio";
@@ -866,7 +866,7 @@
 "web.url.save.bookmark.exists" = "Marcador ya guardado";
 
 /* Floating message indicating failure */
-"web.url.save.bookmark.none" = "No hay ningún sitio web para añadir a marcadores";
+"web.url.save.bookmark.none" = "No hay ninguna página web para añadir a marcadores";
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorito añadido";

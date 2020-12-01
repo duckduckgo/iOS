@@ -20,7 +20,7 @@
 "kYm-7s-KFg.text" = "3";
 
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
-"u7Q-MU-drX.text" = "Benvenuto su DuckDuckGo";
+"u7Q-MU-drX.text" = "DuckDuckGo ti dà il benvenuto!";
 
 /* Class = "UILabel"; text = "Widget Instructions"; ObjectID = "WZv-GS-xyE"; */
 "WZv-GS-xyE.text" = "Istruzioni widget";

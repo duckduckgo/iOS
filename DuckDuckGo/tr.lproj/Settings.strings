@@ -2,7 +2,7 @@
 "0DQ-yq-UuT.text" = "Korumalı Siteler";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Bağlantıların diğer yüklü uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
+"0gU-rZ-pRc.footerTitle" = "Bağlantıların yüklenmiş olan diğer uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Versiyon";
@@ -62,7 +62,7 @@
 "dj9-vh-Rig.headerTitle" = "Özelleştir";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Touch ID, Face ID veya sistem parolası belirlenmişse uygulamamayı açarken kilidini açmanız istenir.";
+"dOj-jn-mSN.footerTitle" = "Touch ID, Face ID veya sistem parolası belirlenmişse uygulamayı açarken kilidini açmanız istenir.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Gizlilik ve Güvenlik";
@@ -164,7 +164,7 @@
 "vSJ-YJ-bBs.headerTitle" = "İstenen zamanlama";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Varsayılan tarayıcı olarak ayarla";
+"xof-5k-PkI.text" = "Varsayılan Tarayıcı olarak ayarla";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Korumalı Siteler";
@@ -179,7 +179,7 @@
 "zMK-jc-4bJ.headerTitle" = "Yardım";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
-"Zpg-h0-rYv.text" = "Yeni sekme";
+"Zpg-h0-rYv.text" = "Yeni Sekme";
 
 /* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
 "zvh-2e-Wmz.text" = "Bu siteler için Gizlilik Koruması uygulanmayacaktır.";

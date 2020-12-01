@@ -23,7 +23,7 @@
 "5dV-qp-Hz5.text" = "Posilnený stupeň";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
-"6os-4h-chg.text" = "Label";
+"6os-4h-chg.text" = "Označenie";
 
 /* Class = "UILabel"; text = "Uh-Oh, That Didn’t Work"; ObjectID = "7k3-Qj-oya"; */
 "7k3-Qj-oya.text" = "Ľutujeme, to nefungovalo";
@@ -38,16 +38,16 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Spôsoby ochrany súkromia";
+"25V-p3-wsn.text" = "SPÔSOBY OCHRANY SÚKROMIA";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
-"953-jn-tmN.normalTitle" = "Resetovať štatistiky sledovacích sietí";
+"953-jn-tmN.normalTitle" = "Obnoviť štatistiky sledovacích sietí";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
 "aD3-hP-MUU.text" = "SLEDOVACIE SIETE S NAJVÄČŠÍMI PRIESTUPKAMI";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Šifrované pripojenie";
+"dZC-7f-pp3.text" = "ŠIFROVANÉ PRIPOJENIE";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -71,7 +71,7 @@
 "IPS-SD-65t.text" = "Top prenasledovatelia";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
-"J3L-KE-1Vb.text" = "Label";
+"J3L-KE-1Vb.text" = "Označenie";
 
 /* Class = "UILabel"; text = "No privacy practices found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Nenašli sa žiadne postupy ochrany súkromia";
@@ -80,10 +80,10 @@
 "Kme-pZ-l7N.normalTitle" = "Nezabezpečené webové stránky";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
-"Mv2-oP-SQd.text" = "Label";
+"Mv2-oP-SQd.text" = "Označenie";
 
 /* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; Note = "Placeholder string, do not translate"; */
-"OHN-Tz-cdk.text" = "ZABLOKOVANÉ SLEDOVACIE SIETE";
+"OHN-Tz-cdk.text" = "n ZABLOKOVANÝCH SLEDOVACÍCH SIETÍ";
 
 /* Class = "UILabel"; text = "Good Privacy Practices"; ObjectID = "oyz-09-obQ"; */
 "oyz-09-obQ.text" = "Osvedčené spôsoby ochrany súkromia";

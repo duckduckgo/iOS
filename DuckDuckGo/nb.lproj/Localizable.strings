@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Åpne i ny fane";
 
 /* Open action */
-"action.title.open" = "Åpen";
+"action.title.open" = "Åpne";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Lim inn og gå";
@@ -44,7 +44,7 @@
 "action.title.refresh" = "Oppdater";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Rapporter ødelagt nettsted";
+"action.title.reportBrokenSite" = "Rapporter nettstedfeil";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Åpne skrivebordsversjon";
@@ -131,7 +131,7 @@
 "brokensite.category.comments" = "Kommentarene ble ikke lastet inn";
 
 /* Broken Site Category */
-"brokensite.category.content" = "Innhold manglet";
+"brokensite.category.content" = "Innhold mangler";
 
 /* Broken Site Category */
 "brokensite.category.images" = "Bildene ble ikke lastet inn";
@@ -152,7 +152,7 @@
 "brokensite.category.unsupported" = "Nettleseren er inkompatibel";
 
 /* Broken Site Category */
-"brokensite.category.videos" = "Videoen ble ikke avspilt";
+"brokensite.category.videos" = "Video ble ikke avspilt";
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "BESKRIV HVA SOM SKJEDDE";
@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Den er grei";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Pass opp! Siden %2$@ eier %1$@, kan jeg ikke forhindre at de ser aktiviteten din her.\n\nMen surf med meg, så kan jeg redusere informasjonen %2$@ får om deg, ved å blokkere sporingsanordningene deres på mange andre nettsteder.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Pass opp! Siden %2$@ eier %1$@, kan jeg ikke forhindre at de ser aktiviteten din her.\n\nMen surf med meg, så kan jeg redusere informasjonen %2$@ får om deg. Det gjør jeg ved å blokkere vedkommendes sporingsanordninger på mange andre nettsteder.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Den er grei";
@@ -206,7 +206,7 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Den er grei";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Besøk favorittsidene dine på et blunk!\n\nGå til et nettsted du liker. Trykk deretter på «...»-ikonet og velg *Legg til i Favoritter*.";
+"dax.onboarding.home.add.favorite" = "Besøk favorittsidene dine på et blunk!\n\nGå til et nettsted du liker. Trykk deretter på «…»-ikonet og velg *Legg til i Favoritter*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
 "dax.onboarding.home.add.favorite.accessible" = "Besøk favorittsidene dine på et blunk! Besøk en av favorittsidene dine. Trykk deretter på Åpne meny-knappen og velg Legg til i Favoritter.";
@@ -257,7 +257,7 @@
 "favorite.menu.edit" = "Rediger";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.ads" = "Blokkering av reklame og pop-uper";
+"feedback.browserFeatures.ads" = "Blokkering av reklame og popups";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.bookmarks" = "Opprette og håndtere bokmerker";
@@ -275,7 +275,7 @@
 "feedback.browserFeatures.images" = "Bruk av bilder";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.navigation" = "Gå videre, tilbake og/eller oppdater";
+"feedback.browserFeatures.navigation" = "Gå frem, tilbake og/eller oppdater";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.other" = "Ingen av disse";
@@ -296,7 +296,7 @@
 "feedback.customization.description" = "Tilpasningsproblemer";
 
 /* No comment provided by engineer. */
-"feedback.customization.entry" = "Det finnes ikke nok tilpasningsalternativer i appen";
+"feedback.customization.entry" = "Det finnes ikke nok tilpasningsvalg i appen";
 
 /* No comment provided by engineer. */
 "feedback.customization.homeScreen" = "Konfigurasjon av startskjermen";
@@ -431,7 +431,7 @@
 "feedback.websiteLoading.form.supplementary" = "Når opplever du disse problemene?";
 
 /* No comment provided by engineer. */
-"feedback.websiteLoading.form.urlPlaceholder" = "Hvilke nettsteder har problemer?";
+"feedback.websiteLoading.form.urlPlaceholder" = "Hvilket nettsted har problemer?";
 
 /* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
 "findinpage.count" = "%1$d av %2$d";
@@ -440,7 +440,7 @@
 "findinpage.title" = "Finn på side";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Gjør til standard nettleser";
+"home.message.buttonText" = "Gjør til standardnettleser";
 
 /* No comment provided by engineer. */
 "home.message.header" = "Ha DuckDuckGo som standardnettleser.";
@@ -452,13 +452,13 @@
 "home.message.topText" = "NYTT I IOS 14";
 
 /* No comment provided by engineer. */
-"home.row.onboarding.header" = "Legg til DuckDuckGo på hjemskjermen!";
+"home.row.onboarding.header" = "Legg til DuckDuckGo på startskjermen!";
 
 /* No comment provided by engineer. */
 "home.row.reminder.message" = "Legg til DuckDuckGo i docken for enkel tilgang!";
 
 /* Home is this context is the bottom home row (dock) */
-"home.row.reminder.title" = "Få DuckDuckGo på hjemskjermen";
+"home.row.reminder.title" = "Få DuckDuckGo på startskjermen";
 
 /* This describes empty tab */
 "homeTab.searchAndFavorites" = "Søk eller skriv inn adresse";
@@ -476,7 +476,7 @@
 "keyCommandBrowserBack" = "Gå tilbake";
 
 /* No comment provided by engineer. */
-"keyCommandBrowserForward" = "Gå videre";
+"keyCommandBrowserForward" = "Gå frem";
 
 /* No comment provided by engineer. */
 "keyCommandClose" = "Lukk";
@@ -554,7 +554,7 @@
 "onboardingDefaultBrowserTitle" = "Ha DuckDuckGo som standardnettleser.";
 
 /* No comment provided by engineer. */
-"onboardingSetAsDefaultBrowser" = "Gjør til standard nettleser";
+"onboardingSetAsDefaultBrowser" = "Gjør til standardnettleser";
 
 /* No comment provided by engineer. */
 "onboardingSkip" = "Hopp over";
@@ -578,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Ønsker du å brannsikre %@?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Brannsikkert nettsted";
+"preserveLogins.menu.confirm" = "Brannsikre nettsted";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ikke nå";
@@ -698,7 +698,7 @@
 "privacy.protection.encryption.yes" = "Ja";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "BESKYTTELSE AV NETTSIDEN DEAKTIVERT";
+"privacy.protection.main.disabled" = "BESKYTTELSE DEAKTIVERT FOR NETTSTEDET";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
 "privacy.protection.main.enhanced" = "FORBEDRET FRA $1 TIL $2";
@@ -812,10 +812,10 @@
 "siteFeedback.subtitle" = "Rapportering av nettstedfeil er helt anonymt og det gjør det lettere for oss å gjøre appen enda bedre!";
 
 /* This is a form title */
-"siteFeedback.title" = "Rapporter et ødelagt nettsted";
+"siteFeedback.title" = "Rapporter en nettstedfeil";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "Hvilket nettsted er ødelagt?";
+"siteFeedback.urlPlaceholder" = "Hvilket nettsted fungerer ikke?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Lukk hjem-fane";
@@ -839,7 +839,7 @@
 "theme.acc.default" = "System";
 
 /* Light Theme entry */
-"theme.acc.light" = "Lys";
+"theme.acc.light" = "Lyst";
 
 /* Dark Theme entry */
 "theme.name.dark" = "Mørkt";
@@ -848,7 +848,7 @@
 "theme.name.default" = "Systemstandard";
 
 /* Light Theme entry */
-"theme.name.light" = "Lys";
+"theme.name.light" = "Lyst";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.disabled" = "%@ lagt til i ubeskyttede nettsteder";

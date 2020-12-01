@@ -2,7 +2,7 @@
 "1RQ-bi-6hU.accessibilityLabel" = "Negativne povratne informacije";
 
 /* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
-"7zN-Xh-yYi.normalTitle" = "Delite povratne informacije";
+"7zN-Xh-yYi.normalTitle" = "Deli povratne informacije";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
 "46v-cB-2YV.title" = "Deli povratne informacije";
@@ -53,7 +53,7 @@
 "Rvx-dM-etJ.title" = "Deli povratne informacije";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Katera spletna stran je poškodovana?“";
+"TMj-NM-j3b.placeholder" = "Katera spletna stran je poškodovana?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
 "WjT-HM-yim.title" = "Prijavi nedelujočo stran";

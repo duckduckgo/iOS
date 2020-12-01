@@ -26,10 +26,10 @@
 "action.title.newBackgroundTabForUrl" = "Отваряне във фонов режим";
 
 /* Create New Tab action */
-"action.title.newTab" = "Нов подпрозорец";
+"action.title.newTab" = "Нов раздел";
 
 /* Open in New Tab action */
-"action.title.newTabForUrl" = "Отваряне в нов подпрозорец";
+"action.title.newTabForUrl" = "Отваряне в нов раздел";
 
 /* Open action */
 "action.title.open" = "Отваряне";
@@ -110,10 +110,10 @@
 "auth.alert.username.placeholder" = "Потребителско име";
 
 /* No comment provided by engineer. */
-"autoclear.off" = "Изключен";
+"autoclear.off" = "Изключено";
 
 /* No comment provided by engineer. */
-"autoclear.on" = "Включен";
+"autoclear.on" = "Включено";
 
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
@@ -188,7 +188,7 @@
 "dax.onboarding.browsing.one.tracker.cta" = "Дай пет!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
-"dax.onboarding.browsing.site.is.major.tracker" = "Внимание! Не мога да направя така, че %1$@ да не вижда вашата активност на %2$@.\n\nНо ако сърфирате с мен, като цяло мога да намаля информацията, която %1$@ научава за вас, като блокирам техните тракери на много други сайтове.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Внимание! Не мога да направя така, че %1$@ да не вижда вашата активност на %2$@.\n\nНо ако сърфирате с мен, като цяло мога да намаля информацията, която %1$@ научава за вас, като блокирам неговите тракери на много други сайтове.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Разбрах";
@@ -263,10 +263,10 @@
 "feedback.browserFeatures.bookmarks" = "Създаване и управление на отметки";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.caption" = "Коя характеристика за сърфиране можем да добавим или да подобрим?";
+"feedback.browserFeatures.caption" = "Коя функция за сърфиране можем да добавим или да подобрим?";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.description" = "Проблеми с характеристика на браузъра";
+"feedback.browserFeatures.description" = "Проблеми с функция на браузъра";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.entry" = "Някои функции за сърфиране липсват или са объркващи";
@@ -281,7 +281,7 @@
 "feedback.browserFeatures.other" = "Никое от тези";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.tabs" = "Създаване и управление на подпрозорци";
+"feedback.browserFeatures.tabs" = "Създаване и управление на раздели";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.videos" = "Гледане на видео";
@@ -305,7 +305,7 @@
 "feedback.customization.other" = "Никое от тези";
 
 /* No comment provided by engineer. */
-"feedback.customization.tabs" = "Как са изобразени подпрозорците";
+"feedback.customization.tabs" = "Как са изобразени разделите";
 
 /* No comment provided by engineer. */
 "feedback.customization.ui" = "Как изглежда приложението";
@@ -320,7 +320,7 @@
 "feedback.ddgSearch.autocomplete" = "По-добро автозавършване";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.caption" = "Коя характеристика за търсене можем да добавим или да подобрим?";
+"feedback.ddgSearch.caption" = "Коя функция за търсене можем да добавим или да подобрим?";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.description" = "Проблеми при търсенето с DuckDuckGo";
@@ -416,7 +416,7 @@
 "feedback.start.supplementary" = "Как бихте категоризирали отзивите си?";
 
 /* No comment provided by engineer. */
-"feedback.submitted.confirmation" = "Благодарим ви! Отзивът вие е изпратен.";
+"feedback.submitted.confirmation" = "Благодарим ви! Отзивът ви е изпратен.";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.description" = "Проблеми със зареждането на уебсайтове";
@@ -446,7 +446,7 @@
 "home.message.header" = "Направете DuckDuckGo браузър по подразбиране.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Отваряйте връзки без притеснения";
+"home.message.subheader" = "Отваряйте връзки без притеснения, всеки път.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "НОВО В IOS 14";
@@ -482,7 +482,7 @@
 "keyCommandClose" = "Затваряне";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Затваряне подпрозорец";
+"keyCommandCloseTab" = "Затваряне на раздел";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Намери в страницата";
@@ -494,13 +494,13 @@
 "keyCommandFindPrevious" = "Намери предишен";
 
 /* No comment provided by engineer. */
-"keyCommandFire" = "Изчистване на всички подпрозорци и данни";
+"keyCommandFire" = "Изчистване на всички раздели и данни";
 
 /* No comment provided by engineer. */
 "keyCommandLocation" = "Търсене или въвеждане на адрес";
 
 /* No comment provided by engineer. */
-"keyCommandNewTab" = "Нов подпрозорец";
+"keyCommandNewTab" = "Нов раздел";
 
 /* No comment provided by engineer. */
 "keyCommandNextTab" = "Следващ раздел";
@@ -545,7 +545,7 @@
 "onboarding.widgets.skipButton" = "Може би по-късно";
 
 /* No comment provided by engineer. */
-"onboardingContinue" = "Продължаване";
+"onboardingContinue" = "Продължи";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserMaybeLater" = "Може би по-късно";
@@ -572,7 +572,7 @@
 "preserveLogins.domain.list.footer" = "Уеб сайтовете разчитат на бисквитки, за да поддържат сесията ви активна. Когато направите сайта огнеустойчив, бисквитките няма да бъдат изтрити и ще останете вписани, дори след като използвате огнения бутон. Ние все пак блокираме тракери на трети страни, които се намират на огнеустойчиви сайтове.";
 
 /* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Уеб сайтове";
+"preserveLogins.domain.list.title" = "Уебсайтове";
 
 /* Paramter is a string - domain name */
 "preserveLogins.fireproof.message" = "Искате ли да направите %@ огнеустойчив?";
@@ -833,22 +833,22 @@
 "tab.switcher.accessibility.label" = "Превключване на раздели";
 
 /* Dark Theme entry */
-"theme.acc.dark" = "Тъмен";
+"theme.acc.dark" = "Тъмна";
 
 /* Short entry for Default System theme */
-"theme.acc.default" = "Системна тема";
+"theme.acc.default" = "Системна";
 
 /* Light Theme entry */
-"theme.acc.light" = "Светла тема";
+"theme.acc.light" = "Светла";
 
 /* Dark Theme entry */
-"theme.name.dark" = "Тъмен";
+"theme.name.dark" = "Тъмна";
 
 /* Entry for Default System theme */
 "theme.name.default" = "По подразбиране за системата";
 
 /* Light Theme entry */
-"theme.name.light" = "Светла тема";
+"theme.name.light" = "Светла";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.disabled" = "%@ е добавен към незащитените сайтове";

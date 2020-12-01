@@ -41,7 +41,7 @@
 "action.title.readingList" = "Toevoegen aan leeslijst";
 
 /* Refresh action - button shown in alert */
-"action.title.refresh" = "Opnieuw laden";
+"action.title.refresh" = "Vernieuwen";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Defecte website melden";
@@ -170,7 +170,7 @@
 "dax.hide.title" = "Resterende tips verbergen?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Uw DuckDuckGo-zoekopdrachten zijn anoniem en ik sla uw zoekgeschiedenis nooit op. Nooit. 🙌";
+"dax.onboarding.browsing.after.search" = "Je DuckDuckGo-zoekopdrachten zijn anoniem en ik sla je zoekgeschiedenis nooit op. Nooit. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";
@@ -230,7 +230,7 @@
 "donotsell.disclaimer.learnmore" = "Meer informatie";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Websites zijn alleen verplicht om op dit signaal te reageren voor zover de toepasselijke wetgeving dit vereist. ";
+"donotsell.disclaimer.suffix" = " Maar websites zijn alleen verplicht om op dit signaal te reageren voor zover de toepasselijke wetgeving dat vereist. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Ingeschakeld";
@@ -323,7 +323,7 @@
 "feedback.ddgSearch.caption" = "Welke zoekfunctie kunnen we toevoegen of verbeteren?";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.description" = "DuckDuckGo zoekproblemen";
+"feedback.ddgSearch.description" = "DuckDuckGo-zoekproblemen";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.entry" = "DuckDuckGo-zoekfunctie is niet goed genoeg";
@@ -440,13 +440,13 @@
 "findinpage.title" = "Zoek op pagina";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Instellen als standaard browser";
+"home.message.buttonText" = "Instellen als standaardbrowser";
 
 /* No comment provided by engineer. */
 "home.message.header" = "Stel DuckDuckGo in als standaardbrowser.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Elke keer links in een rustige toestand openen.";
+"home.message.subheader" = "Open links altijd met een gerust hart.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NIEUW VOOR IOS 14";
@@ -554,7 +554,7 @@
 "onboardingDefaultBrowserTitle" = "Stel DuckDuckGo in als standaardbrowser.";
 
 /* No comment provided by engineer. */
-"onboardingSetAsDefaultBrowser" = "Instellen als standaard browser";
+"onboardingSetAsDefaultBrowser" = "Instellen als standaardbrowser";
 
 /* No comment provided by engineer. */
 "onboardingSkip" = "Overslaan";
@@ -578,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Wil je %@ brandveilig maken?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Brandveilige website";
+"preserveLogins.menu.confirm" = "Website brandveilig maken";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Niet nu";
@@ -626,7 +626,7 @@
 "privacy.protection.encryption.header" = "Een versleutelde verbinding voorkomt het afluisteren van persoonlijke gegevens die je naar een website verstuurt.";
 
 /* Part of certificate info */
-"privacy.protection.encryption.id" = "Subject Key Identifier";
+"privacy.protection.encryption.id" = "Identificatie van de onderwerpsleutel";
 
 /* Part of certificate info */
 "privacy.protection.encryption.issuer" = "Uitgever";
@@ -731,7 +731,7 @@
 "privacy.protection.practices.unknown.info" = "De privacypraktijken van deze website zijn niet gecontroleerd.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privacyniveau %@";
+"privacy.protection.site.grade" = "Privacyklasse %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Druk hierop om het scherm Privacybescherming te openen";

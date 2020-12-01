@@ -32,13 +32,13 @@
 "7nh-8f-M2e.text" = "www.example.com";
 
 /* Class = "UILabel"; text = "Privacy Grade"; ObjectID = "7xH-3L-wpf"; */
-"7xH-3L-wpf.text" = "Datenschutzstufe";
+"7xH-3L-wpf.text" = "Datenschutz-Stufe";
 
 /* Class = "UITableViewController"; title = "xxx"; ObjectID = "7Z1-eg-OWQ"; */
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Datenschutzpraktiken";
+"25V-p3-wsn.text" = "DATENSCHUTZPRAKTIKEN";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Tracker-Netzwerk-Statistiken zurücksetzen";

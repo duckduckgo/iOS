@@ -41,7 +41,7 @@
 "LbT-NO-T0G.text" = "Link";
 
 /* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
-"nYf-xs-PE7.title" = "Yeni sekme";
+"nYf-xs-PE7.title" = "Yeni Sekme";
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
 "qrJ-aX-XrW.accessibilityLabel" = "Sekme Okunmamış";

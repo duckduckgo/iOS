@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Adatvédelmi gyakorlatok";
+"25V-p3-wsn.text" = "ADATVÉDELMI GYAKORLATOK";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Nyomkövető hálózati statisztikák visszaállítása";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "A NYOMKÖVETŐ-HÁLÓZAT LEGNAGYOBB BŰNELKÖVETŐI";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Titkosított kapcsolat";
+"dZC-7f-pp3.text" = "TITKOSÍTOTT KAPCSOLAT";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";

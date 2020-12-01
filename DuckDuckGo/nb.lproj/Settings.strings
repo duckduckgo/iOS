@@ -68,13 +68,13 @@
 "dOj-jn-mSN.headerTitle" = "Personvern og sikkerhet";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
-"dud-qo-Ces.text" = "Label";
+"dud-qo-Ces.text" = "Etikett";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Innstillinger";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
-"EIq-Ev-nfj.text" = "Label";
+"EIq-Ev-nfj.text" = "Etikett";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
 "ekF-SJ-PAQ.text" = "Slett data automatisk";
@@ -137,7 +137,7 @@
 "oM7-1o-9oY.text" = "Om DuckDuckGo";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
+"qeN-SV-zy7.text" = "Etikett";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Vis tastatur i";
@@ -164,7 +164,7 @@
 "vSJ-YJ-bBs.headerTitle" = "Utføres";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Gjør til standard nettleser";
+"xof-5k-PkI.text" = "Gjør til standardnettleser";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Brannsikre nettsteder";
@@ -185,5 +185,5 @@
 "zvh-2e-Wmz.text" = "Disse nettstedene blir ikke dekket av personvernbeskyttelse.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
-"zWP-d3-nVc.title" = "Hjemskjerm";
+"zWP-d3-nVc.title" = "Startskjerm";
 

@@ -53,7 +53,7 @@
 "Rvx-dM-etJ.title" = "Visszajelzés megosztása";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Melyik weboldal nem működik?”";
+"TMj-NM-j3b.placeholder" = "Melyik weboldal nem működik?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
 "WjT-HM-yim.title" = "Hibás weboldal jelentése";

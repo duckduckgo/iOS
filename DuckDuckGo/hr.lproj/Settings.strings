@@ -5,7 +5,7 @@
 "0gU-rZ-pRc.footerTitle" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
-"2ky-s9-1aZ.text" = "Inačica";
+"2ky-s9-1aZ.text" = "Verzija";
 
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Tipkovnica";
@@ -95,7 +95,7 @@
 "fdJ-b1-Des.title" = "Automatsko brisanje podataka";
 
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Nezaštićena mrežna mjesta";
+"FHC-1z-Z3v.text" = "Nezaštićena web-mjesta";
 
 /* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
 "FpT-1C-xtx.headerTitle" = "Ostalo";
@@ -131,7 +131,7 @@
 "OfP-Kw-IOk.text" = "Nema zaštićenih web-mjesta";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
-"OHV-qC-tL9.title" = "Nezaštićena mrežna mjesta";
+"OHV-qC-tL9.title" = "Nezaštićena web-mjesta";
 
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "O DuckDuckGou";

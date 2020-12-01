@@ -1,14 +1,14 @@
 /* No comment provided by engineer. */
-"Label" = "Label";
+"Label" = "Silt";
 
 /* Description of search and favorites widget in widget gallery */
-"widget.gallery.search.and.favorites.description" = "Otsige või külastage oma lemmiksaite privaatselt vaid ühe puudutusega.";
+"widget.gallery.search.and.favorites.description" = "Otsi või külasta oma lemmiksaite privaatselt vaid ühe puudutusega.";
 
 /* Display name for search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.display.name" = "Otsing ja lemmikud";
 
 /* Description of search only widget in widget gallery */
-"widget.gallery.search.description" = "Käivitage kiiresti privaatne otsing brauseris DuckDuckGos.";
+"widget.gallery.search.description" = "Käivita kiiresti privaatne otsing brauseris DuckDuckGos.";
 
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Otsi";

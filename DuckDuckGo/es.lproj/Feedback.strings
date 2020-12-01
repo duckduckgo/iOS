@@ -53,10 +53,10 @@
 "Rvx-dM-etJ.title" = "Compartir opiniones";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "¿Qué sitio web no se carga?";
+"TMj-NM-j3b.placeholder" = "¿Qué sitio web no funciona?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Reportar sitio web roto";
+"WjT-HM-yim.title" = "Informar de sitio web dañado";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Motivo de página dañada";

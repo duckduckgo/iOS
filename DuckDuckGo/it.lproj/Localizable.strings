@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Apri in una nuova scheda";
 
 /* Open action */
-"action.title.open" = "Aperto";
+"action.title.open" = "Apri";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Incolla e continua";
@@ -188,7 +188,7 @@
 "dax.onboarding.browsing.one.tracker.cta" = "Batti cinque!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
-"dax.onboarding.browsing.site.is.major.tracker" = "Attenzione! Non posso impedire a %1$@ di visualizzare la tua attività su %2$@.\n\nTuttavia, se navighi con me posso ridurre la quantità di informazioni che %2$@ conosce in generale su di te, bloccando i suoi sistemi di tracciamento su molti altri siti.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Attenzione! Non posso impedire a %1$@ di visualizzare la tua attività su %2$@.\n\nTuttavia, se navighi con me posso ridurre ciò che %1$@ sa in generale su di te bloccando i suoi sistemi di tracciamento su molti altri siti.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Fatto";
@@ -212,7 +212,7 @@
 "dax.onboarding.home.add.favorite.accessible" = "Visita i tuoi siti preferiti in un batter d'occhio! Visita uno dei tuoi siti preferiti. Poi tocca il pulsante Apri menu e seleziona Aggiungi ai Preferiti.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.home.initial" = "In seguito, prova a visitare uno dei tuoi siti preferiti!\n\nBloccherò i sistemi di tracciamento in modo che non possano spiarti e aggiornerò anche la sicurezza della tua connessione, se possibile. 🔒";
+"dax.onboarding.home.initial" = "In seguito, prova a visitare uno dei tuoi siti preferiti!\n\nBloccherò i sistemi di tracciamento in modo che non possano spiarti e migliorerò anche la sicurezza della tua connessione, se possibile. 🔒";
 
 /* ad = advertisment */
 "dax.onboarding.home.subsequent" = "Ben fatto!\n\nRicorda: quando navighi con me, gli annunci inquietanti non possono seguirti. 👍";
@@ -230,7 +230,7 @@
 "donotsell.disclaimer.learnmore" = "Ulteriori informazioni";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Tuttavia, i siti Web sono tenuti a rispondere alla segnalazione esclusivamente nei limiti delle leggi pertinenti che li obbligano ad agire in tal senso. ";
+"donotsell.disclaimer.suffix" = " Tuttavia, i siti web sono tenuti a rispondere alla segnalazione esclusivamente nei limiti delle leggi pertinenti che li obbligano ad agire in tal senso. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Attivato";
@@ -287,7 +287,7 @@
 "feedback.browserFeatures.videos" = "Visualizzazione di video";
 
 /* No comment provided by engineer. */
-"feedback.customization.bookmarks" = "Il modo in cui i segnalibri vengono visualizzati";
+"feedback.customization.bookmarks" = "Il modo in cui vengono visualizzati i segnalibri";
 
 /* No comment provided by engineer. */
 "feedback.customization.caption" = "Quale opzione di personalizzazione possiamo aggiungere o migliorare?";
@@ -344,7 +344,7 @@
 "feedback.ddgSearch.technical" = "Programmazione/ricerca tecnica";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Dicci cosa potremmo migliorare.";
+"feedback.form.caption" = "Dicci cosa potremmo migliorare";
 
 /* Confirmation button */
 "feedback.form.submit" = "Invia";
@@ -422,7 +422,7 @@
 "feedback.websiteLoading.description" = "Problemi nel caricamento di siti web";
 
 /* No comment provided by engineer. */
-"feedback.websiteLoading.entry" = "Alcuni siti Web non vengono caricati correttamente";
+"feedback.websiteLoading.entry" = "Alcuni siti web non vengono caricati correttamente";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.form.placeholder" = "Quali sono i contenuti che sembrano essere colpiti?";
@@ -440,7 +440,7 @@
 "findinpage.title" = "Trova nella pagina";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Imposta come Browser predefinito";
+"home.message.buttonText" = "Imposta come browser predefinito";
 
 /* No comment provided by engineer. */
 "home.message.header" = "Imposta DuckDuckGo come browser predefinito.";
@@ -563,7 +563,7 @@
 "onboardingStartBrowsing" = "Inizia a navigare";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Benvenuto su DuckDuckGo";
+"onboardingWelcomeHeader" = "DuckDuckGo ti dà il benvenuto!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Impossibile trovare l'app necessaria per aprire il link";
@@ -572,7 +572,7 @@
 "preserveLogins.domain.list.footer" = "Per mantenere l'accesso degli utenti, i siti web si affidano ai cookie. Quando attivi la Protezione per un sito, i cookie non verranno cancellati e manterrai l'accesso, anche dopo aver usato il pulsante Proteggi (icona del fuoco). Continueremo a bloccare i tracker di terze parti che si trovano su siti web protetti.";
 
 /* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Siti Web";
+"preserveLogins.domain.list.title" = "Siti web";
 
 /* Paramter is a string - domain name */
 "preserveLogins.fireproof.message" = "Vuoi proteggere %@?";
@@ -623,7 +623,7 @@
 "privacy.protection.encryption.forced.message" = "Abbiamo imposto a questo sito l'uso di una connessione crittografata, in modo da impedire l'intercettazione dei dati personali inviati.";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Una connessione crittografata impedisce l'intercettazione di qualsiasi dato personale trasmesso a un sito Web.";
+"privacy.protection.encryption.header" = "Una connessione crittografata impedisce l'intercettazione di qualsiasi dato personale trasmesso a un sito web.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.id" = "Identificatore della chiave del soggetto";
@@ -653,7 +653,7 @@
 "privacy.protection.encryption.public.key" = "Chiave pubblica";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Una connessione crittografata impedisce l'intercettazione di qualsiasi dato personale trasmesso a un sito Web.";
+"privacy.protection.encryption.standard.message" = "Una connessione crittografata impedisce l'intercettazione di qualsiasi dato personale trasmesso a un sito web.";
 
 /* Header of a section that provides infomration about certificate issuer */
 "privacy.protection.encryption.subject.name" = "Nome soggetto";
@@ -725,7 +725,7 @@
 "privacy.protection.practices.header.info" = "Le pratiche sulla privacy indicano il livello di protezione delle informazioni personali che hai condiviso con un sito web.";
 
 /* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "In caso di fusione o acquisizione, questo sito Web ti informerà prima di trasferire le tue informazioni.";
+"privacy.protection.practices.reviewed.info" = "In caso di fusione o acquisizione, questo sito web ti informerà prima di trasferire le tue informazioni";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.unknown.info" = "Le procedure sulla privacy di questo sito Web non sono state sottoposte a verifica.";
@@ -740,16 +740,16 @@
 "privacy.protection.top.offenders.info" = "Queste statistiche rimangono salvate solo sul tuo dispositivo e non vengono inviate altrove. In nessun caso.";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Buone pratiche sulla privacy";
+"privacy.protection.tos.good" = "Buone pratiche di privacy";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Pratiche sulla privacy miste";
+"privacy.protection.tos.mixed" = "Pratiche di privacy miste";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Pratiche sulla privacy insufficienti";
+"privacy.protection.tos.poor" = "Pratiche di privacy insufficienti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Pratiche sulla privacy sconosciute";
+"privacy.protection.tos.unknown" = "Pratiche di privacy sconosciute";
 
 /* No comment provided by engineer. */
 "privacy.protection.tracker.networks.info" = "Le reti di tracciamento aggregano la tua cronologia di navigazione per creare un profilo dati su di te. Le reti di tracciamento principali sono le più pericolose, in quanto possono monitorarti e individuarti anche al di là di Internet.";
@@ -866,7 +866,7 @@
 "web.url.save.bookmark.exists" = "Segnalibro già salvato";
 
 /* Floating message indicating failure */
-"web.url.save.bookmark.none" = "Nessuna pagina Web da aggiungere ai segnalibri";
+"web.url.save.bookmark.none" = "Nessuna pagina web da aggiungere ai segnalibri";
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferito aggiunto";

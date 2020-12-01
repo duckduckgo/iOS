@@ -80,7 +80,7 @@
 "alert.title.disable.protection.placeholder" = "www.example.com";
 
 /* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Redaguoti žymelę";
+"alert.title.edit.bookmark" = "Redaguoti žymę";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Įrašyti žymę";
@@ -257,10 +257,10 @@
 "favorite.menu.edit" = "Redaguoti";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.ads" = "Reklamų ir iššokančių langų blokavimas";
+"feedback.browserFeatures.ads" = "Reklamų ir iššokančiųjų langų blokavimas";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.bookmarks" = "Žymelių kūrimas ir tvarkymas";
+"feedback.browserFeatures.bookmarks" = "Žymių kūrimas ir tvarkymas";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.caption" = "Kokią naršymo funkciją galime pridėti arba patobulinti?";
@@ -467,7 +467,7 @@
 "homeTab.title" = "Pagrindinis";
 
 /* No comment provided by engineer. */
-"keyCommandAddBookmark" = "Pridėti žymelę";
+"keyCommandAddBookmark" = "Pridėti žymę";
 
 /* No comment provided by engineer. */
 "keyCommandAddFavorite" = "Pridėti mėgstamą";
@@ -482,7 +482,7 @@
 "keyCommandClose" = "Uždaryti";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Uždaryti kortelė";
+"keyCommandCloseTab" = "Uždaryti kortelę";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Rasti puslapyje";
@@ -563,7 +563,7 @@
 "onboardingStartBrowsing" = "Pradėti naršyti";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Sveiki atvykę į „DUCKDUCKGO“";
+"onboardingWelcomeHeader" = "Sveiki atvykę į „DuckDuckGo“!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Negalima rasti programos, galinčios atidaryti šią nuorodą";
@@ -611,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Efektyvus dydis";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "El.paštas";
+"privacy.protection.encryption.email" = "El. paštas";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Šifruotas ryšys";
@@ -779,7 +779,7 @@
 "search.hint.duckduckgo" = "Ieškoti arba įvesti adresą";
 
 /* No comment provided by engineer. */
-"section.title.bookmarks" = "Žymelės";
+"section.title.bookmarks" = "Žymės";
 
 /* No comment provided by engineer. */
 "section.title.favorites" = "Mėgstami";
@@ -803,13 +803,13 @@
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
 
 /* Domain is an URL address */
-"siteFeedback.domainInfo" = "Sugedusios svetainės domenas:";
+"siteFeedback.domainInfo" = "Neveikiančios svetainės domenas:";
 
 /* No comment provided by engineer. */
 "siteFeedback.messagePlaceholder" = "Koks turinys ar funkcija neveikia?";
 
 /* No comment provided by engineer. */
-"siteFeedback.subtitle" = "Pranešimas apie sugedusią svetainę yra anonimiškas ir padeda mums tobulinti programą!";
+"siteFeedback.subtitle" = "Pranešimas apie neveikiančią svetainę yra anonimiškas ir padeda mums tobulinti programą!";
 
 /* This is a form title */
 "siteFeedback.title" = "Pranešti apie neveikiančią svetainę";

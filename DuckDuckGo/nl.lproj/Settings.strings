@@ -113,7 +113,7 @@
 "gS2-mg-l7R.title" = "Thema";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Voorvertoning bij lang indrukken";
+"HLr-R8-xxF.text" = "Voorbeeldweergave bij lang indrukken";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Privacybescherming ingeschakeld voor alle sites";
@@ -164,7 +164,7 @@
 "vSJ-YJ-bBs.headerTitle" = "Gewenste timing";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Instellen als standaard browser";
+"xof-5k-PkI.text" = "Instellen als standaardbrowser";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Brandveilige websites";

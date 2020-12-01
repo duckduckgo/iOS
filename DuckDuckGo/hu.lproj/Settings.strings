@@ -62,7 +62,7 @@
 "dj9-vh-Rig.headerTitle" = "Testreszabás";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Ha be van állítva ujjlenyomat- vagy arcfelismerés, illetve rendszerjelszó, megnyitásakor fel kell oldania az alkalmazást.";
+"dOj-jn-mSN.footerTitle" = "Ha be van állítva ujjlenyomat- vagy arcfelismerés, illetve rendszerjelszó, megnyitásakor fel kell oldanod az alkalmazást.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Adatvédelem és biztonság";

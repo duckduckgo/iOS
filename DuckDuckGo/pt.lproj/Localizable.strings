@@ -77,7 +77,7 @@
 "alert.title.disable.protection" = "Adicionar a sites não seguros";
 
 /* Disable potection alert placeholder - leave as it is */
-"alert.title.disable.protection.placeholder" = "www.example.com";
+"alert.title.disable.protection.placeholder" = "www.exemplo.com";
 
 /* Edit Bookmark action */
 "alert.title.edit.bookmark" = "Editar marcador";
@@ -116,7 +116,7 @@
 "autoclear.on" = "Ligado";
 
 /* Placeholder in the add bookmark form */
-"bookmark.address.placeholder" = "www.example.com";
+"bookmark.address.placeholder" = "www.exemplo.com";
 
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Título do website";
@@ -179,13 +179,13 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "Dá cá cinco!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Dá cá mais cinco!";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* estava a tentar rastreá-lo aqui.\n\nEu bloqueei-o!\n\n☝️Pode verificar a barra de endereços para ver quem está a tentar rastreá-lo quando visita um site novo.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "Dá cá cinco!";
+"dax.onboarding.browsing.one.tracker.cta" = "Dá cá mais cinco!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Alerta! Não consigo que %1$@ veja a sua atividade no %2$@.\n\nMas navegue comigo, e eu consigo reduzir o que %1$@ sabe sobre si em geral ao bloquear os seus rastreadores em muitos outros sites.";
@@ -194,13 +194,13 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Entendi";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Alerta! Uma vez que %2$@ possui %1$@, eu não consigo impedi-los de verem a sua atividade aqui.\n\nMas navegue comigo, e eu consigo reduzir o que %2$@  sabe sobre si na generalidade, bloqueando os seus rastreadores em muitos outros sites.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Alerta! Uma vez que %2$@ possui %1$@, eu não consigo impedi-los de verem a sua atividade aqui.\n\nMas navegue comigo, e eu consigo reduzir o que %2$@ sabe sobre si na generalidade, bloqueando os seus rastreadores em muitos outros sites.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Entendi";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers" = "Enquanto toca e desliza, eu bloqueio rastreadores irritantes.\n\nProssiga - continue a navegar!";
+"dax.onboarding.browsing.without.trackers" = "Enquanto toca e desliza, eu bloqueio rastreadores irritantes.\n\nContinue a navegar!";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Entendi";
@@ -344,7 +344,7 @@
 "feedback.ddgSearch.technical" = "Programação/pesquisa técnica";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Diga-nos o que podemos melhorar.";
+"feedback.form.caption" = "Diga-nos o que podemos melhorar";
 
 /* Confirmation button */
 "feedback.form.submit" = "Submeter";
@@ -527,7 +527,7 @@
 "keyCommandShowAllTabs" = "Mostrar todos os separadores";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Bem-vindo(a) ao\nDuckDuckGo!";
+"launchscreenWelcomeMessage" = "Damos-lhe as boas-vindas ao\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Editar";
@@ -563,7 +563,7 @@
 "onboardingStartBrowsing" = "Iniciar a navegação";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Bem-vindo(a) ao DuckDuckGo!";
+"onboardingWelcomeHeader" = "Damos-lhe as boas-vindas ao DuckDuckGo!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Não encontramos a aplicação necessária para abrir esse link";
@@ -611,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Tamanho efetivo";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "E-Mail";
+"privacy.protection.encryption.email" = "E-mail";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Ligação encriptada";
@@ -734,7 +734,7 @@
 "privacy.protection.site.grade" = "Grau de privacidade %@";
 
 /* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Pressionar para abrir a tela de Proteção de Privacidade";
+"privacy.protection.site.hint" = "Premir para abrir o ecrã de Proteção de Privacidade";
 
 /* No comment provided by engineer. */
 "privacy.protection.top.offenders.info" = "Estas estatísticas são apenas armazenadas no seu dispositivo e não são enviadas para lado nenhum. Nunca.";

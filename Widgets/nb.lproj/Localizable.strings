@@ -1,8 +1,8 @@
 /* No comment provided by engineer. */
-"Label" = "Label";
+"Label" = "Etikett";
 
 /* Description of search and favorites widget in widget gallery */
-"widget.gallery.search.and.favorites.description" = "Søk eller besøk favorittsider privat med ett klikk.";
+"widget.gallery.search.and.favorites.description" = "Søk eller besøk favorittsider privat med ett trykk.";
 
 /* Display name for search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.display.name" = "Søk og favoritter";

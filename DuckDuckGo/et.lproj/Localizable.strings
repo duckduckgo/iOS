@@ -11,10 +11,10 @@
 "action.title.copy" = "Kopeeri";
 
 /* Disable protection action */
-"action.title.disable.protection" = "Keela Eraelu puutumatuse kaitse";
+"action.title.disable.protection" = "Keela privaatsuse kaitse";
 
 /* Enable protection action */
-"action.title.enable.protection" = "Luba Eraelu puutumatuse kaitse";
+"action.title.enable.protection" = "Luba privaatsuse kaitse";
 
 /* No comment provided by engineer. */
 "action.title.forgetAll" = "Sulge vahekaardid ja kustuta andmed";
@@ -98,7 +98,7 @@
 "auth.alert.message.encrypted" = "Logige sisse kontole% @. Sinu logimisandmed saadetakse turvaliselt.";
 
 /* Authentication Alert - populated with a domain name */
-"auth.alert.message.plain" = "Logi %@. Sinu parool saadetakse ebaturvaliselt, sest ühendus on krüpteerimata.";
+"auth.alert.message.plain" = "Logi sisse %@. Sinu parool saadetakse ebaturvaliselt, sest ühendus on krüpteerimata.";
 
 /* Authentication Password field placeholder */
 "auth.alert.password.placeholder" = "Parool";
@@ -188,7 +188,7 @@
 "dax.onboarding.browsing.one.tracker.cta" = "Viska viis!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
-"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! Ma ei saa takistada %1$@ nägemast sinu tegevust %2$@.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %2$@ sinust üldiselt teab, blokeerides tema jälitajad paljudel teistel lehtedel.";
+"dax.onboarding.browsing.site.is.major.tracker" = "Ettevaatust! Ma ei saa takistada %1$@ nägemast sinu tegevust %2$@.\n\nKuid sirvi koos minuga ja ma saan vähendada seda, mida %1$@ sinust üldiselt teab, blokeerides tema jälitajad paljudel teistel lehtedel.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Sain aru";
@@ -344,13 +344,13 @@
 "feedback.ddgSearch.technical" = "Programmeerimine / tehniline otsing";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Ütle meile, mida saaksime parandada.";
+"feedback.form.caption" = "Ütle meile, mida saaksime parandada";
 
 /* Confirmation button */
 "feedback.form.submit" = "Esita";
 
 /* No comment provided by engineer. */
-"feedback.negative.form.genericPlaceholder" = "Palun olge võimalikult konkreetne";
+"feedback.negative.form.genericPlaceholder" = "Palun ole võimalikult konkreetne";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.placeholder" = "Kas on mingeid üksikasju, mida soovid lisada?";
@@ -359,7 +359,7 @@
 "feedback.negative.header" = "Meil on kahju seda kuulda";
 
 /* No comment provided by engineer. */
-"feedback.negative.supplementary" = "Mis on teie pettumusega kõige rohkem seotud?";
+"feedback.negative.supplementary" = "Millega on teie pettumus kõige rohkem seotud?";
 
 /* No comment provided by engineer. */
 "feedback.other.description" = "Teised probleemid";
@@ -518,7 +518,7 @@
 "keyCommandPrint" = "Prindi";
 
 /* No comment provided by engineer. */
-"keyCommandReload" = "Laadige uuesti";
+"keyCommandReload" = "Laadi uuesti";
 
 /* No comment provided by engineer. */
 "keyCommandSelect" = "Vali";
@@ -554,7 +554,7 @@
 "onboardingDefaultBrowserTitle" = "Muutke DuckDuckGo oma vaikimisi brauseriks.";
 
 /* No comment provided by engineer. */
-"onboardingSetAsDefaultBrowser" = "Määrake vaikebrauseriks";
+"onboardingSetAsDefaultBrowser" = "Määra vaikebrauseriks";
 
 /* No comment provided by engineer. */
 "onboardingSkip" = "Jäta vahele";

@@ -2,7 +2,7 @@
 "0DQ-yq-UuT.text" = "Tulekindlad veebisaidid";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Keela linkide automaatse avamise takistamiseks teistes installitud rakendustes.";
+"0gU-rZ-pRc.footerTitle" = "Keela, et takistada linkide automaatset avanemist teistes installitud rakendustes.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Versioon";
@@ -62,13 +62,13 @@
 "dj9-vh-Rig.headerTitle" = "Kohanda";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Kui on määratud Touch ID, Face ID või süsteemi parool, palutakse sul vabastada rakendus avamisel.";
+"dOj-jn-mSN.footerTitle" = "Kui on määratud Touch ID, Face ID või süsteemi pääsukood, palutakse avamisel rakendus avada.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Privaatsus ja turvalisus";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
-"dud-qo-Ces.text" = "Label";
+"dud-qo-Ces.text" = "Silt";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Seaded";
@@ -137,7 +137,7 @@
 "oM7-1o-9oY.text" = "DuckDuckGo'st";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
+"qeN-SV-zy7.text" = "Silt";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Näita klaviatuuri";

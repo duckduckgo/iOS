@@ -23,7 +23,7 @@
 "h2M-TW-0QG.title" = "Tillbaka";
 
 /* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
-"iVe-E1-jAH.accessibilityHint" = "Din återkoppling";
+"iVe-E1-jAH.accessibilityHint" = "Din återkoppling.";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Tillbaka";
@@ -56,7 +56,7 @@
 "TMj-NM-j3b.placeholder" = "Vilken webbplats är skadad?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Rapportera bruten webbplats";
+"WjT-HM-yim.title" = "Rapportera skadad webbplats";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Orsak till skadad webbplats";

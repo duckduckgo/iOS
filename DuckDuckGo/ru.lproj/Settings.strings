@@ -2,7 +2,7 @@
 "0DQ-yq-UuT.text" = "Огнеупорные сайты";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Отключение этой опции не позволит ссылкам автоматически открываться в других приложениях.";
+"0gU-rZ-pRc.footerTitle" = "Отключение этой функции не позволит ссылкам автоматически открываться в других приложениях.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Версия";
@@ -17,10 +17,10 @@
 "5Yd-7i-bey.text" = "После выхода из приложения, через 30 минут бездействия";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
-"5YD-Od-uDU.text" = "Удалять данные автоматически";
+"5YD-Od-uDU.text" = "Автоудаление данных";
 
 /* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
-"7nt-uS-sOh.normalTitle" = "Больше информации см. по адресу https://duckduckgo.com/about";
+"7nt-uS-sOh.normalTitle" = "Подробнее на https://duckduckgo.com/about";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "После выхода из приложения, через 1 час бездействия";
@@ -77,7 +77,7 @@
 "EIq-Ev-nfj.text" = "Метка";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
-"ekF-SJ-PAQ.text" = "Удалять данные автоматически";
+"ekF-SJ-PAQ.text" = "Автоудаление данных";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
 "ElX-yE-4PX.text" = "После выхода из приложения, через 5 минут бездействия";

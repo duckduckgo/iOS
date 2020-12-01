@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Privātuma prakse";
+"25V-p3-wsn.text" = "PRIVĀTUMA PRAKSE";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Atiestatīt izsekotāju tīklu statistiku";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "IZSEKOTĀJU TĪKLA LIELĀKIE PĀRKĀPĒJI";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Šifrēts savienojums";
+"dZC-7f-pp3.text" = "ŠIFRĒTS SAVIENOJUMS";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.piemērs.com";
@@ -68,7 +68,7 @@
 "iF1-sO-WXk.text" = "Privātuma prakse";
 
 /* Class = "UILabel"; text = "Top Offenders"; ObjectID = "IPS-SD-65t"; */
-"IPS-SD-65t.text" = "Galvenie pārkāpēji";
+"IPS-SD-65t.text" = "Lielākie pārkāpēji";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
 "J3L-KE-1Vb.text" = "Etiķete";
@@ -104,7 +104,7 @@
 "wf1-HZ-e7d.text" = "Šifrēts savienojums";
 
 /* Class = "UILabel"; text = "Major Networks Blocked"; ObjectID = "XzQ-fW-tzk"; */
-"XzQ-fW-tzk.text" = "Galvenie tīkli ir bloķēti";
+"XzQ-fW-tzk.text" = "Lielākie tīkli ir bloķēti";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK FREQUENCY"; ObjectID = "Y3q-u7-IeX"; */
 "Y3q-u7-IeX.text" = "IZSEKOTĀJU TĪKLU ATRAŠANAS BIEŽUMS";

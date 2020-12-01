@@ -11,10 +11,10 @@
 "2T4-dB-Wu0.text" = "Okrypterad data";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
-"2xP-ZS-UtN.normalTitle" = "Rapportera bruten webbplats";
+"2xP-ZS-UtN.normalTitle" = "Rapportera skadad webbplats";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "SPÅRARNÄTVERKETS FRÄMSTA BROTTSLINGAR";
+"3UG-EO-bt5.text" = "SPÅRARNÄTVERKETS FRÄMSTA SYNDARE";
 
 /* Class = "UILabel"; text = "Check your Internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Kontrollera din internetanslutning och försök igen.";
@@ -38,16 +38,16 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Integritetspraxis";
+"25V-p3-wsn.text" = "INTEGRITETSPRAXIS";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Återställ statistik för spårningsnätverk";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "SPÅRARNÄTVERKETS FRÄMSTA BROTTSLINGAR";
+"aD3-hP-MUU.text" = "SPÅRARNÄTVERKETS FRÄMSTA SYNDARE";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Krypterad anslutning";
+"dZC-7f-pp3.text" = "KRYPTERAD ANSLUTNING";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -62,13 +62,13 @@
 "GZ4-PW-wOG.text" = "8 spårare blockerade";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "hDv-jp-eaS"; */
-"hDv-jp-eaS.normalTitle" = "Rapportera bruten webbplats";
+"hDv-jp-eaS.normalTitle" = "Rapportera skadad webbplats";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
 "iF1-sO-WXk.text" = "Integritetspraxis";
 
 /* Class = "UILabel"; text = "Top Offenders"; ObjectID = "IPS-SD-65t"; */
-"IPS-SD-65t.text" = "Främsta förbrytare";
+"IPS-SD-65t.text" = "Främsta syndare";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
 "J3L-KE-1Vb.text" = "Etikett";
@@ -92,13 +92,13 @@
 "pW9-ic-ro9.text" = "Webbplatsens integritetsskydd";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "SPÅRARNÄTVERKETS FRÄMSTA BROTTSLINGAR";
+"rXM-kA-bL0.text" = "SPÅRARNÄTVERKETS FRÄMSTA SYNDARE";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
 "sr7-Qg-P74.text" = "Webbplatsens integritetsskydd";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "SPÅRARNÄTVERKETS FRÄMSTA BROTTSLINGAR";
+"tpT-I9-kDk.text" = "SPÅRARNÄTVERKETS FRÄMSTA SYNDARE";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Krypterad anslutning";

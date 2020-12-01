@@ -1,5 +1,5 @@
 /* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
-"0MQ-7J-rAM.title" = "Öppna länkar utan att behöva oroa dig, varje gång.";
+"0MQ-7J-rAM.title" = "Sluta oroa dig varje gång du öppnar länkar.";
 
 /* Class = "UIViewController"; title = "Quickly search or visit your favorite sites, all while protecting your privacy."; ObjectID = "3xN-1o-4I4"; */
 "3xN-1o-4I4.title" = "Du kan snabbt besöka eller söka inom dina favoritwebbplatser och samtidigt skydda din integritet.";
@@ -20,7 +20,7 @@
 "kYm-7s-KFg.text" = "3";
 
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
-"u7Q-MU-drX.text" = "VÄLKOMMEN TILL DUCKDUCKGO";
+"u7Q-MU-drX.text" = "Välkommen till DuckDuckGo!";
 
 /* Class = "UILabel"; text = "Widget Instructions"; ObjectID = "WZv-GS-xyE"; */
 "WZv-GS-xyE.text" = "Anvisningar för widget";

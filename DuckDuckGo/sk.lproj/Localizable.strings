@@ -191,22 +191,22 @@
 "dax.onboarding.browsing.site.is.major.tracker" = "Hlavu hore! Nemôžem zabrániť službe %1$@ v tom, aby videla vašu aktivitu na %2$@.\n\nPrehliadajte so mnou a môžem obmedziť to, čo o vás služba %1$@ celkovo vie, zablokovaním jej sledovacích zariadení na mnohých ďalších stránkach.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.site.is.major.tracker.cta" = "Mám to";
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Rozumiem";
 
 /* Parameters are domain names (strings) */
 "dax.onboarding.browsing.site.owned.by.major.tracker" = "Hlavu hore! Pretože %2$@ vlastní %1$@, nemôžem im zabrániť v tom, aby tu videli vašu aktivitu.\n\nPrehliadajte so mnou a môžem obmedziť to, čo o vás %2$@ celkovo vie, zablokovaním ich sledovacích zariadení na mnohých ďalších stránkach.";
 
 /* Got It */
-"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Mám to";
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Rozumiem";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers" = "Počas toho, ako budete ťukať a posúvať, zablokujem nepríjemné sledovacie zariadenia.\n\nNeprestávajte - pokračujte v prehľadávaní!";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers.cta" = "Mám to";
+"dax.onboarding.browsing.without.trackers.cta" = "Rozumiem";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "Navštívte svoje obľúbené stránky bleskurýchlo!\n\nPrejdite na stránku, ktorá sa vám páči. Potom kliknite na ikonu „⋯“ a vyberte *Pridať k obľúbeným*.";
+"dax.onboarding.home.add.favorite" = "Navštívte svoje obľúbené stránky bleskurýchlo!\n\nPrejdite na stránku, ktorá sa vám páči. Potom kliknite na ikonu „⋯“ a vyberte možnosť *Pridať k obľúbeným*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
 "dax.onboarding.home.add.favorite.accessible" = "Navštívte svoje obľúbené stránky bleskurýchlo! Navštívte jednu z vašich obľúbených stránok. Potom kliknite na tlačidlo otvorenej ponuky a vyberte možnosť Pridať k obľúbeným.";
@@ -233,7 +233,7 @@
 "donotsell.disclaimer.suffix" = " Od webových stránok sa však vyžaduje, aby konali na základe signálu iba v rozsahu, v akom ich k tomu prinútia príslušné zákony. ";
 
 /* GPC Setting state */
-"donotsell.enabled" = "Povolené";
+"donotsell.enabled" = "Zapnuté";
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Vaše údaje by nemali byť na predaj. V DuckDuckGo s tým súhlasíme. Aktivujte si nastavenie Globálna kontrola súkromia (GPC) a my webové stránky upozorníme na vaše preferencie:\n\n • Nepredávať vaše osobné údaje.\n• Obmedziť zdieľanie vašich osobných údajov s inými spoločnosťami.";
@@ -254,7 +254,7 @@
 "favorite.menu.delete" = "Vymazať";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Editovať";
+"favorite.menu.edit" = "Upraviť";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokovanie reklám a automaticky otváraných okien";
@@ -278,7 +278,7 @@
 "feedback.browserFeatures.navigation" = "Prejsť ďalej, späť a/alebo obnoviť";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.other" = "Žiadne z uvedených";
+"feedback.browserFeatures.other" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.tabs" = "Tvorba a správa kariet";
@@ -302,7 +302,7 @@
 "feedback.customization.homeScreen" = "Konfigurácia domovskej obrazovky";
 
 /* No comment provided by engineer. */
-"feedback.customization.other" = "Žiadne z uvedených";
+"feedback.customization.other" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.customization.tabs" = "Zobrazovanie kariet";
@@ -320,7 +320,7 @@
 "feedback.ddgSearch.autocomplete" = "Lepšie automatické dopĺňanie";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.caption" = "Ktorú funkciu vyhľadávania môžeme pridať alebo zdokonaliť?";
+"feedback.ddgSearch.caption" = "Ktorú funkciu vyhľadávania môžeme pridať alebo zlepšiť?";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.description" = "Problémy s vyhľadávaním DuckDuckGo";
@@ -338,13 +338,13 @@
 "feedback.ddgSearch.loadTime" = "Rýchlejšie načítavanie";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.other" = "Žiadne z uvedených";
+"feedback.ddgSearch.other" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.technical" = "Programovanie/technické vyhľadávanie";
 
 /* No comment provided by engineer. */
-"feedback.form.caption" = "Povedzte nám, čo sa dá zdokonaliť.";
+"feedback.form.caption" = "Povedzte nám, čo sa dá zlepšiť.";
 
 /* Confirmation button */
 "feedback.form.submit" = "Potvrdiť";
@@ -359,13 +359,13 @@
 "feedback.negative.header" = "Mrzí nás to";
 
 /* No comment provided by engineer. */
-"feedback.negative.supplementary" = "Čo vás najviac frustrovalo?";
+"feedback.negative.supplementary" = "Čo vás najviac frustruje?";
 
 /* No comment provided by engineer. */
 "feedback.other.description" = "Iné problémy";
 
 /* No comment provided by engineer. */
-"feedback.other.entry" = "Žiadne z uvedených";
+"feedback.other.entry" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.performance.caption" = "Na aký problém ste natrafili?";
@@ -380,7 +380,7 @@
 "feedback.performance.entry" = "Aplikácia je pomalá, chybná alebo zlyháva";
 
 /* No comment provided by engineer. */
-"feedback.performance.other" = "Žiadne z uvedených";
+"feedback.performance.other" = "Nič z uvedeného";
 
 /* No comment provided by engineer. */
 "feedback.performance.playback" = "Chyby prehrávania videa alebo médií";
@@ -455,7 +455,7 @@
 "home.row.onboarding.header" = "Pridajte DuckDuckGo na svoju domovskú obrazovku!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Pridajte si vyhľadávač DuckDuckGo do svojho docku a zjednodušte si k nemu prístup!";
+"home.row.reminder.message" = "Pridajte si vyhľadávač DuckDuckGo do svojho doku a zjednodušte si k nemu prístup!";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Presmerujte DuckDuckGo na domovskú obrazovku";
@@ -473,10 +473,10 @@
 "keyCommandAddFavorite" = "Pridať do obľúbených položiek";
 
 /* No comment provided by engineer. */
-"keyCommandBrowserBack" = "Prehliadať späť";
+"keyCommandBrowserBack" = "Prehliadajte dozadu";
 
 /* No comment provided by engineer. */
-"keyCommandBrowserForward" = "Prehliadať ďalej";
+"keyCommandBrowserForward" = "Prehliadajte dopredu";
 
 /* No comment provided by engineer. */
 "keyCommandClose" = "Zatvoriť";
@@ -530,7 +530,7 @@
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
 /* Edit button */
-"navigation.title.edit" = "Editovať";
+"navigation.title.edit" = "Upraviť";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -578,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Chceli by ste webovú stránku zabezpečiť funkciou ohňovzdornosti %@?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Zabezpečiť webovú stránku";
+"preserveLogins.menu.confirm" = "Zabezpečiť webovú stránku funkciou ohňovzdornosti";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Teraz nie";

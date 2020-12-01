@@ -29,7 +29,7 @@
 "JF8-Ow-zXL.title" = "Wstecz";
 
 /* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
-"jr6-Al-4fr.title" = "Wyślij";
+"jr6-Al-4fr.title" = "Prześlij";
 
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
 "lsB-Kq-U8p.normalTitle" = "Prześlij";
@@ -53,7 +53,7 @@
 "Rvx-dM-etJ.title" = "Podziel się opinią";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Która strona nie działa poprawnie?”";
+"TMj-NM-j3b.placeholder" = "Która witryna nie działa poprawnie?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
 "WjT-HM-yim.title" = "Zgłoś uszkodzoną witrynę";

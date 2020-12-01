@@ -86,7 +86,7 @@
 "eMH-uv-Kms.title" = "Icono de la aplicación";
 
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Temas";
+"f1O-6u-LFY.text" = "Tema";
 
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Salir de la aplicación";
@@ -110,7 +110,7 @@
 "gji-Fs-EET.text" = "La privacidad, simplificada. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Temas";
+"gS2-mg-l7R.title" = "Tema";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Vistas previas con pulsación larga";
@@ -125,7 +125,7 @@
 "m23-t6-9cb.text" = "Compartir opiniones";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Cuando se active, las páginas web se abrirán automáticamente en DuckDuckGo.";
+"NRb-Cc-1d6.footerTitle" = "Cuando se active, los sitios web se abrirán automáticamente en DuckDuckGo.";
 
 /* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "No hay sitios web a prueba de fuego";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Acción";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Mostrar sugerencias de autocompletado";
+"U8i-cQ-5WW.text" = "Sugerencias de autocompletado";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Eliminar todos los sitios web a prueba de fuego";

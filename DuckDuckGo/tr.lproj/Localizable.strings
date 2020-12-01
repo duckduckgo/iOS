@@ -5,7 +5,7 @@
 "action.title.bookmark" = "Yer imi ekle";
 
 /* Cancel action - button shown in alert */
-"action.title.cancel" = "Vazgeç";
+"action.title.cancel" = "İptal";
 
 /* Copy action */
 "action.title.copy" = "Kopyala";
@@ -26,10 +26,10 @@
 "action.title.newBackgroundTabForUrl" = "Arka Planda Aç";
 
 /* Create New Tab action */
-"action.title.newTab" = "Yeni sekme";
+"action.title.newTab" = "Yeni Sekme";
 
 /* Open in New Tab action */
-"action.title.newTabForUrl" = "Yeni sekmede aç";
+"action.title.newTabForUrl" = "Yeni Sekmede Aç";
 
 /* Open action */
 "action.title.open" = "Aç";
@@ -161,10 +161,10 @@
 "dax.hide.button" = "İpuçlarını Sonsuza Kadar Gizle";
 
 /* No comment provided by engineer. */
-"dax.hide.cancel" = "Vazgeç";
+"dax.hide.cancel" = "İptal";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Sadece birkaç tane var ve onları da bilgilendirici hale getirmeye çalıştık.";
+"dax.hide.message" = "Sadece birkaç tane var ve onları da bilgilendirici hâle getirmeye çalıştık.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "Kalan ipuçları gizlensin mi?";
@@ -179,13 +179,13 @@
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.multiple.trackers.cta" = "Çak bir beşlik!";
+"dax.onboarding.browsing.multiple.trackers.cta" = "Çak Bir Beşlik!";
 
 /* Parameter is domain name (string) */
 "dax.onboarding.browsing.one.tracker" = "*%1$@* sizi burada izlemeye çalışıyordu.\n\nOnları engelledim!\n\n☝️ Yeni bir siteyi ziyaret ettiğinizde sizi kimin izlemeye çalıştığını görmek için adres çubuğunu kontrol edebilirsiniz.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.one.tracker.cta" = "Çak bir beşlik!";
+"dax.onboarding.browsing.one.tracker.cta" = "Çak Bir Beşlik!";
 
 /* First paramter is a string - network name, 2nd parameter is a string - domain name */
 "dax.onboarding.browsing.site.is.major.tracker" = "Dikkat! %2$@ üzerindeki etkinliğinizin %1$@ tarafından görülmesini önleyemiyorum.\n\nAma benimle gezinirseniz diğer birçok sitedeki izleyicisini engelleyerek %1$@ tarafından sizinle ilgili olarak toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Anladım";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Dikkat! %1$@ sitesinin sahibi %2$@ olduğundan, buradaki etkinliğinizi görmesini engelleyemem.\n\nAma benimle gezinirseniz diğer sitelerdeki pek çok izleyicisini engelleyerek sizinle ilgili olarak %1$@ tarafından toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Dikkat! %1$@ sitesinin sahibi %2$@ olduğundan, buradaki etkinliğinizi görmesini engelleyemem.\n\nAma benimle gezinirseniz diğer sitelerdeki pek çok izleyicisini engelleyerek sizinle ilgili olarak %2$@ tarafından toplanan bilgilerin miktarını genel anlamda azaltabilirim.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Anladım";
@@ -206,7 +206,7 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Anladım";
 
 /* Encourage user to add favorite site using the browsing menu. */
-"dax.onboarding.home.add.favorite" = "En sevdiğiniz siteleri anında ziyaret edin!\n\nSevdiğiniz bir siteye gidin. Ardından \"...\" simgesine dokunun ve *Favorilere Ekle* öğesini seçin.";
+"dax.onboarding.home.add.favorite" = "En sevdiğiniz siteleri anında ziyaret edin!\n\nSevdiğiniz bir siteye gidin. Ardından \"...\" simgesine dokunun ve *Favorilere Ekle* ögesini seçin.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
 "dax.onboarding.home.add.favorite.accessible" = "En sevdiğiniz siteleri anında ziyaret edin! En sevdiğiniz sitelerden birini ziyaret edin. Ardından, menü düğmesine dokunun ve Favorilere Ekle'yi seçin.";
@@ -311,7 +311,7 @@
 "feedback.customization.ui" = "Uygulamanın görünüşü";
 
 /* No comment provided by engineer. */
-"feedback.customization.whatIsCleared" = "Silinen veri";
+"feedback.customization.whatIsCleared" = "Hangi veriler temizlenir";
 
 /* No comment provided by engineer. */
 "feedback.customization.whenIsCleared" = "Veriler temizlendiğinde";
@@ -362,7 +362,7 @@
 "feedback.negative.supplementary" = "En çok ne ile ilgili sıkıntı yaşadınız?";
 
 /* No comment provided by engineer. */
-"feedback.other.description" = "Diğer sorunlar";
+"feedback.other.description" = "Diğer Sorunlar";
 
 /* No comment provided by engineer. */
 "feedback.other.entry" = "Bunların hiçbiri";
@@ -374,7 +374,7 @@
 "feedback.performance.crashes" = "Uygulama çöküyor veya donuyor";
 
 /* No comment provided by engineer. */
-"feedback.performance.description" = "Performans sorunları";
+"feedback.performance.description" = "Performans Sorunları";
 
 /* No comment provided by engineer. */
 "feedback.performance.entry" = "Uygulama yavaş, hatalı veya kilitleniyor";
@@ -416,10 +416,10 @@
 "feedback.start.supplementary" = "Geri bildirimlerinizi nasıl sınıflandırırsınız?";
 
 /* No comment provided by engineer. */
-"feedback.submitted.confirmation" = "Teşekkürler! Geri bildirim gönderildi.";
+"feedback.submitted.confirmation" = "Teşekkür Ederiz! Geri bildirim gönderildi.";
 
 /* No comment provided by engineer. */
-"feedback.websiteLoading.description" = "Web sitesi yükleme Sorunları";
+"feedback.websiteLoading.description" = "Web Sitesi Yükleme Sorunları";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.entry" = "Bazı web siteleri düzgün yüklenmiyor";
@@ -440,7 +440,7 @@
 "findinpage.title" = "Sayfada bul";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Varsayılan tarayıcı olarak ayarla";
+"home.message.buttonText" = "Varsayılan Tarayıcı olarak ayarla";
 
 /* No comment provided by engineer. */
 "home.message.header" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
@@ -467,7 +467,7 @@
 "homeTab.title" = "Ana Sayfa";
 
 /* No comment provided by engineer. */
-"keyCommandAddBookmark" = "Yer imi ekle";
+"keyCommandAddBookmark" = "Yer İmi ekle";
 
 /* No comment provided by engineer. */
 "keyCommandAddFavorite" = "Favori Ekle";
@@ -500,7 +500,7 @@
 "keyCommandLocation" = "Adres Ara veya Gir";
 
 /* No comment provided by engineer. */
-"keyCommandNewTab" = "Yeni sekme";
+"keyCommandNewTab" = "Yeni Sekme";
 
 /* No comment provided by engineer. */
 "keyCommandNextTab" = "Sonraki Sekme";
@@ -548,13 +548,13 @@
 "onboardingContinue" = "Devam et";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserMaybeLater" = "Belki sonra";
+"onboardingDefaultBrowserMaybeLater" = "Belki Sonra";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserTitle" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
 
 /* No comment provided by engineer. */
-"onboardingSetAsDefaultBrowser" = "Varsayılan tarayıcı olarak ayarla";
+"onboardingSetAsDefaultBrowser" = "Varsayılan Tarayıcı olarak ayarla";
 
 /* No comment provided by engineer. */
 "onboardingSkip" = "Atla";
@@ -563,7 +563,7 @@
 "onboardingStartBrowsing" = "Gezinmeye Başla";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "DuckDuckGo'ya hoş geldiniz!";
+"onboardingWelcomeHeader" = "DuckDuckGo'ya Hoş Geldiniz!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Bu bağlantıyı açmak için gereken uygulama bulunamıyor";
@@ -575,13 +575,13 @@
 "preserveLogins.domain.list.title" = "Web siteleri";
 
 /* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "%@ sitesini Yanmaya Dayanıklı yapmak ister misiniz?";
+"preserveLogins.fireproof.message" = "%@ sitesini Korumalı yapmak ister misiniz?";
 
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Korumalı Web Sitesi";
 
 /* Deny fireproofing action */
-"preserveLogins.menu.defer" = "Şimdi değil";
+"preserveLogins.menu.defer" = "Şimdi Değil";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Tümünü Kaldır";
@@ -779,7 +779,7 @@
 "search.hint.duckduckgo" = "Adres ara veya gir";
 
 /* No comment provided by engineer. */
-"section.title.bookmarks" = "Yer imleri";
+"section.title.bookmarks" = "Yer İmleri";
 
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriler";

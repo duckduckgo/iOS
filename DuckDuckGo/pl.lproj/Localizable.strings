@@ -77,7 +77,7 @@
 "alert.title.disable.protection" = "Dodaj do niezabezpieczonych witryn";
 
 /* Disable potection alert placeholder - leave as it is */
-"alert.title.disable.protection.placeholder" = "www.example.com";
+"alert.title.disable.protection.placeholder" = "www.domena.pl";
 
 /* Edit Bookmark action */
 "alert.title.edit.bookmark" = "Edytuj zakładkę";
@@ -116,7 +116,7 @@
 "autoclear.on" = "Włączone";
 
 /* Placeholder in the add bookmark form */
-"bookmark.address.placeholder" = "www.example.com";
+"bookmark.address.placeholder" = "www.domena.pl";
 
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Tytuł strony";
@@ -164,7 +164,7 @@
 "dax.hide.cancel" = "Anuluj";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Jest tylko kilka i staraliśmy się, aby były one pouczające.";
+"dax.hide.message" = "Jest ich tylko kilka i staraliśmy się, aby były pouczające.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "Ukryć pozostałe wskazówki?";
@@ -230,7 +230,7 @@
 "donotsell.disclaimer.learnmore" = "Dowiedz się więcej";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Witryny internetowe są jednak zobowiązane do działania w oparciu o sygnał wyłącznie w zakresie, w jakim jest to wymagane przez obowiązujące prawo. ";
+"donotsell.disclaimer.suffix" = " Witryny internetowe są jednak zobowiązane do działania na podstawie sygnału wyłącznie w zakresie, w jakim jest to wymagane przez obowiązujące prawo. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Włączone";
@@ -260,7 +260,7 @@
 "feedback.browserFeatures.ads" = "Blokowanie reklam i wyskakujących okienek";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.bookmarks" = "Tworzenie i zarządzanie zakładkami";
+"feedback.browserFeatures.bookmarks" = "Tworzenie zakładek i zarządzanie nimi";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.caption" = "Jaką funkcję przeglądania stron powinniśmy dodać lub usprawnić?";
@@ -281,10 +281,10 @@
 "feedback.browserFeatures.other" = "Żadne z powyższych";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.tabs" = "Tworzenie i zarządzanie kartami";
+"feedback.browserFeatures.tabs" = "Tworzenie kart i zarządzanie nimi";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.videos" = "Oglądanie filmików";
+"feedback.browserFeatures.videos" = "Oglądanie filmów";
 
 /* No comment provided by engineer. */
 "feedback.customization.bookmarks" = "Sposób wyświetlania zakładek";
@@ -353,7 +353,7 @@
 "feedback.negative.form.genericPlaceholder" = "Podaj jak najdokładniejsze informacje";
 
 /* No comment provided by engineer. */
-"feedback.negative.form.placeholder" = "Czy są jakiekolwiek szczegóły, które chcesz dołączyć?";
+"feedback.negative.form.placeholder" = "Czy są jakiekolwiek szczegóły, które chcesz uwzględnić?";
 
 /* No comment provided by engineer. */
 "feedback.negative.header" = "Przykro nam to słyszeć";
@@ -383,7 +383,7 @@
 "feedback.performance.other" = "Żadne z powyższych";
 
 /* No comment provided by engineer. */
-"feedback.performance.playback" = "Błędy podczas wyświetlania filmów i mediów";
+"feedback.performance.playback" = "Błędy podczas odtwarzania filmów i mediów";
 
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Strony lub wyniki wyszukiwania wczytują się powoli";
@@ -416,7 +416,7 @@
 "feedback.start.supplementary" = "Do jakiej kategorii zaliczysz swoją opinię?";
 
 /* No comment provided by engineer. */
-"feedback.submitted.confirmation" = "Dziękujemy! Informacje zostały przekazane";
+"feedback.submitted.confirmation" = "Dziękujemy! Informacje zostały przekazane.";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.description" = "Problemy z wczytywaniem stron";
@@ -449,13 +449,13 @@
 "home.message.subheader" = "Zawsze otwieraj linki ze spokojem.";
 
 /* No comment provided by engineer. */
-"home.message.topText" = "NOWOŚĆ W IOS 14";
+"home.message.topText" = "NOWOŚĆ W iOS 14";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo do ekranu głównego!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Dodaj DuckDuckGo do stacji dokującej, aby mieć łatwy dostęp!";
+"home.row.reminder.message" = "Dodaj DuckDuckGo do Docka, aby mieć łatwy dostęp!";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Zabierz DuckDuckGo do domu";
@@ -488,10 +488,10 @@
 "keyCommandFind" = "Znajdź na stronie";
 
 /* No comment provided by engineer. */
-"keyCommandFindNext" = "Znajdź następny(-ą)";
+"keyCommandFindNext" = "Znajdź następny element";
 
 /* No comment provided by engineer. */
-"keyCommandFindPrevious" = "Znajdź poprzedni(-ą)";
+"keyCommandFindPrevious" = "Znajdź poprzedni element";
 
 /* No comment provided by engineer. */
 "keyCommandFire" = "Wyczyść wszystkie karty i dane";
@@ -518,7 +518,7 @@
 "keyCommandPrint" = "Drukuj";
 
 /* No comment provided by engineer. */
-"keyCommandReload" = "Przeładuj";
+"keyCommandReload" = "Załaduj ponownie";
 
 /* No comment provided by engineer. */
 "keyCommandSelect" = "Wybierz";
@@ -545,7 +545,7 @@
 "onboarding.widgets.skipButton" = "Może później";
 
 /* No comment provided by engineer. */
-"onboardingContinue" = "Dalej";
+"onboardingContinue" = "Kontynuuj";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserMaybeLater" = "Może później";
@@ -599,7 +599,7 @@
 "privacy.protection.encryption.algorithm" = "Algorytm";
 
 /* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bitów";
+"privacy.protection.encryption.bits" = "Liczba bitów: %d";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.cert.error" = "Błąd podczas wyodrębniania certyfikatu";
@@ -698,10 +698,10 @@
 "privacy.protection.encryption.yes" = "Tak";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "WYŁĄCZONA OCHRONA STRONY";
+"privacy.protection.main.disabled" = "WYŁĄCZONA OCHRONA WITRYNY";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "ULEPSZONY OD $1 DO $2";
+"privacy.protection.main.enhanced" = "ULEPSZONY Z $1 NA $2";
 
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "POZIOM PRYWATNOŚCI";
@@ -728,7 +728,7 @@
 "privacy.protection.practices.reviewed.info" = "Ta witryna internetowa powiadomi Cię przed przekazaniem Twoich danych w przypadku fuzji lub przejęcia";
 
 /* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Praktyki prywatności tej witryny nie zostały sprawdzone.";
+"privacy.protection.practices.unknown.info" = "Polityka prywatności tej witryny nie została sprawdzona.";
 
 /* Replacement string is a single letter: A/B/C/D */
 "privacy.protection.site.grade" = "Poziom prywatności %@";
@@ -743,10 +743,10 @@
 "privacy.protection.tos.good" = "Dobra polityka prywatności";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Zróżnicowana polityka prywatności”";
+"privacy.protection.tos.mixed" = "Przeciętna polityka prywatności";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "„Słaba polityka prywatności”";
+"privacy.protection.tos.poor" = "Słaba polityka prywatności";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Nieznana polityka prywatności";
@@ -812,13 +812,13 @@
 "siteFeedback.subtitle" = "Zgłaszanie błędów w witrynie jest całkowicie anonimowe i pomaga nam ulepszać aplikację!";
 
 /* This is a form title */
-"siteFeedback.title" = "Zgłoś wadliwą stronę";
+"siteFeedback.title" = "Zgłoś uszkodzoną witrynę";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "Która strona nie działa poprawnie?”";
+"siteFeedback.urlPlaceholder" = "Która witryna nie działa poprawnie?";
 
 /* Accessibility label on remove button */
-"tab.close.home" = "Zamknij kartę domową";
+"tab.close.home" = "Zamknij kartę główną";
 
 /* Accesibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Zamknij „%1$@” w %2$@";
@@ -839,7 +839,7 @@
 "theme.acc.default" = "Systemowy";
 
 /* Light Theme entry */
-"theme.acc.light" = "Jasne";
+"theme.acc.light" = "Jasny";
 
 /* Dark Theme entry */
 "theme.name.dark" = "Ciemny";
@@ -848,7 +848,7 @@
 "theme.name.default" = "Domyślne ustawienie systemowe";
 
 /* Light Theme entry */
-"theme.name.light" = "Jasne";
+"theme.name.light" = "Jasny";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.disabled" = "Dodano %@ do witryn niezabezpieczonych";
@@ -866,7 +866,7 @@
 "web.url.save.bookmark.exists" = "Zakładka jest już zapisana";
 
 /* Floating message indicating failure */
-"web.url.save.bookmark.none" = "Brak strony internetowej do zakładki";
+"web.url.save.bookmark.none" = "Brak strony, którą można dodać do zakładek";
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Dodano ulubione";

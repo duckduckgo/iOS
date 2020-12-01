@@ -29,7 +29,7 @@
 "action.title.newTab" = "Nov zavihek";
 
 /* Open in New Tab action */
-"action.title.newTabForUrl" = "Odpri na novem zavihku";
+"action.title.newTabForUrl" = "Odpri v novem zavihku";
 
 /* Open action */
 "action.title.open" = "Odpri";
@@ -170,7 +170,7 @@
 "dax.hide.title" = "Skrij preostale nasvete?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna in nikoli ne shranim vaše zgodovine iskanja. Vedno. 🙌";
+"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna in nikoli ne shranim vaše zgodovine iskanja. Vedno.🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Fuj!";
@@ -509,7 +509,7 @@
 "keyCommandOpenInNewBackgroundTab" = "Odpri povezavo v ozadju";
 
 /* No comment provided by engineer. */
-"keyCommandOpenInNewTab" = "Odpri povezavo na novem zavihku";
+"keyCommandOpenInNewTab" = "Odpri povezavo v novem zavihku";
 
 /* No comment provided by engineer. */
 "keyCommandPreviousTab" = "Prejšnji zavihek";
@@ -563,7 +563,7 @@
 "onboardingStartBrowsing" = "Začni brskanje";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Dobrodošli v aplikaciji DUCKDUCKGO";
+"onboardingWelcomeHeader" = "Dobrodošli v aplikaciji DuckDuckGo!";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Aplikacije, ki je potrebna za odpiranje te povezave, ni mogoče najti";
@@ -743,10 +743,10 @@
 "privacy.protection.tos.good" = "Dobre prakse zasebnosti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Mešane prakse zasebnosti“";
+"privacy.protection.tos.mixed" = "Mešane prakse zasebnosti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "„Slabe prakse zasebnosti“";
+"privacy.protection.tos.poor" = "Slabe prakse zasebnosti";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Neznane prakse zasebnosti";
@@ -815,7 +815,7 @@
 "siteFeedback.title" = "Prijavite poškodovano spletno mesto";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?“";
+"siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zapri zavihek Domov";

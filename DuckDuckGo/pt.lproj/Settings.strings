@@ -113,7 +113,7 @@
 "gS2-mg-l7R.title" = "Tema";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Pré-visualizações ao premir prolongamente";
+"HLr-R8-xxF.text" = "Pré-visualizações ao premir prolongadamente";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Proteção de Privacidade ativa para todos os sites";

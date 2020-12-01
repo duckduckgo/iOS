@@ -197,13 +197,13 @@
 "dax.onboarding.browsing.site.owned.by.major.tracker" = "Προσοχή! Καθώς το %2$@ έχει στην κατοχή του το %1$@, δεν μπορώ να τους εμποδίσω από το να δουν τη δραστηριότητά σας εδώ.\n\nΑλλά περιηγηθείτε μαζί μου και θα μπορώ να περιορίσω το τι θα γνωρίζει το %2$@ για σας συνολικά, αποκλείοντας τις εφαρμογές παρακολούθησης σε πλήθος άλλων ιστότοπων.";
 
 /* Got It */
-"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Το έπιασα";
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Το κατάλαβα";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers" = "Καθώς πατάτε στην οθόνη και κάνετε κύλιση, θα μπλοκάρω ενοχλητικές εφαρμογές παρακολούθησης. \n\nΜη σταματάτε - συνεχίστε την περιήγηση!";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers.cta" = "Το έπιασα";
+"dax.onboarding.browsing.without.trackers.cta" = "Το κατάλαβα";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\nΜεταβείτε σε έναν ιστότοπο που αγαπάτε. Έπειτα, πατήστε το εικονίδιο \"⋯\" και επιλέξτε *Προσθήκη στα αγαπημένα*.";
@@ -455,7 +455,7 @@
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Προσθήκη του DuckDuckGo στο Dock σας για εύκολη πρόσβαση.";
+"home.row.reminder.message" = "Προσθήκη του DuckDuckGo στο Dock σας για εύκολη πρόσβαση!";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη";

@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Zásady ochrany soukromí";
+"25V-p3-wsn.text" = "ZÁSADY OCHRANY SOUKROMÍ";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Obnovit statistiky sledovací sítě";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "NEJČASTĚJŠÍ DELIKVENTI SLEDOVACÍ SÍTĚ";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Šifrované připojení";
+"dZC-7f-pp3.text" = "ŠIFROVANÉ PŘIPOJENÍ";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";

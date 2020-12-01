@@ -17,7 +17,7 @@
 "5Yd-7i-bey.text" = "Έξοδος εφαρμογής, ανενεργή για 30 λεπτά";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
-"5YD-Od-uDU.text" = "Αυτόματη εκκαθάριση δεδομένων";
+"5YD-Od-uDU.text" = "Αυτόματη απαλοιφή δεδομένων";
 
 /* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
 "7nt-uS-sOh.normalTitle" = "Περισσότερα στη διεύθυνση duckduckgo.com/about";

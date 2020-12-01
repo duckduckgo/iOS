@@ -62,7 +62,7 @@
 "dj9-vh-Rig.headerTitle" = "Spersonalizuj";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Jeśli ustawiono Touch ID, Face ID lub hasło systemowe, zostaniesz poproszony(-a) o odblokowanie aplikacji podczas otwierania.";
+"dOj-jn-mSN.footerTitle" = "Jeśli ustawiono Touch ID, Face ID lub hasło systemowe, pojawi się prośba o odblokowanie aplikacji podczas otwierania.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Prywatność i bezpieczeństwo";
@@ -107,7 +107,7 @@
 "Gbx-kl-uOO.text" = "Domyślny";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Prywatność — jeszcze prostsza. ";
+"gji-Fs-EET.text" = "Prywatność – jeszcze prostsza. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Motyw";

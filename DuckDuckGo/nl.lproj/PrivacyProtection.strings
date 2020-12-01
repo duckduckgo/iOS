@@ -20,7 +20,7 @@
 "3uo-s0-uRc.text" = "Controleer je internetverbinding en probeer het opnieuw.";
 
 /* Class = "UILabel"; text = "Enhanced Grade"; ObjectID = "5dV-qp-Hz5"; */
-"5dV-qp-Hz5.text" = "Verbeterd niveau";
+"5dV-qp-Hz5.text" = "Verbeterde klasse";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
 "6os-4h-chg.text" = "Label";
@@ -32,13 +32,13 @@
 "7nh-8f-M2e.text" = "www.voorbeeld.com";
 
 /* Class = "UILabel"; text = "Privacy Grade"; ObjectID = "7xH-3L-wpf"; */
-"7xH-3L-wpf.text" = "Privacyniveau";
+"7xH-3L-wpf.text" = "Privacyklasse";
 
 /* Class = "UITableViewController"; title = "xxx"; ObjectID = "7Z1-eg-OWQ"; */
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Privacypraktijken";
+"25V-p3-wsn.text" = "PRIVACYPRAKTIJKEN";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Trackernetwerkstatistieken resetten";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "TOPOVERTREDERS TRACKERNETWERK";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Gecodeerde verbinding";
+"dZC-7f-pp3.text" = "GECODEERDE VERBINDING";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.voorbeeld.com";

@@ -44,13 +44,13 @@
 "action.title.refresh" = "Uppdatera";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Rapportera bruten webbplats";
+"action.title.reportBrokenSite" = "Rapportera skadad webbplats";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Begär stationär datorwebbplats";
+"action.title.request.desktop.site" = "Begär webbplats för dator";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Begär mobil webbplats";
+"action.title.request.mobile.site" = "Begär webbplats för mobil";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Spara";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videon spelades inte upp";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "BERÄTTA VAD SOM HÄNDE";
+"brokensite.sectionTitle" = "BESKRIV VAD SOM HÄNDE";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Dölj tipsen för alltid";
@@ -200,7 +200,7 @@
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Jag fattar";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers" = "Medan du pekar och bläddrar kommer jag att blockera irriterande spårare.\n\nFortsätt - surfa vidare!";
+"dax.onboarding.browsing.without.trackers" = "Medan du pekar och bläddrar kommer jag att blockera irriterande spårare.\n\nFortsätt – surfa vidare!";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Jag fattar";
@@ -212,7 +212,7 @@
 "dax.onboarding.home.add.favorite.accessible" = "Besök dina favoritsidor på ett ögonblick! Besök en av dina favoritwebbplatser. Tryck sedan på knappen för att öppna menyn och välj Lägg till i favoriter.";
 
 /* No comment provided by engineer. */
-"dax.onboarding.home.initial" = "Prova sedan att besöka en av dina favoritwebbplatser!\n\nJag blockerar trackers så att de inte kan spionera på dig. Jag uppgraderar också säkerheten för din uppkoppling om det är möjligt. 🔒";
+"dax.onboarding.home.initial" = "Prova sedan att besöka en av dina favoritwebbplatser!\n\nJag blockerar spårare så att de inte kan spionera på dig. Jag uppgraderar också säkerheten för din uppkoppling om det är möjligt. 🔒";
 
 /* ad = advertisment */
 "dax.onboarding.home.subsequent" = "Du klarar det här!\n\nKom ihåg: varje gång du surfar med mig förlorar en läskig annons sina vingar. 👍";
@@ -317,7 +317,7 @@
 "feedback.customization.whenIsCleared" = "När data rensas";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.autocomplete" = "Bättre autoslutförfunktion";
+"feedback.ddgSearch.autocomplete" = "Förbättring av Komplettera automatiskt";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.caption" = "Vilken sökfunktion kan vi lägga till eller förbättra?";
@@ -332,7 +332,7 @@
 "feedback.ddgSearch.languageOrRegion" = "Sökning på ett specifikt språk eller i en viss region";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.layout" = "Layouten ska vara mer lik Googles";
+"feedback.ddgSearch.layout" = "Layouten borde vara mer lik Googles";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.loadTime" = "Snabbare laddningstid";
@@ -446,7 +446,7 @@
 "home.message.header" = "Gör DuckDuckGo till din standardwebbläsare.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Öppna länkar utan att behöva oroa dig, varje gång.";
+"home.message.subheader" = "Sluta oroa dig varje gång du öppnar länkar.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "NYTT I IOS 14";
@@ -455,7 +455,7 @@
 "home.row.onboarding.header" = "Lägg till DuckDuckGo på din hemskärm!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Lägg DuckDuckGo i din docka för enkel åtkomst!";
+"home.row.reminder.message" = "Lägg DuckDuckGo i din Dock för enkel åtkomst!";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Ta hem DuckDuckGo";
@@ -656,7 +656,7 @@
 "privacy.protection.encryption.standard.message" = "En krypterad anslutning förhindrar avlyssning av personlig information som du skickar till en webbplats.";
 
 /* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Certifikatmottagarens namn";
+"privacy.protection.encryption.subject.name" = "Certifikatutgivarens namn";
 
 /* Part of certificate info */
 "privacy.protection.encryption.summary" = "Sammanfattning";
@@ -674,7 +674,7 @@
 "privacy.protection.encryption.usage" = "Användning";
 
 /* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Avkryptera";
+"privacy.protection.encryption.usage.decrypt" = "Dekryptera";
 
 /* Usage of a certificate */
 "privacy.protection.encryption.usage.derive" = "Härled";
@@ -716,7 +716,7 @@
 "privacy.protection.network.leaderboard" = "Spårningsnätverk hittades på %1$@%% av de webbplatser som du har besökt sedan %2$@.";
 
 /* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Vi samlar fortfarande in data för att visa hur\nmånga spårare vi har blockerat.";
+"privacy.protection.network.leaderboard.gathering" = "Vi samlar fortfarande in data för att visa \nhur många spårare vi har blockerat.";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Integritetspraxis från ToS;DR.";
@@ -803,13 +803,13 @@
 "siteFeedback.buttonText" = "Skicka in rapport";
 
 /* Domain is an URL address */
-"siteFeedback.domainInfo" = "Skadad webbplats domän:";
+"siteFeedback.domainInfo" = "Den skadade webbplatsens domän:";
 
 /* No comment provided by engineer. */
 "siteFeedback.messagePlaceholder" = "Vilket innehåll eller vilken funktion är skadad?";
 
 /* No comment provided by engineer. */
-"siteFeedback.subtitle" = "Rapportering av skadad webbplats sker helt anonymt och det hjälper oss att förbättra appen!";
+"siteFeedback.subtitle" = "Rapportering av en skadad webbplats sker helt anonymt och hjälper oss att förbättra appen!";
 
 /* This is a form title */
 "siteFeedback.title" = "Rapportera skadad webbplats";

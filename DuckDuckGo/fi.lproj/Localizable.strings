@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Selvä";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Huomio! Koska %2$@ omistaa palvelun %1$@, en voi estää heitä näkemästä, mitä teet täällä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %2$@ saa tietää sinusta estämällä heidän seurantansa monilla muilla sivustoilla.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Huomio! Koska %2$@ omistaa palvelun %1$@, en voi estää heitä näkemästä, mitä teet täällä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %2$@ saa tietää sinusta, estämällä heidän seurantansa monilla muilla sivustoilla.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Selvä";
@@ -644,7 +644,7 @@
 "privacy.protection.encryption.mixed.message" = "Tällä sivustolla on yhdistetty salaus, sillä osa sisällöstä tarjotaan salaamattomalla yhteydellä.";
 
 /* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "ei";
+"privacy.protection.encryption.no" = "Ei";
 
 /* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
 "privacy.protection.encryption.permanent" = "Pysyvä";

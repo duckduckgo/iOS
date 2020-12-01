@@ -59,7 +59,7 @@
 "dBZ-yq-FYj.text" = "Lietojumprogrammas bloķēšana";
 
 /* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Pielāgot";
+"dj9-vh-Rig.headerTitle" = "Pielāgošana";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.footerTitle" = "Ja ir iestatīts Touch ID, Face ID vai sistēmas piekļuves kods, atverot lietotni, tev tā būs jāatbloķē.";
@@ -86,7 +86,7 @@
 "eMH-uv-Kms.title" = "Lietotnes ikona";
 
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Fons";
+"f1O-6u-LFY.text" = "Motīvs";
 
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Tikai iziešana no lietotnes";
@@ -98,7 +98,7 @@
 "FHC-1z-Z3v.text" = "Neaizsargātas vietnes";
 
 /* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "Citi";
+"FpT-1C-xtx.headerTitle" = "Cits";
 
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Globālā privātuma kontrole (GPC)";
@@ -107,10 +107,10 @@
 "Gbx-kl-uOO.text" = "Noklusējums";
 
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Privātums – vienkāršots. ";
+"gji-Fs-EET.text" = "Privātums – vienkāršots. ";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Fons";
+"gS2-mg-l7R.title" = "Motīvs";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Ilgas nospiešanas rezultātu priekšskatījumi";
@@ -149,7 +149,7 @@
 "U2M-6p-6nl.headerTitle" = "Darbība";
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Automātiski aizpildīt ieteikumus";
+"U8i-cQ-5WW.text" = "Automātiski pabeigt ieteikumus";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Noņemt visas ugunsdrošās vietnes";

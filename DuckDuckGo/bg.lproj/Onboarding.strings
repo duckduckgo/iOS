@@ -1,5 +1,5 @@
 /* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
-"0MQ-7J-rAM.title" = "Отваряйте връзки без притеснения, всеки път.";
+"0MQ-7J-rAM.title" = "Отваряйте връзки без притеснения";
 
 /* Class = "UIViewController"; title = "Quickly search or visit your favorite sites, all while protecting your privacy."; ObjectID = "3xN-1o-4I4"; */
 "3xN-1o-4I4.title" = "Търсите или отваряте бързо любимите си сайтове и същевременно защитавате поверителността на данните си.";
@@ -8,7 +8,7 @@
 "8Yp-jL-Y1J.text" = "1";
 
 /* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
-"ciS-pA-ovS.normalTitle" = "Продължи";
+"ciS-pA-ovS.normalTitle" = "Продължаване";
 
 /* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "HOt-9c-gP5"; */
 "HOt-9c-gP5.normalTitle" = "Разбрах";

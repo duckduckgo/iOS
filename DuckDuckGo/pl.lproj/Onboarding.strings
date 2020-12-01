@@ -8,7 +8,7 @@
 "8Yp-jL-Y1J.text" = "1";
 
 /* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
-"ciS-pA-ovS.normalTitle" = "Kontynuuj";
+"ciS-pA-ovS.normalTitle" = "Dalej";
 
 /* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "HOt-9c-gP5"; */
 "HOt-9c-gP5.normalTitle" = "Rozumiem";
@@ -20,7 +20,7 @@
 "kYm-7s-KFg.text" = "3";
 
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
-"u7Q-MU-drX.text" = "Witamy w DuckDuckGo!";
+"u7Q-MU-drX.text" = "WITAMY W DUCKDUCKGO";
 
 /* Class = "UILabel"; text = "Widget Instructions"; ObjectID = "WZv-GS-xyE"; */
 "WZv-GS-xyE.text" = "Instrukcje dotyczące widżetów";

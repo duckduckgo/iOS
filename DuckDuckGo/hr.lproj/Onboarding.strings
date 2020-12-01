@@ -1,5 +1,5 @@
 /* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
-"0MQ-7J-rAM.title" = "Svaki put poveznice otvori spokojno.";
+"0MQ-7J-rAM.title" = "Otvarajte veze spokojno, svaki put.";
 
 /* Class = "UIViewController"; title = "Quickly search or visit your favorite sites, all while protecting your privacy."; ObjectID = "3xN-1o-4I4"; */
 "3xN-1o-4I4.title" = "Brzo pretraži ili posjeti svoja omiljena web-mjesta, štiteći pritom svoju privatnost.";
@@ -8,10 +8,10 @@
 "8Yp-jL-Y1J.text" = "1";
 
 /* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
-"ciS-pA-ovS.normalTitle" = "Nastavi";
+"ciS-pA-ovS.normalTitle" = "Nastaviti";
 
 /* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "HOt-9c-gP5"; */
-"HOt-9c-gP5.normalTitle" = "Shvaćam";
+"HOt-9c-gP5.normalTitle" = "Shvatio/la sam";
 
 /* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
 "J1y-Qk-FSX.normalTitle" = "PRESKOČI";

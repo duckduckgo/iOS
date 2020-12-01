@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Devre Dışı";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Küresel Gizlilik Kontrolü (GPC) yeni bir standart olduğundan, çoğu web sitesi tarafından henüz tanınmayacaktır. Ancak, dünya çapında benimsenmesini sağlamak için elimizden geleni yapıyoruz.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Daha Fazla Bilgi";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Etkin";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Verileriniz satılık olmamalı. DuckDuckGo'da aynı fikirdeyiz. \"Küresel Gizlilik Kontrolü\" (GPC) ayarını etkinleştirirseniz web sitelerine şu tercihleri yaptığınızı bildiririz:\n\n• Kişisel verilerinizin satılmasını istemediğinizi.\n• Kişisel verilerinizin diğer şirketlerle paylaşımının sınırlandırılmasını istediğinizi.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";

@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Zakázáno";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Vzhledem k tomu, že Globální kontrola ochrany osobních údajů (GPC) je nový standard, většina webových stránek ho zatím nerozpozná, nicméně tvrdě pracujeme na tom, abychom zajistili, že bude akceptován po celém světě.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Více informací";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Povoleno";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vaše data by neměla být na prodej. Na tom se ve společnosti DuckDuckGo shodneme. Aktivujte nastavení „Globální kontrola ochrany osobních údajů“ (GPC) a my upozorníme webové stránky na vaše preference:\n\n• Neprodávat vaše osobní údaje.\n• Omezit sdílení vašich osobních údajů s jinými společnosti.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";

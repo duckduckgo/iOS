@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Zakázané";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Vzhľadom na to, že Globálna kontrola súkromia (GPC) je novým štandardom, väčšina webových stránok ho ešte nerozpozná, ale usilovne pracujeme na tom, aby sa stal celosvetovo akceptovaným.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Zistite viac";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Povolené";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vaše údaje by nemali byť na predaj. V DuckDuckGo s tým súhlasíme. Aktivujte si nastavenie Globálna kontrola súkromia (GPC) a my webové stránky upozorníme na vaše preferencie:\n\n • Nepredávať vaše osobné údaje.\n• Obmedziť zdieľanie vašich osobných údajov s inými spoločnosťami.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatiaľ neboli pridané žiadne záložky";

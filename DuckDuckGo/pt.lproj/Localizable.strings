@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Desativado";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Uma vez que o Controlo Global de Privacidade (CGP) é um padrão novo, a maioria dos websites ainda não o reconhecem, mas estamos a trabalhar arduamente para garantir que esse reconhecimento aconteça mundialmente.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Saiba mais";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Ativado";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Os seus dados não devem estar à venda. Na DuckDuckGo, concordamos. Ative a definição de ''Controlo Global de Privacidade'' (CGP) e enviaremos as suas preferências aos websites para: \n\n• Não venderem os seus dados pessoais.\n• Partilha limitada dos seus dados pessoais a outras empresas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda não foram adicionados marcadores";

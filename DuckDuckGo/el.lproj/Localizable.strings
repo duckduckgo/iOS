@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Απενεργοποιήθηκε";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Καθώς ο Παγκόσμιος έλεγχος απορρήτου (GPC) αποτελεί νέο πρότυπο, οι περισσότεροι ιστότοποι δεν θα το αναγνωρίζουν ακόμη, αλλά εργαζόμαστε σκληρά ώστε να εξασφαλίσουμε ότι θα γίνει αποδεκτό παγκοσμίως.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Μάθετε περισσότερα";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Ενεργοποιήθηκε";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Τα δεδομένα σας δεν πρέπει να πωλούνται. Στην DuckDuckGo συμφωνούμε. Ενεργοποιήστε τη ρύθμιση \"Παγκόσμιος έλεγχος απορρήτου\" (GPC) και θα ενημερώσουμε τους ιστότοπους για την προτίμησή σας:\n\n• Να μην πωλούν τα προσωπικά δεδομένα σας.\n• Να περιορίσουν την κοινοποίηση των προσωπικών δεδομένων σας σε άλλες εταιρείες.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";

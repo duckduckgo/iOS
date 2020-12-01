@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Keelatud";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Kuna ülemaailmne privaatsuskontroll (GPC) on uus standard, ei tunne enamik veebisaite seda veel ära, kuid me töötame selle nimel, et seda aktsepteeritaks üleilmselt.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Loe edasi";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Lubatud";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Sinu andmed ei peaks olema müügiks. DuckDuckGo nõustub sellega. Aktiveeri seadistus „Üleilmne privaatsuskontroll“ (GPC) ja me anname veebisaitidele märku sinu eelistustest: \n\n • Mitte müüa sinu isikuandmeid. \n• Piirata sinu isikuandmete jagamist teiste ettevõtetega.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Järjehoidjaid pole veel lisatud";

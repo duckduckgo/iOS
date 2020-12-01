@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Deaktiveret";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Da Global Privacy Control (GPC) er en ny standard, genkender de fleste websteder det endnu ikke, men vi arbejder hårdt på at sikre, at det bliver accepteret over hele verden.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Mere info";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Aktiveret";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Dine data burde ikke være til salg. Det er vi enige i hos DuckDuckGo. Aktivér indstillingen \"Global Privacy Control\" (GPC), så signalerer vi til websteder, at du foretrækker: \n\n• Ikke at sælge dine persondata.\n• Begræns deling af dine persondata til andre virksomheder.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bogmærker tilføjet endnu";

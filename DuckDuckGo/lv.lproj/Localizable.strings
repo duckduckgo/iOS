@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Atspējota";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Tā kā Globālā privātuma kontrole (GPC) ir jauns standarts, lielākā daļa vietņu to vēl neatpazīst, taču mēs cītīgi strādājam pie tā, lai šis standarts tiktu ievērots visā pasaulē.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Uzzināt vairāk";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Iespējota";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Taviem datiem nevajadzētu tikt pārdotiem. DuckDuckGo tam piekrīt. Aktivizē iestatījumu “Globālā privātuma kontrole\" (GPC), un mēs vietnēm paziņosim, ka tu izvēlies:\n\n• Nepārdot savus personas datus.\n• Ierobežo savu personas datu koplietošanu ar citiem uzņēmumiem.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Vēl nav pievienota neviena grāmatzīme";

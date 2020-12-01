@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Désactivé";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Étant donné que le Global Privacy Control (GPC) est une nouvelle norme, la plupart des sites Web ne la reconnaissent pas encore, mais nous mettons tout en œuvre pour qu'elle soit reconnue dans le monde entier.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "En savoir plus";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Activé";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Vos données ne devraient pas être à vendre. C'est aussi la philosophie de DuckDuckGo. Activez le paramètre « Global Privacy Control » (GPC) et nous indiquerons aux sites Web que vous leur demandez de :\n\n• Ne pas vendre vos données personnelles.\n• Limiter le partage de vos données personnelles avec d'autres entreprises.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aucun signet ajouté pour le moment";

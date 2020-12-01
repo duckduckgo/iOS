@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Išjungta";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Kadangi visuotinė privatumo kontrolė (VPK) yra naujas standartas, daugelis svetainių jo neatpažįsta, tačiau mes stengiamės užtikrinti, kad jis būtų priimtas visame pasaulyje.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Sužinoti daugiau";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Įjungta";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Jūsų duomenys neturi būti pardavinėjami. Svetainėje „DuckDuckGo“ su tuo sutinkame. Aktyvinkite „Visuotinės privatumo kontrolės“ (VPK) nustatymą ir pranešime svetainėms:\n\n• Nepardavinėti jūsų asmens duomenų.\n• Apriboti jūsų asmens duomenų dalijimąsi su kitomis įmonėmis.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nepridėta";

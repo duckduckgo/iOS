@@ -224,6 +224,9 @@
 "donotsell.disabled" = "Pois käytöstä";
 
 /* No comment provided by engineer. */
+"donotsell.disclaimer.footertext" = "Koska Global Privacy Control (GPC) on uusi standardi, useimmat verkkosivustot eivät vielä tunnista sitä, mutta teemme parhaamme, että standardi hyväksyttäisiin kaikkialla maailmassa.";
+
+/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Lue lisää";
 
 /* No comment provided by engineer. */
@@ -231,6 +234,9 @@
 
 /* GPC Setting state */
 "donotsell.enabled" = "Käytössä";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "Tietojesi ei pitäisi olla myynnissä. DuckDuckGo on samaa mieltä. Ota \"Global Privacy Control\" (GPC) -asetus käyttöön, niin me kerromme verkkosivustoille, että:\n\n• ne eivät voi myydä tietojasi.\n• niiden täytyy rajoittaa henkilötietojesi jakamista muille yrityksille.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Kirjanmerkkejä ei ole vielä lisätty";

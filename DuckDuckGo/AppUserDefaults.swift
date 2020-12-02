@@ -142,7 +142,7 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
-    @UserDefaultsWrapper(key: .doNotSell, defaultValue: false)
+    @UserDefaultsWrapper(key: .doNotSell, defaultValue: true)
     var sendDoNotSell: Bool
     
 }

@@ -23,5 +23,5 @@
 "nJo-2d-gri.accessibilityLabel" = "Browsing-Optionen";
 
 /* Class = "UIButton"; accessibilityLabel = "Refresh Page"; ObjectID = "Qea-QY-LVl"; */
-"Qea-QY-LVl.accessibilityLabel" = "Seite neu laden";
+"Qea-QY-LVl.accessibilityLabel" = "Seite aktualisieren";
 

@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Добавяне към любими";
 
 /* Settings action */
-"action.title.settings" = "Настройки...";
+"action.title.settings" = "Настройки";
 
 /* Share action */
 "action.title.share" = "Споделяне...";
@@ -89,10 +89,10 @@
 "alert.title.save.favorite" = "Запазване в любими";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Отключване на DuckDuckGo";
+"app.authentication.unlock" = "Отключване на DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
-"auth.alert.login.button" = "Вход";
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Влизане";
 
 /* Authentication Alert - populated with a domain name */
 "auth.alert.message.encrypted" = "Вход в %@. Вашите данни за вход ще бъдат изпратени по сигурен начин.";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Заглавие на уебсайт";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Някои от разделите не могат да бъдат поставени в отметки";
+"bookmarkAll.tabs.failed" = "Добавени са нови отметки за всички раздели";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Всички раздели са поставени в отметки";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Дай пет!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* се опитваше да ви проследи тук.\n\nБлокирах го!\n\n☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* се опитва да ви проследи тук.\n\nБлокирах ги!\n\n☝️ Вижте адресната лента, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.️";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Дай пет!";
@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "Сега опитайте да отворите някой от любимите си сайтове!\n\nЩе блокирам тракерите, за да не ви шпионират. Освен това ще подобря сигурността на вашата връзка, ако това е възможно. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Нали разбрахте!\n\nЗапомнете: Всеки път, когато сърфирате с мен, аз ще подрязвам крилцата на досадните реклами. 👍";
+"dax.onboarding.home.subsequent" = "Нали разбрахте!\n\nЗапомнете: Всеки път, когато сърфирате с мен, аз подрязвам крилцата на някоя досадна реклама. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Интернет може да бъде и доста опасно място.\n\nНе се притеснявайте! Поверителното търсене и сърфиране е много по-лесно, отколкото си мислите.";
@@ -239,10 +239,10 @@
 "donotsell.info.headertext" = "Вашите лични данни не са за продажба. Ние в DuckDuckGo сме съгласни с това. Активирайте настройката \"Глобален контрол на поверителността\" (GPC) и ние ще уведомяваме уебсайтовете за вашето предпочитание:\n\n• Да не продават вашите лични данни.\n• Да ограничат споделянето на личните ви данни с други компании.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Все още няма отметки";
+"empty.bookmarks" = "Все още няма добавени отметки";
 
 /* Empty list state placholder */
-"empty.favorites" = "Все още няма любими";
+"empty.favorites" = "Все още няма добавени любими";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Няма намерени съвпадения";
@@ -320,7 +320,7 @@
 "feedback.ddgSearch.autocomplete" = "По-добро автозавършване";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.caption" = "Коя характеристика за търсене можем да добавим или да подобрим?";
+"feedback.ddgSearch.caption" = "Коя функция за търсене можем да добавим или да подобрим?";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.description" = "Проблеми при търсенето с DuckDuckGo";
@@ -347,7 +347,7 @@
 "feedback.form.caption" = "Моля, кажете ни какво можем да подобрим";
 
 /* Confirmation button */
-"feedback.form.submit" = "Изпращане на отзив";
+"feedback.form.submit" = "Изпрати";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Моля, бъдете колкото може по-конкретни";
@@ -356,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Искате ли да споделите нещо по-конкретно?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Съжаляваме да чуем това.";
+"feedback.negative.header" = "Съжаляваме да чуем това";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "С какво най-вече са свързани отрицателните Ви впечатления?";
@@ -460,14 +460,14 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Вземете DuckDuckGo вкъщи";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Търсене и любими в нов раздел";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Търсене или въвеждане на адрес";
 
 /* Home tab title */
 "homeTab.title" = "Начален екран";
 
 /* No comment provided by engineer. */
-"keyCommandAddBookmark" = "Добавяне на отметка";
+"keyCommandAddBookmark" = "Добави отметка";
 
 /* No comment provided by engineer. */
 "keyCommandAddFavorite" = "Добавяне в любими";
@@ -539,7 +539,7 @@
 "onboarding.widgets.continueButton" = "Добави приспособлението";
 
 /* No comment provided by engineer. */
-"onboarding.widgets.header" = "Сега е още по-лесно да използвате DuckDuckGo.";
+"onboarding.widgets.header" = "Вече е още по-лесно да използвате DuckDuckGo.";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.skipButton" = "Може би по-късно";
@@ -566,10 +566,10 @@
 "onboardingWelcomeHeader" = "Добре дошли в DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Съжаляваме, но приложението среща трудности с тази връзка.";
+"open.externally.failed" = "Не е намерено приложението, необходимо за отваряне на тази връзка";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Уебсайтовете разчитат на бисквитки, за да поддържат сесията ви активна. Когато направите сайта огнеустойчив, бисквитките няма да бъдат изтрити и ще останете вписани, дори след като използвате огнения бутон.";
+"preserveLogins.domain.list.footer" = "Уеб сайтовете разчитат на бисквитки, за да поддържат сесията ви активна. Когато направите сайта огнеустойчив, бисквитките няма да бъдат изтрити и ще останете вписани, дори след като използвате огнения бутон. Ние все пак блокираме тракери на трети страни, които се намират на огнеустойчиви сайтове.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Уебсайтове";
@@ -589,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "ОК";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Питай дали да направиш сайтовете огнеустойчиви";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ вече е огнеустойчив! Отворете настройките, за да го премахнете.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ вече е огнеустойчив! Отворете настройките за управление.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритъм";
@@ -662,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Резюме";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Тази връзка не е криптирана, затова внимавайте какво изпращате.";
+"privacy.protection.encryption.unencrypted" = "Внимавайте, когато въвеждате лична информация на този сайт.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Нешифрована връзка";
@@ -719,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Все още събираме данни, за да покажем колко\nтракери сме блокирали.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Използва политика за защита на поверителността от ToS;DR";
+"privacy.protection.practices.footer.info" = "Практики за защита на поверителността от ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Практиките за защита на поверителността показват каква част от личната информация, която споделяте с уебсайт, е защитена.";
@@ -761,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Не";
+"prompt.custom.url.scheme.dontopen" = "Отмени";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Да";
+"prompt.custom.url.scheme.open" = "Отваряне";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Искате ли да напуснете DuckDuckGo, за да видите това съдържание?";
@@ -773,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Отваряне в друго приложение?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Изпращането на анонимен доклад за нефункциониращ сайт ни помага да отстраним грешките и да подобрим разширението.";
+"report.brokensite.header" = "Изпращането на анонимен доклад за неработещ сайт ни помага да отстраним грешките и да подобрим приложението.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Търсене или въвеждане на адрес";
@@ -791,13 +791,13 @@
 "settings.tutorial.info" = "Другите търсачки проследяват вашето търсене дори когато сте в режим на поверително сърфиране. Ние не ви проследяваме. Точка.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Отворете *Safari* и след това *Търсачка*";
+"settings.tutorial.navigate" = "Отворете *Safari* и след това *Търсачка*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Отворете приложението *Настройки*";
+"settings.tutorial.open" = "Отворете приложението *Настройки*.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Изберете *DuckDuckGo*";
+"settings.tutorial.select" = "Изберете *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";
@@ -836,7 +836,7 @@
 "theme.acc.dark" = "Тъмна";
 
 /* Short entry for Default System theme */
-"theme.acc.default" = "Системна тема";
+"theme.acc.default" = "Системна";
 
 /* Light Theme entry */
 "theme.acc.light" = "Светла";
@@ -857,10 +857,10 @@
 "toast.protection.enabled" = "%@ е премахнат от незащитените сайтове";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Възникна неизвестна грешка";
+"unknown.error.occurred" = "Възникна неизвестна грешка.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Отметката е запазена";
+"web.url.save.bookmark.done" = "Добавена е отметка";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Отметката вече е запазена";
@@ -869,5 +869,5 @@
 "web.url.save.bookmark.none" = "Няма страница, за която да се постави отметка";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Запазен в любими";
+"web.url.save.favorite.done" = "Добавено в любими";
 

@@ -17,7 +17,7 @@
 "widget.no.favorites.cta" = "Favoriten hinzufügen";
 
 /* Message shown in the favorites widget empty state. */
-"widget.no.favorites.message" = "Wechsle mit nur einem Klick zu deinen Lieblingswebsites.";
+"widget.no.favorites.message" = "Wechsel mit nur einem Klick zu deinen Lieblingswebsites.";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Mit DuckDuckGo suchen";

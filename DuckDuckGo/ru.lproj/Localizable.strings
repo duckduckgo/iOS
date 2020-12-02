@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Открыть в новой вкладке";
 
 /* Open action */
-"action.title.open" = "Открыто";
+"action.title.open" = "Открыть";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Вставить и перейти";
@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Добавить в избранное";
 
 /* Settings action */
-"action.title.settings" = "Настройки…";
+"action.title.settings" = "Настройки";
 
 /* Share action */
 "action.title.share" = "Поделиться…";
@@ -89,9 +89,9 @@
 "alert.title.save.favorite" = "Сохранить в избранное";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Разблокировать DuckDuckGo";
+"app.authentication.unlock" = "Разблокируйте DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
+/* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Войти";
 
 /* Authentication Alert - populated with a domain name */
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Название сайта";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Некоторые вкладки не удалось добавить в закладки";
+"bookmarkAll.tabs.failed" = "Все вкладки сохранены в закладках";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Все вкладки добавлены в закладки";
@@ -224,7 +224,7 @@
 "donotsell.disabled" = "Отключено";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Поскольку Глобальный контроль конфиденциальности (GPC) — это новый стандарт, большинство сайтов еще не распознают его, но мы прилагаем все усилия, чтобы он был принят во всем мире.";
+"donotsell.disclaimer.footertext" = "Поскольку стандарт «Глобальный контроль конфиденциальности» (GPC) появился совсем недавно, пока что он не признается большинством сайтов. Тем не менее, мы прилагаем огромные усилия, чтобы он был принят во всем мире.";
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Узнать больше";
@@ -236,13 +236,13 @@
 "donotsell.enabled" = "Включено";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Не позволяйте продавать и распространять ваши данные. DuckDuckGo поможет обеспечить всю необходимую защиту. Активируйте настройку «Глобальный контроль конфиденциальности» (GPC), и мы сообщим сайтам о ваших предпочтениях:\n\n• Не продавать ваши личные данные.\n• Ограничить передачу ваших личных данных другим компаниям.";
+"donotsell.info.headertext" = "Личные данные не объект купли-продажи. DuckDuckGo придерживается того же мнения. Активируйте настройку «Глобальный контроль конфиденциальности» (GPC), и мы оповестим сайты о ваших предпочтениях:\n\n• не продавать ваши личные данные;\n• ограничить передачу ваших личных данных другим компаниям.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Закладок пока нет";
 
 /* Empty list state placholder */
-"empty.favorites" = "Избранного пока нет";
+"empty.favorites" = "В избранное пока ничего не добавлено";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ничего не найдено";
@@ -347,7 +347,7 @@
 "feedback.form.caption" = "Что мы можем улучшить?";
 
 /* Confirmation button */
-"feedback.form.submit" = "Отправить отзыв";
+"feedback.form.submit" = "Отправить";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Опишите максимально подробно";
@@ -356,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Хотите добавить что-то конкретное?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Очень жаль.";
+"feedback.negative.header" = "Очень жаль";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "Что именно вам не понравилось?";
@@ -460,8 +460,8 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "DuckDuckGo всегда под рукой";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Поиск и избранное в новой вкладке";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Введите поисковый запрос или адрес сайта";
 
 /* Home tab title */
 "homeTab.title" = "Домашняя";
@@ -560,16 +560,16 @@
 "onboardingSkip" = "Пропустить";
 
 /* This is on a button presented on the last of the onboarding screens. */
-"onboardingStartBrowsing" = "Начать работу";
+"onboardingStartBrowsing" = "Начать просмотр";
 
 /* No comment provided by engineer. */
 "onboardingWelcomeHeader" = "Добро пожаловать в DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "С этой ссылкой не справится ни одно приложение.";
+"open.externally.failed" = "Приложение для открытия этой ссылки не найдено";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Чтобы вам не приходилось каждый раз входить в свою учетную запись, сайты используют куки-файлы. Если сделать сайт огнеупорным, мы не будем стирать его куки-файлы, даже если вы воспользуетесь кнопкой «Пожар».";
+"preserveLogins.domain.list.footer" = "Чтобы вам не приходилось каждый раз входить в свою учетную запись, сайты используют куки-файлы. Если сделать сайт огнеупорным, мы не будем стирать его куки-файлы, даже если вы воспользуетесь кнопкой «Пожар». Но мы по-прежнему будем блокировать сторонние трекеры, в том числе на огнеупорных сайтах.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Сайты";
@@ -589,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Предлагать обезопасить сайты";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ теперь в безопасности. Отменить огнеупорность можно в настройках.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ теперь в безопасности. Огнеупорность можно изменить в настройках.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";
@@ -662,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Сводка";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Это соединение не зашифровано. Проявляйте бдительность при отправке важной информации.";
+"privacy.protection.encryption.unencrypted" = "Проявляйте бдительность при вводе личной информации на этом сайте.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Незашифрованное соединение";
@@ -719,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Мы все еще собираем данные\nо количестве заблокированных трекеров.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Применяет стандарты защиты конфиденциальности от ToS;DR";
+"privacy.protection.practices.footer.info" = "Стандарты конфиденциальности ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Уровень конфиденциальности показывает, насколько защищены персональные данные, которые вы передаёте сайту.";
@@ -761,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Нет";
+"prompt.custom.url.scheme.dontopen" = "Отменить";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Да";
+"prompt.custom.url.scheme.open" = "Открыть";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Выйти из DuckDuckGo для просмотра этого контента?";
@@ -773,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Открыть в другом приложении?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Анонимная жалоба на неработающий сайт поможет нам устранить недостатки и улучшить приложение.";
+"report.brokensite.header" = "Отправка анонимной жалобы на неработающий сайт помогает нам решить эти проблемы и улучшить приложение.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Введите поисковый запрос или адрес сайта";
@@ -791,13 +791,13 @@
 "settings.tutorial.info" = "Другие поисковые системы отслеживают ваши запросы даже в приватном режиме. Мы же просто не шпионим, и точка!";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Найдите Safari и откройте раздел «Поисковая машина»";
+"settings.tutorial.navigate" = "Найдите Safari и откройте раздел «Поисковая машина».";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Запустите приложение «Настройки»";
+"settings.tutorial.open" = "Запустите приложение «Настройки».";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Выберите DuckDuckGo";
+"settings.tutorial.select" = "Выберите DuckDuckGo.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Отправить жалобу";
@@ -857,10 +857,10 @@
 "toast.protection.enabled" = "%@ удален из незащищенных сайтов";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Произошла неизвестная ошибка";
+"unknown.error.occurred" = "Произошла неизвестная ошибка.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Закладка сохранена";
+"web.url.save.bookmark.done" = "Закладка добавлена";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Уже в закладках";

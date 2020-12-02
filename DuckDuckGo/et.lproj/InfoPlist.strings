@@ -8,7 +8,7 @@
 "NSCameraUsageDescription" = "Võimaldab üles laadida fotosid ja videoid";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Võimaldab avada Face ID abil";
+"NSFaceIDUsageDescription" = "Võimaldab Face ID abil lukustusest avada";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Võimaldab oma asukohta jagada";
@@ -21,4 +21,7 @@
 
 /* (No Comment) */
 "Paste from clipboard" = "Kleebi lõikelaualt";
+
+/* (No Comment) */
+"Paste from Clipboard" = "Kleebi lõikelaualt";
 

@@ -11,7 +11,7 @@
 "ciS-pA-ovS.normalTitle" = "Nastavi";
 
 /* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "HOt-9c-gP5"; */
-"HOt-9c-gP5.normalTitle" = "Shvaćam";
+"HOt-9c-gP5.normalTitle" = "Shvatio/la sam";
 
 /* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
 "J1y-Qk-FSX.normalTitle" = "PRESKOČI";
@@ -20,7 +20,7 @@
 "kYm-7s-KFg.text" = "3";
 
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
-"u7Q-MU-drX.text" = "Dobro došli u DuckDuckGo!";
+"u7Q-MU-drX.text" = "Dobro došao/la u DuckDuckGo!";
 
 /* Class = "UILabel"; text = "Widget Instructions"; ObjectID = "WZv-GS-xyE"; */
 "WZv-GS-xyE.text" = "Upute za widgete";

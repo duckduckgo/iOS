@@ -2,7 +2,7 @@
 "Label" = "Etikett";
 
 /* Description of search and favorites widget in widget gallery */
-"widget.gallery.search.and.favorites.description" = "Søk eller besøk favorittsider privat med ett klikk.";
+"widget.gallery.search.and.favorites.description" = "Søk eller besøk favorittsider privat med ett trykk.";
 
 /* Display name for search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.display.name" = "Søk og favoritter";
@@ -20,5 +20,5 @@
 "widget.no.favorites.message" = "Besøk favorittsidene dine raskt.";
 
 /* Placeholder text in search field on the search and favorites widget */
-"widget.search.duckduckgo" = "Søk med DuckDuckGo";
+"widget.search.duckduckgo" = "Søk i DuckDuckGo";
 

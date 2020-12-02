@@ -1,8 +1,8 @@
 /* Class = "UIView"; accessibilityLabel = "Search or enter address"; ObjectID = "7Jf-KE-oXj"; */
-"7Jf-KE-oXj.accessibilityLabel" = "Poiščite ali vnesite naslov";
+"7Jf-KE-oXj.accessibilityLabel" = "Poišči ali vnesi naslov";
 
 /* Class = "UILabel"; text = "Search or enter address"; ObjectID = "73D-OT-n1K"; */
-"73D-OT-n1K.text" = "Poiščite ali vnesite naslov";
+"73D-OT-n1K.text" = "Poišči ali vnesi naslov";
 
 /* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "kcN-YB-mZi"; */
 "kcN-YB-mZi.accessibilityLabel" = "Nastavitve";

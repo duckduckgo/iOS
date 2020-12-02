@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Ajouter aux favoris";
 
 /* Settings action */
-"action.title.settings" = "Paramètres…";
+"action.title.settings" = "Paramètres";
 
 /* Share action */
 "action.title.share" = "Partager…";
@@ -89,10 +89,10 @@
 "alert.title.save.favorite" = "Enregistrer le favori";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Déverrouiller DuckDuckGo";
+"app.authentication.unlock" = "Déverrouiller DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
-"auth.alert.login.button" = "Connexion";
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Se connecter";
 
 /* Authentication Alert - populated with a domain name */
 "auth.alert.message.encrypted" = "Connectez-vous à %@. Vos identifiants de connexion seront envoyés en toute sécurité.";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Titre du site Web";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Impossible d'ajouter certains onglets aux signets";
+"bookmarkAll.tabs.failed" = "Nouveaux signets ajoutés pour tous les onglets";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Tous les onglets ont été ajoutés aux signets";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Bien joué !";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* essayait de vous traquer ici.\n\nJe l'ai bloqué !\n\n☝️ Vous pouvez voir dans la barre d'adresse URL qui essaie de vous traquer lorsque vous visitez un nouveau site.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* essayait de vous traquer ici.\n\nJe l'ai bloqué !\n\n☝️ Vous pouvez voir dans la barre d'adresse qui essaie de vous traquer lorsque vous visitez un nouveau site.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Bien joué !";
@@ -239,10 +239,10 @@
 "donotsell.info.headertext" = "Vos données ne devraient pas être à vendre. C'est aussi la philosophie de DuckDuckGo. Activez le paramètre « Global Privacy Control » (GPC) et nous indiquerons aux sites Web que vous leur demandez de :\n\n• Ne pas vendre vos données personnelles.\n• Limiter le partage de vos données personnelles avec d'autres entreprises.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Pas encore de signets";
+"empty.bookmarks" = "Aucun signet ajouté pour le moment";
 
 /* Empty list state placholder */
-"empty.favorites" = "Pas encore de favoris";
+"empty.favorites" = "Aucun favori ajouté pour le moment";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Aucune correspondance trouvée";
@@ -347,7 +347,7 @@
 "feedback.form.caption" = "Dites-nous ce que nous pouvons améliorer";
 
 /* Confirmation button */
-"feedback.form.submit" = "Envoyer un commentaire";
+"feedback.form.submit" = "Envoyer";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Veuillez être aussi précis que possible";
@@ -356,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Y a-t-il des informations dont vous aimeriez nous faire part ?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Nous sommes désolés de l'apprendre.";
+"feedback.negative.header" = "Nous sommes désolés de l'apprendre";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "À quoi votre insatisfaction est-elle la plus liée ?";
@@ -460,8 +460,8 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Ajouter DuckDuckGo à votre écran d'accueil";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Effectuez des recherches et consultez vos favoris dans un nouvel onglet";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Rechercher ou saisir une adresse";
 
 /* Home tab title */
 "homeTab.title" = "Accueil";
@@ -566,10 +566,10 @@
 "onboardingWelcomeHeader" = "Bienvenue sur DuckDuckGo !";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Nous sommes désolés, aucune application ne peut prendre en charge ce lien.";
+"open.externally.failed" = "L'application nécessaire pour ouvrir ce lien est introuvable";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Les sites Web utilisent des cookies pour maintenir votre connexion. Quand vous placez un site en mode coupe-feu, les cookies sont conservés et vous restez connecté(e), même après avoir utilisé le bouton en forme de flamme.";
+"preserveLogins.domain.list.footer" = "Les sites Web utilisent des cookies pour maintenir votre connexion. Quand vous placez un site en mode coupe-feu, les cookies sont conservés et vous restez connecté(e), même après avoir utilisé le bouton en forme de flamme. Ceci dit, les traqueurs tiers sont bloqués sur les sites coupe-feu.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Sites Web";
@@ -589,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* Ask to Fireproof Websites */
-"preserveLogins.switch.title" = "Demander à placer des sites Web en mode coupe-feu";
+/* Ask to Fireproof Sites */
+"preserveLogins.switch.title" = "Demander à placer des sites en mode coupe-feu";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ est maintenant en mode coupe-feu ! Accédez aux paramètres pour le supprimer.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ est maintenant en mode coupe-feu ! Accédez aux paramètres pour le gérer.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithme";
@@ -662,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Résumé";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Cette connexion n'est pas chiffrée, donc faites attention à ce que vous envoyez.";
+"privacy.protection.encryption.unencrypted" = "Faites attention lorsque vous saisissez des informations personnelles sur ce site.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Connexion non chiffrée";
@@ -719,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Nous recueillons toujours des données pour indiquer\nle nombre de traqueurs que nous avons bloqués.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Utilisation des informations de pratiques de confidentialité de ToS;DR";
+"privacy.protection.practices.footer.info" = "Les pratiques de confidentialité de ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Les pratiques de confidentialité indiquent dans quelle mesure les informations personnelles que vous partagez avec un site Web sont protégées.";
@@ -761,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Non";
+"prompt.custom.url.scheme.dontopen" = "Annuler";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Oui";
+"prompt.custom.url.scheme.open" = "Ouvrir";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Souhaitez-vous quitter DuckDuckGo pour afficher ce contenu ?";
@@ -773,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Ouvrir dans une autre application ?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "La soumission d'un rapport anonyme pour signaler le mauvais fonctionnement du site nous aide à déboguer ces problèmes et à améliorer l'extension.";
+"report.brokensite.header" = "La soumission d'un rapport anonyme pour signaler le mauvais fonctionnement du site nous aide à déboguer ces problèmes et à améliorer l'application.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Rechercher ou saisir une adresse";
@@ -791,13 +791,13 @@
 "settings.tutorial.info" = "D'autres moteurs de recherche pistent vos recherches même lorsque vous êtes en mode de navigation privée. Nous ne vous pisterons jamais.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Accédez à *Safari*, puis *Moteur de recherche*";
+"settings.tutorial.navigate" = "Accédez à *Safari*, puis *Moteur de recherche*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Accédez à l'application *Réglages*";
+"settings.tutorial.open" = "Accédez à l'application *Réglages*.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Sélectionnez *DuckDuckGo*";
+"settings.tutorial.select" = "Sélectionnez *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Envoyer le rapport";
@@ -857,10 +857,10 @@
 "toast.protection.enabled" = "%@ supprimé des sites non protégés";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Une erreur inconnue s'est produite";
+"unknown.error.occurred" = "Une erreur inconnue s'est produite.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Signet enregistré";
+"web.url.save.bookmark.done" = "Signet ajouté";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Signet déjà enregistré";
@@ -869,5 +869,5 @@
 "web.url.save.bookmark.none" = "Il n'y a aucune page Web à ajouter aux signets";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Favori enregistré";
+"web.url.save.favorite.done" = "Favori ajouté";
 

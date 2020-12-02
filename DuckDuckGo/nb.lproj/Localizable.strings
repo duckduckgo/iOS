@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Legg til i favoritter";
 
 /* Settings action */
-"action.title.settings" = "Innstillinger…";
+"action.title.settings" = "Innstillinger";
 
 /* Share action */
 "action.title.share" = "Del…";
@@ -89,9 +89,9 @@
 "alert.title.save.favorite" = "Lagre favoritt";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Lås opp DuckDuckGo";
+"app.authentication.unlock" = "Lås opp DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
+/* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Logg inn";
 
 /* Authentication Alert - populated with a domain name */
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Nettsidetittel";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Noen faner kunne ikke legges til i bokmerker";
+"bookmarkAll.tabs.failed" = "La til alle fanene som bokmerker";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Alle faner lagt til i bokmerker";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "High five!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* prøvde å spore deg her.\n\nJeg blokkerte!\n\n☝️ Du kan se hvem som prøver å spore deg i adressefeltet når du besøker et nytt nettsted.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* prøvde å spore deg her.\n\nJeg har blokkert dem!\n\n☝️ Du kan sjekke adresselinjen for å se hvem som prøver å spore deg når du besøker et nytt nettsted.️";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "High five!";
@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "Deretter kan du besøke et av favorittnettstedene dine!\n\nJeg blokkerer sporingsforsøk slik at de ikke kan spionere på deg. Hvis det er mulig, oppgraderer jeg også sikkerheten på forbindelsen din. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Dette går bra!\n\nHusk: Hver gang du surfer med meg, klippes vingene på en uhyggelig annonse. 👍";
+"dax.onboarding.home.subsequent" = "Dette går bra!\n\nHusk: Hver gang du surfer med meg, klippes vingene av en ekkel annonse. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internettet kan være ganske skummelt.\n\nMen ikke vær redd! Det er enklere enn du tror å søke og surfe privat.";
@@ -224,7 +224,7 @@
 "donotsell.disabled" = "Deaktivert";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Siden Global Privacy Control (GPC) er en ny standard, gjenkjennes den nok ennå ikke av nettsteder flest, men vi jobber hardt for å sikre at den blir anerkjent verden over.";
+"donotsell.disclaimer.footertext" = "Siden Global Privacy Control (GPC) er en ny standard, gjenkjennes den nok ikke enda av de fleste nettsider, men vi jobber hardt for å sikre at den blir anerkjent verden over.";
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Finn ut mer";
@@ -236,10 +236,10 @@
 "donotsell.enabled" = "Aktivert";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Informasjonen din bør ikke være til salgs. Hos DuckDuckGo deler vi denne oppfatningen. Aktiver innstillingen «Global Privacy Control» (GPC), så opplyser vi nettsteder om at du foretrekker å:<br/><br/> • ikke selge dine personlige data.<br/>• begrense deling av personopplysninger med andre selskaper.";
+"donotsell.info.headertext" = "Informasjonen din skal ikke være til salgs. Hos DuckDuckGo deler vi denne oppfatningen. Aktiver innstillingen «Global Privacy Control» (GPC), så opplyser vi nettsteder om at du foretrekker å:\n\n• ikke selge personopplysningene dine.\n• begrense deling av personopplysninger med andre selskaper.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Ingen bokmerker ennå";
+"empty.bookmarks" = "Ingen bokmerker lagt til ennå";
 
 /* Empty list state placholder */
 "empty.favorites" = "Ingen favoritter ennå";
@@ -347,7 +347,7 @@
 "feedback.form.caption" = "Fortell oss hva vi kan gjøre bedre";
 
 /* Confirmation button */
-"feedback.form.submit" = "Send inn tilbakemelding";
+"feedback.form.submit" = "Send";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Vær så spesifikk som mulig";
@@ -356,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Er det noe spesielt du vil ha med?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Det var leit å høre.";
+"feedback.negative.header" = "Det var leit å høre";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "Hva er det som er mest frustrerende?";
@@ -452,16 +452,16 @@
 "home.message.topText" = "NYTT I IOS 14";
 
 /* No comment provided by engineer. */
-"home.row.onboarding.header" = "Legg til DuckDuckGo på hjemskjermen!";
+"home.row.onboarding.header" = "Legg til DuckDuckGo på startskjermen!";
 
 /* No comment provided by engineer. */
 "home.row.reminder.message" = "Legg til DuckDuckGo i docken for enkel tilgang!";
 
 /* Home is this context is the bottom home row (dock) */
-"home.row.reminder.title" = "Få DuckDuckGo på hjemskjermen";
+"home.row.reminder.title" = "Få DuckDuckGo på startskjermen";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Søk og favoritter i ny fane";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Søk eller skriv inn adresse";
 
 /* Home tab title */
 "homeTab.title" = "Hjem";
@@ -566,10 +566,10 @@
 "onboardingWelcomeHeader" = "Velkommen til DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Beklager, ingen app kan håndtere denne lenken.";
+"open.externally.failed" = "Appen som kreves for å åpne koblingen ble ikke funnet";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Nettsteder anvender informasjonskapsler for å holde deg innlogget. Når du gjør en nettsted brannsikkert, slettes ikke informasjonskapslene, og du forblir innlogget, selv etter å ha brukt brannknappen.";
+"preserveLogins.domain.list.footer" = "Nettsider anvender informasjonskapsler for å holde deg innlogget. Når du gjør en side brannsikker, slettes ikke informasjonskapslene, og du forblir innlogget, selv etter å ha brukt brannknappen. Vi blokkerer fortsatt tredjeparters sporingsanordninger som blir funnet på Brannsikre nettsteder.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Nettsteder";
@@ -578,7 +578,7 @@
 "preserveLogins.fireproof.message" = "Ønsker du å brannsikre %@?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Brannsikkert nettsted";
+"preserveLogins.menu.confirm" = "Brannsikre nettsted";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ikke nå";
@@ -589,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Spør om å gjøre nettsteder brannsikre";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ er nå brannsikkert! Gå til innstillinger for å endre.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ er nå brannsikkert! Gå til Innstillinger for å endre.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
@@ -662,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Sammendrag";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Tilkoblingen er ikke kryptert, så vær forsiktig med hva du sender.";
+"privacy.protection.encryption.unencrypted" = "Vær forsiktig med å oppgi personlig informasjon på denne siden.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Ukryptert tilkobling";
@@ -719,10 +719,10 @@
 "privacy.protection.network.leaderboard.gathering" = "Vi samler fortsatt inn data for å vise deg\nhvor mange sporinger vi har blokkert.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Bruker informasjon om personvernpraksis fra ToS;DR";
+"privacy.protection.practices.footer.info" = "Personvernpraksis fra ToS;DR.";
 
 /* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Personvernpraksis indikerer hvor mye av den personlige informasjonen du deler med et nettsted som er beskyttet.";
+"privacy.protection.practices.header.info" = "Personvernpraksis indikerer i hvilken grad den personlige informasjonen du deler med et nettsted er beskyttet.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.reviewed.info" = "Nettstedet varsler deg før de overfører informasjonen din ved tilfeller av fusjon eller kjøp";
@@ -761,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Nei";
+"prompt.custom.url.scheme.dontopen" = "Avbryt";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Ja";
+"prompt.custom.url.scheme.open" = "Åpne";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Ønsker du å forlate DuckDuckGo for å vise dette innholdet?";
@@ -773,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Åpne i en annen app?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Når du sender inn en anonym rapport om nettstedfeil, hjelper det oss med å feilsøke disse problemene og forbedre utvidelsen.";
+"report.brokensite.header" = "Når du sender inn en anonym rapport om nettstedfeil, hjelper det oss med å feilsøke disse problemene og forbedre appen.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søk eller skriv inn adresse";
@@ -791,13 +791,13 @@
 "settings.tutorial.info" = "Andre søkemotorer sporer søkene dine, til og med når du er i privat nettlesermodus. Vi sporer deg ikke. Punktum.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Gå til *Safari*, deretter *Søkemotor*";
+"settings.tutorial.navigate" = "Gå til *Safari*, deretter *Søkemotor*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Åpne *Innstillinger*-appen";
+"settings.tutorial.open" = "Åpne *Innstillinger*-appen.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Velg *DuckDuckGo*";
+"settings.tutorial.select" = "Velg *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";
@@ -857,10 +857,10 @@
 "toast.protection.enabled" = "%@ fjernet fra ubeskyttede nettsteder";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Det oppstod en ukjent feil";
+"unknown.error.occurred" = "Det oppstod en ukjent feil.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Bokmerke lagret";
+"web.url.save.bookmark.done" = "Bokmerke lagt til";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Bokmerket er alledre lagret";
@@ -869,5 +869,5 @@
 "web.url.save.bookmark.none" = "Det er ingen nettside å legge til";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Favoritt lagret";
+"web.url.save.favorite.done" = "Favoritt lagt til";
 

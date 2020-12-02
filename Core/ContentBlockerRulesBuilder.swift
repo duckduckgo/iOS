@@ -46,7 +46,7 @@ public struct ContentBlockerRulesBuilder {
         }.flatMap { $0 }
         
         var cnameTrackers = [String: KnownTracker]()
-        trackerData.cnames.forEach { key, value in
+        trackerData.cnames?.forEach { key, value in
             guard let knownTracker = trackerData.trackers[value] else { return }
             cnameTrackers[key] = knownTracker.copy(withNewDomain: key)
         }

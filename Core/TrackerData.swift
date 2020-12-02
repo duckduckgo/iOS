@@ -34,9 +34,9 @@ public struct TrackerData: Codable, Equatable {
     public let trackers: [TrackerDomain: KnownTracker]
     public let entities: [EntityName: Entity]
     public let domains: [TrackerDomain: EntityName]
-    public let cnames: [CnameDomain: TrackerDomain]
+    public let cnames: [CnameDomain: TrackerDomain]?
     
-    public init(trackers: [String: KnownTracker], entities: [String: Entity], domains: [String: String], cnames: [String: String]) {
+    public init(trackers: [String: KnownTracker], entities: [String: Entity], domains: [String: String], cnames: [String: String]?) {
         self.trackers = trackers
         self.entities = entities
         self.domains = domains
@@ -45,6 +45,13 @@ public struct TrackerData: Codable, Equatable {
 
     func relatedDomains(for owner: KnownTracker.Owner?) -> [String]? {
         return entities[owner?.name ?? ""]?.domains
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case trackers
+        case entities
+        case domains
+        case cnames
     }
     
 }

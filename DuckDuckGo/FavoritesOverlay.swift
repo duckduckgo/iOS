@@ -33,7 +33,7 @@ class FavoritesOverlay: UIViewController {
     }
     
     private let layout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
     
     private var theme: Theme!
@@ -104,7 +104,6 @@ class FavoritesOverlay: UIViewController {
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
-        Pixel.fire(pixel: .overlayFavoriteLaunched)
         delegate?.favoritesOverlay(self, didSelect: link)
     }
     

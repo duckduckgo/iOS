@@ -38,7 +38,7 @@
 "L7l-vl-rDZ.accessibilityLabel" = "Prepnúť medzi mriežkovým a zoznamovým zobrazením";
 
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
-"LbT-NO-T0G.text" = "Link";
+"LbT-NO-T0G.text" = "Odkaz";
 
 /* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
 "nYf-xs-PE7.title" = "Nová karta";
@@ -50,7 +50,7 @@
 "uIV-4q-5mj.accessibilityLabel" = "Pridať kartu";
 
 /* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
-"Uu4-yR-9tN.text" = "Webová stránka -- dlhý názov";
+"Uu4-yR-9tN.text" = "Webová stránka – dlhý názov";
 
 /* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
 "xto-EI-h22.accessibilityHint" = "Zatvoriť";

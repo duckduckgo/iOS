@@ -1,14 +1,32 @@
 /* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
-"0MQ-7J-rAM.title" = "Otvarajte veze spokojno, svaki put.";
+"0MQ-7J-rAM.title" = "Svaki put poveznice otvori spokojno.";
+
+/* Class = "UIViewController"; title = "Quickly search or visit your favorite sites, all while protecting your privacy."; ObjectID = "3xN-1o-4I4"; */
+"3xN-1o-4I4.title" = "Brzo pretraži ili posjeti svoja omiljena web-mjesta, štiteći pritom svoju privatnost.";
+
+/* Class = "UILabel"; text = "1"; ObjectID = "8Yp-jL-Y1J"; */
+"8Yp-jL-Y1J.text" = "1";
 
 /* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
-"ciS-pA-ovS.normalTitle" = "Nastaviti";
+"ciS-pA-ovS.normalTitle" = "Nastavi";
+
+/* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "HOt-9c-gP5"; */
+"HOt-9c-gP5.normalTitle" = "Shvatio/la sam";
 
 /* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
 "J1y-Qk-FSX.normalTitle" = "PRESKOČI";
 
+/* Class = "UILabel"; text = "3"; ObjectID = "kYm-7s-KFg"; */
+"kYm-7s-KFg.text" = "3";
+
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
-"u7Q-MU-drX.text" = "Dobro došli u DuckDuckGo!";
+"u7Q-MU-drX.text" = "Dobro došao/la u DuckDuckGo!";
+
+/* Class = "UILabel"; text = "Widget Instructions"; ObjectID = "WZv-GS-xyE"; */
+"WZv-GS-xyE.text" = "Upute za widgete";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "XBd-OG-vC0"; */
+"XBd-OG-vC0.text" = "2";
 
 /* Class = "UIViewController"; title = "Search and browse privately,\nevery day."; ObjectID = "Xjr-gI-tDG"; */
 "Xjr-gI-tDG.title" = "Privatno pretražuj i pregledavaj,\nsvaki dan.";

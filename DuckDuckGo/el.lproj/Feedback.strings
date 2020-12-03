@@ -4,17 +4,17 @@
 /* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
 "7zN-Xh-yYi.normalTitle" = "Κοινοποίηση σχολίου";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "46v-cB-2YV"; */
-"46v-cB-2YV.title" = "Αποστολή σχολίου";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Κοινοποίηση σχολίου";
 
-/* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
-"A1s-GY-hbq.normalTitle" = "Όχι ευχαριστώ! Τελείωσα εδώ.";
+/* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
+"A1s-GY-hbq.normalTitle" = "Όχι ευχαριστώ! Τελείωσα";
 
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
 "cZl-qB-kSL.title" = "Κλείσιμο";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "D8A-B7-Dqu"; */
-"D8A-B7-Dqu.title" = "Αποστολή σχολίου";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Κοινοποίηση σχολίου";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
 "epz-Ta-KQ7.title" = "Πίσω";
@@ -31,11 +31,11 @@
 /* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
 "jr6-Al-4fr.title" = "Υποβολή";
 
-/* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "ΥΠΟΒΟΛΗ ΣΧΟΛΙΩΝ";
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "Υποβολή";
 
-/* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
-"lY6-5c-iu4.title" = "Αποστολή σχολίου";
+/* Class = "UITableViewController"; title = "Share Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Κοινοποίηση σχολίου";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
 "m0a-EJ-h27.title" = "Πίσω";
@@ -43,14 +43,14 @@
 /* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
 "msl-mT-bMG.accessibilityLabel" = "Αρνητικό";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "oHj-cX-c6z"; */
-"oHj-cX-c6z.title" = "Αποστολή σχολίου";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Κοινοποίηση σχολίου";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "rAY-cv-mjl"; */
-"rAY-cv-mjl.title" = "Αποστολή σχολίου";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Κοινοποίηση σχολίου";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "Rvx-dM-etJ"; */
-"Rvx-dM-etJ.title" = "Αποστολή σχολίου";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Κοινοποίηση σχολίου";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
 "TMj-NM-j3b.placeholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
@@ -61,8 +61,8 @@
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Αιτία μη λειτουργίας ιστότοπου";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
-"Xb0-Zu-opM.title" = "Αποστολή σχολίου";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Κοινοποίηση σχολίου";
 
 /* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
 "ze4-T7-OFN.accessibilityLabel" = "Θετικό";

@@ -1,6 +1,6 @@
 /* Class = "UILabel"; text = "DuckDuckGo can’t load this page."; ObjectID = "6P7-7R-riV"; */
 "6P7-7R-riV.text" = "DuckDuckGo bu sayfayı yükleyemiyor.";
 
-/* Class = "UILabel"; text = "This website has an invalid certificate and could be trying to pretend to be the website you are trying to access.  Please proceed with caution."; ObjectID = "Cjw-mk-QL3"; */
-"Cjw-mk-QL3.text" = "Bu web sitesi geçersiz bir sertifikaya sahip ve erişmeye çalıştığınız web sitesini taklit ediyor olabilir.  Devam ederseniz lütfen dikkatli olun.";
+/* Class = "UILabel"; text = "This website has an invalid security certificate and might not be safe to visit."; ObjectID = "Cjw-mk-QL3"; */
+"Cjw-mk-QL3.text" = "Bu web sitesinin güvenlik sertifikası geçersiz olduğundan siteyi ziyaret etmek güvenli olmayabilir.";
 

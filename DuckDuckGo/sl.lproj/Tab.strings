@@ -1,6 +1,6 @@
 /* Class = "UILabel"; text = "DuckDuckGo can’t load this page."; ObjectID = "6P7-7R-riV"; */
 "6P7-7R-riV.text" = "DuckDuckGo ne more naložiti te strani.";
 
-/* Class = "UILabel"; text = "This website has an invalid certificate and could be trying to pretend to be the website you are trying to access.  Please proceed with caution."; ObjectID = "Cjw-mk-QL3"; */
-"Cjw-mk-QL3.text" = "To spletno mesto ima neveljavno potrdilo in se lahko pretvarja, da je spletno mesto, do katerega poskušate dostopati.  Bodite previdni.";
+/* Class = "UILabel"; text = "This website has an invalid security certificate and might not be safe to visit."; ObjectID = "Cjw-mk-QL3"; */
+"Cjw-mk-QL3.text" = "To spletno mesto ima neveljavno varnostno potrdilo in obisk morda ni varen.";
 

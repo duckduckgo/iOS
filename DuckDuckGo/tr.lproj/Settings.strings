@@ -1,8 +1,8 @@
-/* Class = "UILabel"; text = "Fireproof Websites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Korumalı Web Siteleri";
+/* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
+"0DQ-yq-UuT.text" = "Korumalı Siteler";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Bağlantıların diğer yüklü uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
+"0gU-rZ-pRc.footerTitle" = "Bağlantıların yüklenmiş olan diğer uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
 
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Versiyon";
@@ -10,11 +10,11 @@
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Klavye";
 
-/* Class = "UILabel"; text = "Clear Tabs only"; ObjectID = "3WZ-Fi-HIH"; */
+/* Class = "UILabel"; text = "Clear Tabs Only"; ObjectID = "3WZ-Fi-HIH"; */
 "3WZ-Fi-HIH.text" = "Yalnızca Sekmeleri Temizle";
 
-/* Class = "UILabel"; text = "App exit, inactive for 30min"; ObjectID = "5Yd-7i-bey"; */
-"5Yd-7i-bey.text" = "30 dk hareket yoksa uygulamadan çık";
+/* Class = "UILabel"; text = "App Exit, Inactive for 30 Minutes"; ObjectID = "5Yd-7i-bey"; */
+"5Yd-7i-bey.text" = "Uygulamadan Çık, 30 Dakika Boyunca İnaktif";
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Verileri Otomatik Olarak Temizle";
@@ -22,8 +22,8 @@
 /* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
 "7nt-uS-sOh.normalTitle" = "Duckduckgo.com/about adresinde daha fazla bilgi edinin";
 
-/* Class = "UILabel"; text = "App exit, inactive for 60min"; ObjectID = "9EC-lx-77p"; */
-"9EC-lx-77p.text" = "60 dk hareket yoksa uygulamadan çık";
+/* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
+"9EC-lx-77p.text" = "1 Saat Boyunca Hareket Yoksa Uygulamadan Çık";
 
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Sekmeleri ve Verileri Temizle";
@@ -34,7 +34,7 @@
 /* Class = "UILabel"; text = "Use DuckDuckGo in Safari"; ObjectID = "74x-N4-jKV"; Note = "This is on a button leading to a screen with instructions about how to enable DuckDuckGo in Safari"; */
 "74x-N4-jKV.text" = "DuckDuckGo'yu Safari'de kullanın";
 
-/* Class = "UILabel"; text = "Open Links in their Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
+/* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Bağlantıları İlişkili Uygulamalarda Aç";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
@@ -49,8 +49,8 @@
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Küresel Gizlilik Kontrolü (GPC)";
 
-/* Class = "UILabel"; text = "App exit, inactive for 15min"; ObjectID = "D0R-jp-UY8"; */
-"D0R-jp-UY8.text" = "15 dk hareket yoksa uygulamadan çık";
+/* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
+"D0R-jp-UY8.text" = "Uygulamadan Çık, 15 Dakika Boyunca İnaktif";
 
 /* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
 "d5n-vG-8kF.text" = "10.0.1 (Build 10005)";
@@ -62,7 +62,7 @@
 "dj9-vh-Rig.headerTitle" = "Özelleştir";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Touch ID, Face ID veya sistem parolası belirlenmişse uygulamamayı açarken kilidini açmanız istenir.";
+"dOj-jn-mSN.footerTitle" = "Touch ID, Face ID veya sistem parolası belirlenmişse uygulamayı açarken kilidini açmanız istenir.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Gizlilik ve Güvenlik";
@@ -79,8 +79,8 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
 "ekF-SJ-PAQ.text" = "Verileri Otomatik Olarak Temizle";
 
-/* Class = "UILabel"; text = "App exit, inactive for 5min"; ObjectID = "ElX-yE-4PX"; */
-"ElX-yE-4PX.text" = "5 dk hareket yoksa uygulamadan çık";
+/* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
+"ElX-yE-4PX.text" = "Uygulamadan Çık, 5 Dakika Boyunca İnaktif";
 
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
 "eMH-uv-Kms.title" = "Uygulama Simgesi";
@@ -88,10 +88,10 @@
 /* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
 "f1O-6u-LFY.text" = "Tema";
 
-/* Class = "UILabel"; text = "App exit only"; ObjectID = "Fal-1Y-o2S"; */
-"Fal-1Y-o2S.text" = "Uygulamadan çık";
+/* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
+"Fal-1Y-o2S.text" = "Yalnızca Uygulamadan Çıkma";
 
-/* Class = "UITableViewController"; title = "Auto Clear Data"; ObjectID = "fdJ-b1-Des"; */
+/* Class = "UITableViewController"; title = "Automatically Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Verileri Otomatik Olarak Temizle";
 
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
@@ -115,26 +115,26 @@
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Uzun Basma Önizlemeleri";
 
-/* Class = "UILabel"; text = "No Unprotected Sites Yet"; ObjectID = "Hu1-5i-vjL"; */
-"Hu1-5i-vjL.text" = "Henüz Korumasız Site Yok";
+/* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
+"Hu1-5i-vjL.text" = "Gizlilik Koruması tüm siteler için etkin";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icon";
 
-/* Class = "UILabel"; text = "Send Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Geri bildirim gönder";
+/* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
+"m23-t6-9cb.text" = "Geri Bildirim Paylaş";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Etkinleştirildiğinde, web siteleri otomatik olarak DuckDuckGo'da açılır.";
 
-/* Class = "UILabel"; text = "None"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Yok";
+/* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Korumalı web sitesi yok";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Korumasız Siteler";
 
-/* Class = "UILabel"; text = "About"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Hakkında";
+/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
+"oM7-1o-9oY.text" = "DuckDuckGo Hakkında";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Label";
@@ -151,8 +151,8 @@
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
 "U8i-cQ-5WW.text" = "Otomatik Tamamlama Önerileri";
 
-/* Class = "UILabel"; text = "Remove All Fireproof Websites"; ObjectID = "UZx-52-aer"; */
-"UZx-52-aer.text" = "Tüm Yanmaya Dayanıklı Web Sitelerini Kaldır";
+/* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
+"UZx-52-aer.text" = "Tüm Korumalı Web Sitelerini Kaldır";
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
 "vPz-uO-6gB.text" = "Küresel Gizlilik Kontrolü (GPC)";
@@ -164,25 +164,25 @@
 "vSJ-YJ-bBs.headerTitle" = "İstenen zamanlama";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Varsayılan tarayıcı olarak ayarla";
+"xof-5k-PkI.text" = "Varsayılan Tarayıcı olarak ayarla";
 
-/* Class = "UINavigationItem"; title = "Fireproof Websites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Korumalı Web Siteleri";
+/* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
+"xUX-nF-HOl.title" = "Korumalı Siteler";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Klavye";
 
-/* Class = "UILabel"; text = "Add DuckDuckGo to your dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "DuckDuckGo'yu dock'una ekle";
+/* Class = "UILabel"; text = "Add DuckDuckGo to Your Dock"; ObjectID = "yvj-LL-MiR"; */
+"yvj-LL-MiR.text" = "DuckDuckGo'yu Dock'una Ekle";
 
 /* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
 "zMK-jc-4bJ.headerTitle" = "Yardım";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
-"Zpg-h0-rYv.text" = "Yeni sekme";
+"Zpg-h0-rYv.text" = "Yeni Sekme";
 
-/* Class = "UILabel"; text = "These unprotected sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Bu korumasız siteler için\nGizlilik Koruması uygulanmayacaktır.";
+/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
+"zvh-2e-Wmz.text" = "Bu siteler için Gizlilik Koruması uygulanmayacaktır.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Ana Ekran";

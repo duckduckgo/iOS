@@ -1,8 +1,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
-"Lqe-Wh-Evj.text" = "Label";
+"Lqe-Wh-Evj.text" = "Označenie";
 
-/* Class = "UILabel"; text = "No bookmarks yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Zatiaľ sa tu nenachádzajú žiadne záložky";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
+"N2X-jQ-cbU.text" = "Zatiaľ neboli pridané žiadne záložky";
 
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Záložky";

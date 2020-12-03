@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Pridėti prie mėgstamų";
 
 /* Settings action */
-"action.title.settings" = "Nustatymai...";
+"action.title.settings" = "Nustatymai";
 
 /* Share action */
 "action.title.share" = "Bendrinti...";
@@ -80,7 +80,7 @@
 "alert.title.disable.protection.placeholder" = "www.example.com";
 
 /* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Redaguoti žymelę";
+"alert.title.edit.bookmark" = "Redaguoti žymę";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Įrašyti žymę";
@@ -89,9 +89,9 @@
 "alert.title.save.favorite" = "Įrašyti mėgstamą";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Atrakinti „DuckDuckGo“";
+"app.authentication.unlock" = "Atrakinti „DuckDuckGo“.";
 
-/* Authentication Alert Log In Button */
+/* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Prisijungti";
 
 /* Authentication Alert - populated with a domain name */
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Svetainės pavadinimas";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Nepavyko pažymėti kai kurių skirtukų";
+"bookmarkAll.tabs.failed" = "Pridėta naujų žymių visiems skirtukams";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Visi skirtukai pažymėti";
@@ -140,7 +140,7 @@
 "brokensite.category.links" = "Nuorodos ar mygtukai neveikia";
 
 /* Broken Site Category */
-"brokensite.category.login" = "Galiu prisijungti";
+"brokensite.category.login" = "Negaliu prisijungti";
 
 /* Broken Site Category */
 "brokensite.category.other" = "Kažkas kito";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Vaizdo įrašas nepaleistas";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Aprašykite, kas atsitiko";
+"brokensite.sectionTitle" = "APRAŠYKITE, KAS ATSITIKO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Slėpti patarimus visam laikui";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Duok penkis!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* bandė tave stebėti.\n\nUžblokavau!\n\n☝️ Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* bandė tave stebėti.\n\nUžblokavau!\n\n☝️ Patikrink adreso juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Duok penkis!";
@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "Pabandyk apsilankyti vienoje mėgstamiausių svetainių!\n\nUžblokuosiu stebėjimo priemones, kad jos negalėtų tavęs šnipinėti. Jei įmanoma, atnaujinsiu tavo ryšio saugumą. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Atlikai!\n\nĮsidėmėk: kiekvieną kartą, kai naršai su manimi, bauginantis skelbimas praranda galią. 👍";
+"dax.onboarding.home.subsequent" = "Atlikai!\n\nĮsidėmėkite: kiekvieną kartą, kai naršote su manimi, bauginantis skelbimas praranda galią. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internetas gali būti bauginantis.\n\nNesijaudink! Ieškoti ir naršyti privačiai yra lengviau, nei manai.";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Įjungta";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Jūsų duomenys neturi būti pardavinėjami. Svetainėje „DuckDuckGo“ su tuo sutinkame. Aktyvinkite „Visuotinės privatumo kontrolės (VPK)“ nustatymą ir pranešime svetainėms:\n\n• Nepardavinėti jūsų asmens duomenų.\n• Apriboti jūsų asmens duomenų dalijimąsi su kitomis įmonėmis.";
+"donotsell.info.headertext" = "Jūsų duomenys neturi būti pardavinėjami. Svetainėje „DuckDuckGo“ su tuo sutinkame. Aktyvinkite „Visuotinės privatumo kontrolės“ (VPK) nustatymą ir pranešime svetainėms:\n\n• Nepardavinėti jūsų asmens duomenų.\n• Apriboti jūsų asmens duomenų dalijimąsi su kitomis įmonėmis.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Žymių dar nėra";
+"empty.bookmarks" = "Žymių dar nepridėta";
 
 /* Empty list state placholder */
-"empty.favorites" = "Mėgstamų dar nėra";
+"empty.favorites" = "Mėgstamų dar nepridėta";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Atitikmenų nerasta";
 
 /* No comment provided by engineer. */
 "favorite" = "Mėgstamas";
@@ -254,10 +257,10 @@
 "favorite.menu.edit" = "Redaguoti";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.ads" = "Reklamų ir iššokančių langų blokavimas";
+"feedback.browserFeatures.ads" = "Reklamų ir iššokančiųjų langų blokavimas";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.bookmarks" = "Žymelių kūrimas ir tvarkymas";
+"feedback.browserFeatures.bookmarks" = "Žymių kūrimas ir tvarkymas";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.caption" = "Kokią naršymo funkciją galime pridėti arba patobulinti?";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Papasakokite, ką galime patobulinti";
 
 /* Confirmation button */
-"feedback.form.submit" = "PATEIKTI ATSILIEPIMĄ";
+"feedback.form.submit" = "Pateikti";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Nurodykite kuo konkrečiau";
@@ -353,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Ar norėtumėte įtraukti konkrečios informacijos?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Apgailestaujame.";
+"feedback.negative.header" = "Apgailestaujame";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "Kas jums kelia didžiausią susierzinimą?";
@@ -457,14 +460,14 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Eiti į „DuckDuckGo“ pagrindinį puslapį";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Ieškoti ir pridėti mėgstamų naujame skirtuke";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Ieškoti arba įvesti adresą";
 
 /* Home tab title */
 "homeTab.title" = "Pagrindinis";
 
 /* No comment provided by engineer. */
-"keyCommandAddBookmark" = "Pridėti žymelę";
+"keyCommandAddBookmark" = "Pridėti žymę";
 
 /* No comment provided by engineer. */
 "keyCommandAddFavorite" = "Pridėti mėgstamą";
@@ -479,7 +482,7 @@
 "keyCommandClose" = "Uždaryti";
 
 /* No comment provided by engineer. */
-"keyCommandCloseTab" = "Uždaryti kortelė";
+"keyCommandCloseTab" = "Uždaryti kortelę";
 
 /* No comment provided by engineer. */
 "keyCommandFind" = "Rasti puslapyje";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Rodyti visus skirtukus";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Sveiki atvykę į „DUCKDUCKGO“";
+"launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
 /* Edit button */
 "navigation.title.edit" = "Redaguoti";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Pridėti valdiklį";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Naudotis „DuckDuckGo“ tapo dar lengviau.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Galbūt vėliau";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Tęsti";
@@ -551,13 +563,13 @@
 "onboardingStartBrowsing" = "Pradėti naršyti";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Sveiki atvykę į „DUCKDUCKGO“";
+"onboardingWelcomeHeader" = "Sveiki atvykę į „DuckDuckGo“!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Apgailestaujame, jokia programa negali atidaryti šios nuorodos.";
+"open.externally.failed" = "Negalima rasti programos, galinčios atidaryti šią nuorodą";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Svetainės pagrįstos slapukais, kad liktumėte prisijungę. Apsaugojus svetainę, slapukai nėra ištrinami ir liksite prisijungę net paspaudę apsaugojimo mygtuką.";
+"preserveLogins.domain.list.footer" = "Svetainės pagrįstos slapukais, kad liktumėte prisijungę. Apsaugojus svetainę, slapukai nėra ištrinami ir liksite prisijungę net paspaudę apsaugojimo mygtuką. Vis tiek blokuosime trečiųjų šalių stebėjimo priemones, randamas svetainėse, kuriose pasinaudosite parinktimi „Fireproof“.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Svetainės";
@@ -575,13 +587,13 @@
 "preserveLogins.remove.all" = "Pašalinti visus";
 
 /* Confirmation button in alert */
-"preserveLogins.remove.all.ok" = "Gerai";
+"preserveLogins.remove.all.ok" = "GERAI";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Prašyti apsaugoti svetaines";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ dabar yra apsaugota! Apsilankykite nustatymuose norėdami pašalinti.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ dabar yra apsaugota! Apsilankykite „Nustatymai“ ir sužinokite daugiau.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmas";
@@ -599,7 +611,7 @@
 "privacy.protection.encryption.effective.size" = "Efektyvus dydis";
 
 /* Part of certificate info */
-"privacy.protection.encryption.email" = "El.paštas";
+"privacy.protection.encryption.email" = "El. paštas";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.encrypted.heading" = "Šifruotas ryšys";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Santrauka";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Šis ryšys nešifruotas, todėl būkite atidūs, ką siunčiate.";
+"privacy.protection.encryption.unencrypted" = "Būkite atsargūs įvesdami asmeninę informaciją šioje svetainėje.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Nešifruotas ryšys";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "PATOBULINTA NUO $1 IKI $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Privatumo laipsnis";
+"privacy.protection.main.grade" = "PRIVATUMO LAIPSNIS";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Renkame duomenis, kad galėtumėme parodyti, kiek\nstebėjimo priemonių užblokavome.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Privatumo praktikų informacijos iš ToS;DR naudojimas";
+"privacy.protection.practices.footer.info" = "Privatumo praktikos iš ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Privatumo praktika nurodo, kiek asmeninės informacijos, kuria dalinatės svetainėje, yra apsaugota.";
@@ -749,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Ne";
+"prompt.custom.url.scheme.dontopen" = "Atšaukti";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Taip";
+"prompt.custom.url.scheme.open" = "Atviras";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Ar norite išeiti iš „DuckDuckGo“ ir peržiūrėti šį turinį?";
@@ -761,13 +773,13 @@
 "prompt.custom.url.scheme.title" = "Atidaryti kitoje programoje?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Pateikus anoniminę sugadintos svetainės ataskaitą, galime padėti išspręsti šias problemas ir patobulinti plėtinį.";
+"report.brokensite.header" = "Pateikdami anoniminę sugadintos svetainės ataskaitą, galime padėti išspręsti šias problemas ir patobulinti programėlę.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Ieškoti arba įvesti adresą";
 
 /* No comment provided by engineer. */
-"section.title.bookmarks" = "Žymelės";
+"section.title.bookmarks" = "Žymės";
 
 /* No comment provided by engineer. */
 "section.title.favorites" = "Mėgstami";
@@ -779,25 +791,25 @@
 "settings.tutorial.info" = "Kitos paieškos sistemos seka jūsų paieškas net tada, kai esate pasirinkę privatų naršymo režimą. Mes jūsų nesekame. Taškas.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Eikite į *Safari*, tuomet rinkitės *paieškos sistemą*";
+"settings.tutorial.navigate" = "Eikite į *Safari*, tuomet rinkitės *paieškos sistemą*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Atidarykite programoje *nustatymus*";
+"settings.tutorial.open" = "Atidarykite programoje *nustatymus*.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Pasirinkite *DuckDuckGo*";
+"settings.tutorial.select" = "Pasirinkite *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
 
 /* Domain is an URL address */
-"siteFeedback.domainInfo" = "Sugedusios svetainės domenas:";
+"siteFeedback.domainInfo" = "Neveikiančios svetainės domenas:";
 
 /* No comment provided by engineer. */
 "siteFeedback.messagePlaceholder" = "Koks turinys ar funkcija neveikia?";
 
 /* No comment provided by engineer. */
-"siteFeedback.subtitle" = "Pranešimas apie sugedusią svetainę yra anonimiškas ir padeda mums tobulinti programą!";
+"siteFeedback.subtitle" = "Pranešimas apie neveikiančią svetainę yra anonimiškas ir padeda mums tobulinti programą!";
 
 /* This is a form title */
 "siteFeedback.title" = "Pranešti apie neveikiančią svetainę";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "%@ pašalintas iš neapsaugotų svetainių";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Įvyko nežinoma klaida";
+"unknown.error.occurred" = "Įvyko nežinoma klaida.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Žymė išsaugota";
+"web.url.save.bookmark.done" = "Žymė pridėta";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Žymė jau išsaugota";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Nėra pažymimo tinklalapio";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Mėgstamas įrašytas";
+"web.url.save.favorite.done" = "Mėgstamas pridėtas";
 

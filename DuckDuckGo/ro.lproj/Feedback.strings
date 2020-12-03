@@ -4,17 +4,17 @@
 /* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
 "7zN-Xh-yYi.normalTitle" = "Partajează feedback";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "46v-cB-2YV"; */
-"46v-cB-2YV.title" = "Trimite feedback";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Partajează feedback";
 
-/* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
+/* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Nu mulțumesc! Am terminat";
 
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
 "cZl-qB-kSL.title" = "Închidere";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "D8A-B7-Dqu"; */
-"D8A-B7-Dqu.title" = "Trimite feedback";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Partajează feedback";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
 "epz-Ta-KQ7.title" = "Înapoi";
@@ -23,7 +23,7 @@
 "h2M-TW-0QG.title" = "Înapoi";
 
 /* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
-"iVe-E1-jAH.accessibilityHint" = "Feedbackul tău.";
+"iVe-E1-jAH.accessibilityHint" = "Feedback-ul tău.";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Înapoi";
@@ -31,11 +31,11 @@
 /* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
 "jr6-Al-4fr.title" = "Trimite";
 
-/* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "TRIMITERE FEEDBACK";
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "Trimite";
 
-/* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
-"lY6-5c-iu4.title" = "Trimite feedback";
+/* Class = "UITableViewController"; title = "Share Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Partajează feedback";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
 "m0a-EJ-h27.title" = "Înapoi";
@@ -43,26 +43,26 @@
 /* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
 "msl-mT-bMG.accessibilityLabel" = "Negativ";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "oHj-cX-c6z"; */
-"oHj-cX-c6z.title" = "Trimite feedback";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Partajează feedback";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "rAY-cv-mjl"; */
-"rAY-cv-mjl.title" = "Trimite feedback";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Partajează feedback";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "Rvx-dM-etJ"; */
-"Rvx-dM-etJ.title" = "Trimite feedback";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Partajează feedback";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
-"TMj-NM-j3b.placeholder" = "Ce site este defect?”";
+"TMj-NM-j3b.placeholder" = "Ce site este defect?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Raportați Site-ul Distrus";
+"WjT-HM-yim.title" = "Raportați site-ul defect";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Motivul pentru care site-ul nu funcționează";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
-"Xb0-Zu-opM.title" = "Trimite feedback";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Partajează feedback";
 
 /* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
 "ze4-T7-OFN.accessibilityLabel" = "Pozitiv";

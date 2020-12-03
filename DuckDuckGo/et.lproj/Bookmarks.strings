@@ -1,8 +1,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
 "Lqe-Wh-Evj.text" = "Label";
 
-/* Class = "UILabel"; text = "No bookmarks yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Järjehoidjaid pole veel";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
+"N2X-jQ-cbU.text" = "Järjehoidjaid pole veel lisatud";
 
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Järjehoidjad";

@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Προσθήκη στα Αγαπημένα";
 
 /* Settings action */
-"action.title.settings" = "Ρυθμίσεις...";
+"action.title.settings" = "Ρυθμίσεις";
 
 /* Share action */
 "action.title.share" = "Κοινοποίηση...";
@@ -89,10 +89,10 @@
 "alert.title.save.favorite" = "Αποθήκευση αγαπημένου";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo!";
+"app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
-"auth.alert.login.button" = "Σύνδεση";
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Είσοδος";
 
 /* Authentication Alert - populated with a domain name */
 "auth.alert.message.encrypted" = "Σύνδεση στο %@. Τα στοιχεία σύνδεσής σας θα σταλούν με ασφάλεια.";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Τίτλος ιστότοπου";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Δεν είναι δυνατή η προσθήκη σελιδοδείκτη σε ορισμένες καρτέλες";
+"bookmarkAll.tabs.failed" = "Προστέθηκαν νέοι σελιδοδείκτες για όλες τις καρτέλες";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Προστέθηκαν σελιδοδείκτες σε όλες τις καρτέλες";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Το βίντεο δεν αναπαράχθηκε";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Περιγράψτε τι συνέβη";
+"brokensite.sectionTitle" = "ΠΕΡΙΓΡΑΨΤΕ ΤΙ ΣΥΝΕΒΗ";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Απόκρυψη συμβουλών για πάντα";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Κόλλα πέντε!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "Το *%1$@* προσπαθούσε να σας παρακολουθήσει εδώ.\n\nΤους εμπόδισα!\n\n☝️ Μπορείτε να ελέγξετε τη γραμμή διευθύνσεων URL για να δείτε ποιος προσπαθεί να σας παρακολουθήσει ενώ επισκέπτεστε έναν νέο ιστότοπο.";
+"dax.onboarding.browsing.one.tracker" = "Το *%1$@* προσπαθούσε να σας παρακολουθήσει εδώ.\n\nΤους εμπόδισα!\n\n☝️ Μπορείτε να ελέγξετε τη γραμμή διευθύνσεων για να δείτε ποιος προσπαθεί να σας παρακολουθήσει ενώ επισκέπτεστε έναν νέο ιστότοπο.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Κόλλα πέντε!";
@@ -197,25 +197,25 @@
 "dax.onboarding.browsing.site.owned.by.major.tracker" = "Προσοχή! Καθώς το %2$@ έχει στην κατοχή του το %1$@, δεν μπορώ να τους εμποδίσω από το να δουν τη δραστηριότητά σας εδώ.\n\nΑλλά περιηγηθείτε μαζί μου και θα μπορώ να περιορίσω το τι θα γνωρίζει το %2$@ για σας συνολικά, αποκλείοντας τις εφαρμογές παρακολούθησης σε πλήθος άλλων ιστότοπων.";
 
 /* Got It */
-"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Το έπιασα";
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Το κατάλαβα";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers" = "Καθώς πατάτε στην οθόνη και κάνετε κύλιση, θα μπλοκάρω ενοχλητικές εφαρμογές παρακολούθησης. \n\nΜη σταματάτε - συνεχίστε την περιήγηση!";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers.cta" = "Το έπιασα";
+"dax.onboarding.browsing.without.trackers.cta" = "Το κατάλαβα";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\nΜεταβείτε σε έναν ιστότοπο που αγαπάτε. Έπειτα, πατήστε το εικονίδιο \"⋯\" και επιλέξτε *Προσθήκη στα αγαπημένα*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\n Επισκεφθείτε έναν από τους αγαπημένους σας ιστότοπους. Έπειτα, πατήστε το κουμπί Άνοιγμα μενού και επιλέξτε Προσθήκη στα αγαπημένα.";
+"dax.onboarding.home.add.favorite.accessible" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! Επισκεφθείτε έναν από τους αγαπημένους σας ιστότοπους. Έπειτα, πατήστε το κουμπί Άνοιγμα μενού και επιλέξτε Προσθήκη στα αγαπημένα.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Στη συνέχεια, δοκιμάστε να επισκεφτείτε έναν από τους αγαπημένους σας ιστότοπους!\n\nΘα εμποδίσω τις εφαρμογές παρακολούθησης ώστε να μην μπορούν να σας κατασκοπεύουν. Επίσης, θα αναβαθμίσω την ασφάλεια της σύνδεσής σας, εάν είναι εφικτό. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Το έχετε!\n\nΝα θυμάστε: κάθε φορά που περιηγείστε μαζί μου, μια ανατριχιαστική διαφήμιση χάνει τη δύναμή της! 👍";
+"dax.onboarding.home.subsequent" = "Το έχετε!\n\nΝα θυμάστε: κάθε φορά που περιηγείστε μαζί μου μια ανατριχιαστική διαφήμιση χάνει τα φτερά της. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Το Διαδίκτυο μπορεί να είναι κάπως ανατριχιαστικό.\n\nΜην ανησυχείτε! Το να πραγματοποιείτε αναζήτηση και περιήγηση ιδιωτικά είναι πιο εύκολο απ' όσο νομίζετε.";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Ενεργοποιήθηκε";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Τα δεδομένα σας δεν πρέπει να πωλούνται. Στην DuckDuckGo συμφωνούμε. Ενεργοποιήστε τη ρύθμιση \"Παγκόσμιος έλεγχος απορρήτου\" (GPC) και θα ενημερώσουμε τους ιστότοπους για την προτίμησή σας:\n\n•.Να μην πωλούν τα προσωπικά δεδομένα σας.\n• Να περιορίσουν την κοινοποίηση των προσωπικών δεδομένων σας σε άλλες εταιρείες.";
+"donotsell.info.headertext" = "Τα δεδομένα σας δεν πρέπει να πωλούνται. Στην DuckDuckGo συμφωνούμε. Ενεργοποιήστε τη ρύθμιση \"Παγκόσμιος έλεγχος απορρήτου\" (GPC) και θα ενημερώσουμε τους ιστότοπους για την προτίμησή σας:\n\n• Να μην πωλούν τα προσωπικά δεδομένα σας.\n• Να περιορίσουν την κοινοποίηση των προσωπικών δεδομένων σας σε άλλες εταιρείες.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Δεν υπάρχουν ακόμα σελιδοδείκτες";
+"empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
 
 /* Empty list state placholder */
-"empty.favorites" = "Δεν υπάρχουν ακόμα αγαπημένα";
+"empty.favorites" = "Δεν έχουν προστεθεί ακόμα αγαπημένα";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Δεν βρέθηκαν αντιστοιχίες";
 
 /* No comment provided by engineer. */
 "favorite" = "Αγαπημένο";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Πείτε μας τι μπορούμε να βελτιώσουμε";
 
 /* Confirmation button */
-"feedback.form.submit" = "ΥΠΟΒΟΛΗ ΣΧΟΛΙΩΝ";
+"feedback.form.submit" = "Υποβολή";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Να είστε όσο το δυνατόν πιο συγκεκριμένοι";
@@ -353,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Υπάρχει κάτι συγκεκριμένο που θα θέλατε να προστεθεί;";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Λυπούμαστε πολύ γι' αυτό.";
+"feedback.negative.header" = "Λυπούμαστε πολύ για αυτό";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "Με τι σχετίζεται περισσότερο το πρόβλημά σας;";
@@ -398,7 +401,7 @@
 "feedback.positive.header" = "Αυτό μας κάνει πολύ χαρούμενους!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "Όχι ευχαριστώ! Τελείωσα.";
+"feedback.positive.noThanks" = "Όχι ευχαριστώ! Τελείωσα";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Μοιραστείτε τις λεπτομέρειες";
@@ -452,13 +455,13 @@
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
 
 /* No comment provided by engineer. */
-"home.row.reminder.message" = "Προσθήκη του DuckDuckGo στο Dock σας για εύκολη πρόσβαση.";
+"home.row.reminder.message" = "Προσθήκη του DuckDuckGo στο Dock σας για εύκολη πρόσβαση!";
 
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Αναζήτηση και αγαπημένα σε νέα καρτέλα";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Αναζήτηση ή εισαγωγή διεύθυνσης";
 
 /* Home tab title */
 "homeTab.title" = "Αρχική σελίδα";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Προβολή όλων των καρτελών";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Καλώς ορίσατε στον DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Η χρήση του DuckDuckGo μόλις έγινε πιο εύκολη.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Ισως αργότερα";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Συνέχεια";
@@ -554,10 +566,10 @@
 "onboardingWelcomeHeader" = "Καλώς ορίσατε στον DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Λυπούμαστε, καμία εφαρμογή δεν μπορεί να διαχειριστεί αυτόν τον σύνδεσμο.";
+"open.externally.failed" = "Δεν είναι δυνατή η εύρεση της εφαρμογής που απαιτείται για άνοιγμα αυτού του συνδέσμου";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας.";
+"preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας. Εξακολουθούμε να αποκλείουμε εφαρμογές παρακολούθησης από τρίτους που υπάρχουν σε ιστότοπους με διαγραφή δραστηριότητας.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Ιστότοποι";
@@ -577,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Εντάξει";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Ζητήστε διαγραφή δραστηριότητας για ιστότοπους";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "Έχει γίνει πλέον διαγραφή δραστηριότητας για το %@! Επισκεφθείτε τις ρυθμίσεις για αφαίρεση.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "Έχει γίνει πλέον διαγραφή δραστηριότητας για το %@! Επισκεφτείτε τις Ρυθμίσεις για να το διαχειριστείτε.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Αλγόριθμος";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Περίληψη";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Η σύνδεση αυτή δεν είναι κρυπτογραφημένη, οπότε θα πρέπει να προσέχετε τι στέλνετε.";
+"privacy.protection.encryption.unencrypted" = "Να είστε προσεκτικοί κατά την εισαγωγή προσωπικών στοιχείων σε αυτόν τον ιστότοπο.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Μη κρυπτογραφημένη σύνδεση";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "ΒΕΛΤΙΩΘΗΚΕ ΑΠΟ $1 ΣΕ $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Βαθμολογία ιδιωτικότητας";
+"privacy.protection.main.grade" = "ΒΑΘΜΟΣ ΠΡΟΣΤΑΣΙΑΣ ΠΡΟΣΩΠΙΚΩΝ ΔΕΔΟΜΕΝΩΝ";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Εξακολουθούμε να συλλέγουμε δεδομένα για να δείξουμε\nπόσες εφαρμογές παρακολούθησης έχουμε αποκλείσει.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Χρήση πληροφοριών για πρακτικές προστασίας προσωπικών δεδομένων από το ToS;DR";
+"privacy.protection.practices.footer.info" = "Αποτελέσματα πρακτικών ιδιωτικότητας από ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Οι πρακτικές ιδιωτικότητας υποδεικνύουν τον βαθμό προστασίας των προσωπικών πληροφοριών που μοιράζεστε με έναν ιστότοπο.";
@@ -749,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Όχι";
+"prompt.custom.url.scheme.dontopen" = "Ακύρωση";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Ναί";
+"prompt.custom.url.scheme.open" = "Άνοιγμα";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Θα θέλατε να επιτρέψετε στο DuckDuckGo να προβάλει αυτό το περιεχόμενο;";
@@ -761,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Άνοιγμα σε άλλη εφαρμογή;";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Η υποβολή μιας ανώνυμης αναφοράς για μη λειτουργία ιστότοπου μας βοηθά να πραγματοποιήσουμε επανόρθωση των εντοπισμένων σφαλμάτων και να βελτιώσουμε την προέκταση.";
+"report.brokensite.header" = "Η υποβολή μιας ανώνυμης αναφοράς για σπασμένους συνδεσμους μασ βοηθά να πραγματοποιήσουμε επανόρθωση των εντοπισμένων σφαλμάτων και προβλημάτων αυτών των ζητημάτων και να βελτιώσουμε την εφαρμογή.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Αναζήτηση ή εισαγωγή διεύθυνσης";
@@ -779,13 +791,13 @@
 "settings.tutorial.info" = "Άλλες μηχανές αναζήτησης παρακολουθούν τις αναζητήσεις σας ακόμα και όταν είστε σε Λειτουργία ιδιωτικής περιήγησης. Δεν σας παρακολουθούμε. Τελεία.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Περιηγηθείτε στο *Safari* κ έπειτα στη *Μηχανή αναζήτησης*";
+"settings.tutorial.navigate" = "Περιηγηθείτε στο *Safari* κι έπειτα στη *Μηχανή αναζήτησης*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Ανοίξτε τις *Ρυθμίσεις*";
+"settings.tutorial.open" = "Ανοίξτε τις *Ρυθμίσεις*.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Επιλέξτε *DuckDuckGo*";
+"settings.tutorial.select" = "Επιλέξτε *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Υποβολή αναφοράς";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "Το %@ αφαιρέθηκε από τους μη προστατευόμενους ιστότοπους";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Προέκυψε άγνωστο σφάλμα";
+"unknown.error.occurred" = "Προέκυψε άγνωστο σφάλμα.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Ο σελιδοδείκτης αποθηκεύτηκε";
+"web.url.save.bookmark.done" = "Προστέθηκε σελιδοδείκτης";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Ο σελιδοδείκτης έχει ήδη αποθηκευτεί";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Δεν υπάρχει ιστοσελίδα για προσθήκη ως σελιδοδείκτης";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Αποθηκεύτηκε ως Αγαπημένο";
+"web.url.save.favorite.done" = "Προστέθηκε αγαπημένο";
 

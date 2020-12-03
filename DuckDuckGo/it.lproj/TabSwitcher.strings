@@ -50,7 +50,7 @@
 "uIV-4q-5mj.accessibilityLabel" = "Aggiungi scheda";
 
 /* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
-"Uu4-yR-9tN.text" = "Sito Web -- Titolo lungo";
+"Uu4-yR-9tN.text" = "Sito web -- Titolo lungo";
 
 /* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
 "xto-EI-h22.accessibilityHint" = "Chiudi";

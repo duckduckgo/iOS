@@ -128,14 +128,7 @@ class GestureToolbarButton: UIView {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            imposeReleaseAnimation()
-            return
-        }
-        guard point(inside: touch.location(in: self), with: event) else {
-            imposeReleaseAnimation()
-            return
-        }
+        imposeReleaseAnimation()
         delegate?.singleTapDetected(in: self)
         imposeReleaseAnimation()
     }

@@ -1,8 +1,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
 "Lqe-Wh-Evj.text" = "Label";
 
-/* Class = "UILabel"; text = "No bookmarks yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Δεν υπάρχουν ακόμα σελιδοδείκτες";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
+"N2X-jQ-cbU.text" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
 
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Σελιδοδείκτες";

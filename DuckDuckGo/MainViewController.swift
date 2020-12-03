@@ -966,10 +966,18 @@ extension MainViewController: OmniBarDelegate {
         showSuggestionTray(.favorites)
     }
 
-    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
+        let isDDGSearch: Bool
+        if let tabURL = currentTab?.url {
+            isDDGSearch = appUrls.isDuckDuckGoSearch(url: tabURL)
+        } else {
+            isDDGSearch = false
+        }
+        
         ViewHighlighter.hideAll()
-        guard let homeController = homeController else { return }
+        guard let homeController = homeController else { return !isDDGSearch }
         homeController.launchNewSearch()
+        return !isDDGSearch
     }
     
     func onRefreshPressed() {

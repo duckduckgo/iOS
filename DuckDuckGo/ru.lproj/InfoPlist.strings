@@ -11,7 +11,7 @@
 "NSFaceIDUsageDescription" = "Позволяет разблокировать приложение через Face ID";
 
 /* Privacy - Location When In Use Usage Description */
-"NSLocationWhenInUseUsageDescription" = "Позволяет делиться своей геопозицией";
+"NSLocationWhenInUseUsageDescription" = "Позволяет делиться геопозицией";
 
 /* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Позволяет делиться аудиозаписями";
@@ -21,4 +21,7 @@
 
 /* (No Comment) */
 "Paste from clipboard" = "Вставить из буфера обмена";
+
+/* (No Comment) */
+"Paste from Clipboard" = "Вставить из буфера обмена";
 

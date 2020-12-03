@@ -22,7 +22,7 @@ import WidgetKit
 
 class BookmarksManager {
 
-    private var dataStore: BookmarkStore
+    private(set) var dataStore: BookmarkStore
 
     init(dataStore: BookmarkStore = BookmarkUserDefaults()) {
         self.dataStore = dataStore
@@ -193,12 +193,6 @@ class BookmarksManager {
             index += 1
         }
         return nil
-    }
-    
-    func migrateFavoritesToBookmarks() {
-        while favoritesCount > 0 {
-            moveFavorite(at: 0, toBookmark: 0)
-        }
     }
 
     func reloadWidgets() {

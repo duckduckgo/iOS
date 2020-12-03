@@ -1,15 +1,33 @@
 /* Class = "UIViewController"; title = "Open links with peace of mind, every time."; ObjectID = "0MQ-7J-rAM"; */
 "0MQ-7J-rAM.title" = "Åpne lenker med ro i sinnet, hver gang.";
 
+/* Class = "UIViewController"; title = "Quickly search or visit your favorite sites, all while protecting your privacy."; ObjectID = "3xN-1o-4I4"; */
+"3xN-1o-4I4.title" = "Søk gjennom eller besøk favorittsidene dine raskt og sikkert mens personvernet ditt beskyttes.";
+
+/* Class = "UILabel"; text = "1"; ObjectID = "8Yp-jL-Y1J"; */
+"8Yp-jL-Y1J.text" = "1";
+
 /* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ciS-pA-ovS"; */
 "ciS-pA-ovS.normalTitle" = "Fortsett";
+
+/* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "HOt-9c-gP5"; */
+"HOt-9c-gP5.normalTitle" = "Den er grei";
 
 /* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "J1y-Qk-FSX"; */
 "J1y-Qk-FSX.normalTitle" = "HOPP OVER";
 
+/* Class = "UILabel"; text = "3"; ObjectID = "kYm-7s-KFg"; */
+"kYm-7s-KFg.text" = "3";
+
 /* Class = "UILabel"; text = "Welcome to DuckDuckGo!"; ObjectID = "u7Q-MU-drX"; */
 "u7Q-MU-drX.text" = "Velkommen til DuckDuckGo!";
 
+/* Class = "UILabel"; text = "Widget Instructions"; ObjectID = "WZv-GS-xyE"; */
+"WZv-GS-xyE.text" = "Instruksjoner for widget";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "XBd-OG-vC0"; */
+"XBd-OG-vC0.text" = "2";
+
 /* Class = "UIViewController"; title = "Search and browse privately,\nevery day."; ObjectID = "Xjr-gI-tDG"; */
-"Xjr-gI-tDG.title" = "Søk og surf privat,\nhver dag";
+"Xjr-gI-tDG.title" = "Søk og surf privat,\nhver dag.";
 

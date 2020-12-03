@@ -89,7 +89,7 @@ class OmniBar: UIView {
         menuButton.isPointerInteractionEnabled = true
 
         refreshButton.isPointerInteractionEnabled = true
-        refreshButton.pointerStyleProvider = { button, effect, shape -> UIPointerStyle? in
+        refreshButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
             return .init(effect: .lift(.init(view: button)))
         }
     }
@@ -396,6 +396,11 @@ extension OmniBar: UITextFieldDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.textField.selectAll(nil)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        omniDelegate?.onEnterPressed()
+        return true
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {

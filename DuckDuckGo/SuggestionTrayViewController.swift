@@ -69,13 +69,29 @@ class SuggestionTrayViewController: UIViewController {
     func willShow(for type: SuggestionType) -> Bool {
         switch type {
         case .autocomplete(let query):
-            removeFavorites()
             return displayAutocompleteSuggestions(forQuery: query)
-            
         case.favorites:
-            removeAutocomplete()
-            return displayFavorites()
+            if isPad {
+                removeAutocomplete()
+                return displayFavorites()
+            } else {
+                return displayFavorites { [weak self] in
+                    self?.removeAutocomplete()
+                }
+            }
         }
+    }
+    
+    func willDismiss(with query: String) {
+        guard !query.isEmpty else { return }
+        
+        if let autocomplete = autocompleteController {
+            autocomplete.willDismiss(with: query)
+        }
+    }
+    
+    var contentFrame: CGRect {
+        return containerView.frame
     }
     
     func didHide() {
@@ -92,7 +108,6 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func float(withWidth width: CGFloat) {
-        
         autocompleteController?.showBackground = false
         
         containerView.layer.cornerRadius = 16
@@ -107,7 +122,12 @@ class SuggestionTrayViewController: UIViewController {
         backgroundView.layer.shadowRadius = 120
 
         topConstraint.constant = 15
-        variableHeightConstraint.constant = 276
+        
+        let isFirstPresentation = fullHeightConstraint.isActive
+        if isFirstPresentation {
+            variableHeightConstraint.constant = SuggestionTableViewCell.Constants.cellHeight * 6
+        }
+        
         variableWidthConstraint.constant = width
         fullWidthConstraint.isActive = false
         fullHeightConstraint.isActive = false
@@ -143,13 +163,13 @@ class SuggestionTrayViewController: UIViewController {
         containerView.addGestureRecognizer(foregroundTap)
     }
     
-    private func displayFavorites() -> Bool {
+    private func displayFavorites(onInstall: @escaping () -> Void = {}) -> Bool {
         guard !bookmarkStore.favorites.isEmpty else { return false }
 
         if favoritesOverlay == nil {
             let controller = FavoritesOverlay()
             controller.delegate = favoritesOverlayDelegate
-            install(controller: controller)
+            install(controller: controller, completion: onInstall)
             favoritesOverlay = controller
         }
         
@@ -157,12 +177,16 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func displayAutocompleteSuggestions(forQuery query: String) -> Bool {
-        guard appSettings.autocomplete && !query.isEmpty else { return false }
+        guard appSettings.autocomplete && !query.isEmpty else {
+            removeAutocomplete()
+            return false
+        }
         
         if autocompleteController == nil {
             let controller = AutocompleteViewController.loadFromStoryboard()
             install(controller: controller)
             controller.delegate = autocompleteDelegate
+            controller.presentationDelegate = self
             autocompleteController = controller
         }
         
@@ -184,16 +208,37 @@ class SuggestionTrayViewController: UIViewController {
         favoritesOverlay = nil
     }
     
-    private func install(controller: UIViewController) {
+    private func install(controller: UIViewController, completion: @escaping () -> Void = {}) {
         addChild(controller)
         controller.view.frame = containerView.bounds
         containerView.addSubview(controller.view)
         controller.didMove(toParent: self)
         controller.view.alpha = 0
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2, animations: {
             controller.view.alpha = 1
+        }, completion: { _ in
+            completion()
+        })
+    }
+    
+    func applyContentInset(_ inset: UIEdgeInsets) {
+        autocompleteController?.tableView.contentInset = inset
+        favoritesOverlay?.collectionView.contentInset = inset
+    }
+}
+
+extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDelegate {
+    
+    func autocompleteDidChangeContentHeight(height: CGFloat) {
+        if autocompleteController != nil {
+            removeFavorites()
         }
         
+        guard !fullHeightConstraint.isActive else { return }
+        
+        if height > variableHeightConstraint.constant {
+            variableHeightConstraint.constant = height
+        }
     }
     
 }

@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Hozzáadás a kedvencekhez";
 
 /* Settings action */
-"action.title.settings" = "Beállítások...";
+"action.title.settings" = "Beállítások";
 
 /* Share action */
 "action.title.share" = "Megosztás…";
@@ -89,13 +89,13 @@
 "alert.title.save.favorite" = "Kedvenc mentése";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "DuckDuckGo feloldása";
+"app.authentication.unlock" = "Oldd fel a DuckDuckGo-t.";
 
-/* Authentication Alert Log In Button */
+/* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Bejelentkezés";
 
 /* Authentication Alert - populated with a domain name */
-"auth.alert.message.encrypted" = "Bejelentkezés ide: %@. A bejelentkezési adataid biztonságosan lesznek elküldve.";
+"auth.alert.message.encrypted" = "Jelentkezz be ide: %@. A bejelentkezési adataid biztonságosan lesznek elküldve.";
 
 /* Authentication Alert - populated with a domain name */
 "auth.alert.message.plain" = "Bejelentkezés ide: %@. A jelszavad nem biztonságosan lesz elküldve, mert a kapcsolat nem titkosított.";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Weboldal címe";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Néhány lapot nem lehet könyvjelzőzni";
+"bookmarkAll.tabs.failed" = "Hozzáadott új könyvjelzők az összes laphoz";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Összes lap könyvjelzőzve";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "A videót nem játszotta le";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Az esemény leírása";
+"brokensite.sectionTitle" = "ESEMÉNY LEÍRÁSA";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ötletek elrejtése örökre";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Pacsi!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* itt próbált követni.\n\nBlokkoltam őket!\n\n☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* itt próbált követni.\n\nBlokkoltam!\n\n☝️ Ellenőrizheted a címsort, hogy megtudhasd, ki próbál nyomon követni, amikor új webhelyre látogatsz.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Pacsi!";
@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "A következő lépésben próbálj ellátogatni az egyik kedvenc webhelyedre!\n\nÉn blokkolom a nyomkövetőket, hogy ne tudjanak kémkedni utánad. Ha lehet, a kapcsolatod biztonságát is javítom. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Megvan, ez az!\n\nNe feledd: minden alkalommal, amikor velem böngészel, egy undok hirdetés elveszíti az erejét. 👍";
+"dax.onboarding.home.subsequent" = "Megvan, ez az!\n\nNe feledd: minden alkalommal, amikor velem végzed a böngészést, egy hátborzongató hirdetés elveszíti az erejét. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Az internet meglehetősen undok hely lehet.\n\nNe aggódj! A bizalmas keresés és böngészés egyszerűbb, mint hinnéd.";
@@ -239,10 +239,13 @@
 "donotsell.info.headertext" = "Az adataidnak nem lenne szabad eladónak lenniük. A DuckDuckGo-nál mi egyetértünk ezzel. Aktiváld a „Globális adatvédelmi szabályozás” (GPC) beállítást, és mi jelezzük a webhelyeknek, hogy te a következőket szeretnéd:\n\n• Ne adják el a személyes adataidat.\n• Korlátozzák a személyes adataid megosztását más vállalatokkal.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Még nincsenek könyvjelzők";
+"empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";
 
 /* Empty list state placholder */
-"empty.favorites" = "Még nincsenek kedvencek";
+"empty.favorites" = "Még nincsenek hozzáadva kedvencek.";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nincs találat";
 
 /* No comment provided by engineer. */
 "favorite" = "Kedvenc";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Kérjük, mondd el, min tudunk még javítani.";
 
 /* Confirmation button */
-"feedback.form.submit" = "VISSZAJELZÉS ELKÜLDÉSE";
+"feedback.form.submit" = "Elküldés";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Kérjük, a lehető legpontosabban írj meg mindent";
@@ -457,8 +460,8 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Vidd haza a DuckDuckGo-t";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Keresés és kedvencek új lapon";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Keresés vagy cím megadása";
 
 /* Home tab title */
 "homeTab.title" = "Kezdőlap";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Összes lap megjelenítése";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Üdvözlünk a DuckDuckGo-ban!";
+"launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "lapok.száma";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Minialkalmazás hozzáadása";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "A DuckDuckGo használata még könnyebb lett.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Talán később";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Folytatás";
@@ -554,10 +566,10 @@
 "onboardingWelcomeHeader" = "Üdvözlünk a DuckDuckGo-ban!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Sajnáljuk, egyetlen alkalmazás sem tudja kezelni ezt a hivatkozást.";
+"open.externally.failed" = "A link megnyitásához szükséges alkalmazás nem található.";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Fire gomb használata után is bejelentkezve maradsz.";
+"preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Tűz gomb használata után is bejelentkezve maradsz. A tűzálló webhelyeken a külső felek nyomkövetőit azonban blokkoljuk.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Weboldalak";
@@ -577,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Kérdezzen rá a weboldalak tűzállóvá tételére";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "A(z) %@ most már tűzálló! Eltávolításához lépj a beállításokba.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "A(z) %@ most már tűzálló! A kezeléshez lépj a Beállításokra.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Összefoglalás";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Ez a kapcsolat nincs titkosítva, ezért vigyázz, mit küldesz.";
+"privacy.protection.encryption.unencrypted" = "Legyél óvatos, amikor személyes adatokat adsz meg ezen a weboldalon.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Titkosítatlan kapcsolat";
@@ -689,10 +701,10 @@
 "privacy.protection.main.disabled" = "WEBOLDAL VÉDELME LETILTVA";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTETT ERRŐL: $1, ERRE: $2";
+"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTVE ERRŐL: $1, ERRE: $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Adatvédelmi fokozat";
+"privacy.protection.main.grade" = "ADATVÉDELMI FOKOZAT";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Folyamatosan gyűjtjük az adatokat, hogy bemutathassuk, hány\nnyomkövetőt tiltottunk le.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "A ToS;DR adatvédelmi gyakorlat információinak felhasználása";
+"privacy.protection.practices.footer.info" = "Adatvédelmi gyakorlatok forrása: ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Az adatvédelmi gyakorlatok jelzik, hogy a weboldalakkal megosztott személyes adataid védelme mennyire garantált.";
@@ -749,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Nem";
+"prompt.custom.url.scheme.dontopen" = "Mégsem";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Igen";
+"prompt.custom.url.scheme.open" = "Megnyitás";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Szeretnél kilépni a DuckDuckGo programból a tartalom megtekintéséhez?";
@@ -761,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Megnyitás másik alkalmazásban?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Egy megsérült webhelyről szóló névtelen bejelentés segít a hibakeresésben és a bővítmény fejlesztésében.";
+"report.brokensite.header" = "Egy hibás webhelyről szóló névtelen bejelentés segít a hibakeresésben és az alkalmazás fejlesztésében.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Keresés vagy cím megadása";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "%@ eltávolítva a védelem nélküli weboldalak közül";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Ismeretlen hiba történt";
+"unknown.error.occurred" = "Ismeretlen hiba történt.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Könyvjelző mentve";
+"web.url.save.bookmark.done" = "Könyvjelző hozzáadva";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "A könyvjelző már el van mentve";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Nincs könyvjelzőzhető weboldal";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Kedvenc mentve";
+"web.url.save.favorite.done" = "Kedvenc hozzáadva";
 

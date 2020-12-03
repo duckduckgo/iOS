@@ -5,7 +5,7 @@
 "2aH-nO-H3f.accessibilityLabel" = "Добавяне на всички раздели като отметки";
 
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
-"2en-CB-bYH.accessibilityLabel" = "Затваряне подпрозорец";
+"2en-CB-bYH.accessibilityLabel" = "Затваряне на раздел";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
 "2GU-MM-UwX.text" = "Заглавие";
@@ -14,13 +14,13 @@
 "5nO-MZ-vSY.accessibilityLabel" = "Затваряне на всички раздели и изчистване на данните";
 
 /* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
-"Cy7-Lb-veV.text" = "Подпрозорци";
+"Cy7-Lb-veV.text" = "Раздели";
 
 /* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
 "cYd-YU-sSj.accessibilityLabel" = "Добавяне на нов раздел";
 
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
-"G2C-qh-g3T.accessibilityLabel" = "Затваряне подпрозорец";
+"G2C-qh-g3T.accessibilityLabel" = "Затваряне на раздел";
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
 "Gyy-py-IOg.accessibilityLabel" = "Непрочетен раздел";
@@ -32,16 +32,16 @@
 "Hcx-F2-HgO.accessibilityLabel" = "Изчистване на раздели и данни";
 
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
-"kW3-ZC-Axl.normalTitle" = "Done";
+"kW3-ZC-Axl.normalTitle" = "Готово";
 
 /* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
 "L7l-vl-rDZ.accessibilityLabel" = "Превключване между изглед в мрежа и списък";
 
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
-"LbT-NO-T0G.text" = "Link";
+"LbT-NO-T0G.text" = "Линк";
 
 /* Class = "UIBarButtonItem"; title = "New Tab"; ObjectID = "nYf-xs-PE7"; */
-"nYf-xs-PE7.title" = "Нов подпрозорец";
+"nYf-xs-PE7.title" = "Нов раздел";
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
 "qrJ-aX-XrW.accessibilityLabel" = "Непрочетен раздел";

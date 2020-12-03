@@ -1,12 +1,12 @@
 /* Class = "UIButton"; accessibilityLabel = "close"; ObjectID = "202-p3-edP"; */
 "202-p3-edP.accessibilityLabel" = "Zatvoriť";
 
-/* Class = "UIButton"; normalTitle = "Got it!"; ObjectID = "DBH-J5-aEO"; Note = "In a sense of \"I understand\""; */
-"DBH-J5-aEO.normalTitle" = "Rozumiem!";
+/* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "DBH-J5-aEO"; Note = "In a sense of \"I understand\""; */
+"DBH-J5-aEO.normalTitle" = "Mám to";
 
 /* Class = "UILabel"; text = "Add DuckDuckGo to your dock for quick and easy access."; ObjectID = "f6f-QY-3H3"; */
-"f6f-QY-3H3.text" = "Na rýchly a jednoduchý prístup si pridajte CuckDuckGo do vášho docku.";
+"f6f-QY-3H3.text" = "Na rýchly a jednoduchý prístup si pridajte CuckDuckGo do vášho doku.";
 
-/* Class = "UILabel"; text = "Take DuckDuckGo Home"; ObjectID = "Tah-vQ-mf9"; */
-"Tah-vQ-mf9.text" = "Presmerujte DuckDuckGo na domovskú obrazovku";
+/* Class = "UILabel"; text = "Add DuckDuckGo to Home"; ObjectID = "Tah-vQ-mf9"; */
+"Tah-vQ-mf9.text" = "Pridať DuckDuckGo na domovskú obrazovku";
 

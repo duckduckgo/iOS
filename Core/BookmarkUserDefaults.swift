@@ -20,6 +20,10 @@
 import Foundation
 
 public class BookmarkUserDefaults: BookmarkStore {
+    
+    public struct Notifications {
+        public static let bookmarkStoreDidChange = Notification.Name("com.duckduckgo.bookmarks.storeDidChange")
+    }
 
     public struct Constants {
         public static let groupName = "\(Global.groupIdPrefix).bookmarks"
@@ -46,6 +50,7 @@ public class BookmarkUserDefaults: BookmarkStore {
         set(newBookmarks) {
             let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
             userDefaults.set(data, forKey: Keys.bookmarkKey)
+            NotificationCenter.default.post(name: Notifications.bookmarkStoreDidChange, object: self)
         }
     }
 
@@ -59,6 +64,7 @@ public class BookmarkUserDefaults: BookmarkStore {
         set(newFavorites) {
             let data = NSKeyedArchiver.archivedData(withRootObject: newFavorites)
             userDefaults.set(data, forKey: Keys.favoritesKey)
+            NotificationCenter.default.post(name: Notifications.bookmarkStoreDidChange, object: self)
         }
     }
 

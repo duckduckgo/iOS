@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Lisää suosikkeihin";
 
 /* Settings action */
-"action.title.settings" = "Asetukset...";
+"action.title.settings" = "Asetukset";
 
 /* Share action */
 "action.title.share" = "Jaa…";
@@ -89,9 +89,9 @@
 "alert.title.save.favorite" = "Tallenna suosikki";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Avaa DuckDuckGo";
+"app.authentication.unlock" = "Avaa DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
+/* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Kirjaudu sisään";
 
 /* Authentication Alert - populated with a domain name */
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Verkkosivuston nimi";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Kaikkia välilehtiä ei voitu lisätä kirjanmerkkeihin";
+"bookmarkAll.tabs.failed" = "Kaikki välilehdet lisättiin kirjanmerkkeihin";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Kaikki välilehdet lisätty kirjanmerkkeihin";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Videota ei toistettu";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Kuvaile mitä tapahtui";
+"brokensite.sectionTitle" = "KUVAILE MITÄ TAPAHTUI";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Piilota vinkit ikuisesti";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Ylävitonen!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* yritti seurata sinua.\n\nEstin sen!\n\n☝️ Tarkista URL-palkista, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* yritti seurata sinua.\n\nEstin sen!\n\n☝️ Tarkista osoiteriviltä, kuka yrittää seurata sinua, kun vierailet uudella sivustolla.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Ylävitonen!";
@@ -194,13 +194,13 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Selvä";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Huomio! Koska %2$@ omistaa palvelun %1$@, en voi estää heitä näkemästä, mitä teet täällä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %2$@ saa tietää sinusta estämällä heidän seurantansa monilla muilla sivustoilla.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Huomio! Koska %2$@ omistaa palvelun %1$@, en voi estää heitä näkemästä, mitä teet täällä.\n\nMutta jos käytät minua selaamiseen, voin vähentää, mitä %2$@ saa tietää sinusta, estämällä heidän seurantansa monilla muilla sivustoilla.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Selvä";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers" = "Kun napautat ja selaat, estän ikävät seurantaohjelmat.\nEli jatka vain selaamista!";
+"dax.onboarding.browsing.without.trackers" = "Kun napautat ja selaat, estän ikävät seurantaohjelmat.\n\nEli jatka vain selaamista!";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Selvä";
@@ -218,7 +218,7 @@
 "dax.onboarding.home.subsequent" = "Hyvin menee!\n\nMuista, että joka kerta kun käytät minua selaamiseen, rasittavat mainokset katoavat. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Internet voi olla pelottava paikka.<br/><br/>Mutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
+"dax.onboarding.message" = "Internet voi olla pelottava paikka.\n\nMutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Pois käytöstä";
@@ -239,10 +239,13 @@
 "donotsell.info.headertext" = "Tietojesi ei pitäisi olla myynnissä. DuckDuckGo on samaa mieltä. Ota \"Global Privacy Control\" (GPC) -asetus käyttöön, niin me kerromme verkkosivustoille, että:\n\n• ne eivät voi myydä tietojasi.\n• niiden täytyy rajoittaa henkilötietojesi jakamista muille yrityksille.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Ei vielä kirjanmerkkejä";
+"empty.bookmarks" = "Kirjanmerkkejä ei ole vielä lisätty";
 
 /* Empty list state placholder */
-"empty.favorites" = "Ei vielä suosikkeja";
+"empty.favorites" = "Suosikkeja ei ole vielä lisätty";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Ei hakutuloksia";
 
 /* No comment provided by engineer. */
 "favorite" = "Suosikki";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Kerro meille, mitä voimme parantaa";
 
 /* Confirmation button */
-"feedback.form.submit" = "LÄHETÄ PALAUTE";
+"feedback.form.submit" = "Lähetä";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Kerro mahdollisimman tarkasti";
@@ -353,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Haluaisitko kertoa tarkempia tietoja?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Ikävä kuulla.";
+"feedback.negative.header" = "Ikävä kuulla";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "Mikä turhauttaa sinua eniten?";
@@ -457,8 +460,8 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Vie DuckDuckGo koti-valikkoon";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Haku ja suosikit uudessa välilehdessä";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Hae tai anna osoite";
 
 /* Home tab title */
 "homeTab.title" = "Koti";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Näytä kaikki välilehdet";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Tervetuloa DuckDuckGo-sovellukseen!";
+"launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
 
 /* Edit button */
 "navigation.title.edit" = "Muokkaa";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Lisää widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGon käyttö on nyt helpompaa.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Ehkä myöhemmin";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Jatka";
@@ -554,10 +566,10 @@
 "onboardingWelcomeHeader" = "Tervetuloa DuckDuckGo-sovellukseen!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Pahoittelut, mikään sovellus ei voi avata linkkiä.";
+"open.externally.failed" = "Linkin avaamiseen tarvittavaa sovellusta ei löydy";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Verkkosivustot käyttävät evästeitä, joilla pysyt kirjautuneena sisään. Kun teet sivustosta palonkestävän, evästeitä ei poisteta ja pysyt kirjautuneena sisään, vaikka käytät Liekki-painiketta.";
+"preserveLogins.domain.list.footer" = "Verkkosivustot käyttävät evästeitä, joilla pysyt kirjautuneena sisään. Kun teet sivustosta palonkestävän, evästeitä ei poisteta ja pysyt kirjautuneena sisään, vaikka käytät Liekki-painiketta. Estämme edelleen kolmannen osapuolen seurannan palonkestävillä sivustoilla.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Verkkosivustot";
@@ -577,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Kysy tehdäänkö sivustoista palonkestäviä";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ on nyt palonkestävä! Poista asetuksista.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ on nyt palonkestävä! Hallitse tätä asetuksissa.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";
@@ -632,7 +644,7 @@
 "privacy.protection.encryption.mixed.message" = "Tällä sivustolla on yhdistetty salaus, sillä osa sisällöstä tarjotaan salaamattomalla yhteydellä.";
 
 /* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "ei";
+"privacy.protection.encryption.no" = "Ei";
 
 /* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
 "privacy.protection.encryption.permanent" = "Pysyvä";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Yhteenveto";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Tätä yhteyttä ei ole salattu, joten varo, mitä lähetät.";
+"privacy.protection.encryption.unencrypted" = "Ole varovainen antaessasi henkilökohtaisia tietoja tällä sivustolla.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Salaamaton yhteys";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "PARANNETTU ARVOSTA $1 ARVOON $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Tietosuoja-arvosana";
+"privacy.protection.main.grade" = "TIETOSUOJA-ARVOSANA";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Keräämme edelleen tietoja näyttääksemme,\nkuinka monta seurantapalvelinta olemme estäneet.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "ToS;DR:n tietosuojakäytäntöjen käyttäminen";
+"privacy.protection.practices.footer.info" = "ToS;DR:n tietosuojakäytäntö.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Tietosuojakäytännöt kertovat, missä määrin verkkosivuston kanssa jakamiasi henkilötietoja suojataan.";
@@ -749,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "ei";
+"prompt.custom.url.scheme.dontopen" = "Peruuta";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Kyllä";
+"prompt.custom.url.scheme.open" = "Avaa";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Haluatko poistua DuckDuckGosta nähdäksesi tämän sisällön?";
@@ -761,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Avataanko toisessa sovelluksessa?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Anonyymin raportin lähettäminen toimimattomasta sivustosta auttaa meitä korjaamaan nämä ongelmat ja parantamaan laajennusta.";
+"report.brokensite.header" = "Anonyymin raportin lähettäminen toimimattomasta sivustosta auttaa meitä korjaamaan nämä ongelmat ja parantamaan sovellusta.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Hae tai anna osoite";
@@ -779,13 +791,13 @@
 "settings.tutorial.info" = "Muut hakukoneet seuraavat hakujasi, vaikka käyttäisit yksityistä selausta. Me emme seuraa sinua – piste.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Siirry *Safariin* ja sitten *hakukoneeseen*";
+"settings.tutorial.navigate" = "Siirry *Safariin* ja sitten *hakukoneeseen*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Avaa *Asetukset*-sovellus";
+"settings.tutorial.open" = "Avaa *Asetukset*-sovellus.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Valitse *DuckDuckGo*";
+"settings.tutorial.select" = "Valitse *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "%@ poistettu suojaamattomista sivustoista";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Tapahtui tuntematon virhe";
+"unknown.error.occurred" = "Tapahtui tuntematon virhe.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Kirjanmerkki tallennettu";
+"web.url.save.bookmark.done" = "Kirjanmerkki lisätty";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Kirjanmerkki on jo tallennettu";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Ei verkkosivua, joka voitaisiin lisätä kirjanmerkkeihin";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Suosikki tallennettu";
+"web.url.save.favorite.done" = "Suosikki lisätty";
 

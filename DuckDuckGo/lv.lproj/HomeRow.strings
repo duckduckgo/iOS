@@ -1,12 +1,12 @@
 /* Class = "UIButton"; accessibilityLabel = "close"; ObjectID = "202-p3-edP"; */
 "202-p3-edP.accessibilityLabel" = "Aizvērt";
 
-/* Class = "UIButton"; normalTitle = "Got it!"; ObjectID = "DBH-J5-aEO"; Note = "In a sense of \"I understand\""; */
-"DBH-J5-aEO.normalTitle" = "Sapratu!";
+/* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "DBH-J5-aEO"; Note = "In a sense of \"I understand\""; */
+"DBH-J5-aEO.normalTitle" = "Sapratu";
 
 /* Class = "UILabel"; text = "Add DuckDuckGo to your dock for quick and easy access."; ObjectID = "f6f-QY-3H3"; */
-"f6f-QY-3H3.text" = "Pievieno DuckDuckGo savam dokam ātrai un ērtai piekļuvei.";
+"f6f-QY-3H3.text" = "Pievieno DuckDuckGo savam sākuma ekrānam ātrai un ērtai piekļuvei.";
 
-/* Class = "UILabel"; text = "Take DuckDuckGo Home"; ObjectID = "Tah-vQ-mf9"; */
-"Tah-vQ-mf9.text" = "Pievieno DuckDuckGo sākuma ekrānam";
+/* Class = "UILabel"; text = "Add DuckDuckGo to Home"; ObjectID = "Tah-vQ-mf9"; */
+"Tah-vQ-mf9.text" = "DuckDuckGo pievienošana sākuma ekrānam";
 

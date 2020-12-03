@@ -4,9 +4,30 @@
 <dict>
 
 	<key>teamID</key>
-        <string>HKE973VLUW</string>
-        <key>method</key>
-        <string>ad-hoc</string>
+    <string>HKE973VLUW</string>
+    <key>method</key>
+    <string>ad-hoc</string>
+
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.duckduckgo.mobile.ios</key>
+        <string>iOS 14 - Ad Hoc - App</string>
+
+        <key>com.duckduckgo.mobile.ios.ShareExtension</key>
+        <string>iOS 14 - Ad Hoc - Share</string>
+
+        <key>com.duckduckgo.mobile.ios.BookmarksTodayExtension</key>
+        <string>iOS 14 - Ad Hoc - Bookmarks</string>
+
+        <key>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</key>
+        <string>iOS 14 - Ad Hoc - Quick Actions</string>
+
+        <key>com.duckduckgo.mobile.ios.OpenAction2</key>
+        <string>iOS 14 - Ad Hoc - Open Action</string>
+
+        <key>com.duckduckgo.mobile.ios.Widgets</key>
+        <string>iOS 14 - Ad Hoc - Widgets</string>
+    </dict>
 
 </dict>
 </plist>

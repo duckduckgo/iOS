@@ -198,7 +198,7 @@
 			<key>UIApplicationShortcutItemIconFile</key>
 			<string>Clipboard</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Paste from clipboard</string>
+			<string>Paste from Clipboard</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>com.duckduckgo.mobile.ios.clipboard</string>
 		</dict>

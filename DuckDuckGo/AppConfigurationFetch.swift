@@ -47,6 +47,7 @@ class AppConfigurationFetch {
         static let bgFetchTypeBackgroundTasks = "bgbt"
         static let bgFetchTypeLegacy = "bgl"
         static let bgFetchTaskExpiration = "bgte"
+        static let bgFetchTaskDuration = "bgtd"
         static let bgFetchStart = "bgfs"
         static let bgFetchNoData = "bgnd"
         static let bgFetchWithData = "bgwd"
@@ -65,10 +66,13 @@ class AppConfigurationFetch {
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
-    private var lastConfigurationRefreshDate: Date
+    static private var lastConfigurationRefreshDate: Date
 
     @UserDefaultsWrapper(key: .backgroundFetchTaskExpirationCount, defaultValue: 0)
     static private var backgroundFetchTaskExpirationCount: Int
+
+    @UserDefaultsWrapper(key: .backgroundFetchTaskDuration, defaultValue: 0)
+    static private var backgroundFetchTaskDuration: Int
     
     @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterSpecCount, defaultValue: 0)
     private var downloadedHTTPSBloomFilterSpecCount: Int
@@ -88,13 +92,13 @@ class AppConfigurationFetch {
     @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
     private var downloadedTemporaryUnprotectedSitesCount: Int
 
-    var shouldRefresh: Bool {
-        return Date().timeIntervalSince(lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
+    static private var shouldRefresh: Bool {
+        return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
     
     func start(isBackgroundFetch: Bool = false,
                completion: AppConfigurationCompletion?) {
-        guard shouldRefresh else {
+        guard Self.shouldRefresh else {
             // Statistics are not sent after a successful background refresh in order to reduce the time spent in the background, so they are checked
             // here in case a background refresh has happened recently.
             Self.fetchQueue.async {
@@ -128,17 +132,34 @@ class AppConfigurationFetch {
     static func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier,
-            using: fetchQueue) { (task) in
+            using: nil) { (task) in
+
+            guard shouldRefresh else {
+                task.setTaskCompleted(success: true)
+                scheduleBackgroundRefreshTask()
+                return
+            }
+
+            let refreshStartDate = Date()
+
+            let taskCompletion = { (success: Bool) in
+                task.setTaskCompleted(success: success)
+                scheduleBackgroundRefreshTask()
+
+                let refreshEndDate = Date()
+                let difference = refreshEndDate.timeIntervalSince(refreshStartDate)
+                backgroundFetchTaskDuration += Int(difference)
+            }
 
             task.expirationHandler = {
                 backgroundFetchTaskExpirationCount += 1
-                scheduleBackgroundRefreshTask()
+                taskCompletion(false)
             }
 
-            AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
-            scheduleBackgroundRefreshTask()
-
-            task.setTaskCompleted(success: true)
+            fetchQueue.async {
+                AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
+                taskCompletion(true)
+            }
         }
     }
 
@@ -221,7 +242,7 @@ class AppConfigurationFetch {
             }
         }
 
-        lastConfigurationRefreshDate = Date()
+        Self.lastConfigurationRefreshDate = Date()
     }
     
     private func sendStatistics(completion: () -> Void ) {
@@ -247,6 +268,7 @@ class AppConfigurationFetch {
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
                           Keys.bgFetchType: backgroundFetchType,
                           Keys.bgFetchTaskExpiration: String(Self.backgroundFetchTaskExpirationCount),
+                          Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration),
                           Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
                           Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
                           Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
@@ -281,6 +303,8 @@ class AppConfigurationFetch {
         store.foregroundNewDataCount = 0
 
         Self.backgroundFetchTaskExpirationCount = 0
+        Self.backgroundFetchTaskDuration = 0
+
         downloadedHTTPSBloomFilterCount = 0
         downloadedHTTPSBloomFilterSpecCount = 0
         downloadedHTTPSExcludedDomainsCount = 0

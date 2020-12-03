@@ -28,16 +28,12 @@ import BackgroundTasks
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
+    
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
-    
-    static var shared: AppDelegate {
-        // swiftlint:disable force_cast
-        return UIApplication.shared.delegate as! AppDelegate
-        // swiftlint:enable force_cast
-    }
-    
+
     private var testing = false
     var appIsLaunching = false
     var overlayWindow: UIWindow?
@@ -47,18 +43,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
+    private var lastBackgroundDate: Date?
 
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        _ = UserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-
-        _ = UserAgentManager.shared
 
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
@@ -168,9 +164,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
+    
+    private func shouldShowKeyboardOnLaunch() -> Bool {
+        guard let date = lastBackgroundDate else { return true }
+        return Date().timeIntervalSince(date) > AppDelegate.ShowKeyboardOnLaunchThreshold
+    }
 
     private func showKeyboardOnLaunch() {
-        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
+        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
         self.mainViewController?.enterSearch()
         showKeyboardIfSettingOn = false
     }
@@ -194,6 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayBlankSnapshotWindow()
         autoClear?.applicationDidEnterBackground()
+        lastBackgroundDate = Date()
     }
 
     func application(_ application: UIApplication,

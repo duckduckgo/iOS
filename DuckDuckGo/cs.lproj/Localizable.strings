@@ -32,7 +32,7 @@
 "action.title.newTabForUrl" = "Otevřít v nové kartě";
 
 /* Open action */
-"action.title.open" = "Åben";
+"action.title.open" = "Otevřít";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Vložit a jít";
@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Přidat do oblíbených";
 
 /* Settings action */
-"action.title.settings" = "Nastavení...";
+"action.title.settings" = "Nastavení";
 
 /* Share action */
 "action.title.share" = "Sdílet...";
@@ -89,13 +89,13 @@
 "alert.title.save.favorite" = "Uložit oblíbené";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Odemknout DuckDuckGo";
+"app.authentication.unlock" = "Odemkněte DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
-"auth.alert.login.button" = "Přihlásit se";
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Přihlásit";
 
 /* Authentication Alert - populated with a domain name */
-"auth.alert.message.encrypted" = "Přihlaste se do %@. Vaše přihlašovací údaje vám budou bezpečně zaslány.";
+"auth.alert.message.encrypted" = "Přihlaste se k%@. Vaše přihlašovací údaje vám budou bezpečně zaslány.";
 
 /* Authentication Alert - populated with a domain name */
 "auth.alert.message.plain" = "Přihlaste se do %@. Vaše heslo bude odesláno nezabezpečeným způsobem, protože připojení není šifrované.";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Název webové stránky";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Některé karty nelze dát do záložek";
+"bookmarkAll.tabs.failed" = "Přidány nové záložky pro všechny karty";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Všechny karty v záložkách";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video se nepřehrálo";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Popište, co se stalo";
+"brokensite.sectionTitle" = "POPIŠTE, CO SE STALO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Navždy skrýt tipy";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Plácnutí!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* se vás snažili tady vysledovat.\n\nZablokovali jsme je!\n\n☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte novou webovou stránku. ️";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* se vás snažili tady vysledovat.\n\nZablokovali jsme je!\n\n☝️ Můžete zkontrolovat panel s adresou a zjistit, kdo se vás snaží sledovat, když navštívíte novou webovou stránku. ️";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Plácnutí!";
@@ -194,7 +194,7 @@
 "dax.onboarding.browsing.site.is.major.tracker.cta" = "Mám to";
 
 /* Parameters are domain names (strings) */
-"dax.onboarding.browsing.site.owned.by.major.tracker" = "Upozornění! Vzhledem k tomu, že %2$@ vlastní %1$@, nemůžeme jim zabránit, aby viděli vaši aktivitu tady.Ale procházejte s námi a budeme moci omezit, co o vás celkově %2$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "Upozornění! Vzhledem k tomu, že %2$@ vlastní %1$@, nemůžeme jim zabránit, aby tady viděli vaši aktivitu.\n\nAle projděte se se mnou a společně omezíme, co o vás celkově %2$@ ví zablokováním jejich trackerů na mnoha jiných stránkách.";
 
 /* Got It */
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Mám to";
@@ -215,7 +215,7 @@
 "dax.onboarding.home.initial" = "Dále zkuste navštívit jednu z vašich oblíbených stránek!\n\nZablokujeme trackery, aby vás nemohli špehovat. Pokud to bude možné, upgradujeme také zabezpečení vašeho připojení. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Máte to!\n\nPamatujte: pokaždé, když internet procházíte s námi, příšerným reklamám přistřihneme křídla. 👍";
+"dax.onboarding.home.subsequent" = "Máte to!\n\nPamatujte: Pokaždé, když internet procházíte s námi, příšerným reklamám přistřihneme křídla. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet může být trochu strašidelný.\n\nNebojte se! Anonymní vyhledávání a procházení je jednodušší, než si myslíte.";
@@ -236,13 +236,16 @@
 "donotsell.enabled" = "Povoleno";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Vaše osobní údaje nesmí být na prodej. S tím ve společnosti DuckDuckGo souhlasíme. Aktivujte nastavení „Globální kontrola ochrany osobních údajů“ (GPC) a my upozorníme webové stránky na vaše preference:\n\n• Neprodávat vaše osobní údaje.\n• Omezit sdílení vašich osobních údajů s jinými společnosti.";
+"donotsell.info.headertext" = "Vaše data by neměla být na prodej. Na tom se ve společnosti DuckDuckGo shodneme. Aktivujte nastavení „Globální kontrola ochrany osobních údajů“ (GPC) a my upozorníme webové stránky na vaše preference:\n\n• Neprodávat vaše osobní údaje.\n• Omezit sdílení vašich osobních údajů s jinými společnosti.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Zatím žádné záložky";
+"empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
 
 /* Empty list state placholder */
-"empty.favorites" = "Zatím žádné oblíbené";
+"empty.favorites" = "Zatím nebyly přidány žádné oblíbené položky";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Nenalezeny žádné shody";
 
 /* No comment provided by engineer. */
 "favorite" = "Oblíbené";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Řekněte nám prosím, co můžeme zlepšit";
 
 /* Confirmation button */
-"feedback.form.submit" = "ODESLAT ZPĚTNOU VAZBU";
+"feedback.form.submit" = "Odeslat";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Buďte co nejkonkrétnější.";
@@ -353,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Máte něco konkrétního, co byste chtěli zahrnout?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Je nám líto, že nejste spokojení.";
+"feedback.negative.header" = "Je nám líto, že nejste spokojení";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "S čím souvisí vaše frustrace nejvíce?";
@@ -457,8 +460,8 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Přidejte DuckDuckGo na domovskou stránku";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Vyhledávání a oblíbené položky v nové kartě";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Vyhledejte nebo zadejte adresu";
 
 /* Home tab title */
 "homeTab.title" = "Domů";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Zobrazit všechny karty";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Vítejte v DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Upravit";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Přidat widget";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Používání DuckDuckGo je nyní snadnější.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Možná později";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Pokračovat";
@@ -554,10 +566,10 @@
 "onboardingWelcomeHeader" = "Vítejte v DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Je nám líto, ale žádná aplikace si s tímto odkazem neporadí.";
+"open.externally.failed" = "Aplikaci nutnou k otevření tohoto odkazu nelze nalézt";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Webové stránky spoléhají na soubory cookie, aby vás udržely přihlášené. Když na webu zapnete ochranu, soubory cookie se nevymažou a zůstanete přihlášeni, a to i po použití tlačítka pro mazání.";
+"preserveLogins.domain.list.footer" = "Webové stránky spoléhají na soubory cookie, aby vás udržely přihlášené. Když na webu zapnete ochranu, soubory cookie se nevymažou a zůstanete přihlášeni, a to i po použití tlačítka pro mazání. Stále přitom blokujeme sledovací programy třetích stran nalezené na webových stránkách s ochranou.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Webové stránky";
@@ -575,13 +587,13 @@
 "preserveLogins.remove.all" = "Odstranit vše";
 
 /* Confirmation button in alert */
-"preserveLogins.remove.all.ok" = "Dobře";
+"preserveLogins.remove.all.ok" = "DOBŘE";
 
-/* Ask to Fireproof Websites */
-"preserveLogins.switch.title" = "Požádat o ochranu webových stránek";
+/* Ask to Fireproof Sites */
+"preserveLogins.switch.title" = "Požádat o ochranu stránek";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ je nyní chráněný! Pro odstranění navštivte nastavení.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ je nyní chráněný! Pro správu navštivte Nastavení.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Shrnutí";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Toto připojení není šifrované, proto dávejte pozor na to, co odešlete.";
+"privacy.protection.encryption.unencrypted" = "Buďte opatrní při zadávání osobních údajů na tomto webu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Nešifrované připojení";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "VYLEPŠENO Z $1 NA $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Hodnocení ochrany soukromí";
+"privacy.protection.main.grade" = "HODNOCENÍ OCHRANY SOUKROMÍ";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Stále shromažďujeme data, abychom zjistili,\nkolik trackerů jsme zablokovali.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Používání informací o postupech na ochranu osobních údajů od společností ToS;DR";
+"privacy.protection.practices.footer.info" = "Zásady ochrany osobních údajů od ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Postupy ochrany soukromí ukazují, do jaké míry jsou osobní údaje, které sdílíte s webovými stránkami, chráněny.";
@@ -749,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Ne";
+"prompt.custom.url.scheme.dontopen" = "Zrušit";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Ano";
+"prompt.custom.url.scheme.open" = "Otevřít";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Chtěl/a byste opustit DuckDuckGo a zobrazit si tento obsah?";
@@ -761,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Otevřít v jiné aplikaci?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Odeslání anonymní zprávy o nefunkční stránce nám pomůže tyto problémy odstranit a vylepšit rozšíření.";
+"report.brokensite.header" = "Odeslání anonymní zprávy o nefunkčním webu nám pomůže tyto problémy řešit a vylepšovat aplikaci.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Vyhledejte nebo zadejte adresu";
@@ -779,13 +791,13 @@
 "settings.tutorial.info" = "Ostatní vyhledávače sledují vaše vyhledávání, i když jste v režimu anonymního procházení. My vás nesledujeme. Tečka.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Přejděte na *Safari*, potom *Vyhledávač*";
+"settings.tutorial.navigate" = "Přejděte na *Safari*, potom *Vyhledávač*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Otevřřete aplikaci *Nastavení*";
+"settings.tutorial.open" = "Otevřete aplikaci *Nastavení*.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Vyberte *DuckDuckGo*";
+"settings.tutorial.select" = "Vyberte *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odešlete zprávu";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "%@ odstraněno z nechráněných stránek";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Vyskytla se neznámá chyba";
+"unknown.error.occurred" = "Vyskytla se neznámá chyba.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Záložky uloženy";
+"web.url.save.bookmark.done" = "Záložka přidána";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Záložky již uloženy";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Žádná webová stránka pro vytvoření záložky";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Oblíbené uloženy";
+"web.url.save.favorite.done" = "Oblíbené položky uloženy";
 

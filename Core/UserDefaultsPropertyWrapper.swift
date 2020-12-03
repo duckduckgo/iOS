@@ -60,6 +60,7 @@ public struct UserDefaultsWrapper<T> {
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
 
         case backgroundFetchTaskExpirationCount = "com.duckduckgo.app.bgFetchTaskExpirationCount"
+        case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
         case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
         case downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"
         case downloadedHTTPSExcludedDomainsCount = "com.duckduckgo.app.downloadedHTTPSExcludedDomainsCount"

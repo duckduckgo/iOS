@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -281,7 +281,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Fireproof Websites" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DQ-yq-UuT">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Fireproof Sites" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DQ-yq-UuT">
                                                     <rect key="frame" x="20" y="10" width="287.33333333333331" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lhy-SS-UWF"/>
@@ -469,7 +469,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" text="Open Links in their Associated Apps" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1T-ui-4Nw">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" text="Open Links in Associated Apps" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1T-ui-4Nw">
                                                     <rect key="frame" x="20" y="10" width="305" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="xj0-Sm-ver"/>
@@ -538,7 +538,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add DuckDuckGo to your dock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yvj-LL-MiR">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yvj-LL-MiR">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -562,7 +562,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Send Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -590,8 +590,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="20" y="0.0" width="354.66666666666669" height="44"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
+                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -697,7 +697,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="0TO-1x-wGv" userLabel="Send Feedback Tap"/>
+                <tapGestureRecognizer id="0TO-1x-wGv" userLabel="Share Feedback Tap"/>
             </objects>
             <point key="canvasLocation" x="1820.289855072464" y="94.419642857142847"/>
         </scene>
@@ -881,10 +881,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
             </objects>
             <point key="canvasLocation" x="1206" y="930"/>
         </scene>
-        <!--Auto Clear Data-->
+        <!--Automatically Clear Data-->
         <scene sceneID="y9R-2c-mBz">
             <objects>
-                <tableViewController storyboardIdentifier="AutoClearSettingsViewController" title="Auto Clear Data" id="fdJ-b1-Des" userLabel="Auto Clear Data" customClass="AutoClearSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AutoClearSettingsViewController" title="Automatically Clear Data" id="fdJ-b1-Des" userLabel="Automatically Clear Data" customClass="AutoClearSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="TDo-S0-c8g">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -960,7 +960,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Clear Tabs only" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3WZ-Fi-HIH">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Clear Tabs Only" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3WZ-Fi-HIH">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -982,7 +982,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App exit only" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fal-1Y-o2S">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit Only" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fal-1Y-o2S">
                                                     <rect key="frame" x="20" y="0.0" width="342" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1000,7 +1000,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App exit, inactive for 5min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ElX-yE-4PX">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 5 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ElX-yE-4PX">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1018,7 +1018,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App exit, inactive for 15min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D0R-jp-UY8">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 15 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D0R-jp-UY8">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1036,7 +1036,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App exit, inactive for 30min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Yd-7i-bey">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 30 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Yd-7i-bey">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1054,7 +1054,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App exit, inactive for 60min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9EC-lx-77p">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 1 Hour" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9EC-lx-77p">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1171,7 +1171,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These unprotected sites will not be enhanced by Privacy Protection." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These sites will not be enhanced by Privacy Protection." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
                                     <rect key="frame" x="60" y="20" width="294" height="32"/>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                     <color key="textColor" red="0.7434888482093811" green="0.76165848970413208" blue="0.79455751180648804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1239,7 +1239,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Unprotected Sites Yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection enabled for all sites" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
                                             <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1351,7 +1351,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
             </objects>
             <point key="canvasLocation" x="4942" y="930"/>
         </scene>
-        <!--Fireproof Websites-->
+        <!--Fireproof Sites-->
         <scene sceneID="Kfp-VW-T6P">
             <objects>
                 <tableViewController id="Jzw-Jd-J97" customClass="PreserveLoginsSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -1448,7 +1448,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="None" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OfP-Kw-IOk">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="No Fireproof websites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OfP-Kw-IOk">
                                             <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1467,7 +1467,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Remove All Fireproof Websites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UZx-52-aer">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Remove All Fireproof Sites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UZx-52-aer">
                                             <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -1485,7 +1485,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <outlet property="delegate" destination="Jzw-Jd-J97" id="7MY-Jt-0Of"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Fireproof Websites" id="xUX-nF-HOl">
+                    <navigationItem key="navigationItem" title="Fireproof Sites" id="xUX-nF-HOl">
                         <rightBarButtonItems>
                             <barButtonItem style="done" systemItem="done" id="6j1-I1-H7J">
                                 <connections>

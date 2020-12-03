@@ -42,7 +42,7 @@ extension UserText {
                                                                  comment: "Report a Broken Site screen confirmation button")
     
     public static let feedbackStartHeader = NSLocalizedString("feedback.start.header",
-                                                              value: "Let’s get started!",
+                                                              value: "Let’s Get Started!",
                                                               comment: "")
     public static let feedbackStartSupplementary = NSLocalizedString("feedback.start.supplementary",
                                                                      value: "How would you categorize your feedback?",
@@ -52,17 +52,17 @@ extension UserText {
                                                               comment: "")
     
     public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
-                                                                 value: "Awesome to hear!",
+                                                                 value: "Awesome to Hear!",
                                                                  comment: "")
     public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
                                                                 value: "Share Details",
                                                                 comment: "Button encouraging uses to share details aboout their feedback")
     public static let feedbackPositiveNoThanks = NSLocalizedString("feedback.positive.noThanks",
-                                                                   value: "No thanks! I’m done",
+                                                                   value: "No Thanks! I’m Done",
                                                                    comment: "")
     
     public static let feedbackFormSubmit = NSLocalizedString("feedback.form.submit",
-                                                             value: "Submit Feedback",
+                                                             value: "Submit",
                                                              comment: "Confirmation button")
     
     public static let feedbackPositiveFormHeader = NSLocalizedString("feedback.positive.form.header",
@@ -76,7 +76,7 @@ extension UserText {
                                                                           comment: "")
     
     public static let feedbackNegativeHeader = NSLocalizedString("feedback.negative.header",
-                                                                 value: "We’re sorry to hear that.",
+                                                                 value: "We’re Sorry to Hear That",
                                                                  comment: "")
     public static let feedbackNegativeSupplementary = NSLocalizedString("feedback.negative.supplementary",
                                                                         value: "What is your frustration most related to?",

@@ -35,13 +35,13 @@
 "action.title.open" = "Atvērt";
 
 /* Paste and Go action */
-"action.title.pasteAndGo" = "Ielīmēt un palaist";
+"action.title.pasteAndGo" = "Ielīmēt un turpināt";
 
 /* Reading List action */
 "action.title.readingList" = "Pievienot literatūras sarakstam";
 
 /* Refresh action - button shown in alert */
-"action.title.refresh" = "Atjaunot";
+"action.title.refresh" = "Atsvaidzināt";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Ziņot par bojātu vietni";
@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Pievienot izlasei";
 
 /* Settings action */
-"action.title.settings" = "Iestatījumi...";
+"action.title.settings" = "Iestatījumi";
 
 /* Share action */
 "action.title.share" = "Kopīgot...";
@@ -89,16 +89,16 @@
 "alert.title.save.favorite" = "Saglabāt izlasi";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Atbloķēt DuckDuckGo";
+"app.authentication.unlock" = "Atbloķēt DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
-"auth.alert.login.button" = "Pieteikties";
-
-/* Authentication Alert - populated with a domain name */
-"auth.alert.message.encrypted" = "Pieteikties %@. Jūsu pieteikšanās informācija tiks nosūtīta drošā veidā.";
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Pierakstīties";
 
 /* Authentication Alert - populated with a domain name */
-"auth.alert.message.plain" = "Pieteikties %@. Jūsu parole tiks nosūtīta nedrošā veidā, jo savienojums nav šifrēts.";
+"auth.alert.message.encrypted" = "Pieraksties %@. Tava pieteikšanās informācija tiks nosūtīta drošā veidā.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Pieteikties %@. Tava parole tiks nosūtīta nedrošā veidā, jo savienojums nav šifrēts.";
 
 /* Authentication Password field placeholder */
 "auth.alert.password.placeholder" = "Parole";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Vietnes nosaukums";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Dažām cilnēm nevar pievienot grāmatzīmi";
+"bookmarkAll.tabs.failed" = "Pievienotas jaunas grāmatzīmes visām cilnēm";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Visām cilnēm ir pievienotas grāmatzīmes";
@@ -140,7 +140,7 @@
 "brokensite.category.links" = "Saites vai pogas nedarbojas";
 
 /* Broken Site Category */
-"brokensite.category.login" = "Es nevaru pieteikties";
+"brokensite.category.login" = "Es nevaru pierakstīties";
 
 /* Broken Site Category */
 "brokensite.category.other" = "Kaut kas cits";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video netika demonstrēts";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Aprakstiet notikušo";
+"brokensite.sectionTitle" = "APRAKSTI NOTIKUŠO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Paslēpt padomus uz visiem laikiem";
@@ -164,16 +164,16 @@
 "dax.hide.cancel" = "Atcelt";
 
 /* Subtitle in Hide Dax dialog */
-"dax.hide.message" = "Tie ir tikai daži, un mēs centāmies padarīt tos informatīvus.";
+"dax.hide.message" = "Tie ir tikai daži, un mēs centāmies tos padarīt informatīvus.";
 
 /* Title in Hide Dax dialog */
 "dax.hide.title" = "Vai paslēpt pārējos padomus?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Jūsu DuckDuckGo meklējumi ir anonīmi, un es nekad neuzglabāju jūsu meklēšanas vēsturi. Nekad. 🙌";
+"dax.onboarding.browsing.after.search" = "Tavi DuckDuckGo meklējumi ir anonīmi, un es nekad neuzglabāju tavu meklēšanas vēsturi. Nekad. 🙌";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search.cta" = "Phū!";
+"dax.onboarding.browsing.after.search.cta" = "Pē!";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Dod pieci!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* mēģināja tevi šeit izsekot.\n\nEs to nobloķēju!\n\n☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* mēģināja tevi šeit izsekot.\n\nEs to nobloķēju!\n\n☝️ Tu vari pārbaudīt adreses joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Dod pieci!";
@@ -224,7 +224,7 @@
 "donotsell.disabled" = "Atspējota";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Tā kā Globālā privātuma kontrole (GPC) ir jauns standarts, lielākā daļa vietņu to vēl neatpazīst, taču mēs cītīgi strādājam pie tā, lai tas tiktu ievērots visā pasaulē.";
+"donotsell.disclaimer.footertext" = "Tā kā Globālā privātuma kontrole (GPC) ir jauns standarts, lielākā daļa vietņu to vēl neatpazīst, taču mēs cītīgi strādājam pie tā, lai šis standarts tiktu ievērots visā pasaulē.";
 
 /* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Uzzināt vairāk";
@@ -236,16 +236,19 @@
 "donotsell.enabled" = "Iespējota";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Tavi dati nav paredzēti pārdošanai. DuckDuckGo tam piekrīt. Aktivizē iestatījumu “Globālā privātuma kontrole” (GPC), un mēs vietnēm paziņosim, ka tu izvēlies:\n\n• Nepārdot savus personas datus.\n• Ierobežot savu personas datu koplietošanu ar citiem uzņēmumiem.";
+"donotsell.info.headertext" = "Taviem datiem nevajadzētu tikt pārdotiem. DuckDuckGo tam piekrīt. Aktivizē iestatījumu “Globālā privātuma kontrole\" (GPC), un mēs vietnēm paziņosim, ka tu izvēlies:\n\n• Nepārdot savus personas datus.\n• Ierobežo savu personas datu koplietošanu ar citiem uzņēmumiem.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Vēl nav grāmatzīmju";
+"empty.bookmarks" = "Vēl nav pievienota neviena grāmatzīme";
 
 /* Empty list state placholder */
-"empty.favorites" = "Vēl nav izlases";
+"empty.favorites" = "Vēl nav pievienota neviena izlase";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Sakritības nav atrastas";
 
 /* No comment provided by engineer. */
-"favorite" = "Izlases vienums";
+"favorite" = "Izlase";
 
 /* No comment provided by engineer. */
 "favorite.menu.delete" = "Dzēst";
@@ -257,7 +260,7 @@
 "feedback.browserFeatures.ads" = "Reklāmu un uznirstošo logu bloķēšana";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.bookmarks" = "Grāmatzīmju izveidošana un pārvaldīšana";
+"feedback.browserFeatures.bookmarks" = "Grāmatzīmju izveide un pārvaldīšana";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.caption" = "Kuru pārlūkošanas funkciju mēs varam pievienot vai uzlabot?";
@@ -266,7 +269,7 @@
 "feedback.browserFeatures.description" = "Pārlūka funkciju problēmas";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.entry" = "Trūkst pārlūkošanas funkcijas vai arī tās nedarbojas";
+"feedback.browserFeatures.entry" = "Trūkst pārlūkošanas funkciju vai arī tās nedarbojas";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.images" = "Mijiedarbība ar attēliem";
@@ -278,7 +281,7 @@
 "feedback.browserFeatures.other" = "Neviens no šiem";
 
 /* No comment provided by engineer. */
-"feedback.browserFeatures.tabs" = "Cilņu izveidošana un pārvaldīšana";
+"feedback.browserFeatures.tabs" = "Ciļņu izveide un pārvaldīšana";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.videos" = "Video skatīšanās";
@@ -287,7 +290,7 @@
 "feedback.customization.bookmarks" = "Kā tiek parādītas grāmatzīmes";
 
 /* No comment provided by engineer. */
-"feedback.customization.caption" = "Kuru pielāgošanas funkciju mēs varam pievienot vai uzlabot?";
+"feedback.customization.caption" = "Kuru pielāgošanas opciju mēs varam pievienot vai uzlabot?";
 
 /* No comment provided by engineer. */
 "feedback.customization.description" = "Pielāgošanas problēmas";
@@ -308,10 +311,10 @@
 "feedback.customization.ui" = "Kā izskatās lietotne";
 
 /* No comment provided by engineer. */
-"feedback.customization.whatIsCleared" = "Kuri dati tiek nodzēsti";
+"feedback.customization.whatIsCleared" = "Kuri dati tiek notīrīti";
 
 /* No comment provided by engineer. */
-"feedback.customization.whenIsCleared" = "Kad dati tiek nodzēsti";
+"feedback.customization.whenIsCleared" = "Kad dati tiek notīrīti";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.autocomplete" = "Labāka automātiskā pabeigšana";
@@ -329,7 +332,7 @@
 "feedback.ddgSearch.languageOrRegion" = "Meklēšana noteiktā valodā vai reģionā";
 
 /* No comment provided by engineer. */
-"feedback.ddgSearch.layout" = "Izkārtojumam vajadzētu būt vairāk kā Google izkārtojumam";
+"feedback.ddgSearch.layout" = "Izkārtojumam vajadzētu vairāk līdzināties Google izkārtojumam";
 
 /* No comment provided by engineer. */
 "feedback.ddgSearch.loadTime" = "Ātrāks ielādes laiks";
@@ -344,19 +347,19 @@
 "feedback.form.caption" = "Lūdzu, pastāsti, ko mēs varam uzlabot.";
 
 /* Confirmation button */
-"feedback.form.submit" = "IESNIEGT ATSAUKSMI";
+"feedback.form.submit" = "Iesniegt";
 
 /* No comment provided by engineer. */
-"feedback.negative.form.genericPlaceholder" = "Lūdzu, norādiet pēc iespējas precīzāk";
+"feedback.negative.form.genericPlaceholder" = "Lūdzu, norādi pēc iespējas precīzāk";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.placeholder" = "Vai vēlies iekļaut specifisku informāciju?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Mums žēl to dzirdēt.";
+"feedback.negative.header" = "Mums žēl to dzirdēt";
 
 /* No comment provided by engineer. */
-"feedback.negative.supplementary" = "Ar ko jūsu vilšanās ir visvairāk saistīta?";
+"feedback.negative.supplementary" = "Ar ko tava vilšanās ir visvairāk saistīta?";
 
 /* No comment provided by engineer. */
 "feedback.other.description" = "Citas problēmas";
@@ -365,7 +368,7 @@
 "feedback.other.entry" = "Neviens no šiem";
 
 /* No comment provided by engineer. */
-"feedback.performance.caption" = "Ar kuru problēmu jūs saskaraties?";
+"feedback.performance.caption" = "Ar kuru problēmu tu saskaries?";
 
 /* No comment provided by engineer. */
 "feedback.performance.crashes" = "Lietotne avarē vai apstājas";
@@ -383,37 +386,37 @@
 "feedback.performance.playback" = "Video vai multivides atskaņošanas kļūdas";
 
 /* No comment provided by engineer. */
-"feedback.performance.slowLoading" = "Tīmekļa lapas vai meklēšanas rezultāti tiek ielādēti lēni";
+"feedback.performance.slowLoading" = "Tīmekļa lapas vai meklēšanas rezultāti tiek lēni ielādēti";
 
 /* Header above input field */
-"feedback.positive.form.header" = "Kopīgojiet informāciju";
+"feedback.positive.form.header" = "Informācijas kopīgošana";
 
 /* No comment provided by engineer. */
-"feedback.positive.form.placeholder" = "Kas jums patika?";
+"feedback.positive.form.placeholder" = "Kas tev patika?";
 
 /* No comment provided by engineer. */
-"feedback.positive.form.supplementary" = "Vai vēlies norādīt komandai papildinformāciju?";
+"feedback.positive.form.supplementary" = "Vai vēlies norādīt mūsu komandai papildinformāciju?";
 
 /* No comment provided by engineer. */
 "feedback.positive.header" = "Prieks dzirdēt!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "Nē, paldies! Es pabeidzu";
+"feedback.positive.noThanks" = "Nē, paldies! Es pabeidzu.";
 
 /* Button encouraging uses to share details aboout their feedback */
-"feedback.positive.submit" = "Kopīgojiet informāciju";
+"feedback.positive.submit" = "Kopīgot informāciju";
 
 /* No comment provided by engineer. */
-"feedback.start.footer" = "Jūsu anonīmās atsauksmes mums ir svarīgas.";
+"feedback.start.footer" = "Tavas anonīmās atsauksmes mums ir svarīgas.";
 
 /* No comment provided by engineer. */
 "feedback.start.header" = "Sāksim!";
 
 /* No comment provided by engineer. */
-"feedback.start.supplementary" = "Kā jūs vērtētu savu atsauksmi?";
+"feedback.start.supplementary" = "Kā tu klasificētu savu atsauksmi?";
 
 /* No comment provided by engineer. */
-"feedback.submitted.confirmation" = "Paldies! Atsauksme ir iesniegta.";
+"feedback.submitted.confirmation" = "Paldies! Tava atsauksme ir iesniegta.";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.description" = "Vietņu ielādes problēmas";
@@ -425,7 +428,7 @@
 "feedback.websiteLoading.form.placeholder" = "Kāds saturs, tavuprāt, ir ietekmēts?";
 
 /* No comment provided by engineer. */
-"feedback.websiteLoading.form.supplementary" = "Kur jūs redzat šīs problēmas?";
+"feedback.websiteLoading.form.supplementary" = "Kur tu redzi šīs problēmas?";
 
 /* No comment provided by engineer. */
 "feedback.websiteLoading.form.urlPlaceholder" = "Kurai vietnei ir problēmas?";
@@ -440,10 +443,10 @@
 "home.message.buttonText" = "Iestatīt kā noklusējuma pārlūku";
 
 /* No comment provided by engineer. */
-"home.message.header" = "Padari DuckDuckGo par savu noklusējuma pārlūkprogrammu!";
+"home.message.header" = "Padari DuckDuckGo par savu noklusējuma pārlūku!";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Katru reizi atveriet saites bez raizēm.";
+"home.message.subheader" = "Katru reizi atver saites bez raizēm.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "JAUNUMS IOS 14";
@@ -457,11 +460,11 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Pievieno DuckDuckGo dokam";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Meklē vai atver izlasi jaunā cilnē";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Meklē vai ievadi adresi";
 
 /* Home tab title */
-"homeTab.title" = "Sākuma ekrāns";
+"homeTab.title" = "Sākums";
 
 /* No comment provided by engineer. */
 "keyCommandAddBookmark" = "Pievienot grāmatzīmi";
@@ -491,7 +494,7 @@
 "keyCommandFindPrevious" = "Atrast iepriekšējo";
 
 /* No comment provided by engineer. */
-"keyCommandFire" = "Izdzēst visas cilnes un datus";
+"keyCommandFire" = "Notīrīt visas cilnes un datus";
 
 /* No comment provided by engineer. */
 "keyCommandLocation" = "Meklē vai ievadi adresi";
@@ -524,7 +527,7 @@
 "keyCommandShowAllTabs" = "Rādīt visas cilnes";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Laipni lūdzam DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Rediģēt";
@@ -533,13 +536,22 @@
 "number.of.tabs" = "number.of.tabs";
 
 /* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Pievienot logrīku";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "DuckDuckGo lietošana nupat kļuva vienkāršāka.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Varbūt vēlāk";
+
+/* No comment provided by engineer. */
 "onboardingContinue" = "Turpināt";
 
 /* No comment provided by engineer. */
 "onboardingDefaultBrowserMaybeLater" = "Varbūt vēlāk";
 
 /* No comment provided by engineer. */
-"onboardingDefaultBrowserTitle" = "Padari DuckDuckGo par savu noklusējuma pārlūkprogrammu!";
+"onboardingDefaultBrowserTitle" = "Padari DuckDuckGo par savu noklusējuma pārlūku!";
 
 /* No comment provided by engineer. */
 "onboardingSetAsDefaultBrowser" = "Iestatīt kā noklusējuma pārlūku";
@@ -554,19 +566,19 @@
 "onboardingWelcomeHeader" = "Laipni lūdzam DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Diemžēl neviena lietotne nevar apstrādāt šo saiti.";
+"open.externally.failed" = "Nevar atrast lietotni, kas nepieciešama šīs saites atvēršanai";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Vietnes lieto sīkfailus, lai tu varētu turpināt būt pierakstījies(-usies). Padarot vietni ugunsdrošu, sīkfaili netiek dzēsti, bet tu vari turpināt būt pierakstījies(-usies) arī pēc Uguns pogas lietošanas.";
+"preserveLogins.domain.list.footer" = "Vietnes lieto sīkfailus, lai tu varētu turpināt būt pierakstījies(-usies). Padarot vietni ugunsdrošu, sīkfaili netiek dzēsti, bet tu vari turpināt būt pierakstījies(-usies) arī pēc Uguns pogas lietošanas. Mēs joprojām bloķēsim trešo pušu izsekotājus, kas atrodami ugunsdrošās vietnēs.";
 
 /* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Tīmekļa vietnes";
+"preserveLogins.domain.list.title" = "Vietnes";
 
 /* Paramter is a string - domain name */
 "preserveLogins.fireproof.message" = "Vai vēlies padarīt %@ ugunsdrošu?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Ugunsdrošā tīmekļa vietne";
+"preserveLogins.menu.confirm" = "Padarīt vietni ugunsdrošu";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ne tagad";
@@ -577,11 +589,11 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Labi";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Padarīt vietnes ugunsdrošas";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ tagad ir ugunsdrošs! Atver iestatījumus, lai to noņemtu.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ tagad ir ugunsdrošs! Atver iestatījumu sadaļu, lai to pārvaldītu.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritms";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Kopsavilkums";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Šis savienojums nav šifrēts, tāpēc uzmanies, nosūtot informāciju.";
+"privacy.protection.encryption.unencrypted" = "Esi piesardzīgs, ievadot personisku informāciju šajā vietnē.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Nešifrēts savienojums";
@@ -686,13 +698,13 @@
 "privacy.protection.encryption.yes" = "Jā";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "VIETAS AIZSARDZĪBA IR ATSPĒJOTA";
+"privacy.protection.main.disabled" = "VIETNES AIZSARDZĪBA IR ATSPĒJOTA";
 
 /* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "UZLABOTS NO $1 uz $2";
+"privacy.protection.main.enhanced" = "UZLABOTS NO $1 UZ $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Privātuma līmenis";
+"privacy.protection.main.grade" = "PRIVĀTUMA LĪMENIS";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -701,16 +713,16 @@
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Izsekotāju tīkli tika atrasti %1$@%% tīmekļa vietņu, kuras apmeklēji kopš %2$@.";
+"privacy.protection.network.leaderboard" = "Izsekotāju tīkli tika atrasti %1$@%% vietņu, kuras apmeklēji kopš %2$@.";
 
 /* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Mēs joprojām apkopojam datus, lai parādītu, cik\nizsekotāju esam nobloķējuši.";
+"privacy.protection.network.leaderboard.gathering" = "Mēs joprojām apkopojam datus, lai parādītu, cik daudz\nizsekotāju esam bloķējuši.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Izmanto ToS;DR privātuma prakses informāciju";
+"privacy.protection.practices.footer.info" = "ToS;DR privātuma prakse.";
 
 /* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Privātuma prakse norāda, cik aizsargāta ir personiskā informācija, kuru kopīgojat ar vietni.";
+"privacy.protection.practices.header.info" = "Privātuma prakse norāda, cik aizsargāta ir personiskā informācija, ko tu kopīgo ar vietni.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.reviewed.info" = "Šī vietne tevi informēs pirms tavas informācijas nodošanas uzņēmumu apvienošanās vai pārņemšanas gadījumā.";
@@ -719,7 +731,7 @@
 "privacy.protection.practices.unknown.info" = "Šīs vietnes privātuma prakse nav pārskatīta.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privātuma pakāpe: %@";
+"privacy.protection.site.grade" = "Privātuma līmenis: %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Nospied, lai atvērtu privātuma aizsardzības ekrānu";
@@ -740,7 +752,7 @@
 "privacy.protection.tos.unknown" = "Nezināma privātuma prakse";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Izsekotāju tīkli apkopo jūsu tīmekļa vēsturi datu profilā par jums. Lielākie izsekotāju tīkli ir kaitīgāki, jo tie var izsekot un mērķēt jūs internetā plašākā apmērā.";
+"privacy.protection.tracker.networks.info" = "Izsekotāju tīkli apkopo tavu tīmekļa vēsturi datu profilā par tevi. Lielākie izsekotāju tīkli ir kaitīgāki, jo tie var izsekot un atlasīt tevi kā mērķauditoriju internetā plašākā mērogā.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
@@ -749,19 +761,19 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Nē";
+"prompt.custom.url.scheme.dontopen" = "Atcelt";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Jā";
+"prompt.custom.url.scheme.open" = "Atvērt";
 
 /* No comment provided by engineer. */
-"prompt.custom.url.scheme.prompt" = "Vai vēlaties iziet no DuckDuckGo, lai aplūkotu šo saturu?";
+"prompt.custom.url.scheme.prompt" = "Vai vēlies iziet no DuckDuckGo, lai skatītu šo saturu?";
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Vai atvērt citā lietotnē?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Ja iesniegsi anonīmu ziņojumu par bojātu vietni, mēs varēsim atkļūdot šīs problēmas un uzlabot paplašinājumu.";
+"report.brokensite.header" = "Ja iesniegsi anonīmu ziņojumu par bojātu vietni, mēs varēsim atkļūdot šīs problēmas un uzlabot lietotni.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Meklē vai ievadi adresi";
@@ -779,13 +791,13 @@
 "settings.tutorial.info" = "Citas meklētājprogrammas izseko tevi arī tad, ja izmanto inkognito režīmu. Mēs tevi neizsekojam. Nekādā gadījumā.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Dodies uz *Safari*, pēc tam uz *meklētājprogrammu*";
+"settings.tutorial.navigate" = "Dodies uz *Safari*, pēc tam uz *meklētājprogrammu*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Atver lietotnes *iestatījumus*";
+"settings.tutorial.open" = "Atver lietotnes *iestatījumus*.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Atlasi *DuckDuckGo*";
+"settings.tutorial.select" = "Atlasi *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Iesniegt ziņojumu";
@@ -809,13 +821,13 @@
 "tab.close.home" = "Aizvērt sākuma cilni";
 
 /* Accesibility label: first string is website title, second is address */
-"tab.close.with.title.and.address" = "Aizvērt \"%1$@\" vietnē %2$@";
+"tab.close.with.title.and.address" = "Aizvērt “%1$@” vietnē %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Atvērt sākuma cilni";
 
 /* Accesibility label: first string is website title, second is address */
-"tab.open.with.title.and.address" = "Atvērt \"%1$@\" vietnē %2$@";
+"tab.open.with.title.and.address" = "Atvērt “%1$@” vietnē %2$@";
 
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Ciļņu pārslēdzējs";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "%@ ir noņemts no neaizsargātām vietnēm";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Radās nezināma kļūda";
+"unknown.error.occurred" = "Radās nezināma kļūda.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Grāmatzīme ir saglabāta";
+"web.url.save.bookmark.done" = "Pievienota grāmatzīme";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Grāmatzīme jau ir saglabāta";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Nav tīmekļa lapas, kurai pievienot grāmatzīmi";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Izlases vienums ir saglabāts";
+"web.url.save.favorite.done" = "Izlases vienums ir pievienots";
 

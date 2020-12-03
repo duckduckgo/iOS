@@ -50,7 +50,7 @@
 "uIV-4q-5mj.accessibilityLabel" = "Dodaj kartę";
 
 /* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
-"Uu4-yR-9tN.text" = "Strona internetowa — długi tytuł";
+"Uu4-yR-9tN.text" = "Strona internetowa – długi tytuł";
 
 /* Class = "UIButton"; accessibilityHint = "Close"; ObjectID = "xto-EI-h22"; */
 "xto-EI-h22.accessibilityHint" = "Zamknij";

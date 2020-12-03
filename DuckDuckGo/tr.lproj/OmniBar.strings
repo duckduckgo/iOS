@@ -11,13 +11,13 @@
 "hor-Jd-3kw.accessibilityLabel" = "Paylaş";
 
 /* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
-"i9n-fD-ncJ.accessibilityLabel" = "Geri Dön";
+"i9n-fD-ncJ.accessibilityLabel" = "Geri dön";
 
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
-"IHT-9R-ERy.normalTitle" = "Vazgeç";
+"IHT-9R-ERy.normalTitle" = "İptal";
 
 /* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
-"ii4-Sq-bD1.accessibilityLabel" = "Yer imleri";
+"ii4-Sq-bD1.accessibilityLabel" = "Yer İmleri";
 
 /* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
 "nJo-2d-gri.accessibilityLabel" = "Göz Atma Menüsü";

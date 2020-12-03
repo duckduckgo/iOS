@@ -1,22 +1,22 @@
-/* Class = "UILabel"; text = "Site is Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
-"0ax-Nd-tDU.text" = "Le site est un réseau majeur de trackers";
+/* Class = "UILabel"; text = "Site Is a Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
+"0ax-Nd-tDU.text" = "Le site est un réseau majeur de traqueurs";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
-"0SO-8y-5QH.text" = "www.example.com";
+"0SO-8y-5QH.text" = "www.exemple.com";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Réessayer";
 
-/* Class = "UILabel"; text = "Your Data is Vulnerable"; ObjectID = "2T4-dB-Wu0"; */
-"2T4-dB-Wu0.text" = "Vos données sont vulnérables";
+/* Class = "UILabel"; text = "Data Is Unencrypted"; ObjectID = "2T4-dB-Wu0"; */
+"2T4-dB-Wu0.text" = "Les données ne sont pas chiffrées";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
-"2xP-ZS-UtN.normalTitle" = "Signaler un site cassé";
+"2xP-ZS-UtN.normalTitle" = "Signaler un problème de site";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "PRINCIPAUX COUPABLES DES RÉSEAUX DE TRACKER";
+"3UG-EO-bt5.text" = "PRINCIPAUX RÉSEAUX DE TRAQUEURS";
 
-/* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
+/* Class = "UILabel"; text = "Check your Internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Vérifiez votre connexion Internet, puis réessayez.";
 
 /* Class = "UILabel"; text = "Enhanced Grade"; ObjectID = "5dV-qp-Hz5"; */
@@ -25,11 +25,11 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
 "6os-4h-chg.text" = "Label";
 
-/* Class = "UILabel"; text = "Uh-oh, that didn’t work."; ObjectID = "7k3-Qj-oya"; */
-"7k3-Qj-oya.text" = "Oups, cela n'a pas fonctionné.";
+/* Class = "UILabel"; text = "Uh-Oh, That Didn’t Work"; ObjectID = "7k3-Qj-oya"; */
+"7k3-Qj-oya.text" = "Oups, cela n'a pas fonctionné";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "7nh-8f-M2e"; */
-"7nh-8f-M2e.text" = "www.example.com";
+"7nh-8f-M2e.text" = "www.exemple.com";
 
 /* Class = "UILabel"; text = "Privacy Grade"; ObjectID = "7xH-3L-wpf"; */
 "7xH-3L-wpf.text" = "Degré de confidentialité";
@@ -38,19 +38,19 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Pratiques de confidentialité";
+"25V-p3-wsn.text" = "PRATIQUES DE CONFIDENTIALITÉ";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Réinitialiser les statistiques du réseau de traqueurs";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "PRINCIPAUX COUPABLES DES RÉSEAUX DE TRACKER";
+"aD3-hP-MUU.text" = "PRINCIPAUX RÉSEAUX DE TRAQUEURS";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Connexion chiffrée";
+"dZC-7f-pp3.text" = "CONNEXION CHIFFRÉE";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
-"F5w-e3-JfY.text" = "www.example.com";
+"F5w-e3-JfY.text" = "www.exemple.com";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "fqL-1Q-ilH"; */
 "fqL-1Q-ilH.normalTitle" = "Sites non protégés";
@@ -62,7 +62,7 @@
 "GZ4-PW-wOG.text" = "8 traqueurs bloqués";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "hDv-jp-eaS"; */
-"hDv-jp-eaS.normalTitle" = "Signaler un site cassé";
+"hDv-jp-eaS.normalTitle" = "Signaler un problème de site";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
 "iF1-sO-WXk.text" = "Pratiques de confidentialité";
@@ -73,7 +73,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
 "J3L-KE-1Vb.text" = "Label";
 
-/* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
+/* Class = "UILabel"; text = "No privacy practices found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Aucune pratique de confidentialité trouvée";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
@@ -92,13 +92,13 @@
 "pW9-ic-ro9.text" = "Protection de la confidentialité du site";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "PRINCIPAUX COUPABLES DES RÉSEAUX DE TRACKER";
+"rXM-kA-bL0.text" = "PRINCIPAUX RÉSEAUX DE TRAQUEURS";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
 "sr7-Qg-P74.text" = "Protection de la confidentialité du site";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "PRINCIPAUX COUPABLES DES RÉSEAUX DE TRACKER";
+"tpT-I9-kDk.text" = "PRINCIPAUX RÉSEAUX DE TRAQUEURS";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Connexion chiffrée";

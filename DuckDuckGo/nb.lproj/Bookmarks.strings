@@ -1,8 +1,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
-"Lqe-Wh-Evj.text" = "Label";
+"Lqe-Wh-Evj.text" = "Etikett";
 
-/* Class = "UILabel"; text = "No bookmarks yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Ingen bokmerker ennå";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
+"N2X-jQ-cbU.text" = "Ingen bokmerker lagt til ennå";
 
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Bokmerker";

@@ -92,7 +92,7 @@ class BookmarksSearch {
     }
     // swiftlint:enable cyclomatic_complexity
     
-    func search(query: String) -> [Link] {
+    func search(query: String, sortByRelevance: Bool = true) -> [Link] {
         guard hasData else {
             return []
         }
@@ -102,6 +102,11 @@ class BookmarksSearch {
         let trimmed = query.trimWhitespace()
         score(query: trimmed, results: results)
         
-        return results.filter { $0.score > 0 }.sorted { $0.score > $1.score } .map { $0.link }
+        var finalResult = results.filter { $0.score > 0 }
+        if sortByRelevance {
+            finalResult = finalResult.sorted { $0.score > $1.score }
+        }
+        
+        return finalResult.map { $0.link }
     }
 }

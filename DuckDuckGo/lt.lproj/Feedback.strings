@@ -4,17 +4,17 @@
 /* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
 "7zN-Xh-yYi.normalTitle" = "Bendrinti atsiliepimą";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "46v-cB-2YV"; */
-"46v-cB-2YV.title" = "Siųsti atsiliepimą";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Bendrinti atsiliepimą";
 
-/* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
+/* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Ne, ačiū! Pakaks";
 
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
 "cZl-qB-kSL.title" = "Uždaryti";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "D8A-B7-Dqu"; */
-"D8A-B7-Dqu.title" = "Siųsti atsiliepimą";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Bendrinti atsiliepimą";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
 "epz-Ta-KQ7.title" = "Atgal";
@@ -29,13 +29,13 @@
 "JF8-Ow-zXL.title" = "Atgal";
 
 /* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
-"jr6-Al-4fr.title" = "Štai keletas nuorodų! Galite eiti tiesiai į:";
+"jr6-Al-4fr.title" = "Pateikti";
 
-/* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "PATEIKTI ATSILIEPIMĄ";
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "Pateikti";
 
-/* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
-"lY6-5c-iu4.title" = "Siųsti atsiliepimą";
+/* Class = "UITableViewController"; title = "Share Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Bendrinti atsiliepimą";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
 "m0a-EJ-h27.title" = "Atgal";
@@ -43,14 +43,14 @@
 /* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
 "msl-mT-bMG.accessibilityLabel" = "Neigiamas";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "oHj-cX-c6z"; */
-"oHj-cX-c6z.title" = "Siųsti atsiliepimą";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Bendrinti atsiliepimą";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "rAY-cv-mjl"; */
-"rAY-cv-mjl.title" = "Siųsti atsiliepimą";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Bendrinti atsiliepimą";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "Rvx-dM-etJ"; */
-"Rvx-dM-etJ.title" = "Siųsti atsiliepimą";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Bendrinti atsiliepimą";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
 "TMj-NM-j3b.placeholder" = "Kuri svetainė neveikia?";
@@ -61,8 +61,8 @@
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Svetainės trikties priežastis";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
-"Xb0-Zu-opM.title" = "Siųsti atsiliepimą";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Bendrinti atsiliepimą";
 
 /* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
 "ze4-T7-OFN.accessibilityLabel" = "Teigiamas";

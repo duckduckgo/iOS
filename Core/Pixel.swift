@@ -128,6 +128,7 @@ public enum PixelName: String {
     
     case daxDialogsSerp = "m_dx_s"
     case daxDialogsWithoutTrackers = "m_dx_wo"
+    case daxDialogsWithoutTrackersFollowUp = "m_dx_wof"
     case daxDialogsWithTrackers = "m_dx_wt"
     case daxDialogsSiteIsMajor = "m_dx_sm"
     case daxDialogsSiteOwnedByMajor = "m_dx_so"

@@ -29,7 +29,7 @@
 "action.title.newTab" = "Nov zavihek";
 
 /* Open in New Tab action */
-"action.title.newTabForUrl" = "Odpri na novem zavihku";
+"action.title.newTabForUrl" = "Odpri v novem zavihku";
 
 /* Open action */
 "action.title.open" = "Odpri";
@@ -62,7 +62,7 @@
 "action.title.save.favorite" = "Dodaj med priljubljene";
 
 /* Settings action */
-"action.title.settings" = "Nastavitve ...";
+"action.title.settings" = "Nastavitve";
 
 /* Share action */
 "action.title.share" = "Deli …";
@@ -89,10 +89,10 @@
 "alert.title.save.favorite" = "Shrani priljubljeno";
 
 /* Shown on authentication screen */
-"app.authentication.unlock" = "Odkleni DuckDuckGo";
+"app.authentication.unlock" = "Odkleni DuckDuckGo.";
 
-/* Authentication Alert Log In Button */
-"auth.alert.login.button" = "Prijava";
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Prijavite se";
 
 /* Authentication Alert - populated with a domain name */
 "auth.alert.message.encrypted" = "Prijava v %@. Vaši podatki za prijavo bodo varno poslani.";
@@ -122,7 +122,7 @@
 "bookmark.title.placeholder" = "Naslov spletnega mesta";
 
 /* Info message after selecting Bookmark All button */
-"bookmarkAll.tabs.failed" = "Nekaterih zavihkov ni mogoče dodati med zaznamke";
+"bookmarkAll.tabs.failed" = "Dodani novi zaznamki za vse zavihke";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Vsi zavihki dodani med zaznamke";
@@ -155,7 +155,7 @@
 "brokensite.category.videos" = "Video se ni predvajal";
 
 /* Broken Site Section Title */
-"brokensite.sectionTitle" = "Opišite, kaj se je zgodilo";
+"brokensite.sectionTitle" = "OPIŠITE, KAJ SE JE ZGODILO";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skrivaj nasvete za vedno";
@@ -170,7 +170,7 @@
 "dax.hide.title" = "Skrij preostale nasvete?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna in nikoli ne shranim vaše zgodovine iskanja. Vedno. 🙌";
+"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna in nikoli ne shranim vaše zgodovine iskanja. Vedno.🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Fuj!";
@@ -182,7 +182,7 @@
 "dax.onboarding.browsing.multiple.trackers.cta" = "Petka!";
 
 /* Parameter is domain name (string) */
-"dax.onboarding.browsing.one.tracker" = "*%1$@* vas je poskusil zaslediti tukaj.\n\nBlokiral sem ga!\n\n☝️ Preverite lahko URL vrstico, da vidite, kdo vam poskuša slediti, ko obiščete novo spletno mesto.";
+"dax.onboarding.browsing.one.tracker" = "*%1$@* vas je poskusil zaslediti tukaj.\n\nBlokiral sem jih!\n\n☝️ Preverite lahko naslovno vrstico, da vidite, kdo vam poskuša slediti, ko obiščete novo spletno mesto.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.one.tracker.cta" = "Petka!";
@@ -200,7 +200,7 @@
 "dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Razumem";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.without.trackers" = "Ko tapkate in se pomikate, bom blokiral nadležne sledilce.Brskajte naprej!";
+"dax.onboarding.browsing.without.trackers" = "Ko tapkate in se pomikate, bom blokiral nadležne sledilce.\n\nBrskajte naprej!";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Razumem";
@@ -209,13 +209,13 @@
 "dax.onboarding.home.add.favorite" = "Hitro obiščite svoja priljubljena spletna mesta! \n\nObiščite spletno mesto, ki vam je všeč. Nato se dotaknite ikone \"⋯\" in izberite *Dodaj med priljubljene*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Hitro obiščite svoja priljubljena spletna mesta! \n\n Obiščite eno izmed svojih priljubljenih spletnih mest. Nato se dotaknite gumba odpri meni in izberite Dodaj med priljubljene.";
+"dax.onboarding.home.add.favorite.accessible" = "Hitro obiščite svoja priljubljena spletna mesta! Obiščite eno izmed svojih priljubljenih spletnih mest. Nato se dotaknite gumba za odprtje menija in izberite Dodaj med priljubljene.";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Nato obiščite eno od svojih najljubših spletišč!\n\nBlokiral bom sledilce, da ne bodo vohunili. Prav tako bom nadgradil varnost tvoje povezave. 🔒";
 
 /* ad = advertisment */
-"dax.onboarding.home.subsequent" = "Uspelo ti bo!\n\nNe pozabi: vsakič, ko brskate z mano, grozljiv oglas izgubi krila. 👍";
+"dax.onboarding.home.subsequent" = "Uspelo ti bo!\n\nNe pozabite: vsakič, ko brskate z mano, grozljiv oglas izgubi krila. 👍";
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet je lahko grozljiv.\n\nNe skrbi! Iskanje in brskanje na zaseben način je lažje, kot si misliš.";
@@ -239,10 +239,13 @@
 "donotsell.info.headertext" = "Vaši podatki ne bi smeli biti naprodaj. Pri DuckDuckGo se strinjamo. Aktivirajte nastavitev globalni nadzor zasebnosti (Global Privacy Control (GPC) in spletnim mestom bomo sporočili vaše nastavitve:\n\n• Ne prodajajte svojih osebnih podatkov.\n• Omejite skupno rabo svojih osebnih podatkov z drugimi podjetji.";
 
 /* Empty list state placholder */
-"empty.bookmarks" = "Zaznamkov še ni";
+"empty.bookmarks" = "Zaznamki še niso dodani";
 
 /* Empty list state placholder */
-"empty.favorites" = "Priljubljenih še ni";
+"empty.favorites" = "Priljubljeni še niso dodani";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Ni zadetkov";
 
 /* No comment provided by engineer. */
 "favorite" = "Priljubljeni";
@@ -344,7 +347,7 @@
 "feedback.form.caption" = "Povejte nam, kaj lahko izboljšamo";
 
 /* Confirmation button */
-"feedback.form.submit" = "POŠLJITE POVRATNE INFORMACIJE";
+"feedback.form.submit" = "Potrdi";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Bodite čim bolj natančni";
@@ -353,7 +356,7 @@
 "feedback.negative.form.placeholder" = "Ali bi želeli vključiti kakšne podrobnosti?";
 
 /* No comment provided by engineer. */
-"feedback.negative.header" = "Žal nam je, da tako menite.";
+"feedback.negative.header" = "Žal nam je, da to slišimo";
 
 /* No comment provided by engineer. */
 "feedback.negative.supplementary" = "Nad čim ste najbolj razočarani?";
@@ -457,8 +460,8 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Dodaj DuckDuckGo na domači zaslon";
 
-/* This describes empty tab, on which you can search or navigate to favorites */
-"homeTab.searchAndFavorites" = "Iskanje in priljubljene v novem zavihku";
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Poišči ali vnesi naslov";
 
 /* Home tab title */
 "homeTab.title" = "Domov";
@@ -506,7 +509,7 @@
 "keyCommandOpenInNewBackgroundTab" = "Odpri povezavo v ozadju";
 
 /* No comment provided by engineer. */
-"keyCommandOpenInNewTab" = "Odpri povezavo na novem zavihku";
+"keyCommandOpenInNewTab" = "Odpri povezavo v novem zavihku";
 
 /* No comment provided by engineer. */
 "keyCommandPreviousTab" = "Prejšnji zavihek";
@@ -524,13 +527,22 @@
 "keyCommandShowAllTabs" = "Prikaži vse zavihke";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji DUCKDUCKGO";
+"launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji DuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Uredi";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Dodaj gradnik";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Uporaba DuckDuckGo je ravnokar postala še preprostejša.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Mogoče kasneje";
 
 /* No comment provided by engineer. */
 "onboardingContinue" = "Nadaljuj";
@@ -551,13 +563,13 @@
 "onboardingStartBrowsing" = "Začni brskanje";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Dobrodošli v aplikaciji DUCKDUCKGO";
+"onboardingWelcomeHeader" = "Dobrodošli v aplikaciji DuckDuckGo!";
 
 /* ’Link’ is link on a website */
-"open.externally.failed" = "Žal nobena aplikacija ne more upravljati s to povezavo.";
+"open.externally.failed" = "Aplikacije, ki je potrebna za odpiranje te povezave, ni mogoče najti";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Spletne strani se zanašajo na piškotke, da boš vedno prijavljen. Ko spletno mesto požarno zaščitiš, piškotki ne bodo izbrisani in ostal boš prijavljen tudi po uporabi gumba Fire.";
+"preserveLogins.domain.list.footer" = "Spletne strani se zanašajo na piškotke, da boš vedno prijavljen. Ko spletno mesto požarno zaščitiš, piškotki ne bodo izbrisani in ostal boš prijavljen tudi po uporabi gumba Fire. Še vedno blokiramo zunanje sledilce, ki jih najdemo na požarno izoliranih spletnih mestih.";
 
 /* Section header above Fireproffed websites list */
 "preserveLogins.domain.list.title" = "Spletna mesta";
@@ -575,13 +587,13 @@
 "preserveLogins.remove.all" = "Odstrani vse";
 
 /* Confirmation button in alert */
-"preserveLogins.remove.all.ok" = "V redu";
+"preserveLogins.remove.all.ok" = "V REDU";
 
-/* Ask to Fireproof Websites */
+/* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Poziv ob straneh s požarno zaščito";
 
-/* Paramter is a string - domain name */
-"preserveLogins.toast" = "%@ ima sedaj požarno zaščito! Obišči nastavitve za odstranitev.";
+/* Parameter is a string - domain name */
+"preserveLogins.toast" = "%@ ima sedaj požarno zaščito! Za upravljanje odprite Nastavitve.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritem";
@@ -650,7 +662,7 @@
 "privacy.protection.encryption.summary" = "Povzetek";
 
 /* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Ta povezava ni šifrirana, zato pazite, kaj pošlješ.";
+"privacy.protection.encryption.unencrypted" = "Bodite previdni pri vnašanju osebnih podatkov na tem spletnem mestu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.unencrypted.heading" = "Nešifrirana povezava";
@@ -692,7 +704,7 @@
 "privacy.protection.main.enhanced" = "IZBOLJŠANO OD $1 DO $2";
 
 /* No comment provided by engineer. */
-"privacy.protection.main.grade" = "Ocena zasebnosti";
+"privacy.protection.main.grade" = "OCENA ZASEBNOSTI";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
@@ -707,7 +719,7 @@
 "privacy.protection.network.leaderboard.gathering" = "Še vedno zbiramo podatke za prikaz, koliko\nsledilnikov smo blokirali.";
 
 /* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Uporaba informacij o praksah zasebnosti iz ToS; DR";
+"privacy.protection.practices.footer.info" = "Prakse zasebnosti od ToS;DR.";
 
 /* No comment provided by engineer. */
 "privacy.protection.practices.header.info" = "Prakse zasebnosti kažejo, koliko osebnih podatkov, ki jih delite s spletnim mestom, je zaščitenih.";
@@ -731,10 +743,10 @@
 "privacy.protection.tos.good" = "Dobre prakse zasebnosti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Mešane prakse zasebnosti“";
+"privacy.protection.tos.mixed" = "Mešane prakse zasebnosti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "„Slabe prakse zasebnosti“";
+"privacy.protection.tos.poor" = "Slabe prakse zasebnosti";
 
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Neznane prakse zasebnosti";
@@ -749,10 +761,10 @@
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* Deny action */
-"prompt.custom.url.scheme.dontopen" = "Ne";
+"prompt.custom.url.scheme.dontopen" = "Prekliči";
 
 /* Confirm action */
-"prompt.custom.url.scheme.open" = "Da";
+"prompt.custom.url.scheme.open" = "Odpri";
 
 /* No comment provided by engineer. */
 "prompt.custom.url.scheme.prompt" = "Želite zapustiti DuckDuckGo in si ogledati to vsebino?";
@@ -761,7 +773,7 @@
 "prompt.custom.url.scheme.title" = "Odpri v drugi aplikaciji?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Če pošlješ poročilo o anonimnem pokvarjenem spletišču, nam pomagaš odpraviti napake in izboljšati razširitve.";
+"report.brokensite.header" = "Če pošljete poročilo o anonimnem pokvarjenem spletišču, nam pomagate odpraviti napake in izboljšati aplikacijo.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Poišči ali vnesi naslov";
@@ -779,13 +791,13 @@
 "settings.tutorial.info" = "Drugi iskalniki spremljajo vaša iskanja, tudi če ste v načinu zasebnega brskanja. Ne sledimo vam in vašim podatkov. In pika.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Odprite *Safari* in nato *Iskalnik*";
+"settings.tutorial.navigate" = "Odprite *Safari* in nato *Iskalnik*.";
 
 /* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Odprite *Nastavitve* aplikacije";
+"settings.tutorial.open" = "Odprite *Nastavitve* aplikacije.";
 
 /* No comment provided by engineer. */
-"settings.tutorial.select" = "Izberite *DuckDuckGo*";
+"settings.tutorial.select" = "Izberite *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošlji poročilo";
@@ -803,7 +815,7 @@
 "siteFeedback.title" = "Prijavite poškodovano spletno mesto";
 
 /* No comment provided by engineer. */
-"siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?“";
+"siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zapri zavihek Domov";
@@ -845,10 +857,10 @@
 "toast.protection.enabled" = "%@ odstranjeno z nezaščitenih spletnih strani";
 
 /* No comment provided by engineer. */
-"unknown.error.occurred" = "Prišlo je do neznane napake";
+"unknown.error.occurred" = "Prišlo je do neznane napake.";
 
 /* Confirmation message */
-"web.url.save.bookmark.done" = "Zaznamek je shranjen";
+"web.url.save.bookmark.done" = "Zaznamek je dodan";
 
 /* Floating Info message */
 "web.url.save.bookmark.exists" = "Zaznamek je že shranjen";
@@ -857,5 +869,5 @@
 "web.url.save.bookmark.none" = "Ni spletne strani za zaznamek";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Priljubljeni shranjeni";
+"web.url.save.favorite.done" = "Priljubljeni dodan";
 

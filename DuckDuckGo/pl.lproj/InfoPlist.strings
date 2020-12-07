@@ -11,7 +11,7 @@
 "NSFaceIDUsageDescription" = "Umożliwia odblokowanie za pomocą Face ID";
 
 /* Privacy - Location When In Use Usage Description */
-"NSLocationWhenInUseUsageDescription" = "Umożliwia udostępnianie swojej lokalizacji";
+"NSLocationWhenInUseUsageDescription" = "Umożliwia udostępnianie Twojej lokalizacji";
 
 /* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Umożliwia udostępnianie nagrań";
@@ -21,4 +21,7 @@
 
 /* (No Comment) */
 "Paste from clipboard" = "Wklej ze schowka";
+
+/* (No Comment) */
+"Paste from Clipboard" = "Wklej ze schowka";
 

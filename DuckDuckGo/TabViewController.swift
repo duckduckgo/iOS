@@ -31,19 +31,7 @@ class TabViewController: UIViewController {
         static let frameLoadInterruptedErrorCode = 102
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
-        
-        static let secGPCHeader = "Sec-GPC"
     }
-    
-    enum LinkDestination {
-        
-        case currentTab
-        case newTab
-        case backgroundTab
-        
-    }
-    
-    var tapLinkDestination: LinkDestination = .currentTab
     
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
@@ -100,6 +88,12 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
     private var trackersInfoWorkItem: DispatchWorkItem?
+
+    // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
+    private var woShownRecently = false
+
+    // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
+    private var fireWoFollowUp = false
     
     public var url: URL? {
         didSet {
@@ -108,6 +102,8 @@ class TabViewController: UIViewController {
             checkLoginDetectionAfterNavigation()
         }
     }
+
+    private var lastCommittedURL: URL?
     
     override var title: String? {
         didSet {
@@ -195,8 +191,10 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         showMenuHighlighterIfNeeded()
+
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -489,6 +487,7 @@ class TabViewController: UIViewController {
     }
     
     private func reloadUserScripts() {
+        lastCommittedURL = nil
         removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
@@ -534,6 +533,7 @@ class TabViewController: UIViewController {
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
             controller.spec = sender as? DaxDialogs.BrowsingSpec
+            controller.woShown = woShownRecently
             controller.delegate = self
             
             if controller.spec?.highlightAddressBar ?? false {
@@ -796,6 +796,7 @@ extension TabViewController: WKNavigationDelegate {
             instrumentation.willLoad(url: url)
         }
                 
+        lastCommittedURL = webView.url
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -804,7 +805,10 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         os_log("webpageLoading started", log: generalLog, type: .debug)
-        
+
+        // Only fire when on the same page that the without trackers Dax Dialog was shown
+        self.fireWoFollowUp = false
+
         self.httpsForced = httpsForced
         delegate?.showBars()
 
@@ -920,6 +924,11 @@ extension TabViewController: WKNavigationDelegate {
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+
+            if spec == DaxDialogs.BrowsingSpec.withoutTrackers {
+                self?.woShownRecently = true
+                self?.fireWoFollowUp = true
+            }
         }
     }
     
@@ -994,53 +1003,25 @@ extension TabViewController: WKNavigationDelegate {
         detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
-    
-    private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
-        var request = incomingRequest
-        // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
-            if let headers = request.allHTTPHeaderFields,
-               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
-                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-                return request
-            }
-        } else {
-            // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
-                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-                return request
-            }
-        }
-        
-        return nil
-    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        if navigationAction.isTargetingMainFrame(),
-           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
-           navigationAction.navigationType != .backForward,
-           let request = requestForDoNotSell(basedOn: navigationAction.request) {
-            decisionHandler(.cancel)
-            load(urlRequest: request)
-            return
-        }
+        if navigationAction.navigationType == .linkActivated,
+           let url = navigationAction.request.url,
+           let modifierFlags = delegate?.tabWillRequestNewTab(self) {
 
-        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
-            switch tapLinkDestination {
-            case .newTab:
-                decisionHandler(.cancel)
-                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
-                return
-
-            case .backgroundTab:
-                decisionHandler(.cancel)
-                delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
-                return
-                
-            default: break
+            if modifierFlags.contains(.command) {
+                if modifierFlags.contains(.shift) {
+                    decisionHandler(.cancel)
+                    delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+                    return
+                } else {
+                    decisionHandler(.cancel)
+                    delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+                    return
+                }
             }
         }
         
@@ -1101,6 +1082,8 @@ extension TabViewController: WKNavigationDelegate {
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
+            } else {
+                presentOpenInExternalAppAlert(url: url)
             }
             completion(.cancel)
         }
@@ -1274,6 +1257,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
+        lastCommittedURL = nil
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
                 load(url: url)
@@ -1297,6 +1281,12 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
     }
     
     func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
+
+        if tracker.blocked && fireWoFollowUp {
+            fireWoFollowUp = false
+            Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
+        }
+
         siteRating?.trackerDetected(tracker)
         onSiteRatingChanged()
 

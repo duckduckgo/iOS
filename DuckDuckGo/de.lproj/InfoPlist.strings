@@ -8,7 +8,7 @@
 "NSCameraUsageDescription" = "Lade Fotos und Videos hoch";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Entsperre mit Face ID";
+"NSFaceIDUsageDescription" = "Nutze Face ID zum Entsperren";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Teile deinen Standort";
@@ -21,4 +21,7 @@
 
 /* (No Comment) */
 "Paste from clipboard" = "Vom Clipboard einfügen";
+
+/* (No Comment) */
+"Paste from Clipboard" = "Vom Clipboard einfügen";
 

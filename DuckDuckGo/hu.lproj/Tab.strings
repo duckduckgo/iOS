@@ -1,6 +1,6 @@
 /* Class = "UILabel"; text = "DuckDuckGo can’t load this page."; ObjectID = "6P7-7R-riV"; */
 "6P7-7R-riV.text" = "A DuckDuckGo nem tudja betölteni ezt az oldalt.";
 
-/* Class = "UILabel"; text = "This website has an invalid certificate and could be trying to pretend to be the website you are trying to access.  Please proceed with caution."; ObjectID = "Cjw-mk-QL3"; */
-"Cjw-mk-QL3.text" = "A weboldal érvénytelen tanúsítvánnyal rendelkezik, és megpróbálhat úgy tenni, mintha az a weboldal lenne, amelyet elérni próbálsz.  Óvatosan folytasd.";
+/* Class = "UILabel"; text = "This website has an invalid security certificate and might not be safe to visit."; ObjectID = "Cjw-mk-QL3"; */
+"Cjw-mk-QL3.text" = "Ez a webhely érvénytelen biztonsági tanúsítvánnyal rendelkezik, és meglátogatása talán nem biztonságos.";
 

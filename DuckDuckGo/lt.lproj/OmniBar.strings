@@ -17,7 +17,7 @@
 "IHT-9R-ERy.normalTitle" = "Atšaukti";
 
 /* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
-"ii4-Sq-bD1.accessibilityLabel" = "Žymelės";
+"ii4-Sq-bD1.accessibilityLabel" = "Žymės";
 
 /* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
 "nJo-2d-gri.accessibilityLabel" = "Naršymo meniu";

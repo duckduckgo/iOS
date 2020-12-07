@@ -17,19 +17,19 @@
 
 I blocked them!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
 			<key>zero</key>
 			<string>*%2$@ and %3$@* were trying to track you here.
 
 I blocked them!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
 			<key>other</key>
 			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
 
 I blocked them!
 
-☝️ You can check the URL bar to see who is trying to track you when you visit a new site.</string>
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

@@ -1,2 +1,2 @@
-• Our widgets are now more accessible if you're blind or have low vision.
+• We now show bookmarks in autocomplete results. This lets you get to your favorite sites faster.
 • Bug fixes and other improvements.

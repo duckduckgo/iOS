@@ -5,7 +5,7 @@
 "2aH-nO-H3f.accessibilityLabel" = "Pridėti visus skirtukus kaip žymes";
 
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
-"2en-CB-bYH.accessibilityLabel" = "Uždaryti kortelė";
+"2en-CB-bYH.accessibilityLabel" = "Uždaryti kortelę";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
 "2GU-MM-UwX.text" = "Pavadinimas";
@@ -20,7 +20,7 @@
 "cYd-YU-sSj.accessibilityLabel" = "Pridėti naują skirtuką";
 
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "G2C-qh-g3T"; */
-"G2C-qh-g3T.accessibilityLabel" = "Uždaryti kortelė";
+"G2C-qh-g3T.accessibilityLabel" = "Uždaryti kortelę";
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "Gyy-py-IOg"; */
 "Gyy-py-IOg.accessibilityLabel" = "Skirtukas neperskaitytas";

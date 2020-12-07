@@ -1,5 +1,5 @@
-/* Class = "UILabel"; text = "Site is Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
-"0ax-Nd-tDU.text" = "Site-ul este o rețea mare de cookie-uri de urmărire";
+/* Class = "UILabel"; text = "Site Is a Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
+"0ax-Nd-tDU.text" = "Site-ul este o rețea mare de instrumente de urmărire";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
 "0SO-8y-5QH.text" = "www.example.com";
@@ -7,16 +7,16 @@
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Încearcă din nou";
 
-/* Class = "UILabel"; text = "Your Data is Vulnerable"; ObjectID = "2T4-dB-Wu0"; */
-"2T4-dB-Wu0.text" = "Datele tale sunt vulnerabile";
+/* Class = "UILabel"; text = "Data Is Unencrypted"; ObjectID = "2T4-dB-Wu0"; */
+"2T4-dB-Wu0.text" = "Datele sunt necriptate";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
-"2xP-ZS-UtN.normalTitle" = "Raportați Site-ul Distrus";
+"2xP-ZS-UtN.normalTitle" = "Raportați site-ul defect";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "CEI MAI MARI INFRACTORI PRIVIND REȚELELE DE COOKIE-URI DE URMĂRIRE";
+"3UG-EO-bt5.text" = "CEI MAI MARI INFRACTORI ÎN CADRUL REȚELELOR DE COOKIE-URI DE URMĂRIRE";
 
-/* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
+/* Class = "UILabel"; text = "Check your Internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Verifică conexiunea la internet și încearcă din nou.";
 
 /* Class = "UILabel"; text = "Enhanced Grade"; ObjectID = "5dV-qp-Hz5"; */
@@ -25,8 +25,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
 "6os-4h-chg.text" = "Label";
 
-/* Class = "UILabel"; text = "Uh-oh, that didn’t work."; ObjectID = "7k3-Qj-oya"; */
-"7k3-Qj-oya.text" = "Of, nu a funcționat.";
+/* Class = "UILabel"; text = "Uh-Oh, That Didn’t Work"; ObjectID = "7k3-Qj-oya"; */
+"7k3-Qj-oya.text" = "Of, nu a funcționat";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "7nh-8f-M2e"; */
 "7nh-8f-M2e.text" = "www.example.com";
@@ -38,16 +38,16 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Practici privind confidențialitatea";
+"25V-p3-wsn.text" = "PRACTICI DE CONFIDENȚIALITATE";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Resetează statisticile despre rețelele de urmărire";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "CEI MAI MARI INFRACTORI PRIVIND REȚELELE DE COOKIE-URI DE URMĂRIRE";
+"aD3-hP-MUU.text" = "CEI MAI MARI INFRACTORI ÎN CADRUL REȚELELOR DE COOKIE-URI DE URMĂRIRE";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Conexiune criptată";
+"dZC-7f-pp3.text" = "CONEXIUNE CRIPTATĂ";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -62,7 +62,7 @@
 "GZ4-PW-wOG.text" = "8 instrumente de urmărire blocate";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "hDv-jp-eaS"; */
-"hDv-jp-eaS.normalTitle" = "Raportați Site-ul Distrus";
+"hDv-jp-eaS.normalTitle" = "Raportați site-ul defect";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
 "iF1-sO-WXk.text" = "Practici privind confidențialitatea";
@@ -73,7 +73,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
 "J3L-KE-1Vb.text" = "Label";
 
-/* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
+/* Class = "UILabel"; text = "No privacy practices found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Nu s-au găsit practici privind confidențialitatea";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
@@ -92,13 +92,13 @@
 "pW9-ic-ro9.text" = "Protecția confidențialității site-ului";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "CEI MAI MARI INFRACTORI PRIVIND REȚELELE DE COOKIE-URI DE URMĂRIRE";
+"rXM-kA-bL0.text" = "CEI MAI MARI INFRACTORI ÎN CADRUL REȚELELOR DE COOKIE-URI DE URMĂRIRE";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
 "sr7-Qg-P74.text" = "Protecția confidențialității site-ului";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "CEI MAI MARI INFRACTORI PRIVIND REȚELELE DE COOKIE-URI DE URMĂRIRE";
+"tpT-I9-kDk.text" = "CEI MAI MARI INFRACTORI ÎN CADRUL REȚELELOR DE COOKIE-URI DE URMĂRIRE";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Conexiune criptată";

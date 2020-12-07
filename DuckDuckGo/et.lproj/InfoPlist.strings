@@ -5,20 +5,23 @@
 "CFBundleName" = "DuckDuckGo";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Võimaldab sul üles laadida fotosid ja videoid";
+"NSCameraUsageDescription" = "Võimaldab üles laadida fotosid ja videoid";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Võimaldab sul Face ID abil lukustusest avada";
+"NSFaceIDUsageDescription" = "Võimaldab Face ID abil lukustusest avada";
 
 /* Privacy - Location When In Use Usage Description */
-"NSLocationWhenInUseUsageDescription" = "Võimaldab sul oma asukohta jagada";
+"NSLocationWhenInUseUsageDescription" = "Võimaldab oma asukohta jagada";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Võimaldab sul salvestisi jagada";
+"NSMicrophoneUsageDescription" = "Võimaldab salvestisi jagada";
 
 /* Privacy - Photo Library Additions Usage Description */
-"NSPhotoLibraryAddUsageDescription" = "Võimaldab sul salvestada pilte oma seadmesse";
+"NSPhotoLibraryAddUsageDescription" = "Võimaldab salvestada pilte oma seadmesse";
 
 /* (No Comment) */
 "Paste from clipboard" = "Kleebi lõikelaualt";
+
+/* (No Comment) */
+"Paste from Clipboard" = "Kleebi lõikelaualt";
 

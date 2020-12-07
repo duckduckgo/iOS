@@ -1,7 +1,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
 "Lqe-Wh-Evj.text" = "Метка";
 
-/* Class = "UILabel"; text = "No bookmarks yet"; ObjectID = "N2X-jQ-cbU"; */
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
 "N2X-jQ-cbU.text" = "Закладок пока нет";
 
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */

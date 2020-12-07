@@ -14,7 +14,7 @@
 "widget.gallery.search.display.name" = "Ara";
 
 /* CTA shown in the favorites widget empty state. */
-"widget.no.favorites.cta" = "Favori Ekle";
+"widget.no.favorites.cta" = "Favorilere Ekle";
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "En sevdiğiniz siteleri hızlıca ziyaret edin.";

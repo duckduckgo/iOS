@@ -1,4 +1,4 @@
-/* Class = "UILabel"; text = "Site is Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
+/* Class = "UILabel"; text = "Site Is a Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
 "0ax-Nd-tDU.text" = "A weboldal egy nagy nyomkövető-hálózat";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
@@ -7,8 +7,8 @@
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Próbáld újra";
 
-/* Class = "UILabel"; text = "Your Data is Vulnerable"; ObjectID = "2T4-dB-Wu0"; */
-"2T4-dB-Wu0.text" = "Az adataid sebezhetők.";
+/* Class = "UILabel"; text = "Data Is Unencrypted"; ObjectID = "2T4-dB-Wu0"; */
+"2T4-dB-Wu0.text" = "Az adatok nincsenek titkosítva";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
 "2xP-ZS-UtN.normalTitle" = "Hibás weboldal jelentése";
@@ -16,7 +16,7 @@
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
 "3UG-EO-bt5.text" = "A NYOMKÖVETŐ-HÁLÓZAT LEGNAGYOBB BŰNELKÖVETŐI";
 
-/* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
+/* Class = "UILabel"; text = "Check your Internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Ellenőrizd az internetkapcsolatodat, és próbáld újra.";
 
 /* Class = "UILabel"; text = "Enhanced Grade"; ObjectID = "5dV-qp-Hz5"; */
@@ -25,7 +25,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
 "6os-4h-chg.text" = "Címke";
 
-/* Class = "UILabel"; text = "Uh-oh, that didn’t work."; ObjectID = "7k3-Qj-oya"; */
+/* Class = "UILabel"; text = "Uh-Oh, That Didn’t Work"; ObjectID = "7k3-Qj-oya"; */
 "7k3-Qj-oya.text" = "Hát, ez nem vált be.";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "7nh-8f-M2e"; */
@@ -38,7 +38,7 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Adatvédelmi gyakorlatok";
+"25V-p3-wsn.text" = "ADATVÉDELMI GYAKORLATOK";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Nyomkövető hálózati statisztikák visszaállítása";
@@ -47,7 +47,7 @@
 "aD3-hP-MUU.text" = "A NYOMKÖVETŐ-HÁLÓZAT LEGNAGYOBB BŰNELKÖVETŐI";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Titkosított kapcsolat";
+"dZC-7f-pp3.text" = "TITKOSÍTOTT KAPCSOLAT";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -73,7 +73,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
 "J3L-KE-1Vb.text" = "Címke";
 
-/* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
+/* Class = "UILabel"; text = "No privacy practices found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Nem találhatók adatvédelmi gyakorlatok";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */

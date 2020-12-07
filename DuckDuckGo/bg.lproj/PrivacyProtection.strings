@@ -1,4 +1,4 @@
-/* Class = "UILabel"; text = "Site is Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
+/* Class = "UILabel"; text = "Site Is a Major Tracker Network"; ObjectID = "0ax-Nd-tDU"; */
 "0ax-Nd-tDU.text" = "Сайтът е основна проследяваща мрежа";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
@@ -7,26 +7,26 @@
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Нов опит";
 
-/* Class = "UILabel"; text = "Your Data is Vulnerable"; ObjectID = "2T4-dB-Wu0"; */
-"2T4-dB-Wu0.text" = "Вашите данни са уязвими";
+/* Class = "UILabel"; text = "Data Is Unencrypted"; ObjectID = "2T4-dB-Wu0"; */
+"2T4-dB-Wu0.text" = "Данните не са криптирани";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
 "2xP-ZS-UtN.normalTitle" = "Подаване на сигнал за повреден сайт";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
-"3UG-EO-bt5.text" = "ОСНОВНИ НАРУШИТЕЛИ НА МРЕЖАТА ЗА ПРОСЛЕДЯВАНЕ";
+"3UG-EO-bt5.text" = "ОСНОВНИ НАРУШИТЕЛИ В ПРОСЛЕДЯВАЩАТА МРЕЖА";
 
-/* Class = "UILabel"; text = "Check your internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
+/* Class = "UILabel"; text = "Check your Internet connection and try again."; ObjectID = "3uo-s0-uRc"; */
 "3uo-s0-uRc.text" = "Проверете интернет връзката и опитайте отново.";
 
 /* Class = "UILabel"; text = "Enhanced Grade"; ObjectID = "5dV-qp-Hz5"; */
 "5dV-qp-Hz5.text" = "Засилена степен";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "6os-4h-chg"; */
-"6os-4h-chg.text" = "Label";
+"6os-4h-chg.text" = "Етикет";
 
-/* Class = "UILabel"; text = "Uh-oh, that didn’t work."; ObjectID = "7k3-Qj-oya"; */
-"7k3-Qj-oya.text" = "Опа, това не се получи.";
+/* Class = "UILabel"; text = "Uh-Oh, That Didn’t Work"; ObjectID = "7k3-Qj-oya"; */
+"7k3-Qj-oya.text" = "Опа, това не се получи";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "7nh-8f-M2e"; */
 "7nh-8f-M2e.text" = "www.example.com";
@@ -38,16 +38,16 @@
 "7Z1-eg-OWQ.title" = "xxx";
 
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "Практики за защита на поверителността";
+"25V-p3-wsn.text" = "ПРАКТИКИ ЗА ЗАЩИТА НА ПОВЕРИТЕЛНОСТТА";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
-"953-jn-tmN.normalTitle" = "Нулиране на статистики на мрежи за проследяване";
+"953-jn-tmN.normalTitle" = "Нулиране на статистики на проследяващи мрежи";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
-"aD3-hP-MUU.text" = "ОСНОВНИ НАРУШИТЕЛИ НА МРЕЖАТА ЗА ПРОСЛЕДЯВАНЕ";
+"aD3-hP-MUU.text" = "ОСНОВНИ НАРУШИТЕЛИ В ПРОСЛЕДЯВАЩАТА МРЕЖА";
 
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
-"dZC-7f-pp3.text" = "Шифрована връзка";
+"dZC-7f-pp3.text" = "ШИФРОВАНА ВРЪЗКА";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -71,19 +71,19 @@
 "IPS-SD-65t.text" = "Основни нарушители";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "J3L-KE-1Vb"; */
-"J3L-KE-1Vb.text" = "Label";
+"J3L-KE-1Vb.text" = "Етикет";
 
-/* Class = "UILabel"; text = "No Privacy Practices Found"; ObjectID = "k0S-dU-EUe"; */
+/* Class = "UILabel"; text = "No privacy practices found"; ObjectID = "k0S-dU-EUe"; */
 "k0S-dU-EUe.text" = "Не са намерени практики за защита на поверителността";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
 "Kme-pZ-l7N.normalTitle" = "Незащитени сайтове";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
-"Mv2-oP-SQd.text" = "Label";
+"Mv2-oP-SQd.text" = "Етикет";
 
 /* Class = "UILabel"; text = "n TRACKER NETWORKS BLOCKED"; ObjectID = "OHN-Tz-cdk"; Note = "Placeholder string, do not translate"; */
-"OHN-Tz-cdk.text" = "n БЛОКИРАНИ МРЕЖИ ЗА ПРОСЛЕДЯВАНЕ";
+"OHN-Tz-cdk.text" = "n БЛОКИРАНИ ПРОСЛЕДЯВАЩИ МРЕЖИ";
 
 /* Class = "UILabel"; text = "Good Privacy Practices"; ObjectID = "oyz-09-obQ"; */
 "oyz-09-obQ.text" = "Добри практики за защита на поверителността";
@@ -92,13 +92,13 @@
 "pW9-ic-ro9.text" = "Защита на поверителността на сайта";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "rXM-kA-bL0"; */
-"rXM-kA-bL0.text" = "ОСНОВНИ НАРУШИТЕЛИ НА МРЕЖАТА ЗА ПРОСЛЕДЯВАНЕ";
+"rXM-kA-bL0.text" = "ОСНОВНИ НАРУШИТЕЛИ В ПРОСЛЕДЯВАЩАТА МРЕЖА";
 
 /* Class = "UILabel"; text = "Site Privacy Protection"; ObjectID = "sr7-Qg-P74"; */
 "sr7-Qg-P74.text" = "Защита на поверителността на сайта";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "tpT-I9-kDk"; */
-"tpT-I9-kDk.text" = "ОСНОВНИ НАРУШИТЕЛИ НА МРЕЖАТА ЗА ПРОСЛЕДЯВАНЕ";
+"tpT-I9-kDk.text" = "ОСНОВНИ НАРУШИТЕЛИ В ПРОСЛЕДЯВАЩАТА МРЕЖА";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Шифрована връзка";
@@ -107,7 +107,7 @@
 "XzQ-fW-tzk.text" = "Блокирани основни мрежи";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK FREQUENCY"; ObjectID = "Y3q-u7-IeX"; */
-"Y3q-u7-IeX.text" = "ЧЕСТОТА НА МРЕЖА ЗА ПРОСЛЕДЯВАНЕ";
+"Y3q-u7-IeX.text" = "ЧЕСТОТА НА ПРОСЛЕДЯВАЩА МРЕЖА";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "zz1-Q4-Fxr"; */
 "zz1-Q4-Fxr.text" = "Шифрована връзка";

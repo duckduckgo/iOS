@@ -11,7 +11,7 @@
 "2GU-MM-UwX.text" = "Τίτλος";
 
 /* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
-"5nO-MZ-vSY.accessibilityLabel" = "Κλείσιμο όλων των καρτελών και εκκαθάριση δεδομένων";
+"5nO-MZ-vSY.accessibilityLabel" = "Κλείσιμο όλων των καρτελών και απαλοιφή δεδομένων";
 
 /* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
 "Cy7-Lb-veV.text" = "Καρτέλες";
@@ -26,7 +26,7 @@
 "Gyy-py-IOg.accessibilityLabel" = "Μη αναγνωσμένη καρτέλα";
 
 /* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "h1S-c2-Spf"; */
-"h1S-c2-Spf.title" = "Κλείσιμο όλων των καρτελών και εκκαθάριση δεδομένων";
+"h1S-c2-Spf.title" = "Κλείσιμο όλων των καρτελών και απαλοιφή δεδομένων";
 
 /* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
 "Hcx-F2-HgO.accessibilityLabel" = "Εκκαθάριση καρτελών και δεδομένων";

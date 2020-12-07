@@ -4,17 +4,17 @@
 /* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
 "7zN-Xh-yYi.normalTitle" = "Partagez vos commentaires";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "46v-cB-2YV"; */
-"46v-cB-2YV.title" = "Envoyez vos remarques";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Partagez vos commentaires";
 
-/* Class = "UIButton"; normalTitle = "No thanks! I’m done"; ObjectID = "A1s-GY-hbq"; */
+/* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Non merci ! J'ai terminé";
 
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
 "cZl-qB-kSL.title" = "Fermer";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "D8A-B7-Dqu"; */
-"D8A-B7-Dqu.title" = "Envoyez vos remarques";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Partagez vos commentaires";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
 "epz-Ta-KQ7.title" = "Retour";
@@ -31,11 +31,11 @@
 /* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
 "jr6-Al-4fr.title" = "Envoyer";
 
-/* Class = "UIButton"; normalTitle = "Submit Feedback"; ObjectID = "lsB-Kq-U8p"; */
-"lsB-Kq-U8p.normalTitle" = "ENVOYER UN COMMENTAIRE";
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "Envoyer";
 
-/* Class = "UITableViewController"; title = "Send Feedback"; ObjectID = "lY6-5c-iu4"; */
-"lY6-5c-iu4.title" = "Envoyez vos remarques";
+/* Class = "UITableViewController"; title = "Share Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Partagez vos commentaires";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
 "m0a-EJ-h27.title" = "Retour";
@@ -43,26 +43,26 @@
 /* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
 "msl-mT-bMG.accessibilityLabel" = "Négatifs";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "oHj-cX-c6z"; */
-"oHj-cX-c6z.title" = "Envoyez vos remarques";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Partagez vos commentaires";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "rAY-cv-mjl"; */
-"rAY-cv-mjl.title" = "Envoyez vos remarques";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Partagez vos commentaires";
 
-/* Class = "UIViewController"; title = "Send Feedback"; ObjectID = "Rvx-dM-etJ"; */
-"Rvx-dM-etJ.title" = "Envoyez vos remarques";
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Partagez vos commentaires";
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
 "TMj-NM-j3b.placeholder" = "Quel site Web pose problème ?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Signaler un site cassé";
+"WjT-HM-yim.title" = "Signaler un problème de site";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Raison du mauvais fonctionnement du site";
 
-/* Class = "UINavigationItem"; title = "Send Feedback"; ObjectID = "Xb0-Zu-opM"; */
-"Xb0-Zu-opM.title" = "Envoyez vos remarques";
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Partagez vos commentaires";
 
 /* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
 "ze4-T7-OFN.accessibilityLabel" = "Positifs";

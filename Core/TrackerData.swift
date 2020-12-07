@@ -47,6 +47,19 @@ public struct TrackerData: Codable, Equatable {
         return entities[owner?.name ?? ""]?.domains
     }
     
+    func findTracker(byCname cname: String) -> KnownTracker? {
+        var currdomain = cname
+        while currdomain.contains(".") {
+            if let tracker = self.trackers[currdomain] {
+                return tracker
+            }
+            
+            currdomain = currdomain.split(separator: ".").dropFirst().joined(separator: ".")
+        }
+        
+        return nil
+    }
+    
     enum CodingKeys: String, CodingKey {
         case trackers
         case entities

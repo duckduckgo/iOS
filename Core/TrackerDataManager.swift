@@ -65,11 +65,8 @@ public class TrackerDataManager {
         
         do {
             // This maigh fail if the downloaded data is corrupt or format has changed unexpectedly
-            let dict = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
             trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
-            Swift.print("LOADED")
         } catch {
-            Swift.print("FALLING BACK: \(error.localizedDescription)")
             // This should NEVER fail
             let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
             self.trackerData = trackerData!
@@ -86,6 +83,10 @@ public class TrackerDataManager {
         for host in variations(of: host) {
             if let tracker = trackerData.trackers[host] {
                 return tracker                
+            } else if let cname = trackerData.cnames?[host] {
+                var tracker = trackerData.findTracker(byCname: cname)
+                tracker = tracker?.copy(withNewDomain: cname)
+                return tracker
             }
         }
         return nil

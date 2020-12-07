@@ -1087,6 +1087,7 @@ extension MainViewController: TabDelegate {
              for navigationAction: WKNavigationAction) -> WKWebView? {
 
         showBars()
+        currentTab?.dismiss()
 
         let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
         newTab.openedByPage = true

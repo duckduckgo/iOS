@@ -32,7 +32,7 @@ class SuggestionTableViewCell: UITableViewCell {
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var plusButton: UIButton!
 
-    func updateFor(query: String, suggestion: Suggestion) {
+    func updateFor(query: String, suggestion: Suggestion, with theme: Theme) {
         let text = suggestion.suggestion
         
         switch suggestion.source {
@@ -46,18 +46,34 @@ class SuggestionTableViewCell: UITableViewCell {
             }
         }
         
-        styleText(query: query, text: suggestion.suggestion)
+        styleText(query: query,
+                  text: suggestion.suggestion,
+                  regularColor: theme.tableCellTextColor,
+                  suggestionColor: theme.autocompleteSuggestionTextColor)
     }
 
-    private func styleText(query: String, text: String) {
+    private func styleText(query: String, text: String, regularColor: UIColor, suggestionColor: UIColor) {
 
-        let attributes = [
+        let regularAttributes = [
             NSAttributedString.Key.font: UIFont.semiBoldAppFont(ofSize: 16),
-            NSAttributedString.Key.foregroundColor: UIColor.white
+            NSAttributedString.Key.foregroundColor: regularColor
+        ]
+        
+        let boldAttributes = [
+            NSAttributedString.Key.font: UIFont.boldAppFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor: suggestionColor
         ]
 
-        let text = NSMutableAttributedString(string: text)
-        text.addAttributes(attributes, range: NSRange(location: 0, length: text.length))
-        label.attributedText = text
+        let newText = NSMutableAttributedString(string: text)
+        
+        let queryLength = query.length()
+        if queryLength < newText.length, text.hasPrefix(query) {
+            newText.addAttributes(regularAttributes, range: NSRange(location: 0, length: queryLength))
+            newText.addAttributes(boldAttributes, range: NSRange(location: queryLength, length: newText.length - queryLength))
+        } else {
+            newText.addAttributes(regularAttributes, range: NSRange(location: 0, length: newText.length))
+        }
+        
+        label.attributedText = newText
     }
 }

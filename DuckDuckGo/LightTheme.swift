@@ -55,6 +55,7 @@ struct LightTheme: Theme {
     var progressBarGradientDarkColor = UIColor.cornflowerBlue
     var progressBarGradientLightColor = UIColor.skyBlueLight
 
+    var autocompleteSuggestionTextColor = UIColor.black
     var autocompleteCellAccessoryColor = UIColor.darkGreyish
     
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight

@@ -963,7 +963,19 @@ extension MainViewController: OmniBarDelegate {
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
-        showSuggestionTray(.favorites)
+        
+        let isDDGSearch: Bool
+        if let tabURL = currentTab?.url {
+            isDDGSearch = appUrls.isDuckDuckGoSearch(url: tabURL)
+        } else {
+            isDDGSearch = false
+        }
+        
+        if isDDGSearch, let query = omniBar.textField.text {
+            showSuggestionTray(.autocomplete(query: query))
+        } else {
+            showSuggestionTray(.favorites)
+        }
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {

@@ -12,6 +12,7 @@
 		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
 		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
+		025CCF76257EAFAF001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
 		02C57C5525153330009E5129 /* DoNotSellUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C5425153330009E5129 /* DoNotSellUserScript.swift */; };
 		02C57C5F251533CE009E5129 /* donotsell.js in Resources */ = {isa = PBXBuildFile; fileRef = 02C57C5E251533CE009E5129 /* donotsell.js */; };
@@ -699,6 +700,7 @@
 		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
 		0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesUserScript.swift; sourceTree = "<group>"; };
 		0254AC2324EDACDE004855DF /* contentblockerrules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = contentblockerrules.js; sourceTree = "<group>"; };
+		025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerprintUITest.swift; sourceTree = "<group>"; };
 		02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotSellSettingsViewController.swift; sourceTree = "<group>"; };
 		02C57C5425153330009E5129 /* DoNotSellUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotSellUserScript.swift; sourceTree = "<group>"; };
 		02C57C5E251533CE009E5129 /* donotsell.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = donotsell.js; sourceTree = "<group>"; };
@@ -2103,6 +2105,14 @@
 			name = ContentBlockerRules;
 			sourceTree = "<group>";
 		};
+		025CCF74257EAF73001CD5BB /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
 		02DC6A50255D8BE700B03BC2 /* fingerprinting */ = {
 			isa = PBXGroup;
 			children = (
@@ -2353,6 +2363,7 @@
 				98A54A8222AFCB2C00E541F4 /* Instruments */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
 				85F21DAE210F5E32002631A6 /* IntegrationTests */,
+				025CCF74257EAF73001CD5BB /* UITests */,
 				85482D892462DCD100EDEDD1 /* OpenAction */,
 				8512EA5224ED30D20073EE19 /* Widgets */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
@@ -4800,6 +4811,7 @@
 			files = (
 				85519125247468580010FDD0 /* TrackerRadarIntegrationTests.swift in Sources */,
 				02CA904D24FD2DB000D41DDF /* ContentBlockingRulesTests.swift in Sources */,
+				025CCF76257EAFAF001CD5BB /* FingerprintUITest.swift in Sources */,
 				85F21DBE21121147002631A6 /* AtbServerTests.swift in Sources */,
 				85F21DB0210F5E32002631A6 /* AtbIntegrationTests.swift in Sources */,
 				8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */,

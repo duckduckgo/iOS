@@ -34,11 +34,17 @@ extension UIImageView {
                      usingCache cacheType: Favicons.CacheType,
                      useFakeFavicon: Bool = true,
                      completion: ((UIImage?, Bool) -> Void)? = nil) {
-        
-        DispatchQueue.global(qos: .utility).async {
-            self.loadFaviconSync(forDomain: domain, usingCache: cacheType, useFakeFavicon: useFakeFavicon, completion: completion)
+
+        func load() {
+            loadFaviconSync(forDomain: domain, usingCache: cacheType, useFakeFavicon: useFakeFavicon, completion: completion)
         }
-        
+
+        if Thread.isMainThread {
+            load()
+        } else {
+            DispatchQueue.main.async(execute: load)
+        }
+
     }
 
     private func loadFaviconSync(forDomain domain: String?,
@@ -47,16 +53,14 @@ extension UIImageView {
                                  completion: ((UIImage?, Bool) -> Void)? = nil) {
    
         func complete(_ image: UIImage?) {
-            DispatchQueue.main.async {
-                var fake = false
-                if image != nil {
-                    self.image = image
-                } else if useFakeFavicon, let domain = domain {
-                    fake = true
-                    self.image = Self.createFakeFavicon(forDomain: domain)
-                }
-                completion?(self.image, fake)
+            var fake = false
+            if image != nil {
+                self.image = image
+            } else if useFakeFavicon, let domain = domain {
+                fake = true
+                self.image = Self.createFakeFavicon(forDomain: domain)
             }
+            completion?(self.image, fake)
         }
         
         if UIImageViewConstants.appUrls.isDuckDuckGo(domain: domain) {

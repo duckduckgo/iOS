@@ -75,6 +75,9 @@ class TabViewController: UIViewController {
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
+    
+    private let requeryLogic = RequeryLogic()
+    
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
     private var lastError: Error?
@@ -342,6 +345,10 @@ class TabViewController: UIViewController {
     
     private func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
+        
+        if let url = urlRequest.url, !shouldReissueSearch(for: url) {
+            requeryLogic.onNewNavigation(url: url)
+        }
         webView.stopLoading()
         webView.load(urlRequest)
     }
@@ -1258,6 +1265,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
+        requeryLogic.onRefresh()
         lastCommittedURL = nil
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {

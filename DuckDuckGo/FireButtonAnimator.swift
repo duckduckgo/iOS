@@ -63,17 +63,25 @@ enum FireButtonAnimationType: String, CaseIterable {
     }
 }
 
-//TODO link to settings (aka appuserdefaults)?
-//yeah, probs, and make all not static and add preloading
-
 class FireButtonAnimator {
     
-    //static let view = animation(type: .fireRising)
+    private let appSettings: AppSettings
+    private var animationView: AnimationView?
     
-    static func animate(type: FireButtonAnimationType, completion: @escaping () -> Void) {
+    init(appSettings: AppSettings) {
+        self.appSettings = appSettings
+        reloadAnimationView()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onFireButtonAnimationChange),
+                                               name: AppUserDefaults.Notifications.currentFireButtonAnimationChange,
+                                               object: nil)
+    }
+        
+    func animate(completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
-              let animationView = type.animationView else {
+              let animationView = animationView else {
             completion()
             return
         }
@@ -86,5 +94,13 @@ class FireButtonAnimator {
             
             animationView.removeFromSuperview()
         }
+    }
+    
+    @objc func onFireButtonAnimationChange() {
+        reloadAnimationView()
+    }
+    
+    private func reloadAnimationView() {
+        animationView = appSettings.currentFireButtonAnimation.animationView
     }
 }

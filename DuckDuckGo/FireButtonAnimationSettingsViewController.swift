@@ -64,7 +64,7 @@ class FireButtonAnimationSettingsViewController: UITableViewController {
         
         let type = availableAnimations[indexPath.row]
         appSettings.currentFireButtonAnimation = type
-        //TODO fire animation controller might need to know about this if it preloads the fire animations
+        NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: nil)
         tableView.reloadData()
     }
 }

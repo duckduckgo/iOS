@@ -76,14 +76,9 @@ class FingerprintUITest: XCTestCase {
             .tap()
         app
             .searchFields["searchEntry"]
-            .typeText("https://privacy-test-pages.glitch.me/privacy-protections/fingerprinting/\n")
+            .typeText("https://privacy-test-pages.glitch.me/privacy-protections/fingerprinting/?run\n")
         let webview = app.webViews.firstMatch
         XCTAssertTrue(webview.staticTexts["⚠️ Please note that:"].firstMatch.waitForExistence(timeout: 25), "Page not loaded")
-        
-        // Run webpage test
-        webview
-            /*@START_MENU_TOKEN@*/.buttons["Start the test"]/*[[".otherElements[\"Fingerprinting test page\"].buttons[\"Start the test\"]",".buttons[\"Start the test\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-            .tap()
         
         // Run the new bookmarklet
         app.toolbars["Toolbar"].buttons["Bookmarks"].tap()

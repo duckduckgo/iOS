@@ -1,5 +1,5 @@
 //
-//  FireButtonAnimation.swift
+//  FireButtonAnimator.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -66,7 +66,7 @@ enum FireButtonAnimationType: String, CaseIterable {
 //TODO link to settings (aka appuserdefaults)?
 //yeah, probs, and make all not static and add preloading
 
-class FireButtonAnimation {
+class FireButtonAnimator {
     
     //static let view = animation(type: .fireRising)
     

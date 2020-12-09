@@ -1336,7 +1336,7 @@ extension MainViewController: AutoClearWorker {
 //        forgetData()
 //        DaxDialogs.shared.resumeRegularFlow()
         
-        FireButtonAnimation.animate(type: appSettings.currentFireButtonAnimation) {
+        FireButtonAnimator.animate(type: appSettings.currentFireButtonAnimation) {
             
             self.forgetTabs()
             completion?()

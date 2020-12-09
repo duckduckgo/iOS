@@ -142,6 +142,9 @@
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Fire button animation settings item"/>
+                                                    </attributedString>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bdg-6r-nMM">
                                                     <rect key="frame" x="324.33333333333337" y="14" width="50.333333333333336" height="16"/>
@@ -1835,7 +1838,11 @@ Cg
                             <outlet property="delegate" destination="cQ5-DF-7xY" id="1FC-9G-vfG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Fire Button Animation" id="uns-8w-IwL"/>
+                    <navigationItem key="navigationItem" title="Fire Button Animation" id="uns-8w-IwL">
+                        <attributedString key="userComments">
+                            <fragment content="Fire button animation setting page title"/>
+                        </attributedString>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kav-l0-Xbo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

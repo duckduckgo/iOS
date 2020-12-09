@@ -35,7 +35,7 @@ enum FireButtonAnimationType: String, CaseIterable {
         case .airstream:
             return UserText.fireButtonAnimationAirstreamName
         case .none:
-            return UserText.fireButtonAnimationNoneName //TODO translations
+            return UserText.fireButtonAnimationNoneName
         }
     }
     

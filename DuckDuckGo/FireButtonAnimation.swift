@@ -26,19 +26,6 @@ enum FireButtonAnimationType: String, CaseIterable {
     case airstream
     case none
     
-    var fileName: String? {
-        switch self {
-        case .fireRising:
-            return "01_Fire_reallysmol"
-        case .waterSwirl:
-            return "02_really_smol"
-        case .airstream:
-            return "03_dividedByFour"
-        case .none:
-            return nil
-        }
-    }
-    
     var descriptionText: String {
         switch self {
         case .fireRising:
@@ -51,87 +38,53 @@ enum FireButtonAnimationType: String, CaseIterable {
             return UserText.fireButtonAnimationNoneName //TODO translations
         }
     }
-}
-
-//TODO link to settings (aka appuserdefaults)
-
-class FireButtonAnimation {
-
-    static func animation(type: FireButtonAnimationType) -> AnimationView? {
-        guard let fileName = type.fileName else {
+    
+    var animationView: AnimationView? {
+        guard let fileName = fileName else {
             return nil
         }
         let animationView = AnimationView(name: fileName)
         animationView.loopMode = .playOnce
+        animationView.contentMode = .scaleAspectFill
         return animationView
     }
     
-    static let view = animation(type: .fireRising)
+    private var fileName: String? {
+        switch self {
+        case .fireRising:
+            return "01_Fire_reallysmol"
+        case .waterSwirl:
+            return "02_really_smol"
+        case .airstream:
+            return "03_dividedByFour"
+        case .none:
+            return nil
+        }
+    }
+}
+
+//TODO link to settings (aka appuserdefaults)?
+//yeah, probs, and make all not static and add preloading
+
+class FireButtonAnimation {
+    
+    //static let view = animation(type: .fireRising)
     
     static func animate(type: FireButtonAnimationType, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
-              let fileName = type.fileName else {
+              let animationView = type.animationView else {
             completion()
             return
         }
-
-        let animationView = AnimationView(name: fileName)
-        animationView.loopMode = .playOnce
-        animationView.contentMode = .scaleAspectFill//window.frame.width > animationView.bounds.width ? .scaleAspectFill : .center
         
         animationView.frame = window.frame
         window.addSubview(animationView)
-
-//        anim.frame = window.frame
-//        anim.transform.ty = anim.frame.size.height
-//        window.addSubview(anim)
         
         animationView.play { _ in
             completion()
             
             animationView.removeFromSuperview()
         }
-
-//        UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseOut, animations: {
-//            anim.transform.ty = -(anim.offset.constant * 2)
-//        }, completion: { _ in
-//            completion()
-//        })
-//
-//        UIView.animate(withDuration: Constants.endAnimationDuration, delay: Constants.endDelayDuration, options: .curveEaseOut, animations: {
-//            anim.alpha = 0
-//        }, completion: { _ in
-//            anim.removeFromSuperview()
-//        })
-
     }
 }
-
-//class FireButtonAnimationController: UIViewController {
-//    
-//    let animationView: AnimationView = {
-//        let animationView = AnimationView(name: FireButtonAnimationType.fire.rawValue)
-//        animationView.loopMode = .playOnce
-//        return animationView
-//    }()
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        view.addSubview(animationView)
-//        
-//        NSLayoutConstraint.activate([
-//            animationView.topAnchor.constraint(equalTo: view.topAnchor),
-//            animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//        ])
-//    }
-//    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//    
-//        animationView.play()
-//    }
-//}

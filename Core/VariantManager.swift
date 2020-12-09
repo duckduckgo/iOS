@@ -24,11 +24,6 @@ public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
-     
-    // Onboarding
-    case onboardingHomeRow
-    case onboardingDefaultBrowser
-    case onboardingWidgets
 }
 
 public struct Variant {
@@ -62,12 +57,7 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
-
-        // Onboarding
-        Variant(name: "mh", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingHomeRow ]),
-        Variant(name: "md", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingDefaultBrowser ]),
-        Variant(name: "mw", weight: 1, isIncluded: When.inEnglishAndIOS14, features: [ .onboardingWidgets ])
+        Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: [])
     ]
     
     public let name: String

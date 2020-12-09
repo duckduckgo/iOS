@@ -23,12 +23,8 @@ import Core
 class OnboardingViewController: UIViewController, Onboarding {
         
     private lazy var controllerNames: [String] = {
-        if variantManager.isSupported(feature: .onboardingHomeRow) {
-            return ["onboardingHomeRow"]
-        } else if variantManager.isSupported(feature: .onboardingDefaultBrowser) {
+        if #available(iOS 14, *) {
             return ["onboardingDefaultBrowser"]
-        } else if variantManager.isSupported(feature: .onboardingWidgets) {
-            return ["onboardingWidget"]
         } else {
             return ["onboardingHomeRow"]
         }

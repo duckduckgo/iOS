@@ -22,8 +22,8 @@ import Foundation
 public class TrackerDataManager {
     
     public struct Constants {
-        public static let embeddedDataSetETag = "5c5dda7f1873f3183b141c0739a187ca"
-        public static let embeddedDatsSetSHA = "R1SM0xhBMf4dmw40wRMbIskMFoVJaQ6t6I40hw9nL3k="
+        public static let embeddedDataSetETag = "7c0a71eb049748b86e8590353141a90f"
+        public static let embeddedDatsSetSHA = "rIBc/qpKYsUxT6+oceMEnF/IUgBCz0tcWMOQWW/waac="
     }
     
     public enum DataSet {

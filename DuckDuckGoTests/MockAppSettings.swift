@@ -28,5 +28,6 @@ class MockAppSettings: AppSettings {
     var allowUniversalLinks: Bool = true
     var longPressPreviews: Bool = true
     var sendDoNotSell: Bool = true
+    var currentFireButtonAnimation: FireButtonAnimationType = FireButtonAnimationType.fireRising
     
 }

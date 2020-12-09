@@ -48,6 +48,8 @@ public class AppUserDefaults: AppSettings {
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
         static let allowUniversalLinks = "com.duckduckgo.app.allowUniversalLinks"
         static let longPressPreviews = "com.duckduckgo.app.longPressPreviews"
+        
+        static let currentFireButtonAnimationKey = "com.duckduckgo.app.currentFireButtonAnimationKey"
     }
 
     private var userDefaults: UserDefaults? {
@@ -144,6 +146,27 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .doNotSell, defaultValue: true)
     var sendDoNotSell: Bool
+    
+    var currentFireButtonAnimation: FireButtonAnimationType {
+        
+        get {
+            var currentAnimation: FireButtonAnimationType?
+            if let string = userDefaults?.string(forKey: Keys.currentFireButtonAnimationKey) {
+                currentAnimation = FireButtonAnimationType(rawValue: string)
+            }
+            
+            if let animation = currentAnimation {
+                return animation
+            } else {
+                return .fireRising 
+            }
+        }
+        
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentFireButtonAnimationKey)
+        }
+        
+    }
     
 }
 

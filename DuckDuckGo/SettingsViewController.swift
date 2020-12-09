@@ -25,6 +25,7 @@ class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
+    @IBOutlet weak var fireButtonAnimationAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
@@ -68,6 +69,7 @@ class SettingsViewController: UITableViewController {
         configureVersionCell()
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
+        configureFireButtonAnimationCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -80,6 +82,7 @@ class SettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        configureFireButtonAnimationCellAccessory()
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
@@ -120,6 +123,10 @@ class SettingsViewController: UITableViewController {
         case .dark:
             themeAccessoryText.text = UserText.themeAccessoryDark
         }
+    }
+    
+    private func configureFireButtonAnimationCellAccessory() {
+        fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
     }
 
     private func configureIconViews() {

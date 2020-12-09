@@ -104,7 +104,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         Favicons.shared.migrateIfNeeded {
             DispatchQueue.main.async {
                 self.homeController?.collectionView.reloadData()
@@ -1331,14 +1331,16 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetAllWithAnimation(completion: (() -> Void)? = nil) {
-        let spid = Instruments.shared.startTimedEvent(.clearingData)
-        Pixel.fire(pixel: .forgetAllExecuted)
-        forgetData()
-        DaxDialogs.shared.resumeRegularFlow()
-        FireAnimation.animate {
+//        let spid = Instruments.shared.startTimedEvent(.clearingData)
+//        Pixel.fire(pixel: .forgetAllExecuted)
+//        forgetData()
+//        DaxDialogs.shared.resumeRegularFlow()
+        
+        FireButtonAnimation.animate(type: appSettings.currentFireButtonAnimation) {
+            
             self.forgetTabs()
             completion?()
-            Instruments.shared.endTimedEvent(for: spid)
+            //Instruments.shared.endTimedEvent(for: spid)
 
             if KeyboardSettings().onNewTab {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -1346,6 +1348,18 @@ extension MainViewController: AutoClearWorker {
                 }
             }
         }
+//        FireAnimation.animate {
+//            self.forgetTabs()
+//            completion?()
+//            Instruments.shared.endTimedEvent(for: spid)
+//
+//            if KeyboardSettings().onNewTab {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                    self.enterSearch()
+//                }
+//            }
+//        }
+        
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }

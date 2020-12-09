@@ -117,6 +117,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
+        mainViewController?.didReturnFromBackground()
+        
         if !privacyStore.authenticationEnabled {
             showKeyboardOnLaunch()
         }

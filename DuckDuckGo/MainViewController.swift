@@ -102,6 +102,9 @@ class MainViewController: UIViewController {
 
     var keyModifierFlags: UIKeyModifierFlags?
     
+    // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
+    private var skipSERPFlow = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -463,6 +466,10 @@ class MainViewController: UIViewController {
 
     public var siteRating: SiteRating? {
         return currentTab?.siteRating
+    }
+    
+    func didReturnFromBackground() {
+        skipSERPFlow = true
     }
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
@@ -961,17 +968,16 @@ extension MainViewController: OmniBarDelegate {
         self.currentTab?.showMenuHighlighterIfNeeded()
     }
     
+    private var isSERPPresented: Bool {
+        guard let tabURL = currentTab?.url else { return false }
+            
+        return appUrls.isDuckDuckGoSearch(url: tabURL)
+    }
+    
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
         
-        let isDDGSearch: Bool
-        if let tabURL = currentTab?.url {
-            isDDGSearch = appUrls.isDuckDuckGoSearch(url: tabURL)
-        } else {
-            isDDGSearch = false
-        }
-        
-        if isDDGSearch, let query = omniBar.textField.text {
+        if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             showSuggestionTray(.autocomplete(query: query))
         } else {
             showSuggestionTray(.favorites)
@@ -979,17 +985,15 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
-        let isDDGSearch: Bool
-        if let tabURL = currentTab?.url {
-            isDDGSearch = appUrls.isDuckDuckGoSearch(url: tabURL)
-        } else {
-            isDDGSearch = false
-        }
+        let selectQueryText = isSERPPresented && !skipSERPFlow
+        skipSERPFlow = false
         
         ViewHighlighter.hideAll()
-        guard let homeController = homeController else { return !isDDGSearch }
+        guard let homeController = homeController else {
+            return !selectQueryText
+        }
         homeController.launchNewSearch()
-        return !isDDGSearch
+        return !selectQueryText
     }
     
     func onRefreshPressed() {

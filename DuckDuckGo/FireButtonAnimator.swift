@@ -52,11 +52,11 @@ enum FireButtonAnimationType: String, CaseIterable {
     private var fileName: String? {
         switch self {
         case .fireRising:
-            return "01_Fire_reallysmol"
+            return "01_Fire_really_small"
         case .waterSwirl:
-            return "02_really_smol"
+            return "02_Water_swirl_really_small"
         case .airstream:
-            return "03_dividedByFour"
+            return "03_Airstream_divided_by_four"
         case .none:
             return nil
         }

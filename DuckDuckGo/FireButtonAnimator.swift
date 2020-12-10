@@ -100,6 +100,7 @@ class FireButtonAnimator {
               let animation = animation,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
             transitionCompletion()
+            completion()
             return
         }
         
@@ -123,7 +124,6 @@ class FireButtonAnimator {
         
         animationView.play { _ in
             animationView.removeFromSuperview()
-            window.showBottomToast(UserText.actionForgetAllDone, duration: 1)
             completion()
         }
     }

@@ -89,3 +89,5 @@ class FingerprintUITest: XCTestCase {
     }
 
 }
+
+// swiftlint:enable line_length

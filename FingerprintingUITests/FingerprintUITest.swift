@@ -25,10 +25,16 @@ class FingerprintUITest: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
-
-        XCUIApplication().launch()
-
+        
         let app = XCUIApplication()
+        
+        app.launchEnvironment = [
+            "DAXDIALOGS": "false",
+            "ONBOARDING": "false",
+            "VARIANT": "sc"
+        ]
+        
+        app.launch()
 
         // Add a bookmark to edit to a bookmarklet later
         app.searchFields["searchEntry"].tap()

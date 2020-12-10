@@ -149,24 +149,18 @@ public class AppUserDefaults: AppSettings {
     var sendDoNotSell: Bool
     
     var currentFireButtonAnimation: FireButtonAnimationType {
-        
         get {
-            var currentAnimation: FireButtonAnimationType?
-            if let string = userDefaults?.string(forKey: Keys.currentFireButtonAnimationKey) {
-                currentAnimation = FireButtonAnimationType(rawValue: string)
-            }
-            
-            if let animation = currentAnimation {
-                return animation
+            if let string = userDefaults?.string(forKey: Keys.currentFireButtonAnimationKey),
+               let currentAnimation = FireButtonAnimationType(rawValue: string) {
+                
+                return currentAnimation
             } else {
-                return .fireRising 
+                return .fireRising
             }
         }
-        
         set {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentFireButtonAnimationKey)
         }
-        
     }
     
 }

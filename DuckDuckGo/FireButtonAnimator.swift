@@ -39,18 +39,19 @@ enum FireButtonAnimationType: String, CaseIterable {
         }
     }
     
-    var animationView: AnimationView? {
-        guard let fileName = fileName else {
+    var animation: Animation? {
+        guard let fileName = fileName,
+              let url = Bundle.main.url(forResource:fileName, withExtension: "json") else {
             return nil
         }
-        let animationView = AnimationView(name: fileName)
-        animationView.loopMode = .playOnce
-        animationView.contentMode = .scaleAspectFill
-        //animationView.respectAnimationFrameRate = true
-        //fire seems to look weird with this?
-        return animationView
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode(Animation.self, from: data)
+        } catch {
+            return nil
+        }
     }
-
+    
     var transition: Double {
         switch self {
         case .fireRising:
@@ -81,11 +82,11 @@ enum FireButtonAnimationType: String, CaseIterable {
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var animationView: AnimationView? //DO I want to change to saving an Animation object?
+    private var animation: Animation?
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
-        reloadAnimationView()
+        reloadPreloadedAnimation()
                 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onFireButtonAnimationChange),
@@ -96,13 +97,19 @@ class FireButtonAnimator {
     func animate(transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
-              let animationView = animationView,
+              let animation = animation,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
             transitionCompletion()
             return
         }
         
         window.addSubview(snapshot)
+        
+        let animationView = AnimationView(animation: animation)
+        animationView.loopMode = .playOnce
+        animationView.contentMode = .scaleAspectFill
+        //animationView.respectAnimationFrameRate = true
+        //fire seems to look weird with this? I prefer without
         
         animationView.frame = window.frame
         window.addSubview(animationView)
@@ -122,10 +129,10 @@ class FireButtonAnimator {
     }
     
     @objc func onFireButtonAnimationChange() {
-        reloadAnimationView()
+        reloadPreloadedAnimation()
     }
     
-    private func reloadAnimationView() {
-        animationView = appSettings.currentFireButtonAnimation.animationView
+    private func reloadPreloadedAnimation() {
+        animation = appSettings.currentFireButtonAnimation.animation
     }
 }

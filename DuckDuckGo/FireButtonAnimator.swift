@@ -41,7 +41,7 @@ enum FireButtonAnimationType: String, CaseIterable {
     
     var animation: Animation? {
         guard let fileName = fileName,
-              let url = Bundle.main.url(forResource:fileName, withExtension: "json") else {
+              let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
             return nil
         }
         do {

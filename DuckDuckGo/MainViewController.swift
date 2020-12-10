@@ -1333,26 +1333,23 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    func forgetAllWithAnimation(completion: (() -> Void)? = nil) {
+    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         DaxDialogs.shared.resumeRegularFlow()
+        self.forgetTabs()
         
         fireButtonAnimator?.animate {
-            self.forgetTabs()
-            completion?()
+            transitionCompletion?()
+        } completion: {
             Instruments.shared.endTimedEvent(for: spid)
-
             if KeyboardSettings().onNewTab {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.enterSearch()
                 }
             }
         }
-        
-        let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
     
 }

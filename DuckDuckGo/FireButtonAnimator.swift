@@ -46,7 +46,22 @@ enum FireButtonAnimationType: String, CaseIterable {
         let animationView = AnimationView(name: fileName)
         animationView.loopMode = .playOnce
         animationView.contentMode = .scaleAspectFill
+        //animationView.respectAnimationFrameRate = true
+        //fire seems to look weird with this?
         return animationView
+    }
+
+    var transition: Double {
+        switch self {
+        case .fireRising:
+            return 0.35
+        case .waterSwirl:
+            return 0.5
+        case .airstream:
+            return 0.5
+        case .none:
+            return 0
+        }
     }
     
     private var fileName: String? {
@@ -66,33 +81,43 @@ enum FireButtonAnimationType: String, CaseIterable {
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var animationView: AnimationView?
+    private var animationView: AnimationView? //DO I want to change to saving an Animation object?
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
         reloadAnimationView()
-        
+                
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onFireButtonAnimationChange),
                                                name: AppUserDefaults.Notifications.currentFireButtonAnimationChange,
                                                object: nil)
     }
         
-    func animate(completion: @escaping () -> Void) {
+    func animate(transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
-              let animationView = animationView else {
-            completion()
+              let animationView = animationView,
+              let snapshot = window.snapshotView(afterScreenUpdates: false) else {
+            transitionCompletion()
             return
         }
+        
+        window.addSubview(snapshot)
         
         animationView.frame = window.frame
         window.addSubview(animationView)
         
+        let duration = animationView.animation?.duration ?? 0
+        let delay = duration * appSettings.currentFireButtonAnimation.transition
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            snapshot.removeFromSuperview()
+            transitionCompletion()
+        }
+        
         animationView.play { _ in
-            completion()
-            
             animationView.removeFromSuperview()
+            window.showBottomToast(UserText.actionForgetAllDone, duration: 1)
+            completion()
         }
     }
     

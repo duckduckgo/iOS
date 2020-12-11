@@ -66,6 +66,8 @@ public struct AppUrls {
         static let source = "ddg_ios"
         static let appUsage = "app_use"
         static let searchHeader = "-1"
+        
+        static let majorVerticals: Set<String> = ["images", "videos", "news", "maps"]
     }
 
     let statisticsStore: StatisticsStore
@@ -148,8 +150,9 @@ public struct AppUrls {
             if let mapsValue = queryContext.getParam(name: Param.verticalMaps) {
                 parameters[Param.verticalMaps] = mapsValue
                 parameters[Param.vertical] = queryContext.getParam(name: Param.vertical)
-            } else {
-                parameters[Param.verticalRewrite] = queryContext.getParam(name: Param.vertical)
+            } else if let vertical = queryContext.getParam(name: Param.vertical),
+                      ParamValue.majorVerticals.contains(vertical) {
+                parameters[Param.verticalRewrite] = vertical
             }
         }
         

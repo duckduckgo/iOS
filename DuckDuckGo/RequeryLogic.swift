@@ -44,6 +44,12 @@ class RequeryLogic {
         onQuerySubmitted(newQuery: query)
     }
     
+    func onRefresh() {
+        guard case .loaded = serpState else { return }
+        
+        sendPixel(value: .sameQuery)
+    }
+    
     private func onQuerySubmitted(newQuery: String) {
         guard case let .loaded(query) = serpState else {
             serpState = .loaded(newQuery)
@@ -58,12 +64,6 @@ class RequeryLogic {
         }
     }
     
-    func onRefresh() {
-        guard case .loaded = serpState else { return }
-        
-        sendPixel(value: .sameQuery)
-    }
-    
     private func sendPixel(value: PixelValue) {
         
         let pixel: PixelName
@@ -74,6 +74,9 @@ class RequeryLogic {
             pixel = .serpRequeryNew
         }
         
-        Pixel.fire(pixel: pixel, forDeviceType: nil, onComplete: { _ in })
+        var headers = APIHeaders().defaultHeaders
+        headers[APIHeaders.Name.userAgent] = UserAgentManager.shared.userAgent(isDesktop: false)
+        
+        Pixel.fire(pixel: pixel, forDeviceType: nil, withHeaders: headers, onComplete: { _ in })
     }
 }

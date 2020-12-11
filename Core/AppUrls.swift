@@ -57,6 +57,9 @@ public struct AppUrls {
         static let activityType = "at"
         static let partialHost = "pv1"
         static let searchHeader = "ko"
+        static let vertical = "ia"
+        static let verticalRewrite = "iar"
+        static let verticalMaps = "iaxm"
     }
 
     private struct ParamValue {
@@ -135,11 +138,22 @@ public struct AppUrls {
         return url.getParam(name: Param.search)
     }
 
-    public func url(forQuery query: String) -> URL {
+    public func url(forQuery query: String, queryContext: URL? = nil) -> URL {
         if let url = URL.webUrl(fromText: query) {
             return url
         }
-        return searchUrl(text: query)
+        
+        var parameters = [String: String]()
+        if let queryContext = queryContext, isDuckDuckGoSearch(url: queryContext) {
+            if let mapsValue = queryContext.getParam(name: Param.verticalMaps) {
+                parameters[Param.verticalMaps] = mapsValue
+                parameters[Param.vertical] = queryContext.getParam(name: Param.vertical)
+            } else {
+                parameters[Param.verticalRewrite] = queryContext.getParam(name: Param.vertical)
+            }
+        }
+        
+        return searchUrl(text: query, additionalParameters: parameters)
     }
 
     public func exti(forAtb atb: String) -> URL {
@@ -151,8 +165,9 @@ public struct AppUrls {
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    public func searchUrl(text: String) -> URL {
-        let searchUrl = base.addParam(name: Param.search, value: text)
+    public func searchUrl(text: String, additionalParameters: [String: String] = [:]) -> URL {
+        var searchUrl = base.addParam(name: Param.search, value: text)
+        searchUrl = searchUrl.addParams(additionalParameters)
         return applyStatsParams(for: searchUrl)
     }
     

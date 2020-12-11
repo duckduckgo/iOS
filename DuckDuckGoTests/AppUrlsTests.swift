@@ -209,6 +209,35 @@ class AppUrlsTests: XCTestCase {
         let url = testee.searchUrl(text: "query")
         XCTAssertEqual(url.getParam(name: "t"), "ddg_ios")
     }
+    
+    func testWhenExistingQueryUsesVerticalThenItIsAppliedToNewOne() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images")!
+        let url = testee.url(forQuery: "query", queryContext: contextURL)
+        
+        XCTAssertEqual(url.getParam(name: "t"), "ddg_ios")
+        XCTAssertEqual(url.getParam(name: "iar"), "images")
+    }
+    
+    func testWhenExistingQueryUsesVerticalWithMapsThenBothAreAppliedToNewOne() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images&iaxm=maps")!
+        let url = testee.url(forQuery: "query", queryContext: contextURL)
+        
+        XCTAssertEqual(url.getParam(name: "t"), "ddg_ios")
+        XCTAssertEqual(url.getParam(name: "ia"), "images")
+        XCTAssertEqual(url.getParam(name: "iaxm"), "maps")
+        XCTAssertNil(url.getParam(name: "iar"))
+    }
+    
+    func testWhenExistingQueryHasNoVerticalThenItIsAbsentInNewOne() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let contextURL = URL(string: "https://example.com")!
+        let url = testee.url(forQuery: "query", queryContext: contextURL)
+        
+        XCTAssertEqual(url.getParam(name: "t"), "ddg_ios")
+        XCTAssertNil(url.getParam(name: "iar"))
+    }
 
     func testWhenAtbValuesExistInStatisticsStoreThenSearchUrlCreatesUrlWithAtb() {
         mockStatisticsStore.atb = "x"

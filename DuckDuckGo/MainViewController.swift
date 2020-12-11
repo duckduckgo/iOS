@@ -505,7 +505,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        let queryUrl = appUrls.url(forQuery: query)
+        let queryUrl = appUrls.url(forQuery: query, queryContext: currentTab?.url)
         loadUrl(queryUrl)
     }
 

@@ -42,7 +42,6 @@ public struct UserText {
     public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", value: "Close Tabs and Clear Data", comment: "")
     public static let actionForgetAllDone = NSLocalizedString("action.title.forgetAllDone", value: "Tabs and data cleared", comment: "Confirmation message")
     public static let actionOpen = NSLocalizedString("action.title.open", value: "Open", comment: "Open action")
-    public static let actionReadingList = NSLocalizedString("action.title.readingList", value: "Add to Reading List", comment: "Reading List action")
     public static let actionCopy = NSLocalizedString("action.title.copy", value: "Copy", comment: "Copy action")
     public static let actionShare = NSLocalizedString("action.title.share", value: "Share...", comment: "Share action")
     public static let actionEnableProtection = NSLocalizedString("action.title.enable.protection", value: "Enable Privacy Protection", comment: "Enable protection action")

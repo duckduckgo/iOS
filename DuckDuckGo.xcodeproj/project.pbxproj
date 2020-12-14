@@ -559,10 +559,9 @@
 		F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F446B9B625115C1700324016 /* HomeMessageCell.xib */; };
 		F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B825115F9700324016 /* HomeMessageCell.swift */; };
 		F456B3B525810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */; };
-		F460CE4D2587C3E1004588DC /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F460CE4C2587C3E1004588DC /* Lottie.framework */; };
-		F460CE4E2587C3E1004588DC /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F460CE4C2587C3E1004588DC /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */; };
 		F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */; };
+		F486D2F62506958A002D07D7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F486D2F52506958A002D07D7 /* Lottie */; };
 		F486D306250697AF002D07D7 /* Punnycode in Frameworks */ = {isa = PBXBuildFile; productRef = F486D305250697AF002D07D7 /* Punnycode */; };
 		F486D31D2506980E002D07D7 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = F486D31C2506980E002D07D7 /* Swifter */; };
 		F486D33025069993002D07D7 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = F486D32F25069993002D07D7 /* Toast */; };
@@ -679,7 +678,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F143C2EC1E4A4CD400CFDE3A /* Core.framework in Embed Frameworks */,
-				F460CE4E2587C3E1004588DC /* Lottie.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1996,7 +1994,6 @@
 		F446B9B625115C1700324016 /* HomeMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeMessageCell.xib; sourceTree = "<group>"; };
 		F446B9B825115F9700324016 /* HomeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCell.swift; sourceTree = "<group>"; };
 		F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireButtonAnimationSettingsViewController.swift; sourceTree = "<group>"; };
-		F460CE4C2587C3E1004588DC /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/iOS/Lottie.framework; sourceTree = "<group>"; };
 		F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDefaultBroswerViewController.swift; sourceTree = "<group>"; };
 		F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsViewController.swift; sourceTree = "<group>"; };
@@ -2042,8 +2039,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
-				F460CE4D2587C3E1004588DC /* Lottie.framework in Frameworks */,
 				F486D33025069993002D07D7 /* Toast in Frameworks */,
+				F486D2F62506958A002D07D7 /* Lottie in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3505,7 +3502,6 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F460CE4C2587C3E1004588DC /* Lottie.framework */,
 				F1AA54601E48D90700223211 /* NotificationCenter.framework */,
 				8512EA4E24ED30D20073EE19 /* WidgetKit.framework */,
 				8512EA5024ED30D20073EE19 /* SwiftUI.framework */,
@@ -3848,6 +3844,7 @@
 			);
 			name = DuckDuckGo;
 			packageProductDependencies = (
+				F486D2F52506958A002D07D7 /* Lottie */,
 				F486D32F25069993002D07D7 /* Toast */,
 			);
 			productName = DuckDuckGo;
@@ -4098,6 +4095,7 @@
 			mainGroup = 84E341891E2F7EFB00BDBA6F;
 			packageReferences = (
 				F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				F486D2F42506958A002D07D7 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				F486D2F7250695DE002D07D7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */,
 				F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
@@ -6265,10 +6263,6 @@
 				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HKE973VLUW;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6293,10 +6287,6 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = HKE973VLUW;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6725,6 +6715,14 @@
 				minimumVersion = 5.14.1;
 			};
 		};
+		F486D2F42506958A002D07D7 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.8;
+			};
+		};
 		F486D2F7250695DE002D07D7 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -6760,6 +6758,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F486D2F52506958A002D07D7 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F486D2F42506958A002D07D7 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		F486D305250697AF002D07D7 /* Punnycode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */;

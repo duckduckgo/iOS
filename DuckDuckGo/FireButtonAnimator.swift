@@ -119,7 +119,10 @@ class FireButtonAnimator {
             animationView.removeFromSuperview()
             completion()
         }
-        animationStartCompletion()
+
+        DispatchQueue.main.async {
+            animationStartCompletion()
+        }
     }
     
     @objc func onFireButtonAnimationChange() {

@@ -93,7 +93,7 @@ class FireButtonAnimator {
                                                object: nil)
     }
         
-    func animate(transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
+    func animate(animationStartCompletion: @escaping () -> Void, transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
               let animationView = animationView,
@@ -119,6 +119,7 @@ class FireButtonAnimator {
             animationView.removeFromSuperview()
             completion()
         }
+        animationStartCompletion()
     }
     
     @objc func onFireButtonAnimationChange() {

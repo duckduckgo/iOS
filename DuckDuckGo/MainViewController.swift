@@ -1336,11 +1336,12 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        forgetData()
-        DaxDialogs.shared.resumeRegularFlow()
-        self.forgetTabs()
         
         fireButtonAnimator?.animate {
+            self.forgetData()
+            DaxDialogs.shared.resumeRegularFlow()
+            self.forgetTabs()
+        } transitionCompletion: {
             transitionCompletion?()
         } completion: {
             let window = UIApplication.shared.keyWindow

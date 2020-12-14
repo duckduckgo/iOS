@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
 
-/* Reading List action */
-"action.title.readingList" = "Add to Reading List";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Refresh";
 

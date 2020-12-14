@@ -62,8 +62,10 @@ class FingerprintUITest: XCTestCase {
         
         // Edit bookmark into bookmarklet to verify fingerprinting test
         let bookmarksNavigationBar = app.navigationBars["Bookmarks"]
+        sleep(1)
         bookmarksNavigationBar.buttons["Edit"].tap()
-        app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        sleep(1)
+        app.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
         app.alerts["Edit Bookmark"].scrollViews.otherElements.collectionViews.textFields["www.example.com"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
         app.alerts["Edit Bookmark"].scrollViews.otherElements.collectionViews.textFields["www.example.com"]
             .typeText("javascript:(function(){const values = {'screen.availTop': 0,'screen.availLeft': 0,'screen.availWidth': screen.width,'screen.availHeight': screen.height,'screen.colorDepth': 24,'screen.pixelDepth': 24,'window.screenY': 0,'window.screenLeft': 0,'navigator.doNotTrack': undefined};var passed = true;var reason = null;for (const test of results.results) {if (values[test.id] !== undefined) {if (values[test.id] !== test.value) {console.log(test.id, values[test.id]);reason = test.id;passed = false;break;}}}var elem = document.createElement('p');elem.innerHTML = (passed) ? 'TEST PASSED' : 'TEST FAILED: ' + reason;document.body.insertBefore(elem, document.body.childNodes[0]);}());")

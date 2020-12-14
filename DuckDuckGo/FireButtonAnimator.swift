@@ -39,19 +39,18 @@ enum FireButtonAnimationType: String, CaseIterable {
         }
     }
     
-    var animation: Animation? {
-        guard let fileName = fileName,
-              let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
-            return nil
-        }
-        do {
-            let data = try Data(contentsOf: url)
-            return try JSONDecoder().decode(Animation.self, from: data)
-        } catch {
-            return nil
-        }
+    var animationView: AnimationView? {
+        guard let fileName = fileName else { return nil }
+        let animationView = AnimationView(name: fileName)
+        animationView.loopMode = .playOnce
+        animationView.contentMode = .scaleAspectFill
+        let animationSpeed = 1.3
+        animationView.animationSpeed = CGFloat(animationSpeed)
+        //animationView.respectAnimationFrameRate = true
+        //fire seems to look weird with this?
+        return animationView
     }
-    
+
     var transition: Double {
         switch self {
         case .fireRising:
@@ -82,11 +81,11 @@ enum FireButtonAnimationType: String, CaseIterable {
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var animation: Animation?
+    private var animationView: AnimationView? //DO I want to change to saving an Animation object?
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
-        reloadPreloadedAnimation()
+        reloadAnimationView()
                 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onFireButtonAnimationChange),
@@ -97,7 +96,7 @@ class FireButtonAnimator {
     func animate(transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
-              let animation = animation,
+              let animationView = animationView,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
             transitionCompletion()
             completion()
@@ -106,18 +105,11 @@ class FireButtonAnimator {
         
         window.addSubview(snapshot)
         
-        let animationView = AnimationView(animation: animation)
-        animationView.loopMode = .playOnce
-        animationView.contentMode = .scaleAspectFill
-        animationView.respectAnimationFrameRate = false
-        let animationSpeed = 1.3
-        animationView.animationSpeed = CGFloat(animationSpeed)
-        
         animationView.frame = window.frame
         window.addSubview(animationView)
         
         let duration = animationView.animation?.duration ?? 0
-        let delay = duration * appSettings.currentFireButtonAnimation.transition / animationSpeed
+        let delay = duration * appSettings.currentFireButtonAnimation.transition / 1.3
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
             transitionCompletion()
@@ -130,10 +122,10 @@ class FireButtonAnimator {
     }
     
     @objc func onFireButtonAnimationChange() {
-        reloadPreloadedAnimation()
+        reloadAnimationView()
     }
     
-    private func reloadPreloadedAnimation() {
-        animation = appSettings.currentFireButtonAnimation.animation
+    private func reloadAnimationView() {
+        animationView = appSettings.currentFireButtonAnimation.animationView
     }
 }

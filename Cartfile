@@ -1,0 +1,5 @@
+# If this is updated then check remove observers in Favicons.swift doesn't break anything
+
+github "airbnb/lottie-ios" "tags/2.5.3"
+
+

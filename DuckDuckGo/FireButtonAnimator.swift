@@ -110,12 +110,14 @@ class FireButtonAnimator {
         animationView.loopMode = .playOnce
         animationView.contentMode = .scaleAspectFill
         animationView.respectAnimationFrameRate = false
+        let animationSpeed = 1.3
+        animationView.animationSpeed = CGFloat(animationSpeed)
         
         animationView.frame = window.frame
         window.addSubview(animationView)
         
         let duration = animationView.animation?.duration ?? 0
-        let delay = duration * appSettings.currentFireButtonAnimation.transition
+        let delay = duration * appSettings.currentFireButtonAnimation.transition / animationSpeed
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
             transitionCompletion()

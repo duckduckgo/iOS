@@ -109,8 +109,7 @@ class FireButtonAnimator {
         let animationView = AnimationView(animation: animation)
         animationView.loopMode = .playOnce
         animationView.contentMode = .scaleAspectFill
-        //animationView.respectAnimationFrameRate = true
-        //fire seems to look weird with this? I prefer without
+        animationView.respectAnimationFrameRate = false
         
         animationView.frame = window.frame
         window.addSubview(animationView)

@@ -23,6 +23,7 @@ public struct TrackerData: Codable, Equatable {
 
     public typealias EntityName = String
     public typealias TrackerDomain = String
+    public typealias CnameDomain = String
 
     public struct TrackerRules {
         
@@ -33,15 +34,37 @@ public struct TrackerData: Codable, Equatable {
     public let trackers: [TrackerDomain: KnownTracker]
     public let entities: [EntityName: Entity]
     public let domains: [TrackerDomain: EntityName]
+    public let cnames: [CnameDomain: TrackerDomain]?
     
-    public init(trackers: [String: KnownTracker], entities: [String: Entity], domains: [String: String]) {
+    public init(trackers: [String: KnownTracker], entities: [String: Entity], domains: [String: String], cnames: [String: String]?) {
         self.trackers = trackers
         self.entities = entities
         self.domains = domains
+        self.cnames = cnames
     }
 
     func relatedDomains(for owner: KnownTracker.Owner?) -> [String]? {
         return entities[owner?.name ?? ""]?.domains
+    }
+    
+    func findTracker(byCname cname: String) -> KnownTracker? {
+        var currdomain = cname
+        while currdomain.contains(".") {
+            if let tracker = self.trackers[currdomain] {
+                return tracker
+            }
+            
+            currdomain = currdomain.split(separator: ".").dropFirst().joined(separator: ".")
+        }
+        
+        return nil
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case trackers
+        case entities
+        case domains
+        case cnames
     }
     
 }
@@ -100,6 +123,17 @@ public struct KnownTracker: Codable, Equatable {
     public let subdomains: [String]?
     public let categories: [String]?
     public let rules: [Rule]?
+    
+    public func copy(withNewDomain newDomain: String) -> KnownTracker {
+        let newTracker = KnownTracker(domain: newDomain,
+                                      defaultAction: self.defaultAction,
+                                      owner: self.owner,
+                                      prevalence: self.prevalence,
+                                      subdomains: self.subdomains,
+                                      categories: self.categories,
+                                      rules: self.rules)
+        return newTracker
+    }
 
 }
 

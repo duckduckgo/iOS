@@ -347,6 +347,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
+        Pixel.fire(pixel: .refreshPressed)
         trackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }

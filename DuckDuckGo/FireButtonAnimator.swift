@@ -39,15 +39,11 @@ enum FireButtonAnimationType: String, CaseIterable {
         }
     }
     
-    var animationView: AnimationView? {
+    var animationView: LOTAnimationView? {
         guard let fileName = fileName else { return nil }
-        let animationView = AnimationView(name: fileName)
-        animationView.loopMode = .playOnce
+        let animationView = LOTAnimationView(name: fileName)
         animationView.contentMode = .scaleAspectFill
-        let animationSpeed = 1.3
-        animationView.animationSpeed = CGFloat(animationSpeed)
-        //animationView.respectAnimationFrameRate = true
-        //fire seems to look weird with this?
+        animationView.animationSpeed = CGFloat(speed)
         return animationView
     }
 
@@ -62,6 +58,10 @@ enum FireButtonAnimationType: String, CaseIterable {
         case .none:
             return 0
         }
+    }
+    
+    var speed: Double {
+        return 1.3
     }
     
     private var fileName: String? {
@@ -81,7 +81,7 @@ enum FireButtonAnimationType: String, CaseIterable {
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var animationView: AnimationView? //DO I want to change to saving an Animation object?
+    private var animationView: LOTAnimationView?
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
@@ -108,8 +108,9 @@ class FireButtonAnimator {
         animationView.frame = window.frame
         window.addSubview(animationView)
         
-        let duration = animationView.animation?.duration ?? 0
-        let delay = duration * appSettings.currentFireButtonAnimation.transition / 1.3
+        let currentAnimation = appSettings.currentFireButtonAnimation
+        let duration = Double(animationView.animationDuration) / currentAnimation.speed
+        let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
             transitionCompletion()

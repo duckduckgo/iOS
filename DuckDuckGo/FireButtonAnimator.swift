@@ -21,6 +21,7 @@ import UIKit
 import Lottie
 
 enum FireButtonAnimationType: String, CaseIterable {
+
     case fireRising
     case waterSwirl
     case airstream
@@ -39,12 +40,9 @@ enum FireButtonAnimationType: String, CaseIterable {
         }
     }
     
-    var animationView: LOTAnimationView? {
+    var composition: LOTComposition? {
         guard let fileName = fileName else { return nil }
-        let animationView = LOTAnimationView(name: fileName)
-        animationView.contentMode = .scaleAspectFill
-        animationView.animationSpeed = CGFloat(speed)
-        return animationView
+        return LOTComposition(name: fileName)
     }
 
     var transition: Double {
@@ -81,11 +79,11 @@ enum FireButtonAnimationType: String, CaseIterable {
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var animationView: LOTAnimationView?
+    private var preLoadedComposition: LOTComposition?
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
-        reloadAnimationView()
+        reloadPreLoadedComposition()
                 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onFireButtonAnimationChange),
@@ -96,7 +94,6 @@ class FireButtonAnimator {
     func animate(animationStartCompletion: @escaping () -> Void, transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
-              let animationView = animationView,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
             transitionCompletion()
             completion()
@@ -105,11 +102,15 @@ class FireButtonAnimator {
         
         window.addSubview(snapshot)
         
+        let animationView = LOTAnimationView(model: preLoadedComposition, in: nil)
+        let currentAnimation = appSettings.currentFireButtonAnimation
+        let speed = currentAnimation.speed
+        animationView.contentMode = .scaleAspectFill
+        animationView.animationSpeed = CGFloat(speed)
         animationView.frame = window.frame
         window.addSubview(animationView)
         
-        let currentAnimation = appSettings.currentFireButtonAnimation
-        let duration = Double(animationView.animationDuration) / currentAnimation.speed
+        let duration = Double(animationView.animationDuration) / speed
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
@@ -127,10 +128,10 @@ class FireButtonAnimator {
     }
     
     @objc func onFireButtonAnimationChange() {
-        reloadAnimationView()
+        reloadPreLoadedComposition()
     }
     
-    private func reloadAnimationView() {
-        animationView = appSettings.currentFireButtonAnimation.animationView
+    private func reloadPreLoadedComposition() {
+        preLoadedComposition = appSettings.currentFireButtonAnimation.composition
     }
 }

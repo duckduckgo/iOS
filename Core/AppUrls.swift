@@ -48,6 +48,11 @@ public struct AppUrls {
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@"
     }
+    
+    private enum DDGStaticURL: String {
+        case settings = "/settings"
+        case params = "/params"
+    }
 
     private struct Param {
         static let search = "q"
@@ -179,6 +184,12 @@ public struct AppUrls {
         guard url.getParam(name: Param.search) != nil else { return false }
         return true
     }
+    
+    public func isDuckDuckGoStatic(url: URL) -> Bool {
+        if !isDuckDuckGo(url: url) { return false }
+        guard DDGStaticURL(rawValue: url.path) != nil else { return false }
+        return true
+    }
 
     public func applyStatsParams(for url: URL) -> URL {
         var searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
@@ -197,7 +208,7 @@ public struct AppUrls {
         return true
     }
     
-    public func applySearchHederParams(for url: URL) -> URL {
+    public func applySearchHeaderParams(for url: URL) -> URL {
         return url.addParam(name: Param.searchHeader, value: ParamValue.searchHeader)
     }
     

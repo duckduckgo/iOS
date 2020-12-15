@@ -440,6 +440,18 @@
 "findinpage.title" = "Atrast lapā";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Gaisa plūsma";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Liesmas";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Nav";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Atvars";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Iestatīt kā noklusējuma pārlūku";
 
 /* No comment provided by engineer. */

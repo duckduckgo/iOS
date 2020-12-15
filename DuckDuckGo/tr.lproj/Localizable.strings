@@ -440,6 +440,18 @@
 "findinpage.title" = "Sayfada bul";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Hava";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Ateş";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Yok";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Girdap";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Varsayılan Tarayıcı olarak ayarla";
 
 /* No comment provided by engineer. */

@@ -35,20 +35,7 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didEnterBackground(notification:)),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil)
         startVideo()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil)
     }
     
     override var header: String {
@@ -104,10 +91,6 @@ class OnboardingHomeRowViewController: OnboardingContentViewController {
     @objc func playerDidFinishPlaying(note: NSNotification) {
         HomeRowReminder().setShown()
         playButton.isHidden = false
-    }
-    
-    @objc func didEnterBackground(notification: NSNotification) {
-        Pixel.fire(pixel: .homeRowOnboardingMovedToBackground)
     }
     
     deinit {

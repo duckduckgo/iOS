@@ -56,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
+        preloadFireAnimations()
+
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
         }
@@ -89,6 +91,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appIsLaunching = true
         return true
+    }
+
+    private func preloadFireAnimations() {
+        DispatchQueue.main.async {
+            _ = FireButtonAnimationType.views
+        }
     }
 
     private func clearLegacyAllowedDomainCookies() {

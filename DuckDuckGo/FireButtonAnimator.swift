@@ -21,13 +21,6 @@ import UIKit
 import Lottie
 
 enum FireButtonAnimationType: String, CaseIterable {
-
-    static let views = [
-        "01_Fire_really_small": LOTAnimationView(name: "01_Fire_really_small"),
-        "02_Water_swirl_really_small": LOTAnimationView(name: "02_Water_swirl_really_small"),
-        "03_Airstream_divided_by_four": LOTAnimationView(name: "03_Airstream_divided_by_four")
-    ]
-
     case fireRising
     case waterSwirl
     case airstream
@@ -48,9 +41,9 @@ enum FireButtonAnimationType: String, CaseIterable {
     
     var animationView: LOTAnimationView? {
         guard let fileName = fileName else { return nil }
-        let animationView = Self.views[fileName]
-        animationView?.contentMode = .scaleAspectFill
-        animationView?.animationSpeed = CGFloat(speed)
+        let animationView = LOTAnimationView(name: fileName)
+        animationView.contentMode = .scaleAspectFill
+        animationView.animationSpeed = CGFloat(speed)
         return animationView
     }
 
@@ -86,7 +79,7 @@ enum FireButtonAnimationType: String, CaseIterable {
 }
 
 class FireButtonAnimator {
-
+    
     private let appSettings: AppSettings
     private var animationView: LOTAnimationView?
     

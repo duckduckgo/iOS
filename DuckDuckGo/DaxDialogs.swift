@@ -33,83 +33,70 @@ class DaxDialogs {
     
     struct HomeScreenSpec: Equatable {
 
-        static let initial = HomeScreenSpec(height: 235, message: UserText.daxDialogHomeInitial)
-        static let subsequent = HomeScreenSpec(height: 210, message: UserText.daxDialogHomeSubsequent)
+        static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial, accessibilityLabel: nil)
+        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
+        static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
+                                                accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
 
-        let height: CGFloat
         let message: String
-        
+        let accessibilityLabel: String?
+
     }
     
     struct BrowsingSpec: Equatable {
-
-        static let afterSearch = BrowsingSpec(height: 250,
-                                              message: UserText.daxDialogBrowsingAfterSearch,
+        
+        static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
                                               pixelName: .daxDialogsSerp)
         
-        static let withoutTrackers = BrowsingSpec(height: 260,
-                                                  message: UserText.daxDialogBrowsingWithoutTrackers,
+        static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
                                                   pixelName: .daxDialogsWithoutTrackers)
         
-        static let siteIsMajorTracker = BrowsingSpec(height: 345,
-                                                     message: UserText.daxDialogBrowsingSiteIsMajorTracker,
+        static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
                                                      pixelName: .daxDialogsSiteIsMajor)
         
-        static let siteOwnedByMajorTracker = BrowsingSpec(height: 365,
-                                                          message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
+        static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
                                                           pixelName: .daxDialogsSiteOwnedByMajor)
         
-        static let withOneTracker = BrowsingSpec(height: 345,
-                                                      message: UserText.daxDialogBrowsingWithOneTracker,
-                                                      cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
+        static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
+                                                 cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
+                                                 highlightAddressBar: true,
+                                                 pixelName: .daxDialogsWithTrackers)
+        
+        static let withMutipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
+                                                      cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers)
-
-        static let withTwoTrackers = BrowsingSpec(height: 345,
-                                                       message: UserText.daxDialogBrowsingWithTwoTrackers,
-                                                       cta: UserText.daxDialogBrowsingWithTwoTrackersCTA,
-                                                       highlightAddressBar: true,
-                                                       pixelName: .daxDialogsWithTrackers)
         
-        static let withMutipleTrackers = BrowsingSpec(height: 345,
-                                                               message: UserText.daxDialogBrowsingWithMultipleTrackers,
-                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
-                                                               highlightAddressBar: true,
-                                                               pixelName: .daxDialogsWithTrackers)
-
-        static let withMutipleTrackersPlural = BrowsingSpec(height: 345,
-                                                               message: UserText.daxDialogBrowsingWithMultipleTrackersPlural,
-                                                               cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
-                                                               highlightAddressBar: true,
-                                                               pixelName: .daxDialogsWithTrackers)
-
-        let height: CGFloat
         let message: String
         let cta: String
         let highlightAddressBar: Bool
         let pixelName: PixelName
         
         func format(args: CVarArg...) -> BrowsingSpec {
-            return BrowsingSpec(height: height,
-                                message: String(format: message, arguments: args),
+            return BrowsingSpec(message: String(format: message, arguments: args),
                                 cta: cta,
                                 highlightAddressBar: highlightAddressBar,
                                 pixelName: pixelName)
         }
         
     }
-    
+
+    public static let shared = DaxDialogs()
+
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
-    
+
+    private var nextHomeScreenMessageOverride: HomeScreenSpec?
+
+    /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.settings = settings
     }
@@ -121,6 +108,16 @@ class DaxDialogs {
             || settings.browsingMajorTrackingSiteShown
     }
     
+    var isEnabled: Bool {
+        // skip dax dialogs in integration tests
+        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
+        return !settings.isDismissed
+    }
+
+    var isAddFavoriteFlow: Bool {
+        return nextHomeScreenMessageOverride == .addFavorite
+    }
+
     func dismiss() {
         settings.isDismissed = true
     }
@@ -128,15 +125,19 @@ class DaxDialogs {
     func primeForUse() {
         settings.isDismissed = false
     }
-    
-    var isEnabled: Bool {
-        // skip dax dialogs in integration tests
-        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
-        return !settings.isDismissed
+
+    func enableAddFavoriteFlow() {
+        nextHomeScreenMessageOverride = .addFavorite
+        // Progress to next home screen message, but don't re-show the second dax dialog if it's already been shown
+        settings.homeScreenMessagesSeen = max(settings.homeScreenMessagesSeen, 1)
     }
-    
+
+    func resumeRegularFlow() {
+        nextHomeScreenMessageOverride = nil
+    }
+
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
-        guard isEnabled else { return nil }
+        guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
@@ -162,6 +163,11 @@ class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
+
+        if nextHomeScreenMessageOverride != nil {
+            return nextHomeScreenMessageOverride
+        }
+
         guard isEnabled else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }
         
@@ -200,11 +206,10 @@ class DaxDialogs {
     private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
         guard let entity = TrackerDataManager.shared.findEntity(forHost: host),
-            let entityName = entity.displayName,
-            let entityPrevalence = entity.prevalence else { return nil }
+            let entityName = entity.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithoutTrackersShown = true
-        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, entityPrevalence)
+        return BrowsingSpec.siteIsMajorTracker.format(args: entityName, host)
     }
     
     private func searchMessage() -> BrowsingSpec? {
@@ -225,20 +230,11 @@ class DaxDialogs {
             settings.browsingWithTrackersShown = true
             return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0].displayName ?? "")
             
-        case 2:
-            settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withTwoTrackers.format(args: entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
-            
         default:
             settings.browsingWithTrackersShown = true
-            
-            if entitiesBlocked.count - 2 > 1 {
-                return BrowsingSpec.withMutipleTrackersPlural.format(args:
-                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "", entitiesBlocked.count - 2)
-            } else {
-                return BrowsingSpec.withMutipleTrackers.format(args:
-                    entitiesBlocked[0].displayName ?? "", entitiesBlocked[1].displayName ?? "")
-            }
+            return BrowsingSpec.withMutipleTrackers.format(args: entitiesBlocked.count - 2,
+                                                           entitiesBlocked[0].displayName ?? "",
+                                                           entitiesBlocked[1].displayName ?? "")
         }
 
     }

@@ -34,6 +34,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var headerInfoLabel: UILabel!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
@@ -43,7 +44,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private let serverTrustCache = ServerTrustCache.shared
     private var sections = [Section]()
-
+ 
     override func viewDidLoad() {
 
         Pixel.fire(pixel: .privacyDashboardEncryption)
@@ -74,6 +75,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
+        headerInfoLabel.setAttributedTextString(UserText.ppEncryptionHeaderInfo)
 
         var message: String!
 
@@ -111,6 +113,18 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
             self?.sections = displayable.toSections()
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
+            }
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
             }
         }
     }
@@ -157,7 +171,7 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return siteRating.https ? 22 : 180
+        return UITableView.automaticDimension
     }
 
     private func cellForEncrypted(at indexPath: IndexPath) -> UITableViewCell {
@@ -191,6 +205,18 @@ class PrivacyProtectionEncryptionDetailCell: UITableViewCell {
     func update(name: String, value: String) {
         nameLabel.text = name
         valueLabel.text = value
+    }
+
+}
+
+class PrivacyProtectionEncryptionUnencrytedCell: UITableViewCell {
+
+    @IBOutlet weak var detailLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        detailLabel.setAttributedTextString(UserText.ppEncryptionUnencryptedDetailInfo)
     }
 
 }

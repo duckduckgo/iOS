@@ -48,7 +48,13 @@ class ReportBrokenSiteViewController: UIViewController {
         super.viewDidLoad()
         
         submitButton.isEnabled = false
+        headerLabel.setAttributedTextString(UserText.reportBrokenSiteHeader)
         applyTheme(ThemeManager.shared.currentTheme)
+        
+        DispatchQueue.main.async {
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
     }
     
     @IBAction func onClosePressed(sender: Any) {
@@ -63,6 +69,18 @@ class ReportBrokenSiteViewController: UIViewController {
         brokenSiteInfo?.send(with: categories[selectedCategory].rawValue)
         view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
         dismiss(animated: true)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
     }
 }
 

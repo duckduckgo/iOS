@@ -1,0 +1,27 @@
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "1rB-5w-de3"; */
+"1rB-5w-de3.accessibilityLabel" = "Ρυθμίσεις";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse forward"; ObjectID = "aXg-p3-oeq"; */
+"aXg-p3-oeq.accessibilityLabel" = "Περιήγηση προς τα μπροστά";
+
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "Dt8-We-5tV"; */
+"Dt8-We-5tV.accessibilityLabel" = "Απαλοιφή κειμένου";
+
+/* Class = "UIButton"; accessibilityLabel = "Share"; ObjectID = "hor-Jd-3kw"; */
+"hor-Jd-3kw.accessibilityLabel" = "Κοινή χρήση";
+
+/* Class = "UIButton"; accessibilityLabel = "Browse back"; ObjectID = "i9n-fD-ncJ"; */
+"i9n-fD-ncJ.accessibilityLabel" = "Περιήγηση προς τα πίσω";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IHT-9R-ERy"; */
+"IHT-9R-ERy.normalTitle" = "Ακύρωση";
+
+/* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
+"ii4-Sq-bD1.accessibilityLabel" = "Σελιδοδείκτες";
+
+/* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
+"nJo-2d-gri.accessibilityLabel" = "Μενού περιήγησης";
+
+/* Class = "UIButton"; accessibilityLabel = "Refresh Page"; ObjectID = "Qea-QY-LVl"; */
+"Qea-QY-LVl.accessibilityLabel" = "Ανανέωση σελίδας";
+

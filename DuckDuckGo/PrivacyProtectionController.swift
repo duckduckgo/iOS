@@ -37,7 +37,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     weak var siteRating: SiteRating?
     var omniBarText: String?
     var errorText: String?
-
+  
     private var storageCache = AppDependencyProvider.shared.storageCache.current
 
     override func viewDidLoad() {
@@ -47,7 +47,8 @@ class PrivacyProtectionController: ThemableNavigationController {
             overrideUserInterfaceStyle = .light
         }
 
-        navigationBar.isHidden = isPad
+        navigationBar.isHidden = AppWidthObserver.shared.isLargeWidth
+        
         popoverPresentationController?.backgroundColor = UIColor.nearlyWhite
 
         if let errorText = errorText {

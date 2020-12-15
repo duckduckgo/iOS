@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import ToastSwiftFramework
+import Toast
 
 private struct ViewConstants {
     static let marginBottom: CGFloat = 80

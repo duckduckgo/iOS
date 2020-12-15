@@ -41,9 +41,11 @@ class TabTests: XCTestCase {
     }
 
     func testWhenDesktopModeToggledThenPropertyIsUpdated() {
+        _ = AppWidthObserver.shared.willResize(toWidth: UIScreen.main.bounds.width)
+
         let tab = Tab(link: link())
-        
-        if isPad {
+
+        if AppWidthObserver.shared.isLargeWidth {
             XCTAssertTrue(tab.isDesktop)
             tab.toggleDesktopMode()
             XCTAssertFalse(tab.isDesktop)

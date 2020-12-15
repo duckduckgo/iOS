@@ -36,8 +36,16 @@ protocol OmniBarDelegate: class {
     func onSettingsPressed()
     
     func onCancelPressed()
+    
+    func onEnterPressed()
 
     func onRefreshPressed()
+    
+    func onBackPressed()
+    
+    func onForwardPressed()
+    
+    func onSharePressed()
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar)
     
@@ -91,4 +99,13 @@ extension OmniBarDelegate {
     
     }
 
+    func onSharePressed() {
+    }
+    
+    func onBackPressed() {
+    }
+    
+    func onForwardPressed() {
+    }
+    
 }

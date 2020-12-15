@@ -1,3 +1,1 @@
-• Better external keyboard support on the iPad.
-• Improved accessibility labels (thanks to a community contribution).
-• Other fixes and improvements.
+• Bug fixes and other improvements.

@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
             let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
-            
+
             // hide the keyboard if transitioning away
             if oldValue == 1.0 && searchHeaderTransition != 1.0 {
                 chromeDelegate?.omniBar.resignFirstResponder()
@@ -47,6 +47,7 @@ class HomeViewController: UIViewController {
             
             delegate?.home(self, searchTransitionUpdated: percent)
             chromeDelegate?.omniBar.alpha = percent
+            chromeDelegate?.tabsBar.alpha = percent
         }
     }
     
@@ -98,14 +99,6 @@ class HomeViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func remove(_ renderer: ExtraContentHomeSectionRenderer) {
-        if let section = collectionView.renderers.remove(renderer: renderer) {
-            collectionView.performBatchUpdates({
-                collectionView.deleteSections(IndexSet(integer: section))
-            }, completion: nil)
-        }
-    }
-    
     func omniBarCancelPressed() {
         collectionView.omniBarCancelPressed()
     }
@@ -125,6 +118,10 @@ class HomeViewController: UIViewController {
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
             showNextDaxDialog()
             Pixel.fire(pixel: .homeScreenShown)
+            
+            if collectionView.isShowingHomeMessage(.defaultBrowserPrompt) {
+                Pixel.fire(pixel: .defaultBrowserHomeMessageShown)
+            }
         }
                 
         viewHasAppeared = true
@@ -135,12 +132,16 @@ class HomeViewController: UIViewController {
     }
         
     func showNextDaxDialog() {
-        guard let spec = DaxDialogs().nextHomeScreenMessage() else { return }
+
+        guard !isShowingDax else { return }
+        guard let spec = DaxDialogs.shared.nextHomeScreenMessage() else { return }
         collectionView.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
+        daxDialogViewController?.loadViewIfNeeded()
         daxDialogViewController?.message = spec.message
-        daxDialogContainerHeight.constant = spec.height
+        daxDialogViewController?.accessibleMessage = spec.accessibilityLabel
+        daxDialogContainerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         hideLogo()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -222,6 +223,13 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
         delegate?.home(self, didRequestUrl: link.url)
     }
 
+}
+
+extension HomeViewController: HomeMessageViewSectionRendererDelegate {
+    
+    func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer, didDismissHomeMessage homeMessage: HomeMessage) {
+        refresh()
+    }
 }
 
 extension HomeViewController: Themable {

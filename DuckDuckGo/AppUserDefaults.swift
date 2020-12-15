@@ -21,6 +21,10 @@ import Foundation
 import Core
 
 public class AppUserDefaults: AppSettings {
+    
+    public struct Notifications {
+        public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
+    }
 
     private let groupName: String
 
@@ -32,7 +36,7 @@ public class AppUserDefaults: AppSettings {
         static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
         
         static let homePage = "com.duckduckgo.app.homePage"
-        
+
         static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
         static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
         static let foregroundFetchNewDataCount = "com.duckduckgo.app.fgFetchNewDataCount"
@@ -118,21 +122,6 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    var homePage: HomePageConfiguration.ConfigName? {
-        get {
-            guard let index = userDefaults?.object(forKey: Keys.homePage) as? Int else { return nil }
-            return HomePageConfiguration.ConfigName(rawValue: index)!
-        }
-        
-        set {
-            if let newValue = newValue {
-                userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePage)
-            } else {
-                userDefaults?.removeObject(forKey: Keys.homePage)
-            }
-        }
-    }
-    
     var allowUniversalLinks: Bool {
         get {
             return userDefaults?.object(forKey: Keys.allowUniversalLinks) as? Bool ?? true
@@ -152,6 +141,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: Keys.longPressPreviews)
         }
     }
+    
+    @UserDefaultsWrapper(key: .doNotSell, defaultValue: true)
+    var sendDoNotSell: Bool
     
 }
 

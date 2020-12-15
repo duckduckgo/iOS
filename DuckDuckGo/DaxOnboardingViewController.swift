@@ -31,7 +31,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     weak var delegate: OnboardingDelegate?
     weak var daxDialog: DaxDialogViewController?
     
-    @IBOutlet weak var welcomeMessage: UIView!
+    @IBOutlet weak var welcomeMessage: UILabel!
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var daxIcon: UIView!
@@ -55,11 +55,11 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        welcomeMessage.setAttributedTextString(UserText.launchscreenWelcomeMessage)
         daxDialog?.message = UserText.daxDialogOnboardingMessage
         daxDialog?.theme = LightTheme()
         daxDialog?.reset()
-        daxDialogContainerHeight.constant = isSmall ? 190 : 195
-
+        daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
         button.displayDropShadow()
         daxIcon.isHidden = true
     }
@@ -67,6 +67,9 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard !view.isHidden else { return }
+        
+        daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
             self.transitionFromOnboarding()
         }
@@ -79,7 +82,8 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
             self.daxDialog = controller
         } else if let controller = segue.destination as? DaxOnboardingPadViewController {
             controller.delegate = self
-        } else if let controller = segue.destination as? OnboardingViewController {
+        } else if let navController = segue.destination as? UINavigationController,
+                  let controller = navController.viewControllers.first as? OnboardingViewController {
             controller.delegate = self
         }
         

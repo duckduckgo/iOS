@@ -50,9 +50,6 @@ extension TabViewController {
         alert.addAction(title: UserText.actionOpen) { [weak self] in
             self?.onOpenAction(forUrl: url)
         }
-        alert.addAction(title: UserText.actionReadingList) { [weak self] in
-            self?.onReadingAction(forUrl: url)
-        }
         alert.addAction(title: UserText.actionCopy) { [weak self] in
             self?.onCopyAction(forUrl: url)
         }
@@ -75,35 +72,25 @@ extension TabViewController {
     }
     
     private func onNewTabAction(url: URL) {
-        Pixel.fire(pixel: .longPressMenuNewTabItem)
         delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
     }
     
     private func onBackgroundTabAction(url: URL) {
-        Pixel.fire(pixel: .longPressMenuNewBackgroundTabItem)
         delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
     }
     
     private func onOpenAction(forUrl url: URL) {
         if let webView = webView {
-            Pixel.fire(pixel: .longPressMenuOpenItem)
             webView.load(URLRequest(url: url))
         }
     }
-    
-    private func onReadingAction(forUrl url: URL) {
-        Pixel.fire(pixel: .longPressMenuReadingListItem)
-        try? SSReadingList.default()?.addItem(with: url, title: nil, previewText: nil)
-    }
-    
+
     private func onCopyAction(forUrl url: URL) {
         let copyText = url.absoluteString
-        Pixel.fire(pixel: .longPressMenuCopyItem)
         UIPasteboard.general.string = copyText
     }
     
     private func onShareAction(forUrl url: URL, atPoint point: Point?) {
-        Pixel.fire(pixel: .longPressMenuShareItem)
         guard let webView = webView else { return }
         presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
     }
@@ -119,8 +106,8 @@ extension TabViewController {
         nil // hide/show link previews on some versions of ios
     ]
 
-    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
-                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
+        func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+                     completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
 
         guard let url = elementInfo.linkURL else {
             completionHandler(nil)
@@ -150,7 +137,7 @@ extension TabViewController {
     fileprivate func buildOpenLinkPreview(for url: URL) -> UIViewController? {
         let tab = Tab(link: Link(title: nil, url: url))
         let tabController = TabViewController.loadFromStoryboard(model: tab)
-        tabController.daxDialogsDisabled = true
+        tabController.isLinkPreview = true
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest(url: url), consumeCookies: false)

@@ -34,6 +34,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var hoveringResetContainer: UIView!
     @IBOutlet weak var hoveringView: UIView!
     @IBOutlet weak var resetView: UIView!
+    @IBOutlet weak var resetViewInfo: UILabel!
 
     private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
     private var siteRating: SiteRating!
@@ -81,6 +82,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
             hoveringResetContainer.addSubview(resetView)
         }
 
+        resetViewInfo.setAttributedTextString(UserText.ppTopOffendersInfo)
     }
 
     private func initHeroIcon() {
@@ -116,7 +118,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let dateText = dateFormatter.string(from: date)
 
         let percent = pagesVisited == 0 ? 0 : 100 * pagesWithTrackers / pagesVisited
-        let percentText = "\(percent)%"
+        let percentText = "\(percent)"
         let message = UserText.ppNetworkLeaderboard.format(arguments: percentText, dateText)
 
         guard let percentRange = message.range(of: percentText) else { return }
@@ -168,6 +170,17 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         })
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+    }
 }
 
 extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {

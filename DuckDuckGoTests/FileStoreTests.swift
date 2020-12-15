@@ -27,7 +27,7 @@ class FileStoreTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .surrogates))
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .temporaryUnprotectedSites))
     }
-    
+
     func testWhenFileExistsThenHasDataReturnsTrue() {
         let store = FileStore()
         XCTAssertFalse(store.hasData(forConfiguration: .surrogates))
@@ -50,7 +50,7 @@ class FileStoreTests: XCTestCase {
         XCTAssertNil(store.loadAsString(forConfiguration: .temporaryUnprotectedSites))
     }
 
-    private func assertDeleted(_ url: URL, file: StaticString = #file, line: UInt = #line) {
+    private func assertDeleted(_ url: URL, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.absoluteString), file: file, line: line)
     }
     

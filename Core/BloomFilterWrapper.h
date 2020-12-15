@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 
 @interface BloomFilterWrapper : NSObject
-- (instancetype)initFromPath:(NSString*)path withTotalItems:(int)count;
+- (instancetype)initFromPath:(NSString*)path withBitCount:(int)bitCount andTotalItems:(int)totalItems;
 - (instancetype)initWithTotalItems:(int)count errorRate:(double)errorRate;
 - (void)add:(NSString*) entry;
 - (BOOL)contains:(NSString*) entry;

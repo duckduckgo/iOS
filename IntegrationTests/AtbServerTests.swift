@@ -18,7 +18,6 @@
 //
 
 import XCTest
-import Alamofire
 @testable import Core
 
 class AtbServerTests: XCTestCase {

@@ -84,26 +84,12 @@ class AppUserDefaultsTests: XCTestCase {
     func testWhenReadingCurrentThemeDefaultThenSystemDefaultIsReturned() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
         
-    }
-    
-    func testWhenNewThenDefaultHomePageIsNil() {
-        
-        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(appUserDefaults.homePage, nil)
-        
-    }
-    
-    func testWhenHomePageSetThenSettingIsStored() {
-        
-        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.homePage = .centerSearch
-        XCTAssertEqual(appUserDefaults.homePage, .centerSearch)
-        
-        let otherDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertEqual(otherDefaults.homePage, .centerSearch)
-
+        if #available(iOS 13.0, *) {
+            XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
+        } else {
+            XCTAssertEqual(appUserDefaults.currentThemeName, .dark)
+        }
     }
     
 }

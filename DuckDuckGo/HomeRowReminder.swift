@@ -35,14 +35,19 @@ class HomeRowReminder {
     }
 
     private var storage: HomeRowReminderStorage
+    private var homeMessageStorage: HomeMessageStorage
 
-    init(storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage()) {
+    init(storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage(),
+         homeMessageStorage: HomeMessageStorage = HomeMessageStorage()) {
         self.storage = storage
+        self.homeMessageStorage = homeMessageStorage
     }
 
-    func showNow() -> Bool {
+    func showNow(isDefaultBrowserSupported: Bool) -> Bool {
+        // Note this is also depedent on when the Default browser home message was dismissed
+        // we should bare this depedency in mind when experimenting in the future
         guard !hasShownBefore() else { return false }
-        guard hasReminderTimeElapsed() else { return false }
+        guard hasReminderTimeElapsed(isDefaultBrowserSupported: isDefaultBrowserSupported) else { return false }
         return true
     }
 
@@ -54,13 +59,17 @@ class HomeRowReminder {
         return storage.shown
     }
 
-    private func hasReminderTimeElapsed() -> Bool {
-        guard let date = storage.firstAccessDate else {
-            storage.firstAccessDate = Date()
-            return false
+    private func hasReminderTimeElapsed(isDefaultBrowserSupported: Bool) -> Bool {
+        if isDefaultBrowserSupported {
+            return homeMessageStorage.hasExpiredForHomeRow()
+        } else {
+            guard let date = storage.firstAccessDate else {
+                storage.firstAccessDate = Date()
+                return false
+            }
+            let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
+            return days > Constants.reminderTimeInDays
         }
-        let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
-        return days > Constants.reminderTimeInDays
     }
 
 }
@@ -74,6 +83,13 @@ public class UserDefaultsHomeRowReminderStorage: HomeRowReminderStorage {
 
     var firstAccessDate: Date? {
 
+        get {
+            if let interval = userDefaults.object(forKey: Keys.firstAccessDate) as? Double {
+                return Date(timeIntervalSince1970: interval)
+            }
+            return nil
+        }
+        
         set {
             if let date = newValue {
                 userDefaults.set(date.timeIntervalSince1970, forKey: Keys.firstAccessDate)
@@ -82,23 +98,16 @@ public class UserDefaultsHomeRowReminderStorage: HomeRowReminderStorage {
             }
         }
 
-        get {
-            if let interval = userDefaults.object(forKey: Keys.firstAccessDate) as? Double {
-                return Date(timeIntervalSince1970: interval)
-            }
-            return nil
-        }
-
     }
 
     var shown: Bool {
+        
+        get {
+            return userDefaults.bool(forKey: Keys.shown)
+        }
 
         set {
             userDefaults.set(newValue, forKey: Keys.shown)
-        }
-
-        get {
-            return userDefaults.bool(forKey: Keys.shown)
         }
 
     }

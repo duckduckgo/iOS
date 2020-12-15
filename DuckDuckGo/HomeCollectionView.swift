@@ -33,11 +33,6 @@ class HomeCollectionView: UICollectionView {
         UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
     
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
-
-    var centeredSearch: UIView? {
-        guard let renderer = renderers.rendererFor(section: 0) as? CenteredSearchHomeViewSectionRenderer else { return nil }
-        return renderer.centeredSearch
-    }
     
     private var topIndexPath: IndexPath? {
         for section in 0..<renderers.numberOfSections(in: self) {
@@ -55,6 +50,8 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "favorite")
         register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "PrivacyHomeCell")
+        register(UINib(nibName: "HomeMessageCell", bundle: nil),
+                 forCellWithReuseIdentifier: "homeMessageCell")
         register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "extraContent")
         
@@ -81,22 +78,11 @@ class HomeCollectionView: UICollectionView {
             case .navigationBarSearch(let fixed):
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
-            case .centeredSearch(let fixed):
-                if controller.isShowingDax {
-                    renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
-                } else {
-                    renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
-                }
-                
-            case .extraContent:
-                renderers.install(renderer: ExtraContentHomeSectionRenderer())
-                
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())
-
-            case .padding:
-                renderers.install(renderer: PaddingHomeViewSectionRenderer())
-
+                
+            case .homeMessage:
+                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
             }
 
         }
@@ -168,6 +154,9 @@ class HomeCollectionView: UICollectionView {
         controller.collectionView.reloadData()
     }
     
+    func isShowingHomeMessage(_ homeMessage: HomeMessage) -> Bool {
+        return homePageConfiguration.homeMessages().contains { $0.homeMessage == homeMessage }
+    }
 }
 
 extension HomeCollectionView: Themable {

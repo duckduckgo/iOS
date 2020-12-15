@@ -51,6 +51,11 @@ public class SiteRatingView: UIView {
         }
         self.addSubview(view)
         view.frame = self.bounds
+        
+        if #available(iOS 13.4, *) {
+            addInteraction(UIPointerInteraction(delegate: self))
+        }
+        
     }
 
     public func update(siteRating: SiteRating?, with storageCache: StorageCache?) {
@@ -80,7 +85,17 @@ public class SiteRatingView: UIView {
             grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
-            circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+            circleIndicator.accessibilityLabel = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+            circleIndicator.accessibilityHint = UserText.privacyGradeHint
         }
     }
+}
+
+@available(iOS 13.4, *)
+extension SiteRatingView: UIPointerInteractionDelegate {
+    
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        return .init(effect: .lift(.init(view: self)))
+    }
+    
 }

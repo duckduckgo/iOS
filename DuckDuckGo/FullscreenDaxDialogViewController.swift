@@ -29,7 +29,19 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
 class FullscreenDaxDialogViewController: UIViewController {
 
+    struct Constants {
+        
+        static let defaultCTAHeight: CGFloat = 100
+        
+        static let largeHighlightBottom: CGFloat = -40
+        static let defaultHighlightBottom: CGFloat = 0
+        static let largeAddressBarOffset: CGFloat = -90
+        static let defaultAddressBarOffset: CGFloat = -50
+        
+    }
+    
     @IBOutlet weak var highlightBar: UIView!
+    @IBOutlet weak var highlightBarBottom: NSLayoutConstraint!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     @IBOutlet weak var fullScreen: NSLayoutConstraint!
     @IBOutlet weak var showAddressBar: NSLayoutConstraint!
@@ -38,6 +50,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     weak var delegate: FullscreenDaxDialogDelegate?
 
     var spec: DaxDialogs.BrowsingSpec?
+    var woShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,25 +58,33 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.cta = spec?.cta
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta
-        containerHeight.constant = spec?.height ?? 100.0
         
         if spec?.highlightAddressBar ?? false {
             fullScreen.isActive = false
             showAddressBar.isActive = true
             highlightBar.isHidden = false
+            highlightBarBottom.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeHighlightBottom : Constants.defaultHighlightBottom
+            showAddressBar.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeAddressBarOffset : Constants.defaultAddressBarOffset
         } else {
-            showAddressBar.isActive = false
             fullScreen.isActive = true
+            showAddressBar.isActive = false
             highlightBar.isHidden = true
         }
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let spec = spec {
-            Pixel.fire(pixel: spec.pixelName)
+            Pixel.fire(pixel: spec.pixelName, withAdditionalParameters: [ "wo": woShown ? "1" : "0" ])
         }
+        containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         daxDialogViewController?.start()
     }
     
@@ -96,7 +117,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 
         alertController.addAction(title: UserText.daxDialogHideButton, style: .default) {
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
-            DaxDialogs().dismiss()
+            DaxDialogs.shared.dismiss()
         }
         alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel)
         present(alertController, animated: true)

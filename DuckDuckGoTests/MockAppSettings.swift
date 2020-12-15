@@ -25,8 +25,8 @@ class MockAppSettings: AppSettings {
     var currentThemeName: ThemeName = ThemeName.dark
     var autoClearTiming: AutoClearSettingsModel.Timing = .termination
     var autoClearAction: AutoClearSettingsModel.Action = []
-    var homePage: HomePageConfiguration.ConfigName? = .simple
     var allowUniversalLinks: Bool = true
     var longPressPreviews: Bool = true
+    var sendDoNotSell: Bool = true
     
 }

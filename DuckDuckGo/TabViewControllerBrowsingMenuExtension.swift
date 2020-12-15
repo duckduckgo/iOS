@@ -49,7 +49,8 @@ extension TabViewController {
 
             alert.addAction(title: UserText.actionShare) { [weak self] in
                 guard let self = self else { return }
-                self.onShareAction(forLink: link, printFormatter: self.webView.viewPrintFormatter())
+                guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
+                self.onShareAction(forLink: link, fromView: menu)
             }
             
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
@@ -95,7 +96,7 @@ extension TabViewController {
     
     private func buildSaveBookmarkAction(forLink link: Link) -> UIAlertAction? {
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.contains(url: link.url) else { return nil }
+        guard !bookmarksManager.containsBookmark(url: link.url) else { return nil }
         
         return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToBookmarks)
@@ -104,24 +105,31 @@ extension TabViewController {
         }
     }
     
-    private func buildSaveFavoriteAction(forLink link: Link, homePageSettings: HomePageSettings = DefaultHomePageSettings()) -> UIAlertAction? {
-        guard homePageSettings.favorites else { return nil }
-        
+    private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.contains(url: link.url) else { return nil }
+        guard !bookmarksManager.containsFavorite(url: link.url) else { return nil }
 
-        return UIAlertAction(title: UserText.actionSaveFavorite, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuAddToFavorites)
+        // Capture flow state here as will be reset after menu is shown
+        let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+
+        let title = [
+            addToFavoriteFlow ? "👋 " : "",
+            UserText.actionSaveFavorite
+        ].joined()
+
+        let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
             bookmarksManager.save(favorite: link)
             self?.view.showBottomToast(UserText.webSaveFavoriteDone)
         }
+        action.accessibilityLabel = UserText.actionSaveFavorite
+        return action
     }
 
-    private func onShareAction(forLink link: Link, printFormatter: UIPrintFormatter) {
+    func onShareAction(forLink link: Link, fromView view: UIView) {
         Pixel.fire(pixel: .browsingMenuShare)
-        guard let menu = chromeDelegate?.omniBar.menuButton else { return }
         let url = appUrls.removeATBAndSource(fromUrl: link.url)
-        presentShareSheet(withItems: [ url, link, printFormatter ], fromView: menu)
+        presentShareSheet(withItems: [ url, link, webView.viewPrintFormatter() ], fromView: view)
     }
     
     private func onToggleDesktopSiteAction(forUrl url: URL) {

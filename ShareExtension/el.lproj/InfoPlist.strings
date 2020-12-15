@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Άνοιγμα στο DuckDuckGo";
+
+/* Bundle name */
+"CFBundleName" = "ShareExtension";
+

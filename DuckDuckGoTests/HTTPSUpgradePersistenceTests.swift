@@ -32,62 +32,83 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     override func tearDown() {
         testee.reset()
     }
-    
-    func testWhenBloomFilterSpecificationIsNotPersistedThenSpecificationIsNil() {
-        XCTAssertNil(testee.bloomFilterSpecification())
-    }
 
-    func testWhenBloomFilterMatchesShaInSpecThenSpecAndDataPersisted() {
+    /// This may fail after embedded data is updated, fix accordingly
+    func testWhenBloomNotPersistedThenEmbeddedSpecificationReturned() {
+        let sha = "d72a358afca8f70fd1447009efd9e5e42aa7a4e6a01f593da226dbabef0a0052"
+        let specification = HTTPSBloomFilterSpecification(bitCount: 12153347, errorRate: 0.000001, totalEntries: 422649, sha256: sha)
+        XCTAssertEqual(specification, testee.bloomFilterSpecification())
+    }
+    
+    /// This may fail after embedded data is updated, fix accordingly
+    func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndBloomContainsKnownUpgradableSite() {
+        XCTAssertNotNil(testee.bloomFilter())
+        XCTAssertTrue(testee.bloomFilter()!.contains("facebook.com"))
+    }
+    
+    /// This may fail after embedded data is updated, fix accordingly
+    func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndBloomDoesNotContainAnUnknownSite() {
+        XCTAssertNotNil(testee.bloomFilter())
+        XCTAssertFalse(testee.bloomFilter()!.contains("anUnkonwnSiteThatIsNotInOurUpgradeList.com"))
+    }
+    
+    /// This may fail after embedded data is updated, fix accordingly
+    func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndEmbeddedExcludedDomainIsTrue() {
+        XCTAssertNotNil(testee.bloomFilter())
+        XCTAssertTrue(testee.shouldExcludeDomain("www.dppps.sc.gov"))
+    }
+        
+    func testWhenNewBloomFilterMatchesShaInSpecThenSpecAndDataPersisted() {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
-        let specification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)        
+        let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: sha)
         XCTAssertTrue(testee.persistBloomFilter(specification: specification, data: data))
         XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
     
-    func testWhenBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {
+    func testWhenNewBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "wrong sha"
-        let specification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)
+        let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: sha)
         XCTAssertFalse(testee.persistBloomFilter(specification: specification, data: data))
-        XCTAssertNil(testee.bloomFilterSpecification())
-        XCTAssertNil(testee.bloomFilter())
+        XCTAssertNotEqual(specification, testee.bloomFilterSpecification())
     }
 
     func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() {
-        let specification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: "abc")
         testee.persistBloomFilterSpecification(specification)
         XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
     
     func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() {
-        let originalSpecification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        let originalSpecification =  HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: "abc")
         testee.persistBloomFilterSpecification(originalSpecification)
 
-        let newSpecification = HTTPSBloomFilterSpecification(totalEntries: 101, errorRate: 0.01, sha256: "abc")
+        let newSpecification = HTTPSBloomFilterSpecification(bitCount: 101, errorRate: 0.01, totalEntries: 101, sha256: "abc")
         testee.persistBloomFilterSpecification(newSpecification)
 
         let storedSpecification = testee.bloomFilterSpecification()
         XCTAssertEqual(newSpecification, storedSpecification)
     }
 
-    func testWhenExcludedDomainsPersistedThenHasDomainIsTrue() {
+    func testWhenExcludedDomainsPersistedThenExcludedDomainIsTrue() {
         testee.persistExcludedDomains([ "www.example.com", "apple.com" ])
-        XCTAssertFalse(testee.shouldUpgradeDomain("www.example.com"))
-        XCTAssertFalse(testee.shouldUpgradeDomain("apple.com"))
+        XCTAssertTrue(testee.shouldExcludeDomain("www.example.com"))
+        XCTAssertTrue(testee.shouldExcludeDomain("apple.com"))
     }
     
-    func testWhenNoExcludedDomainsPersistedThenHasDomainIsFalse() {
-        XCTAssertTrue(testee.shouldUpgradeDomain("www.example.com"))
-        XCTAssertTrue(testee.shouldUpgradeDomain("apple.com"))
+    func testWhenNoExcludedDomainsPersistedThenExcludedDomainIsFalse() {
+        XCTAssertFalse(testee.shouldExcludeDomain("www.example.com"))
+        XCTAssertFalse(testee.shouldExcludeDomain("apple.com"))
     }
     
     func testWhenExcludedDomainsPersistedThenOldDomainsAreDeleted() {
         testee.persistExcludedDomains([ "www.old.com", "otherold.com" ])
         testee.persistExcludedDomains([ "www.new.com", "othernew.com" ])
-        XCTAssertTrue(testee.shouldUpgradeDomain("www.old.com"))
-        XCTAssertTrue(testee.shouldUpgradeDomain("otherold.com"))
-        XCTAssertFalse(testee.shouldUpgradeDomain("www.new.com"))
-        XCTAssertFalse(testee.shouldUpgradeDomain("othernew.com"))
+        XCTAssertFalse(testee.shouldExcludeDomain("www.old.com"))
+        XCTAssertFalse(testee.shouldExcludeDomain("otherold.com"))
+        XCTAssertTrue(testee.shouldExcludeDomain("www.new.com"))
+        XCTAssertTrue(testee.shouldExcludeDomain("othernew.com"))
     }
+
 }

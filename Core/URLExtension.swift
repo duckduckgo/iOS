@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import JavaScriptCore
 
 extension URL {
 
@@ -34,18 +35,29 @@ extension URL {
         case localhost
     }
     
+    public var hostVariations: [String]? {
+        guard var parts = host?.components(separatedBy: ".") else { return nil }
+        var domains = [String]()
+        while parts.count > 1 {
+            let domain = parts.joined(separator: ".")
+            domains.append(domain)
+            parts.removeFirst()
+        }
+        return domains
+    }
+    
     public func toHttps() -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         guard components.scheme == URLProtocol.http.rawValue else { return self }
         components.scheme = URLProtocol.https.rawValue
-        return try? components.asURL()
+        return components.url
     }
 
     public func toDesktopUrl() -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         components.host = components.host?.dropPrefix(prefix: "m.")
         components.host = components.host?.dropPrefix(prefix: "mobile.")
-        return (try? components.asURL()) ?? self
+        return components.url ?? self
     }
 
     public func getParam(name: String) -> String? {
@@ -106,6 +118,14 @@ extension URL {
     public func isCustomURLScheme() -> Bool {
         return scheme != nil && !absoluteString.hasPrefix(URLProtocol.http.scheme) && !absoluteString.hasPrefix(URLProtocol.https.scheme)
     }
+
+    public func isBookmarklet() -> Bool {
+        return absoluteString.isBookmarklet()
+    }
+
+    public func toDecodedBookmarklet() -> String? {
+        return absoluteString.toDecodedBookmarklet()
+    }
     
     // MARK: static
 
@@ -156,6 +176,22 @@ extension URL {
         // from https://stackoverflow.com/a/30023010/73479
         let ipRegex = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
         return host.matches(pattern: ipRegex)
+    }
+
+    /// Uses JavaScriptCore to determine if the bookmarklet is valid JavaScript
+    public static func isValidBookmarklet(url: URL?) -> Bool {
+        guard let url = url,
+              let bookmarklet = url.toDecodedBookmarklet(),
+              let context = JSContext() else { return false }
+
+        context.evaluateScript(bookmarklet)
+        if let exception = context.exception {
+            // Allow ReferenceErrors since the bookmarklet will likely want to access
+            // document or other variables which don't exist in this JSContext.  Consider
+            // this bookmarklet invalid for all other exceptions.
+            return exception.description.contains("ReferenceError")
+        }
+        return true
     }
     
     public func isPart(ofDomain domain: String) -> Bool {

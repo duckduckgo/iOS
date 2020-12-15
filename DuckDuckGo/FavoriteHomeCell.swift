@@ -28,7 +28,6 @@ class FavoriteHomeCell: UICollectionViewCell {
     }
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var highlightMask: UIView!
@@ -86,21 +85,20 @@ class FavoriteHomeCell: UICollectionViewCell {
         self.link = link
         
         let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
-        iconLabel.text = "\(host.capitalized.first ?? " ")"
         
         isAccessibilityElement = true
         accessibilityTraits = .button
-        accessibilityLabel = "\(link.title ?? "")). \(UserText.favorite)"
+        accessibilityLabel = "\(link.displayTitle ?? "")). \(UserText.favorite)"
         
-        titleLabel.text = link.title
+        titleLabel.text = link.displayTitle
+        iconBackground.backgroundColor = UIColor.forDomain(host)
         
-        iconImage.isHidden = true
-        iconLabel.isHidden = false
-        
-        iconBackground.backgroundColor = host.color
-        useImageBorder(true)
+        if let domain = link.url.host?.dropPrefix(prefix: "www."),
+           let fakeFavicon = UIImageView.createFakeFavicon(forDomain: link.url.host ?? "", backgroundColor: UIColor.forDomain(domain), bold: false) {
+            iconImage.image = fakeFavicon
+        }
 
-        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, fallbackImage: nil) { image in
+        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
             guard let image = image else { return }
 
             let useBorder = Self.appUrls.isDuckDuckGo(domain: link.url.host) || image.size.width < Constants.largeFaviconSize
@@ -117,8 +115,6 @@ class FavoriteHomeCell: UICollectionViewCell {
   
     private func applyFavicon(_ image: UIImage) {
 
-        iconLabel.isHidden = true
-        iconImage.isHidden = false
         iconImage.contentMode = image.size.width < Constants.largeFaviconSize ? .center : .scaleAspectFit
 
         guard let theme = theme else { return }
@@ -145,56 +141,4 @@ extension FavoriteHomeCell: Themable {
         }
     }
 
-}
-
-fileprivate extension String {
-    
-    var consistentHash: Int {
-        return self.utf8
-            .map { return $0 }
-            .reduce(5381) { ($0 << 5) &+ $0 &+ Int($1) }
-    }
-    
-    var color: UIColor {
-        
-        let palette = [
-            UIColor(hex: "94B3AF"),
-            UIColor(hex: "727998"),
-            UIColor(hex: "645468"),
-            UIColor(hex: "4D5F7F"),
-            UIColor(hex: "855DB6"),
-            UIColor(hex: "5E5ADB"),
-            UIColor(hex: "678FFF"),
-            UIColor(hex: "6BB4EF"),
-            UIColor(hex: "4A9BAE"),
-            UIColor(hex: "66C4C6"),
-            UIColor(hex: "55D388"),
-            UIColor(hex: "99DB7A"),
-            UIColor(hex: "ECCC7B"),
-            UIColor(hex: "E7A538"),
-            UIColor(hex: "DD6B4C"),
-            UIColor(hex: "D65D62")
-        ]
-        
-        let hash = consistentHash
-        let index = hash % palette.count
-        return palette[abs(index)]
-    }
-    
-}
-
-fileprivate extension UIColor {
-
-    convenience init(hex: String) {
-        var rgbValue: UInt32 = 0
-        Scanner(string: hex).scanHexInt32(&rgbValue)
-        
-        self.init(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
-    
 }

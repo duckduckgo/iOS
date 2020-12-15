@@ -44,6 +44,12 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
+    
+    @IBOutlet weak var topFireButton: UIButton!
+    @IBOutlet weak var topPlusButton: UIButton!
+    @IBOutlet weak var topDoneButton: UIButton!
+
+    @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -70,6 +76,24 @@ class TabSwitcherViewController: UIViewController {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
             tabSwitcherSettings.hasSeenNewLayout = true
         }
+        
+        if #available(iOS 13.4, *) {
+            displayModeButton.isPointerInteractionEnabled = true
+            bookmarkAllButton.isPointerInteractionEnabled = true
+            topFireButton.isPointerInteractionEnabled = true
+            topPlusButton.isPointerInteractionEnabled = true
+            topDoneButton.isPointerInteractionEnabled = true
+        }
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
+        displayModeTrailingConstraint.isActive = !AppWidthObserver.shared.isLargeWidth
+        topFireButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        topDoneButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+        topPlusButton.isHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func setupBackgroundView() {
@@ -151,7 +175,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {
-        if openTabsCount == results.newBookmarksCount + results.existingBookmarksCount {
+        if results.newBookmarksCount == openTabsCount {
             view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
@@ -183,12 +207,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
-        
-        guard tabsModel.tabs.count > 0 else {
-            view.showBottomToast(UserText.bookmarkAllTabsNotFound)
-            return
-        }
-        
+         
         let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
                                       message: UserText.alertBookmarkAllMessage,
                                       preferredStyle: .alert)
@@ -243,14 +262,18 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
 
-    @IBAction func onFirePressed() {
+    @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         
         let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
             self?.forgetAll()
         })
-        self.present(controller: alert, fromView: self.toolbar)
         
+        if let anchor = sender as? UIView {
+            self.present(controller: alert, fromView: anchor)
+        } else {
+            self.present(controller: alert, fromView: toolbar)
+        }
     }
 
     private func forgetAll() {
@@ -390,7 +413,9 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
             let spacing = layout?.sectionInset.left ?? 0.0
             
-            return CGSize(width: collectionView.bounds.size.width - 2 * spacing, height: 70)
+            let width = min(664, collectionView.bounds.size.width - 2 * spacing)
+            
+            return CGSize(width: width, height: 70)
         }
     }
     
@@ -417,6 +442,9 @@ extension TabSwitcherViewController: Themable {
         
         titleView.textColor = theme.barTintColor
         bookmarkAllButton.tintColor = theme.barTintColor
+        topDoneButton.tintColor = theme.barTintColor
+        topPlusButton.tintColor = theme.barTintColor
+        topFireButton.tintColor = theme.barTintColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

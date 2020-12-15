@@ -21,11 +21,19 @@ import UIKit
 import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
-    
-    private var controllerNames = ["onboardingHomeRow"]
+        
+    private lazy var controllerNames: [String] = {
+        if #available(iOS 14, *) {
+            return ["onboardingDefaultBrowser"]
+        } else {
+            return ["onboardingHomeRow"]
+        }
+    }()
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
+    @IBOutlet weak var headerContainer: UIView!
+    @IBOutlet weak var subheaderContainer: UIView!
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var skipButton: UIButton!
@@ -41,6 +49,12 @@ class OnboardingViewController: UIViewController, Onboarding {
         super.viewDidLoad()
         loadInitialContent()
         updateForSmallerScreens()
+        setUpNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func loadInitialContent() {
@@ -61,13 +75,40 @@ class OnboardingViewController: UIViewController, Onboarding {
         contentWidth.constant = isSmall ? -52 : -72
     }
     
+    private func setUpNavigationBar() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    private func adjustHeight(label: UILabel, toMaxHeight maxHeight: CGFloat) -> CGFloat {
+        guard var fontSize = label.attributedText?.font?.pointSize else { return label.bounds.height }
+        
+        var requiredHeight = label.sizeThatFits(CGSize(width: header.bounds.width, height: 1000)).height
+        
+        while requiredHeight > maxHeight, fontSize > 10 {
+            fontSize -= 1.0
+            label.attributedText = label.attributedText?.stringWithFontSize(fontSize)
+            requiredHeight = label.sizeThatFits(CGSize(width: label.bounds.width, height: 1000)).height
+        }
+        
+        return requiredHeight
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        _ = adjustHeight(label: header, toMaxHeight: headerContainer.bounds.height - 10)
+        _ = adjustHeight(label: subheader, toMaxHeight: subheaderContainer.bounds.height - 10)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let controller = segue.destination as? OnboardingContentViewController else {
             fatalError("destination controller is not \(OnboardingContentViewController.self)")
         }
         updateContent(controller)
     }
-    
+
     private func updateContent(_ controller: OnboardingContentViewController) {
         controller.delegate = self
         continueButton.isEnabled = controller.canContinue
@@ -142,7 +183,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         let skipButtonTitle = nextScreen.skipButtonTitle
         skipButton.setTitle(skipButtonTitle, for: .normal)
         skipButton.setTitle(skipButtonTitle, for: .disabled)
-        skipButton.isHidden = true
+        skipButton.isHidden = (nextScreen is OnboardingHomeRowViewController)
     }
     
     func done() {

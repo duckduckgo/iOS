@@ -46,7 +46,7 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
         let model = TabsModel(tabs: [
             firstTab,
             secondTab
-        ])
+        ], desktop: UIDevice.current.userInterfaceIdiom == .pad)
         return model
     }
 

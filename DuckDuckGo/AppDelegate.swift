@@ -22,20 +22,18 @@ import Core
 import UserNotifications
 import os.log
 import Kingfisher
+import WidgetKit
+import BackgroundTasks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
+    
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
-    
-    static var shared: AppDelegate {
-        // swiftlint:disable force_cast
-        return UIApplication.shared.delegate as! AppDelegate
-        // swiftlint:enable force_cast
-    }
-    
+
     private var testing = false
     var appIsLaunching = false
     var overlayWindow: UIWindow?
@@ -45,18 +43,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
+    private var lastBackgroundDate: Date?
 
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        _ = UserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-
-        _ = UserAgentManager.shared
 
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
@@ -65,8 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
         }
-
-        migrateHomePageSettings()
         
         HTTPSUpgrade.shared.loadDataAsync()
         
@@ -75,9 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            
-            DaxDialogs().primeForUse()
-            return .includeInCohort
+            DaxDialogs.shared.primeForUse()
         }
 
         if let main = mainViewController {
@@ -86,6 +80,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         clearLegacyAllowedDomainCookies()
+
+        if #available(iOS 13.0, *) {
+            // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
+            // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
+            AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
+        }
         
         appIsLaunching = true
         return true
@@ -100,10 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
     }
 
-    private func migrateHomePageSettings(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
-        homePageSettings.migrate(from: AppDependencyProvider.shared.appSettings)
-    }
-
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
         
@@ -113,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
-            Pixel.fire(pixel: .appLaunch)
+            self.fireAppLaunchPixel()
         }
         
         if appIsLaunching {
@@ -124,22 +120,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !privacyStore.authenticationEnabled {
             showKeyboardOnLaunch()
         }
+
+        AppConfigurationFetch().start { newData in
+            if newData {
+                NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+            }
+        }
+    }
+
+    private func fireAppLaunchPixel() {
+
+        if #available(iOS 14, *) {
+            WidgetCenter.shared.getCurrentConfigurations { result in
+
+                let paramKeys: [WidgetFamily: String] = [
+                    .systemSmall: PixelParameters.widgetSmall,
+                    .systemMedium: PixelParameters.widgetMedium,
+                    .systemLarge: PixelParameters.widgetLarge
+                ]
+
+                switch result {
+                case .failure(let error):
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                        PixelParameters.widgetError: "1",
+                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                        PixelParameters.widgetErrorDomain: (error as NSError).domain
+                    ])
+
+                case .success(let widgetInfo):
+                    let params = widgetInfo.reduce([String: String]()) {
+                        var result = $0
+                        if let key = paramKeys[$1.family] {
+                            result[key] = "1"
+                        }
+                        return result
+                    }
+                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                }
+
+            }
+        } else {
+            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
+        }
+
+    }
+    
+    private func shouldShowKeyboardOnLaunch() -> Bool {
+        guard let date = lastBackgroundDate else { return true }
+        return Date().timeIntervalSince(date) > AppDelegate.ShowKeyboardOnLaunchThreshold
     }
 
     private func showKeyboardOnLaunch() {
-        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn else { return }
+        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
         self.mainViewController?.enterSearch()
         showKeyboardIfSettingOn = false
     }
     
-    func applicationWillResignActive(_ application: UIApplication) {
-        displayBlankSnapshotWindow()
-    }
-    
     private func onApplicationLaunch(_ application: UIApplication) {
         beginAuthentication()
-        AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
+        applyAppearanceChanges()
+    }
+    
+    private func applyAppearanceChanges() {
+        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -149,7 +193,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        displayBlankSnapshotWindow()
         autoClear?.applicationDidEnterBackground()
+        lastBackgroundDate = Date()
     }
 
     func application(_ application: UIApplication,
@@ -165,10 +211,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         showKeyboardIfSettingOn = false
         
         if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.newTab()
+            mainViewController?.newTab(reuseExisting: true)
+            if url.getParam(name: "w") != nil {
+                Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
+            }
+        } else if AppDeepLinks.isLaunchFavorite(url: url) {
+            let query = AppDeepLinks.query(fromLaunchFavorite: url)
+            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
+            Pixel.fire(pixel: .widgetFavoriteLaunch)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
-            mainViewController?.loadQueryInNewTab(query)
+            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
         } else if AppDeepLinks.isBookmarks(url: url) {
             mainViewController?.onBookmarksPressed()
         } else if AppDeepLinks.isFire(url: url) {
@@ -176,8 +230,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 removeOverlay()
             }
             mainViewController?.onQuickFirePressed()
+        } else if AppDeepLinks.isAddFavorite(url: url) {
+            mainViewController?.startAddFavoriteFlow()
         } else {
-            mainViewController?.loadUrlInNewTab(url)
+            Pixel.fire(pixel: .defaultBrowserLaunch)
+            mainViewController?.loadUrlInNewTab(url, reuseExisting: true)
         }
         
         return true
@@ -192,10 +249,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+        return true
+    }
+
     // MARK: private
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
-        application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
+        if #available(iOS 13.0, *) {
+            guard UIApplication.shared.backgroundRefreshStatus == .available else {
+                return
+            }
+            
+            // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
+            // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
+            BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+                guard tasks.isEmpty else {
+                    return
+                }
+
+                AppConfigurationFetch.scheduleBackgroundRefreshTask()
+            }
+        } else {
+            application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
+        }
     }
     
     private func displayAuthenticationWindow() {

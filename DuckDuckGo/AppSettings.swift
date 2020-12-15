@@ -24,10 +24,10 @@ protocol AppSettings: AnyObject {
     var autoClearAction: AutoClearSettingsModel.Action { get set }
     var autoClearTiming: AutoClearSettingsModel.Timing { get set }
 
-    var homePage: HomePageConfiguration.ConfigName? { get set }
-
     var longPressPreviews: Bool { get set }
 
     var allowUniversalLinks: Bool { get set }
+    
+    var sendDoNotSell: Bool { get set }
 
 }

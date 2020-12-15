@@ -20,43 +20,53 @@
 import UIKit
 import MessageUI
 import Core
-import Device
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet var margins: [NSLayoutConstraint]!
+    @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
-    @IBOutlet weak var homePageAccessoryText: UILabel!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
     @IBOutlet weak var longPressPreviewsToggle: UISwitch!
     @IBOutlet weak var rememberLoginsCell: UITableViewCell!
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
-
+    @IBOutlet weak var doNotSellCell: UITableViewCell!
+    @IBOutlet weak var doNotSellAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
+    @IBOutlet weak var versionCell: UITableViewCell!
 
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
-
+    private let defaultBroswerSectionIndex = 0
+    
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
 
+    private static var shouldShowDefaultBrowserSection: Bool {
+        if #available(iOS 14, *) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMargins()
+
+        configureVersionCell()
+        configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
@@ -64,7 +74,6 @@ class SettingsViewController: UITableViewController {
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
         configureRememberLogins()
-        
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -73,44 +82,17 @@ class SettingsViewController: UITableViewController {
         
         configureAutoClearCellAccessory()
         configureRememberLogins()
-        configureHomePageCellAccessory()
+        configureDoNotSell()
         configureIconViews()
+        
+        // Make sure muliline labels are correctly presented
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is AutoClearSettingsViewController {
-            Pixel.fire(pixel: .autoClearSettingsShown)
-            return
-        }
-        
-        if segue.destination is ThemeSettingsViewController {
-            Pixel.fire(pixel: .settingsThemeShown)
-            return
-        }
-
-        if segue.destination is AppIconSettingsViewController {
-            Pixel.fire(pixel: .settingsAppIconShown)
-            return
-        }
-        
-        if let controller = segue.destination as? HomePageSettingsViewController {
-            Pixel.fire(pixel: .settingsNewTabShown)
-            controller.delegate = homePageSettingsDelegate
-            return
-        }
-
-        if segue.destination is KeyboardSettingsViewController {
-            Pixel.fire(pixel: .settingsKeyboardShown)
-            return
-        }
-
-        if segue.destination is UnprotectedSitesViewController {
-            Pixel.fire(pixel: .settingsUnprotectedSites)
-            return
-        }
-        
-        if segue.destination is HomeRowInstructionsViewController {
-            Pixel.fire(pixel: .settingsHomeRowInstructionsRequested)
+        if segue.destination is DoNotSellSettingsViewController {
+            Pixel.fire(pixel: .settingsDoNotSellShown)
             return
         }
                 
@@ -121,13 +103,14 @@ class SettingsViewController: UITableViewController {
         }
     }
 
-    private func configureMargins() {
-        guard #available(iOS 11, *) else { return }
-        for margin in margins {
-            margin.constant = 0
-        }
+    private func configureVersionCell() {
+        versionCell.isUserInteractionEnabled = isDebugBuild
     }
-    
+
+    private func configureDefaultBroswerCell() {
+        defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
+    }
+
     private func configureThemeCellAccessory() {
         switch appSettings.currentThemeName {
         case .systemDefault:
@@ -163,26 +146,16 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    private func configureHomePageCellAccessory(homePageSettings: HomePageSettings = DefaultHomePageSettings()) {
-
-        switch homePageSettings.layout {
-
-        case .centered:
-            homePageAccessoryText.text = UserText.homePageCenterSearch
-
-        case .navigationBar:
-            homePageAccessoryText.text = UserText.homePageNavigationBar
-
-        }
-        
+    private func configureDoNotSell() {
+        doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
     }
-    
+     
     private func configureRememberLogins() {
         if #available(iOS 13, *) {
             rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
         } else {
             rememberLoginsCell.isHidden = true
-        }        
+        }
     }
 
     private func configureVersionText() {
@@ -200,8 +173,30 @@ class SettingsViewController: UITableViewController {
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 
+    private func showDebug() {
+        // Use the "AdhocDebug" scheme when archiving to create a compatible adhoc build
+        guard isDebugBuild else { return }
+        performSegue(withIdentifier: "Debug", sender: nil)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let cell = tableView.cellForRow(at: indexPath)
+
+        switch cell {
+
+        case defaultBrowserCell:
+            Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+
+        case versionCell:
+            showDebug()
+
+        default: break
+        }
+
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -234,7 +229,38 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+        return cell.isHidden ? 0 : UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return 22.0
+        } else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return CGFloat.leastNonzeroMagnitude
+        } else {
+            return super.tableView(tableView, heightForFooterInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
+        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+            return nil
+        } else {
+            return super.tableView(tableView, titleForFooterInSection: section)
+        }
     }
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
@@ -255,7 +281,6 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onLinkPreviewsToggle(_ sender: UISwitch) {
         appSettings.longPressPreviews = sender.isOn
-        Pixel.fire(pixel: appSettings.longPressPreviews ? .settingsLinkPreviewsOn : .settingsLinkPreviewsOff)
     }
 }
 

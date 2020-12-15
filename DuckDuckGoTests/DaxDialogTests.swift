@@ -45,16 +45,30 @@ class DaxDialogTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
     }
 
+    func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessageShown() {
+        onboarding.enableAddFavoriteFlow()
+        onboarding.resumeRegularFlow()
+        XCTAssertNil(onboarding.nextHomeScreenMessage())
+        XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.google)))
+        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .subsequent)
+    }
+
+    func testWhenStartingAddFavoriteFlowThenNextMessageIsAddFavorite() {
+        onboarding.enableAddFavoriteFlow()
+        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .addFavorite)
+        XCTAssertTrue(onboarding.isAddFavoriteFlow)
+    }
+
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
 
         // swiftlint:disable line_length
         let testCases = [
             (urls: [ URLs.google ], expected: DaxDialogs.BrowsingSpec.withOneTracker.format(args: "Google"), line: #line),
-            (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Amazon.com"), line: #line),
-            (urls: [ URLs.amazon, URLs.ownedByFacebook ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Facebook", "Amazon.com"), line: #line),
-            (urls: [ URLs.facebook, URLs.google ], expected: DaxDialogs.BrowsingSpec.withTwoTrackers.format(args: "Google", "Facebook"), line: #line),
-            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: "Google", "Facebook", 1), line: #line),
-            (urls: [ URLs.facebook, URLs.google, URLs.amazon, URLs.tracker ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackersPlural.format(args: "Google", "Facebook", 2), line: #line)
+            (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: 0, "Google", "Amazon.com"), line: #line),
+            (urls: [ URLs.amazon, URLs.ownedByFacebook ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: 0, "Facebook", "Amazon.com"), line: #line),
+            (urls: [ URLs.facebook, URLs.google ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: 0, "Google", "Facebook"), line: #line),
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: 1, "Google", "Facebook"), line: #line),
+            (urls: [ URLs.facebook, URLs.google, URLs.amazon, URLs.tracker ], expected: DaxDialogs.BrowsingSpec.withMutipleTrackers.format(args: 2, "Google", "Facebook"), line: #line)
         ]
         // swiftlint:enable line_length
 
@@ -129,13 +143,13 @@ class DaxDialogTests: XCTestCase {
 
     func testWhenFirstTimeOnFacebookThenShowMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.facebook)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Facebook", 39.0),
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Facebook", URLs.facebook.host ?? ""),
                        onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 
     func testWhenFirstTimeOnGoogleThenShowMajorTrackingMessage() {
         let siteRating = SiteRating(url: URLs.google)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Google", 92.0),
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Google", URLs.google.host ?? ""),
                        onboarding.nextBrowsingMessage(siteRating: siteRating))
     }
 

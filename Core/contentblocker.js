@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-var duckduckgoContentBlocking = function() {
+(function() {
 
    function trackerDetected(data) {
        try {
@@ -460,9 +460,19 @@ _utf8_encode : function (string) {
 
     let topLevelUrl = getTopLevelURL();
 
-    let unprotectedDomain = `
-        ${unprotectedDomains}
-    `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
+    var unprotectedDomain = false;
+    var domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split(".") : [];
+
+    // walk up the domain to see if it's unprotected
+    while (domainParts && domainParts.length > 1 && !unprotectedDomain) {
+      let partialDomain = domainParts.join(".")
+
+      unprotectedDomain = `
+          ${unprotectedDomains}
+          `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+
+      domainParts.shift()
+    }
 
     // private
     function getTopLevelURL() {
@@ -504,11 +514,10 @@ _utf8_encode : function (string) {
 
         var blocked = false;
         if (unprotectedDomain) {
-            blocked = false;
             result.reason = "unprotectedDomain";
-        } else if (result.action === 'block') {
-            blocked = true;
-        } else if (result.matchedRule && result.matchedRule.surrogate) {
+        } else if (result.action !== 'ignore') {
+            // other actions are "block" or "redirect" - anything that is not ignored should be blocked. Surrogates are handled below since
+            //  we can't do a redirect.
             blocked = true;
         }
 
@@ -519,23 +528,26 @@ _utf8_encode : function (string) {
             isSurrogate: result.matchedRule && result.matchedRule.surrogate
         })
 
-        if (blocked) {
-
-            if (result.matchedRule && result.matchedRule.surrogate) {
-                loadSurrogate(result.matchedRule.surrogate)
-            }
+        // Tracker blocking is dealt with by content rules
+        // Only handle surrogates here
+        if (blocked && result.matchedRule && result.matchedRule.surrogate) {
+            loadSurrogate(result.matchedRule.surrogate)
 
             duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
-        } else {
-            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Allowed",
-                                                   url: trackerUrl,
-                                                   reason: result.reason,
-                                                   time: performance.now() - startTime})
-        }
 
-        return blocked;
+            return true
+        }
+        
+        if (!blocked) {
+            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Allowed",
+                                                    url: trackerUrl,
+                                                    reason: result.reason,
+                                                    time: performance.now() - startTime})
+        }
+        
+        return false
     }
 
     // Init
@@ -570,8 +582,8 @@ _utf8_encode : function (string) {
             duckduckgoDebugMessaging.log("installing image src detection")
 
             var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
-            delete Image.prototype.src;
             Object.defineProperty(Image.prototype, 'src', {
+                writable: true, // Needs to be writable for the content blocking rules script. Will be locked down in that script
                 get: function() {
                     return originalImageSrc.get.call(this)
                 },
@@ -618,4 +630,4 @@ _utf8_encode : function (string) {
     return {
         shouldBlock: shouldBlock
     }
-}()
+})()

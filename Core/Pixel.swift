@@ -18,12 +18,13 @@
 //
 
 import Foundation
-import Alamofire
 import os.log
 
+// swiftlint:disable identifier_name
 public enum PixelName: String {
     
     case appLaunch = "ml"
+    case defaultBrowserLaunch = "m_dl"
     case navigationDetected = "m_n"
 
     case forgetAllPressedBrowsing = "mf_bp"
@@ -44,81 +45,22 @@ public enum PixelName: String {
     
     case httpsNoLookup = "m_https_nl"
     case httpsLocalUpgrade = "m_https_lu"
-    case httpsServiceRequestUpgrade = "m_https_sru"
-    case httpsServiceCacheUpdgrade = "m_https_scu"
-    case httpsServiceRequestNoUpdgrade = "m_https_srn"
-    case httpsServiceCacheNoUpdgrade = "m_https_scn"
-    
-    case longPressMenuOpened = "mlp"
-    case longPressMenuNewBackgroundTabItem = "mlp_b"
-    case longPressMenuNewTabItem = "mlp_t"
-    case longPressMenuOpenItem = "mlp_o"
-    case longPressMenuReadingListItem = "mlp_r"
-    case longPressMenuCopyItem = "mlp_c"
-    case longPressMenuShareItem = "mlp_s"
-    
-    case quickActionExtensionSearch = "mqe_s"
-    case quickActionExtensionFire = "mqe_f"
-    case quickActionExtensionBookmarks = "mqe_b"
-    case bookmarksExtensionBookmark = "mbe_b"
-    
-    case bookmarkTapped = "m_b_t"
-    case bookmarkRemoved = "m_b_r"
-    case bookmarksEditPressed = "m_b_e"
-    case overlayFavoriteLaunched = "m_ov_f"
+    case httpsNoUpgrade = "m_https_nu"
     
     case tabSwitcherNewLayoutSeen = "m_ts_n"
     case tabSwitcherListEnabled = "m_ts_l"
     case tabSwitcherGridEnabled = "m_ts_g"
     
-    case settingsOpened = "ms"
-    case settingsHomeRowInstructionsRequested = "ms_hr"
-    
-    case settingsThemeShown = "ms_tp"
-    case settingsThemeChangedSystemDefault = "ms_ts"
-    case settingsThemeChangedLight = "ms_tl"
-    case settingsThemeChangedDark = "ms_td"
-
-    case settingsAppIconShown = "ms_ais"
-    case settingsAppIconChangedPrefix = "ms_aic_"
-    case settingsAppIconChangedRed = "ms_aic_red"
-    case settingsAppIconChangedYellow = "ms_aic_yellow"
-    case settingsAppIconChangedGreen = "ms_aic_green"
-    case settingsAppIconChangedBlue = "ms_aic_blue"
-    case settingsAppIconChangedPurple = "ms_aic_purple"
-    case settingsAppIconChangedBlack = "ms_aic_black"
-
-    case settingsNewTabShown = "ms_nt"
-    case settingsNewTabDefaultSelected = "ms_nt_d"
-    case settingsNewTabCenteredSelected = "ms_nt_c"
-    case settingsNewTabFavoritesOn = "ms_nt_f_on"
-    case settingsNewTabFavoritesOff = "ms_nt_f_off"
-
-    case settingsKeyboardShown = "ms_ks"
-    case settingsKeyboardNewTabOn = "ms_ks_nt_on"
-    case settingsKeyboardNewTabOff = "ms_ks_nt_off"
-    case settingsKeyboardAppLaunchOn = "ms_ks_al_on"
-    case settingsKeyboardAppLaunchOff = "ms_ks_pl_off"
-    
-    case settingsUnprotectedSites = "ms_mw"
-    case settingsLinkPreviewsOff = "ms_lp_f"
-    case settingsLinkPreviewsOn = "ms_lp_n"
-
-    case autoClearSettingsShown = "mac_s"
-    case autoClearActionOptionNone = "macwhat_n"
-    case autoClearActionOptionTabs = "macwhat_t"
-    case autoClearActionOptionTabsAndData = "macwhat_td"
-    case autoClearTimingOptionExit = "macwhen_x"
-    case autoClearTimingOptionExitOr5Mins = "macwhen_5"
-    case autoClearTimingOptionExitOr15Mins = "macwhen_15"
-    case autoClearTimingOptionExitOr30Mins = "macwhen_30"
-    case autoClearTimingOptionExitOr60Mins = "macwhen_60"
+    case settingsDoNotSellShown = "ms_dns"
+    case settingsDoNotSellOn = "ms_dns_on"
+    case settingsDoNotSellOff = "ms_dns_off"
 
     case browsingMenuOpened = "mb"
     case browsingMenuRefresh = "mb_rf"
     case browsingMenuNewTab = "mb_tb"
     case browsingMenuAddToBookmarks = "mb_abk"
     case browsingMenuAddToFavorites = "mb_af"
+    case browsingMenuAddToFavoritesAddFavoriteFlow = "mb_aff"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
     case browsingMenuSettings = "mb_st"
@@ -143,11 +85,9 @@ public enum PixelName: String {
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
     
-    case homeRowCTAReminderTapped = "m_hc"
-    case homeRowCTAReminderDismissed = "m_hd"
-    
-    case homeRowInstructionsReplayed = "m_hv"
-    
+    case autocompleteSelectedLocal = "m_au_l"
+    case autocompleteSelectedRemote = "m_au_r"
+
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     
@@ -182,28 +122,30 @@ public enum PixelName: String {
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
-    case notificationOptIn = "m_ne"
-    case notificationOptOut = "m_nd"
-    
-    case brokenSiteReported = "m_bsr"
-    
     case brokenSiteReport = "epbf"
-
-    case preserveLoginsSettingsSwitchOn = "m_pl_s_on"
-    case preserveLoginsSettingsSwitchOff = "m_pl_s_off"
-    case preserveLoginsSettingsEdit = "m_pl_s_c_e"
-    case preserveLoginsSettingsDeleteEditing = "m_pl_s_c_ie"
-    case preserveLoginsSettingsDeleteNotEditing = "m_pl_s_c_in"
-    case preserveLoginsSettingsClearAll = "m_pl_s_c_a"
     
     case daxDialogsSerp = "m_dx_s"
     case daxDialogsWithoutTrackers = "m_dx_wo"
+    case daxDialogsWithoutTrackersFollowUp = "m_dx_wof"
     case daxDialogsWithTrackers = "m_dx_wt"
     case daxDialogsSiteIsMajor = "m_dx_sm"
     case daxDialogsSiteOwnedByMajor = "m_dx_so"
     case daxDialogsHidden = "m_dx_h"
-        
-    // debug pixels:
+
+    case widgetFavoriteLaunch = "m_w_fl"
+    case widgetNewSearch = "m_w_ns"
+    case widgetAddFavoriteLaunch = "m_w_af"
+
+    case defaultBrowserButtonPressedSettings = "m_db_s"
+    case defaultBrowserButtonPressedHome = "m_db_h"
+    case defaultBrowserHomeMessageShown = "m_db_h_s"
+    case defaultBrowserHomeMessageDismissed = "m_db_h_d"
+    
+    case widgetsOnboardingCTAPressed = "m_o_w_a"
+    case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
+    case widgetsOnboardingMovedToBackground = "m_o_w_b"
+
+    // MARK: debug pixels
     
     case dbMigrationError = "m_d_dbme"
     case dbRemovalError = "m_d_dbre"
@@ -225,13 +167,19 @@ public enum PixelName: String {
 
     case settingsAppIconChangeFailed = "m_d_aicf"
     case settingsAppIconChangeNotSupported = "m_d_aicns"
+
+    case backgroundTaskSubmissionFailed = "m_bt_rf"
 }
+// swiftlint:enable identifier_name
 
 public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
     static let appVersion = "appVersion"
+    
+    public static let autocompleteBookmarkCapable = "bc"
+    public static let autocompleteIncludedLocalResults = "sb"
     
     static let applicationState = "as"
     static let dataAvailiability = "dp"
@@ -243,6 +191,14 @@ public struct PixelParameters {
     static let underlyingErrorDesc = "ud"
 
     public static let tabCount = "tc"
+
+    public static let widgetSmall = "ws"
+    public static let widgetMedium = "wm"
+    public static let widgetLarge = "wl"
+    public static let widgetError = "we"
+    public static let widgetErrorCode = "ec"
+    public static let widgetErrorDomain = "ed"
+    public static let widgetUnavailable = "wx"
 }
 
 public struct PixelValues {
@@ -263,7 +219,7 @@ public class Pixel {
     
     public static func fire(pixel: PixelName,
                             forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
-                            withAdditionalParameters params: [String: String?] = [:],
+                            withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
@@ -274,13 +230,12 @@ public class Pixel {
         }
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-        let url = appUrls
-            .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
-            .addParams(newParams)
+        let url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
         
-        Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
+        APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
+            
             os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
-            onComplete(response.error)
+            onComplete(error)
         }
     }
     
@@ -288,7 +243,7 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String?] = [:], isCounted: Bool = false) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:], isCounted: Bool = false) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
@@ -317,7 +272,7 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String?] = [:]) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
         var newParams = params
         newParams[PixelParameters.duration] = duration

@@ -31,6 +31,13 @@ class APIHeadersTests: XCTestCase {
         XCTAssertEqual(expected, actual)
     }
 
+    func testWhenProvidingEtagThenHeadersContainsIfNoneMatchHeader() {
+        let testee = APIHeaders(appVersion: appVersion())
+        let expected = "etag"
+        let headers = testee.defaultHeaders(with: expected)
+        XCTAssertEqual(expected, headers[APIHeaders.Name.ifNoneMatch])
+    }
+
     func appVersion() -> AppVersion {
         let mockBundle = MockBundle()
         mockBundle.add(name: AppVersion.Keys.identifier, value: "com.duckduckgo.mobile.ios")

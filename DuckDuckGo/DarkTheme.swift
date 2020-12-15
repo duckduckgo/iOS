@@ -24,6 +24,9 @@ struct DarkTheme: Theme {
     var currentImageSet: ThemeManager.ImageSet = .dark
     var statusBarStyle: UIStatusBarStyle = .lightContent
     var keyboardAppearance: UIKeyboardAppearance = .dark
+
+    var tabsBarBackgroundColor = UIColor.nearlyBlack
+    var tabsBarSeparatorColor = UIColor.darkGreyish
     
     var backgroundColor = UIColor.nearlyBlack
     
@@ -100,5 +103,13 @@ struct DarkTheme: Theme {
 
     var daxDialogBackgroundColor: UIColor = .nearlyBlackLight
     var daxDialogTextColor: UIColor = UIColor.nearlyWhite
+    
+    var homeMessageBackgroundColor = UIColor.nearlyBlackLight
+    var homeMessageHeaderTextColor = UIColor.white
+    var homeMessageSubheaderTextColor = UIColor.greyish2
+    var homeMessageTopTextColor = UIColor.cornflowerBlue
+    var homeMessageButtonColor = UIColor.cornflowerBlue
+    var homeMessageButtonTextColor = UIColor.white
+    var homeMessageDismissButtonColor = UIColor.white
 
 }

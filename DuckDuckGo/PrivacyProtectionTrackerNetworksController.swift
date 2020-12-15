@@ -60,7 +60,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         Pixel.fire(pixel: .privacyDashboardNetworks)
         
         initTableView()
-        initBackButton()
+        initUI()
         update()
     }
 
@@ -76,6 +76,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         updateSubtitle()
         updateIcon()
         tableView.reloadData()
+        tableView.setNeedsLayout()
     }
 
     private func trackers() -> [DetectedTracker] {
@@ -106,7 +107,8 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         tableView.dataSource = self
     }
 
-    private func initBackButton() {
+    private func initUI() {
+        messageLabel.setAttributedTextString(UserText.ppTrackerNetworksInfo)
         backButton.isHidden = !isPad
     }
 
@@ -114,6 +116,17 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         return siteRating.protecting(protectionStore)
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+            DispatchQueue.main.async {
+                self.tableView.tableHeaderView = header
+            }
+        }
+    }
 }
 
 extension PrivacyProtectionTrackerNetworksController: UITableViewDelegate {

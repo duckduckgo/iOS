@@ -29,12 +29,16 @@ extension String {
     public func length() -> Int {
         return count
     }
+    
+    public var fullRange: NSRange {
+        return NSRange(location: 0, length: count)
+    }
 
     public func matches(pattern: String) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
             return false
         }
-        let matches = regex.matches(in: self, options: .anchored, range: NSRange(location: 0, length: count))
+        let matches = regex.matches(in: self, options: .anchored, range: fullRange)
         return matches.count == 1
     }
 
@@ -111,4 +115,56 @@ extension String {
         return ""
     }
 
+    public func attributedString(withPlaceholder placeholder: String,
+                                 replacedByImage image: UIImage,
+                                 horizontalPadding: CGFloat = 0.0,
+                                 verticalOffset: CGFloat = 0.0) -> NSAttributedString? {
+        let components = self.components(separatedBy: placeholder)
+        guard components.count > 1 else { return nil }
+        
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        attachment.bounds = CGRect(x: 0, y: verticalOffset, width: image.size.width, height: image.size.height)
+        let attachmentString = NSAttributedString(attachment: attachment)
+        
+        let paddingAttachment = NSTextAttachment()
+        paddingAttachment.bounds = CGRect(x: 0, y: 0, width: horizontalPadding, height: 0)
+        let startPadding = NSAttributedString(attachment: paddingAttachment)
+        let endPadding = NSAttributedString(attachment: paddingAttachment)
+        
+        let firstString = NSMutableAttributedString(string: components[0])
+        for component in components.dropFirst() {
+            let endString = NSMutableAttributedString(string: component)
+            firstString.append(startPadding)
+            firstString.append(attachmentString)
+            firstString.append(endPadding)
+            firstString.append(endString)
+        }
+        return firstString
+    }
+}
+
+// MARK: - Bookmarklet
+
+extension String {
+    public func isBookmarklet() -> Bool {
+        return self.lowercased().hasPrefix("javascript:")
+    }
+
+    public func toDecodedBookmarklet() -> String? {
+        guard self.isBookmarklet(),
+              let result = self.dropPrefix(prefix: "javascript:").removingPercentEncoding,
+              !result.isEmpty else { return nil }
+        return result
+    }
+
+    public func toEncodedBookmarklet() -> URL? {
+        let allowedCharacters = CharacterSet.alphanumerics.union(.urlQueryAllowed)
+        guard self.isBookmarklet(),
+              let encoded = self.dropPrefix(prefix: "javascript:")
+                // Avoid double encoding by removing any encoding first
+                .removingPercentEncoding?
+                .addingPercentEncoding(withAllowedCharacters: allowedCharacters) else { return nil }
+        return URL(string: "javascript:\(encoded)")
+    }
 }

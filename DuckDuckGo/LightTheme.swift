@@ -30,6 +30,9 @@ struct LightTheme: Theme {
     }
     
     var keyboardAppearance: UIKeyboardAppearance = .light
+
+    var tabsBarBackgroundColor = UIColor.lightGreyish
+    var tabsBarSeparatorColor = UIColor.greyish
     
     var backgroundColor = UIColor.nearlyWhite
     
@@ -106,4 +109,12 @@ struct LightTheme: Theme {
     
     var daxDialogBackgroundColor: UIColor = UIColor.white
     var daxDialogTextColor: UIColor = UIColor.darkGreyish
+    
+    var homeMessageBackgroundColor = UIColor.white
+    var homeMessageHeaderTextColor = UIColor.black
+    var homeMessageSubheaderTextColor = UIColor.greyish3
+    var homeMessageTopTextColor = UIColor.cornflowerBlue
+    var homeMessageButtonColor = UIColor.cornflowerBlue
+    var homeMessageButtonTextColor = UIColor.white
+    var homeMessageDismissButtonColor = UIColor.nearlyBlackLight
 }

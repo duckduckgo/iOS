@@ -26,8 +26,8 @@ class TLDTests: XCTestCase {
     let tld = TLD()
 
     func testWhenJsonAccessedThenReturnsValidJson() {
-        let json = try? JSONSerialization.jsonObject(with: tld.json.data(using: .utf8)!, options: [])
-        let tlds = json as? [String: Int]
+        let tlds = try? JSONDecoder().decode([String: Int].self, from: tld.json.data(using: .utf8)!)
+
         XCTAssertNotNil(tlds)
         XCTAssertFalse(tlds?.isEmpty ?? true)
     }

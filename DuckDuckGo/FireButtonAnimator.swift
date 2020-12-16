@@ -114,6 +114,7 @@ class FireButtonAnimator {
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
+            window.showBottomToast(UserText.actionForgetAllDone, duration: 1.0)
             transitionCompletion()
         }
         

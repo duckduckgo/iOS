@@ -1344,11 +1344,9 @@ extension MainViewController: AutoClearWorker {
         } transitionCompletion: {
             transitionCompletion?()
         } completion: {
-            let window = UIApplication.shared.keyWindow
-            window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
             Instruments.shared.endTimedEvent(for: spid)
             if KeyboardSettings().onNewTab {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.enterSearch()
                 }
             }

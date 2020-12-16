@@ -108,6 +108,15 @@ class FireButtonAnimator {
         
         guard let window = UIApplication.shared.keyWindow,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
+            animationStartCompletion()
+            transitionCompletion()
+            completion()
+            return
+        }
+        
+        guard let composition = preLoadedComposition else {
+            animationStartCompletion()
+            window.showBottomToast(UserText.actionForgetAllDone, duration: 1.0)
             transitionCompletion()
             completion()
             return
@@ -115,7 +124,7 @@ class FireButtonAnimator {
         
         window.addSubview(snapshot)
         
-        let animationView = LOTAnimationView(model: preLoadedComposition, in: nil)
+        let animationView = LOTAnimationView(model: composition, in: nil)
         let currentAnimation = appSettings.currentFireButtonAnimation
         let speed = currentAnimation.speed
         animationView.contentMode = .scaleAspectFill

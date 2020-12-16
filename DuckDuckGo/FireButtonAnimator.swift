@@ -74,6 +74,19 @@ enum FireButtonAnimationType: String, CaseIterable {
             return nil
         }
     }
+    
+    var endFrame: NSNumber {
+        switch self {
+        case .fireRising:
+            return 21
+        case .waterSwirl:
+            return 24
+        case .airstream:
+            return 18
+        case .none:
+            return 0
+        }
+    }
 }
 
 class FireButtonAnimator {
@@ -118,7 +131,7 @@ class FireButtonAnimator {
             transitionCompletion()
         }
         
-        animationView.play { _ in
+        animationView.play(fromFrame: 0, toFrame: currentAnimation.endFrame) { _ in
             animationView.removeFromSuperview()
             completion()
         }

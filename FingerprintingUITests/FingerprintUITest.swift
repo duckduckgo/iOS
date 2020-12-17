@@ -42,6 +42,9 @@ class FingerprintUITest: XCTestCase {
         app
             .searchFields["searchEntry"]
             .typeText("https://duckduckgo.com\n")
+        
+        sleep(5) // let site load
+        
         app.buttons["Browsing Menu"].tap()
         if app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].waitForExistence(timeout: 2) {
             app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].tap()

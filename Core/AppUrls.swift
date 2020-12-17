@@ -72,7 +72,7 @@ public struct AppUrls {
         static let appUsage = "app_use"
         static let searchHeader = "-1"
         
-        static let majorVerticals: Set<String> = ["images", "videos", "news", "maps"]
+        static let majorVerticals: Set<String> = ["images", "videos", "news"]
     }
 
     let statisticsStore: StatisticsStore
@@ -152,10 +152,8 @@ public struct AppUrls {
         
         var parameters = [String: String]()
         if let queryContext = queryContext, isDuckDuckGoSearch(url: queryContext) {
-            if let mapsValue = queryContext.getParam(name: Param.verticalMaps) {
-                parameters[Param.verticalMaps] = mapsValue
-                parameters[Param.vertical] = queryContext.getParam(name: Param.vertical)
-            } else if let vertical = queryContext.getParam(name: Param.vertical),
+            if queryContext.getParam(name: Param.verticalMaps) == nil,
+               let vertical = queryContext.getParam(name: Param.vertical),
                       ParamValue.majorVerticals.contains(vertical) {
                 parameters[Param.verticalRewrite] = vertical
             }

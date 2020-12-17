@@ -43,8 +43,11 @@ class FingerprintUITest: XCTestCase {
             .searchFields["searchEntry"]
             .typeText("https://duckduckgo.com\n")
         app.buttons["Browsing Menu"].tap()
-        app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].tap()
-        app.toolbars["Toolbar"].buttons["Bookmarks"].tap()
+        if app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].waitForExistence(timeout: 2) {
+            app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].tap()
+        } else {
+            app.sheets.scrollViews.otherElements.buttons["Cancel"].tap()
+        }
     }
 
     override func tearDownWithError() throws {
@@ -59,6 +62,12 @@ class FingerprintUITest: XCTestCase {
 
     func test() throws {
         let app = XCUIApplication()
+        
+        if app.toolbars["Toolbar"].buttons["Bookmarks"].waitForExistence(timeout: 2) {
+            app.toolbars["Toolbar"].buttons["Bookmarks"].tap()
+        } else {
+            XCTFail("Bookmarks button missing")
+        }
         
         // Edit bookmark into bookmarklet to verify fingerprinting test
         let bookmarksNavigationBar = app.navigationBars["Bookmarks"]

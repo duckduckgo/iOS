@@ -986,15 +986,18 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
-        let selectQueryText = isSERPPresented && !skipSERPFlow
+        var selectQueryText = true
+        if appUrls.variantManager.isSupported(feature: .removeSERPHeader) {
+            selectQueryText = !(isSERPPresented && !skipSERPFlow)
+        }
         skipSERPFlow = false
         
         ViewHighlighter.hideAll()
         guard let homeController = homeController else {
-            return !selectQueryText
+            return selectQueryText
         }
         homeController.launchNewSearch()
-        return !selectQueryText
+        return selectQueryText
     }
     
     func onRefreshPressed() {

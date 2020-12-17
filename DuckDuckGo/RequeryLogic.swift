@@ -36,6 +36,8 @@ class RequeryLogic {
     private var serpState: SerpState = .notLoaded
 
     func onNewNavigation(url: URL) {
+        guard appUrls.variantManager.isSupported(feature: .removeSERPHeader) else { return }
+        
         guard let query = appUrls.searchQuery(fromUrl: url) else {
             serpState = .notLoaded
             return
@@ -45,6 +47,8 @@ class RequeryLogic {
     }
     
     func onRefresh() {
+        guard appUrls.variantManager.isSupported(feature: .removeSERPHeader) else { return }
+        
         guard case .loaded = serpState else { return }
         
         sendPixel(value: .sameQuery)

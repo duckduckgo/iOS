@@ -76,9 +76,12 @@ public struct AppUrls {
     }
 
     let statisticsStore: StatisticsStore
+    public let variantManager: VariantManager
 
-    public init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+    public init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+                variantManager: VariantManager = DefaultVariantManager()) {
         self.statisticsStore = statisticsStore
+        self.variantManager = variantManager
     }
 
     public var base: URL {
@@ -207,10 +210,13 @@ public struct AppUrls {
     }
     
     public func applySearchHeaderParams(for url: URL) -> URL {
+        guard variantManager.isSupported(feature: .removeSERPHeader) else { return url }
+        
         return url.addParam(name: Param.searchHeader, value: ParamValue.searchHeader)
     }
     
     public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
+        guard variantManager.isSupported(feature: .removeSERPHeader) else { return true }
         guard let header = url.getParam(name: Param.searchHeader) else { return false }
         return header == ParamValue.searchHeader
     }

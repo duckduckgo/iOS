@@ -327,3 +327,37 @@ extension MFMailComposeViewController {
         return MFMailComposeViewController()
     }
 }
+
+extension SettingsViewController {
+    static var fontSizeForHeaderView: CGFloat {
+        let contentSize = UIApplication.shared.preferredContentSizeCategory
+        switch contentSize {
+        case .extraSmall:
+            return 12
+        case .small:
+            return 12
+        case .medium:
+            return 12
+        case .large:
+            return 13
+        case .extraLarge:
+            return 15
+        case .extraExtraLarge:
+            return 17
+        case .extraExtraExtraLarge:
+            return 19
+        case .accessibilityMedium:
+            return 23
+        case .accessibilityLarge:
+            return 27
+        case .accessibilityExtraLarge:
+            return 33
+        case .accessibilityExtraExtraLarge:
+            return 38
+        case .accessibilityExtraExtraExtraLarge:
+            return 44
+        default:
+            return 13
+        }
+    }
+}

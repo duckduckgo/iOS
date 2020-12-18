@@ -48,6 +48,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        #if targetEnvironment(simulator)
+        if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
+            // Disable hardware keyboards.
+            let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
+            UITextInputMode.activeInputModes
+                // Filter `UIKeyboardInputMode`s.
+                .filter({ $0.responds(to: setHardwareLayout) })
+                .forEach { $0.perform(setHardwareLayout, with: nil) }
+        }
+        #endif
+        
         _ = UserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {

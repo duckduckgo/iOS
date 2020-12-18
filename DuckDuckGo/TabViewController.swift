@@ -157,6 +157,7 @@ class TabViewController: UIViewController {
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var contentBlockerScript = ContentBlockerUserScript()
     private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
+    private var fingerprintScript = FingerprintUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
     private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
@@ -231,6 +232,7 @@ class TabViewController: UIViewController {
             navigatorPatchScript,
             contentBlockerScript,
             contentBlockerRulesScript,
+            fingerprintScript,
             faviconScript,
             fullScreenVideoScript
         ]

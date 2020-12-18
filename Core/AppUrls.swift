@@ -154,7 +154,8 @@ public struct AppUrls {
         }
         
         var parameters = [String: String]()
-        if let queryContext = queryContext, isDuckDuckGoSearch(url: queryContext) {
+        if let queryContext = queryContext, isDuckDuckGoSearch(url: queryContext),
+           variantManager.isSupported(feature: .removeSERPHeader) {
             if queryContext.getParam(name: Param.verticalMaps) == nil,
                let vertical = queryContext.getParam(name: Param.vertical),
                       ParamValue.majorVerticals.contains(vertical) {

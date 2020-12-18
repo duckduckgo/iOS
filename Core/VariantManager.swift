@@ -61,7 +61,7 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         
-        Variant(name: "mi", weight: doNotAllocate, isIncluded: When.always, features: []),
+        Variant(name: "mi", weight: 0, isIncluded: When.always, features: []),
         Variant(name: "mo", weight: 1, isIncluded: When.always, features: [.removeSERPHeader])
     ]
     

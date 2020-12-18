@@ -978,7 +978,8 @@ extension MainViewController: OmniBarDelegate {
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
         
-        if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
+        if appUrls.variantManager.isSupported(feature: .removeSERPHeader),
+           !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             showSuggestionTray(.autocomplete(query: query))
         } else {
             showSuggestionTray(.favorites)

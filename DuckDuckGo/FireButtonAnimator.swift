@@ -104,20 +104,20 @@ class FireButtonAnimator {
                                                object: nil)
     }
         
-    func animate(animationStartCompletion: @escaping () -> Void, transitionCompletion: @escaping () -> Void, completion: @escaping () -> Void) {
+    func animate(onAnimationStart: @escaping () -> Void, onTransitionCompleted: @escaping () -> Void, completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
-            animationStartCompletion()
-            transitionCompletion()
+            onAnimationStart()
+            onTransitionCompleted()
             completion()
             return
         }
         
         guard let composition = preLoadedComposition else {
-            animationStartCompletion()
+            onAnimationStart()
             window.showBottomToast(UserText.actionForgetAllDone, duration: 1.0)
-            transitionCompletion()
+            onTransitionCompleted()
             completion()
             return
         }
@@ -137,7 +137,7 @@ class FireButtonAnimator {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
             window.showBottomToast(UserText.actionForgetAllDone, duration: 1.0)
-            transitionCompletion()
+            onTransitionCompleted()
         }
         
         animationView.play(fromFrame: 0, toFrame: currentAnimation.endFrame) { _ in
@@ -146,7 +146,7 @@ class FireButtonAnimator {
         }
 
         DispatchQueue.main.async {
-            animationStartCompletion()
+            onAnimationStart()
         }
     }
     

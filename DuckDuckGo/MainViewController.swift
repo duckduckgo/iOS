@@ -1341,7 +1341,7 @@ extension MainViewController: AutoClearWorker {
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
-        } transitionCompletion: {
+        } onTransitionCompleted: {
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)

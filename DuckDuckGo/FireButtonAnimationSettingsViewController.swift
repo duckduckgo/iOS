@@ -64,7 +64,7 @@ class FireButtonAnimationSettingsViewController: UITableViewController {
         
         let type = availableAnimations[indexPath.row]
         appSettings.currentFireButtonAnimation = type
-        NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: nil)
+        NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
         tableView.reloadData()
     }
 }

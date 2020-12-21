@@ -129,16 +129,23 @@
                                             <segue destination="jbD-Oy-Cmw" kind="show" id="f37-XF-kAF"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="gBo-Cu-e2k" detailTextLabel="bdg-6r-nMM" style="IBUITableViewCellStyleValue1" id="peE-aq-cyw">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="peE-aq-cyw">
                                         <rect key="frame" x="0.0" y="234" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="peE-aq-cyw" id="bq3-rZ-Mru">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Fire Button Animation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gBo-Cu-e2k">
-                                                    <rect key="frame" x="20" y="14" width="156.33333333333334" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="AtR-nS-Gun" userLabel="Fire Button Accessory Label">
+                                                    <rect key="frame" x="374.66666666666669" y="22" width="0.0" height="0.0"/>
+                                                    <attributedString key="attributedText"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Fire Button Animation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBo-Cu-e2k">
+                                                    <rect key="frame" x="20" y="10" width="334.66666666666669" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lET-gS-0lq"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -146,14 +153,16 @@
                                                         <fragment content="Fire button animation settings item"/>
                                                     </attributedString>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bdg-6r-nMM">
-                                                    <rect key="frame" x="324.33333333333337" y="14" width="50.333333333333336" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="gBo-Cu-e2k" secondAttribute="bottom" constant="10" id="3PL-5d-tH1"/>
+                                                <constraint firstItem="gBo-Cu-e2k" firstAttribute="leading" secondItem="bq3-rZ-Mru" secondAttribute="leadingMargin" id="FrW-Ls-gih"/>
+                                                <constraint firstItem="AtR-nS-Gun" firstAttribute="centerY" secondItem="bq3-rZ-Mru" secondAttribute="centerY" id="IkX-ko-fqr"/>
+                                                <constraint firstItem="gBo-Cu-e2k" firstAttribute="top" secondItem="bq3-rZ-Mru" secondAttribute="top" constant="10" id="JMc-nT-54U"/>
+                                                <constraint firstItem="gBo-Cu-e2k" firstAttribute="centerY" secondItem="bq3-rZ-Mru" secondAttribute="centerY" id="RY6-yK-WQb"/>
+                                                <constraint firstItem="AtR-nS-Gun" firstAttribute="leading" secondItem="gBo-Cu-e2k" secondAttribute="trailing" constant="20" id="qaL-Fl-t87"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="AtR-nS-Gun" secondAttribute="trailing" id="yA0-pg-gL7"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
@@ -654,7 +663,7 @@
                         <outlet property="defaultBrowserCell" destination="TFL-da-OrV" id="b59-Ul-Qut"/>
                         <outlet property="doNotSellAccessoryText" destination="3Eb-dV-4ZX" id="i3h-XN-Jzz"/>
                         <outlet property="doNotSellCell" destination="X9R-j6-TtK" id="T8Q-4B-bvp"/>
-                        <outlet property="fireButtonAnimationAccessoryText" destination="bdg-6r-nMM" id="9o0-Ab-Kuz"/>
+                        <outlet property="fireButtonAnimationAccessoryText" destination="AtR-nS-Gun" id="hxe-n6-40j"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
@@ -684,8 +693,8 @@
                         <outletCollection property="accessoryLabels" destination="1SP-ku-vDO" collectionClass="NSMutableArray" id="Q2K-in-SPo"/>
                         <outletCollection property="labels" destination="vPz-uO-6gB" collectionClass="NSMutableArray" id="uIp-dc-5qn"/>
                         <outletCollection property="accessoryLabels" destination="3Eb-dV-4ZX" collectionClass="NSMutableArray" id="fOs-VN-OGc"/>
-                        <outletCollection property="labels" destination="gBo-Cu-e2k" collectionClass="NSMutableArray" id="1zV-Q2-RYf"/>
-                        <outletCollection property="accessoryLabels" destination="bdg-6r-nMM" collectionClass="NSMutableArray" id="4Dm-KR-AIh"/>
+                        <outletCollection property="accessoryLabels" destination="AtR-nS-Gun" collectionClass="NSMutableArray" id="6qq-fa-ps2"/>
+                        <outletCollection property="labels" destination="gBo-Cu-e2k" collectionClass="NSMutableArray" id="gh5-J8-R2y"/>
                         <segue destination="fzf-7H-o48" kind="show" identifier="Debug" id="o3U-Oe-eLc"/>
                     </connections>
                 </tableViewController>

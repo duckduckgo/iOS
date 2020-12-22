@@ -440,6 +440,18 @@
 "findinpage.title" = "Zoek op pagina";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Luchtstroom";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Vuurzee";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Geen";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Draaikolk";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Instellen als standaardbrowser";
 
 /* No comment provided by engineer. */

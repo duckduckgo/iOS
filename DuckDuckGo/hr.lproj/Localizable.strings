@@ -440,6 +440,18 @@
 "findinpage.title" = "Pronađi na stranici";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Zračna struja";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Pakao";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Nijedno";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Vrtlog";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Postavi kao zadani preglednik";
 
 /* No comment provided by engineer. */

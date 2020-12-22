@@ -440,6 +440,18 @@
 "findinpage.title" = "Keresés az oldalon";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Levegő";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Lángnyelvek";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Nincs";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Whirlpool";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Beállítás alapértelmezett böngészőként";
 
 /* No comment provided by engineer. */

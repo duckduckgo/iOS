@@ -440,6 +440,18 @@
 "findinpage.title" = "Найти на странице";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Воздушный поток";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Инферно";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Отсутствуют";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Водоворот";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Сделать браузером по умолчанию";
 
 /* No comment provided by engineer. */

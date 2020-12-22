@@ -440,6 +440,18 @@
 "findinpage.title" = "Намери в страницата";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Въздушна струя";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Адски огън";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Няма";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Водовъртеж";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Задаване като браузър по подразбиране";
 
 /* No comment provided by engineer. */

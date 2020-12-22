@@ -440,6 +440,18 @@
 "findinpage.title" = "Otsi lehel";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Airstream";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Inferno";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Puudub";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Whirlpool";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Määrake vaikebrauseriks";
 
 /* No comment provided by engineer. */

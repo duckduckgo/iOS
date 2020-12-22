@@ -440,6 +440,18 @@
 "findinpage.title" = "Hľadať na stránke";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Prúd vzduchu";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Peklo";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Žiadne";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Vír";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Nastaviť ako predvolený prehliadač";
 
 /* No comment provided by engineer. */

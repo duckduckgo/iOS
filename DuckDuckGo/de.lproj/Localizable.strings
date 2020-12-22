@@ -440,6 +440,18 @@
 "findinpage.title" = "Auf Seite suchen";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Luftstrom";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Inferno";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "gar nichts";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Wasserstrudel";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Als Standard-Browser festlegen";
 
 /* No comment provided by engineer. */
@@ -836,7 +848,7 @@
 "theme.acc.dark" = "Dunkel";
 
 /* Short entry for Default System theme */
-"theme.acc.default" = "System";
+"theme.acc.default" = "Standard";
 
 /* Light Theme entry */
 "theme.acc.light" = "Hell";

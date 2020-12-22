@@ -32,14 +32,14 @@ class ViewHighlighter {
         guard let center = view.superview?.convert(view.center, to: nil) else { return }
         let size = max(view.frame.width, view.frame.height) * 5.5
 
-        let highlightView = AnimationView(name: "view_highlight")
+        let highlightView = LOTAnimationView(name: "view_highlight")
         highlightView.frame = CGRect(x: 0, y: 0, width: size, height: size)
         highlightView.center = center
         highlightView.isUserInteractionEnabled = false
         window.addSubview(highlightView)
 
         highlightView.contentMode = .scaleToFill
-        highlightView.loopMode = .loop
+        highlightView.loopAnimation = true
         highlightView.play()
 
         addedViews.append(WeaklyHeldView(view: highlightView))

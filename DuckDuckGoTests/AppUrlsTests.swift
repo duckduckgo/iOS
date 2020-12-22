@@ -211,7 +211,8 @@ class AppUrlsTests: XCTestCase {
     }
     
     func testWhenExistingQueryUsesVerticalThenItIsAppliedToNewOne() {
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let mock = MockVariantManager(isSupportedReturns: true)
+        let testee = AppUrls(statisticsStore: mockStatisticsStore, variantManager: mock)
         let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images")!
         let url = testee.url(forQuery: "query", queryContext: contextURL)
         
@@ -220,7 +221,8 @@ class AppUrlsTests: XCTestCase {
     }
     
     func testWhenExistingQueryUsesVerticalWithMapsThenTheseAreIgnored() {
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let mock = MockVariantManager(isSupportedReturns: true)
+        let testee = AppUrls(statisticsStore: mockStatisticsStore, variantManager: mock)
         let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images&iaxm=maps")!
         let url = testee.url(forQuery: "query", queryContext: contextURL)
         
@@ -231,7 +233,8 @@ class AppUrlsTests: XCTestCase {
     }
     
     func testWhenExistingQueryHasNoVerticalThenItIsAbsentInNewOne() {
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let mock = MockVariantManager(isSupportedReturns: true)
+        let testee = AppUrls(statisticsStore: mockStatisticsStore, variantManager: mock)
         let contextURL = URL(string: "https://example.com")!
         let url = testee.url(forQuery: "query", queryContext: contextURL)
         

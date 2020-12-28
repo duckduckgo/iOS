@@ -424,7 +424,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
 extension TabSwitcherViewController: TabObserver {
     
     func didChange(tab: Tab) {
-        //Reloading when updates are processed will result in a crash
+        // Reloading when updates are processed will result in a crash
         guard !isProcessingUpdates else { return }
         
         if let index = tabsModel.indexOf(tab: tab) {

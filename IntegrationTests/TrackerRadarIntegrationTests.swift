@@ -18,7 +18,6 @@
 //
 
 import XCTest
-@testable import DuckDuckGo
 @testable import Core
 
 class TrackerRadarIntegrationTests: XCTestCase {

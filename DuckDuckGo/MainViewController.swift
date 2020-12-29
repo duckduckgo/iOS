@@ -704,7 +704,7 @@ class MainViewController: UIViewController {
         notificationContainerHeight.constant = height
 
         if #available(iOS 11.0, *) {
-            //no-op
+            // no-op
         } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
             traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
             // adjust frame to toolbar height change

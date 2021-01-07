@@ -440,6 +440,18 @@
 "findinpage.title" = "Rasti puslapyje";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "„Airstream“";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "„Inferno“";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Jokie";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "„Whirlpool“";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Nustatyti kaip numatytąją naršyklę";
 
 /* No comment provided by engineer. */
@@ -563,7 +575,7 @@
 "onboardingStartBrowsing" = "Pradėti naršyti";
 
 /* No comment provided by engineer. */
-"onboardingWelcomeHeader" = "Sveiki atvykę į „DuckDuckGo“!";
+"onboardingWelcomeHeader" = "Sveiki atvykę į „DuckDuckGo!“";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Negalima rasti programos, galinčios atidaryti šią nuorodą";

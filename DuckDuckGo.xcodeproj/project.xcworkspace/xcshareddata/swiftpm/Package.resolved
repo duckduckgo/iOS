@@ -12,11 +12,11 @@
       },
       {
         "package": "Lottie",
-        "repositoryURL": "https://github.com/airbnb/lottie-ios.git",
+        "repositoryURL": "https://github.com/duckduckgo/lottie-ios.git",
         "state": {
-          "branch": null,
-          "revision": "4e5877425dae5c10792fc9d22d53dc6bf6824dc1",
-          "version": "3.1.8"
+          "branch": "2.5.3/spm",
+          "revision": "58eabd4767dcd4862d0e0a6a93e08ff0746141c6",
+          "version": null
         }
       },
       {

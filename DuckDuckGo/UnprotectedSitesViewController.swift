@@ -45,6 +45,12 @@ class UnprotectedSitesViewController: UITableViewController {
         refreshToolbarItems(animated: false)
         
         configureBackButton()
+        
+        let fontSize = SettingsViewController.fontSizeForHeaderView
+        let text = NSAttributedString(string: infoText.text ?? "", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
+        ])
+        infoText.attributedText = text
     }
     
     override func viewWillDisappear(_ animated: Bool) {

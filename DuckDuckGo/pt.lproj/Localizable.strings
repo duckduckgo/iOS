@@ -440,6 +440,18 @@
 "findinpage.title" = "Encontrar na página";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Corrente de ar";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Inferno";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Nenhum";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Redemoinho";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Definir como navegador padrão";
 
 /* No comment provided by engineer. */

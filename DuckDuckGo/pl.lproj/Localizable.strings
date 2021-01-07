@@ -440,6 +440,18 @@
 "findinpage.title" = "Znajdź na stronie";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Strumień powietrza";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Ogień";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Brak";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Whirlpool";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Ustaw jako domyślną przeglądarkę";
 
 /* No comment provided by engineer. */

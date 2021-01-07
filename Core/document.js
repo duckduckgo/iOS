@@ -22,7 +22,9 @@
         Object.defineProperty(window, "__ddg__", {
             enumerable: false,
             configurable: false,
-            writable: false
+            writable: false,
+            value: {
+            }
         });
     }
     

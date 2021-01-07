@@ -1,8 +1,8 @@
 //
-//  AppSettings.swift
+//  FingerprintUserScript.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2020 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,19 +17,21 @@
 //  limitations under the License.
 //
 
-protocol AppSettings: AnyObject {
-    var autocomplete: Bool { get set }
-    var currentThemeName: ThemeName { get set }
-    
-    var autoClearAction: AutoClearSettingsModel.Action { get set }
-    var autoClearTiming: AutoClearSettingsModel.Timing { get set }
+import UIKit
+import WebKit
 
-    var longPressPreviews: Bool { get set }
-
-    var allowUniversalLinks: Bool { get set }
+public class FingerprintUserScript: NSObject, UserScript {
+    public var source: String {
+        return loadJS("fingerprint")
+    }
     
-    var sendDoNotSell: Bool { get set }
+    public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
     
-    var currentFireButtonAnimation: FireButtonAnimationType { get set }
-
+    public var forMainFrameOnly: Bool = false
+    
+    public var messageNames: [String] = []
+    
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+    }
 }

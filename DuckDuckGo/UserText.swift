@@ -42,7 +42,6 @@ public struct UserText {
     public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", value: "Close Tabs and Clear Data", comment: "")
     public static let actionForgetAllDone = NSLocalizedString("action.title.forgetAllDone", value: "Tabs and data cleared", comment: "Confirmation message")
     public static let actionOpen = NSLocalizedString("action.title.open", value: "Open", comment: "Open action")
-    public static let actionReadingList = NSLocalizedString("action.title.readingList", value: "Add to Reading List", comment: "Reading List action")
     public static let actionCopy = NSLocalizedString("action.title.copy", value: "Copy", comment: "Copy action")
     public static let actionShare = NSLocalizedString("action.title.share", value: "Share...", comment: "Share action")
     public static let actionEnableProtection = NSLocalizedString("action.title.enable.protection", value: "Enable Privacy Protection", comment: "Enable protection action")
@@ -332,4 +331,9 @@ public struct UserText {
     public static let emailAliasAlertMessage = NSLocalizedString("email.aliasAlert.message", value: "This address can be used to communicate with you, but won’t reveal your real email.", comment: "")
     public static let emailAliasAlertConfirm = NSLocalizedString("email.aliasAlert.confirm", value: "Use %@", comment: "")
     public static let emailAliasAlertDecline = NSLocalizedString("email.aliasAlert.decline", value: "Don't Use", comment: "")
+
+    public static let fireButtonAnimationFireRisingName = NSLocalizedString("fireButtonAnimation.fireRising.name", value: "Inferno", comment: "")
+    public static let fireButtonAnimationWaterSwirlName = NSLocalizedString("fireButtonAnimation.waterSwirl.name", value: "Whirlpool", comment: "")
+    public static let fireButtonAnimationAirstreamName = NSLocalizedString("fireButtonAnimation.airstream.name", value: "Airstream", comment: "")
+    public static let fireButtonAnimationNoneName = NSLocalizedString("fireButtonAnimation.none.name", value: "None", comment: "")
 }

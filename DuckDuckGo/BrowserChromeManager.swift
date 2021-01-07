@@ -212,7 +212,7 @@ private class BarsAnimator {
         guard bottomRevealGestureState != .triggered else { return }
         
         // In case view has been "caught" in the middle of the animation above the (0.0, 0.0) offset,
-        //wait till user scrolls to the top before animating any transition.
+        // wait till user scrolls to the top before animating any transition.
         if draggingStartPosY < 0, scrollView.contentOffset.y <= 0 {
             return
         }

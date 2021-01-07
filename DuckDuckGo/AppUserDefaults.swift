@@ -24,6 +24,7 @@ public class AppUserDefaults: AppSettings {
     
     public struct Notifications {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
+        public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
     }
 
     private let groupName: String
@@ -48,6 +49,8 @@ public class AppUserDefaults: AppSettings {
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
         static let allowUniversalLinks = "com.duckduckgo.app.allowUniversalLinks"
         static let longPressPreviews = "com.duckduckgo.app.longPressPreviews"
+        
+        static let currentFireButtonAnimationKey = "com.duckduckgo.app.currentFireButtonAnimationKey"
     }
 
     private var userDefaults: UserDefaults? {
@@ -144,6 +147,21 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .doNotSell, defaultValue: true)
     var sendDoNotSell: Bool
+    
+    var currentFireButtonAnimation: FireButtonAnimationType {
+        get {
+            if let string = userDefaults?.string(forKey: Keys.currentFireButtonAnimationKey),
+               let currentAnimation = FireButtonAnimationType(rawValue: string) {
+                
+                return currentAnimation
+            } else {
+                return .fireRising
+            }
+        }
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentFireButtonAnimationKey)
+        }
+    }
     
 }
 

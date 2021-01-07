@@ -50,9 +50,6 @@ extension TabViewController {
         alert.addAction(title: UserText.actionOpen) { [weak self] in
             self?.onOpenAction(forUrl: url)
         }
-        alert.addAction(title: UserText.actionReadingList) { [weak self] in
-            self?.onReadingAction(forUrl: url)
-        }
         alert.addAction(title: UserText.actionCopy) { [weak self] in
             self?.onCopyAction(forUrl: url)
         }
@@ -87,11 +84,7 @@ extension TabViewController {
             webView.load(URLRequest(url: url))
         }
     }
-    
-    private func onReadingAction(forUrl url: URL) {
-        try? SSReadingList.default()?.addItem(with: url, title: nil, previewText: nil)
-    }
-    
+
     private func onCopyAction(forUrl url: URL) {
         let copyText = url.absoluteString
         UIPasteboard.general.string = copyText

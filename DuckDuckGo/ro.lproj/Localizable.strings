@@ -440,6 +440,18 @@
 "findinpage.title" = "Găsire în pagină";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Curent de aer";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Infern";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Niciuna";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Vârtej";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Setare ca browser implicit";
 
 /* No comment provided by engineer. */

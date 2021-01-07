@@ -45,8 +45,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
 
         // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work
-        let encodedTrackerData = try? JSONEncoder().encode(TrackerDataManager.shared.trackerData)
-        let trackerData = String(data: encodedTrackerData!, encoding: .utf8)!
+        let trackerData = TrackerDataManager.shared.encodedTrackerData!
         
         return loadJS("contentblocker", withReplacements: [
             "${unprotectedDomains}": unprotectedDomains,

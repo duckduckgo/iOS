@@ -37,6 +37,9 @@
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Åbn links i tilknyttede apps";
 
+/* Class = "UILabel"; text = "Default"; ObjectID = "bdg-6r-nMM"; */
+"bdg-6r-nMM.text" = "Tema";
+
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Data og/eller faner ryddes ved genstart af appen.";
 
@@ -45,6 +48,9 @@
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "App-ikon";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "CR5-Al-WIW"; */
+"CR5-Al-WIW.text" = "Etiket";
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Global Privacy Control (GPC)";
@@ -103,6 +109,9 @@
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Global Privacy Control (GPC)";
 
+/* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
+"gBo-Cu-e2k.text" = "Ildknap-animation";
+
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Tema";
 
@@ -150,6 +159,9 @@
 
 /* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
 "U8i-cQ-5WW.text" = "Vis forslag til Autoudfyld";
+
+/* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
+"uns-8w-IwL.title" = "Ildknap-animation";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Fjern alle brandsikre websteder";

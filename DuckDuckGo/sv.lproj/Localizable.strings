@@ -440,6 +440,18 @@
 "findinpage.title" = "Hitta på sidan";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Luftström";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Inferno";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Inga";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Virvel";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Ställ in som standardwebbläsare";
 
 /* No comment provided by engineer. */

@@ -20,6 +20,11 @@
 import UIKit
 import Core
 
+protocol BlankSnapshotViewRecoveringDelegate: AnyObject {
+    
+    func recoverFromPresenting(controler: BlankSnapshotViewController)
+}
+
 class BlankSnapshotViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -35,6 +40,8 @@ class BlankSnapshotViewController: UIViewController {
     
     var omniBar: OmniBar!
     let tabSwitcherButton = TabSwitcherButton()
+    
+    weak var delegate: BlankSnapshotViewRecoveringDelegate?
     
     static func loadFromStoryboard() -> BlankSnapshotViewController {
         let storyboard = UIStoryboard(name: "BlankSnapshot", bundle: nil)
@@ -55,6 +62,7 @@ class BlankSnapshotViewController: UIViewController {
             configureTabBar()
         } else {
             tabsButton.customView = tabSwitcherButton
+            tabSwitcherButton.delegate = self
         }
 
         applyTheme(ThemeManager.shared.currentTheme)
@@ -83,7 +91,44 @@ class BlankSnapshotViewController: UIViewController {
         if AppWidthObserver.shared.isLargeWidth {
             omniBar.enterPadState()
         }
+        
+        omniBar.omniDelegate = self
     }
+    
+    @IBAction func userInteractionDetected() {
+        Pixel.fire(pixel: .blankOverlayNotDismissed)
+        delegate?.recoverFromPresenting(controler: self)
+    }
+}
+
+extension BlankSnapshotViewController: OmniBarDelegate {
+    
+    func onSettingsPressed() {
+        userInteractionDetected()
+    }
+    
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+        DispatchQueue.main.async {
+            self.omniBar.resignFirstResponder()
+            self.userInteractionDetected()
+        }
+    }
+    
+    func onEnterPressed() {
+        userInteractionDetected()
+    }
+}
+
+extension BlankSnapshotViewController: TabSwitcherButtonDelegate {
+    
+    func showTabSwitcher(_ button: TabSwitcherButton) {
+        userInteractionDetected()
+    }
+    
+    func launchNewTab(_ button: TabSwitcherButton) {
+        userInteractionDetected()
+    }
+    
 }
 
 extension BlankSnapshotViewController: Themable {

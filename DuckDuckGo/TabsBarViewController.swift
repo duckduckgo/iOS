@@ -49,7 +49,7 @@ class TabsBarViewController: UIViewController {
     weak var delegate: TabsBarDelegate?
     private weak var tabsModel: TabsModel?
 
-    private let tabSwitcherButton = TabSwitcherButton()
+    let tabSwitcherButton = TabSwitcherButton()
     private let longPressTabGesture = UILongPressGestureRecognizer()
     
     private weak var pressedCell: TabsBarCell?

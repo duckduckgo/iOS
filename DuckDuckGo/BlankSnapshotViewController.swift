@@ -80,7 +80,17 @@ class BlankSnapshotViewController: UIViewController {
             fatalError("Failed to instantiate tabs bar controller")
         }
         controller.view.frame = CGRect(x: 0, y: 24, width: view.frame.width, height: 40)
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(controller.view)
+        
+        controller.view.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
+        controller.view.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        controller.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 24.0).isActive = true
+        controller.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        
+        controller.fireButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        controller.addTabButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        controller.tabSwitcherButton.delegate = self
     }
     
     private func configureOmniBar() {
@@ -93,6 +103,10 @@ class BlankSnapshotViewController: UIViewController {
         }
         
         omniBar.omniDelegate = self
+    }
+    
+    @objc func buttonPressed(sender: Any) {
+        userInteractionDetected()
     }
     
     @IBAction func userInteractionDetected() {

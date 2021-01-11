@@ -25,7 +25,7 @@ class TabSwitcherButtonTests: XCTestCase {
     func testInitialState() {
         
         let button = TabSwitcherButton()
-        XCTAssertEqual(0, button.anim.currentProgress)
+        XCTAssertEqual(0, button.anim.animationProgress)
         XCTAssertEqual(0, button.tabCount)
         XCTAssertFalse(button.hasUnread)
         XCTAssertNil(button.label.text)
@@ -43,7 +43,7 @@ class TabSwitcherButtonTests: XCTestCase {
         
         let button = TabSwitcherButton()
         button.hasUnread = true
-        XCTAssertEqual(1.0, button.anim.currentProgress)
+        XCTAssertEqual(1.0, button.anim.animationProgress)
         
     }
     

@@ -36,7 +36,13 @@ public class TrackerDataManager {
     
     public static let shared = TrackerDataManager()
     
-    private(set) public var trackerData: TrackerData!
+    private(set) public var trackerData: TrackerData! {
+        didSet {
+            let encodedData = try? JSONEncoder().encode(trackerData)
+            encodedTrackerData = String(data: encodedData!, encoding: .utf8)!
+        }
+    }
+    private(set) public var encodedTrackerData: String!
     private(set) public var etag: String?
 
     init(trackerData: TrackerData) {

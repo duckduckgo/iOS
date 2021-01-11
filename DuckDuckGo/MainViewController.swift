@@ -94,6 +94,8 @@ class MainViewController: UIViewController {
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
+    
+    private var fireButtonAnimator: FireButtonAnimator?
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -107,7 +109,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         Favicons.shared.migrateIfNeeded {
             DispatchQueue.main.async {
                 self.homeController?.collectionView.reloadData()
@@ -126,6 +128,7 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
+        fireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -708,7 +711,7 @@ class MainViewController: UIViewController {
         notificationContainerHeight.constant = height
 
         if #available(iOS 11.0, *) {
-            //no-op
+            // no-op
         } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
             traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
             // adjust frame to toolbar height change
@@ -1360,24 +1363,24 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    func forgetAllWithAnimation(completion: (() -> Void)? = nil) {
+    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        forgetData()
-        DaxDialogs.shared.resumeRegularFlow()
-        FireAnimation.animate {
+        
+        fireButtonAnimator?.animate {
+            self.forgetData()
+            DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
-            completion?()
+        } onTransitionCompleted: {
+            transitionCompletion?()
+        } completion: {
             Instruments.shared.endTimedEvent(for: spid)
-
             if KeyboardSettings().onNewTab {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.enterSearch()
                 }
             }
         }
-        let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
     
 }

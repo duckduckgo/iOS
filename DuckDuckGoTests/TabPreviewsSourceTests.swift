@@ -127,11 +127,11 @@ class TabPreviewsSourceTests: XCTestCase {
                                                     withIntermediateDirectories: false,
                                                     attributes: nil)
             
-            //Prepare png file
+            // Prepare png file
             let pngFile = fromUrl.appendingPathComponent("test.png")
             try "".write(to: pngFile, atomically: false, encoding: .utf8)
             
-            //Prepare random file
+            // Prepare random file
             let randomFile = fromUrl.appendingPathComponent("test.file")
             try "".write(to: randomFile, atomically: false, encoding: .utf8)
         } catch {

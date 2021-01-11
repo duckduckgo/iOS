@@ -440,6 +440,18 @@
 "findinpage.title" = "Etsi sivulta";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Ilmavirta";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Tulimyrsky";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Ei mitään";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Pyörre";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Aseta oletusselaimeksi";
 
 /* No comment provided by engineer. */

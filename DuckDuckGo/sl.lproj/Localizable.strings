@@ -440,6 +440,18 @@
 "findinpage.title" = "Najdi na strani";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Zračni tok";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Pekel";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Brez";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Vrtinec";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Nastavite za privzeti brskalnik";
 
 /* No comment provided by engineer. */
@@ -527,7 +539,7 @@
 "keyCommandShowAllTabs" = "Prikaži vse zavihke";
 
 /* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji DuckDuckGo!";
+"launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji\nDuckDuckGo!";
 
 /* Edit button */
 "navigation.title.edit" = "Uredi";

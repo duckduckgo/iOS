@@ -29,5 +29,7 @@ protocol AppSettings: AnyObject {
     var allowUniversalLinks: Bool { get set }
     
     var sendDoNotSell: Bool { get set }
+    
+    var currentFireButtonAnimation: FireButtonAnimationType { get set }
 
 }

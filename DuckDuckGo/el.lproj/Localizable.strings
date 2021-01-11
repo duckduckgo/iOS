@@ -440,6 +440,18 @@
 "findinpage.title" = "Εύρεση στη σελίδα";
 
 /* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Ρεύμα αέρα";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Πύρινη κόλαση";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Κανένα";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Δίνη νερού";
+
+/* No comment provided by engineer. */
 "home.message.buttonText" = "Ορισμός ως προεπιλεγμένο πρόγραμμα περιήγησης";
 
 /* No comment provided by engineer. */

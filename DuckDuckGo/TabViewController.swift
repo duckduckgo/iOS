@@ -921,7 +921,9 @@ extension TabViewController: WKNavigationDelegate {
                 return
         }
         
-        scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        if spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
+            scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)

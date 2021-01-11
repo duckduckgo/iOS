@@ -349,7 +349,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
     
-    func recoverFromPresenting(controler: BlankSnapshotViewController) {
+    func recoverFromPresenting(controller: BlankSnapshotViewController) {
         overlayWindow?.isHidden = true
         overlayWindow = nil
         window?.makeKeyAndVisible()

@@ -22,7 +22,7 @@ import Core
 
 protocol BlankSnapshotViewRecoveringDelegate: AnyObject {
     
-    func recoverFromPresenting(controler: BlankSnapshotViewController)
+    func recoverFromPresenting(controller: BlankSnapshotViewController)
 }
 
 class BlankSnapshotViewController: UIViewController {

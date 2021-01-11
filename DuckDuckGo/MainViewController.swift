@@ -932,7 +932,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
-        guard !isSERPPresented else { return }
+        if appUrls.variantManager.isSupported(feature: .removeSERPHeader), isSERPPresented { return }
         ViewHighlighter.hideAll()
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
@@ -1043,7 +1043,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
-            if AppUrls().isDuckDuckGoSearch(url: url) {
+            if appUrls.isDuckDuckGoSearch(url: url) {
                 omniBar.textField.text = suggestion.suggestion
             } else {
                 omniBar.textField.text = url.absoluteString

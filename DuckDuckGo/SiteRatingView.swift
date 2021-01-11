@@ -43,6 +43,8 @@ public class SiteRatingView: UIView {
 
     private var siteRating: SiteRating?
     var mode: DisplayMode = .loading
+    
+    private let serpHeaderExperimentEnabled = DefaultVariantManager().isSupported(feature: .removeSERPHeader)
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -75,7 +77,7 @@ public class SiteRatingView: UIView {
             return
         }
         
-        guard !AppUrls().isDuckDuckGoSearch(url: siteRating.url) else {
+        if serpHeaderExperimentEnabled && AppUrls().isDuckDuckGoSearch(url: siteRating.url) {
             circleIndicator.image = UIImage(named: "LogoIcon")
             return
         }

@@ -907,7 +907,7 @@ extension TabViewController: WKNavigationDelegate {
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
 
-    private func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+    func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
         guard !isLinkPreview else { return }
 
         if DaxDialogs.shared.isAddFavoriteFlow {

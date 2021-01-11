@@ -299,6 +299,11 @@ public struct UserText {
     public static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
     public static let daxDialogBrowsingWithMultipleTrackersCTA = NSLocalizedString("dax.onboarding.browsing.multiple.trackers.cta" , value: "High Five!", comment: "")
     
+    public static let daxDialogBrowsingFireButtonEducation = NSLocalizedString("dax.onboarding.browsing.fire.button", value: "Over time, personal data can build up in your browser. Yuck. Use the Fire Button to clear it all away. Give it a try 👇", comment: "Encourage user to try clearing data with the fire button")
+    public static let daxDialogBrowsingFireButtonEducationCTA = NSLocalizedString("dax.onboarding.browsing.fire.button.cta", value: "Clear All Tabs and Data", comment: "Encourage user to try clearing data with the fire button")
+    
+    public static let daxDialogBrowsingFireButtonEducationSubsequent = NSLocalizedString("dax.onboarding.browsing.fire.button.subsequent", value: "That's it — your data is toast!\n\nHere's a tip: Fireproof a site and you won't have to sign in again each time.\n\nWant to see how it works? Visit one of your favorite sites and sign in.", comment: "Educate user about fireproofing (i.e. stopping a site being affected by the fire button")
+    
     public static let daxDialogOnboardingMessage = NSLocalizedString("dax.onboarding.message", value: "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.", comment: "")
     
     public static let daxDialogHideTitle = NSLocalizedString("dax.hide.title", value: "Hide remaining tips?", comment: "Title in Hide Dax dialog")

@@ -37,6 +37,7 @@ class DaxDialogs {
         static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
         static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
                                                 accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
+        static let fireButtonSubsequent = HomeScreenSpec(message: UserText.daxDialogBrowsingFireButtonEducationSubsequent, accessibilityLabel: nil)
 
         let message: String
         let accessibilityLabel: String?
@@ -75,6 +76,10 @@ class DaxDialogs {
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers)
         
+        static let fireButtonEducation = BrowsingSpec(message: UserText.daxDialogBrowsingFireButtonEducation,
+                                                      cta: UserText.daxDialogBrowsingFireButtonEducationCTA,
+                                                      highlightAddressBar: false,
+                                                      pixelName: .daxDialogsWithTrackers)
         let message: String
         let cta: String
         let highlightAddressBar: Bool
@@ -93,12 +98,14 @@ class DaxDialogs {
 
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
+    private let variantManager: VariantManager
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
 
     /// Use singleton accessor, this is only accessible for tests
-    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(), variantManager: VariantManager = DefaultVariantManager()) {
         self.settings = settings
+        self.variantManager = variantManager
     }
     
     private var browsingMessageSeen: Bool {
@@ -106,6 +113,10 @@ class DaxDialogs {
             || settings.browsingWithTrackersShown
             || settings.browsingWithoutTrackersShown
             || settings.browsingMajorTrackingSiteShown
+    }
+    
+    private var fireButtonBrowsingMessageSeen: Bool {
+        return settings.browsingFireButtonEducationShown
     }
     
     var isEnabled: Bool {
@@ -116,6 +127,10 @@ class DaxDialogs {
 
     var isAddFavoriteFlow: Bool {
         return nextHomeScreenMessageOverride == .addFavorite
+    }
+    
+    private var isFireButtonEducationEnabled: Bool {
+        return variantManager.isSupported(feature: .fireButtonEducationFeature)
     }
 
     func dismiss() {
@@ -139,6 +154,10 @@ class DaxDialogs {
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
+        
+        if browsingMessageSeen {
+            return fireButtonBrowsingMessage()
+        }
                 
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
@@ -176,7 +195,7 @@ class DaxDialogs {
             return .initial
         }
         
-        if browsingMessageSeen {
+        if browsingMessageSeen && !isFireButtonEducationEnabled {
             settings.homeScreenMessagesSeen += 1
             return .subsequent
         }
@@ -237,6 +256,12 @@ class DaxDialogs {
                                                            entitiesBlocked[1].displayName ?? "")
         }
 
+    }
+    
+    private func fireButtonBrowsingMessage() -> BrowsingSpec? {
+        guard !fireButtonBrowsingMessageSeen else { return nil }
+        settings.browsingFireButtonEducationShown = true
+        return BrowsingSpec.fireButtonEducation
     }
  
     private func entitiesBlocked(_ siteRating: SiteRating) -> [Entity]? {

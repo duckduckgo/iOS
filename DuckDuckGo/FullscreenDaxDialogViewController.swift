@@ -130,6 +130,14 @@ extension TabViewController: FullscreenDaxDialogDelegate {
         if controller.spec?.highlightAddressBar ?? false {
             chromeDelegate?.omniBar.completeAnimations()
         }
+        
+        if controller.spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
+            showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        }
+        
+        if controller.spec == DaxDialogs.BrowsingSpec.fireButtonEducation {
+            delegate?.tabDidRequestForgetAll(tab: self)
+        }
     }
 
 }

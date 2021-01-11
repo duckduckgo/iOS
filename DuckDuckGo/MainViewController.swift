@@ -1171,6 +1171,10 @@ extension MainViewController: TabDelegate {
         findInPageView.done()
         tabManager.invalidateCache(forController: tab)
     }
+    
+    func tabDidRequestForgetAll(tab: TabViewController) {
+        forgetAllWithAnimation()
+    }
 
     func showBars() {
         chromeManager.reset()

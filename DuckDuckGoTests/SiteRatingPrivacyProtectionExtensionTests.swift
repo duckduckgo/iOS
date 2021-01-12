@@ -21,6 +21,7 @@ import Foundation
 import XCTest
 
 @testable import Core
+@testable import ContentBlocker
 @testable import DuckDuckGo
 
 class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {

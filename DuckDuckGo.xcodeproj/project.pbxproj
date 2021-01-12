@@ -26,6 +26,7 @@
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
+		4B2F814925ACD50600DC65BC /* ContentBlocker in Frameworks */ = {isa = PBXBuildFile; productRef = 4B2F814825ACD50600DC65BC /* ContentBlocker */; };
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
 		4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */; };
 		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
@@ -126,7 +127,6 @@
 		85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */; };
 		85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */; };
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
-		8521FDE3238C0D0D00A44CC3 /* TrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE2238C0D0D00A44CC3 /* TrackerData.swift */; };
 		8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE4238D411400A44CC3 /* FileStoreTests.swift */; };
 		8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 8521FDE9238DA9D800A44CC3 /* trackerData.json */; };
 		8521FDEC238DA9E600A44CC3 /* TrackerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */; };
@@ -724,6 +724,7 @@
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
+		4B2F813E25ABEB7700DC65BC /* ContentBlocker */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ContentBlocker; sourceTree = "<group>"; };
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
 		4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoUserScript.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
@@ -823,7 +824,6 @@
 		85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetworkLeaderboard.xcdatamodel; sourceTree = "<group>"; };
 		85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionNetworkLeaderboardController.swift; sourceTree = "<group>"; };
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
-		8521FDE2238C0D0D00A44CC3 /* TrackerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerData.swift; sourceTree = "<group>"; };
 		8521FDE4238D411400A44CC3 /* FileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStoreTests.swift; sourceTree = "<group>"; };
 		8521FDE9238DA9D800A44CC3 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDataManager.swift; sourceTree = "<group>"; };
@@ -2080,6 +2080,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
+				4B2F814925ACD50600DC65BC /* ContentBlocker in Frameworks */,
 				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2246,7 +2247,6 @@
 				83E2D2B1253CC16B005605F5 /* httpsMobileV2BloomSpec.json */,
 				83E2D2AF253CC16B005605F5 /* httpsMobileV2Bloom.bin */,
 				83E2D2B0253CC16B005605F5 /* httpsMobileV2FalsePositives.json */,
-				8521FDE2238C0D0D00A44CC3 /* TrackerData.swift */,
 				8521FDE9238DA9D800A44CC3 /* trackerData.json */,
 				8521FDEB238DA9E600A44CC3 /* TrackerDataManager.swift */,
 			);
@@ -2347,6 +2347,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				4B2F813E25ABEB7700DC65BC /* ContentBlocker */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
@@ -3984,6 +3985,7 @@
 			packageProductDependencies = (
 				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
+				4B2F814825ACD50600DC65BC /* ContentBlocker */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -4934,7 +4936,6 @@
 				0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
-				8521FDE3238C0D0D00A44CC3 /* TrackerData.swift in Sources */,
 				83E2D2BE253CD772005605F5 /* HTTPSExcludedDomains.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
@@ -6838,6 +6839,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4B2F814825ACD50600DC65BC /* ContentBlocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ContentBlocker;
+		};
 		F486D305250697AF002D07D7 /* Punnycode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */;

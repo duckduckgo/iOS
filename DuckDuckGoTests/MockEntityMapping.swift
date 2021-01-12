@@ -18,6 +18,7 @@
 //
 
 import Foundation
+@testable import ContentBlocker
 
 class MockEntityMapping: EntityMapping {
     

@@ -43,11 +43,11 @@ public struct TrackerData: Codable, Equatable {
         self.cnames = cnames
     }
 
-    func relatedDomains(for owner: KnownTracker.Owner?) -> [String]? {
+    public func relatedDomains(for owner: KnownTracker.Owner?) -> [String]? {
         return entities[owner?.name ?? ""]?.domains
     }
     
-    func findTracker(byCname cname: String) -> KnownTracker? {
+    public func findTracker(byCname cname: String) -> KnownTracker? {
         var currdomain = cname
         while currdomain.contains(".") {
             if let tracker = self.trackers[currdomain] {

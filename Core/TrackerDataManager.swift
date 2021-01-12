@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import ContentBlocker
 
 public class TrackerDataManager {
     

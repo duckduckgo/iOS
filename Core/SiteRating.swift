@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import ContentBlocker
 
 public class SiteRating {
 

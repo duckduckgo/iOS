@@ -303,7 +303,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
-        overlayWindow?.rootViewController = BlankSnapshotViewController.loadFromStoryboard()
+        
+        let overlay = BlankSnapshotViewController.loadFromStoryboard()
+        overlay.delegate = self
+        
+        overlayWindow?.rootViewController = overlay
         overlayWindow?.makeKeyAndVisible()
         window?.isHidden = true
     }
@@ -343,4 +347,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
+}
+
+extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
+    
+    func recoverFromPresenting(controller: BlankSnapshotViewController) {
+        overlayWindow?.isHidden = true
+        overlayWindow = nil
+        window?.makeKeyAndVisible()
+    }
+    
 }

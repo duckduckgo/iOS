@@ -175,6 +175,8 @@ public enum PixelName: String {
     case settingsAppIconChangeNotSupported = "m_d_aicns"
 
     case backgroundTaskSubmissionFailed = "m_bt_rf"
+    
+    case blankOverlayNotDismissed = "m_d_ovs"
 }
 // swiftlint:enable identifier_name
 

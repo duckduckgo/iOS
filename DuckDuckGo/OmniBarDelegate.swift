@@ -49,7 +49,8 @@ protocol OmniBarDelegate: class {
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar)
     
-    func onTextFieldDidBeginEditing(_ omniBar: OmniBar)
+    // Returns whether field should select the text or not
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool
 
 }
 

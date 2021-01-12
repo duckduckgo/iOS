@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */; };
-		0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */; };
 		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
 		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
@@ -703,8 +701,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRule.swift; sourceTree = "<group>"; };
-		0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesBuilder.swift; sourceTree = "<group>"; };
 		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
 		0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesUserScript.swift; sourceTree = "<group>"; };
 		0254AC2324EDACDE004855DF /* contentblockerrules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = contentblockerrules.js; sourceTree = "<group>"; };
@@ -2091,8 +2087,6 @@
 		0201A44D24ED81F000C6641C /* ContentBlockerRules */ = {
 			isa = PBXGroup;
 			children = (
-				0201A44E24ED821E00C6641C /* ContentBlockerRule.swift */,
-				0201A44F24ED821E00C6641C /* ContentBlockerRulesBuilder.swift */,
 				0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */,
 				0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */,
 				0254AC2324EDACDE004855DF /* contentblockerrules.js */,
@@ -4883,7 +4877,6 @@
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				02DC6A64255D8C5000B03BC2 /* FingerprintUserScript.swift in Sources */,
 				85BDC31224339E080053DB07 /* DocumentUserScript.swift in Sources */,
-				0201A45124ED821E00C6641C /* ContentBlockerRule.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* FileStore.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
@@ -4933,7 +4926,6 @@
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
-				0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				83E2D2BE253CD772005605F5 /* HTTPSExcludedDomains.swift in Sources */,

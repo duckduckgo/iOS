@@ -1,9 +1,8 @@
 //
 //  ContentBlockerRule.swift
-//  DuckDuckGo
+//  ContentBlocker
 //
-//
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -158,9 +157,9 @@ extension String {
     func matches(_ string: String) -> Bool {
         // opt: memoize?
         guard let regex = try? NSRegularExpression(pattern: self, options: [ .caseInsensitive ]) else {
-            os_log("Invalid regex %{public}s", log: generalLog, self)
             return false
         }
+
         let matches = regex.matches(in: string, options: [ ], range: NSRange(location: 0, length: string.utf16.count))
         return !matches.isEmpty
     }

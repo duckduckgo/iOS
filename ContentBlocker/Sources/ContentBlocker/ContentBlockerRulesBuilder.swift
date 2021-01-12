@@ -18,10 +18,9 @@
 //
 
 import Foundation
-import ContentBlocker
 
 public struct ContentBlockerRulesBuilder {
-    
+
     struct Constants {
         // in the scheme .* overmatches and "OR" does not work
         static let subDomainPrefix = "^(https?)?(wss?)?://([a-z0-9-]+\\.)*"
@@ -37,6 +36,10 @@ public struct ContentBlockerRulesBuilder {
     ]
     
     let trackerData: TrackerData
+
+    public init(trackerData: TrackerData) {
+        self.trackerData = trackerData
+    }
     
     /// Build all the rules for the given tracker data and list of exceptions.
     public func buildRules(withExceptions exceptions: [String]? = nil,

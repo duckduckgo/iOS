@@ -111,7 +111,7 @@ class BlankSnapshotViewController: UIViewController {
     
     @IBAction func userInteractionDetected() {
         Pixel.fire(pixel: .blankOverlayNotDismissed)
-        delegate?.recoverFromPresenting(controler: self)
+        delegate?.recoverFromPresenting(controller: self)
     }
 }
 

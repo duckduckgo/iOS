@@ -194,16 +194,16 @@ extension AutocompleteViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as? SuggestionTableViewCell else {
             fatalError("Failed to dequeue \(type) as SuggestionTableViewCell")
         }
-        cell.updateFor(query: query, suggestion: suggestions[indexPath.row])
-        cell.plusButton.tag = indexPath.row
         
         let currentTheme = ThemeManager.shared.currentTheme
+        
+        cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme)
+        cell.plusButton.tag = indexPath.row
         
         let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : currentTheme.tableCellBackgroundColor
         
         cell.backgroundColor = color
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
-        cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
         
         return cell

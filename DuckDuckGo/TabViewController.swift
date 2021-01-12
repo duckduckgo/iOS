@@ -75,6 +75,9 @@ class TabViewController: UIViewController {
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
+    
+    private let requeryLogic = RequeryLogic()
+    
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
     private var lastError: Error?
@@ -344,6 +347,10 @@ class TabViewController: UIViewController {
     
     private func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
+        
+        if let url = urlRequest.url, !shouldReissueSearch(for: url) {
+            requeryLogic.onNewNavigation(url: url)
+        }
         webView.stopLoading()
         webView.load(urlRequest)
     }
@@ -406,13 +413,23 @@ class TabViewController: UIViewController {
         reload(scripts: false)
     }
     
-    private func shouldReissueSearch(for url: URL) -> Bool {
-        return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasCorrectMobileStatsParams(url: url)
+    private func shouldReissueDDGStaticNavigation(for url: URL) -> Bool {
+        guard appUrls.isDuckDuckGoStatic(url: url) else { return false }
+        return  !appUrls.hasCorrectSearchHeaderParams(url: url)
     }
     
-    private func reissueSearchWithStatsParams(for url: URL) {
+    private func reissueNavigationWithSearchHeaderParams(for url: URL) {
+        load(url: appUrls.applySearchHeaderParams(for: url))
+    }
+    
+    private func shouldReissueSearch(for url: URL) -> Bool {
+        guard appUrls.isDuckDuckGoSearch(url: url) else { return false }
+        return  !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
+    }
+    
+    private func reissueSearchWithRequiredParams(for url: URL) {
         let mobileSearch = appUrls.applyStatsParams(for: url)
-        load(url: mobileSearch)
+        reissueNavigationWithSearchHeaderParams(for: mobileSearch)
     }
     
     private func showProgressIndicator() {
@@ -860,7 +877,7 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
-        chromeDelegate?.omniBar.startLoadingAnimation()
+        chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         
         detectedNewNavigation()
     }
@@ -1097,7 +1114,13 @@ extension TabViewController: WKNavigationDelegate {
                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if shouldReissueSearch(for: url) {
-            reissueSearchWithStatsParams(for: url)
+            reissueSearchWithRequiredParams(for: url)
+            completion(.cancel)
+            return
+        }
+        
+        if shouldReissueDDGStaticNavigation(for: url) {
+            reissueNavigationWithSearchHeaderParams(for: url)
             completion(.cancel)
             return
         }
@@ -1259,6 +1282,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
+        requeryLogic.onRefresh()
         lastCommittedURL = nil
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {

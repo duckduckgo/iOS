@@ -43,6 +43,8 @@ public class SiteRatingView: UIView {
 
     private var siteRating: SiteRating?
     var mode: DisplayMode = .loading
+    
+    private let serpHeaderExperimentEnabled = DefaultVariantManager().isSupported(feature: .removeSERPHeader)
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -75,14 +77,18 @@ public class SiteRatingView: UIView {
             return
         }
         
-        let grades = siteRating.scores
-        let grade: Grade.Score
+        if serpHeaderExperimentEnabled && AppUrls().isDuckDuckGoSearch(url: siteRating.url) {
+            circleIndicator.image = UIImage(named: "LogoIcon")
+            return
+        }
+        
         switch mode {
         case .loading:
             circleIndicator.image = PrivacyProtectionIconSource.iconImageTemplate(withString: " ",
                                                                                   iconSize: circleIndicator.bounds.size)
         case .ready:
-            grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
+            let grades = siteRating.scores
+            let grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
             circleIndicator.accessibilityLabel = UserText.privacyGrade(grade.grade.rawValue.uppercased())

@@ -1173,7 +1173,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestForgetAll(tab: TabViewController) {
-        forgetAllWithAnimation()
+        forgetAllWithAnimation(showNextDaxDialog: true)
     }
 
     func showBars() {
@@ -1338,7 +1338,7 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil) {
+    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
@@ -1350,7 +1350,9 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)
-            if KeyboardSettings().onNewTab {
+            if showNextDaxDialog {
+                self.homeController?.showNextDaxDialog()
+            } else if KeyboardSettings().onNewTab {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.enterSearch()
                 }

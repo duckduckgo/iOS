@@ -195,9 +195,14 @@ class DaxDialogs {
             return .initial
         }
         
-        if browsingMessageSeen && !isFireButtonEducationEnabled {
-            settings.homeScreenMessagesSeen += 1
-            return .subsequent
+        if browsingMessageSeen {
+            if isFireButtonEducationEnabled {
+                settings.homeScreenMessagesSeen += 1
+                return .fireButtonSubsequent
+            } else {
+                settings.homeScreenMessagesSeen += 1
+                return .subsequent
+            }
         }
         
         return nil
@@ -259,7 +264,7 @@ class DaxDialogs {
     }
     
     private func fireButtonBrowsingMessage() -> BrowsingSpec? {
-        guard !fireButtonBrowsingMessageSeen else { return nil }
+        guard !fireButtonBrowsingMessageSeen && isFireButtonEducationEnabled else { return nil }
         settings.browsingFireButtonEducationShown = true
         return BrowsingSpec.fireButtonEducation
     }

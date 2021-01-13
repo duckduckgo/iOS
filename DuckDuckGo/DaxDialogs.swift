@@ -201,14 +201,14 @@ class DaxDialogs {
             return .initial
         }
         
-        if browsingMessageSeen {
-            if isFireButtonEducationEnabled {
+        if isFireButtonEducationEnabled {
+            if fireButtonBrowsingMessageSeen {
                 settings.homeScreenMessagesSeen += 1
                 return .fireButtonSubsequent
-            } else {
-                settings.homeScreenMessagesSeen += 1
-                return .subsequent
             }
+        } else if browsingMessageSeen {
+            settings.homeScreenMessagesSeen += 1
+            return .subsequent
         }
         
         return nil

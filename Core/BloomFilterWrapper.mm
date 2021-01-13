@@ -44,6 +44,10 @@
     return self;
 }
 
+- (void)dealloc {
+	delete filter;
+}
+
 - (void)add:(NSString*)entry {
     if (filter != nil) {
         filter->add([entry UTF8String]);

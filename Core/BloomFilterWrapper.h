@@ -21,6 +21,7 @@
 @interface BloomFilterWrapper : NSObject
 - (instancetype)initFromPath:(NSString*)path withBitCount:(int)bitCount andTotalItems:(int)totalItems;
 - (instancetype)initWithTotalItems:(int)count errorRate:(double)errorRate;
+- (void)dealloc;
 - (void)add:(NSString*) entry;
 - (BOOL)contains:(NSString*) entry;
 @end

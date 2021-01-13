@@ -115,6 +115,12 @@ class DaxDialogs {
             || settings.browsingMajorTrackingSiteShown
     }
     
+    private var nonDDGBrowsingMessageSeen: Bool {
+        settings.browsingWithTrackersShown
+        || settings.browsingWithoutTrackersShown
+        || settings.browsingMajorTrackingSiteShown
+    }
+    
     private var fireButtonBrowsingMessageSeen: Bool {
         return settings.browsingFireButtonEducationShown
     }
@@ -154,11 +160,11 @@ class DaxDialogs {
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
-        
-        if browsingMessageSeen {
+                
+        if nonDDGBrowsingMessageSeen {
             return fireButtonBrowsingMessage()
         }
-                
+        
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
         }

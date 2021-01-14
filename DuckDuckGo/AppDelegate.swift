@@ -25,8 +25,9 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder,UIApplicationDelegate {
 
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     
@@ -312,6 +313,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.isHidden = true
     }
 
+
     private func beginAuthentication() {
         
         guard privacyStore.authenticationEnabled else { return }
@@ -335,7 +337,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         overlayWindow = nil
     }
 
-    private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
+    private func handleShortCutItem(_ shortcutItem:UIApplicationShortcutItem) {
         os_log("Handling shortcut item: %s", log: generalLog, type: .debug, shortcutItem.type)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()

@@ -20,7 +20,7 @@
 import Foundation
 
 extension URL {
-    public var hostVariations: [String]? {
+    var hostVariations: [String]? {
         guard var parts = host?.components(separatedBy: ".") else { return nil }
         var domains = [String]()
         while parts.count > 1 {

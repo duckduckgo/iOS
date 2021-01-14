@@ -48,7 +48,6 @@ class FullscreenDaxDialogViewController: UIViewController {
 
     var spec: DaxDialogs.BrowsingSpec?
     var woShown: Bool = false
-    var fireButtonLocation: CGPoint? //TODO since we have the delegate method, maybe we don't need this now?
     
     override func viewDidLoad() {
         super.viewDidLoad()

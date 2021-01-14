@@ -24,7 +24,8 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
     func hideDaxDialogs(controller: FullscreenDaxDialogViewController)
     func closedDaxDialogs(controller: FullscreenDaxDialogViewController)
-
+    func daxDialogDidRequestFireButtonPosition(controller: FullscreenDaxDialogViewController) -> CGPoint?
+    
 }
 
 class FullscreenDaxDialogViewController: UIViewController {
@@ -39,18 +40,15 @@ class FullscreenDaxDialogViewController: UIViewController {
         static let defaultAddressBarOffset: CGFloat = -50
         
     }
-    
-    @IBOutlet weak var highlightBar: UIView!
-    @IBOutlet weak var highlightBarBottom: NSLayoutConstraint!
+    @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
-    @IBOutlet weak var fullScreen: NSLayoutConstraint!
-    @IBOutlet weak var showAddressBar: NSLayoutConstraint!
     
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
 
     var spec: DaxDialogs.BrowsingSpec?
     var woShown: Bool = false
+    var fireButtonLocation: CGPoint? //TODO since we have the delegate method, maybe we don't need this now?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,24 +57,17 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.message = spec?.message
         daxDialogViewController?.onTapCta = dismissCta
         
-        if spec?.highlightAddressBar ?? false {
-            fullScreen.isActive = false
-            showAddressBar.isActive = true
-            highlightBar.isHidden = false
-            highlightBarBottom.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeHighlightBottom : Constants.defaultHighlightBottom
-            showAddressBar.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeAddressBarOffset : Constants.defaultAddressBarOffset
-        } else {
-            fullScreen.isActive = true
-            showAddressBar.isActive = false
-            highlightBar.isHidden = true
-        }
-
+        highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
+        
+        updateCutOut()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,6 +83,30 @@ class FullscreenDaxDialogViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
         if segue.destination is DaxDialogViewController {
             daxDialogViewController = segue.destination as? DaxDialogViewController
+        }
+    }
+    
+    @objc
+    func orientationDidChange() {
+        updateCutOut()
+    }
+    
+    private func updateCutOut() {
+        if spec?.highlightAddressBar ?? false {
+            //TODO
+//            fullScreen.isActive = false
+//            showAddressBar.isActive = true
+//            highlightBar.isHidden = false
+//            highlightBarBottom.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeHighlightBottom : Constants.defaultHighlightBottom
+//            showAddressBar.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeAddressBarOffset : Constants.defaultAddressBarOffset
+        } else if spec?.highlightFireButton ?? false, let pos = delegate?.daxDialogDidRequestFireButtonPosition(controller: self) {
+            let size: CGFloat = 56
+            let point = CGPoint(x: pos.x - size / 2.0, y: pos.y - size / 2.0)
+            let rect = CGRect(origin: point, size: CGSize(width: size, height: size))
+            highlightCutOutView.cutOutPath = UIBezierPath(ovalIn: rect)
+            highlightCutOutView.setNeedsDisplay()
+        } else {
+            highlightCutOutView.cutOutPath = nil
         }
     }
 
@@ -140,6 +155,9 @@ extension TabViewController: FullscreenDaxDialogDelegate {
         }
     }
 
+    func daxDialogDidRequestFireButtonPosition(controller: FullscreenDaxDialogViewController) -> CGPoint? {
+        return delegate?.tabDidRequestFireButtonLocation(tab: self)
+    }
 }
 
 fileprivate extension DefaultDaxDialogsSettings {
@@ -148,7 +166,8 @@ fileprivate extension DefaultDaxDialogsSettings {
         let count = [ browsingMajorTrackingSiteShown,
                       browsingWithoutTrackersShown,
                       browsingWithTrackersShown,
-                      browsingAfterSearchShown].reduce(0, { $0 + ($1 ? 1 : 0) })
+                      browsingAfterSearchShown,
+                      browsingFireButtonEducationShown].reduce(0, { $0 + ($1 ? 1 : 0) })
         return "\(count)"
     }
     

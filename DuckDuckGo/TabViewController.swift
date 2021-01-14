@@ -541,6 +541,8 @@ class TabViewController: UIViewController {
             if controller.spec?.highlightAddressBar ?? false {
                 chromeDelegate.omniBar.cancelAllAnimations()
             }
+            
+            controller.fireButtonLocation = delegate?.tabDidRequestFireButtonLocation(tab: self)
         }
         
     }

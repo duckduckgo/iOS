@@ -50,6 +50,8 @@ protocol TabDelegate: class {
     func tabContentProcessDidTerminate(tab: TabViewController)
     
     func tabDidRequestForgetAll(tab: TabViewController)
+    
+    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint?
 
     func showBars()
 

@@ -1171,10 +1171,6 @@ extension MainViewController: TabDelegate {
         findInPageView.done()
         tabManager.invalidateCache(forController: tab)
     }
-    
-    func tabDidRequestForgetAll(tab: TabViewController) {
-        forgetAllWithAnimation(showNextDaxDialog: true)
-    }
 
     func showBars() {
         chromeManager.reset()
@@ -1183,6 +1179,24 @@ extension MainViewController: TabDelegate {
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+    }
+    
+    func tabDidRequestForgetAll(tab: TabViewController) {
+        forgetAllWithAnimation(showNextDaxDialog: true)
+        
+        //TODO what if they press the fire button instead? ( I don't think they can at the moment, maybe they should be able to)
+    }
+    
+    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint? {
+        if toolbar.isHidden {
+            return tabsBarController?.fireButtonCenterPosition
+        }
+        
+        guard let view = fireButton.value(forKey: "view") as? UIView else {
+            return nil
+        }
+        let point = view.convert(view.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+        return CGPoint(x: point.x + view.frame.size.width / 2.0, y: point.y + view.frame.size.height / 2.0)
     }
 
     private func newTabAnimation(completion: @escaping () -> Void) {

@@ -577,6 +577,7 @@
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
+		F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */; };
 		F4F7F10A25813FE200045D62 /* 01_Fire_really_small.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10725813FE200045D62 /* 01_Fire_really_small.json */; };
 		F4F7F10B25813FE200045D62 /* 02_Water_swirl_really_small.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10825813FE200045D62 /* 02_Water_swirl_really_small.json */; };
 		F4F7F10C25813FE200045D62 /* 03_Airstream_divided_by_four.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */; };
@@ -2017,6 +2018,7 @@
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
+		F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCutOutView.swift; sourceTree = "<group>"; };
 		F4F7F10725813FE200045D62 /* 01_Fire_really_small.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 01_Fire_really_small.json; sourceTree = "<group>"; };
 		F4F7F10825813FE200045D62 /* 02_Water_swirl_really_small.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 02_Water_swirl_really_small.json; sourceTree = "<group>"; };
 		F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 03_Airstream_divided_by_four.json; sourceTree = "<group>"; };
@@ -2642,6 +2644,7 @@
 				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
 				8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */,
 				8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */,
+				F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */,
 				85C297032476C1FD0063A335 /* DaxDialogsSettings.swift */,
 				85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */,
 			);
@@ -4578,6 +4581,7 @@
 				8540BD5623D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
+				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
 				85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */,

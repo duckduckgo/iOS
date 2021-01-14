@@ -49,6 +49,7 @@ struct DarkTheme: Theme {
     var progressBarGradientDarkColor = UIColor.orange
     var progressBarGradientLightColor = UIColor.orangeLight
     
+    var autocompleteSuggestionTextColor = UIColor.white
     var autocompleteCellAccessoryColor = UIColor.lightMercury
 
     var tableCellBackgroundColor = UIColor.nearlyBlackLight

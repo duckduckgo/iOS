@@ -1,1 +1,2 @@
+• Introducing three new Fire Button animations: Inferno, Whirlpool, and Airstream, available in Settings.
 • Bug fixes and other improvements.

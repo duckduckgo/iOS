@@ -159,8 +159,8 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
-    public func startLoadingAnimation() {
-        trackersAnimator.startLoadingAnimation(in: self)
+    public func startLoadingAnimation(for url: URL?) {
+        trackersAnimator.startLoadingAnimation(in: self, for: url)
     }
     
     public func startTrackersAnimation(_ trackers: [DetectedTracker], collapsing: Bool) {
@@ -388,14 +388,16 @@ extension OmniBar: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         DispatchQueue.main.async {
-            self.omniDelegate?.onTextFieldDidBeginEditing(self)
+            let highlightText = self.omniDelegate?.onTextFieldDidBeginEditing(self) ?? true
             self.refreshState(self.state.onEditingStartedState)
-        }
-
-        // Allow the cursor to move to the end before selecting all the text
-        // to avoid text not being selected properly
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.textField.selectAll(nil)
+            
+            if highlightText {
+                // Allow the cursor to move to the end before selecting all the text
+                // to avoid text not being selected properly
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    self.textField.selectAll(nil)
+                }
+            }
         }
     }
     

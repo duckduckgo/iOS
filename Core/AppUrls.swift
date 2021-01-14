@@ -46,9 +46,13 @@ public struct AppUrls {
         static let httpsExcludedDomains = "https://staticcdn.duckduckgo.com/https/https-mobile-v2-false-positives.json"
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
-        static let pixel = "\(pixelBase)/t/%@_ios_%@"
-        
+        static let pixel = "\(pixelBase)/t/%@"
         static let emailAlias = "https://quack.duckduckgo.com/api/email/addresses"
+    }
+    
+    private enum DDGStaticURL: String {
+        case settings = "/settings"
+        case params = "/params"
     }
 
     private struct Param {
@@ -58,17 +62,27 @@ public struct AppUrls {
         static let setAtb = "set_atb"
         static let activityType = "at"
         static let partialHost = "pv1"
+        static let searchHeader = "ko"
+        static let vertical = "ia"
+        static let verticalRewrite = "iar"
+        static let verticalMaps = "iaxm"
     }
 
     private struct ParamValue {
         static let source = "ddg_ios"
         static let appUsage = "app_use"
+        static let searchHeader = "-1"
+        
+        static let majorVerticals: Set<String> = ["images", "videos", "news"]
     }
 
     let statisticsStore: StatisticsStore
+    public let variantManager: VariantManager
 
-    public init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+    public init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+                variantManager: VariantManager = DefaultVariantManager()) {
         self.statisticsStore = statisticsStore
+        self.variantManager = variantManager
     }
 
     public var base: URL {
@@ -135,11 +149,22 @@ public struct AppUrls {
         return url.getParam(name: Param.search)
     }
 
-    public func url(forQuery query: String) -> URL {
+    public func url(forQuery query: String, queryContext: URL? = nil) -> URL {
         if let url = URL.webUrl(fromText: query) {
             return url
         }
-        return searchUrl(text: query)
+        
+        var parameters = [String: String]()
+        if let queryContext = queryContext, isDuckDuckGoSearch(url: queryContext),
+           variantManager.isSupported(feature: .removeSERPHeader) {
+            if queryContext.getParam(name: Param.verticalMaps) == nil,
+               let vertical = queryContext.getParam(name: Param.vertical),
+                      ParamValue.majorVerticals.contains(vertical) {
+                parameters[Param.verticalRewrite] = vertical
+            }
+        }
+        
+        return searchUrl(text: query, additionalParameters: parameters)
     }
 
     public func exti(forAtb atb: String) -> URL {
@@ -151,14 +176,21 @@ public struct AppUrls {
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    public func searchUrl(text: String) -> URL {
-        let searchUrl = base.addParam(name: Param.search, value: text)
+    public func searchUrl(text: String, additionalParameters: [String: String] = [:]) -> URL {
+        var searchUrl = base.addParam(name: Param.search, value: text)
+        searchUrl = searchUrl.addParams(additionalParameters)
         return applyStatsParams(for: searchUrl)
     }
     
     public func isDuckDuckGoSearch(url: URL) -> Bool {
         if !isDuckDuckGo(url: url) { return false }
         guard url.getParam(name: Param.search) != nil else { return false }
+        return true
+    }
+    
+    public func isDuckDuckGoStatic(url: URL) -> Bool {
+        if !isDuckDuckGo(url: url) { return false }
+        guard DDGStaticURL(rawValue: url.path) != nil else { return false }
         return true
     }
 
@@ -179,6 +211,18 @@ public struct AppUrls {
         return true
     }
     
+    public func applySearchHeaderParams(for url: URL) -> URL {
+        guard variantManager.isSupported(feature: .removeSERPHeader) else { return url }
+        
+        return url.addParam(name: Param.searchHeader, value: ParamValue.searchHeader)
+    }
+    
+    public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
+        guard variantManager.isSupported(feature: .removeSERPHeader) else { return true }
+        guard let header = url.getParam(name: Param.searchHeader) else { return false }
+        return header == ParamValue.searchHeader
+    }
+    
     public var httpsBloomFilter: URL {
         return URL(string: Url.httpsBloomFilter)!
     }
@@ -191,8 +235,12 @@ public struct AppUrls {
         return URL(string: Url.httpsExcludedDomains)!
     }
     
-    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String) -> URL {
-        var url = URL(string: Url.pixel.format(arguments: pixelName, formFactor))!
+    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil) -> URL {
+        var urlString = Url.pixel.format(arguments: pixelName)
+        if let formFactor = formFactor {
+            urlString.append("_ios_\(formFactor)")
+        }
+        var url = URL(string: urlString)!
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         return url
     }

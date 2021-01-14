@@ -155,6 +155,11 @@ public enum PixelName: String {
     case emailAliasGenerated = "m_e_ag"
     case emailAliasCopiedToClipboard = "m_e_cc"
 
+    // MARK: SERP pixels
+    
+    case serpRequerySame = "rq_0"
+    case serpRequeryNew = "rq_1"
+
     // MARK: debug pixels
     
     case dbMigrationError = "m_d_dbme"
@@ -179,6 +184,8 @@ public enum PixelName: String {
     case settingsAppIconChangeNotSupported = "m_d_aicns"
 
     case backgroundTaskSubmissionFailed = "m_bt_rf"
+    
+    case blankOverlayNotDismissed = "m_d_ovs"
 }
 // swiftlint:enable identifier_name
 
@@ -228,7 +235,7 @@ public class Pixel {
     }
     
     public static func fire(pixel: PixelName,
-                            forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
+                            forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
@@ -239,8 +246,13 @@ public class Pixel {
             newParams[PixelParameters.test] = PixelValues.test
         }
         
-        let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-        let url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
+        let url: URL
+        if let deviceType = deviceType {
+            let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
+        } else {
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue)
+        }
         
         APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
             

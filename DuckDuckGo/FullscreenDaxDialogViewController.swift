@@ -98,12 +98,13 @@ class FullscreenDaxDialogViewController: UIViewController {
         updateCutOut()
     }
     
-    //TODO I need to check if the old version allowed you to interact with the address bar
-    //TODO also need to check landscape on smaller devices
     @objc private func updateCutOut() {
         if spec?.highlightAddressBar ?? false, let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) {
             let padding: CGFloat = 8
-            let paddedRect = CGRect(x: rect.origin.x - padding, y: rect.origin.y - padding, width: rect.size.width + padding * 2, height: rect.size.height + padding * 2)
+            let paddedRect = CGRect(x: rect.origin.x - padding,
+                                    y: rect.origin.y - padding,
+                                    width: rect.size.width + padding * 2,
+                                    height: rect.size.height + padding * 2)
             highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: paddedRect, cornerRadius: paddedRect.height / 2.0)
         } else if spec?.highlightFireButton ?? false, let pos = delegate?.daxDialogDidRequestFireButtonPosition(controller: self) {
             let size: CGFloat = 56

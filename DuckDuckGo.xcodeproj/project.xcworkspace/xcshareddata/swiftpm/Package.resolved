@@ -54,6 +54,15 @@
           "revision": "0c9493eeacb102cc614da385cfaaf475379f4ab4",
           "version": "5.0.1"
         }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "git@github.com:samsymons/TrackerRadarKit.git",
+        "state": {
+          "branch": "main",
+          "revision": "0652051964c2e0187f71e9a55daef084cef1e5d7",
+          "version": null
+        }
       }
     ]
   },

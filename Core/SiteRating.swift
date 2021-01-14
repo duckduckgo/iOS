@@ -19,7 +19,7 @@
 
 import Foundation
 import os.log
-import ContentBlocker
+import TrackerRadarKit
 
 public class SiteRating {
 

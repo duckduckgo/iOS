@@ -19,7 +19,7 @@
 
 import Foundation
 import Core
-import ContentBlocker
+import TrackerRadarKit
 
 class DaxDialogs {
     

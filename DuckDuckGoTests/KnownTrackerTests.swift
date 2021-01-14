@@ -19,7 +19,7 @@
 
 import XCTest
 @testable import Core
-@testable import ContentBlocker
+@testable import TrackerRadarKit
 
 class KnownTrackerTests: XCTestCase {
 

@@ -18,7 +18,7 @@
 //
 
 import Foundation
-@testable import ContentBlocker
+@testable import TrackerRadarKit
 
 class MockEntityMapping: EntityMapping {
     

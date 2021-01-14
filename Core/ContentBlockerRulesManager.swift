@@ -20,7 +20,7 @@
 import Foundation
 import WebKit
 import os.log
-import ContentBlocker
+import TrackerRadarKit
 
 public class ContentBlockerRulesManager {
     

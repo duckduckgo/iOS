@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import ContentBlocker
+import TrackerRadarKit
 
 // Populated with relevant info at the point of detection.
 public struct DetectedTracker {

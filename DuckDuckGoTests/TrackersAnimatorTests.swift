@@ -19,7 +19,7 @@
 
 import Foundation
 import XCTest
-@testable import ContentBlocker
+@testable import TrackerRadarKit
 @testable import Core
 @testable import DuckDuckGo
 

@@ -33,6 +33,8 @@ protocol TabsBarDelegate: NSObjectProtocol {
 
 class TabsBarViewController: UIViewController {
 
+    public static let ViewDidLayoutNotification = Notification.Name("com.duckduckgo.app.TabsBarViewControllerViewDidLayout")
+    
     struct Constants {
         
         static let minItemWidth: CGFloat = 68
@@ -201,6 +203,10 @@ class TabsBarViewController: UIViewController {
         }
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        NotificationCenter.default.post(name: TabsBarViewController.ViewDidLayoutNotification, object: self)
+    }
 }
 
 extension TabsBarViewController: TabSwitcherButtonDelegate {

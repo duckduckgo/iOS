@@ -35,11 +35,6 @@ class FullscreenDaxDialogViewController: UIViewController {
         
         static let defaultCTAHeight: CGFloat = 100
         
-        static let largeHighlightBottom: CGFloat = -40
-        static let defaultHighlightBottom: CGFloat = 0
-        static let largeAddressBarOffset: CGFloat = -90
-        static let defaultAddressBarOffset: CGFloat = -50
-        
     }
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
@@ -59,7 +54,19 @@ class FullscreenDaxDialogViewController: UIViewController {
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(orientationDidChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateCutOut),
+                                               name: TabsBarViewController.ViewDidLayoutNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateCutOut),
+                                               name: OmniBar.DidLayoutNotification,
+                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

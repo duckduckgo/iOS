@@ -27,6 +27,8 @@ extension OmniBar: NibLoading {}
 // swiftlint:disable type_body_length
 class OmniBar: UIView {
 
+    public static let DidLayoutNotification = Notification.Name("com.duckduckgo.app.OmniBarDidLayout")
+    
     @IBOutlet weak var searchLoupe: UIView!
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
@@ -374,6 +376,11 @@ class OmniBar: UIView {
     
     func enterPadState() {
         refreshState(state.onEnterPadState)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        NotificationCenter.default.post(name: OmniBar.DidLayoutNotification, object: self)
     }
     
 }

@@ -1198,6 +1198,10 @@ extension MainViewController: TabDelegate {
         let point = view.convert(view.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
         return CGPoint(x: point.x + view.frame.size.width / 2.0, y: point.y + view.frame.size.height / 2.0)
     }
+    
+    func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
+        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+    }
 
     private func newTabAnimation(completion: @escaping () -> Void) {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()

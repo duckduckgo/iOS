@@ -25,6 +25,7 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
     func hideDaxDialogs(controller: FullscreenDaxDialogViewController)
     func closedDaxDialogs(controller: FullscreenDaxDialogViewController)
     func daxDialogDidRequestFireButtonPosition(controller: FullscreenDaxDialogViewController) -> CGPoint?
+    func daxDialogDidRquestAddressBarRect(controller: FullscreenDaxDialogViewController) -> CGRect?
     
 }
 
@@ -90,23 +91,22 @@ class FullscreenDaxDialogViewController: UIViewController {
         updateCutOut()
     }
     
-    private func updateCutOut() {
-        if spec?.highlightAddressBar ?? false {
-            //TODO
-//            fullScreen.isActive = false
-//            showAddressBar.isActive = true
-//            highlightBar.isHidden = false
-//            highlightBarBottom.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeHighlightBottom : Constants.defaultHighlightBottom
-//            showAddressBar.constant = AppWidthObserver.shared.isLargeWidth ? Constants.largeAddressBarOffset : Constants.defaultAddressBarOffset
+    //TODO I need to check if the old version allowed you to interact with the address bar
+    //TODO also need to check landscape on smaller devices
+    @objc private func updateCutOut() {
+        if spec?.highlightAddressBar ?? false, let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) {
+            let padding: CGFloat = 8
+            let paddedRect = CGRect(x: rect.origin.x - padding, y: rect.origin.y - padding, width: rect.size.width + padding * 2, height: rect.size.height + padding * 2)
+            highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: paddedRect, cornerRadius: paddedRect.height / 2.0)
         } else if spec?.highlightFireButton ?? false, let pos = delegate?.daxDialogDidRequestFireButtonPosition(controller: self) {
             let size: CGFloat = 56
             let point = CGPoint(x: pos.x - size / 2.0, y: pos.y - size / 2.0)
             let rect = CGRect(origin: point, size: CGSize(width: size, height: size))
             highlightCutOutView.cutOutPath = UIBezierPath(ovalIn: rect)
-            highlightCutOutView.setNeedsDisplay()
         } else {
             highlightCutOutView.cutOutPath = nil
         }
+        highlightCutOutView.setNeedsDisplay()
     }
 
     @IBAction func onTapHide() {
@@ -156,6 +156,10 @@ extension TabViewController: FullscreenDaxDialogDelegate {
 
     func daxDialogDidRequestFireButtonPosition(controller: FullscreenDaxDialogViewController) -> CGPoint? {
         return delegate?.tabDidRequestFireButtonLocation(tab: self)
+    }
+    
+    func daxDialogDidRquestAddressBarRect(controller: FullscreenDaxDialogViewController) -> CGRect? {
+        return delegate?.tabDidRequestSearchBarRect(tab: self)
     }
 }
 

@@ -430,7 +430,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Duck Address" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAK-LL-HUH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Email Protection" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAK-LL-HUH">
                                                     <rect key="frame" x="20" y="10" width="334.66666666666669" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="VfE-hn-SnR"/>
@@ -1863,9 +1863,9 @@ Cg
                                     <rect key="frame" x="8" y="0.0" width="398" height="69"/>
                                     <attributedString key="attributedText">
                                         <fragment>
-                                            <string key="content">The app will automatically detect email fields within signup forms and offer you a new randomized duck address which forwards to your existing inbox. 
+                                            <string key="content">Protect your personal address, block trackers, and forward to your regular inbox. The app will automatically detect email fields within signup forms and offer an option to use a Private Duck Address.
 
-Your main duck address is %@.</string>
+Signed in as %@.</string>
                                             <attributes>
                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <font key="NSFont" metaFont="system" size="14"/>
@@ -1917,7 +1917,7 @@ Your main duck address is %@.</string>
                             <outlet property="delegate" destination="BqF-uf-aTa" id="6DJ-fO-rsM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Email" id="xMC-Sf-t5x"/>
+                    <navigationItem key="navigationItem" title="Email Protection" id="xMC-Sf-t5x"/>
                     <connections>
                         <outlet property="headerTextView" destination="98g-Vz-RYx" id="EFI-ZL-aW0"/>
                         <outlet property="headerView" destination="upy-Jo-Ubx" id="KdQ-Oh-nvZ"/>

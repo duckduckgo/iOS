@@ -63,7 +63,7 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         
-        Variant(name: "mo", weight: 1, isIncluded: When.always, features: [.fireButtonEducationControl]),
+        Variant(name: "mc", weight: 1, isIncluded: When.always, features: [.fireButtonEducationControl]),
         Variant(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonEducationFeature])
     ]
     

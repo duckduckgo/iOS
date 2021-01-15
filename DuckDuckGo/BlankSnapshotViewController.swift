@@ -20,6 +20,11 @@
 import UIKit
 import Core
 
+protocol BlankSnapshotViewRecoveringDelegate: AnyObject {
+    
+    func recoverFromPresenting(controller: BlankSnapshotViewController)
+}
+
 class BlankSnapshotViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -35,6 +40,8 @@ class BlankSnapshotViewController: UIViewController {
     
     var omniBar: OmniBar!
     let tabSwitcherButton = TabSwitcherButton()
+    
+    weak var delegate: BlankSnapshotViewRecoveringDelegate?
     
     static func loadFromStoryboard() -> BlankSnapshotViewController {
         let storyboard = UIStoryboard(name: "BlankSnapshot", bundle: nil)
@@ -55,6 +62,7 @@ class BlankSnapshotViewController: UIViewController {
             configureTabBar()
         } else {
             tabsButton.customView = tabSwitcherButton
+            tabSwitcherButton.delegate = self
         }
 
         applyTheme(ThemeManager.shared.currentTheme)
@@ -72,7 +80,17 @@ class BlankSnapshotViewController: UIViewController {
             fatalError("Failed to instantiate tabs bar controller")
         }
         controller.view.frame = CGRect(x: 0, y: 24, width: view.frame.width, height: 40)
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(controller.view)
+        
+        controller.view.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
+        controller.view.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        controller.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 24.0).isActive = true
+        controller.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        
+        controller.fireButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        controller.addTabButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        controller.tabSwitcherButton.delegate = self
     }
     
     private func configureOmniBar() {
@@ -83,7 +101,49 @@ class BlankSnapshotViewController: UIViewController {
         if AppWidthObserver.shared.isLargeWidth {
             omniBar.enterPadState()
         }
+        
+        omniBar.omniDelegate = self
     }
+    
+    @objc func buttonPressed(sender: Any) {
+        userInteractionDetected()
+    }
+    
+    @IBAction func userInteractionDetected() {
+        Pixel.fire(pixel: .blankOverlayNotDismissed)
+        delegate?.recoverFromPresenting(controller: self)
+    }
+}
+
+extension BlankSnapshotViewController: OmniBarDelegate {
+    
+    func onSettingsPressed() {
+        userInteractionDetected()
+    }
+    
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
+        DispatchQueue.main.async {
+            self.omniBar.resignFirstResponder()
+            self.userInteractionDetected()
+        }
+        return false
+    }
+    
+    func onEnterPressed() {
+        userInteractionDetected()
+    }
+}
+
+extension BlankSnapshotViewController: TabSwitcherButtonDelegate {
+    
+    func showTabSwitcher(_ button: TabSwitcherButton) {
+        userInteractionDetected()
+    }
+    
+    func launchNewTab(_ button: TabSwitcherButton) {
+        userInteractionDetected()
+    }
+    
 }
 
 extension BlankSnapshotViewController: Themable {

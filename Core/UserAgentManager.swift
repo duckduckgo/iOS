@@ -42,6 +42,10 @@ public class UserAgentManager {
             self?.userAgent = UserAgent(defaultAgent: defaultAgent)
         }
     }
+    
+    public func userAgent(isDesktop: Bool) -> String {
+        return userAgent.agent(forUrl: nil, isDesktop: isDesktop)
+    }
 
     public func update(request: inout URLRequest, isDesktop: Bool) {
         request.addValue(userAgent.agent(forUrl: nil, isDesktop: isDesktop), forHTTPHeaderField: "User-Agent")

@@ -145,7 +145,7 @@ class DaxDialogs {
     }
     
     private var isFireButtonEducationEnabled: Bool {
-        return variantManager.isSupported(feature: .fireButtonEducationFeature)
+        return variantManager.isSupported(feature: .fireButtonEducation)
     }
 
     func dismiss() {

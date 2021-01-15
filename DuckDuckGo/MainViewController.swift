@@ -104,6 +104,9 @@ class MainViewController: UIViewController {
 
     var keyModifierFlags: UIKeyModifierFlags?
     
+    // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
+    private var skipSERPFlow = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -467,6 +470,10 @@ class MainViewController: UIViewController {
     public var siteRating: SiteRating? {
         return currentTab?.siteRating
     }
+    
+    func didReturnFromBackground() {
+        skipSERPFlow = true
+    }
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
@@ -501,7 +508,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        let queryUrl = appUrls.url(forQuery: query)
+        let queryUrl = appUrls.url(forQuery: query, queryContext: currentTab?.url)
         loadUrl(queryUrl)
     }
 
@@ -925,6 +932,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
+        if appUrls.variantManager.isSupported(feature: .removeSERPHeader), isSERPPresented { return }
         ViewHighlighter.hideAll()
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
@@ -964,15 +972,36 @@ extension MainViewController: OmniBarDelegate {
         self.currentTab?.showMenuHighlighterIfNeeded()
     }
     
+    private var isSERPPresented: Bool {
+        guard let tabURL = currentTab?.url else { return false }
+            
+        return appUrls.isDuckDuckGoSearch(url: tabURL)
+    }
+    
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
-        showSuggestionTray(.favorites)
+        
+        if appUrls.variantManager.isSupported(feature: .removeSERPHeader),
+           !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
+            showSuggestionTray(.autocomplete(query: query))
+        } else {
+            showSuggestionTray(.favorites)
+        }
     }
 
-    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
+        var selectQueryText = true
+        if appUrls.variantManager.isSupported(feature: .removeSERPHeader) {
+            selectQueryText = !(isSERPPresented && !skipSERPFlow)
+        }
+        skipSERPFlow = false
+        
         ViewHighlighter.hideAll()
-        guard let homeController = homeController else { return }
+        guard let homeController = homeController else {
+            return selectQueryText
+        }
         homeController.launchNewSearch()
+        return selectQueryText
     }
     
     func onRefreshPressed() {
@@ -1014,7 +1043,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
-            if AppUrls().isDuckDuckGoSearch(url: url) {
+            if appUrls.isDuckDuckGoSearch(url: url) {
                 omniBar.textField.text = suggestion.suggestion
             } else {
                 omniBar.textField.text = url.absoluteString

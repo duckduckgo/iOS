@@ -1772,10 +1772,7 @@
      setValue = _require2.setValue;
 
  var _require3 = require('./autofill-utils'),
-     notifyWebApp = _require3.notifyWebApp;
-
- var _require4 = require('./autofill-utils'),
-     isDDGApp = _require4.isDDGApp;
+     isDDGApp = _require3.isDDGApp;
 
  var SIGN_IN_MSG = {
    signMeIn: true,
@@ -1869,13 +1866,9 @@
    trySigningIn: function trySigningIn() {
      if (isDDGDomain()) {
        sendAndWaitForAnswer(SIGN_IN_MSG, 'addUserData').then(function (data) {
-         AndroidInterface.storeUserData(data); // The previous call doesn't send a response, so we can't know if things are fine
-
-         notifyWebApp({
-           deviceSignedIn: {
-             value: true
-           }
-         });
+         // This call doesn't send a response, so we can't know if it succeded
+         AndroidInterface.storeUserData(data);
+         scanForInputs(AndroidInterface);
        });
      }
    },
@@ -1915,13 +1908,9 @@
    trySigningIn: function trySigningIn() {
      if (isDDGDomain()) {
        sendAndWaitForAnswer(SIGN_IN_MSG, 'addUserData').then(function (data) {
-         iOSInterface.storeUserData(data); // The previous call doesn't send a response, so we can't know if things are fine
-
-         notifyWebApp({
-           deviceSignedIn: {
-             value: true
-           }
-         });
+         // This call doesn't send a response, so we can't know if it succeded
+         iOSInterface.storeUserData(data);
+         scanForInputs(iOSInterface);
        });
      }
    },
@@ -2678,7 +2667,7 @@
      },
      extensionSignedIn: {
        value: true
-     } // TODO: deprecated, to be removed soon
+     } // TODO: deprecated, to be removed in a future release
 
    });
    var forms = new Map();
@@ -2753,7 +2742,11 @@
      notifyWebApp({
        deviceSignedIn: {
          value: false
-       }
+       },
+       extensionSignedIn: {
+         value: false
+       } // TODO: deprecated, to be removed in a future release
+
      });
    };
 

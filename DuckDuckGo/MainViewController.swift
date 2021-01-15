@@ -1212,8 +1212,6 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestForgetAll(tab: TabViewController) {
         forgetAllWithAnimation(showNextDaxDialog: true)
-        
-        //TODO what if they press the fire button instead? ( I don't think they can at the moment, maybe they should be able to)
     }
     
     func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint? {

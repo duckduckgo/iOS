@@ -57,7 +57,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "git@github.com:duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": "feature/sam/initial-implementation",
           "revision": "b49ee20fa38a0d032ede8f8a66c48832deafe738",

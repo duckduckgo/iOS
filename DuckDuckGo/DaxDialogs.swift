@@ -37,7 +37,6 @@ class DaxDialogs {
         static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
         static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
                                                 accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
-        static let fireButtonSubsequent = HomeScreenSpec(message: UserText.daxDialogBrowsingFireButtonEducationSubsequent, accessibilityLabel: nil)
 
         let message: String
         let accessibilityLabel: String?
@@ -211,9 +210,10 @@ class DaxDialogs {
         }
         
         if isFireButtonEducationEnabled {
+            // make sure we don't show the home message until the fire button education has been seen
             if fireButtonBrowsingMessageSeen {
                 settings.homeScreenMessagesSeen += 1
-                return .fireButtonSubsequent
+                return .subsequent
             }
         } else if browsingMessageSeen {
             settings.homeScreenMessagesSeen += 1

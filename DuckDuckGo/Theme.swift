@@ -57,6 +57,7 @@ protocol Theme {
     var progressBarGradientDarkColor: UIColor { get }
     var progressBarGradientLightColor: UIColor { get }
     
+    var autocompleteSuggestionTextColor: UIColor { get }
     var autocompleteCellAccessoryColor: UIColor { get }
     
     var tableCellBackgroundColor: UIColor { get }

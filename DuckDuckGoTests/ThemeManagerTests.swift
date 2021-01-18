@@ -31,8 +31,8 @@ class ThemeManagerTests: XCTestCase {
         }
     }
     
-    private class MockRootControllerProvider: RootControllerProvider {
-        var rootController: UIViewController?
+    private class MockRootControllersProvider: RootControllersProvider {
+        var rootControllers = [UIViewController]()
     }
     
     func testWhenApplyingThemeOnThemeChangeThenControllerShouldBeUpdated() {
@@ -42,8 +42,8 @@ class ThemeManagerTests: XCTestCase {
         let mockRootController = MockRootController()
         mockRootController.onDecorate = expectDecoration
         
-        let mockRootControllerProvider = MockRootControllerProvider()
-        mockRootControllerProvider.rootController = mockRootController
+        let mockRootControllerProvider = MockRootControllersProvider()
+        mockRootControllerProvider.rootControllers = [mockRootController]
         
         let manager = ThemeManager(settings: AppUserDefaults(),
                                    rootProvider: mockRootControllerProvider)

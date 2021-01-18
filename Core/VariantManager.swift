@@ -24,6 +24,8 @@ public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
+    
+    case removeSERPHeader
 }
 
 public struct Variant {
@@ -57,7 +59,10 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: [])
+        Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
+        
+        Variant(name: "mi", weight: 1, isIncluded: When.always, features: []),
+        Variant(name: "mo", weight: 1, isIncluded: When.always, features: [.removeSERPHeader])
     ]
     
     public let name: String

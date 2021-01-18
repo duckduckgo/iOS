@@ -329,6 +329,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self?.showKeyboardOnLaunch()
         }
     }
+    
+    private func tryToObtainOverlayWindow() {
+        for window in UIApplication.shared.windows where window.rootViewController is BlankSnapshotViewController {
+            overlayWindow = window
+            return
+        }
+    }
 
     private func removeOverlay() {
         window?.makeKeyAndVisible()
@@ -352,6 +359,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
     
     func recoverFromPresenting(controller: BlankSnapshotViewController) {
+        if overlayWindow == nil {
+            tryToObtainOverlayWindow()
+        }
+        
         overlayWindow?.isHidden = true
         overlayWindow = nil
         window?.makeKeyAndVisible()

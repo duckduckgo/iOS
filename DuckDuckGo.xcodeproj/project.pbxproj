@@ -26,7 +26,7 @@
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
 		4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */; };
-		4B6160AC25B0E6BC007DE5B2 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B6160AB25B0E6BC007DE5B2 /* TrackerRadarKit */; };
+		4B82E96B25B6317300656FE7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B82E96A25B6317300656FE7 /* TrackerRadarKit */; };
 		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
 		83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */; };
 		83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */; };
@@ -2072,7 +2072,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B6160AC25B0E6BC007DE5B2 /* TrackerRadarKit in Frameworks */,
+				4B82E96B25B6317300656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
 				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 			);
@@ -3974,7 +3974,7 @@
 			packageProductDependencies = (
 				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
-				4B6160AB25B0E6BC007DE5B2 /* TrackerRadarKit */,
+				4B82E96A25B6317300656FE7 /* TrackerRadarKit */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -4118,7 +4118,7 @@
 				F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				4B6160AA25B0E6BC007DE5B2 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
+				4B82E96925B6317300656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6775,11 +6775,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4B6160AA25B0E6BC007DE5B2 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */ = {
+		4B82E96925B6317300656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:samsymons/TrackerRadarKit.git";
+			repositoryURL = "git@github.com:duckduckgo/TrackerRadarKit.git";
 			requirement = {
-				branch = main;
+				branch = "feature/sam/initial-implementation";
 				kind = branch;
 			};
 		};
@@ -6834,9 +6834,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4B6160AB25B0E6BC007DE5B2 /* TrackerRadarKit */ = {
+		4B82E96A25B6317300656FE7 /* TrackerRadarKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4B6160AA25B0E6BC007DE5B2 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
+			package = 4B82E96925B6317300656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
 			productName = TrackerRadarKit;
 		};
 		F486D305250697AF002D07D7 /* Punnycode */ = {

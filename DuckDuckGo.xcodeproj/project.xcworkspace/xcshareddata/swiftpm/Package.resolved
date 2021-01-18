@@ -57,10 +57,10 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "git@github.com:samsymons/TrackerRadarKit.git",
+        "repositoryURL": "git@github.com:duckduckgo/TrackerRadarKit.git",
         "state": {
-          "branch": "main",
-          "revision": "0652051964c2e0187f71e9a55daef084cef1e5d7",
+          "branch": "feature/sam/initial-implementation",
+          "revision": "b49ee20fa38a0d032ede8f8a66c48832deafe738",
           "version": null
         }
       }

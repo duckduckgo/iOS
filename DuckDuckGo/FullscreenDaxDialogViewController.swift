@@ -157,12 +157,14 @@ extension TabViewController: FullscreenDaxDialogDelegate {
             }
         }
         present(alertController, animated: true)
+        isShowingFullScreenDaxDialog = false
         if controller.spec?.highlightAddressBar ?? false {
             chromeDelegate?.omniBar.cancelAllAnimations()
         }
     }
     
     func closedDaxDialogs(controller: FullscreenDaxDialogViewController) {
+        isShowingFullScreenDaxDialog = false
         if controller.spec?.highlightAddressBar ?? false {
             chromeDelegate?.omniBar.completeAnimations()
         }

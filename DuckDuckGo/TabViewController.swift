@@ -98,6 +98,9 @@ class TabViewController: UIViewController {
     // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
     private var fireWoFollowUp = false
     
+    // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
+    var isShowingFullScreenDaxDialog = false
+    
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -933,11 +936,13 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         guard let siteRating = self.siteRating,
-            let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
+              !isShowingFullScreenDaxDialog,
+              let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return
         }
         
+        isShowingFullScreenDaxDialog = true
         if spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
             scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         }

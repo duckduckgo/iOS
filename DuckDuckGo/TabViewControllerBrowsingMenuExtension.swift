@@ -136,7 +136,7 @@ extension TabViewController {
         return UIAlertAction(title: title, style: .default) { [weak self] _ in
             self?.emailManager.getAliasEmailIfNeededAndConsume { [weak self] alias, _ in
                 guard let alias = alias else {
-                    //we may want to communicate this failure to the user in the future
+                    // we may want to communicate this failure to the user in the future
                     return
                 }
                 let pasteBoard = UIPasteboard.general

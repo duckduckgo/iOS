@@ -152,6 +152,8 @@ extension TabViewController: FullscreenDaxDialogDelegate {
         alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel) {
             if controller.spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
                 self.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+            } else {
+                Pixel.fire(pixel: .daxDialogsFireEducationHiddenCanceled)
             }
         }
         present(alertController, animated: true)

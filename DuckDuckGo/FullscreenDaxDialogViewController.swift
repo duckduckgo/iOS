@@ -124,6 +124,9 @@ class FullscreenDaxDialogViewController: UIViewController {
     
     private func dismissCta() {
         dismiss(animated: true)
+        if spec == DaxDialogs.BrowsingSpec.fireButtonEducation {
+            Pixel.fire(pixel: .daxDialogsFireEducationCTA)
+        }
         delegate?.closedDaxDialogs(controller: self)
     }
     
@@ -138,6 +141,11 @@ extension TabViewController: FullscreenDaxDialogDelegate {
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
         alertController.addAction(title: UserText.daxDialogHideButton, style: .default) {
+            if controller.spec == DaxDialogs.BrowsingSpec.fireButtonEducation {
+                Pixel.fire(pixel: .daxDialogsFireEducationHidden)
+            } else if DaxDialogs.shared.isFireButtonEducationEnabled {
+                Pixel.fire(pixel: .daxDialogsHiddenBeforeFireEducation)
+            }
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
             DaxDialogs.shared.dismiss()
         }

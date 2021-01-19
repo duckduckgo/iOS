@@ -85,7 +85,8 @@ class DaxDialogs {
                                                       cta: UserText.daxDialogBrowsingFireButtonEducationCTA,
                                                       highlightAddressBar: false,
                                                       highlightFireButton: true,
-                                                      pixelName: .daxDialogsWithTrackers)
+                                                      pixelName: .daxDialogsFireEducation)
+        
         let message: String
         let cta: String
         let highlightAddressBar: Bool

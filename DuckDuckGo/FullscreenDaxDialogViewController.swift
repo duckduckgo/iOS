@@ -100,7 +100,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     
     @objc private func updateCutOut() {
         if spec?.highlightAddressBar ?? false, let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) {
-            let padding: CGFloat = 8
+            let padding: CGFloat = 6
             let paddedRect = CGRect(x: rect.origin.x - padding,
                                     y: rect.origin.y - padding,
                                     width: rect.size.width + padding * 2,

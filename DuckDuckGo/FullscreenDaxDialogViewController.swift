@@ -149,7 +149,11 @@ extension TabViewController: FullscreenDaxDialogDelegate {
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
             DaxDialogs.shared.dismiss()
         }
-        alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel)
+        alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel) {
+            if controller.spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
+                self.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+            }
+        }
         present(alertController, animated: true)
         if controller.spec?.highlightAddressBar ?? false {
             chromeDelegate?.omniBar.cancelAllAnimations()

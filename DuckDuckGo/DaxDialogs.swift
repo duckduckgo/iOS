@@ -145,8 +145,6 @@ class DaxDialogs {
     }
     
     var isFireButtonEducationEnabled: Bool {
-//        return true
-//        //TODO
         return variantManager.isSupported(feature: .fireButtonEducation)
     }
 

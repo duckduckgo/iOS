@@ -242,16 +242,16 @@
 "email.aliasAlert.decline" = "Don't Use";
 
 /* No comment provided by engineer. */
-"email.aliasAlert.message" = "This address can be used to communicate with you, but won’t reveal your real email.";
+"email.aliasAlert.message" = "Protect your personal address, block trackers, and forward to your regular inbox.";
 
 /* No comment provided by engineer. */
-"email.aliasAlert.title" = "For more privacy, use a Duck Address.";
+"email.aliasAlert.title" = "Use a private Duck Address";
 
 /* No comment provided by engineer. */
 "email.browsingMenu.alert" = "New address copied to your clipboard";
 
 /* No comment provided by engineer. */
-"email.browsingMenu.useNewDuckAddress" = "New Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";

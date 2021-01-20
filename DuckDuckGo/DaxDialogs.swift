@@ -117,7 +117,7 @@ class DaxDialogs {
         self.variantManager = variantManager
     }
     
-    private var browsingMessageSeen: Bool {
+    private var firstBrowsingMessageSeen: Bool {
         return settings.browsingAfterSearchShown
             || settings.browsingWithTrackersShown
             || settings.browsingWithoutTrackersShown
@@ -216,7 +216,7 @@ class DaxDialogs {
                 settings.homeScreenMessagesSeen += 1
                 return .subsequent
             }
-        } else if browsingMessageSeen {
+        } else if firstBrowsingMessageSeen {
             settings.homeScreenMessagesSeen += 1
             return .subsequent
         }

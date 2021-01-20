@@ -144,7 +144,9 @@ class DaxDialogs {
         return nextHomeScreenMessageOverride == .addFavorite
     }
     
-    private var isFireButtonEducationEnabled: Bool {
+    var isFireButtonEducationEnabled: Bool {
+//        return true
+//        //TODO
         return variantManager.isSupported(feature: .fireButtonEducation)
     }
 
@@ -170,7 +172,7 @@ class DaxDialogs {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
                 
-        if nonDDGBrowsingMessageSeen {
+        if nonDDGBrowsingMessageSeen && isFireButtonEducationEnabled {
             return fireButtonBrowsingMessage()
         }
         

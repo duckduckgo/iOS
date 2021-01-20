@@ -814,18 +814,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the Internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Other search engines track your searches even when you’re in Private Browsing Mode. We don’t track you. Period.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigate to *Safari*, then *Search Engine*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Open *Settings* app.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Select *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
 

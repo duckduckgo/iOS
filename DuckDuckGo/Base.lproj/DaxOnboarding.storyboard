@@ -288,7 +288,7 @@ DuckDuckGo!</string>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmT-SX-w7H">
-                                <rect key="frame" x="324.5" y="316" width="375" height="400"/>
+                                <rect key="frame" x="324.5" y="309" width="375" height="400"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="V8D-Hc-dLK"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="eK0-5h-FDJ"/>
@@ -316,7 +316,7 @@ DuckDuckGo!</string>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="width" secondItem="yHc-FK-kfn" secondAttribute="width" priority="750" id="b3Y-VV-mAW"/>
                             <constraint firstAttribute="bottom" secondItem="7G3-x9-wwM" secondAttribute="bottom" id="f4h-cU-qpe"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="trailing" secondItem="Ica-YY-s5f" secondAttribute="trailing" id="szK-zk-axH"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="52" id="ur2-53-anE">
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="59" id="ur2-53-anE">
                                 <variation key="heightClass=compact-widthClass=compact" constant="40"/>
                             </constraint>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="wS0-Hw-4bW"/>

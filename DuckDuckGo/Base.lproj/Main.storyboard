@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,21 +22,21 @@
             <objects>
                 <viewController definesPresentationContext="YES" id="C1X-Zd-UbA" customClass="MainViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJw-WC-cX3" userLabel="Logo Container">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="KGS-6D-8Qu">
-                                        <rect key="frame" x="252" y="180" width="96" height="96"/>
+                                        <rect key="frame" x="159" y="328" width="96" height="96"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="KGS-6D-8Qu" secondAttribute="height" multiplier="1:1" id="8Sj-qV-mg4"/>
                                             <constraint firstAttribute="width" constant="96" id="cmA-xS-5w3"/>
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextDuckDuckGo" translatesAutoresizingMaskIntoConstraints="NO" id="x0w-JG-l7a">
-                                        <rect key="frame" x="219" y="288" width="162" height="21"/>
+                                        <rect key="frame" x="126" y="436" width="162" height="21"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -45,28 +47,28 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="52" width="600" height="504"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="717"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vw-jR-X6Q" userLabel="Suggestion Tray">
-                                <rect key="frame" x="0.0" y="52" width="600" height="504"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="717"/>
                                 <connections>
                                     <segue destination="j6c-LM-dZE" kind="embed" id="1ri-Fa-CEp"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-0B-l2J">
-                                <rect key="frame" x="0.0" y="52" width="600" height="0.0"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="g5u-N0-iSI"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiL-6e-jxs" userLabel="Status BG">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="52"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="96"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agl-Nk-nUH" userLabel="Tabs Container">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vZY-9N-j4a"/>
                                 </constraints>
@@ -75,23 +77,23 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="52"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="52"/>
                                 <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="XOq-1B-9oE"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFG-OX-YkL" customClass="ProgressView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49" width="600" height="3"/>
+                                <rect key="frame" x="0.0" y="93" width="414" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="ysF-8z-Vg0"/>
                                 </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Krm-hA-s9u" customClass="HitTestingToolbar" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ACG-Ld-ZlG">
+                                    <constraint firstAttribute="height" constant="49" id="ACG-Ld-ZlG">
                                         <variation key="heightClass=compact-widthClass=compact" constant="32"/>
                                     </constraint>
                                 </constraints>
@@ -136,20 +138,20 @@
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPc-P1-sCk" customClass="FindInPageView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="451" width="600" height="149"/>
+                                <rect key="frame" x="0.0" y="747" width="414" height="149"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vrw-HM-EuC" userLabel="Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8N-Ee-U1n">
-                                                <rect key="frame" x="551" y="9.5" width="37" height="30"/>
+                                                <rect key="frame" x="365" y="9.5" width="37" height="30"/>
                                                 <state key="normal" title="Done"/>
                                                 <connections>
                                                     <action selector="done" destination="yPc-P1-sCk" eventType="touchUpInside" id="QkN-1x-ae0"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="piX-Du-shO" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                <rect key="frame" x="76" y="6.5" width="463" height="36"/>
+                                                <rect key="frame" x="76" y="6.5" width="277" height="36"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="5Nz-IB-Q70">
                                                         <rect key="frame" x="9" y="6.5" width="23" height="23"/>
@@ -159,13 +161,13 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-zZ-iud">
-                                                        <rect key="frame" x="410.5" y="10" width="43.5" height="16.5"/>
+                                                        <rect key="frame" x="231" y="11" width="37" height="14"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="IBB-TQ-d5c">
-                                                        <rect key="frame" x="38" y="0.0" width="364.5" height="36"/>
+                                                        <rect key="frame" x="38" y="0.0" width="185" height="36"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -219,7 +221,7 @@
                                                 </connections>
                                             </button>
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NKG-8h-dYm">
-                                                <rect key="frame" x="510" y="14.5" width="20" height="20"/>
+                                                <rect key="frame" x="324" y="14.5" width="20" height="20"/>
                                             </activityIndicatorView>
                                         </subviews>
                                         <constraints>
@@ -399,15 +401,15 @@
             <objects>
                 <viewController id="j6c-LM-dZE" customClass="SuggestionTrayViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jEf-yR-5Dz">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="670"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IT2-Wd-hHA" userLabel="Background View">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="670"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFZ-vQ-cny">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="670"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="908" id="Jcf-as-Vyd"/>

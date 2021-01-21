@@ -107,8 +107,14 @@ class FullscreenDaxDialogViewController: UIViewController {
                                     height: rect.size.height + padding * 2)
             highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: paddedRect, cornerRadius: paddedRect.height / 2.0)
         } else if spec?.highlightFireButton ?? false, let pos = delegate?.daxDialogDidRequestFireButtonPosition(controller: self) {
-            let size: CGFloat = 56
-            let point = CGPoint(x: pos.x - size / 2.0, y: pos.y - size / 2.0)
+            var size: CGFloat = 56
+            var offset: CGFloat = 1
+            let hasBottomSafeArea = UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0 > 20
+            if !hasBottomSafeArea && !isPad {
+                size = 40
+                offset = 0
+            }
+            let point = CGPoint(x: pos.x - size / 2.0, y: pos.y - size / 2.0 + offset)
             let rect = CGRect(origin: point, size: CGSize(width: size, height: size))
             highlightCutOutView.cutOutPath = UIBezierPath(ovalIn: rect)
         } else {

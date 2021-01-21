@@ -90,6 +90,30 @@ class AppConfigurationFetchTests: XCTestCase {
     }
 
     @available(iOS 13.0, *)
+    func testWhenTheCompletionHandlerTriesToUpdateStatisticsThenTheCountCannotBeNegative() {
+        let store = AppUserDefaults(groupName: testGroupName)
+        let task = MockBackgroundTask()
+
+        store.backgroundFetchTaskExpirationCount = 0
+        store.backgroundNoDataCount = 0
+        store.backgroundNewDataCount = 0
+
+        var previousStatus: AppConfigurationFetch.BackgroundRefreshCompletionStatus? = .expired
+
+        MockAppConfigurationFetch.backgroundRefreshTaskCompletionHandler(store: store,
+                                                                         refreshStartDate: Date(),
+                                                                         task: task,
+                                                                         status: .noData,
+                                                                         previousStatus: &previousStatus)
+
+        XCTAssertEqual(previousStatus, .noData)
+
+        XCTAssertEqual(store.backgroundFetchTaskExpirationCount, 0)
+        XCTAssertEqual(store.backgroundNoDataCount, 0)
+        XCTAssertEqual(store.backgroundNewDataCount, 0)
+    }
+
+    @available(iOS 13.0, *)
     private func assert(current: AppConfigurationFetch.BackgroundRefreshCompletionStatus,
                         previous: AppConfigurationFetch.BackgroundRefreshCompletionStatus?) {
 

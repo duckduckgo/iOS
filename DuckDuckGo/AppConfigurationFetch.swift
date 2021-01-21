@@ -36,7 +36,6 @@ protocol AppConfigurationFetchStatistics {
     var backgroundFetchTaskExpirationCount: Int { get set }
 }
 
-// swiftlint:disable type_body_length
 class AppConfigurationFetch {
     
     private struct Constants {
@@ -301,7 +300,6 @@ class AppConfigurationFetch {
         downloadedTrackerDataSetCount = 0
     }
 }
-// swiftlint:enable type_body_length
 
 extension AppConfigurationFetch {
 

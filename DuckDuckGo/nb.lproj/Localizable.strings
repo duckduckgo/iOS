@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Lim inn og gå";
 
-/* Reading List action */
-"action.title.readingList" = "Legg til i leseliste";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Oppdater";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Over tid kan det hope seg opp med personlige opplysninger i nettleseren din. Fysj. Bruk brannknappen for å fjerne alt. Prøv den 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Tøm alle faner og data";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Dett var dett – dataene dine er brent til aske!\n\nTips: Du kan sikre en side sånn at du slipper å logge inn hver gang.\n\nLurer du på hvordan det funker? Besøk en av favorittsidene dine og logg inn.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

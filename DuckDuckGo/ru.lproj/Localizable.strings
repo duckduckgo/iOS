@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Вставить и перейти";
 
-/* Reading List action */
-"action.title.readingList" = "Добавить в список для чтения";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Обновить";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Уф!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "В браузере могут скапливаться личные данные. Фу. Пользуйтесь кнопкой «Пожар», чтобы сжечь весь лишний мусор. Попробуйте сами 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Сбросить все вкладки и данные";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Вот и всё: старым данным крышка!\n\nСовет: наделите отдельные сайты огнеупорностью, чтобы каждый раз не вводить учетную информацию.\n\nХотите проверить эту функцию в деле? Посетите любимый сайт и выполните вход.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

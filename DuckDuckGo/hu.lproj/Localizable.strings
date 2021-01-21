@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Beillesztés";
 
-/* Reading List action */
-"action.title.readingList" = "Hozzáadás az olvasási listához";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Frissítés";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfuj!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Idővel személyes adatok halmozódhatnak fel a böngésződben. Fúj. A Tűz gombbal mindet törölheted. Próbáld ki 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Összes lap és adat törlése";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Ennyi — az adatok megsütve! \n\nÍme egy tipp: tedd tűzállóvá a webhelyeket, hogy ne kelljen minden alkalommal újra bejelentkezned.\n\nKíváncsi vagy, hogyan működik? Látogass el az egyik kedvenc webhelyedre, és jelentkezz be.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -449,7 +455,7 @@
 "fireButtonAnimation.none.name" = "Nincs";
 
 /* No comment provided by engineer. */
-"fireButtonAnimation.waterSwirl.name" = "Whirlpool";
+"fireButtonAnimation.waterSwirl.name" = "Örvény";
 
 /* No comment provided by engineer. */
 "home.message.buttonText" = "Beállítás alapértelmezett böngészőként";

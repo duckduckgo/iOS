@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Prilepi in nadaljuj";
 
-/* Reading List action */
-"action.title.readingList" = "Dodaj na seznam za branje";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osveži";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Fuj!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Osebni podatki se lahko naberejo v vašem brskalniku. Fuj. Uporabite gumb ogenj, da jih odstranite. Poskusite 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Počisti vse zavihke in podatke";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Tako — vaši podatki so izginili!\n\nNasvet: Naložite požarno zaščito na spletno mesto in ne bo se vam treba vsakič znova prijaviti.\n\nBi radi videli, kako deluje? Obiščite eno izmed svojih priljubljenih spletnih mest in se prijavite.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -449,7 +455,7 @@
 "fireButtonAnimation.none.name" = "Brez";
 
 /* No comment provided by engineer. */
-"fireButtonAnimation.waterSwirl.name" = "Vrtinec";
+"fireButtonAnimation.waterSwirl.name" = "Vodni mehurčki";
 
 /* No comment provided by engineer. */
 "home.message.buttonText" = "Nastavite za privzeti brskalnik";

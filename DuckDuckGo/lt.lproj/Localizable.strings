@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Klijuoti ir eiti";
 
-/* Reading List action */
-"action.title.readingList" = "Pridėti prie skaitymo sąrašo";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Atnaujinti";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Oi!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Asmeniniai duomenys gali kauptis jūsų naršyklėje. Fui. Naudokite mygtuką „Fire“, kad juos panaikintumėte. Išbandykite dabar 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Valyti visas korteles ir duomenis";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Viskas — jūsų duomenys yra tostai! \n\nŠtai patarimas: svetainei naudokite parinktį „Fireproof“ ir nereikės kaskart prisijungti iš naujo. \n\nNorite pamatyti, kaip tai veikia? Apsilankykite vienoje iš mėgstamiausių svetainių ir prisijunkite.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

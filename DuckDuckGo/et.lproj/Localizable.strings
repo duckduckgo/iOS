@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Kleebi ja mine";
 
-/* Reading List action */
-"action.title.readingList" = "Lisa lugemisloendisse";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Värskenda";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Aja jooksul võivad sinu brauserisse koguneda isikuandmed. Õudne. Kasuta tulenuppu, et need kõik ära kustutada. Proovi 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Kustuta kõik vahekaardid ja andmed";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Ongi korras — sinu andmed on hävitatud!\n\nSoovitus: muuda sait tulekindlaks ja sa ei pea enam iga kord uuesti sisse logima. \n\nTahad näha, kuidas see töötab? Külasta ühte oma lemmiksaitidest ja logi sisse.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

@@ -38,6 +38,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     }
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
+    @IBOutlet weak var fireButtonOverlayButton: UIButton!
     
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
@@ -53,6 +54,9 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.onTapCta = dismissCta
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        let highlightFireButton = spec?.highlightFireButton ?? false
+        fireButtonOverlayButton.accessibilityLabel = UserText.daxDialogBrowsingFireButtonEducationCTA
+        fireButtonOverlayButton.isHidden = !highlightFireButton
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(orientationDidChange),
@@ -116,6 +120,7 @@ class FullscreenDaxDialogViewController: UIViewController {
             }
             let point = CGPoint(x: pos.x - size / 2.0, y: pos.y - size / 2.0 + offset)
             let rect = CGRect(origin: point, size: CGSize(width: size, height: size))
+            fireButtonOverlayButton.frame = rect
             highlightCutOutView.cutOutPath = UIBezierPath(ovalIn: rect)
         } else {
             highlightCutOutView.cutOutPath = nil
@@ -136,6 +141,11 @@ class FullscreenDaxDialogViewController: UIViewController {
         delegate?.closedDaxDialogs(controller: self)
     }
     
+    @IBAction func onTapFireButtonOverlay(_ sender: Any) {
+        dismiss(animated: true)
+        Pixel.fire(pixel: .daxDialogsFireEducationFireButton)
+        self.delegate?.closedDaxDialogs(controller: self)
+    }
 }
 
 extension TabViewController: FullscreenDaxDialogDelegate {

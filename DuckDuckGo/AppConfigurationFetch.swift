@@ -95,6 +95,16 @@ class AppConfigurationFetch {
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
+
+    private enum BackgroundRefreshCompletionStatus {
+        case expired
+        case noData
+        case newData
+
+        var success: Bool {
+            self == .noData || self == .newData
+        }
+    }
     
     func start(isBackgroundFetch: Bool = false,
                completion: AppConfigurationCompletion?) {
@@ -141,24 +151,45 @@ class AppConfigurationFetch {
             }
 
             let refreshStartDate = Date()
+            var lastCompletionStatus: BackgroundRefreshCompletionStatus?
 
-            let taskCompletion = { (success: Bool) in
-                task.setTaskCompleted(success: success)
+            // taskCompletion gets called at the end of the refresh process, either by the task being expired by the OS or by the refresh process
+            // completing successfully. It checks whether it has been called earlier in the same refresh run and self-corrects its statistics if so.
+
+            let taskCompletion = { (status: BackgroundRefreshCompletionStatus) in
+                task.setTaskCompleted(success: status.success)
                 scheduleBackgroundRefreshTask()
 
                 let refreshEndDate = Date()
                 let difference = refreshEndDate.timeIntervalSince(refreshStartDate)
                 backgroundFetchTaskDuration += Int(difference)
+
+                guard let last = lastCompletionStatus else {
+                    lastCompletionStatus = status
+                    return
+                }
+
+                var store: AppConfigurationFetchStatistics = AppUserDefaults()
+
+                // If a new completion status comes in then the counter for the previous status should be reversed.
+                switch last {
+                case .expired:
+                    backgroundFetchTaskExpirationCount = max(0, backgroundFetchTaskExpirationCount - 1)
+                case .noData:
+                    store.backgroundNoDataCount = max(0, store.backgroundNoDataCount - 1)
+                case .newData:
+                    store.backgroundNewDataCount = max(0, store.backgroundNewDataCount - 1)
+                }
             }
 
             task.expirationHandler = {
                 backgroundFetchTaskExpirationCount += 1
-                taskCompletion(false)
+                taskCompletion(.expired)
             }
 
             fetchQueue.async {
-                AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
-                taskCompletion(true)
+                let newData = AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
+                taskCompletion(newData ? .newData : .noData)
             }
         }
     }

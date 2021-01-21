@@ -96,26 +96,23 @@ class AppConfigurationFetchTests: XCTestCase {
         let store = AppUserDefaults(groupName: testGroupName)
         let task = MockBackgroundTask()
 
-        // Set up the counts for the current and previous statuses. The completion handler expects that the statistic counts have already been
-        // updated before completion.
-        switch current {
-        case .expired:
-            store.backgroundFetchTaskExpirationCount += 1
-        case .noData:
-            store.backgroundNoDataCount += 1
-        case .newData:
-            store.backgroundNewDataCount += 1
+        let updateStore: (AppConfigurationFetch.BackgroundRefreshCompletionStatus?) -> Void = { status in
+            switch status {
+            case .expired:
+                store.backgroundFetchTaskExpirationCount += 1
+            case .noData:
+                store.backgroundNoDataCount += 1
+            case .newData:
+                store.backgroundNewDataCount += 1
+            case .none: break
+            }
         }
 
-        switch previous {
-        case .expired:
-            store.backgroundFetchTaskExpirationCount += 1
-        case .noData:
-            store.backgroundNoDataCount += 1
-        case .newData:
-            store.backgroundNewDataCount += 1
-        case .none: break
-        }
+        // Set up the counts for the current and previous statuses. The completion handler expects that the statistic counts have already been
+        // updated before completion.
+
+        updateStore(current)
+        updateStore(previous)
 
         var previousStatus: AppConfigurationFetch.BackgroundRefreshCompletionStatus? = previous
 
@@ -127,20 +124,9 @@ class AppConfigurationFetchTests: XCTestCase {
 
         XCTAssertEqual(previousStatus, current)
 
-        switch current {
-        case .expired:
-            XCTAssertEqual(store.backgroundFetchTaskExpirationCount, 1)
-            XCTAssertEqual(store.backgroundNoDataCount, 0)
-            XCTAssertEqual(store.backgroundNewDataCount, 0)
-        case .noData:
-            XCTAssertEqual(store.backgroundFetchTaskExpirationCount, 0)
-            XCTAssertEqual(store.backgroundNoDataCount, 1)
-            XCTAssertEqual(store.backgroundNewDataCount, 0)
-        case .newData:
-            XCTAssertEqual(store.backgroundFetchTaskExpirationCount, 0)
-            XCTAssertEqual(store.backgroundNoDataCount, 0)
-            XCTAssertEqual(store.backgroundNewDataCount, 1)
-        }
+        XCTAssertEqual(store.backgroundFetchTaskExpirationCount, current == .expired ? 1 : 0)
+        XCTAssertEqual(store.backgroundNoDataCount, current == .noData ? 1 : 0)
+        XCTAssertEqual(store.backgroundNewDataCount, current == .newData ? 1 : 0)
     }
 }
 

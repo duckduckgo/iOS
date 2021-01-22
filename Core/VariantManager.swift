@@ -67,8 +67,8 @@ public struct Variant {
         Variant(name: "mc", weight: 1, isIncluded: When.always, features: []),
         Variant(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonEducation]),
 
-        Variant(name: "mi", weight: 1, isIncluded: When.always, features: []),
-        Variant(name: "mo", weight: 1, isIncluded: When.always, features: [.removeSERPHeader])
+        Variant(name: "mi", weight: doNotAllocate, isIncluded: When.always, features: []),
+        Variant(name: "mo", weight: doNotAllocate, isIncluded: When.always, features: [.removeSERPHeader])
     ]
     
     public let name: String

@@ -264,13 +264,15 @@ class TabViewController: UIViewController {
         } else {
             tabModel.link = nil
         }
+        tabModel.sessionStateData = (try? webView.sessionStateData()) ?? nil
     }
         
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
 
-    func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
+    func attachWebView(configuration: WKWebViewConfiguration, sessionStateData: Data? = nil,
+                       andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -295,6 +297,14 @@ class TabViewController: UIViewController {
         updateContentMode()
         
         instrumentation.didPrepareWebView()
+
+        do {
+            if let data = sessionStateData {
+                loadViewIfNeeded()
+                try webView.restoreSessionState(from: data)
+                return
+            }
+        } catch {}
 
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
@@ -839,6 +849,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         tabModel.link = link
+        tabModel.sessionStateData = (try? webView.sessionStateData()) ?? nil
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
@@ -918,6 +929,7 @@ extension TabViewController: WKNavigationDelegate {
         siteRating?.finishedLoading = true
         updateSiteRating()
         tabModel.link = link
+        tabModel.sessionStateData = (try? webView.sessionStateData()) ?? nil
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
 

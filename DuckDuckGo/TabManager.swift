@@ -36,7 +36,7 @@ class TabManager {
         self.delegate = delegate
         let index = model.currentIndex
         let tab = model.tabs[index]
-        if tab.link != nil {
+        if tab.link != nil || tab.sessionStateData != nil {
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
         }
@@ -51,6 +51,7 @@ class TabManager {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
         controller.attachWebView(configuration: configuration,
+                                 sessionStateData: tab.sessionStateData,
                                  andLoadRequest: url == nil ? nil : URLRequest(url: url!),
                                  consumeCookies: !model.hasActiveTabs)
         controller.delegate = delegate

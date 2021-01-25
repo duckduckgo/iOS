@@ -36,6 +36,7 @@ public class Tab: NSObject, NSCoding {
         static let link = "link"
         static let viewed = "viewed"
         static let desktop = "desktop"
+        static let sessionStateData = "ssdata"
     }
 
     private var observersHolder = [WeaklyHeldTabObserver]()
@@ -60,14 +61,18 @@ public class Tab: NSObject, NSCoding {
         }
     }
 
+    var sessionStateData: Data?
+
     public init(uid: String? = nil,
                 link: Link? = nil,
                 viewed: Bool = true,
-                desktop: Bool = AppWidthObserver.shared.isLargeWidth) {
+                desktop: Bool = AppWidthObserver.shared.isLargeWidth,
+                sessionStateData: Data? = nil) {
         self.uid = uid ?? UUID().uuidString
         self.link = link
         self.viewed = viewed
         self.isDesktop = desktop
+        self.sessionStateData = sessionStateData
     }
 
     public convenience required init?(coder decoder: NSCoder) {
@@ -75,7 +80,10 @@ public class Tab: NSObject, NSCoding {
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
         let viewed = decoder.containsValue(forKey: NSCodingKeys.viewed) ? decoder.decodeBool(forKey: NSCodingKeys.viewed) : true
         let desktop = decoder.containsValue(forKey: NSCodingKeys.desktop) ? decoder.decodeBool(forKey: NSCodingKeys.desktop) : false
-        self.init(uid: uid, link: link, viewed: viewed, desktop: desktop)
+        let sessionStateData = decoder.containsValue(forKey: NSCodingKeys.sessionStateData)
+            ? decoder.decodeObject(of: NSData.self, forKey: NSCodingKeys.sessionStateData) as Data?
+            : nil
+        self.init(uid: uid, link: link, viewed: viewed, desktop: desktop, sessionStateData: sessionStateData)
     }
 
     public func encode(with coder: NSCoder) {
@@ -83,6 +91,9 @@ public class Tab: NSObject, NSCoding {
         coder.encode(link, forKey: NSCodingKeys.link)
         coder.encode(viewed, forKey: NSCodingKeys.viewed)
         coder.encode(isDesktop, forKey: NSCodingKeys.desktop)
+        if let sessionStateData = sessionStateData {
+            coder.encode(sessionStateData, forKey: NSCodingKeys.sessionStateData)
+        }
     }
 
     public override func isEqual(_ other: Any?) -> Bool {

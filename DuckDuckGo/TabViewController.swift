@@ -31,6 +31,8 @@ class TabViewController: UIViewController {
         static let frameLoadInterruptedErrorCode = 102
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
+        
+        static let secGPCHeader = "Sec-GPC"
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -1022,10 +1024,43 @@ extension TabViewController: WKNavigationDelegate {
         detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
+    
+    private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
+        // For now, only enable for select sites, due to an issue with back navigation this can introduce
+        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
+        
+        var request = incomingRequest
+        // Add Do Not sell header if needed
+        if appSettings.sendDoNotSell {
+            if let headers = request.allHTTPHeaderFields,
+               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
+                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
+                return request
+            }
+        } else {
+            // Check if DN$ header is still there and remove it
+            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
+                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
+                return request
+            }
+        }
+        return nil
+    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isCustomURLScheme() ?? false), // https://github.com/duckduckgo/iOS/pull/739/files
+           lastCommittedURL != navigationAction.request.url,
+           navigationAction.navigationType != .backForward,
+           let request = requestForDoNotSell(basedOn: navigationAction.request) {
+            
+            decisionHandler(.cancel)
+            load(urlRequest: request)
+            return
+        }
 
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,

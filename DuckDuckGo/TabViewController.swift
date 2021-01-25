@@ -1048,7 +1048,7 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if navigationAction.isTargetingMainFrame(),
-           !(navigationAction.request.url?.isCustomURLScheme() ?? false), // https://github.com/duckduckgo/iOS/pull/739/files
+           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {
             

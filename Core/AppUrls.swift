@@ -47,6 +47,11 @@ public struct AppUrls {
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@"
+        
+        static let gpcGlitchBase = "http://global-privacy-control.glitch.me"
+        static let washingtonPostBase = "https://washingtonpost.com"
+        static let newYorkTimesBase = "https://nytimes.com"
+        static let gpcEnabled = [gpcGlitchBase, washingtonPostBase, newYorkTimesBase]
     }
     
     private enum DDGStaticURL: String {
@@ -130,6 +135,12 @@ public struct AppUrls {
             .addParam(name: Param.atb, value: atbWithVariant)
             .addParam(name: Param.setAtb, value: setAtb)
     }
+    
+    private var gpcEnabledURLs: [URL] {
+        return Url.gpcEnabled.map {
+            URL(string: $0)!
+        }
+    }
 
     public func isDuckDuckGo(domain: String?) -> Bool {
         guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
@@ -191,6 +202,16 @@ public struct AppUrls {
         if !isDuckDuckGo(url: url) { return false }
         guard DDGStaticURL(rawValue: url.path) != nil else { return false }
         return true
+    }
+    
+    public func isGPCEnabled(url: URL) -> Bool {
+        for gpcURL in gpcEnabledURLs {
+            if let host = gpcURL.host,
+               url.isPart(ofDomain: host) {
+                return true
+            }
+        }
+        return false
     }
 
     public func applyStatsParams(for url: URL) -> URL {

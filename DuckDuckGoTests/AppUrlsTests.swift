@@ -20,6 +20,7 @@
 import XCTest
 @testable import Core
 
+// swiftlint:disable type_body_length
 class AppUrlsTests: XCTestCase {
 
     var mockStatisticsStore: MockStatisticsStore!
@@ -143,7 +144,43 @@ class AppUrlsTests: XCTestCase {
         let result = testee.isDuckDuckGo(url: URL(string: "http://www.duckduckgo.com")!)
         XCTAssertTrue(result)
     }
-
+    
+    func testWhenGPCEnableDomainIsHttpThenISGPCEnabledTrue() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let result = testee.isGPCEnabled(url: URL(string: "https://www.washingtonpost.com")!)
+        XCTAssertTrue(result)
+    }
+    
+    func testWhenGPCEnableDomainIsHttpsThenISGPCEnabledTrue() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let result = testee.isGPCEnabled(url: URL(string: "http://www.washingtonpost.com")!)
+        XCTAssertTrue(result)
+    }
+    
+    func testWhenGPCEnableDomainHasNoSubDomainThenISGPCEnabledTrue() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let result = testee.isGPCEnabled(url: URL(string: "http://washingtonpost.com")!)
+        XCTAssertTrue(result)
+    }
+    
+    func testWhenGPCEnableDomainHasPathThenISGPCEnabledTrue() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let result = testee.isGPCEnabled(url: URL(string: "http://www.washingtonpost.com/test/somearticle.html")!)
+        XCTAssertTrue(result)
+    }
+    
+    func testWhenGPCEnableDomainHasCorrectSubdomainThenISGPCEnabledTrue() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let result = testee.isGPCEnabled(url: URL(string: "http://global-privacy-control.glitch.me")!)
+        XCTAssertTrue(result)
+    }
+    
+    func testWhenGPCEnableDomainHasWrongSubdomainThenISGPCEnabledFalse() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let result = testee.isGPCEnabled(url: URL(string: "http://glitch.me")!)
+        XCTAssertFalse(result)
+    }
+    
     func testAutocompleteUrlCreatesCorrectUrlWithParams() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         let actual = testee.autocompleteUrl(forText: "a term")
@@ -277,3 +314,4 @@ class AppUrlsTests: XCTestCase {
         XCTAssertNil(result)
     }
 }
+// swiftlint:enable type_body_length

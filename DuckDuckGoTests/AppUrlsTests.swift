@@ -20,6 +20,7 @@
 import XCTest
 @testable import Core
 
+// swiftlint:disable type_body_length
 class AppUrlsTests: XCTestCase {
 
     var mockStatisticsStore: MockStatisticsStore!
@@ -313,3 +314,4 @@ class AppUrlsTests: XCTestCase {
         XCTAssertNil(result)
     }
 }
+// swiftlint:enable type_body_length

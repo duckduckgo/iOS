@@ -19,9 +19,8 @@
 
 import Foundation
 import XCTest
-
+import TrackerRadarKit
 @testable import Core
-@testable import TrackerRadarKit
 @testable import DuckDuckGo
 
 class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {

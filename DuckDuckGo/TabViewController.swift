@@ -107,8 +107,6 @@ class TabViewController: UIViewController {
             checkLoginDetectionAfterNavigation()
         }
     }
-
-    private var lastCommittedURL: URL?
     
     override var title: String? {
         didSet {
@@ -508,7 +506,6 @@ class TabViewController: UIViewController {
     }
     
     private func reloadUserScripts() {
-        lastCommittedURL = nil
         removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
@@ -817,7 +814,6 @@ extension TabViewController: WKNavigationDelegate {
             instrumentation.willLoad(url: url)
         }
                 
-        lastCommittedURL = webView.url
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -1053,7 +1049,6 @@ extension TabViewController: WKNavigationDelegate {
         
         if navigationAction.isTargetingMainFrame(),
            !(navigationAction.request.url?.isCustomURLScheme() ?? false), // https://github.com/duckduckgo/iOS/pull/739/files
-           lastCommittedURL != navigationAction.request.url,
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {
             
@@ -1318,7 +1313,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     func refresh() {
         requeryLogic.onRefresh()
-        lastCommittedURL = nil
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
                 load(url: url)

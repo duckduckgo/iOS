@@ -31,6 +31,8 @@ class TabViewController: UIViewController {
         static let frameLoadInterruptedErrorCode = 102
         
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
+        
+        static let secGPCHeader = "Sec-GPC"
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -105,8 +107,6 @@ class TabViewController: UIViewController {
             checkLoginDetectionAfterNavigation()
         }
     }
-
-    private var lastCommittedURL: URL?
     
     override var title: String? {
         didSet {
@@ -515,7 +515,6 @@ class TabViewController: UIViewController {
     }
     
     private func reloadUserScripts() {
-        lastCommittedURL = nil
         removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
@@ -824,7 +823,6 @@ extension TabViewController: WKNavigationDelegate {
             instrumentation.willLoad(url: url)
         }
                 
-        lastCommittedURL = webView.url
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -1031,10 +1029,46 @@ extension TabViewController: WKNavigationDelegate {
         detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
+    
+    private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
+        /*
+         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com),
+         while the DOM signal is available to all websites.
+         This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
+         */
+        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
+        
+        var request = incomingRequest
+        // Add Do Not sell header if needed
+        if appSettings.sendDoNotSell {
+            if let headers = request.allHTTPHeaderFields,
+               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
+                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
+                return request
+            }
+        } else {
+            // Check if DN$ header is still there and remove it
+            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
+                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
+                return request
+            }
+        }
+        return nil
+    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
+           navigationAction.navigationType != .backForward,
+           let request = requestForDoNotSell(basedOn: navigationAction.request) {
+            
+            decisionHandler(.cancel)
+            load(urlRequest: request)
+            return
+        }
 
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
@@ -1292,7 +1326,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     func refresh() {
         requeryLogic.onRefresh()
-        lastCommittedURL = nil
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
                 load(url: url)

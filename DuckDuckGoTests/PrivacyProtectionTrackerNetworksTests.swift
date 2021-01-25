@@ -21,6 +21,7 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
+@testable import TrackerRadarKit
 
 class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     

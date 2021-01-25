@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import TrackerRadarKit
 
 // Populated with relevant info at the point of detection.
 public struct DetectedTracker {

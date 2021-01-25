@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import TrackerRadarKit
 
 public class SiteRating {
 

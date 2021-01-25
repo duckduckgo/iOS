@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
-          "revision": "869685eb73b77a5e92943c3cf1838656aeea805f",
-          "version": "1.0.0"
+          "revision": "03748273a5b7cec12df5116794152b7090d179b5",
+          "version": "1.0.1"
         }
       }
     ]

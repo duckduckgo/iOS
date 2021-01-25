@@ -77,7 +77,7 @@ class DaxDialogFireEducationTests: XCTestCase {
 
         testCases.forEach { testCase in
             
-            let onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings())
+            let onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(), variantManager: mockVariantManager)
             let siteRating = SiteRating(url: URLs.example)
             
             testCase.urls.forEach { url in

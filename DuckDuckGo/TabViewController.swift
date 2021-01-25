@@ -1023,7 +1023,9 @@ extension TabViewController: WKNavigationDelegate {
     
     private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
         /*
-         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com), while the DOM signal is available to all websites. This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
+         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com),
+         while the DOM signal is available to all websites.
+         This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
          */
         guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
         

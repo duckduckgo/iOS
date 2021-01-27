@@ -100,13 +100,13 @@ class AppConfigurationFetchTests: XCTestCase {
 
         var previousStatus: AppConfigurationFetch.BackgroundRefreshCompletionStatus? = .expired
 
-        MockAppConfigurationFetch.backgroundRefreshTaskCompletionHandler(store: store,
-                                                                         refreshStartDate: Date(),
-                                                                         task: task,
-                                                                         status: .noData,
-                                                                         previousStatus: &previousStatus)
+        let newStatus = MockAppConfigurationFetch.backgroundRefreshTaskCompletionHandler(store: store,
+                                                                                         refreshStartDate: Date(),
+                                                                                         task: task,
+                                                                                         status: .noData,
+                                                                                         previousStatus: previousStatus)
 
-        XCTAssertEqual(previousStatus, .noData)
+        XCTAssertEqual(newStatus, .noData)
 
         XCTAssertEqual(store.backgroundFetchTaskExpirationCount, 0)
         XCTAssertEqual(store.backgroundNoDataCount, 0)
@@ -138,15 +138,13 @@ class AppConfigurationFetchTests: XCTestCase {
         updateStore(current)
         updateStore(previous)
 
-        var previousStatus: AppConfigurationFetch.BackgroundRefreshCompletionStatus? = previous
+        let newStatus = MockAppConfigurationFetch.backgroundRefreshTaskCompletionHandler(store: store,
+                                                                                         refreshStartDate: Date(),
+                                                                                         task: task,
+                                                                                         status: current,
+                                                                                         previousStatus: previous)
 
-        MockAppConfigurationFetch.backgroundRefreshTaskCompletionHandler(store: store,
-                                                                         refreshStartDate: Date(),
-                                                                         task: task,
-                                                                         status: current,
-                                                                         previousStatus: &previousStatus)
-
-        XCTAssertEqual(previousStatus, current)
+        XCTAssertEqual(newStatus, current)
 
         XCTAssertEqual(store.backgroundFetchTaskExpirationCount, current == .expired ? 1 : 0)
         XCTAssertEqual(store.backgroundNoDataCount, current == .noData ? 1 : 0)

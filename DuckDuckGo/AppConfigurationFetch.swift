@@ -308,7 +308,7 @@ extension AppConfigurationFetch {
                                                        refreshStartDate: Date,
                                                        task: BGTask,
                                                        status: BackgroundRefreshCompletionStatus,
-                                                       previousStatus: inout BackgroundRefreshCompletionStatus?) {
+                                                       previousStatus: BackgroundRefreshCompletionStatus?) -> BackgroundRefreshCompletionStatus {
 
         task.setTaskCompleted(success: status.success)
         scheduleBackgroundRefreshTask()
@@ -318,8 +318,7 @@ extension AppConfigurationFetch {
         backgroundFetchTaskDuration += Int(difference)
 
         guard let last = previousStatus else {
-            previousStatus = status
-            return
+            return status
         }
 
         var mutableStore = store
@@ -334,7 +333,7 @@ extension AppConfigurationFetch {
             mutableStore.backgroundNewDataCount = max(0, store.backgroundNewDataCount - 1)
         }
 
-        previousStatus = status
+        return status
     }
 
     @available(iOS 13.0, *)
@@ -353,21 +352,21 @@ extension AppConfigurationFetch {
             var mutableStore = store
             mutableStore.backgroundFetchTaskExpirationCount += 1
 
-            backgroundRefreshTaskCompletionHandler(store: store,
-                                                   refreshStartDate: refreshStartDate,
-                                                   task: task,
-                                                   status: .expired,
-                                                   previousStatus: &lastCompletionStatus)
+            lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                          refreshStartDate: refreshStartDate,
+                                                                          task: task,
+                                                                          status: .expired,
+                                                                          previousStatus: lastCompletionStatus)
         }
 
         queue.async {
             let newData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
 
-            backgroundRefreshTaskCompletionHandler(store: store,
-                                                   refreshStartDate: refreshStartDate,
-                                                   task: task,
-                                                   status: newData ? .newData : .noData,
-                                                   previousStatus: &lastCompletionStatus)
+            lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                          refreshStartDate: refreshStartDate,
+                                                                          task: task,
+                                                                          status: newData ? .newData : .noData,
+                                                                          previousStatus: lastCompletionStatus)
         }
     }
 

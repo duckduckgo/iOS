@@ -98,13 +98,11 @@ class AppConfigurationFetchTests: XCTestCase {
         store.backgroundNoDataCount = 0
         store.backgroundNewDataCount = 0
 
-        var previousStatus: AppConfigurationFetch.BackgroundRefreshCompletionStatus? = .expired
-
         let newStatus = MockAppConfigurationFetch.backgroundRefreshTaskCompletionHandler(store: store,
                                                                                          refreshStartDate: Date(),
                                                                                          task: task,
                                                                                          status: .noData,
-                                                                                         previousStatus: previousStatus)
+                                                                                         previousStatus: .expired)
 
         XCTAssertEqual(newStatus, .noData)
 

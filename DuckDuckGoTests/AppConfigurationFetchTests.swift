@@ -89,8 +89,13 @@ class AppConfigurationFetchTests: XCTestCase {
         assert(current: .newData, previous: .newData)
     }
 
-    @available(iOS 13.0, *)
     func testWhenTheCompletionHandlerTriesToUpdateStatisticsThenTheCountCannotBeNegative() {
+
+        // Using @available at the function/class level still allowed these unit tests to run pre iOS 13, so a guard statement is used.
+        guard #available(iOS 13.0, *) else {
+            return
+        }
+
         let store = AppUserDefaults(groupName: testGroupName)
         let task = MockBackgroundTask()
 
@@ -109,11 +114,16 @@ class AppConfigurationFetchTests: XCTestCase {
         XCTAssertEqual(store.backgroundFetchTaskExpirationCount, 0)
         XCTAssertEqual(store.backgroundNoDataCount, 0)
         XCTAssertEqual(store.backgroundNewDataCount, 0)
+
     }
 
-    @available(iOS 13.0, *)
     private func assert(current: AppConfigurationFetch.BackgroundRefreshCompletionStatus,
                         previous: AppConfigurationFetch.BackgroundRefreshCompletionStatus?) {
+
+        // Using @available at the function/class level still allowed these unit tests to run pre iOS 13, so a guard statement is used.
+        guard #available(iOS 13.0, *) else {
+            return
+        }
 
         let store = AppUserDefaults(groupName: testGroupName)
         let task = MockBackgroundTask()
@@ -147,21 +157,26 @@ class AppConfigurationFetchTests: XCTestCase {
         XCTAssertEqual(store.backgroundFetchTaskExpirationCount, current == .expired ? 1 : 0)
         XCTAssertEqual(store.backgroundNoDataCount, current == .noData ? 1 : 0)
         XCTAssertEqual(store.backgroundNewDataCount, current == .newData ? 1 : 0)
+
     }
 }
 
 private class MockAppConfigurationFetch: AppConfigurationFetch {
+
     func fetchConfigurationFiles(isBackground: Bool) -> Bool {
         return true
     }
+
 }
 
 @available(iOS 13.0, *)
 private class MockBackgroundTask: BGTask {
+
     /// Used to instantiate background tasks, as `BGTask` marks its `init` unavailable.
     init(_ unusedValue: String? = nil) {}
 
     override func setTaskCompleted(success: Bool) {
         // no-op
     }
+
 }

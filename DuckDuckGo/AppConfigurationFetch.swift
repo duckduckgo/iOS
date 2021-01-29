@@ -352,21 +352,25 @@ extension AppConfigurationFetch {
             var mutableStore = store
             mutableStore.backgroundFetchTaskExpirationCount += 1
 
-            lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
-                                                                          refreshStartDate: refreshStartDate,
-                                                                          task: task,
-                                                                          status: .expired,
-                                                                          previousStatus: lastCompletionStatus)
+            DispatchQueue.main.async {
+                lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                              refreshStartDate: refreshStartDate,
+                                                                              task: task,
+                                                                              status: .expired,
+                                                                              previousStatus: lastCompletionStatus)
+            }
         }
 
         queue.async {
             let newData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
 
-            lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
-                                                                          refreshStartDate: refreshStartDate,
-                                                                          task: task,
-                                                                          status: newData ? .newData : .noData,
-                                                                          previousStatus: lastCompletionStatus)
+            DispatchQueue.main.async {
+                lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                              refreshStartDate: refreshStartDate,
+                                                                              task: task,
+                                                                              status: newData ? .newData : .noData,
+                                                                              previousStatus: lastCompletionStatus)
+            }
         }
     }
 

@@ -98,13 +98,13 @@ fileprivate extension KnownTracker {
     func hasExemption(for trackerUrlString: String, pageUrlString: String) -> Bool {
         let range = NSRange(location: 0, length: trackerUrlString.utf16.count)
 
-        // For each rule, where the rule is set to ignore a pattern:
+        // For each rule, where the rule has an `ignore` action:
         //
-        // 1. Create a regular expression from the rule string
-        // 2. Check if the rule matches the URL string
-        // 3. If it matches, check if the rule contains an exemption for the page's host value
+        // 1. Create a regular expression from the rule
+        // 2. Check if the rule matches the tracker URL
+        // 3. If it matches, check if the rule contains an exemption for the page's host URL
         //    3a. If exempt, continue checking rules
-        //    3b. If not exempt, return true
+        //    3b. If not exempt, return true – an exemption was found, no further checking needed
 
         for rule in rules ?? [] where rule.action == .ignore {
             guard let pattern = rule.rule,

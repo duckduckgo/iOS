@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import TrackerRadarKit
 
 public class ContentBlockerRulesUserScript: NSObject, UserScript {
     
@@ -54,10 +55,10 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
-        guard let urlString = dict[ContentBlockerKey.url] as? String else { return }
+        guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
         guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
         
-        if let tracker = trackerFromUrl(urlString, blocked: blocked) {
+        if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, blockable: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
                let pageHost = pageUrl.host,
                let pageEntity = TrackerDataManager.shared.findEntity(forHost: pageHost) else {
@@ -71,12 +72,54 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         }
     }
     
-    private func trackerFromUrl(_ urlString: String, blocked: Bool) -> DetectedTracker? {
-        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
-        if let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "") {
-            return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+    private func trackerFromUrl(_ trackerUrlString: String, pageUrlString: String, blockable: Bool) -> DetectedTracker? {
+        guard let knownTracker = TrackerDataManager.shared.findTracker(forUrl: trackerUrlString) else {
+            return nil
+        }
+
+        let blocked: Bool
+
+        if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
+            blocked = false
+        } else {
+            blocked = blockable
+        }
+
+        if let entity = TrackerDataManager.shared.findEntity(byName: knownTracker.owner?.name ?? "") {
+            return DetectedTracker(url: trackerUrlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
         }
         
         return nil
     }
+}
+
+fileprivate extension KnownTracker {
+
+    func hasExemption(for trackerUrlString: String, pageUrlString: String) -> Bool {
+        let range = NSRange(location: 0, length: trackerUrlString.utf16.count)
+
+        // For each rule, where the rule is set to ignore a pattern:
+        //
+        // 1. Create a regular expression from the rule string
+        // 2. Check if the rule matches the URL string
+        // 3. If it matches, check if the rule contains an exemption for the page's host value
+        //    3a. If exempt, continue checking rules
+        //    3b. If not exempt, return true
+
+        for rule in rules ?? [] where rule.action == .ignore {
+            guard let pattern = rule.rule,
+                  let regex = try? NSRegularExpression(pattern: pattern, options: []) else { continue }
+
+            if regex.firstMatch(in: trackerUrlString, options: [], range: range) != nil {
+                if let host = URL(string: pageUrlString)?.host, rule.exceptions?.domains?.contains(host) == true {
+                    continue
+                } else {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
 }

@@ -65,11 +65,11 @@ class FullscreenDaxDialogViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateCutOut),
-                                               name: TabsBarViewController.ViewDidLayoutNotification,
+                                               name: TabsBarViewController.viewDidLayoutNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateCutOut),
-                                               name: OmniBar.DidLayoutNotification,
+                                               name: OmniBar.didLayoutNotification,
                                                object: nil)
     }
     

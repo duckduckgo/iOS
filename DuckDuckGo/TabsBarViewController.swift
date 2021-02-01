@@ -33,7 +33,7 @@ protocol TabsBarDelegate: NSObjectProtocol {
 
 class TabsBarViewController: UIViewController {
 
-    public static let ViewDidLayoutNotification = Notification.Name("com.duckduckgo.app.TabsBarViewControllerViewDidLayout")
+    public static let viewDidLayoutNotification = Notification.Name("com.duckduckgo.app.TabsBarViewControllerViewDidLayout")
     
     struct Constants {
         
@@ -205,7 +205,7 @@ class TabsBarViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        NotificationCenter.default.post(name: TabsBarViewController.ViewDidLayoutNotification, object: self)
+        NotificationCenter.default.post(name: TabsBarViewController.viewDidLayoutNotification, object: self)
     }
 }
 

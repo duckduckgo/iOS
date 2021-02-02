@@ -31,7 +31,7 @@ class AtbServerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
+
         store = MockStatisticsStore()
         loader = StatisticsLoader(statisticsStore: store)
         

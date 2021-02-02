@@ -18,7 +18,7 @@
 //
 
 import XCTest
-import TrackerRadarKit
+@testable import TrackerRadarKit
 @testable import Core
 
 class ContentBlockingRulesTests: XCTestCase {

@@ -101,7 +101,7 @@ class AppConfigurationFetch {
         case newData
 
         var success: Bool {
-            self == .noData || self == .newData
+            self != .expired
         }
     }
     

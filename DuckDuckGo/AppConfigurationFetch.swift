@@ -121,7 +121,7 @@ class AppConfigurationFetch {
 
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            let newData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
+            let fetchedNewData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
 
             if !isBackgroundFetch {
                 type(of: self).fetchQueue.async {
@@ -133,7 +133,7 @@ class AppConfigurationFetch {
                 UIApplication.shared.endBackgroundTask(taskID)
             }
 
-            completion?(newData)
+            completion?(fetchedNewData)
         }
     }
 
@@ -362,13 +362,13 @@ extension AppConfigurationFetch {
         }
 
         queue.async {
-            let newData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
+            let fetchedNewData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
 
             DispatchQueue.main.async {
                 lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
                                                                               refreshStartDate: refreshStartDate,
                                                                               task: task,
-                                                                              status: newData ? .newData : .noData,
+                                                                              status: fetchedNewData ? .newData : .noData,
                                                                               previousStatus: lastCompletionStatus)
             }
         }

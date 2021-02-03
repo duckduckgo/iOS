@@ -103,6 +103,7 @@ class MainViewController: UIViewController {
     }
 
     var keyModifierFlags: UIKeyModifierFlags?
+    var showKeyboardAfterFireButton: DispatchWorkItem?
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
@@ -1080,7 +1081,8 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-       loadUrl(url)
+        showKeyboardAfterFireButton?.cancel()
+        loadUrl(url)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1376,9 +1378,11 @@ extension MainViewController: AutoClearWorker {
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)
             if KeyboardSettings().onNewTab {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()
                 }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
+                self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
         }
     }

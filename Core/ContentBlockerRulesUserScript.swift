@@ -58,7 +58,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
         guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
         
-        if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, blockable: blocked) {
+        if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
                   let pageHost = pageUrl.host,
                   let pageEntity = TrackerDataManager.shared.findEntity(forHost: pageHost) else {
@@ -72,7 +72,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         }
     }
     
-    private func trackerFromUrl(_ trackerUrlString: String, pageUrlString: String, blockable: Bool) -> DetectedTracker? {
+    private func trackerFromUrl(_ trackerUrlString: String, pageUrlString: String, potentiallyBlocked: Bool) -> DetectedTracker? {
         guard let knownTracker = TrackerDataManager.shared.findTracker(forUrl: trackerUrlString) else {
             return nil
         }
@@ -82,7 +82,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
             blocked = false
         } else {
-            blocked = blockable
+            blocked = potentiallyBlocked
         }
 
         if let entity = TrackerDataManager.shared.findEntity(byName: knownTracker.owner?.name ?? "") {

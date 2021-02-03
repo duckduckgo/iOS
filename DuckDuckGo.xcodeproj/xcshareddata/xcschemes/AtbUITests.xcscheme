@@ -17,20 +17,21 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "85F21DAC210F5E32002631A6"
-               BuildableName = "IntegrationTests.xctest"
-               BlueprintName = "IntegrationTests"
+               BuildableName = "AtbUITests.xctest"
+               BlueprintName = "AtbUITests"
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "025CCFE12582601C001CD5BB"
-               BuildableName = "FingerprintingUITests.xctest"
-               BlueprintName = "FingerprintingUITests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AtbServerTests">
+               </Test>
+               <Test
+                  Identifier = "ContentBlockingRulesTests">
+               </Test>
+               <Test
+                  Identifier = "TrackerRadarIntegrationTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

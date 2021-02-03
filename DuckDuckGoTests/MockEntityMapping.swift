@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import TrackerRadarKit
 
 class MockEntityMapping: EntityMapping {
     

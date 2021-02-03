@@ -19,15 +19,15 @@
 import UIKit
 import Core
 
-protocol RootControllerProvider {
-    var rootController: UIViewController? { get }
+protocol RootControllersProvider {
+    var rootControllers: [UIViewController] { get }
 }
 
 class ThemeManager {
     
-    class UIApplicationRootControllerProvider: RootControllerProvider {
-        var rootController: UIViewController? {
-            return UIApplication.shared.keyWindow?.rootViewController
+    class UIApplicationRootControllersProvider: RootControllersProvider {
+        var rootControllers: [UIViewController] {
+            return UIApplication.shared.windows.compactMap { $0.rootViewController }
         }
     }
     
@@ -40,10 +40,12 @@ class ThemeManager {
 
     private var appSettings: AppSettings
     
-    var rootControllerProvider: RootControllerProvider
+    var rootControllersProvider: RootControllersProvider
     private(set) var currentTheme: Theme {
         didSet {
-            rootControllerProvider.rootController?.applyTheme(currentTheme)
+            for controller in rootControllersProvider.rootControllers {
+                controller.applyTheme(currentTheme)
+            }
         }
     }
     
@@ -76,11 +78,11 @@ class ThemeManager {
     }
     
     init(settings: AppSettings = AppUserDefaults(),
-         rootProvider: RootControllerProvider = UIApplicationRootControllerProvider()) {
+         rootProvider: RootControllersProvider = UIApplicationRootControllersProvider()) {
         
         appSettings = settings
         currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)
-        rootControllerProvider = rootProvider
+        rootControllersProvider = rootProvider
     }
     
     public func enableTheme(with name: ThemeName) {

@@ -60,8 +60,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         
         if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, blockable: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
-               let pageHost = pageUrl.host,
-               let pageEntity = TrackerDataManager.shared.findEntity(forHost: pageHost) else {
+                  let pageHost = pageUrl.host,
+                  let pageEntity = TrackerDataManager.shared.findEntity(forHost: pageHost) else {
                 delegate.contentBlockerUserScript(self, detectedTracker: tracker)
                 return
             }
@@ -98,24 +98,14 @@ fileprivate extension KnownTracker {
     func hasExemption(for trackerUrlString: String, pageUrlString: String) -> Bool {
         let range = NSRange(location: 0, length: trackerUrlString.utf16.count)
 
-        // For each rule, where the rule has an `ignore` action:
-        //
-        // 1. Create a regular expression from the rule
-        // 2. Check if the rule matches the tracker URL
-        // 3. If it matches, check if the rule contains an exemption for the page's host URL
-        //    3a. If exempt, continue checking rules
-        //    3b. If not exempt, return true – an exemption was found, no further checking needed
-
         for rule in rules ?? [] where rule.action == .ignore {
             guard let pattern = rule.rule,
+                  let host = URL(string: pageUrlString)?.host,
+                  rule.exceptions?.domains?.contains(host) ?? false == false,
                   let regex = try? NSRegularExpression(pattern: pattern, options: []) else { continue }
 
             if regex.firstMatch(in: trackerUrlString, options: [], range: range) != nil {
-                if let host = URL(string: pageUrlString)?.host, rule.exceptions?.domains?.contains(host) == true {
-                    continue
-                } else {
-                    return true
-                }
+                return true
             }
         }
 

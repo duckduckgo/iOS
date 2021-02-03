@@ -172,6 +172,15 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Phew!";
 
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Over time, personal data can build up in your browser. Yuck. Use the Fire Button to clear it all away. Give it a try 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Clear All Tabs and Data";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "That’s it — your data is toast!\n\nHere’s a tip: Fireproof a site and you won’t have to sign in again each time.\n\nWant to see how it works? Visit one of your favorite sites and sign in.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 

@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Lipește și pornește";
 
-/* Reading List action */
-"action.title.readingList" = "Adaugă la lista de citire";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Reîmprospătare";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfiu!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "În timp, în browserul tău se pot acumula date personale. Bleah. Utilizează butonul Foc pentru a șterge totul. Încearcă acum 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Șterge toate filele și datele";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Gata — datele tale sunt afectate!\n\nIată un sfat: șterge activitatea și istoricul unui site și nu va trebui să te conectezi din nou de fiecare dată.\n\nVrei să vezi cum funcționează? Vizitează unul dintre site-urile preferate și conectează-te.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -449,7 +455,7 @@
 "fireButtonAnimation.none.name" = "Niciuna";
 
 /* No comment provided by engineer. */
-"fireButtonAnimation.waterSwirl.name" = "Vârtej";
+"fireButtonAnimation.waterSwirl.name" = "Vârtej de apă";
 
 /* No comment provided by engineer. */
 "home.message.buttonText" = "Setare ca browser implicit";

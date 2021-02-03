@@ -1211,6 +1211,26 @@ extension MainViewController: TabDelegate {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
     }
+    
+    func tabDidRequestForgetAll(tab: TabViewController) {
+        forgetAllWithAnimation(showNextDaxDialog: true)
+    }
+    
+    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint? {
+        if toolbar.isHidden {
+            return tabsBarController?.fireButtonCenterPosition
+        }
+        
+        guard let view = fireButton.value(forKey: "view") as? UIView else {
+            return nil
+        }
+        let point = view.convert(view.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+        return CGPoint(x: point.x + view.frame.size.width / 2.0, y: point.y + view.frame.size.height / 2.0)
+    }
+    
+    func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
+        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+    }
 
     private func newTabAnimation(completion: @escaping () -> Void) {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
@@ -1365,7 +1385,7 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil) {
+    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
@@ -1377,7 +1397,9 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)
-            if KeyboardSettings().onNewTab {
+            if showNextDaxDialog {
+                self.homeController?.showNextDaxDialog()
+            } else if KeyboardSettings().onNewTab {
                 let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()
                 }

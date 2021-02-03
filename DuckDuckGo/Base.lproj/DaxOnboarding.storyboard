@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -283,16 +283,21 @@ DuckDuckGo!</string>
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G3-x9-wwM">
+                            <view opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G3-x9-wwM" customClass="HighlightCutOutView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.60217786815068497" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hN-QW-QID">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="0.0"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.60217786819999997" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-VQ-vvO">
+                                        <rect key="frame" x="487" y="359" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="onTapFireButtonOverlay:" destination="yGQ-WA-daz" eventType="touchUpInside" id="UoJ-cu-Egl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmT-SX-w7H">
-                                <rect key="frame" x="324.5" y="344" width="375" height="400"/>
+                                <rect key="frame" x="324.5" y="309" width="375" height="400"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="V8D-Hc-dLK"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="eK0-5h-FDJ"/>
@@ -313,35 +318,23 @@ DuckDuckGo!</string>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yHc-FK-kfn"/>
                         <constraints>
-                            <constraint firstItem="4hN-QW-QID" firstAttribute="width" secondItem="Ica-YY-s5f" secondAttribute="width" id="04f-c6-SAb"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="leading" secondItem="Ica-YY-s5f" secondAttribute="leading" id="0TY-9i-a7Z"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="7G3-x9-wwM" secondAttribute="top" id="2W5-ID-JWT"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="EYf-zh-Pqq"/>
-                            <constraint firstItem="4hN-QW-QID" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="NHP-BS-w7e"/>
-                            <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="RsO-pv-xjm"/>
                             <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="hgy-75-OvJ" secondAttribute="top" constant="-72" id="XDb-xE-iQc"/>
                             <constraint firstItem="hgy-75-OvJ" firstAttribute="trailing" secondItem="7G3-x9-wwM" secondAttribute="trailing" constant="-24" id="azD-JN-kS9"/>
                             <constraint firstItem="XmT-SX-w7H" firstAttribute="width" secondItem="yHc-FK-kfn" secondAttribute="width" priority="750" id="b3Y-VV-mAW"/>
                             <constraint firstAttribute="bottom" secondItem="7G3-x9-wwM" secondAttribute="bottom" id="f4h-cU-qpe"/>
-                            <constraint firstItem="4hN-QW-QID" firstAttribute="centerX" secondItem="yHc-FK-kfn" secondAttribute="centerX" id="nNn-90-J2z"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="top" secondItem="4hN-QW-QID" secondAttribute="bottom" id="qq4-L9-ia1"/>
                             <constraint firstItem="7G3-x9-wwM" firstAttribute="trailing" secondItem="Ica-YY-s5f" secondAttribute="trailing" id="szK-zk-axH"/>
-                            <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="24" id="ur2-53-anE">
-                                <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                            <constraint firstItem="yHc-FK-kfn" firstAttribute="bottom" secondItem="XmT-SX-w7H" secondAttribute="bottom" constant="59" id="ur2-53-anE">
+                                <variation key="heightClass=compact-widthClass=compact" constant="40"/>
                             </constraint>
+                            <constraint firstItem="7G3-x9-wwM" firstAttribute="top" secondItem="Ica-YY-s5f" secondAttribute="top" id="wS0-Hw-4bW"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="RsO-pv-xjm"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="containerHeight" destination="V8D-Hc-dLK" id="mNj-Zf-ZTG"/>
-                        <outlet property="fullScreen" destination="RsO-pv-xjm" id="8Th-zb-zQD"/>
-                        <outlet property="highlightBar" destination="4hN-QW-QID" id="5xf-h4-YBF"/>
-                        <outlet property="highlightBarBottom" destination="qq4-L9-ia1" id="VtI-5J-frD"/>
-                        <outlet property="showAddressBar" destination="2W5-ID-JWT" id="WKG-DX-nRL"/>
+                        <outlet property="fireButtonOverlayButton" destination="JIA-VQ-vvO" id="fDK-Al-xN3"/>
+                        <outlet property="highlightCutOutView" destination="7G3-x9-wwM" id="lug-DV-qRe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VkF-pV-fJc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

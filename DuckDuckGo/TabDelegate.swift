@@ -48,6 +48,12 @@ protocol TabDelegate: class {
     func tabDidRequestFindInPage(tab: TabViewController)
 
     func tabContentProcessDidTerminate(tab: TabViewController)
+    
+    func tabDidRequestForgetAll(tab: TabViewController)
+    
+    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint?
+    
+    func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
 
     func showBars()
 

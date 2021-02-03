@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Yapıştır ve Git";
 
-/* Reading List action */
-"action.title.readingList" = "Okuma Listesine Ekle";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Yenile";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Zamanla, kişisel veriler tarayıcınızda birikebilir. İğrenç. Bunların hepsini temizlemek için Yangın Düğmesi'ni kullanın. Hemen deneyin 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Tüm Sekmeleri ve Verileri Temizle";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "İşte bu kadar — verilerinizden eser kalmadı!\n\nİpucu: Bir siteyi korumalı yaparsanız her ziyarette tekrar oturum açmanız gerekmez.\n\nNasıl işlediğini görmek ister misiniz? En sevdiğiniz sitelerden birini ziyaret edip oturum açın.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

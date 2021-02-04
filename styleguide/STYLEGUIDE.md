@@ -36,6 +36,12 @@ This won't be enforced by Swift Lint.
 
 We use [unified logging system](https://developer.apple.com/documentation/os/logging) to capture log messages. To send a message to the logging system, call the `os_log` function. Please use debug log level to protect users' privacy.
 
+### Assertions and fatal errors
+
+We use fatal errors when the app reaches a state that shouldn't happen in a release build and isn't handled, for example, if we fail to instantiate a view controller from a storyboard.
+
+We use assert() and assertionFailure() also for when something happens that shouldn't, but when the resulting app state is explicitly handled and is recoverable.
+
 ### Unit test names
 
 * We use the when then convention for test:

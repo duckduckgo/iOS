@@ -256,6 +256,7 @@ class AppConfigurationFetch {
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
                           Keys.bgFetchType: backgroundFetchType,
+                          Keys.bgFetchTaskExpiration: String(store.backgroundFetchTaskExpirationCount),
                           Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration),
                           Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
                           Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
@@ -289,6 +290,7 @@ class AppConfigurationFetch {
         store.foregroundStartCount = 0
         store.foregroundNoDataCount = 0
         store.foregroundNewDataCount = 0
+        store.backgroundFetchTaskExpirationCount = 0
 
         Self.backgroundFetchTaskDuration = 0
 

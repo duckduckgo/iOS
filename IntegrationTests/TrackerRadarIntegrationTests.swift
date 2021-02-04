@@ -18,7 +18,7 @@
 //
 
 import XCTest
-@testable import TrackerRadarKit
+import TrackerRadarKit
 @testable import Core
 
 class TrackerRadarIntegrationTests: XCTestCase {

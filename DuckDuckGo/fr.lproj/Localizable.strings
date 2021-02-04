@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Coller et valider";
 
-/* Reading List action */
-"action.title.readingList" = "Ajouter à la liste de lecture";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Actualiser";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Ouf !";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Les données personnelles peuvent s'accumuler dans votre navigateur au fil du temps. Oh non. Utilisez le bouton en forme de flamme pour les supprimer. Essayez par vous-même 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Effacer tous les onglets et données";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "C'est bon, vos données ont bien été supprimées !\n\nUn conseil : placez un site en mode coupe-feu pour ne pas avoir à vous reconnecter à chaque fois.\n\nVous voulez essayer ? Rendez-vous et connectez-vous sur l'un de vos sites préférés.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

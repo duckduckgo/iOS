@@ -33,6 +33,8 @@ protocol TabsBarDelegate: NSObjectProtocol {
 
 class TabsBarViewController: UIViewController {
 
+    public static let viewDidLayoutNotification = Notification.Name("com.duckduckgo.app.TabsBarViewControllerViewDidLayout")
+    
     struct Constants {
         
         static let minItemWidth: CGFloat = 68
@@ -64,6 +66,11 @@ class TabsBarViewController: UIViewController {
 
     var maxItems: Int {
         return Int(collectionView.frame.size.width / Constants.minItemWidth)
+    }
+    
+    var fireButtonCenterPosition: CGPoint {
+        let point = fireButton.convert(fireButton.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+        return CGPoint(x: point.x + fireButton.frame.size.width / 2.0, y: point.y + fireButton.frame.size.height / 2.0)
     }
     
     override func viewDidLoad() {
@@ -196,6 +203,10 @@ class TabsBarViewController: UIViewController {
         }
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        NotificationCenter.default.post(name: TabsBarViewController.viewDidLayoutNotification, object: self)
+    }
 }
 
 extension TabsBarViewController: TabSwitcherButtonDelegate {

@@ -49,42 +49,56 @@ class DaxDialogs {
         static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
+                                              highlightFireButton: false,
                                               pixelName: .daxDialogsSerp)
         
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
+                                                  highlightFireButton: false,
                                                   pixelName: .daxDialogsWithoutTrackers)
         
         static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
+                                                     highlightFireButton: false,
                                                      pixelName: .daxDialogsSiteIsMajor)
         
         static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
+                                                          highlightFireButton: false,
                                                           pixelName: .daxDialogsSiteOwnedByMajor)
         
         static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                  highlightAddressBar: true,
+                                                 highlightFireButton: false,
                                                  pixelName: .daxDialogsWithTrackers)
         
         static let withMutipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
+                                                      highlightFireButton: false,
                                                       pixelName: .daxDialogsWithTrackers)
+        
+        static let fireButtonEducation = BrowsingSpec(message: UserText.daxDialogBrowsingFireButtonEducation,
+                                                      cta: UserText.daxDialogBrowsingFireButtonEducationCTA,
+                                                      highlightAddressBar: false,
+                                                      highlightFireButton: true,
+                                                      pixelName: .daxDialogsFireEducation)
         
         let message: String
         let cta: String
         let highlightAddressBar: Bool
+        let highlightFireButton: Bool
         let pixelName: PixelName
         
         func format(args: CVarArg...) -> BrowsingSpec {
             return BrowsingSpec(message: String(format: message, arguments: args),
                                 cta: cta,
                                 highlightAddressBar: highlightAddressBar,
+                                highlightFireButton: highlightFireButton,
                                 pixelName: pixelName)
         }
         
@@ -94,19 +108,31 @@ class DaxDialogs {
 
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
+    private let variantManager: VariantManager
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
 
     /// Use singleton accessor, this is only accessible for tests
-    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(), variantManager: VariantManager = DefaultVariantManager()) {
         self.settings = settings
+        self.variantManager = variantManager
     }
     
-    private var browsingMessageSeen: Bool {
+    private var firstBrowsingMessageSeen: Bool {
         return settings.browsingAfterSearchShown
             || settings.browsingWithTrackersShown
             || settings.browsingWithoutTrackersShown
             || settings.browsingMajorTrackingSiteShown
+    }
+    
+    private var nonDDGBrowsingMessageSeen: Bool {
+        settings.browsingWithTrackersShown
+        || settings.browsingWithoutTrackersShown
+        || settings.browsingMajorTrackingSiteShown
+    }
+    
+    private var fireButtonBrowsingMessageSeen: Bool {
+        return settings.browsingFireButtonEducationShown
     }
     
     var isEnabled: Bool {
@@ -117,6 +143,10 @@ class DaxDialogs {
 
     var isAddFavoriteFlow: Bool {
         return nextHomeScreenMessageOverride == .addFavorite
+    }
+    
+    var isFireButtonEducationEnabled: Bool {
+        return variantManager.isSupported(feature: .fireButtonEducation)
     }
 
     func dismiss() {
@@ -141,6 +171,10 @@ class DaxDialogs {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
                 
+        if nonDDGBrowsingMessageSeen && isFireButtonEducationEnabled && !fireButtonBrowsingMessageSeen {
+            return fireButtonBrowsingMessage()
+        }
+        
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
         }
@@ -177,7 +211,13 @@ class DaxDialogs {
             return .initial
         }
         
-        if browsingMessageSeen {
+        if isFireButtonEducationEnabled {
+            // make sure we don't show the home message until the fire button education has been seen
+            if fireButtonBrowsingMessageSeen {
+                settings.homeScreenMessagesSeen += 1
+                return .subsequent
+            }
+        } else if firstBrowsingMessageSeen {
             settings.homeScreenMessagesSeen += 1
             return .subsequent
         }
@@ -238,6 +278,12 @@ class DaxDialogs {
                                                            entitiesBlocked[1].displayName ?? "")
         }
 
+    }
+    
+    private func fireButtonBrowsingMessage() -> BrowsingSpec? {
+        guard !fireButtonBrowsingMessageSeen && isFireButtonEducationEnabled else { return nil }
+        settings.browsingFireButtonEducationShown = true
+        return BrowsingSpec.fireButtonEducation
     }
  
     private func entitiesBlocked(_ siteRating: SiteRating) -> [Entity]? {

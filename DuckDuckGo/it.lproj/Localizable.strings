@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Incolla e continua";
 
-/* Reading List action */
-"action.title.readingList" = "Aggiungi all'elenco di lettura";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Aggiorna";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Accidenti!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Di tanto in tanto, i dati personali possono accumularsi nel tuo browser. Non va bene. Usa il pulsante Proteggi per sbarazzarti di tutto. Provalo 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Elimina tutte le schede e i dati";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Ecco, i tuoi dati sono spacciati!\n\nEcco un suggerimento: aggiungi un sito ai siti protetti e non dovrai più eseguire l'accesso ogni volta.\n\nVuoi vedere come funziona? Visita uno dei tuoi siti preferiti ed effettua l'accesso.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -449,7 +455,7 @@
 "fireButtonAnimation.none.name" = "Niente";
 
 /* No comment provided by engineer. */
-"fireButtonAnimation.waterSwirl.name" = "Vortice";
+"fireButtonAnimation.waterSwirl.name" = "Mulinello";
 
 /* No comment provided by engineer. */
 "home.message.buttonText" = "Imposta come browser predefinito";

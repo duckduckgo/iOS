@@ -25,6 +25,9 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
+    // Fire button education
+    case fireButtonEducation
+
     case removeSERPHeader
 }
 
@@ -61,8 +64,11 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         
-        Variant(name: "mi", weight: 1, isIncluded: When.always, features: []),
-        Variant(name: "mo", weight: 1, isIncluded: When.always, features: [.removeSERPHeader])
+        Variant(name: "mc", weight: 1, isIncluded: When.always, features: []),
+        Variant(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonEducation]),
+
+        Variant(name: "mi", weight: doNotAllocate, isIncluded: When.always, features: []),
+        Variant(name: "mo", weight: doNotAllocate, isIncluded: When.always, features: [.removeSERPHeader])
     ]
     
     public let name: String

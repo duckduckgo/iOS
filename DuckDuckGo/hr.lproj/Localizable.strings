@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Zalijepi i nastavi";
 
-/* Reading List action */
-"action.title.readingList" = "Dodaj na popis za čitanje";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osvježi";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Vremenom se u pregledniku mogu nakupljati osobni podaci. Fuj. Upotrijebite gumb Vatre da sve to očistite. Pokušajte 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Obriši sve kartice i podatke";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "To je to – vaših podataka nema više! \n\nEvo savjeta: označite da je mrežno mjesto sigurno i nećete se morati svaki put ponovno prijavljivati. \n\nŽelite li vidjeti kako to funkcionira? Posjetite jedno od svojih omiljenih mrežnih mjesta i prijavite se.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

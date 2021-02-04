@@ -32,6 +32,8 @@ protocol DaxDialogsSettings {
     var browsingWithoutTrackersShown: Bool { get set }
     
     var browsingMajorTrackingSiteShown: Bool { get set }
+    
+    var browsingFireButtonEducationShown: Bool { get set }
 
 }
 
@@ -55,6 +57,9 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     @UserDefaultsWrapper(key: .daxBrowsingMajorTrackingSiteShown, defaultValue: false)
     var browsingMajorTrackingSiteShown: Bool
     
+    @UserDefaultsWrapper(key: .daxBrowsingFireButtonEducationShown, defaultValue: false)
+    var browsingFireButtonEducationShown: Bool
+    
 }
 
 class InMemoryDaxDialogsSettings: DaxDialogsSettings {
@@ -70,5 +75,7 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     var browsingWithoutTrackersShown: Bool = false
     
     var browsingMajorTrackingSiteShown: Bool = false
+    
+    var browsingFireButtonEducationShown: Bool = false
     
 }

@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Liitä ja avaa";
 
-/* Reading List action */
-"action.title.readingList" = "Lisää lukulistalle";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Päivitä";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh huh!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Henkilökohtaisia tietoja voi ajan myötä tallentua selaimeesi. Hyi. Poista ne kaikki Liekki-painikkeella. Kokeile nyt! 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Poista kaikki välilehdet ja tiedot";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Siinä se – tiedot on hävitetty!\n\nVinkki: Tee sivustosta palonkestävä, niin et joudu kirjautumaan joka kerta uudelleen.\n\nHaluatko tietää, miten se toimii? Mene suosikkisivustollesi ja kirjaudu sisään.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";

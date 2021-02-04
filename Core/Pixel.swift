@@ -131,7 +131,13 @@ public enum PixelName: String {
     case daxDialogsWithTrackers = "m_dx_wt"
     case daxDialogsSiteIsMajor = "m_dx_sm"
     case daxDialogsSiteOwnedByMajor = "m_dx_so"
+    case daxDialogsFireEducation = "m_dx_fe"
     case daxDialogsHidden = "m_dx_h"
+    case daxDialogsFireEducationHidden = "m_dx_fe_h"
+    case daxDialogsFireEducationHiddenCanceled = "m_dx_fe_hc"
+    case daxDialogsFireEducationCTA = "m_dx_fe_c"
+    case daxDialogsFireEducationFireButton = "m_dx_fe_f"
+    case daxDialogsHiddenBeforeFireEducation = "m_dx_h_bfe"
 
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"

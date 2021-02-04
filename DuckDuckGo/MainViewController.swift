@@ -103,6 +103,7 @@ class MainViewController: UIViewController {
     }
 
     var keyModifierFlags: UIKeyModifierFlags?
+    var showKeyboardAfterFireButton: DispatchWorkItem?
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
@@ -1080,7 +1081,8 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-       loadUrl(url)
+        showKeyboardAfterFireButton?.cancel()
+        loadUrl(url)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1208,6 +1210,26 @@ extension MainViewController: TabDelegate {
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+    }
+    
+    func tabDidRequestForgetAll(tab: TabViewController) {
+        forgetAllWithAnimation(showNextDaxDialog: true)
+    }
+    
+    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint? {
+        if toolbar.isHidden {
+            return tabsBarController?.fireButtonCenterPosition
+        }
+        
+        guard let view = fireButton.value(forKey: "view") as? UIView else {
+            return nil
+        }
+        let point = view.convert(view.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+        return CGPoint(x: point.x + view.frame.size.width / 2.0, y: point.y + view.frame.size.height / 2.0)
+    }
+    
+    func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
+        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
     }
 
     private func newTabAnimation(completion: @escaping () -> Void) {
@@ -1363,7 +1385,7 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
-    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil) {
+    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
@@ -1375,10 +1397,14 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)
-            if KeyboardSettings().onNewTab {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            if showNextDaxDialog {
+                self.homeController?.showNextDaxDialog()
+            } else if KeyboardSettings().onNewTab {
+                let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()
                 }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
+                self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
         }
     }

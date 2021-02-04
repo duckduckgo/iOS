@@ -37,9 +37,6 @@
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Abrir enlaces en aplicaciones asociadas";
 
-/* Class = "UILabel"; text = "Default"; ObjectID = "bdg-6r-nMM"; */
-"bdg-6r-nMM.text" = "Predeterminado";
-
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Se borrarán los datos o las pestañas al reiniciar la aplicación.";
 
@@ -192,9 +189,6 @@
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Nueva pestaña";
-
-/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "La protección de privacidad está deshabilitada para estos sitios.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Pantalla de inicio";

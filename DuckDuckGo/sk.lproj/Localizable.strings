@@ -37,9 +37,6 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Prilepiť a odísť";
 
-/* Reading List action */
-"action.title.readingList" = "Pridať do zoznamu na prečítanie";
-
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Obnoviť";
 
@@ -174,6 +171,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Vo vašom prehliadači sa časom môžu zhromažďovať osobné údaje. Fuj. Použitím tlačidla na vymazanie ich môžete všetky odstrániť. Vyskúšajte to 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Vymazať všetky karty a údaje";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "A je to – vaše údaje sú chránené!\n\nTip pre vás: Zabezpečte stránku a nebudete sa musieť zakaždým znova prihlasovať.\n\nChcete vidieť, ako to funguje? Navštívte jednu zo svojich obľúbených stránok a prihláste sa.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -449,7 +455,7 @@
 "fireButtonAnimation.none.name" = "Žiadne";
 
 /* No comment provided by engineer. */
-"fireButtonAnimation.waterSwirl.name" = "Vír";
+"fireButtonAnimation.waterSwirl.name" = "Vodný vír";
 
 /* No comment provided by engineer. */
 "home.message.buttonText" = "Nastaviť ako predvolený prehliadač";

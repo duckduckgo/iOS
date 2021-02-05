@@ -29,6 +29,12 @@ class AppConfigurationFetchTests: XCTestCase {
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
 
+    func testBackgroundRefreshCompletionStatusSuccess() {
+        XCTAssertFalse(AppConfigurationFetch.BackgroundRefreshCompletionStatus.expired.success)
+        XCTAssertTrue(AppConfigurationFetch.BackgroundRefreshCompletionStatus.noData.success)
+        XCTAssertTrue(AppConfigurationFetch.BackgroundRefreshCompletionStatus.newData.success)
+    }
+
     // MARK: - Test Expired
 
     @available(iOS 13.0, *)

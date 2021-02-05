@@ -14,7 +14,6 @@ lane :release do
     submit_for_review: false,
     automatic_release: false, 
     phased_release: true,
-    username: "jenkins-itunes@duckduckgo.com",
     force: true,
     skip_screenshots: true,
     precheck_include_in_app_purchases: false,

@@ -46,7 +46,7 @@ public class AppUserDefaults: AppSettings {
         static let backgroundFetchNoDataCount = "com.duckduckgo.app.bgFetchNoDataCount"
         static let backgroundFetchNewDataCount = "com.duckduckgo.app.bgFetchNewDataCount"
 
-        static let backgroundFetchTaskExpirationCount = "backgroundFetchTaskExpirationCount"
+        static let backgroundFetchTaskExpirationCount = "com.duckduckgo.app.bgFetchTaskExpirationCount"
         
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
         static let allowUniversalLinks = "com.duckduckgo.app.allowUniversalLinks"

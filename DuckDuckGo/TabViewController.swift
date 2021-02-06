@@ -65,7 +65,7 @@ class TabViewController: UIViewController {
     
     let progressWorker = WebProgressWorker()
 
-    private(set) var webView: WKWebView!
+    private(set) var webView: DDGWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyController: PrivacyProtectionController?
     
@@ -275,7 +275,7 @@ class TabViewController: UIViewController {
 
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
-        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        webView = DDGWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         if #available(iOS 13, *) {
@@ -292,6 +292,7 @@ class TabViewController: UIViewController {
         
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        webView.ddgWebViewDelegate = self
         webViewContainer.addSubview(webView)
 
         reloadUserScripts()
@@ -1245,6 +1246,14 @@ extension TabViewController: PrivacyProtectionDelegate {
     func omniBarTextTapped() {
         chromeDelegate?.omniBar.becomeFirstResponder()
     }
+}
+
+extension TabViewController: DDGWebViewDelegate {
+
+    func webView(_ webView: WKWebView, didRequestLookupText text: String) {
+        delegate?.tab(self, didRequestNewTabForUrl: appUrls.url(forQuery: text), openedByPage: true)
+    }
+
 }
 
 extension TabViewController: WKUIDelegate {

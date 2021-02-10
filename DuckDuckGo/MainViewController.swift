@@ -1451,7 +1451,14 @@ extension MainViewController: OnboardingDelegate {
     func onboardingCompleted(controller: UIViewController) {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
-        controller.dismiss(animated: true)
+        
+        controller.dismiss(animated: true) {
+            // For the email beta, we don't want to show dax dialogs after onboarding, because we instead take the
+            // user to the email sign up page.
+            // THIS SHOULD BE REMOVED BEFORE THE EMAIL FEATURE IS OUT OF BETA
+            self.loadUrl(self.appUrls.emailLandingPage)
+        }
+        
         homeController?.onboardingCompleted()
     }
     

@@ -60,6 +60,7 @@ class OmniBar: UIView {
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
+    private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private(set) var trackersAnimator = TrackersAnimator()
     
@@ -78,6 +79,13 @@ class OmniBar: UIView {
         configureEditingMenu()
         refreshState(state)
         enableInteractionsWithPointer()
+        observeSafeAreaInsets()
+    }
+    
+    private func observeSafeAreaInsets() {
+        safeAreaInsetsObservation = self.observe(\.safeAreaInsets, options: .new) { [weak self] (_, _) in
+            self?.updateOmniBarPadding()
+        }
     }
     
     private func enableInteractionsWithPointer() {
@@ -214,12 +222,16 @@ class OmniBar: UIView {
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
         leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
         rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
-        omniBarLeadingConstraint.constant = state.hasLargeWidth ? 24 : 8
-        omniBarTrailingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
+        updateOmniBarPadding()
         updateSearchBarBorder()
     }
 
+    private func updateOmniBarPadding() {
+        omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + safeAreaInsets.left
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + safeAreaInsets.right
+    }
+    
     private func updateSearchBarBorder() {
         let theme = ThemeManager.shared.currentTheme
         if state.showBackground {

@@ -798,7 +798,9 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
+        if let url = webView.url, appUrls.shouldAuthenticateWithEmailCredentials(url: url) {
+            completionHandler(.useCredential, URLCredential(user: "dax", password: "qu4ckqu4ck!", persistence: .forSession))
+        } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)

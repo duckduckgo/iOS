@@ -331,6 +331,7 @@ public struct UserText {
     public static let emailAliasAlertMessage = NSLocalizedString("email.aliasAlert.message", value: "Protect your personal address, block trackers, and forward to your regular inbox.", comment: "")
     public static let emailAliasAlertConfirm = NSLocalizedString("email.aliasAlert.confirm", value: "Use %@", comment: "")
     public static let emailAliasAlertDecline = NSLocalizedString("email.aliasAlert.decline", value: "Don't Use", comment: "")
+    public static let emailSettingsAccessoryOff = NSLocalizedString("email.settings.accessory.off", value: "Off", comment: "")
 
     public static let fireButtonAnimationFireRisingName = NSLocalizedString("fireButtonAnimation.fireRising.name", value: "Inferno", comment: "")
     public static let fireButtonAnimationWaterSwirlName = NSLocalizedString("fireButtonAnimation.waterSwirl.name", value: "Whirlpool", comment: "")

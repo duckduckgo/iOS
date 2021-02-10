@@ -21,7 +21,13 @@ import UIKit
 import MessageUI
 import Core
 
+protocol SettingsViewControllerDelegate: class {
+    func settingsViewController(_ settingsViewController: SettingsViewController, didRequestNewTabForUrl url: URL)
+}
+
 class SettingsViewController: UITableViewController {
+    
+    weak var delegate: SettingsViewControllerDelegate?
 
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
@@ -171,7 +177,7 @@ class SettingsViewController: UITableViewController {
             emailCell.isHidden = false
             emailAccessoryText.text = emailManager.userEmail
         } else {
-            emailCell.isHidden = true
+            emailAccessoryText.text = UserText.emailSettingsAccessoryOff
         }
     }
      
@@ -218,6 +224,14 @@ class SettingsViewController: UITableViewController {
 
         case versionCell:
             showDebug()
+            
+        case emailCell:
+            if emailManager.isSignedIn {
+                performSegue(withIdentifier: "showEmail", sender: self)
+            } else {
+                delegate?.settingsViewController(self, didRequestNewTabForUrl: AppUrls().emailLandingPage)
+                dismiss(animated: true, completion: nil)
+            }
 
         default: break
         }

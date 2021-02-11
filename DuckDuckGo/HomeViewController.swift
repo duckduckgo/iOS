@@ -163,7 +163,7 @@ class HomeViewController: UIViewController {
         // For the email beta, we don't want to show dax dialogs after onboarding, because we instead take the
         // user to the email sign up page.
         // THIS SHOULD BE REMOVED BEFORE THE EMAIL FEATURE IS OUT OF BETA
-        //showNextDaxDialog()
+        // showNextDaxDialog()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -21,6 +21,7 @@ import UIKit
 import MessageUI
 import Core
 
+// swiftlint:disable file_length
 protocol SettingsViewControllerDelegate: class {
     func settingsViewController(_ settingsViewController: SettingsViewController, didRequestNewTabForUrl url: URL)
 }
@@ -400,3 +401,4 @@ extension SettingsViewController {
         }
     }
 }
+// swiftlint:enable file_length

@@ -48,9 +48,6 @@ public class HomeMessageStorage {
     }
     
     private func shouldShowDefaultBrowserMessage() -> Bool {
-        if #available(iOS 14, *), homeDefaultBrowserMessageDateDismissed == nil {
-            return true
-        }
         return false
     }
 

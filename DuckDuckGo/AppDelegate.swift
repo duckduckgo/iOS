@@ -67,6 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
+        updateUserInterfaceStyle()
+
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
         }
@@ -100,6 +102,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appIsLaunching = true
         return true
+    }
+
+    func updateUserInterfaceStyle() {
+        guard #available(iOS 13.0, *) else { return }
+        switch ThemeManager.shared.currentTheme.name {
+
+        case .dark:
+            window?.overrideUserInterfaceStyle = .dark
+
+        case .light:
+            window?.overrideUserInterfaceStyle = .light
+
+        default:
+            window?.overrideUserInterfaceStyle = .unspecified
+
+        }
     }
 
     private func clearLegacyAllowedDomainCookies() {

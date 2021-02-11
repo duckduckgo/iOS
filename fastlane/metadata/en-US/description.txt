@@ -12,6 +12,8 @@ DuckDuckGo Privacy Browser has the speed you need, the browsing features you exp
 
  • Decode Privacy — each site you visit gets a Privacy Grade (A-F) so you can see how protected you are at a glance, and you can even dig into the details to see who we caught trying to track you. 
 
+ • Signal Your Privacy Preference with GPC — with Global Privacy Control (GPC) built in, you’ll invoke your legal privacy rights (e.g., under CCPA, GDPR) by telling websites not to sell or share your personal data by default.
+
  • Limit Access — secure your browser with Touch ID or Face ID.
 
 Privacy, simplified.

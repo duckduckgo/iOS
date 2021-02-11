@@ -262,6 +262,9 @@
 /* No comment provided by engineer. */
 "email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
 
+/* No comment provided by engineer. */
+"email.settings.accessory.off" = "Off";
+
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
 

@@ -798,7 +798,9 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
+        if let url = webView.url, appUrls.shouldAuthenticateWithEmailCredentials(url: url) {
+            completionHandler(.useCredential, URLCredential(user: "dax", password: "qu4ckqu4ck!", persistence: .forSession))
+        } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
@@ -935,6 +937,11 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
+        // For the email beta, we don't want to show dax dialogs after onboarding, because we instead take the
+        // user to the email sign up page.
+        // THIS SHOULD BE REMOVED BEFORE THE EMAIL FEATURE IS OUT OF BETA
+        guard url?.host != appUrls.emailLandingPage.host else { return }
+        
         guard !isLinkPreview else { return }
 
         if DaxDialogs.shared.isAddFavoriteFlow {

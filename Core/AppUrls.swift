@@ -49,6 +49,8 @@ public struct AppUrls {
         static let pixel = "\(pixelBase)/t/%@"
 
         static let emailAlias = "https://quack.duckduckgo.com/api/email/addresses"
+        static let emailLandingPage = "https://quack.duckduckgo.com/email-protection"
+        static let emailAuthenticationHosts = ["quack.duckduckgo.com", "quackdev.duckduckgo.com"]
         
         static let gpcGlitchBase = "http://global-privacy-control.glitch.me"
         static let washingtonPostBase = "https://washingtonpost.com"
@@ -138,6 +140,10 @@ public struct AppUrls {
             .addParam(name: Param.setAtb, value: setAtb)
     }
     
+    public var emailLandingPage: URL {
+        return URL(string: Url.emailLandingPage)!
+    }
+    
     private var gpcEnabledURLs: [URL] {
         return Url.gpcEnabled.map {
             URL(string: $0)!
@@ -204,6 +210,11 @@ public struct AppUrls {
         if !isDuckDuckGo(url: url) { return false }
         guard DDGStaticURL(rawValue: url.path) != nil else { return false }
         return true
+    }
+    
+    public func shouldAuthenticateWithEmailCredentials(url: URL) -> Bool {
+        guard let host = url.host else { return false }
+        return Url.emailAuthenticationHosts.contains(host)
     }
     
     public func isGPCEnabled(url: URL) -> Bool {

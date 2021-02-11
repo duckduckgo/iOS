@@ -940,7 +940,7 @@ extension TabViewController: WKNavigationDelegate {
         // For the email beta, we don't want to show dax dialogs after onboarding, because we instead take the
         // user to the email sign up page.
         // THIS SHOULD BE REMOVED BEFORE THE EMAIL FEATURE IS OUT OF BETA
-        guard url != appUrls.emailLandingPage else { return }
+        guard url?.host != appUrls.emailLandingPage.host else { return }
         
         guard !isLinkPreview else { return }
 

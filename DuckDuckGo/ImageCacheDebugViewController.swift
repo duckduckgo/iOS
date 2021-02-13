@@ -142,9 +142,9 @@ class ImageCacheDebugViewController: UITableViewController {
     private func presentClearCachePrompt(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Clear Image Cache?", message: nil, preferredStyle: .actionSheet)
 
-        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Clear", style: .destructive)) { _ in
             self.clearCacheAndReload()
-        }))
+        }
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 

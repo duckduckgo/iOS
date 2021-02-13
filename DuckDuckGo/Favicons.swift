@@ -22,7 +22,7 @@ import UIKit
 import os
 import LinkPresentation
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 public class Favicons {
 
     public struct Constants {
@@ -412,4 +412,4 @@ public class Favicons {
     }
 
 }
-// swiftlint:enable type_body_length
+// swiftlint:enable type_body_length file_length

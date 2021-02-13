@@ -67,8 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        updateUserInterfaceStyle()
-
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
         }
@@ -106,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func updateUserInterfaceStyle() {
         guard #available(iOS 13.0, *) else { return }
-        switch ThemeManager.shared.currentTheme.name {
+        switch AppUserDefaults().currentThemeName {
 
         case .dark:
             window?.overrideUserInterfaceStyle = .dark
@@ -131,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-        
+
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()
         }
@@ -218,6 +216,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        updateUserInterfaceStyle()
+
         beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true

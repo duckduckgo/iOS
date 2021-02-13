@@ -102,22 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func updateUserInterfaceStyle() {
-        guard #available(iOS 13.0, *) else { return }
-        switch AppUserDefaults().currentThemeName {
-
-        case .dark:
-            window?.overrideUserInterfaceStyle = .dark
-
-        case .light:
-            window?.overrideUserInterfaceStyle = .light
-
-        default:
-            window?.overrideUserInterfaceStyle = .unspecified
-
-        }
-    }
-
     private func clearLegacyAllowedDomainCookies() {
         let domains = PreserveLogins.shared.legacyAllowedDomains
         guard !domains.isEmpty else { return }
@@ -216,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        updateUserInterfaceStyle()
+        ThemeManager.shared.updateUserInterfaceStyle()
 
         beginAuthentication()
         autoClear?.applicationWillMoveToForeground()

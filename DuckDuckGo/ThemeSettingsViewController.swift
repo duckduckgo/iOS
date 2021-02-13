@@ -80,7 +80,7 @@ class ThemeSettingsViewController: UITableViewController {
 
         ThemeManager.shared.enableTheme(with: theme)
 
-        (UIApplication.shared.delegate as? AppDelegate)?.updateUserInterfaceStyle()
+        ThemeManager.shared.updateUserInterfaceStyle()
     }
 }
 

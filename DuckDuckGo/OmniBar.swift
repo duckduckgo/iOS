@@ -107,9 +107,7 @@ class OmniBar: UIView {
                                                name: UITextField.textDidChangeNotification,
                                                object: textField)
         
-        if #available(iOS 11.0, *) {
-            textField.textDragInteraction?.isEnabled = false
-        }
+        textField.textDragInteraction?.isEnabled = false
     }
     
     private func configureSeparator() {

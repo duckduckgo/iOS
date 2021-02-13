@@ -710,15 +710,6 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height
-
-        if #available(iOS 11.0, *) {
-            // no-op
-        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
-            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
-            // adjust frame to toolbar height change
-            tabSwitcherButton.layoutSubviews()
-            gestureBookmarksButton.layoutSubviews()
-        }
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -889,9 +880,7 @@ extension MainViewController: BrowserChromeDelegate {
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = toolbarHeight
-        if #available(iOS 11.0, *) {
-            bottomHeight += view.safeAreaInsets.bottom
-        }
+        bottomHeight += view.safeAreaInsets.bottom
         let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
         toolbarBottom.constant = bottomHeight * multiplier
         findInPageHeightLayoutConstraint.constant = findInPageInnerContainerView.frame.height + view.safeAreaInsets.bottom

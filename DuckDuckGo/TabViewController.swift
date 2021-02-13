@@ -847,12 +847,10 @@ extension TabViewController: WKNavigationDelegate {
         pageHasTrackers = false
         NetworkLeaderboard.shared.incrementPagesLoaded()
         
-        if #available(iOS 10.3, *) {
-            appRatingPrompt.registerUsage()
-            if appRatingPrompt.shouldPrompt() {
-                SKStoreReviewController.requestReview()
-                appRatingPrompt.shown()
-            }
+        appRatingPrompt.registerUsage()
+        if appRatingPrompt.shouldPrompt() {
+            SKStoreReviewController.requestReview()
+            appRatingPrompt.shown()
         }
         
         // If site is unprotected we need to remove the content blocking rules

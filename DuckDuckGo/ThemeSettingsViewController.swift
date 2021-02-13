@@ -79,6 +79,8 @@ class ThemeSettingsViewController: UITableViewController {
         appSettings.currentThemeName = theme
 
         ThemeManager.shared.enableTheme(with: theme)
+
+        ThemeManager.shared.updateUserInterfaceStyle()
     }
 }
 

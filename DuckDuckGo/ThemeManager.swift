@@ -100,5 +100,21 @@ class ThemeManager {
             currentTheme = systemTheme
         }
     }
-    
+
+    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.keyWindow) {
+        guard #available(iOS 13.0, *) else { return }
+        switch appSettings.currentThemeName {
+
+        case .dark:
+            window?.overrideUserInterfaceStyle = .dark
+
+        case .light:
+            window?.overrideUserInterfaceStyle = .light
+
+        default:
+            window?.overrideUserInterfaceStyle = .unspecified
+
+        }
+    }
+
 }

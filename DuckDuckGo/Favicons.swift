@@ -20,6 +20,7 @@
 import Kingfisher
 import UIKit
 import os
+import LinkPresentation
 
 // swiftlint:disable type_body_length
 public class Favicons {
@@ -277,7 +278,23 @@ public class Favicons {
 
         let additionalSources = sourcesProvider.additionalSources(forDomain: domain)
 
-        // Try best sources first
+        if #available(iOS 13.0, *) {
+            retrieveLinkPresentationImage(from: domain) {
+
+                 guard let image = $0 else {
+                    self.retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
+                    return
+                }
+
+                completion(image)
+            }
+        } else {
+            retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
+        }
+
+    }
+
+    private func retrieveBestImage(bestSources: [URL], additionalSources: [URL], completion: @escaping (UIImage?) -> Void) {
         retrieveBestImage(from: bestSources) {
 
             // Fallback to favicons
@@ -289,6 +306,26 @@ public class Favicons {
             }
 
             completion(image)
+        }
+    }
+
+    @available(iOS 13.0, *)
+    private func retrieveLinkPresentationImage(from domain: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: "http://\(domain)") else {
+            completion(nil)
+            return
+        }
+
+        let metadataFetcher = LPMetadataProvider()
+        metadataFetcher.startFetchingMetadata(for: url) { metadata, metadataError in
+            guard let iconProvider = metadata?.iconProvider, metadataError == nil else {
+                completion(nil)
+                return
+            }
+
+            iconProvider.loadObject(ofClass: UIImage.self) { potentialImage, _ in
+                completion(potentialImage as? UIImage)
+            }
         }
     }
 

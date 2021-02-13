@@ -336,11 +336,7 @@ fileprivate extension UIScrollView {
     /// Calculate Y-axis content offset corresponding to very bottom of the scroll area
     var contentOffsetYAtBottom: CGFloat {
         let yOffset = contentSize.height - bounds.height
-        if #available(iOS 11.0, *) {
-            return yOffset - adjustedContentInset.top + adjustedContentInset.bottom
-        } else {
-            return yOffset - contentInset.top + contentInset.bottom
-        }
+        return yOffset - adjustedContentInset.top + adjustedContentInset.bottom
     }
     
     var fullyZoomedOut: Bool {

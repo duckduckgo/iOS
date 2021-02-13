@@ -26,11 +26,7 @@ class AppIconManager {
     static var shared = AppIconManager()
 
     var isAppIconChangeSupported: Bool {
-        if #available(iOS 10.3, *) {
-            return UIApplication.shared.supportsAlternateIcons
-        } else {
-            return false
-        }
+        UIApplication.shared.supportsAlternateIcons
     }
 
     enum AppIconManagerError: Error {
@@ -43,36 +39,25 @@ class AppIconManager {
             return
         }
 
-        if #available(iOS 10.3, *), isAppIconChangeSupported {
-            let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
-            UIApplication.shared.setAlternateIconName(alternateIconName) { error in
-                if let error = error {
-                    Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
-                    os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
-                    completionHandler?(error)
-                } else {
-                    completionHandler?(nil)
-                }
+        let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
+        UIApplication.shared.setAlternateIconName(alternateIconName) { error in
+            if let error = error {
+                Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
+                os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
+                completionHandler?(error)
+            } else {
+                completionHandler?(nil)
             }
-        } else {
-            let error = AppIconManagerError.changeNotSupported
-            Pixel.fire(pixel: .settingsAppIconChangeNotSupported, error: error)
-            os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
-            completionHandler?(error)
         }
     }
 
     var appIcon: AppIcon {
-        if #available(iOS 10.3, *) {
-            guard let appIconName = UIApplication.shared.alternateIconName,
-                let appIcon = AppIcon(rawValue: appIconName) else {
-                return AppIcon.defaultAppIcon
-            }
-
-            return appIcon
-        } else {
-            return AppIcon.defaultAppIcon
+        guard let appIconName = UIApplication.shared.alternateIconName,
+            let appIcon = AppIcon(rawValue: appIconName) else {
+             return AppIcon.defaultAppIcon
         }
+
+        return appIcon
     }
 
 }

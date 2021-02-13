@@ -55,9 +55,7 @@ extension UIViewController {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         shareController.overrideUserInterfaceStyle()
-        if #available(iOS 11.0, *) {
-            shareController.excludedActivityTypes = [.markupAsPDF]
-        }
+        shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)
     }
 

@@ -39,14 +39,16 @@ class ImageCacheDebugViewController: UITableViewController {
 
     let imageNotFound = UIImage(systemName: "exclamationmark.circle")
     let imageError = UIImage(systemName: "exclamationmark.triangle")
-    let clearCache = UIImage(systemName: "trash")
     let bookmarksManager = BookmarksManager()
     let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let clearCacheItem = UIBarButtonItem(image: clearCache!, style: .done, target: self, action: #selector(presentClearCachePrompt(_:)))
+        let clearCacheItem = UIBarButtonItem(image: UIImage(systemName: "trash")!,
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(presentClearCachePrompt(_:)))
         clearCacheItem.tintColor = .systemRed
         navigationItem.rightBarButtonItem = clearCacheItem
     }

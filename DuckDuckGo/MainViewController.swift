@@ -922,7 +922,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
-        if appUrls.variantManager.isSupported(feature: .removeSERPHeader), isSERPPresented { return }
+        if isSERPPresented { return }
         ViewHighlighter.hideAll()
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
@@ -971,8 +971,7 @@ extension MainViewController: OmniBarDelegate {
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
         
-        if appUrls.variantManager.isSupported(feature: .removeSERPHeader),
-           !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
+        if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             showSuggestionTray(.autocomplete(query: query))
         } else {
             showSuggestionTray(.favorites)
@@ -980,10 +979,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
-        var selectQueryText = true
-        if appUrls.variantManager.isSupported(feature: .removeSERPHeader) {
-            selectQueryText = !(isSERPPresented && !skipSERPFlow)
-        }
+        let selectQueryText = !(isSERPPresented && !skipSERPFlow)
         skipSERPFlow = false
         
         ViewHighlighter.hideAll()

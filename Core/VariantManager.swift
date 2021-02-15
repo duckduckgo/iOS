@@ -27,8 +27,6 @@ public enum FeatureName: String {
     
     // Fire button education
     case fireButtonEducation
-
-    case removeSERPHeader
 }
 
 public struct Variant {
@@ -65,10 +63,7 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         
         Variant(name: "mc", weight: 1, isIncluded: When.always, features: []),
-        Variant(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonEducation]),
-
-        Variant(name: "mi", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "mo", weight: doNotAllocate, isIncluded: When.always, features: [.removeSERPHeader])
+        Variant(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonEducation])
     ]
     
     public let name: String

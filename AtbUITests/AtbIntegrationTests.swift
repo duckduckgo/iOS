@@ -72,6 +72,7 @@ class AtbIntegrationTests: XCTestCase {
     }
 
     func testSearchCausesAtbRequests() {
+        requests = 0 // Reset to ensure test launch of the app doesn't register as a false positive
         search(forText: "lemons")
         waitForRequests()
     }

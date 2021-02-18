@@ -32,6 +32,8 @@ protocol AppConfigurationFetchStatistics {
     var backgroundStartCount: Int { get set }
     var backgroundNoDataCount: Int { get set }
     var backgroundNewDataCount: Int { get set }
+
+    var backgroundFetchTaskExpirationCount: Int { get set }
 }
 
 class AppConfigurationFetch {
@@ -68,9 +70,6 @@ class AppConfigurationFetch {
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     static private var lastConfigurationRefreshDate: Date
 
-    @UserDefaultsWrapper(key: .backgroundFetchTaskExpirationCount, defaultValue: 0)
-    static private var backgroundFetchTaskExpirationCount: Int
-
     @UserDefaultsWrapper(key: .backgroundFetchTaskDuration, defaultValue: 0)
     static private var backgroundFetchTaskDuration: Int
     
@@ -95,6 +94,16 @@ class AppConfigurationFetch {
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
+
+    enum BackgroundRefreshCompletionStatus {
+        case expired
+        case noData
+        case newData
+
+        var success: Bool {
+            self != .expired
+        }
+    }
     
     func start(isBackgroundFetch: Bool = false,
                completion: AppConfigurationCompletion?) {
@@ -112,7 +121,7 @@ class AppConfigurationFetch {
 
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            let newData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
+            let fetchedNewData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
 
             if !isBackgroundFetch {
                 type(of: self).fetchQueue.async {
@@ -124,42 +133,22 @@ class AppConfigurationFetch {
                 UIApplication.shared.endBackgroundTask(taskID)
             }
 
-            completion?(newData)
+            completion?(fetchedNewData)
         }
     }
 
     @available(iOS 13.0, *)
     static func registerBackgroundRefreshTaskHandler() {
-        BGTaskScheduler.shared.register(
-            forTaskWithIdentifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier,
-            using: nil) { (task) in
-
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundProcessingTaskIdentifier, using: nil) { (task) in
             guard shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
                 return
             }
 
-            let refreshStartDate = Date()
-
-            let taskCompletion = { (success: Bool) in
-                task.setTaskCompleted(success: success)
-                scheduleBackgroundRefreshTask()
-
-                let refreshEndDate = Date()
-                let difference = refreshEndDate.timeIntervalSince(refreshStartDate)
-                backgroundFetchTaskDuration += Int(difference)
-            }
-
-            task.expirationHandler = {
-                backgroundFetchTaskExpirationCount += 1
-                taskCompletion(false)
-            }
-
-            fetchQueue.async {
-                AppConfigurationFetch().fetchConfigurationFiles(isBackground: true)
-                taskCompletion(true)
-            }
+            let store = AppUserDefaults()
+            let fetcher = AppConfigurationFetch()
+            backgroundRefreshTaskHandler(store: store, configurationFetcher: fetcher, queue: fetchQueue, task: task)
         }
     }
 
@@ -177,13 +166,13 @@ class AppConfigurationFetch {
         //
         // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
 
+        #if !targetEnvironment(simulator)
         do {
             try BGTaskScheduler.shared.submit(task)
         } catch {
-            #if !targetEnvironment(simulator)
             Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
-            #endif
         }
+        #endif
     }
 
     @discardableResult
@@ -267,7 +256,7 @@ class AppConfigurationFetch {
                           Keys.fgFetchNoData: String(store.foregroundNoDataCount),
                           Keys.fgFetchWithData: String(store.foregroundNewDataCount),
                           Keys.bgFetchType: backgroundFetchType,
-                          Keys.bgFetchTaskExpiration: String(Self.backgroundFetchTaskExpirationCount),
+                          Keys.bgFetchTaskExpiration: String(store.backgroundFetchTaskExpirationCount),
                           Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration),
                           Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
                           Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
@@ -283,7 +272,7 @@ class AppConfigurationFetch {
                 semaphore.signal()
                 return
             }
-                
+
             self.resetStatistics()
             semaphore.signal()
         }
@@ -301,8 +290,8 @@ class AppConfigurationFetch {
         store.foregroundStartCount = 0
         store.foregroundNoDataCount = 0
         store.foregroundNewDataCount = 0
+        store.backgroundFetchTaskExpirationCount = 0
 
-        Self.backgroundFetchTaskExpirationCount = 0
         Self.backgroundFetchTaskDuration = 0
 
         downloadedHTTPSBloomFilterCount = 0
@@ -312,4 +301,71 @@ class AppConfigurationFetch {
         downloadedTemporaryUnprotectedSitesCount = 0
         downloadedTrackerDataSetCount = 0
     }
+}
+
+extension AppConfigurationFetch {
+
+    @available(iOS 13.0, *)
+    static func backgroundRefreshTaskHandler(store: AppConfigurationFetchStatistics,
+                                             configurationFetcher: AppConfigurationFetch,
+                                             queue: DispatchQueue,
+                                             task: BGTask) {
+
+        let refreshStartDate = Date()
+        var lastCompletionStatus: BackgroundRefreshCompletionStatus?
+
+        task.expirationHandler = {
+            DispatchQueue.main.async {
+                if lastCompletionStatus == nil {
+                    var mutableStore = store
+                    mutableStore.backgroundFetchTaskExpirationCount += 1
+                }
+
+                lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                              refreshStartDate: refreshStartDate,
+                                                                              task: task,
+                                                                              status: .expired,
+                                                                              previousStatus: lastCompletionStatus)
+            }
+        }
+
+        queue.async {
+            let fetchedNewData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
+
+            DispatchQueue.main.async {
+                lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                              refreshStartDate: refreshStartDate,
+                                                                              task: task,
+                                                                              status: fetchedNewData ? .newData : .noData,
+                                                                              previousStatus: lastCompletionStatus)
+            }
+        }
+    }
+
+    // Gets called at the end of the refresh process, either by the task being expired by the OS or by the refresh process completing successfully.
+    // It checks whether it has been called earlier in the same refresh run and self-corrects the completion statistics if necessary.
+    @available(iOS 13.0, *)
+    static func backgroundRefreshTaskCompletionHandler(store: AppConfigurationFetchStatistics,
+                                                       refreshStartDate: Date,
+                                                       task: BGTask,
+                                                       status: BackgroundRefreshCompletionStatus,
+                                                       previousStatus: BackgroundRefreshCompletionStatus?) -> BackgroundRefreshCompletionStatus {
+
+        task.setTaskCompleted(success: status.success)
+        scheduleBackgroundRefreshTask()
+
+        let refreshEndDate = Date()
+        let difference = refreshEndDate.timeIntervalSince(refreshStartDate)
+        backgroundFetchTaskDuration += Int(difference)
+
+        // This function tries to avoid expirations that are counted erroneously, so in the case where an expiration comes in _just_ before the
+        // refresh process completes it checks if an expiration was last processed and decrements the expiration counter so that the books balance.
+        if previousStatus == .expired {
+            var mutableStore = store
+            mutableStore.backgroundFetchTaskExpirationCount = max(0, store.backgroundFetchTaskExpirationCount - 1)
+        }
+
+        return status
+    }
+
 }

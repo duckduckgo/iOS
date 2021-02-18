@@ -45,6 +45,8 @@ public class AppUserDefaults: AppSettings {
         static let backgroundFetchStartCount = "com.duckduckgo.app.bgFetchStartCount"
         static let backgroundFetchNoDataCount = "com.duckduckgo.app.bgFetchNoDataCount"
         static let backgroundFetchNewDataCount = "com.duckduckgo.app.bgFetchNewDataCount"
+
+        static let backgroundFetchTaskExpirationCount = "com.duckduckgo.app.bgFetchTaskExpirationCount"
         
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
         static let allowUniversalLinks = "com.duckduckgo.app.allowUniversalLinks"
@@ -218,6 +220,15 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
         }
         set {
             userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchNewDataCount)
+        }
+    }
+
+    var backgroundFetchTaskExpirationCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.backgroundFetchTaskExpirationCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchTaskExpirationCount)
         }
     }
 }

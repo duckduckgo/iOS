@@ -51,10 +51,8 @@ fileprivate extension SecCertificate {
         let displayable = DisplayableCertificate()
 
         displayable.summary = extractSummary()
-        if #available(iOS 10.3, *) {
-            displayable.commonName = extractCommonName()
-            displayable.emails = extractEmails()
-        }
+        displayable.commonName = extractCommonName()
+        displayable.emails = extractEmails()
 
         displayable.publicKey = extractKey()
 
@@ -73,14 +71,12 @@ fileprivate extension SecCertificate {
         return SecCertificateCopySubjectSummary(self) as String? ?? ""
     }
 
-    @available(iOS 10.3, *)
     private func extractCommonName() -> String {
         var commonName: CFString?
         SecCertificateCopyCommonName(self, &commonName)
         return commonName as String? ?? ""
     }
 
-    @available(iOS 10.3, *)
     private func extractEmails() -> [String]? {
         var emails: CFArray?
         guard errSecSuccess == SecCertificateCopyEmailAddresses(self, &emails) else { return nil }
@@ -96,32 +92,29 @@ fileprivate extension SecKey {
 
         key.blockSize = SecKeyGetBlockSize(self)
 
-        if #available(iOS 10.0, *) {
-            key.externalRepresentation = SecKeyCopyExternalRepresentation(self, nil) as Data?
+        key.externalRepresentation = SecKeyCopyExternalRepresentation(self, nil) as Data?
 
-            guard let attrs: NSDictionary = SecKeyCopyAttributes(self) else { return key }
+        guard let attrs: NSDictionary = SecKeyCopyAttributes(self) else { return key }
 
-            key.bitSize = attrs[kSecAttrKeySizeInBits] as? Int
-            key.effectiveSize = attrs[kSecAttrEffectiveKeySize] as? Int
-            key.canDecrypt = attrs[kSecAttrCanDecrypt] as? Bool ?? false
-            key.canDerive = attrs[kSecAttrCanDerive] as? Bool ?? false
-            key.canEncrypt = attrs[kSecAttrCanEncrypt] as? Bool ?? false
-            key.canSign = attrs[kSecAttrCanSign] as? Bool ?? false
-            key.canUnwrap = attrs[kSecAttrCanUnwrap] as? Bool ?? false
-            key.canVerify = attrs[kSecAttrCanVerify] as? Bool ?? false
-            key.canWrap = attrs[kSecAttrCanWrap] as? Bool ?? false
-            key.isPermanent = attrs[kSecAttrIsPermanent] as? Bool ?? false
-            key.keyId = attrs[kSecAttrApplicationLabel] as? Data
+        key.bitSize = attrs[kSecAttrKeySizeInBits] as? Int
+        key.effectiveSize = attrs[kSecAttrEffectiveKeySize] as? Int
+        key.canDecrypt = attrs[kSecAttrCanDecrypt] as? Bool ?? false
+        key.canDerive = attrs[kSecAttrCanDerive] as? Bool ?? false
+        key.canEncrypt = attrs[kSecAttrCanEncrypt] as? Bool ?? false
+        key.canSign = attrs[kSecAttrCanSign] as? Bool ?? false
+        key.canUnwrap = attrs[kSecAttrCanUnwrap] as? Bool ?? false
+        key.canVerify = attrs[kSecAttrCanVerify] as? Bool ?? false
+        key.canWrap = attrs[kSecAttrCanWrap] as? Bool ?? false
+        key.isPermanent = attrs[kSecAttrIsPermanent] as? Bool ?? false
+        key.keyId = attrs[kSecAttrApplicationLabel] as? Data
 
-            if let type = attrs[kSecAttrType] as? String {
-                key.type = typeToString(type)
-            }
+        if let type = attrs[kSecAttrType] as? String {
+            key.type = typeToString(type)
         }
 
         return key
     }
 
-    @available(iOS 10, *)
     private func typeToString(_ type: String) -> String? {
         switch type as CFString {
         case kSecAttrKeyTypeRSA: return "RSA"

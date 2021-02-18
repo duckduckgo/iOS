@@ -57,9 +57,7 @@ class BasicAuthenticationAlert: UIAlertController {
             textField.accessibilityLabel = "Password"
             textField.placeholder = UserText.authAlertPasswordPlaceholder
             textField.keyboardAppearance = keyboardAppearance
-            if #available(iOS 11.0, *) {
-                textField.textContentType = .password
-            }
+            textField.textContentType = .password
             textField.isSecureTextEntry = true
             textField.autocorrectionType = .no
             textField.autocapitalizationType = .none

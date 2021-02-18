@@ -36,7 +36,6 @@ extension WKWebViewConfiguration {
         }
         configuration.dataDetectorTypes = [.link, .phoneNumber]
 
-        configuration.installHideAtbModals()
         configuration.installContentBlockingRules()
 
         configuration.allowsAirPlayForMediaPlayback = true
@@ -45,28 +44,6 @@ extension WKWebViewConfiguration {
         configuration.ignoresViewportScaleLimits = true
 
         return configuration
-    }
-
-    private func installHideAtbModals() {
-        guard let store = WKContentRuleListStore.default() else { return }
-        let rules = """
-        [
-          {
-            "trigger": {
-              "url-filter": ".*",
-              "if-domain": ["*duckduckgo.com"]
-            },
-            "action": {
-              "type": "css-display-none",
-              "selector": ".ddg-extension-hide"
-            }
-          }
-        ]
-        """
-        store.compileContentRuleList(forIdentifier: "hide-extension-css", encodedContentRuleList: rules) { rulesList, _ in
-            guard let rulesList = rulesList else { return }
-            self.userContentController.add(rulesList)
-        }
     }
     
     private func installContentBlockingRules() {
@@ -87,7 +64,6 @@ extension WKWebViewConfiguration {
     }
     
     public func installContentRules(trackerProtection: Bool) {
-        self.installHideAtbModals()
         if trackerProtection {
             self.installContentBlockingRules()
         }

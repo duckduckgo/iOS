@@ -715,15 +715,6 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height
-
-        if #available(iOS 11.0, *) {
-            // no-op
-        } else if traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)),
-            traitCollection.containsTraits(in: .init(horizontalSizeClass: .compact)) {
-            // adjust frame to toolbar height change
-            tabSwitcherButton.layoutSubviews()
-            gestureBookmarksButton.layoutSubviews()
-        }
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -894,9 +885,7 @@ extension MainViewController: BrowserChromeDelegate {
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = toolbarHeight
-        if #available(iOS 11.0, *) {
-            bottomHeight += view.safeAreaInsets.bottom
-        }
+        bottomHeight += view.safeAreaInsets.bottom
         let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
         toolbarBottom.constant = bottomHeight * multiplier
         findInPageHeightLayoutConstraint.constant = findInPageInnerContainerView.frame.height + view.safeAreaInsets.bottom
@@ -938,7 +927,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
-        if appUrls.variantManager.isSupported(feature: .removeSERPHeader), isSERPPresented { return }
+        if isSERPPresented { return }
         ViewHighlighter.hideAll()
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
@@ -987,8 +976,7 @@ extension MainViewController: OmniBarDelegate {
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
         guard homeController == nil else { return }
         
-        if appUrls.variantManager.isSupported(feature: .removeSERPHeader),
-           !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
+        if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             showSuggestionTray(.autocomplete(query: query))
         } else {
             showSuggestionTray(.favorites)
@@ -996,10 +984,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
-        var selectQueryText = true
-        if appUrls.variantManager.isSupported(feature: .removeSERPHeader) {
-            selectQueryText = !(isSERPPresented && !skipSERPFlow)
-        }
+        let selectQueryText = !(isSERPPresented && !skipSERPFlow)
         skipSERPFlow = false
         
         ViewHighlighter.hideAll()

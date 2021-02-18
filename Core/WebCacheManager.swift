@@ -168,7 +168,6 @@ extension WKHTTPCookieStore: WebCacheManagerCookieStore {
 extension WKWebsiteDataStore: WebCacheManagerDataStore {
 
     public var cookieStore: WebCacheManagerCookieStore? {
-        guard #available(iOS 11, *) else { return nil }
         return self.httpCookieStore
     }
 

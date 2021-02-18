@@ -114,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-        
+
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()
         }
@@ -201,6 +201,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        ThemeManager.shared.updateUserInterfaceStyle()
+
         beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true

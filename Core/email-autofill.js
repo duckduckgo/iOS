@@ -1563,7 +1563,9 @@
 
      this.form = form;
      this.autofillSignal = 0;
-     this.signals = [];
+     this.signals = []; // Avoid autofill on our signup page
+
+     if (window.location.href.match(/^https:\/\/.+\.duckduckgo\.com\/email\/signup/i)) return this;
      this.evaluateElAttributes(input, 3, true);
      form ? this.evaluateForm() : this.evaluatePage();
      console.log(this.autofillSignal, this, this.signals);
@@ -2041,9 +2043,7 @@
        value: true
      } // TODO: deprecated, to be removed in a future release
 
-   }); // Avoid autofill on our signup page
-
-   if (window.location.href.match(/^https:\/\/.+\.duckduckgo\.com\/email\/signup/i)) return;
+   });
    var forms = new Map();
    var EMAIL_SELECTOR = "\n            input:not([type])[name*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=\"\"][name*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=text][name*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input:not([type])[id*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input:not([type])[placeholder*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=\"\"][id*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=text][placeholder*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=\"\"][placeholder*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input:not([type])[placeholder*=mail i]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=email]:not([readonly]):not([disabled]):not([hidden]):not([aria-hidden=true]),\n            input[type=text][aria-label*=mail i],\n            input:not([type])[aria-label*=mail i],\n            input[type=text][placeholder*=mail i]:not([readonly])\n        ";
 

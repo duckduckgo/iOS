@@ -1,1 +1,2 @@
+• Searching in the app just got easier. We've combined the search field and address bar so you don't have to think twice about which to use.
 • Bug fixes and other improvements.

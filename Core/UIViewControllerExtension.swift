@@ -78,17 +78,17 @@ extension UIViewController {
 extension Core.Link: UIActivityItemSource {
 
     public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        AppUrls().removeATBAndSource(fromUrl: url)
+        return AppUrls().removeATBAndSource(fromUrl: url)
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        AppUrls().removeATBAndSource(fromUrl: url)
+        return AppUrls().removeATBAndSource(fromUrl: url)
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
-        title ?? ""
+        return title ?? ""
     }
 
 }

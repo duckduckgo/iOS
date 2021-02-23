@@ -51,9 +51,14 @@ extension UIViewController {
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
-    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
+    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, subject: String? = nil, atPoint point: Point? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+
+        if let subject = subject {
+            shareController.setValue(subject, forKey: "Subject")
+        }
+
         shareController.overrideUserInterfaceStyle()
         shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)

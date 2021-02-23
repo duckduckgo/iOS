@@ -51,14 +51,9 @@ extension UIViewController {
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
-    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, subject: String? = nil, atPoint point: Point? = nil) {
+    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
-
-        if let subject = subject {
-            shareController.setValue(subject, forKey: "Subject")
-        }
-
         shareController.overrideUserInterfaceStyle()
         shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)
@@ -78,4 +73,22 @@ extension UIViewController {
         }
         present(controller, animated: true, completion: nil)
     }
+}
+
+extension Core.Link: UIActivityItemSource {
+
+    public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        AppUrls().removeATBAndSource(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        AppUrls().removeATBAndSource(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        title ?? ""
+    }
+
 }

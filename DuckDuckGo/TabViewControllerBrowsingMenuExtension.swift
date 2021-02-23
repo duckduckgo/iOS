@@ -128,8 +128,7 @@ extension TabViewController {
 
     func onShareAction(forLink link: Link, fromView view: UIView) {
         Pixel.fire(pixel: .browsingMenuShare)
-        let url = appUrls.removeATBAndSource(fromUrl: link.url)
-        presentShareSheet(withItems: [ url, link, webView.viewPrintFormatter() ], fromView: view, subject: link.title)
+        presentShareSheet(withItems: [ link, webView.viewPrintFormatter() ], fromView: view)
     }
     
     private func onToggleDesktopSiteAction(forUrl url: URL) {

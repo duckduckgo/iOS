@@ -91,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         clearLegacyAllowedDomainCookies()
+        clearLegacyStoredCookies()
 
         if #available(iOS 13.0, *) {
             // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -109,6 +110,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             os_log("Removed cookies for %d legacy allowed domains", domains.count)
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })
+    }
+
+    private func clearLegacyStoredCookies() {
+        let storage = CookieStorage()
+        storage.clear()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

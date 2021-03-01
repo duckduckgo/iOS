@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://dub.duckduckgo.com/duckduckgo/BrowserServicesKit",
         "state": {
-          "branch": "feature/elle/update-email",
-          "revision": "1ec3e7d75781799a996059f4bf7aeff2b3b2c719",
-          "version": null
+          "branch": null,
+          "revision": "db715c141c5db258c769cf13f7899801ae08ca08",
+          "version": "0.3.0"
         }
       },
       {

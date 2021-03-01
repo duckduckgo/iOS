@@ -202,6 +202,7 @@ class TabViewController: UIViewController {
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
+        addEailObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -603,6 +604,21 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
+    private func addEailObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onEmailDidSignIn),
+                                               name: .emailDidSignIn,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onEmailDidSignOut),
+                                               name: .emailDidSignOut,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onEmailDidGenerateAlias),
+                                               name: .emailDidGenerateAlias,
+                                               object: nil)
+    }
+    
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
     }
@@ -629,6 +645,18 @@ class TabViewController: UIViewController {
     
     @objc func onDoNotSellChange() {
         reload(scripts: true)
+    }
+    
+    @objc func onEmailDidSignIn() {
+        Pixel.fire(pixel: .emailUserSignedIn)
+    }
+    
+    @objc func onEmailDidSignOut() {
+        Pixel.fire(pixel: .emailUserSignedOut)
+    }
+    
+    @objc func onEmailDidGenerateAlias() {
+        Pixel.fire(pixel: .emailAliasGenerated)
     }
 
     private func resetNavigationBar() {

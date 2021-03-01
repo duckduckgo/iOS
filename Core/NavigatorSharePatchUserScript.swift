@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import BrowserServicesKit
 
 public class NavigatorSharePatchUserScript: NSObject, UserScript {
     public var source: String {

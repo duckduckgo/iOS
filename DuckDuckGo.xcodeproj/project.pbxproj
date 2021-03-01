@@ -567,17 +567,12 @@
 		F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F486D33325069BBB002D07D7 /* Kingfisher */; };
 		F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3352506A037002D07D7 /* OHHTTPStubs */; };
 		F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3372506A225002D07D7 /* OHHTTPStubsSwift */; };
+		F498DD3D25ED0A89008197FE /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F498DD3C25ED0A89008197FE /* BrowserServicesKit */; };
 		F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */; };
 		F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */; };
-		F4D349632541D7D0002AAF35 /* EmailUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349622541D7D0002AAF35 /* EmailUserScript.swift */; };
-		F4D3497F2541F712002AAF35 /* EmailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3497E2541F712002AAF35 /* EmailManager.swift */; };
-		F4D3499F2548329B002AAF35 /* email-autofill.js in Resources */ = {isa = PBXBuildFile; fileRef = F4D3499B2548329B002AAF35 /* email-autofill.js */; };
-		F4D349D125502AC4002AAF35 /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */; };
-		F4D349DB25506A1E002AAF35 /* EmailKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */; };
-		F4D349F7255195F4002AAF35 /* EmailUserScriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */; };
-		F4D34A122551C810002AAF35 /* EmailManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D34A082551C7EE002AAF35 /* EmailManagerTests.swift */; };
 		F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CE6D1A257EA33C00D0A6AA /* FireButtonAnimator.swift */; };
 		F4D1BFA42587EA0600469046 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F4D1BFA32587EA0600469046 /* Lottie */; };
+		F4D349D125502AC4002AAF35 /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */; };
 		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
@@ -1999,14 +1994,8 @@
 		F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsViewController.swift; sourceTree = "<group>"; };
 		F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsDetailsViewController.swift; sourceTree = "<group>"; };
-		F4D349622541D7D0002AAF35 /* EmailUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUserScript.swift; sourceTree = "<group>"; };
-		F4D3497E2541F712002AAF35 /* EmailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailManager.swift; sourceTree = "<group>"; };
-		F4D3499B2548329B002AAF35 /* email-autofill.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "email-autofill.js"; sourceTree = "<group>"; };
-		F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
-		F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailKeychainManager.swift; sourceTree = "<group>"; };
-		F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailUserScriptTests.swift; sourceTree = "<group>"; };
-		F4D34A082551C7EE002AAF35 /* EmailManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerTests.swift; sourceTree = "<group>"; };
 		F4CE6D1A257EA33C00D0A6AA /* FireButtonAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButtonAnimator.swift; sourceTree = "<group>"; };
+		F4D349D025502AC3002AAF35 /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
 		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessagesStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
@@ -2110,6 +2099,7 @@
 			files = (
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
+				F498DD3D25ED0A89008197FE /* BrowserServicesKit in Frameworks */,
 				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3264,7 +3254,6 @@
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,
 				F143C3141E4A99BE00CFDE3A /* Domain */,
-				F4D349572541C44B002AAF35 /* Email */,
 				85CA53A724BB342B00A6288C /* Favicons */,
 				8512BCBF2061B6110085E862 /* global.swift */,
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
@@ -3722,7 +3711,6 @@
 				83EDCC3E1F86B363005CDFCD /* API */,
 				830FA79B1F8E81FB00FCE105 /* ContentBlocker */,
 				F17D722C1E8B3563003E8B0E /* Domain */,
-				F4D349E425518F20002AAF35 /* Email */,
 				85D2186E24BF24BA004373D2 /* Favicons */,
 				F16393F31ECCA83F00DDD653 /* SiteMonitoring */,
 				F1134EC91F40E74800B73467 /* Statistics */,
@@ -3769,26 +3757,6 @@
 				F1EEAC4C1EAFC708006128D9 /* readme.txt */,
 			);
 			name = Licensed;
-			sourceTree = "<group>";
-		};
-		F4D349572541C44B002AAF35 /* Email */ = {
-			isa = PBXGroup;
-			children = (
-				F4D3499B2548329B002AAF35 /* email-autofill.js */,
-				F4D349622541D7D0002AAF35 /* EmailUserScript.swift */,
-				F4D3497E2541F712002AAF35 /* EmailManager.swift */,
-				F4D349DA25506A1E002AAF35 /* EmailKeychainManager.swift */,
-			);
-			name = Email;
-			sourceTree = "<group>";
-		};
-		F4D349E425518F20002AAF35 /* Email */ = {
-			isa = PBXGroup;
-			children = (
-				F4D34A082551C7EE002AAF35 /* EmailManagerTests.swift */,
-				F4D349E525518F7B002AAF35 /* EmailUserScriptTests.swift */,
-			);
-			name = Email;
 			sourceTree = "<group>";
 		};
 		F4B594E2257E9806006BC1F0 /* NewFireAnimation */ = {
@@ -4065,6 +4033,7 @@
 				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
 				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
+				F498DD3C25ED0A89008197FE /* BrowserServicesKit */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -4213,6 +4182,7 @@
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
+				F498DCFD25ED08D6008197FE /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -4450,7 +4420,6 @@
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
-				F4D3499F2548329B002AAF35 /* email-autofill.js in Resources */,
 				8521FDEA238DA9D800A44CC3 /* trackerData.json in Resources */,
 				02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */,
 			);
@@ -4864,13 +4833,11 @@
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */,
-				F4D34A122551C810002AAF35 /* EmailManagerTests.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
-				F4D349F7255195F4002AAF35 /* EmailUserScriptTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
@@ -5008,7 +4975,6 @@
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */,
-				F4D349DB25506A1E002AAF35 /* EmailKeychainManager.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,
@@ -5017,7 +4983,6 @@
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				9896632422C56716007BE4FE /* EtagStorage.swift in Sources */,
-				F4D349632541D7D0002AAF35 /* EmailUserScript.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				8521FDEE238DD1B500A44CC3 /* MockEntityMapping.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,
@@ -5039,8 +5004,6 @@
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
-				F4D3497F2541F712002AAF35 /* EmailManager.swift in Sources */,
-				0201A45324ED821E00C6641C /* ContentBlockerRulesBuilder.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				83E2D2BE253CD772005605F5 /* HTTPSExcludedDomains.swift in Sources */,
@@ -7014,6 +6977,14 @@
 				minimumVersion = 1.5.0;
 			};
 		};
+		F498DCFD25ED08D6008197FE /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://dub.duckduckgo.com/duckduckgo/BrowserServicesKit";
+			requirement = {
+				branch = "feature/elle/update-email";
+				kind = branch;
+			};
+		};
 		F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/lottie-ios.git";
@@ -7059,6 +7030,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
+		};
+		F498DD3C25ED0A89008197FE /* BrowserServicesKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F498DCFD25ED08D6008197FE /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = BrowserServicesKit;
 		};
 		F4D1BFA32587EA0600469046 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

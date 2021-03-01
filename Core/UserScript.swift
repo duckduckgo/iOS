@@ -17,34 +17,16 @@
 //  limitations under the License.
 //
 
-import WebKit
-
-public protocol UserScript: WKScriptMessageHandler {
-        
-    var source: String { get }
-    var injectionTime: WKUserScriptInjectionTime { get }
-    var forMainFrameOnly: Bool { get }
-    
-    var messageNames: [String] { get }
-    
-}
+import BrowserServicesKit
 
 extension UserScript {
         
+    // Wrapper to reduce the number of changes required to integrate BrowserServicesKit
+    // and reduce the size of the eventual merge conflict when the email feature is ready to be made public
+    // This can be removed then
     public func loadJS(_ jsFile: String, withReplacements replacements: [String: String] = [:]) -> String {
         
-        let bundle = Bundle.core
-        let path = bundle.path(forResource: jsFile, ofType: "js")!
-        
-        guard var js = try? String(contentsOfFile: path) else {
-            fatalError("Failed to load JavaScript \(jsFile) from \(path)")
-        }
-        
-        for (key, value) in replacements {
-            js = js.replacingOccurrences(of: key, with: value, options: .literal)
-        }
-
-        return js
+        return Self.loadJS(jsFile, from: Bundle.core, withReplacements: replacements)
     }
     
 }

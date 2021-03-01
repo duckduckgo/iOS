@@ -20,6 +20,7 @@
 import UIKit
 import MessageUI
 import Core
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 protocol SettingsViewControllerDelegate: class {

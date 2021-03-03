@@ -88,7 +88,11 @@ extension Core.Link: UIActivityItemSource {
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
-        return title ?? ""
+        if let title = title, activityType == .mail {
+            return title
+        } else {
+            return ""
+        }
     }
 
 }

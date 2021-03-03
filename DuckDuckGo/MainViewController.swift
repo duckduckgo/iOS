@@ -82,6 +82,7 @@ class MainViewController: UIViewController {
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
+    var browsingMenu: BrowsingMenuViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -690,7 +691,34 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchBrowsingMenu() {
-        currentTab?.launchBrowsingMenu()
+        guard let tab = currentTab else { return }
+        
+        let entries = tab.buildBrowsingMenu()
+        let controller = BrowsingMenuViewController(nibName: "BrowsingMenuViewController", bundle: nil)
+        controller.loadViewIfNeeded()
+        controller.setHeaderEntires(tab.buildBrowsingMenuHeaderContent())
+        controller.setMenuEntires(entries)
+        controller.attachTo(view) { [weak self] in
+            self?.dismissBrowsingMenu()
+        }
+        
+        let webViewFrame = tab.webView.convert(tab.webView.frame, to: view)
+        
+        controller.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10).isActive = true
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: controller.view.trailingAnchor, constant: 10).isActive = true
+        controller.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 280).isActive = true
+        controller.view.heightAnchor.constraint(lessThanOrEqualTo: tab.webView.heightAnchor, multiplier: 1.0).isActive = true
+        
+        addChild(controller)
+        
+        browsingMenu = controller
+        tab.didLaunchBrowsingMenu()
+    }
+    
+    private func dismissBrowsingMenu() {
+        guard let controller = browsingMenu else { return }
+        
+        controller.detachFrom(view)
     }
     
     fileprivate func launchReportBrokenSite() {

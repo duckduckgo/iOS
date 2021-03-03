@@ -670,11 +670,9 @@ class TabViewController: UIViewController {
         privacyController?.updateSiteRating(siteRating)
     }
     
-    func launchBrowsingMenu() {
+    func didLaunchBrowsingMenu() {
         Pixel.fire(pixel: .browsingMenuOpened)
-        guard let button = chromeDelegate?.omniBar.menuButton else { return }
-        let alert = buildBrowsingMenu()
-        present(controller: alert, fromView: button)
+//        guard let button = chromeDelegate?.omniBar.menuButton else { return }
         DaxDialogs.shared.resumeRegularFlow()
     }
     

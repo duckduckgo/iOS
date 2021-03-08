@@ -202,7 +202,7 @@ class TabViewController: UIViewController {
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
-        addEailObservers()
+        addEmailObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -604,7 +604,7 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
-    private func addEailObservers() {
+    private func addEmailObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onEmailDidSignIn),
                                                name: .emailDidSignIn,

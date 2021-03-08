@@ -20,6 +20,7 @@
 import UIKit
 import WebKit
 import TrackerRadarKit
+import BrowserServicesKit
 
 public class ContentBlockerRulesUserScript: NSObject, UserScript {
     

@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import BrowserServicesKit
 
 public class FingerprintUserScript: NSObject, UserScript {
     public var source: String {

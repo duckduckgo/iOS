@@ -21,6 +21,7 @@ import WebKit
 import Core
 import StoreKit
 import os.log
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -168,7 +169,8 @@ class TabViewController: UIViewController {
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
-        emailManager.delegate = self
+        emailManager.aliasPermissionDelegate = self
+        emailManager.requestDelegate = self
         return emailManager
     }()
     private var emailScript = EmailUserScript()
@@ -200,6 +202,7 @@ class TabViewController: UIViewController {
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
+        addEmailObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -601,6 +604,21 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
+    private func addEmailObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onEmailDidSignIn),
+                                               name: .emailDidSignIn,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onEmailDidSignOut),
+                                               name: .emailDidSignOut,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onEmailDidGenerateAlias),
+                                               name: .emailDidGenerateAlias,
+                                               object: nil)
+    }
+    
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
     }
@@ -627,6 +645,18 @@ class TabViewController: UIViewController {
     
     @objc func onDoNotSellChange() {
         reload(scripts: true)
+    }
+    
+    @objc func onEmailDidSignIn() {
+        Pixel.fire(pixel: .emailUserSignedIn)
+    }
+    
+    @objc func onEmailDidSignOut() {
+        Pixel.fire(pixel: .emailUserSignedOut)
+    }
+    
+    @objc func onEmailDidGenerateAlias() {
+        Pixel.fire(pixel: .emailAliasGenerated)
     }
 
     private func resetNavigationBar() {
@@ -1403,7 +1433,7 @@ extension TabViewController: FaviconUserScriptDelegate {
     
 }
 
-extension TabViewController: EmailManagerPresentationDelegate {
+extension TabViewController: EmailManagerAliasPermissionDelegate {
     func emailManager(_ emailManager: EmailManager, didRequestPermissionToProvideAlias alias: String, completionHandler: @escaping (Bool) -> Void) {
         
         let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: UserText.emailAliasAlertMessage, preferredStyle: .actionSheet)
@@ -1435,6 +1465,25 @@ extension TabViewController: EmailManagerPresentationDelegate {
         
         Pixel.fire(pixel: .emailTooltipShown)
     }
+}
+
+extension TabViewController: EmailManagerRequestDelegate {
+    // swiftlint:disable function_parameter_count
+    func emailManager(_ emailManager: EmailManager,
+                      didRequestAliasWithURL url: URL,
+                      method: String,
+                      headers: [String: String],
+                      timeoutInterval: TimeInterval,
+                      completion: @escaping (Data?, Error?) -> Void) {
+        APIRequest.request(url: url,
+                           method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
+                           headers: headers,
+                           timeoutInterval: timeoutInterval) { response, error in
+            
+            completion(response?.data, error)
+        }
+    }
+    // swiftlint:enable function_parameter_count
 }
 
 extension TabViewController: Themable {

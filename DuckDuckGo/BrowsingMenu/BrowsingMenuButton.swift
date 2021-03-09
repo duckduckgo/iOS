@@ -25,11 +25,19 @@ class BrowsingMenuButton: UIView {
 
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var highlight: UIView!
     
     private var action: () -> Void = {}
     
     static func loadFromXib() -> BrowsingMenuButton {
         return BrowsingMenuButton.load(nibName: "BrowsingMenuButton")
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        highlight.layer.cornerRadius = 10
+        highlight.isHidden = true
     }
     
     func configure(with icon: UIImage, label: String, action: @escaping () -> Void) {
@@ -41,21 +49,16 @@ class BrowsingMenuButton: UIView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-        backgroundColor = .red
+        highlight.isHidden = false
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         
         guard let touch = touches.first else { return }
-        
         let location = touch.location(in: self)
         
-        if !bounds.contains(location) {
-            backgroundColor = .clear
-        } else {
-            backgroundColor = .red
-        }
+        highlight.isHidden = !bounds.contains(location)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,7 +72,7 @@ class BrowsingMenuButton: UIView {
             action()
         }
         
-        backgroundColor = .clear
+        highlight.isHidden = true
     }
     
 }

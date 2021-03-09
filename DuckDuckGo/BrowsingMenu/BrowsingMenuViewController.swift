@@ -217,6 +217,7 @@ extension BrowsingMenuViewController: Themable {
         for headerButton in headerButtons {
             headerButton.image.tintColor = theme.browsingMenuIconsColor
             headerButton.label.textColor = theme.browsingMenuTextColor
+            headerButton.highlight.backgroundColor = theme.browsingMenuHighlightColor
         }
         
         horizontalContainer.backgroundColor = theme.browsingMenuBackgroundColor

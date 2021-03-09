@@ -56,6 +56,7 @@ struct LightTheme: Theme {
     var browsingMenuIconsColor = UIColor.nearlyBlackLight
     var browsingMenuBackgroundColor = UIColor.white
     var browsingMenuSeparatorColor = UIColor.mercury
+    var browsingMenuHighlightColor = UIColor.lightGreyish
     
     var progressBarGradientDarkColor = UIColor.cornflowerBlue
     var progressBarGradientLightColor = UIColor.skyBlueLight

@@ -30,13 +30,7 @@ class BrowsingMenuEntryViewCell: UITableViewCell {
         
         entryImage.tintColor = theme.browsingMenuIconsColor
         entryLabel.textColor = theme.browsingMenuTextColor
-        contentView.backgroundColor = theme.browsingMenuBackgroundColor
+        backgroundColor = theme.browsingMenuBackgroundColor
+        setHighlightedStateBackgroundColor(theme.browsingMenuHighlightColor)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

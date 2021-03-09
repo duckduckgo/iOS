@@ -21,7 +21,7 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="280" height="500"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBS-aZ-obk">
+                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBS-aZ-obk">
                     <rect key="frame" x="0.0" y="0.0" width="280" height="85"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="85" id="mZd-2l-FZb"/>

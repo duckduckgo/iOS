@@ -48,7 +48,6 @@ struct DarkTheme: Theme {
     
     var browsingMenuTextColor = UIColor.white
     var browsingMenuIconsColor = UIColor.lightMercury
-    var browsingMenuTopIconsColor = UIColor.lightMercury
     var browsingMenuBackgroundColor = UIColor.nearlyBlackLight
     var browsingMenuSeparatorColor = UIColor.charcoalGrey
     

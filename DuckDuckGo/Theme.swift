@@ -56,7 +56,6 @@ protocol Theme {
     
     var browsingMenuTextColor: UIColor { get }
     var browsingMenuIconsColor: UIColor { get }
-    var browsingMenuTopIconsColor: UIColor { get }
     var browsingMenuBackgroundColor: UIColor { get }
     var browsingMenuSeparatorColor: UIColor { get }
     

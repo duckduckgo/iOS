@@ -53,8 +53,7 @@ struct LightTheme: Theme {
     var searchBarClearTextIconColor = UIColor.greyish2
     
     var browsingMenuTextColor = UIColor.nearlyBlack
-    var browsingMenuIconsColor = UIColor.darkGreyish
-    var browsingMenuTopIconsColor = UIColor.nearlyBlack
+    var browsingMenuIconsColor = UIColor.nearlyBlackLight
     var browsingMenuBackgroundColor = UIColor.white
     var browsingMenuSeparatorColor = UIColor.mercury
     

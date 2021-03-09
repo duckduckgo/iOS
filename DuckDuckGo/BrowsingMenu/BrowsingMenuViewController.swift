@@ -92,6 +92,9 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     private func configureShadow() {
         view.clipsToBounds = false
         
+        horizontalContainer.layer.cornerRadius = 10
+        tableView.layer.cornerRadius = 10
+        
         view.layer.cornerRadius = 10
         view.layer.shadowOffset = CGSize(width: 0, height: 4)
         view.layer.shadowColor = UIColor.black.cgColor
@@ -148,7 +151,10 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
                 fatalError("Regular entry not found")
             }
             
-            view.configure(with: image, label: name, action: action)
+            view.configure(with: image, label: name) { [weak self] in
+                self?.dismiss?()
+                action()
+            }
         }
         
         headerEntries = entries
@@ -165,6 +171,7 @@ extension BrowsingMenuViewController: UITableViewDelegate {
         
         switch menuEntries[indexPath.row] {
         case .regular(_, _, let action):
+            dismiss?()
             action()
         case .separator:
             break
@@ -208,7 +215,7 @@ extension BrowsingMenuViewController: Themable {
     func decorate(with theme: Theme) {
         
         for headerButton in headerButtons {
-            headerButton.image.tintColor = theme.browsingMenuTopIconsColor
+            headerButton.image.tintColor = theme.browsingMenuIconsColor
             headerButton.label.textColor = theme.browsingMenuTextColor
         }
         

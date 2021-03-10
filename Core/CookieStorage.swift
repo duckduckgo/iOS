@@ -30,23 +30,23 @@ public class CookieStorage {
 
     var cookies: [HTTPCookie] {
 
-         var storedCookies = [HTTPCookie]()
-         if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
-             for cookieData in cookies {
-                 var properties = [HTTPCookiePropertyKey: Any]()
-                 cookieData.forEach({
-                     properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
-                 })
+        var storedCookies = [HTTPCookie]()
+        if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
+            for cookieData in cookies {
+                var properties = [HTTPCookiePropertyKey: Any]()
+                cookieData.forEach({
+                    properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
+                })
 
-                 if let cookie = HTTPCookie(properties: properties) {
-                     os_log("read cookie %s %s %s", log: generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
-                     storedCookies.append(cookie)
-                 }
-             }
-         }
+                if let cookie = HTTPCookie(properties: properties) {
+                    os_log("read cookie %s %s %s", log: generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
+                    storedCookies.append(cookie)
+                }
+            }
+        }
 
-         return storedCookies
-     }
+        return storedCookies
+    }
 
     public init(userDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults

@@ -302,8 +302,8 @@ class TabViewController: UIViewController {
         instrumentation.didPrepareWebView()
 
         if consumeCookies {
-             consumeCookiesThenLoadRequest(request)
-         } else if let request = request {
+            consumeCookiesThenLoadRequest(request)
+        } else if let request = request {
             load(urlRequest: request)
         }
     }
@@ -325,20 +325,20 @@ class TabViewController: UIViewController {
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
-         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-             WebCacheManager.shared.consumeCookies { [weak self] in
-                 guard let strongSelf = self else { return }
-
-                 if let request = request {
-                     strongSelf.load(urlRequest: request)
-                 }
-
-                 if request != nil {
-                     strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
-                     strongSelf.onWebpageDidStartLoading(httpsForced: false)
-                 }
-             }
-         }
+        webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
+            WebCacheManager.shared.consumeCookies { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                if let request = request {
+                    strongSelf.load(urlRequest: request)
+                }
+                
+                if request != nil {
+                    strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
+                    strongSelf.onWebpageDidStartLoading(httpsForced: false)
+                }
+            }
+        }
     }
     
     public func load(url: URL) {

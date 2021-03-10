@@ -52,37 +52,37 @@ public class WebCacheManager {
     public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
                                httpCookieStore: WebCacheManagerCookieStore? = WKWebsiteDataStore.default().cookieStore,
                                completion: @escaping () -> Void) {
-
-             guard let httpCookieStore = httpCookieStore else {
-                 completion()
-                 return
-             }
-
-             let cookies = cookieStorage.cookies
-
-             guard !cookies.isEmpty else {
-                 completion()
-                 return
-             }
-
-             let group = DispatchGroup()
-
-             for cookie in cookies {
-                 group.enter()
-                 httpCookieStore.setCookie(cookie) {
-                     group.leave()
-                 }
-             }
-
-             DispatchQueue.global(qos: .userInitiated).async {
-                 group.wait()
-
-                 DispatchQueue.main.async {
-                     cookieStorage.clear()
-                     completion()
-                 }
-             }
-         }
+        
+        guard let httpCookieStore = httpCookieStore else {
+            completion()
+            return
+        }
+        
+        let cookies = cookieStorage.cookies
+        
+        guard !cookies.isEmpty else {
+            completion()
+            return
+        }
+        
+        let group = DispatchGroup()
+        
+        for cookie in cookies {
+            group.enter()
+            httpCookieStore.setCookie(cookie) {
+                group.leave()
+            }
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            group.wait()
+            
+            DispatchQueue.main.async {
+                cookieStorage.clear()
+                completion()
+            }
+        }
+    }
 
     public func removeCookies(forDomains domains: [String],
                               dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),

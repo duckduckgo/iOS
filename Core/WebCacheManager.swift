@@ -91,9 +91,9 @@ public class WebCacheManager {
                 return
             }
 
-            let group = DispatchGroup()
-
             cookieStore.getAllCookies { cookies in
+                let group = DispatchGroup()
+
                 let cookiesToRemove = cookies.filter { !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain }
 
                 for cookie in cookiesToRemove {
@@ -102,14 +102,14 @@ public class WebCacheManager {
                         group.leave()
                     }
                 }
-            }
 
-            DispatchQueue.global(qos: .background).async {
-                _ = group.wait(timeout: .now() + 5)
-                Pixel.fire(pixel: .blankOverlayNotDismissed)
+                DispatchQueue.global(qos: .background).async {
+                    _ = group.wait(timeout: .now() + 5)
 
-                DispatchQueue.main.async {
-                    completion()
+                    Pixel.fire(pixel: .blankOverlayNotDismissed)
+                    DispatchQueue.main.async {
+                        completion()
+                    }
                 }
             }
         }

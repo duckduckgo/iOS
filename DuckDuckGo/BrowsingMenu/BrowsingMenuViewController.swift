@@ -39,6 +39,8 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
+    public var parentConstraits = [NSLayoutConstraint]()
+    
     weak var background: UIView?
     private var dismiss: DismissHandler?
     
@@ -111,8 +113,15 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         background.backgroundColor = .clear
         targetView.addSubview(background)
         background.frame = targetView.bounds
-        self.background = background
         
+        background.translatesAutoresizingMaskIntoConstraints = false
+        background.topAnchor.constraint(equalTo: targetView.topAnchor).isActive = true
+        background.bottomAnchor.constraint(equalTo: targetView.bottomAnchor).isActive = true
+        background.leadingAnchor.constraint(equalTo: targetView.leadingAnchor).isActive = true
+        background.trailingAnchor.constraint(equalTo: targetView.trailingAnchor).isActive = true
+        
+        self.background = background
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
         background.addGestureRecognizer(tapGesture)
         
@@ -131,6 +140,14 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         view.removeFromSuperview()
         
         dismiss = nil
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.flashScrollIndicators()
+        }
     }
     
     private func recalculateLayout() {

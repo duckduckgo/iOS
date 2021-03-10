@@ -336,7 +336,10 @@ class MainViewController: UIViewController {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
-
+        
+        if let menu = browsingMenu {
+            refreshConstraints(browsingMenu: menu)
+        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -691,7 +694,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchBrowsingMenu() {
-        guard let tab = currentTab else { return }
+        guard let tab = currentTab, browsingMenu == nil else { return }
         
         let entries = tab.buildBrowsingMenu()
         let controller = BrowsingMenuViewController(nibName: "BrowsingMenuViewController", bundle: nil)
@@ -702,23 +705,49 @@ class MainViewController: UIViewController {
             self?.dismissBrowsingMenu()
         }
         
-        let webViewFrame = tab.webView.convert(tab.webView.frame, to: view)
-        
-        controller.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10).isActive = true
-        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: controller.view.trailingAnchor, constant: 10).isActive = true
-        controller.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 280).isActive = true
-        controller.view.heightAnchor.constraint(lessThanOrEqualTo: tab.webView.heightAnchor, multiplier: 1.0).isActive = true
-        
+        refreshConstraints(browsingMenu: controller)
         addChild(controller)
         
         browsingMenu = controller
         tab.didLaunchBrowsingMenu()
     }
     
+    func refreshConstraints(browsingMenu: BrowsingMenuViewController) {
+        guard let tab = currentTab else { return }
+        
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: browsingMenu.view.trailingAnchor, constant: 10))
+        
+        if traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact)) {
+            // iPhone - landscape:
+            
+            // Move menu up, as bottom toolbar shrinks
+            constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 0))
+            
+            // Make it go above WebView
+            constraints.append(browsingMenu.view.topAnchor.constraint(equalTo: tab.webView.topAnchor, constant: -10))
+            
+            // Flexible width
+            constraints.append(browsingMenu.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 280))
+        } else {
+            // Reguar sizing:
+            constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10))
+            constraints.append(browsingMenu.view.topAnchor.constraint(equalTo: tab.webView.topAnchor, constant: 10))
+            
+            // Constant width
+            constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
+        }
+        
+        browsingMenu.parentConstraits.forEach { $0.isActive = false }
+        constraints.forEach { $0.isActive = true }
+        browsingMenu.parentConstraits = constraints
+    }
+    
     private func dismissBrowsingMenu() {
         guard let controller = browsingMenu else { return }
         
         controller.detachFrom(view)
+        browsingMenu = nil
     }
     
     fileprivate func launchReportBrokenSite() {

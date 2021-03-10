@@ -37,6 +37,7 @@ struct DefaultTutorialSettings: TutorialSettings {
     private struct Keys {
         static let lastVersionSeen = "com.duckduckgo.tutorials.lastVersionSeen"
         static let hasSeenOnboarding = "com.duckduckgo.tutorials.hasSeenOnboarding"
+        static let hasSeenEmailOnboarding = "com.duckduckgo.tutorials.hasSeenEmailOnboarding"
     }
 
     private func userDefaults() -> UserDefaults {
@@ -57,6 +58,15 @@ struct DefaultTutorialSettings: TutorialSettings {
         set(newValue) {
             userDefaults().set(Constants.onboardingVersion, forKey: Keys.lastVersionSeen)
             userDefaults().set(newValue, forKey: Keys.hasSeenOnboarding)
+        }
+    }
+    
+    public var hasSeenEmailOnboarding: Bool {
+        get {
+            return userDefaults().bool(forKey: Keys.hasSeenEmailOnboarding)
+        }
+        set {
+            userDefaults().setValue(newValue, forKey: Keys.hasSeenEmailOnboarding)
         }
     }
 }

@@ -6,8 +6,8 @@
         "repositoryURL": "https://dub.duckduckgo.com/duckduckgo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "db715c141c5db258c769cf13f7899801ae08ca08",
-          "version": "0.3.0"
+          "revision": "dd70e6476381bb0277da1172afe55b249ab95d19",
+          "version": "0.5.0"
         }
       },
       {

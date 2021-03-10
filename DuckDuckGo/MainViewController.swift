@@ -168,11 +168,29 @@ class MainViewController: UIViewController {
         let showOnboarding = !settings.hasSeenOnboarding ||
             // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
-        guard showOnboarding else { return }
+        guard showOnboarding else {
+            startEmailOnboardingIfNotSeenBefore(inNewTab: true)
+            return
+        }
 
         let onboardingFlow = "DaxOnboarding"
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
+    }
+    
+    func startEmailOnboardingIfNotSeenBefore(inNewTab: Bool) {
+        var settings = DefaultTutorialSettings()
+        guard !settings.hasSeenEmailOnboarding else { return }
+        
+        // For the email beta, we don't want to show dax dialogs after onboarding, because we instead take the
+        // user to the email sign up page.
+        // THIS SHOULD BE REMOVED BEFORE THE EMAIL FEATURE IS OUT OF BETA
+        if inNewTab {
+            self.loadUrlInNewTab(self.appUrls.emailLandingPage)
+        } else {
+            self.loadUrl(self.appUrls.emailLandingPage)
+        }
+        settings.hasSeenEmailOnboarding = true
     }
     
     private func registerForKeyboardNotifications() {
@@ -1443,10 +1461,7 @@ extension MainViewController: OnboardingDelegate {
         controller.modalTransitionStyle = .crossDissolve
         
         controller.dismiss(animated: true) {
-            // For the email beta, we don't want to show dax dialogs after onboarding, because we instead take the
-            // user to the email sign up page.
-            // THIS SHOULD BE REMOVED BEFORE THE EMAIL FEATURE IS OUT OF BETA
-            self.loadUrl(self.appUrls.emailLandingPage)
+            self.startEmailOnboardingIfNotSeenBefore(inNewTab: false)
         }
         
         homeController?.onboardingCompleted()

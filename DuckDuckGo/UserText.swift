@@ -326,6 +326,7 @@ public struct UserText {
     public static let doNotSellDisabled = NSLocalizedString("donotsell.disabled", value: "Disabled", comment: "GPC Setting state")
     
     public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Create a Duck Address", comment: "")
+    public static let emailBrowsingMenuTurnOnEmail = NSLocalizedString("email.browsingMenu.turnOnEmail", value: "Turn on Email Protection", comment: "")
     public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New address copied to your clipboard", comment: "")
     public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "Use a private Duck Address", comment: "")
     public static let emailAliasAlertMessage = NSLocalizedString("email.aliasAlert.message", value: "Protect your personal address, block trackers, and forward to your regular inbox.", comment: "")

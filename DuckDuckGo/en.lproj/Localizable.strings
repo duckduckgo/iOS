@@ -260,6 +260,9 @@
 "email.browsingMenu.alert" = "New address copied to your clipboard";
 
 /* No comment provided by engineer. */
+"email.browsingMenu.turnOnEmail" = "Turn on Email Protection";
+
+/* No comment provided by engineer. */
 "email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
 
 /* No comment provided by engineer. */

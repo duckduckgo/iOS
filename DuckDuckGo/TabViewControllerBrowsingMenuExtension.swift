@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 extension TabViewController {
     
@@ -54,6 +55,10 @@ extension TabViewController {
             }
             
             if let action = buildUseNewDuckAddressAction(forLink: link) {
+                alert.addAction(action)
+            }
+            
+            if let action = buildTurnOnEmailAction(forLink: link) {
                 alert.addAction(action)
             }
             
@@ -128,6 +133,16 @@ extension TabViewController {
         }
         action.accessibilityLabel = UserText.actionSaveFavorite
         return action
+    }
+    
+    private func buildTurnOnEmailAction(forLink link: Link) -> UIAlertAction? {
+        guard !emailManager.isSignedIn else { return nil }
+        let title = UserText.emailBrowsingMenuTurnOnEmail
+        let url = EmailUrls().emailLandingPage
+        return UIAlertAction(title: title, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+        }
     }
     
     private func buildUseNewDuckAddressAction(forLink link: Link) -> UIAlertAction? {

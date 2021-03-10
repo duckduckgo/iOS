@@ -106,6 +106,8 @@ public class WebCacheManager {
 
             DispatchQueue.global(qos: .background).async {
                 _ = group.wait(timeout: .now() + 5)
+                Pixel.fire(pixel: .blankOverlayNotDismissed)
+
                 DispatchQueue.main.async {
                     completion()
                 }

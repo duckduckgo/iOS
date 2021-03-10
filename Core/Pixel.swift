@@ -183,6 +183,8 @@ public enum PixelName: String {
     case backgroundTaskSubmissionFailed = "m_bt_rf"
     
     case blankOverlayNotDismissed = "m_d_ovs"
+
+    case cookieDeletionTimedOut = "m_d_csto"
 }
 // swiftlint:enable identifier_name
 

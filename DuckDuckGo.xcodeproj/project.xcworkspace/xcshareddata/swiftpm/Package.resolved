@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "BrowserServicesKit",
-        "repositoryURL": "https://dub.duckduckgo.com/duckduckgo/BrowserServicesKit",
+        "repositoryURL": "git@dub.duckduckgo.com:duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": null,
           "revision": "dd70e6476381bb0277da1172afe55b249ab95d19",

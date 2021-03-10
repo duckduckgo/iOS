@@ -554,6 +554,7 @@
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
+		F4292DC325F9543900B2BDA0 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F4292DC225F9543900B2BDA0 /* BrowserServicesKit */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
 		F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F446B9B625115C1700324016 /* HomeMessageCell.xib */; };
 		F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B825115F9700324016 /* HomeMessageCell.swift */; };
@@ -567,7 +568,6 @@
 		F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F486D33325069BBB002D07D7 /* Kingfisher */; };
 		F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3352506A037002D07D7 /* OHHTTPStubs */; };
 		F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3372506A225002D07D7 /* OHHTTPStubsSwift */; };
-		F498DD3D25ED0A89008197FE /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F498DD3C25ED0A89008197FE /* BrowserServicesKit */; };
 		F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */; };
 		F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */; };
 		F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CE6D1A257EA33C00D0A6AA /* FireButtonAnimator.swift */; };
@@ -2099,7 +2099,7 @@
 			files = (
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
-				F498DD3D25ED0A89008197FE /* BrowserServicesKit in Frameworks */,
+				F4292DC325F9543900B2BDA0 /* BrowserServicesKit in Frameworks */,
 				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4033,7 +4033,7 @@
 				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
 				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
-				F498DD3C25ED0A89008197FE /* BrowserServicesKit */,
+				F4292DC225F9543900B2BDA0 /* BrowserServicesKit */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -4182,7 +4182,7 @@
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
-				F498DCFD25ED08D6008197FE /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
+				F4292DC125F9543900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6937,6 +6937,14 @@
 				minimumVersion = 1.0.2;
 			};
 		};
+		F4292DC125F9543900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@dub.duckduckgo.com:duckduckgo/BrowserServicesKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -6977,14 +6985,6 @@
 				minimumVersion = 1.5.0;
 			};
 		};
-		F498DCFD25ED08D6008197FE /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://dub.duckduckgo.com/duckduckgo/BrowserServicesKit";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
 		F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/lottie-ios.git";
@@ -7000,6 +7000,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
 			productName = TrackerRadarKit;
+		};
+		F4292DC225F9543900B2BDA0 /* BrowserServicesKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4292DC125F9543900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = BrowserServicesKit;
 		};
 		F486D305250697AF002D07D7 /* Punnycode */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -7030,11 +7035,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
-		};
-		F498DD3C25ED0A89008197FE /* BrowserServicesKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F498DCFD25ED08D6008197FE /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
-			productName = BrowserServicesKit;
 		};
 		F4D1BFA32587EA0600469046 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

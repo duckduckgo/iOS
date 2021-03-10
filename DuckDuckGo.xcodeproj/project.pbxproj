@@ -554,7 +554,7 @@
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
-		F4292DC325F9543900B2BDA0 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F4292DC225F9543900B2BDA0 /* BrowserServicesKit */; };
+		F4292DEE25F962D900B2BDA0 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F4292DED25F962D900B2BDA0 /* BrowserServicesKit */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
 		F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F446B9B625115C1700324016 /* HomeMessageCell.xib */; };
 		F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B825115F9700324016 /* HomeMessageCell.swift */; };
@@ -2099,7 +2099,7 @@
 			files = (
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
-				F4292DC325F9543900B2BDA0 /* BrowserServicesKit in Frameworks */,
+				F4292DEE25F962D900B2BDA0 /* BrowserServicesKit in Frameworks */,
 				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4033,7 +4033,7 @@
 				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
 				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
-				F4292DC225F9543900B2BDA0 /* BrowserServicesKit */,
+				F4292DED25F962D900B2BDA0 /* BrowserServicesKit */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -4182,7 +4182,7 @@
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
-				F4292DC125F9543900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
+				F4292DEC25F962D900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6937,12 +6937,12 @@
 				minimumVersion = 1.0.2;
 			};
 		};
-		F4292DC125F9543900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
+		F4292DEC25F962D900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@dub.duckduckgo.com:duckduckgo/BrowserServicesKit.git";
+			repositoryURL = "git@github.com:more-duckduckgo-org/BrowserServicesKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.5.0;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -7001,9 +7001,9 @@
 			package = 4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
 			productName = TrackerRadarKit;
 		};
-		F4292DC225F9543900B2BDA0 /* BrowserServicesKit */ = {
+		F4292DED25F962D900B2BDA0 /* BrowserServicesKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F4292DC125F9543900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			package = F4292DEC25F962D900B2BDA0 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
 		};
 		F486D305250697AF002D07D7 /* Punnycode */ = {

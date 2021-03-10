@@ -23,6 +23,8 @@ public protocol WebCacheManagerCookieStore {
     
     func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
 
+    func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
+
     func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
     
 }
@@ -44,6 +46,43 @@ public class WebCacheManager {
     public static var shared = WebCacheManager()
     
     private init() { }
+
+    /// This function is used to extract cookies stored in CookieStorage and restore them to WKWebView's HTTP cookie store during the Fire button operation.
+    /// The Fire button no longer persists and restores cookies, but this function remains in the event that cookies have been stored and not yet restored.
+    public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
+                               httpCookieStore: WebCacheManagerCookieStore? = WKWebsiteDataStore.default().cookieStore,
+                               completion: @escaping () -> Void) {
+
+             guard let httpCookieStore = httpCookieStore else {
+                 completion()
+                 return
+             }
+
+             let cookies = cookieStorage.cookies
+
+             guard !cookies.isEmpty else {
+                 completion()
+                 return
+             }
+
+             let group = DispatchGroup()
+
+             for cookie in cookies {
+                 group.enter()
+                 httpCookieStore.setCookie(cookie) {
+                     group.leave()
+                 }
+             }
+
+             DispatchQueue.global(qos: .userInitiated).async {
+                 group.wait()
+
+                 DispatchQueue.main.async {
+                     cookieStorage.clear()
+                     completion()
+                 }
+             }
+         }
 
     public func removeCookies(forDomains domains: [String],
                               dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
@@ -93,7 +132,6 @@ public class WebCacheManager {
 
             cookieStore.getAllCookies { cookies in
                 let group = DispatchGroup()
-
                 let cookiesToRemove = cookies.filter { !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain }
 
                 for cookie in cookiesToRemove {

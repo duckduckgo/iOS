@@ -273,7 +273,9 @@ class TabViewController: UIViewController {
         shouldReloadOnError = true
     }
 
-    func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?) {
+    // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
+    // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
+    func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -299,7 +301,9 @@ class TabViewController: UIViewController {
         
         instrumentation.didPrepareWebView()
 
-        if let request = request {
+        if consumeCookies {
+             consumeCookiesThenLoadRequest(request)
+         } else if let request = request {
             load(urlRequest: request)
         }
     }
@@ -318,6 +322,23 @@ class TabViewController: UIViewController {
         gestrueRecognizer.delegate = self
         webView.scrollView.addGestureRecognizer(gestrueRecognizer)
         longPressGestureRecognizer = gestrueRecognizer
+    }
+
+    private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
+         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
+             WebCacheManager.shared.consumeCookies { [weak self] in
+                 guard let strongSelf = self else { return }
+
+                 if let request = request {
+                     strongSelf.load(urlRequest: request)
+                 }
+
+                 if request != nil {
+                     strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
+                     strongSelf.onWebpageDidStartLoading(httpsForced: false)
+                 }
+             }
+         }
     }
     
     public func load(url: URL) {

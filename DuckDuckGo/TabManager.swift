@@ -50,7 +50,9 @@ class TabManager {
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configuration, andLoadRequest: url == nil ? nil : URLRequest(url: url!))
+        controller.attachWebView(configuration: configuration,
+                                 andLoadRequest: url == nil ? nil : URLRequest(url: url!),
+                                 consumeCookies: !model.hasActiveTabs)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         return controller
@@ -107,7 +109,7 @@ class TabManager {
         model.select(tabAt: model.currentIndex + 1)
 
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configCopy, andLoadRequest: request)
+        controller.attachWebView(configuration: configCopy, andLoadRequest: request, consumeCookies: !model.hasActiveTabs)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         tabControllerCache.append(controller)

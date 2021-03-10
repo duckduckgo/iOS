@@ -23,7 +23,7 @@
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
-		4B52647525F9593F00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52647425F9593F00CB4C24 /* trackerData.json */; };
+		4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52648A25F9613B00CB4C24 /* trackerData.json */; };
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
 		4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */; };
 		4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */; };
@@ -729,7 +729,7 @@
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
-		4B52647425F9593F00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
+		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
 		4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoUserScript.swift; sourceTree = "<group>"; };
 		4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationFetchTests.swift; sourceTree = "<group>"; };
@@ -2256,7 +2256,7 @@
 				85C271D01FCF33C8007216B4 /* DetectedTracker.swift */,
 				8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */,
 				83E2D2BD253CD772005605F5 /* HTTPSExcludedDomains.swift */,
-				4B52647425F9593F00CB4C24 /* trackerData.json */,
+				4B52648A25F9613B00CB4C24 /* trackerData.json */,
 				83E2D2B1253CC16B005605F5 /* httpsMobileV2BloomSpec.json */,
 				83E2D2AF253CC16B005605F5 /* httpsMobileV2Bloom.bin */,
 				83E2D2B0253CC16B005605F5 /* httpsMobileV2FalsePositives.json */,
@@ -4401,7 +4401,7 @@
 				02DC6A52255D8C0A00B03BC2 /* fingerprint.js in Resources */,
 				987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */,
 				98B001B0251EABB40090EC07 /* InfoPlist.strings in Resources */,
-				4B52647525F9593F00CB4C24 /* trackerData.json in Resources */,
+				4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
 				02C57C5F251533CE009E5129 /* donotsell.js in Resources */,

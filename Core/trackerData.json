@@ -1113,42 +1113,6 @@
                 }
             ]
         },
-        "adobe.com": {
-            "domain": "adobe.com",
-            "owner": {
-                "name": "Adobe Inc.",
-                "displayName": "Adobe",
-                "privacyPolicy": "https://www.adobe.com/privacy/marketing-cloud.html",
-                "url": "http://adobe.com"
-            },
-            "prevalence": 0.000771,
-            "fingerprinting": 3,
-            "cookies": 0.00057,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "adobe\\.com\\/entitlement\\/v4\\/AccessEnabler\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000625
-                },
-                {
-                    "rule": "adobe\\.com\\/entitlement\\/v4\\/AccessEnablerProxy\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.000319
-                },
-                {
-                    "rule": "adobe\\.com\\/marketingtech\\/main\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.00000695
-                },
-                {
-                    "rule": "adobe\\.com\\/entitlement\\/lib\\/AccessEnablerHelper\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000139
-                }
-            ]
-        },
         "adobedtm.com": {
             "domain": "adobedtm.com",
             "owner": {
@@ -7725,17 +7689,6 @@
                     "exceptions": {
                         "domains": [
                             "ijpr.org"
-                        ]
-                    }
-                },
-                {
-                    "rule": "pubads\\.g\\.doubleclick\\.net",
-                    "exceptions": {
-                        "domains": [
-                            "washingtonpost.com"
-                        ],
-                        "types": [
-                            "xmlhttprequest"
                         ]
                     }
                 },
@@ -20264,7 +20217,17 @@
                 "Analytics",
                 "Embedded Content"
             ],
-            "default": "block"
+            "default": "block",
+            "rules": [
+                {
+                    "rule": "go\\.pardot\\.com\\/.*\\/2tmb",
+                    "action": "ignore"
+                },
+                {
+                    "rule": "go\\.pardot\\.com\\/css\\/form.css",
+                    "action": "ignore"
+                }
+            ]
         },
         "parsely.com": {
             "domain": "parsely.com",
@@ -29914,7 +29877,25 @@
                 "Third-Party Analytics Marketing",
                 "Embedded Content"
             ],
-            "default": "block"
+            "default": "block",
+            "rules": [
+                {
+                    "rule": "yotpo\\.com\\/.*\\/widget\\.js",
+                    "exceptions": {
+                        "domains": [
+                            "candywarehouse.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yotpo\\.com\\/.*\\/widget\\.css",
+                    "exceptions": {
+                        "domains": [
+                            "candywarehouse.com"
+                        ]
+                    }
+                }
+            ]
         },
         "yottaa.net": {
             "domain": "yottaa.net",
@@ -30817,25 +30798,6 @@
                     "rule": "logbor\\.com\\/p\\/",
                     "fingerprinting": 1,
                     "cookies": 0.000101
-                }
-            ]
-        },
-        "realytics.net": {
-            "domain": "realytics.net",
-            "owner": {
-                "name": "Realytics SAS",
-                "displayName": "Realytics"
-            },
-            "prevalence": 0.00242,
-            "fingerprinting": 1,
-            "cookies": 0.00151,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "realytics\\.net\\/realytics-1\\.2\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.00151
                 }
             ]
         },
@@ -39907,6 +39869,14 @@
             "prevalence": 0.0132,
             "displayName": "Read the Docs"
         },
+        "Realytics SAS": {
+            "domains": [
+                "realytics.io",
+                "realytics.net"
+            ],
+            "prevalence": 0.0132,
+            "displayName": "Realytics"
+        },
         "Lantirn Incorporated": {
             "domains": [
                 "reamaze.com",
@@ -42442,14 +42412,6 @@
             ],
             "prevalence": 0.0049,
             "displayName": "Public-Id&Atilde;&copy;es"
-        },
-        "Realytics SAS": {
-            "domains": [
-                "realytics.io",
-                "realytics.net"
-            ],
-            "prevalence": 0.0132,
-            "displayName": "Realytics"
         },
         "Spreading Apps": {
             "domains": [
@@ -47262,6 +47224,8 @@
         "readthedocs.com": "Read the Docs, Inc",
         "readthedocs.io": "Read the Docs, Inc",
         "readthedocs.org": "Read the Docs, Inc",
+        "realytics.io": "Realytics SAS",
+        "realytics.net": "Realytics SAS",
         "reamaze.com": "Lantirn Incorporated",
         "reamaze.io": "Lantirn Incorporated",
         "recruitics.com": "Recruitics LLC",
@@ -48105,8 +48069,6 @@
         "framasoft.org": "Alexis Kauffmann",
         "hunkal.com": "3xchange",
         "logbor.com": "Public-Id&Atilde;&copy;es SA",
-        "realytics.io": "Realytics SAS",
-        "realytics.net": "Realytics SAS",
         "social-sb.com": "Spreading Apps",
         "static-sb.com": "Spreading Apps",
         "statshop.fr": "web2roi",

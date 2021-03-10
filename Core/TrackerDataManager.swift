@@ -23,8 +23,8 @@ import TrackerRadarKit
 public class TrackerDataManager {
     
     public struct Constants {
-        public static let embeddedDataSetETag = "7c0a71eb049748b86e8590353141a90f"
-        public static let embeddedDatsSetSHA = "rIBc/qpKYsUxT6+oceMEnF/IUgBCz0tcWMOQWW/waac="
+        public static let embeddedDataSetETag = "8d84f309c283d2fb72351e940d6ae004"
+        public static let embeddedDatsSetSHA = "RM5oPfeAwY2lGwvGP7TL2qJcZTjsBxZ7ykAsozuR0hk="
     }
     
     public enum DataSet {

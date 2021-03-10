@@ -64,7 +64,7 @@ public class CookieStorage {
         cookie.properties?.forEach({
             cookieData[$0.key.rawValue] = $0.value
         })
-        
+
         // Same site policy is not returned in the cookie properties so have to use iOS 13 api to get it - setting is fine.  Leaving same site policy
         //  untouched for previous versions of iOS as changing from Strict to Lax blindly could be a security issue if sites have set it as such.
         //  See https://www.owasp.org/index.php/SameSite
@@ -74,11 +74,11 @@ public class CookieStorage {
         
         setCookie(cookieData)
     }
-    
+
     private func setCookie(_ cookieData: [String: Any?]) {
         var cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] ?? []
         cookies.append(cookieData)
         userDefaults.set(cookies, forKey: Constants.key)
     }
-    
+
 }

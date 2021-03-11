@@ -110,7 +110,7 @@
 		8512EA5724ED30D30073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8512EA5624ED30D30073EE19 /* Assets.xcassets */; };
 		8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8512EA9D24EEA6820073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
-		8514590B25F97DFB00CDB48D /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8514590A25F97DFB00CDB48D /* BrowserServicesKit */; };
+		8514593625F9982D00CDB48D /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8514593525F9982D00CDB48D /* BrowserServicesKit */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
@@ -2099,7 +2099,7 @@
 			files = (
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
-				8514590B25F97DFB00CDB48D /* BrowserServicesKit in Frameworks */,
+				8514593625F9982D00CDB48D /* BrowserServicesKit in Frameworks */,
 				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4033,7 +4033,7 @@
 				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
 				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
-				8514590A25F97DFB00CDB48D /* BrowserServicesKit */,
+				8514593525F9982D00CDB48D /* BrowserServicesKit */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -4182,7 +4182,7 @@
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
-				854CFB6225F9785B00FF48E8 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
+				8514593425F9982D00CDB48D /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6937,9 +6937,9 @@
 				minimumVersion = 1.0.2;
 			};
 		};
-		854CFB6225F9785B00FF48E8 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
+		8514593425F9982D00CDB48D /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:more-duckduckgo-org/BrowserServicesKit.git";
+			repositoryURL = "git@dub.duckduckgo.com:duckduckgo/BrowserServicesKit.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.4.0;
@@ -7001,9 +7001,9 @@
 			package = 4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
 			productName = TrackerRadarKit;
 		};
-		8514590A25F97DFB00CDB48D /* BrowserServicesKit */ = {
+		8514593525F9982D00CDB48D /* BrowserServicesKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 854CFB6225F9785B00FF48E8 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			package = 8514593425F9982D00CDB48D /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
 		};
 		F486D305250697AF002D07D7 /* Punnycode */ = {

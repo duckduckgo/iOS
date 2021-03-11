@@ -52,8 +52,6 @@ extension TabViewController {
         var entires = [BrowsingMenuEntry]()
         
         if let link = link, !isError {
-            entires.append(buildFindInPageEntry(forLink: link))
-            
             if let entry = buildSaveBookmarkEntry(forLink: link) {
                 entires.append(entry)
             }
@@ -61,6 +59,13 @@ extension TabViewController {
             if let entry = buildSaveFavoriteEntry(forLink: link) {
                 entires.append(entry)
             }
+            
+            entires.append(BrowsingMenuEntry.regular(name: "Bookmarks", image: UIImage(named: "Bookmarks")!, action: { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
+            }))
+            
+            entires.append(.separator)
 
             if let entry = buildKeepSignInEntry(forLink: link) {
                 entires.append(entry)
@@ -71,6 +76,8 @@ extension TabViewController {
             entires.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
                 self?.onToggleDesktopSiteAction(forUrl: link.url)
             }))
+            
+            entires.append(buildFindInPageEntry(forLink: link))
         }
         
         if let domain = siteRating?.domain {

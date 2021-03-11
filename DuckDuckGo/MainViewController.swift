@@ -38,7 +38,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
-    @IBOutlet weak var bookmarksButton: UIBarButtonItem!
+    @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
@@ -94,6 +94,7 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
+    let menuButton = MenuButton()
     let gestureBookmarksButton = GestureToolbarButton()
     
     private var fireButtonAnimator: FireButtonAnimator?
@@ -125,6 +126,7 @@ class MainViewController: UIViewController {
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
+        initMenuButton()
         initBookmarksButton()
         configureTabManager()
         loadInitialView()
@@ -253,20 +255,33 @@ class MainViewController: UIViewController {
         tabsButton.accessibilityTraits = .button
     }
     
+    private func initMenuButton() {
+        menuButton.delegate = self
+    }
+    
     private func initBookmarksButton() {
         omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
-        bookmarksButton.customView = gestureBookmarksButton
-        bookmarksButton.isAccessibilityElement = true
-        bookmarksButton.accessibilityTraits = .button
     }
     
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             quickSaveBookmark()
         }
+    }
+    
+    private func attachBookmarksButton() {
+        lastToolbarButton.customView = gestureBookmarksButton
+        lastToolbarButton.isAccessibilityElement = true
+        lastToolbarButton.accessibilityTraits = .button
+    }
+    
+    private func attachMenuButton() {
+        lastToolbarButton.customView = menuButton
+        lastToolbarButton.isAccessibilityElement = true
+        lastToolbarButton.accessibilityTraits = .button
     }
     
     @objc func quickSaveBookmark() {
@@ -578,6 +593,7 @@ class MainViewController: UIViewController {
 
     fileprivate func refreshControls() {
         refreshTabIcon()
+        refreshMenuIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
     }
@@ -586,6 +602,14 @@ class MainViewController: UIViewController {
         tabsButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
         tabSwitcherButton.tabCount = tabManager.count
         tabSwitcherButton.hasUnread = tabManager.hasUnread
+    }
+    
+    private func refreshMenuIcon() {
+        if homeController != nil {
+            attachBookmarksButton()
+        } else {
+            attachMenuButton()
+        }
     }
 
     private func refreshOmniBar() {
@@ -701,14 +725,25 @@ class MainViewController: UIViewController {
         controller.loadViewIfNeeded()
         controller.setHeaderEntires(tab.buildBrowsingMenuHeaderContent())
         controller.setMenuEntires(entries)
-        controller.attachTo(view) { [weak self] in
-            self?.dismissBrowsingMenu()
+        
+        controller.view.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            controller.attachTo(self.view) { [weak self] in
+                self?.menuButton.animateToState(.menuImage)
+                UIView.animate(withDuration: 0.2, animations: {
+                    controller.view.alpha = 0
+                }, completion: { _ in
+                    self?.dismissBrowsingMenu()
+                })
+            }
+            controller.view.alpha = 1
         }
         
         refreshConstraints(browsingMenu: controller)
         addChild(controller)
         
         browsingMenu = controller
+        menuButton.animateToState(.closeImage)
         tab.didLaunchBrowsingMenu()
     }
     
@@ -1235,6 +1270,10 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         launchReportBrokenSite()
     }
+    
+    func tabDidRequestBookmarks(tab: TabViewController) {
+        onBookmarksPressed()
+    }
 
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
@@ -1378,6 +1417,13 @@ extension MainViewController: TabSwitcherButtonDelegate {
                 self.performSegue(withIdentifier: "ShowTabs", sender: self)
             })
         }
+    }
+}
+
+extension MainViewController: MenuButtonDelegate {
+    
+    func showMenu(_ button: MenuButton) {
+        launchBrowsingMenu()
     }
 }
 

@@ -220,7 +220,7 @@ extension BrowsingMenuViewController: UITableViewDataSource {
                 fatalError()
             }
             
-            cell.separator.backgroundColor = theme.browsingMenuBackgroundColor
+            cell.separator.backgroundColor = theme.browsingMenuSeparatorColor
             return cell
         }
     }

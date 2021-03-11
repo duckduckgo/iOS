@@ -24,21 +24,21 @@
                 <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBS-aZ-obk">
                     <rect key="frame" x="0.0" y="0.0" width="280" height="85"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="85" id="mZd-2l-FZb"/>
+                        <constraint firstAttribute="height" constant="85" identifier="stackViewHeightConstraint" id="mZd-2l-FZb"/>
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Re3-rU-zGN" userLabel="SeparatorView">
-                    <rect key="frame" x="0.0" y="85" width="280" height="2"/>
+                    <rect key="frame" x="0.0" y="85" width="280" height="1"/>
                     <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="2" id="E0g-nd-VVj"/>
+                        <constraint firstAttribute="height" constant="1" identifier="separatorHeightConstraint" id="E0g-nd-VVj"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-er-PvS">
-                    <rect key="frame" x="0.0" y="87" width="280" height="413"/>
+                    <rect key="frame" x="0.0" y="86" width="280" height="414"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="750" constant="413" id="Qwc-LA-MWe"/>
+                        <constraint firstAttribute="height" priority="750" constant="413" identifier="tableViewHeightContraint" id="Qwc-LA-MWe"/>
                     </constraints>
                 </tableView>
             </subviews>

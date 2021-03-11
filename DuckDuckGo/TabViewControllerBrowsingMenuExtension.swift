@@ -26,22 +26,22 @@ extension TabViewController {
         
         var entires = [BrowsingMenuEntry]()
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab, image: UIImage(named: "NewTab")!, action: { [weak self] in
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab, image: UIImage(named: "MenuNewTab")!, action: { [weak self] in
             self?.onNewTabAction()
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share")!, action: { [weak self] in
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "MenuShare")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
             self.onShareAction(forLink: self.link!, fromView: menu)
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy")!, action: { [weak self] in
-            self?.onNewTabAction()
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
+            // TODO: self?.onNewTabAction()
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: "Print", image: UIImage(named: "Print")!, action: { [weak self] in
-            self?.onNewTabAction()
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
+            // TODO self?.onNewTabAction()
         }))
         
         return entires
@@ -60,7 +60,7 @@ extension TabViewController {
                 entires.append(entry)
             }
             
-            entires.append(BrowsingMenuEntry.regular(name: "Bookmarks", image: UIImage(named: "Bookmarks")!, action: { [weak self] in
+            entires.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks, image: UIImage(named: "MenuBookmarks")!, action: { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
             }))
@@ -72,7 +72,7 @@ extension TabViewController {
             }
             
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-            let image = tabModel.isDesktop ? UIImage(named: "DesktopMode")! : UIImage(named: "MobileMode")!
+            let image = tabModel.isDesktop ? UIImage(named: "MenuDesktopMode")! : UIImage(named: "MenuMobileMode")!
             entires.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
                 self?.onToggleDesktopSiteAction(forUrl: link.url)
             }))
@@ -84,11 +84,11 @@ extension TabViewController {
             entires.append(buildToggleProtectionEntry(forDomain: domain))
         }
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite, image: UIImage(named: "Feedback")!, action: { [weak self] in
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite, image: UIImage(named: "MenuFeedback")!, action: { [weak self] in
             self?.onReportBrokenSiteAction()
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionSettings, image: UIImage(named: "Settings")!, action: { [weak self] in
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionSettings, image: UIImage(named: "MenuSettings")!, action: { [weak self] in
             self?.onBrowsingSettingsAction()
         }))
         
@@ -98,10 +98,22 @@ extension TabViewController {
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
         guard #available(iOS 13, *) else { return nil }
         guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
-        guard !PreserveLogins.shared.isAllowed(cookieDomain: domain) else { return nil }
-        return BrowsingMenuEntry.regular(name: UserText.preserveLoginsFireproofConfirm, image: UIImage(named: "Fireproof")!, action: { [weak self] in
-            self?.fireproofWebsite(domain: domain)
-        })
+        let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)
+        
+        if isFireproofed {
+            return BrowsingMenuEntry.regular(name: UserText.preserveLoginsFireproofConfirm,
+                                             image: UIImage(named: "MenuRemoveFireproof")!,
+                                             action: { [weak self] in
+                self?.fireproofWebsite(domain: domain)
+            })
+        } else {
+            return BrowsingMenuEntry.regular(name: UserText.preserveLoginsFireproofConfirm,
+                                             image: UIImage(named: "MenuFireproof")!,
+                                             action: { [weak self] in
+                // TODO: self?.fireproofWebsite(domain: domain)
+            })
+        }
+
     }
     
     private func onNewTabAction() {
@@ -110,7 +122,7 @@ extension TabViewController {
     }
     
     private func buildFindInPageEntry(forLink link: Link) -> BrowsingMenuEntry {
-        return BrowsingMenuEntry.regular(name: UserText.findInPage, image: UIImage(named: "Find")!, action: { [weak self] in
+        return BrowsingMenuEntry.regular(name: UserText.findInPage, image: UIImage(named: "MenuFind")!, action: { [weak self] in
             Pixel.fire(pixel: .browsingMenuFindInPage)
             self?.requestFindInPage()
         })
@@ -118,33 +130,52 @@ extension TabViewController {
     
     private func buildSaveBookmarkEntry(forLink link: Link) -> BrowsingMenuEntry? {
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.containsBookmark(url: link.url) else { return nil }
-        
-        return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark, image: UIImage(named: "Bookmarks")!, action: { [weak self] in
-            Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-            bookmarksManager.save(bookmark: link)
-            self?.view.showBottomToast(UserText.webSaveBookmarkDone)
-        })
+        let isBookmark = bookmarksManager.containsBookmark(url: link.url)
+        if isBookmark {
+            return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
+                                             image: UIImage(named: "MenuBookmarkSolid")!,
+                                             action: { [weak self] in
+                                                //ToDO
+                                             })
+        } else {
+            return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
+                                             image: UIImage(named: "MenuBookmark")!,
+                                             action: { [weak self] in
+                                                // ToDo
+                                                Pixel.fire(pixel: .browsingMenuAddToBookmarks)
+                                                bookmarksManager.save(bookmark: link)
+                                                self?.view.showBottomToast(UserText.webSaveBookmarkDone)
+                                             })
+        }
     }
     
     private func buildSaveFavoriteEntry(forLink link: Link) -> BrowsingMenuEntry? {
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.containsFavorite(url: link.url) else { return nil }
-
-        // Capture flow state here as will be reset after menu is shown
-        let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
-
-        let title = [
-            addToFavoriteFlow ? "👋 " : "",
-            UserText.actionSaveFavorite
-        ].joined()
-
-        return BrowsingMenuEntry.regular(name: title, image: UIImage(named: "Favorite")!, action: { [weak self] in
-            Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-            bookmarksManager.save(favorite: link)
-            self?.view.showBottomToast(UserText.webSaveFavoriteDone)
-        })
+        let isFavorite = bookmarksManager.containsFavorite(url: link.url)
         
+        if isFavorite {
+            return BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
+                                             image: UIImage(named: "MenuFavoriteSolid")!,
+                                             action: { [weak self] in
+                // ToDo: Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+                // ToDo: bookmarksManager.save(favorite: link)
+                // ToDo: self?.view.showBottomToast(UserText.webSaveFavoriteDone)
+            })
+        } else {
+            // Capture flow state here as will be reset after menu is shown
+            let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+
+            let title = [
+                addToFavoriteFlow ? "👋 " : "",
+                UserText.actionSaveFavorite
+            ].joined()
+
+            return BrowsingMenuEntry.regular(name: title, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
+                Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+                bookmarksManager.save(favorite: link)
+                self?.view.showBottomToast(UserText.webSaveFavoriteDone)
+            })
+        }
         // TODO
 //        action.accessibilityLabel = UserText.actionSaveFavorite
     }
@@ -175,7 +206,7 @@ extension TabViewController {
         let manager = UnprotectedSitesManager()
         let isProtected = manager.isProtected(domain: domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
-        let image = isProtected ? UIImage(named: "DisableProtection")! : UIImage(named: "EnableProtection")!
+        let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
         let operation = isProtected ? manager.add : manager.remove
         
         return BrowsingMenuEntry.regular(name: title, image: image, action: {

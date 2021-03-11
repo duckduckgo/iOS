@@ -760,14 +760,14 @@ class MainViewController: UIViewController {
             constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 0))
             
             // Make it go above WebView
-            constraints.append(browsingMenu.view.topAnchor.constraint(equalTo: tab.webView.topAnchor, constant: -10))
+            constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: -10))
             
             // Flexible width
             constraints.append(browsingMenu.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 280))
         } else {
             // Reguar sizing:
             constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10))
-            constraints.append(browsingMenu.view.topAnchor.constraint(equalTo: tab.webView.topAnchor, constant: 10))
+            constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: 10))
             
             // Constant width
             constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))

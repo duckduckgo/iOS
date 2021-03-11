@@ -176,7 +176,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
-        let title = UserText.alertEditBookmark
+        let title = UserText.actionEditBookmark
         let link = dataSource.link(at: indexPath)
         let alert = EditBookmarkAlert.buildAlert(
             title: title,

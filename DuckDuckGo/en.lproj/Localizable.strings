@@ -4,6 +4,9 @@
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Bookmark";
 
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Bookmarks";
+
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Cancel";
 
@@ -12,6 +15,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Disable Privacy Protection";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Edit Bookmark";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Enable Privacy Protection";
@@ -26,7 +32,7 @@
 "action.title.newBackgroundTabForUrl" = "Open in Background";
 
 /* Create New Tab action */
-"action.title.newTab" = "New Tab";
+"action.title.newTabAction" = "New";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Open in New Tab";
@@ -37,8 +43,14 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
 
+/* Print action */
+"action.title.print" = "Print";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Refresh";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Remove Favorite";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Report Broken Site";
@@ -53,16 +65,16 @@
 "action.title.save" = "Save";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Add to Bookmarks";
+"action.title.save.bookmark" = "Bookmark This Page";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Add to Favorites";
+"action.title.save.favorite" = "Favorite This Page";
 
 /* Settings action */
 "action.title.settings" = "Settings";
 
 /* Share action */
-"action.title.share" = "Share...";
+"action.title.share" = "Share";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
@@ -75,9 +87,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Edit Bookmark";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Save Bookmark";

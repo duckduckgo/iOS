@@ -78,6 +78,8 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
                 previousButton = button
             }
         }
+        
+        separatorHeight.constant = 1.0 / UIScreen.main.scale
     }
     
     private func configureTableView() {

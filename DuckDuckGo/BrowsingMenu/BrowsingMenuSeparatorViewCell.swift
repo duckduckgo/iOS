@@ -22,5 +22,11 @@ import UIKit
 class BrowsingMenuSeparatorViewCell: UITableViewCell {
 
     @IBOutlet weak var separator: UIView!
+    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        separatorHeight.constant = 1.0 / UIScreen.main.scale
+    }
 }

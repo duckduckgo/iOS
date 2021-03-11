@@ -36,6 +36,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="separator" destination="NhR-6w-1nT" id="d6D-91-d2H"/>
+                <outlet property="separatorHeight" destination="UfW-gK-gRw" id="vMa-Me-utt"/>
             </connections>
             <point key="canvasLocation" x="30" y="76"/>
         </tableViewCell>

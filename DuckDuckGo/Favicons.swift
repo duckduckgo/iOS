@@ -280,7 +280,7 @@ public class Favicons {
 
         if #available(iOS 13.0, *) {
             retrieveLinkPresentationImage(from: domain) {
-                guard let image = $0 else {
+                guard let image = $0, image.size.width >= Constants.targetImageSizePoints else {
                     self.retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
                     return
                 }

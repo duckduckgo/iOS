@@ -111,7 +111,14 @@ public class WebCacheManager {
             }
 
             DispatchQueue.global(qos: .background).async {
-                _ = group.wait(timeout: .now() + 5)
+                let result = group.wait(timeout: .now() + 5)
+
+                if result == .timedOut {
+                    Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
+                        PixelParameters.removeCookiesTimedOut: "1"
+                    ])
+                }
+
                 DispatchQueue.main.async {
                     completion()
                 }
@@ -145,7 +152,9 @@ public class WebCacheManager {
                     let result = group.wait(timeout: .now() + 5)
 
                     if result == .timedOut {
-                        Pixel.fire(pixel: .cookieDeletionTimedOut)
+                        Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
+                            PixelParameters.clearWebDataTimedOut: "1"
+                        ])
                     }
 
                     DispatchQueue.main.async {

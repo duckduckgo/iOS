@@ -36,7 +36,7 @@ class BrowsingMenuButton: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        highlight.layer.cornerRadius = 10
+        highlight.layer.cornerRadius = 6
         highlight.isHidden = true
     }
     

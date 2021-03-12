@@ -157,7 +157,7 @@ extension MenuButton: Themable {
             anim.setAnimation(named: "menu_dark")
         }
         
-        if State.closeImage == currentState {
+        if currentState == State.closeImage {
             anim.animationProgress = 1.0
         }
 

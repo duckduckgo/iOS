@@ -768,6 +768,11 @@ class TabViewController: UIViewController {
         printController.present(animated: true, completionHandler: nil)
     }
     
+    func onCopyAction(forUrl url: URL) {
+        let copyText = url.absoluteString
+        UIPasteboard.general.string = copyText
+    }
+    
     deinit {
         removeMessageHandlers()
         removeObservers()

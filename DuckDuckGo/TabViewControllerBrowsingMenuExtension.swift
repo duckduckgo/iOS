@@ -37,11 +37,13 @@ extension TabViewController {
         }))
         
         entires.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
-            // TODO: self?.onNewTabAction()
+            guard let url = self?.webView.url else { return }
+            
+            self?.onCopyAction(forUrl: url)
         }))
         
         entires.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
-            // TODO self?.onNewTabAction()
+            self?.print()
         }))
         
         return entires

@@ -38,6 +38,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var preferredWidth: NSLayoutConstraint!
     
     public var parentConstraits = [NSLayoutConstraint]()
     
@@ -181,6 +182,21 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     
     func setMenuEntires(_ entries: [BrowsingMenuEntry]) {
         menuEntries = entries
+        
+        recalculateConstraints()
+    }
+    
+    private func recalculateConstraints() {
+        
+        let longestEntry = menuEntries.reduce("") { (result, entry) -> String in
+            guard case BrowsingMenuEntry.regular(let name, _, _) = entry else { return result }
+            if result.length() < name.length() {
+                return name
+            }
+            return result
+        }
+        
+        preferredWidth.constant = BrowsingMenuEntryViewCell.preferredWidth(for: longestEntry)
     }
 }
 

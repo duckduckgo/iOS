@@ -763,7 +763,7 @@ class MainViewController: UIViewController {
             constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: -10))
             
             // Flexible width
-            constraints.append(browsingMenu.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 280))
+            constraints.append(browsingMenu.view.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 100))
         } else {
             // Reguar sizing:
             constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10))
@@ -773,8 +773,8 @@ class MainViewController: UIViewController {
             constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
         }
         
-        browsingMenu.parentConstraits.forEach { $0.isActive = false }
-        constraints.forEach { $0.isActive = true }
+        NSLayoutConstraint.deactivate(browsingMenu.parentConstraits)
+        NSLayoutConstraint.activate(constraints)
         browsingMenu.parentConstraits = constraints
     }
     

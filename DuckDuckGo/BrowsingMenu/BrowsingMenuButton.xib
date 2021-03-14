@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="70" height="86"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOb-q4-bUE">
-                    <rect key="frame" x="4" y="4" width="62" height="78"/>
+                    <rect key="frame" x="3" y="3" width="64" height="80"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Fs-Fi-0RY">
@@ -24,14 +24,17 @@
                         <constraint firstAttribute="height" constant="24" id="hs8-zA-JVo"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw1-7w-6TO">
-                    <rect key="frame" x="0.0" y="49" width="70" height="14"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="hw1-7w-6TO">
+                    <rect key="frame" x="6" y="49" width="58" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="zpy-Rt-FMO"/>
+                    </constraints>
                     <attributedString key="attributedText">
                         <fragment content="Label">
                             <attributes>
                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -40,15 +43,15 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="LOb-q4-bUE" secondAttribute="trailing" constant="4" id="7gg-sa-eLs"/>
-                <constraint firstItem="hw1-7w-6TO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DS5-sF-HJO"/>
-                <constraint firstAttribute="bottom" secondItem="LOb-q4-bUE" secondAttribute="bottom" constant="4" id="MDm-Aq-L3X"/>
-                <constraint firstItem="LOb-q4-bUE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="NO8-nC-ozd"/>
+                <constraint firstAttribute="trailing" secondItem="LOb-q4-bUE" secondAttribute="trailing" constant="3" id="7gg-sa-eLs"/>
+                <constraint firstItem="hw1-7w-6TO" firstAttribute="leading" secondItem="LOb-q4-bUE" secondAttribute="leading" constant="3" id="LEv-qH-9tx"/>
+                <constraint firstAttribute="bottom" secondItem="LOb-q4-bUE" secondAttribute="bottom" constant="3" id="MDm-Aq-L3X"/>
+                <constraint firstItem="LOb-q4-bUE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="NO8-nC-ozd"/>
                 <constraint firstItem="hw1-7w-6TO" firstAttribute="top" secondItem="9Fs-Fi-0RY" secondAttribute="bottom" constant="6" id="QIA-za-5uG"/>
                 <constraint firstItem="9Fs-Fi-0RY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SPD-A7-yw9"/>
                 <constraint firstItem="9Fs-Fi-0RY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-12" id="XT0-VM-7DB"/>
-                <constraint firstItem="LOb-q4-bUE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="ogG-SA-wPN"/>
-                <constraint firstAttribute="trailing" secondItem="hw1-7w-6TO" secondAttribute="trailing" id="tzd-VL-LOL"/>
+                <constraint firstItem="hw1-7w-6TO" firstAttribute="trailing" secondItem="LOb-q4-bUE" secondAttribute="trailing" constant="-3" id="ZWx-kh-tBq"/>
+                <constraint firstItem="LOb-q4-bUE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="ogG-SA-wPN"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -58,7 +61,7 @@
                 <outlet property="image" destination="9Fs-Fi-0RY" id="Fpu-am-HAk"/>
                 <outlet property="label" destination="hw1-7w-6TO" id="2K5-cO-z7K"/>
             </connections>
-            <point key="canvasLocation" x="67" y="76"/>
+            <point key="canvasLocation" x="66.666666666666671" y="75.669642857142847"/>
         </view>
     </objects>
     <resources>

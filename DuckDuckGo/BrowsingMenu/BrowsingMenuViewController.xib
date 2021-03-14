@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowsingMenuViewController" customModule="DuckDuckGo" customModuleProvider="target">
             <connections>
                 <outlet property="horizontalContainer" destination="iBS-aZ-obk" id="54V-Gn-ybA"/>
+                <outlet property="preferredWidth" destination="bAB-s6-TsU" id="jZ8-Ma-ZNa"/>
                 <outlet property="separatorHeight" destination="E0g-nd-VVj" id="cI2-Ch-uaC"/>
                 <outlet property="tableView" destination="bcd-er-PvS" id="Miv-wM-xpE"/>
                 <outlet property="tableViewHeight" destination="Qwc-LA-MWe" id="D6c-cm-Bld"/>
@@ -51,6 +52,7 @@
                 <constraint firstItem="iBS-aZ-obk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MwX-4b-89J"/>
                 <constraint firstAttribute="top" secondItem="iBS-aZ-obk" secondAttribute="top" id="Spg-sz-0V2"/>
                 <constraint firstAttribute="trailing" secondItem="iBS-aZ-obk" secondAttribute="trailing" id="Y2n-ZL-OKV"/>
+                <constraint firstAttribute="width" priority="750" constant="280" id="bAB-s6-TsU"/>
                 <constraint firstAttribute="bottom" secondItem="bcd-er-PvS" secondAttribute="bottom" id="plY-wl-wcZ"/>
                 <constraint firstAttribute="trailing" secondItem="bcd-er-PvS" secondAttribute="trailing" id="qUG-CC-89Y"/>
                 <constraint firstItem="bcd-er-PvS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wQ6-gU-XLm"/>

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class BrowsingMenuEntryViewCell: UITableViewCell {
     
@@ -32,5 +33,15 @@ class BrowsingMenuEntryViewCell: UITableViewCell {
         entryLabel.textColor = theme.browsingMenuTextColor
         backgroundColor = theme.browsingMenuBackgroundColor
         setHighlightedStateBackgroundColor(theme.browsingMenuHighlightColor)
+    }
+    
+    static func preferredWidth(for text: String) -> CGFloat {
+        
+        let size = (text as NSString).boundingRect(with: CGSize(width: 1000, height: 20),
+                                                   options: [.usesFontLeading, .usesLineFragmentOrigin],
+                                                   attributes: [.font: UIFont.appFont(ofSize: 16)],
+                                                   context: nil)
+        
+        return size.width + 65 // Left Margin + Icon width + Spacing + Right Margin
     }
 }

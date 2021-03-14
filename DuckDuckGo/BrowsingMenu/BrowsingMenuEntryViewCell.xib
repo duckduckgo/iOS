@@ -25,10 +25,11 @@
                             <constraint firstAttribute="height" constant="24" id="nNc-LZ-R6n"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWj-8a-8jk">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWj-8a-8jk">
                         <rect key="frame" x="53" y="12" width="255" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="2iM-nN-FLn"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="a9h-KJ-eDP"/>
                         </constraints>
                         <attributedString key="attributedText">
                             <fragment content="Label">

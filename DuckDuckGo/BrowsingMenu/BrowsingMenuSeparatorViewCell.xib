@@ -26,10 +26,8 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="NhR-6w-1nT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="3iz-qZ-TDf"/>
                     <constraint firstItem="NhR-6w-1nT" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gqK-Ts-9Mm"/>
                     <constraint firstAttribute="trailing" secondItem="NhR-6w-1nT" secondAttribute="trailing" constant="24" id="hRd-8Z-Kmd"/>
-                    <constraint firstAttribute="bottom" secondItem="NhR-6w-1nT" secondAttribute="bottom" constant="10" id="sX6-MV-rCY"/>
                     <constraint firstItem="NhR-6w-1nT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="yTg-qA-ng6"/>
                 </constraints>
             </tableViewCellContentView>

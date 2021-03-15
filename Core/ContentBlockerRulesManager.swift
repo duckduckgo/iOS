@@ -61,6 +61,7 @@ public class ContentBlockerRulesManager {
 
         store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, error in
             guard list == nil else {
+                self.blockingRules = list
                 completion?(list)
                 return
             }

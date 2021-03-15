@@ -68,6 +68,6 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     }
 
     private func onStoreChanged() {
-        NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+        ContentBlockerRulesManager.shared.recompile()
     }
 }

@@ -30,6 +30,22 @@ public class ContentBlockerRulesManager {
 
     private init() {}
 
+    public func recompile() {
+        guard let store = WKContentRuleListStore.default() else {
+            fatalError("Failed to access the default WKContentRuleListStore")
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            store.removeContentRuleList(forIdentifier: "tds") { _ in
+                ContentBlockerRulesManager.shared.compileRules { _ in
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+                    }
+                }
+            }
+        }
+    }
+
     public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
         guard let trackerData = TrackerDataManager.shared.trackerData else {
             completion?(nil)
@@ -50,14 +66,22 @@ public class ContentBlockerRulesManager {
         }
         
         if let store = WKContentRuleListStore.default() {
-            let ruleList = String(data: data, encoding: .utf8)!
-            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
-                self?.blockingRules = ruleList
-                completion?(ruleList)
-                if let error = error {
-                    os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
+            store.lookUpContentRuleList(forIdentifier: "tds") { list, error in
+                guard list == nil else {
+                    completion?(list)
+                    return
+                }
+
+                let ruleList = String(data: data, encoding: .utf8)!
+                store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
+                    self?.blockingRules = ruleList
+                    completion?(ruleList)
+                    if let error = error {
+                        os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
+                    }
                 }
             }
+
         } else {
             os_log("Failed to access the default WKContentRuleListStore for rules compiliation checking", log: generalLog, type: .error)
         }

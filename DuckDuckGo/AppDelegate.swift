@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppConfigurationFetch().start { newData in
             if newData {
-                NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+                ContentBlockerRulesManager.shared.recompile()
             }
         }
     }

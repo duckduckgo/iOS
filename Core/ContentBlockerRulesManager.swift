@@ -48,43 +48,42 @@ public class ContentBlockerRulesManager {
 
     /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
     public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
-        guard let trackerData = TrackerDataManager.shared.trackerData else {
-            completion?(nil)
-            return
+        guard let store = WKContentRuleListStore.default() else {
+            fatalError("Failed to access the default WKContentRuleListStore for rules compiliation checking")
         }
 
-        let storageCache = StorageCacheProvider().current
-        let unprotectedSites = UnprotectedSitesManager().domains
-        let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
-
-        let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
-                                                                                    andTemporaryUnprotectedDomains: tempUnprotectedDomains)
-        
-        guard let data = try? JSONEncoder().encode(rules) else {
-            os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
-            return
-        }
-        
-        if let store = WKContentRuleListStore.default() {
-            store.lookUpContentRuleList(forIdentifier: "tds") { list, error in
-                guard list == nil else {
-                    completion?(list)
-                    return
-                }
-
-                let ruleList = String(data: data, encoding: .utf8)!
-                store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
-                    self?.blockingRules = ruleList
-                    completion?(ruleList)
-                    if let error = error {
-                        os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
-                    }
-                }
+        store.lookUpContentRuleList(forIdentifier: "tds") { list, error in
+            guard list == nil else {
+                completion?(list)
+                return
             }
 
-        } else {
-            os_log("Failed to access the default WKContentRuleListStore for rules compiliation checking", log: generalLog, type: .error)
+            guard let trackerData = TrackerDataManager.shared.trackerData else {
+                completion?(nil)
+                return
+            }
+
+            let storageCache = StorageCacheProvider().current
+            let unprotectedSites = UnprotectedSitesManager().domains
+            let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty }
+
+            let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
+                                                                                        andTemporaryUnprotectedDomains: tempUnprotectedDomains)
+
+            guard let data = try? JSONEncoder().encode(rules) else {
+                os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
+                return
+            }
+
+            let ruleList = String(data: data, encoding: .utf8)!
+            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
+                self?.blockingRules = ruleList
+                completion?(ruleList)
+                if let error = error {
+                    os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
+                }
+            }
         }
     }
     

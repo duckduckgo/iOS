@@ -353,7 +353,11 @@ class MainViewController: UIViewController {
         }
         
         if let menu = browsingMenu {
-            refreshConstraints(browsingMenu: menu)
+            if isPad {
+                refreshConstraintsForTablet(browsingMenu: menu)
+            } else {
+                refreshConstraintsForPhone(browsingMenu: menu)
+            }
         }
     }
     
@@ -739,7 +743,12 @@ class MainViewController: UIViewController {
             controller.view.alpha = 1
         }
         
-        refreshConstraints(browsingMenu: controller)
+        if isPad {
+            refreshConstraintsForTablet(browsingMenu: controller)
+        } else {
+            refreshConstraintsForPhone(browsingMenu: controller)
+        }
+        
         addChild(controller)
         
         browsingMenu = controller
@@ -747,7 +756,7 @@ class MainViewController: UIViewController {
         tab.didLaunchBrowsingMenu()
     }
     
-    func refreshConstraints(browsingMenu: BrowsingMenuViewController) {
+    func refreshConstraintsForPhone(browsingMenu: BrowsingMenuViewController) {
         guard let tab = currentTab else { return }
         
         var constraints = [NSLayoutConstraint]()
@@ -772,6 +781,23 @@ class MainViewController: UIViewController {
             // Constant width
             constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
         }
+        
+        NSLayoutConstraint.deactivate(browsingMenu.parentConstraits)
+        NSLayoutConstraint.activate(constraints)
+        browsingMenu.parentConstraits = constraints
+    }
+    
+    func refreshConstraintsForTablet(browsingMenu: BrowsingMenuViewController) {
+        guard let tab = currentTab else { return }
+        
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: browsingMenu.view.trailingAnchor, constant: 67))
+        constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
+        
+        constraints.append(browsingMenu.view.bottomAnchor.constraint(lessThanOrEqualTo: tab.webView.bottomAnchor, constant: -40))
+        
+        // Make it go above WebView
+        constraints.append(browsingMenu.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 50))
         
         NSLayoutConstraint.deactivate(browsingMenu.parentConstraits)
         NSLayoutConstraint.activate(constraints)

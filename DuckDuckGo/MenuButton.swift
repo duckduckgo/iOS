@@ -118,14 +118,22 @@ class MenuButton: UIView {
         tint(alpha: 1, animated: false)
     }
     
-    func animateToState(_ state: State) {
+    func setState(_ state: State, animated: Bool) {
         guard state != currentState else { return }
-            
+         
         switch state {
         case .closeImage:
-            anim.play()
+            if animated {
+                anim.play()
+            } else {
+                anim.animationProgress = 1.0
+            }
         case .menuImage:
-            anim.play(fromProgress: 1.0, toProgress: 0, withCompletion: nil)
+            if animated {
+                anim.play(fromProgress: 1.0, toProgress: 0, withCompletion: nil)
+            } else {
+                anim.animationProgress = 0.0
+            }
         }
         
         currentState = state

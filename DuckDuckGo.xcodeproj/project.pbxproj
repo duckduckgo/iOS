@@ -316,6 +316,7 @@
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820EAF422613CD30089094D /* WebProgressWorker.swift */; };
 		9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */; };
+		982686A1260004760011A8D6 /* MainViewController+BrowsingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982686A0260004760011A8D6 /* MainViewController+BrowsingMenu.swift */; };
 		982846052444ECC3009B19EA /* TrackersAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */; };
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
@@ -1078,6 +1079,7 @@
 		9820A5D522B1C0B20024E37C /* DDG Trace.tracetemplate */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "DDG Trace.tracetemplate"; sourceTree = "<group>"; };
 		9820EAF422613CD30089094D /* WebProgressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProgressWorker.swift; sourceTree = "<group>"; };
 		9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
+		982686A0260004760011A8D6 /* MainViewController+BrowsingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+BrowsingMenu.swift"; sourceTree = "<group>"; };
 		982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimatorTests.swift; sourceTree = "<group>"; };
 		982C87C32255559A00919035 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -3661,6 +3663,7 @@
 				8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
+				982686A0260004760011A8D6 /* MainViewController+BrowsingMenu.swift */,
 				85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */,
 				98EF177C21837E35006750C1 /* new_tab_dark.json */,
 				85371D232121B9D400920548 /* new_tab.json */,
@@ -4806,6 +4809,7 @@
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
+				982686A1260004760011A8D6 /* MainViewController+BrowsingMenu.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,

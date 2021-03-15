@@ -47,6 +47,8 @@ class OmniBar: UIView {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
+    
+    private(set) var menuButtonContent = MenuButton()
 
     // Don't use weak because adding/removing them causes them to go away
     @IBOutlet var separatorHeightConstraint: NSLayoutConstraint!
@@ -74,6 +76,7 @@ class OmniBar: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureMenuButton()
         configureTextField()
         configureSeparator()
         configureEditingMenu()
@@ -102,6 +105,12 @@ class OmniBar: UIView {
         refreshButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
             return .init(effect: .lift(.init(view: button)))
         }
+    }
+    
+    private func configureMenuButton() {
+        menuButton.addSubview(menuButtonContent)
+        menuButton.isAccessibilityElement = true
+        menuButton.accessibilityTraits = .button
     }
     
     private func configureTextField() {

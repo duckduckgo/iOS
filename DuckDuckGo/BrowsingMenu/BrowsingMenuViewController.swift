@@ -100,7 +100,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     }
     
     private func configureArrow(with color: UIColor) {
-        guard isPad else {
+        guard AppWidthObserver.shared.isLargeWidth else {
             arrowView.isHidden = true
             return
         }

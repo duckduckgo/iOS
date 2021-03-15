@@ -95,6 +95,10 @@ class MainViewController: UIViewController {
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     let menuButton = MenuButton()
+    var presentedMenuButton: MenuButton {
+        AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
+    }
+    
     let gestureBookmarksButton = GestureToolbarButton()
     
     private var fireButtonAnimator: FireButtonAnimator?
@@ -353,7 +357,7 @@ class MainViewController: UIViewController {
         }
         
         if let menu = browsingMenu {
-            if isPad {
+            if AppWidthObserver.shared.isLargeWidth {
                 refreshConstraintsForTablet(browsingMenu: menu)
             } else {
                 refreshConstraintsForPhone(browsingMenu: menu)
@@ -434,6 +438,7 @@ class MainViewController: UIViewController {
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
+        omniBar.menuButtonContent.delegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
     }
@@ -675,6 +680,8 @@ class MainViewController: UIViewController {
             
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
+            
+            self.refreshMenuButtonState()
         }
     }
     
@@ -719,96 +726,6 @@ class MainViewController: UIViewController {
         omniBar.showSeparator()
         suggestionTrayContainer.isHidden = true
         suggestionTrayController?.didHide()
-    }
-    
-    fileprivate func launchBrowsingMenu() {
-        guard let tab = currentTab, browsingMenu == nil else { return }
-        
-        let entries = tab.buildBrowsingMenu()
-        let controller = BrowsingMenuViewController(nibName: "BrowsingMenuViewController", bundle: nil)
-        controller.loadViewIfNeeded()
-        controller.setHeaderEntires(tab.buildBrowsingMenuHeaderContent())
-        controller.setMenuEntires(entries)
-        
-        controller.view.alpha = 0
-        UIView.animate(withDuration: 0.3) {
-            controller.attachTo(self.view) { [weak self] in
-                self?.menuButton.animateToState(.menuImage)
-                UIView.animate(withDuration: 0.2, animations: {
-                    controller.view.alpha = 0
-                }, completion: { _ in
-                    self?.dismissBrowsingMenu()
-                })
-            }
-            controller.view.alpha = 1
-        }
-        
-        if isPad {
-            refreshConstraintsForTablet(browsingMenu: controller)
-        } else {
-            refreshConstraintsForPhone(browsingMenu: controller)
-        }
-        
-        addChild(controller)
-        
-        browsingMenu = controller
-        menuButton.animateToState(.closeImage)
-        tab.didLaunchBrowsingMenu()
-    }
-    
-    func refreshConstraintsForPhone(browsingMenu: BrowsingMenuViewController) {
-        guard let tab = currentTab else { return }
-        
-        var constraints = [NSLayoutConstraint]()
-        constraints.append(view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: browsingMenu.view.trailingAnchor, constant: 10))
-        
-        if traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact)) {
-            // iPhone - landscape:
-            
-            // Move menu up, as bottom toolbar shrinks
-            constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 0))
-            
-            // Make it go above WebView
-            constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: -10))
-            
-            // Flexible width
-            constraints.append(browsingMenu.view.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 100))
-        } else {
-            // Reguar sizing:
-            constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10))
-            constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: 10))
-            
-            // Constant width
-            constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
-        }
-        
-        NSLayoutConstraint.deactivate(browsingMenu.parentConstraits)
-        NSLayoutConstraint.activate(constraints)
-        browsingMenu.parentConstraits = constraints
-    }
-    
-    func refreshConstraintsForTablet(browsingMenu: BrowsingMenuViewController) {
-        guard let tab = currentTab else { return }
-        
-        var constraints = [NSLayoutConstraint]()
-        constraints.append(view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: browsingMenu.view.trailingAnchor, constant: 67))
-        constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
-        
-        constraints.append(browsingMenu.view.bottomAnchor.constraint(lessThanOrEqualTo: tab.webView.bottomAnchor, constant: -40))
-        
-        // Make it go above WebView
-        constraints.append(browsingMenu.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 50))
-        
-        NSLayoutConstraint.deactivate(browsingMenu.parentConstraits)
-        NSLayoutConstraint.activate(constraints)
-        browsingMenu.parentConstraits = constraints
-    }
-    
-    private func dismissBrowsingMenu() {
-        guard let controller = browsingMenu else { return }
-        
-        controller.detachFrom(view)
-        browsingMenu = nil
     }
     
     fileprivate func launchReportBrokenSite() {

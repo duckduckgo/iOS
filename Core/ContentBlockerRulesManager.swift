@@ -37,7 +37,7 @@ public class ContentBlockerRulesManager {
 
         DispatchQueue.global(qos: .background).async {
             store.removeContentRuleList(forIdentifier: "tds") { _ in
-                ContentBlockerRulesManager.shared.compileRules { _ in
+                self.compiledRules { _ in
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
                     }
@@ -46,7 +46,8 @@ public class ContentBlockerRulesManager {
         }
     }
 
-    public func compileRules(completion: ((WKContentRuleList?) -> Void)?) {
+    /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
+    public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
         guard let trackerData = TrackerDataManager.shared.trackerData else {
             completion?(nil)
             return

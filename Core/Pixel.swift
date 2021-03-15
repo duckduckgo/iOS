@@ -183,6 +183,8 @@ public enum PixelName: String {
     case backgroundTaskSubmissionFailed = "m_bt_rf"
     
     case blankOverlayNotDismissed = "m_d_ovs"
+
+    case cookieDeletionTimedOut = "m_d_csto"
 }
 // swiftlint:enable identifier_name
 
@@ -213,6 +215,9 @@ public struct PixelParameters {
     public static let widgetErrorCode = "ec"
     public static let widgetErrorDomain = "ed"
     public static let widgetUnavailable = "wx"
+
+    static let removeCookiesTimedOut = "rc"
+    static let clearWebDataTimedOut = "cd"
 }
 
 public struct PixelValues {

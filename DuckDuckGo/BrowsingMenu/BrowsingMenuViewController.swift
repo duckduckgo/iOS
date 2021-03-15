@@ -32,11 +32,16 @@ enum BrowsingMenuEntry {
 
 class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     
+    private enum Contants {
+        static let arrowLayerKey = "arrowLayer"
+    }
+    
     typealias DismissHandler = () -> Void
     
     @IBOutlet weak var horizontalContainer: UIStackView!
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var arrowView: UIView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var preferredWidth: NSLayoutConstraint!
     
@@ -92,6 +97,33 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    private func configureArrow(with color: UIColor) {
+        guard isPad else {
+            arrowView.isHidden = true
+            return
+        }
+        arrowView.isHidden = false
+        arrowView.backgroundColor = .clear
+        
+        arrowView.layer.sublayers?.first { $0.name == Contants.arrowLayerKey }?.removeFromSuperlayer()
+        
+        let bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+        let bezierPath = UIBezierPath(roundedRect: bounds,
+                                      byRoundingCorners: .allCorners,
+                                      cornerRadii: CGSize(width: 3, height: 3))
+
+        let shape = CAShapeLayer()
+        shape.bounds = bounds
+        shape.position = CGPoint(x: -2, y: 15)
+        shape.path = bezierPath.cgPath
+        shape.fillColor = color.cgColor
+        shape.name = Contants.arrowLayerKey
+        
+        shape.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat.pi / 4))
+
+        arrowView.layer.addSublayer(shape)
     }
     
     private func configureShadow() {
@@ -254,6 +286,8 @@ extension BrowsingMenuViewController: Themable {
             headerButton.label.textColor = theme.browsingMenuTextColor
             headerButton.highlight.backgroundColor = theme.browsingMenuHighlightColor
         }
+        
+        configureArrow(with: theme.browsingMenuBackgroundColor)
         
         horizontalContainer.backgroundColor = theme.browsingMenuBackgroundColor
         tableView.backgroundColor = theme.browsingMenuBackgroundColor

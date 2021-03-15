@@ -27,8 +27,6 @@ public class ContentBlockerRulesManager {
     private static let rulesIdentifier = "tds"
 
     public static let shared = ContentBlockerRulesManager()
-    
-    public var blockingRules: WKContentRuleList?
 
     private init() {}
 
@@ -39,8 +37,8 @@ public class ContentBlockerRulesManager {
 
         DispatchQueue.global(qos: .background).async {
             store.removeContentRuleList(forIdentifier: Self.rulesIdentifier) { _ in
-                self.compiledRules { _ in
-                    DispatchQueue.main.async {
+                DispatchQueue.global(qos: .background).async {
+                    self.compiledRules { _ in
                         NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
                     }
                 }
@@ -50,49 +48,55 @@ public class ContentBlockerRulesManager {
 
     /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
     public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
-        if blockingRules != nil {
-            completion?(blockingRules)
-            return
-        }
 
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore for rules compiliation checking")
         }
 
-        store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, error in
+        store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, _ in
             guard list == nil else {
-                self.blockingRules = list
                 completion?(list)
                 return
             }
 
-            guard let trackerData = TrackerDataManager.shared.trackerData else {
-                completion?(nil)
-                return
-            }
-
-            let storageCache = StorageCacheProvider().current
-            let unprotectedSites = UnprotectedSitesManager().domains
-            let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-                .filter { !$0.trimWhitespace().isEmpty }
-
-            let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
-                                                                                        andTemporaryUnprotectedDomains: tempUnprotectedDomains)
-
-            guard let data = try? JSONEncoder().encode(rules) else {
-                os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
-                return
-            }
-
-            let ruleList = String(data: data, encoding: .utf8)!
-            store.compileContentRuleList(forIdentifier: Self.rulesIdentifier, encodedContentRuleList: ruleList) { [weak self] ruleList, error in
-                self?.blockingRules = ruleList
-                completion?(ruleList)
-                if let error = error {
-                    os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
-                }
+            DispatchQueue.global(qos: .background).async {
+                store.compileRules(withIdentifier: Self.rulesIdentifier, completion: completion)
             }
         }
     }
-    
+
+}
+
+fileprivate extension WKContentRuleListStore {
+
+    func compileRules(withIdentifier rulesIdentifier: String, completion: ((WKContentRuleList?) -> Void)?) {
+
+        guard let trackerData = TrackerDataManager.shared.trackerData else {
+            completion?(nil)
+            return
+        }
+
+        let storageCache = StorageCacheProvider().current
+        let unprotectedSites = UnprotectedSitesManager().domains
+        let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
+
+        let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
+                                                                                    andTemporaryUnprotectedDomains: tempUnprotectedDomains)
+
+        guard let data = try? JSONEncoder().encode(rules) else {
+            os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
+            return
+        }
+
+        let ruleList = String(data: data, encoding: .utf8)!
+        compileContentRuleList(forIdentifier: rulesIdentifier, encodedContentRuleList: ruleList) { ruleList, error in
+            completion?(ruleList)
+            if let error = error {
+                os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
+            }
+        }
+
+    }
+
 }

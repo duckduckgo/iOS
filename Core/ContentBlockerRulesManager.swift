@@ -38,7 +38,7 @@ public class ContentBlockerRulesManager {
         }
 
         DispatchQueue.global(qos: .background).async {
-            store.removeContentRuleList(forIdentifier: "tds") { _ in
+            store.removeContentRuleList(forIdentifier: Self.rulesIdentifier) { _ in
                 self.compiledRules { _ in
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)

@@ -23,7 +23,9 @@ import os.log
 import TrackerRadarKit
 
 public class ContentBlockerRulesManager {
-    
+
+    private static let rulesIdentifier = "tds"
+
     public static let shared = ContentBlockerRulesManager()
     
     public var blockingRules: WKContentRuleList?
@@ -48,11 +50,16 @@ public class ContentBlockerRulesManager {
 
     /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
     public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
+        if blockingRules != nil {
+            completion?(blockingRules)
+            return
+        }
+
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore for rules compiliation checking")
         }
 
-        store.lookUpContentRuleList(forIdentifier: "tds") { list, error in
+        store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, error in
             guard list == nil else {
                 completion?(list)
                 return
@@ -77,7 +84,7 @@ public class ContentBlockerRulesManager {
             }
 
             let ruleList = String(data: data, encoding: .utf8)!
-            store.compileContentRuleList(forIdentifier: "tds", encodedContentRuleList: ruleList) { [weak self] ruleList, error in
+            store.compileContentRuleList(forIdentifier: Self.rulesIdentifier, encodedContentRuleList: ruleList) { [weak self] ruleList, error in
                 self?.blockingRules = ruleList
                 completion?(ruleList)
                 if let error = error {

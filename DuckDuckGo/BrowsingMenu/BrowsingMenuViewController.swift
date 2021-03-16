@@ -97,6 +97,8 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     }
     
     private func configureArrow(with color: UIColor) {

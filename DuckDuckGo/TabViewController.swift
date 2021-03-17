@@ -599,9 +599,7 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        // Recompile and add the content rules list
-
-        ContentBlockerRulesManager.shared.compileRules { [weak self] rulesList in
+        ContentBlockerRulesManager.shared.compiledRules { [weak self] rulesList in
             guard let self = self else { return }
             if let rulesList = rulesList {
                 self.webView.configuration.userContentController.remove(rulesList)
@@ -853,15 +851,6 @@ extension TabViewController: WKNavigationDelegate {
         if appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview()
             appRatingPrompt.shown()
-        }
-        
-        // If site is unprotected we need to remove the content blocking rules
-        if let ruleList = ContentBlockerRulesManager.shared.blockingRules {
-            if !contentBlockerProtection.isProtected(domain: url?.host) {
-                webView.configuration.userContentController.remove(ruleList)
-            } else {
-                webView.configuration.userContentController.add(ruleList)
-            }
         }
     }
     

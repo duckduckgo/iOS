@@ -61,7 +61,7 @@ class WebCacheManagerTests: XCTestCase {
         WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: dataStore) {
             expect.fulfill()
         }
-        wait(for: [expect], timeout: 5.0)
+        wait(for: [expect], timeout: 10.0)
         
         XCTAssertEqual(cookieStore.cookies.count, 0)
     }
@@ -84,7 +84,7 @@ class WebCacheManagerTests: XCTestCase {
         WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
             expect.fulfill()
         }
-        wait(for: [expect], timeout: 5.0)
+        wait(for: [expect], timeout: 10.0)
 
         XCTAssertEqual(cookieStore.cookies.count, 1)
         XCTAssertEqual(cookieStore.cookies[0].domain, ".example.com")
@@ -130,7 +130,7 @@ class WebCacheManagerTests: XCTestCase {
         WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
             expect.fulfill()
         }
-        wait(for: [expect], timeout: 5.0)
+        wait(for: [expect], timeout: 10.0)
         
         XCTAssertEqual(cookieStore.cookies.count, 1)
         XCTAssertEqual(cookieStore.cookies[0].domain, "www.example.com")

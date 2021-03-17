@@ -110,7 +110,7 @@ public class WebCacheManager {
                 }
             }
 
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .userInitiated).async {
                 let result = group.wait(timeout: .now() + 5)
 
                 if result == .timedOut {
@@ -148,7 +148,7 @@ public class WebCacheManager {
                     }
                 }
 
-                DispatchQueue.global(qos: .background).async {
+                DispatchQueue.global(qos: .userInitiated).async {
                     let result = group.wait(timeout: .now() + 5)
 
                     if result == .timedOut {

@@ -17,9 +17,9 @@
                     <attributedString key="attributedText">
                         <fragment content="Label">
                             <attributes>
-                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <font key="NSFont" size="16" name="ProximaNova-Regular"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="21" tighteningFactorForTruncation="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -48,12 +48,20 @@
                 <constraint firstAttribute="trailing" secondItem="oCd-LV-OI1" secondAttribute="trailing" constant="12" id="M6a-3L-VQf"/>
                 <constraint firstAttribute="bottom" secondItem="WEm-Fo-Kmm" secondAttribute="bottom" constant="12" id="bGo-Vb-YBZ"/>
                 <constraint firstItem="oCd-LV-OI1" firstAttribute="leading" secondItem="WEm-Fo-Kmm" secondAttribute="trailing" constant="10" id="dLh-j4-VmK"/>
+                <constraint firstAttribute="trailing" secondItem="WEm-Fo-Kmm" secondAttribute="trailing" constant="14" id="tGL-FG-Yuv"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="tGL-FG-Yuv"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="actionButton" destination="oCd-LV-OI1" id="rV2-gG-PYB"/>
+                <outlet property="labelToButton" destination="dLh-j4-VmK" id="eOw-mN-R99"/>
+                <outlet property="labelToTrailing" destination="tGL-FG-Yuv" id="HId-Nr-8kQ"/>
                 <outlet property="message" destination="WEm-Fo-Kmm" id="UyH-Ik-mWb"/>
             </connections>
             <point key="canvasLocation" x="-197.10144927536234" y="69.977678571428569"/>

@@ -334,6 +334,7 @@
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
                         <segue destination="HTt-o2-2gp" kind="presentation" identifier="DaxOnboarding" animates="NO" modalPresentationStyle="overFullScreen" id="eix-GD-QaT"/>
+                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEditCurrent" id="lgJ-lb-xgS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
@@ -445,6 +446,9 @@
             <point key="canvasLocation" x="1400" y="-130"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="lgJ-lb-xgS"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Bookmarks" width="24" height="24"/>
         <image name="BrowseNext" width="24" height="24"/>

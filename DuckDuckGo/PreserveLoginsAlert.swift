@@ -34,7 +34,7 @@ class PreserveLoginsAlert {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsFireproofConfirm, style: .default) {
+        prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction, style: .default) {
             onConfirmHandler()
         }
         prompt.addAction(title: UserText.actionCancel, style: .cancel)
@@ -47,7 +47,7 @@ class PreserveLoginsAlert {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsFireproofConfirm) {
+        prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction) {
             onConfirmHandler()
         }
         prompt.addAction(title: UserText.preserveLoginsFireproofDefer, style: .cancel)

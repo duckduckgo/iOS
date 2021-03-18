@@ -105,4 +105,8 @@ class ActionMessageView: UIView {
             }
         })
     }
+    
+    @IBAction func onButtonTap() {
+        action()
+    }
 }

@@ -1,3 +1,9 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Edit";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Undo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
@@ -12,6 +18,9 @@
 
 /* Copy action */
 "action.title.copy" = "Copy";
+
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL copied";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Disable Privacy Protection";
@@ -607,6 +616,9 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Fireproof Website";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ is now Fireproof";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Not Now";
 
@@ -615,6 +627,9 @@
 
 /* Enable fireproofing for site */
 "preserveLogins.menu.enable" = "Fireproof This Site";
+
+/*  Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Fireproofing removed";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Remove All";
@@ -872,13 +887,16 @@
 "theme.name.light" = "Light";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ added to Unprotected Sites";
+"toast.protection.disabled" = "Privacy Protection disabled for %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ removed from Unprotected Sites";
+"toast.protection.enabled" = "Privacy Protection enabled for %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "An unknown error occurred.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favorite removed";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Bookmark added";

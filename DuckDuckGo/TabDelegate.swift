@@ -44,6 +44,8 @@ protocol TabDelegate: class {
     func tabDidRequestReportBrokenSite(tab: TabViewController)
     
     func tabDidRequestBookmarks(tab: TabViewController)
+    
+    func tabDidRequestEditBookmark(tab: TabViewController)
 
     func tabDidRequestSettings(tab: TabViewController)
     

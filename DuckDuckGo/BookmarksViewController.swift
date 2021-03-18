@@ -33,6 +33,8 @@ class BookmarksViewController: UITableViewController {
     fileprivate var dataSource = DefaultBookmarksDataSource()
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     
+    fileprivate var onDidAppearAction: () -> Void = {}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForNotifications()
@@ -41,6 +43,22 @@ class BookmarksViewController: UITableViewController {
         refreshEditButton()
         
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        onDidAppearAction()
+        onDidAppearAction = {}
+    }
+    
+    func openEditFormWhenPresented(link: Link) {
+        onDidAppearAction = { [weak self] in
+            guard let strongSelf = self,
+                  let index = strongSelf.dataSource.bookmarksManager.indexOfBookmark(url: link.url) else { return }
+            
+            strongSelf.showEditBookmarkAlert(for: IndexPath(row: index, section: 1))
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

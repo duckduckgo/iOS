@@ -321,6 +321,11 @@ class MainViewController: UIViewController {
         if segue.destination.children.count > 0,
             let controller = segue.destination.children[0] as? BookmarksViewController {
             controller.delegate = self
+            
+            if segue.identifier == "BookmarksEditCurrent",
+               let link = currentTab?.link {
+                controller.openEditFormWhenPresented(link: link)
+            }
             return
         }
 
@@ -968,11 +973,17 @@ extension MainViewController: OmniBarDelegate {
         hideSuggestionTray()
         launchBrowsingMenu()
     }
-
+    
     @objc func onBookmarksPressed() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
+    }
+    
+    func onBookmarkEdit() {
+        ViewHighlighter.hideAll()
+        hideSuggestionTray()
+        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
     }
     
     func onEnterPressed() {
@@ -1216,6 +1227,10 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestBookmarks(tab: TabViewController) {
         onBookmarksPressed()
+    }
+    
+    func tabDidRequestEditBookmark(tab: TabViewController) {
+        onBookmarkEdit()
     }
 
     func tabDidRequestSettings(tab: TabViewController) {

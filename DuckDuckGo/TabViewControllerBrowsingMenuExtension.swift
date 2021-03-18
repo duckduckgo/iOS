@@ -54,11 +54,11 @@ extension TabViewController {
         var entires = [BrowsingMenuEntry]()
         
         if let link = link, !isError {
-            if let entry = buildSaveBookmarkEntry(forLink: link) {
+            if let entry = buildBookmarkEntry(for: link) {
                 entires.append(entry)
             }
             
-            if let entry = buildSaveFavoriteEntry(forLink: link) {
+            if let entry = buildFavoriteEntry(for: link) {
                 entires.append(entry)
             }
             
@@ -136,42 +136,58 @@ extension TabViewController {
         })
     }
     
-    private func buildSaveBookmarkEntry(forLink link: Link) -> BrowsingMenuEntry? {
+    private func buildBookmarkEntry(for link: Link) -> BrowsingMenuEntry? {
+        
         let bookmarksManager = BookmarksManager()
         let isBookmark = bookmarksManager.containsBookmark(url: link.url)
         if isBookmark {
             return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
                                              image: UIImage(named: "MenuBookmarkSolid")!,
                                              action: { [weak self] in
-                                                Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-                                                bookmarksManager.save(bookmark: link)
-                                                self?.view.showBottomToast(UserText.webSaveBookmarkDone)
+                                                self?.performEditBookmarkAction(for: link)
                                              })
         } else {
             return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
                                              image: UIImage(named: "MenuBookmark")!,
                                              action: { [weak self] in
-                                                //TODO
-                                                
+                                                self?.performEditBookmarkAction(for: link)
                                              })
         }
     }
     
-    private func buildSaveFavoriteEntry(forLink link: Link) -> BrowsingMenuEntry? {
+    private func performSaveBookmarkAction(for link: Link) {
+        Pixel.fire(pixel: .browsingMenuAddToBookmarks)
+        
+        BookmarksManager().save(bookmark: link)
+        view.showBottomToast(UserText.webSaveBookmarkDone)
+        
+        ActionMessageView.present(message: UserText.webSaveBookmarkDone,
+                                  actionTitle: UserText.actionGenericEdit) {
+            self.performEditBookmarkAction(for: link)
+        }
+    }
+    
+    private func performEditBookmarkAction(for link: Link) {
+        Pixel.fire(pixel: .browsingMenuEditBookmark)
+        
+        delegate?.tabDidRequestEditBookmark(tab: self)
+    }
+    
+    private func buildFavoriteEntry(for link: Link) -> BrowsingMenuEntry? {
         let bookmarksManager = BookmarksManager()
         let isFavorite = bookmarksManager.containsFavorite(url: link.url)
         
         if isFavorite {
+            
+            let action: () -> Void = { [weak self] in
+                Pixel.fire(pixel: .browsingMenuAddToFavorites)
+                self?.performRemoveFavoriteAction(for: link)
+            }
+            
             return BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
                                              image: UIImage(named: "MenuFavoriteSolid")!,
-                                             action: { [weak self] in
-                // ToDo: Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-                // ToDo: bookmarksManager.save(favorite: link)
-                // ToDo: self?.view.showBottomToast(UserText.webSaveFavoriteDone)
-                                                ActionMessageView.present(message: "aaaa", actionTitle: "UNdo") {
-                                                    
-                                                }
-            })
+                                             action: action)
+                                                
         } else {
             // Capture flow state here as will be reset after menu is shown
             let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
@@ -183,12 +199,31 @@ extension TabViewController {
 
             return BrowsingMenuEntry.regular(name: title, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
                 Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-                bookmarksManager.save(favorite: link)
-                self?.view.showBottomToast(UserText.webSaveFavoriteDone)
+                self?.performSaveFavoriteAction(for: link)
             })
         }
         // TODO
 //        action.accessibilityLabel = UserText.actionSaveFavorite
+    }
+    
+    private func performSaveFavoriteAction(for link: Link) {
+        let bookmarksManager = BookmarksManager()
+        bookmarksManager.save(favorite: link)
+        
+        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
+            self.performRemoveFavoriteAction(for: link)
+        }
+    }
+    
+    private func performRemoveFavoriteAction(for link: Link) {
+        let bookmarksManager = BookmarksManager()
+        guard let index = bookmarksManager.indexOfFavorite(url: link.url) else { return }
+        
+        bookmarksManager.deleteFavorite(at: index)
+        
+        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
+            self.performSaveFavoriteAction(for: link)
+        }
     }
 
     func onShareAction(forLink link: Link, fromView view: UIView) {

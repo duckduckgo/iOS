@@ -74,3 +74,25 @@ extension UIViewController {
         present(controller, animated: true, completion: nil)
     }
 }
+
+extension Core.Link: UIActivityItemSource {
+
+    public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return AppUrls().removeATBAndSource(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        return AppUrls().removeATBAndSource(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        if let title = title, activityType == .mail {
+            return title
+        } else {
+            return ""
+        }
+    }
+
+}

@@ -24,8 +24,7 @@ import Swifter
 class AtbIntegrationTests: XCTestCase {
 
     struct Constants {
-        // 5 should be good enough. 10 for some padding
-        static let defaultTimeout: Double = 10
+        static let defaultTimeout: Double = 30
 
         static let devmode = "test"
         static let atbParam = "atb"

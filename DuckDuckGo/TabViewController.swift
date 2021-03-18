@@ -285,6 +285,8 @@ class TabViewController: UIViewController {
         shouldReloadOnError = true
     }
 
+    // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
+    // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
@@ -333,7 +335,7 @@ class TabViewController: UIViewController {
         webView.scrollView.addGestureRecognizer(gestrueRecognizer)
         longPressGestureRecognizer = gestrueRecognizer
     }
-    
+
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.shared.consumeCookies { [weak self] in
@@ -624,9 +626,7 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        // Recompile and add the content rules list
-
-        ContentBlockerRulesManager.shared.compileRules { [weak self] rulesList in
+        ContentBlockerRulesManager.shared.compiledRules { [weak self] rulesList in
             guard let self = self else { return }
             if let rulesList = rulesList {
                 self.webView.configuration.userContentController.remove(rulesList)
@@ -892,15 +892,6 @@ extension TabViewController: WKNavigationDelegate {
         if appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview()
             appRatingPrompt.shown()
-        }
-        
-        // If site is unprotected we need to remove the content blocking rules
-        if let ruleList = ContentBlockerRulesManager.shared.blockingRules {
-            if !contentBlockerProtection.isProtected(domain: url?.host) {
-                webView.configuration.userContentController.remove(ruleList)
-            } else {
-                webView.configuration.userContentController.add(ruleList)
-            }
         }
     }
     

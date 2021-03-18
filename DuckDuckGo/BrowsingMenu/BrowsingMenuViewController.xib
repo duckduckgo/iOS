@@ -48,7 +48,7 @@
                     <rect key="frame" x="0.0" y="86" width="280" height="414"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="750" constant="413" identifier="tableViewHeightContraint" id="Qwc-LA-MWe"/>
+                        <constraint firstAttribute="height" priority="750" constant="200" identifier="tableViewHeightContraint" id="Qwc-LA-MWe"/>
                     </constraints>
                 </tableView>
             </subviews>

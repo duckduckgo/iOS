@@ -62,7 +62,9 @@ extension TabViewController {
                 entires.append(entry)
             }
             
-            entires.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks, image: UIImage(named: "MenuBookmarks")!, action: { [weak self] in
+            entires.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
+                                                     image: UIImage(named: "MenuBookmarks")!,
+                                                     action: { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
             }))
@@ -86,11 +88,15 @@ extension TabViewController {
             entires.append(buildToggleProtectionEntry(forDomain: domain))
         }
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite, image: UIImage(named: "MenuFeedback")!, action: { [weak self] in
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+                                                 image: UIImage(named: "MenuFeedback")!,
+                                                 action: { [weak self] in
             self?.onReportBrokenSiteAction()
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionSettings, image: UIImage(named: "MenuSettings")!, action: { [weak self] in
+        entires.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
+                                                 image: UIImage(named: "MenuSettings")!,
+                                                 action: { [weak self] in
             self?.onBrowsingSettingsAction()
         }))
         
@@ -103,17 +109,17 @@ extension TabViewController {
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)
         
         if isFireproofed {
-            return BrowsingMenuEntry.regular(name: UserText.preserveLoginsFireproofConfirm,
+            return BrowsingMenuEntry.regular(name: UserText.disablePreservingLogins,
                                              image: UIImage(named: "MenuRemoveFireproof")!,
                                              action: { [weak self] in
-                self?.fireproofWebsite(domain: domain)
-            })
+                                                // TODO: self?.fireproofWebsite(domain: domain)
+                                             })
         } else {
-            return BrowsingMenuEntry.regular(name: UserText.preserveLoginsFireproofConfirm,
+            return BrowsingMenuEntry.regular(name: UserText.enablePreservingLogins,
                                              image: UIImage(named: "MenuFireproof")!,
                                              action: { [weak self] in
-                // TODO: self?.fireproofWebsite(domain: domain)
-            })
+                                                self?.fireproofWebsite(domain: domain)
+                                             })
         }
 
     }
@@ -134,19 +140,19 @@ extension TabViewController {
         let bookmarksManager = BookmarksManager()
         let isBookmark = bookmarksManager.containsBookmark(url: link.url)
         if isBookmark {
-            return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
+            return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
                                              image: UIImage(named: "MenuBookmarkSolid")!,
                                              action: { [weak self] in
-                                                //ToDO
-                                             })
-        } else {
-            return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
-                                             image: UIImage(named: "MenuBookmark")!,
-                                             action: { [weak self] in
-                                                // ToDo
                                                 Pixel.fire(pixel: .browsingMenuAddToBookmarks)
                                                 bookmarksManager.save(bookmark: link)
                                                 self?.view.showBottomToast(UserText.webSaveBookmarkDone)
+                                             })
+        } else {
+            return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
+                                             image: UIImage(named: "MenuBookmark")!,
+                                             action: { [weak self] in
+                                                //TODO
+                                                
                                              })
         }
     }
@@ -162,6 +168,9 @@ extension TabViewController {
                 // ToDo: Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
                 // ToDo: bookmarksManager.save(favorite: link)
                 // ToDo: self?.view.showBottomToast(UserText.webSaveFavoriteDone)
+                                                ActionMessageView.present(message: "aaaa", actionTitle: "UNdo") {
+                                                    
+                                                }
             })
         } else {
             // Capture flow state here as will be reset after menu is shown

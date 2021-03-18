@@ -317,6 +317,8 @@
 		9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820EAF422613CD30089094D /* WebProgressWorker.swift */; };
 		9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */; };
 		982686A1260004760011A8D6 /* MainViewController+BrowsingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982686A0260004760011A8D6 /* MainViewController+BrowsingMenu.swift */; };
+		982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982686AC2600C0850011A8D6 /* ActionMessageView.swift */; };
+		982686B92600C0960011A8D6 /* ActionMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982686B82600C0960011A8D6 /* ActionMessageView.xib */; };
 		982846052444ECC3009B19EA /* TrackersAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */; };
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
@@ -1080,6 +1082,8 @@
 		9820EAF422613CD30089094D /* WebProgressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProgressWorker.swift; sourceTree = "<group>"; };
 		9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
 		982686A0260004760011A8D6 /* MainViewController+BrowsingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+BrowsingMenu.swift"; sourceTree = "<group>"; };
+		982686AC2600C0850011A8D6 /* ActionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionMessageView.swift; sourceTree = "<group>"; };
+		982686B82600C0960011A8D6 /* ActionMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionMessageView.xib; sourceTree = "<group>"; };
 		982846032444ECBA009B19EA /* TrackersAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimatorTests.swift; sourceTree = "<group>"; };
 		982C87C32255559A00919035 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -3743,6 +3747,8 @@
 				F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
+				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
+				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -4366,6 +4372,7 @@
 				85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */,
 				AA4D6AFB23DF0CF6007E8790 /* AppIconRed29x29@2x.png in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
+				982686B92600C0960011A8D6 /* ActionMessageView.xib in Resources */,
 				F4F7F10A25813FE200045D62 /* 01_Fire_really_small.json in Resources */,
 				F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */,
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
@@ -4728,6 +4735,7 @@
 				F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */,
 				983B4D9A254B67F900467D62 /* BookmarksSearch.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
+				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
 				F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */,
 				98D98A8225ED88E300D8E3DF /* BrowsingMenuSeparatorViewCell.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,

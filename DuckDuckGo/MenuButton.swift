@@ -120,7 +120,7 @@ class MenuButton: UIView {
     
     func setState(_ state: State, animated: Bool) {
         guard state != currentState else { return }
-         
+        
         switch state {
         case .closeImage:
             if animated {
@@ -130,6 +130,9 @@ class MenuButton: UIView {
             }
         case .menuImage:
             if animated {
+                // Work around a bug that caused glitches when rapidly toggling button
+                anim.stop()
+                anim.animationProgress = 1.0
                 anim.play(fromProgress: 1.0, toProgress: 0, withCompletion: nil)
             } else {
                 anim.animationProgress = 0.0
@@ -163,6 +166,7 @@ extension MenuButton: Themable {
             anim.setAnimation(named: "menu_light")
         case .dark:
             anim.setAnimation(named: "menu_dark")
+            
         }
         
         if currentState == State.closeImage {

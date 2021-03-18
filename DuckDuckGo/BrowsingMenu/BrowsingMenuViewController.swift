@@ -42,10 +42,20 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var arrowView: UIView!
+    
+    // Height to accomodate all content, can be constrained by parent view.
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    
+    // Width to accomodate all entries as a single line of text, can be constrained by parent view.
     @IBOutlet weak var preferredWidth: NSLayoutConstraint!
     
-    public var parentConstraits = [NSLayoutConstraint]()
+    // Set to force recalculation
+    public var parentConstraits = [NSLayoutConstraint]() {
+        didSet {
+            recalculatePreferredWidthConstraint()
+            recalculateHeightConstraints()
+        }
+    }
     
     weak var background: UIView?
     private var dismiss: DismissHandler?
@@ -53,11 +63,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     private var headerButtons: [BrowsingMenuButton] = []
     private var headerEntries: [BrowsingMenuEntry] = []
     
-    private var menuEntries: [BrowsingMenuEntry] = [] {
-        didSet {
-            recalculateLayout()
-        }
-    }
+    private var menuEntries: [BrowsingMenuEntry] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +104,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
     
     private func configureArrow(with color: UIColor) {
@@ -143,6 +149,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     
     func attachTo(_ targetView: UIView, onDismiss: @escaping DismissHandler) {
         assert(background == nil, "\(#file) - view has been already attached")
+        loadViewIfNeeded()
         
         dismiss = onDismiss
         
@@ -163,8 +170,6 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         background.addGestureRecognizer(tapGesture)
         
         targetView.addSubview(view)
-        
-        recalculateLayout()
     }
     
     @objc func backgroundTapped() {
@@ -185,13 +190,6 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.flashScrollIndicators()
         }
-    }
-    
-    private func recalculateLayout() {
-        guard isViewLoaded else { return }
-        
-        tableView.reloadData()
-        tableViewHeight.constant = tableView.contentSize.height
     }
     
     func setHeaderEntires(_ entries: [BrowsingMenuEntry]) {
@@ -216,11 +214,9 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     
     func setMenuEntires(_ entries: [BrowsingMenuEntry]) {
         menuEntries = entries
-        
-        recalculateConstraints()
     }
     
-    private func recalculateConstraints() {
+    private func recalculatePreferredWidthConstraint() {
         
         let longestEntry = menuEntries.reduce("") { (result, entry) -> String in
             guard case BrowsingMenuEntry.regular(let name, _, _) = entry else { return result }
@@ -231,6 +227,14 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         }
         
         preferredWidth.constant = BrowsingMenuEntryViewCell.preferredWidth(for: longestEntry)
+    }
+    
+    private func recalculateHeightConstraints() {
+        guard isViewLoaded else { return }
+        
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
+        tableViewHeight.constant = tableView.contentSize.height + tableView.contentInset.bottom + tableView.contentInset.top
     }
 }
 
@@ -273,6 +277,7 @@ extension BrowsingMenuViewController: UITableViewDataSource {
             }
             
             cell.separator.backgroundColor = theme.browsingMenuSeparatorColor
+            cell.backgroundColor = theme.browsingMenuBackgroundColor
             return cell
         }
     }
@@ -287,12 +292,14 @@ extension BrowsingMenuViewController: Themable {
             headerButton.image.tintColor = theme.browsingMenuIconsColor
             headerButton.label.textColor = theme.browsingMenuTextColor
             headerButton.highlight.backgroundColor = theme.browsingMenuHighlightColor
+            headerButton.backgroundColor = theme.browsingMenuBackgroundColor
         }
         
         configureArrow(with: theme.browsingMenuBackgroundColor)
         
         horizontalContainer.backgroundColor = theme.browsingMenuBackgroundColor
         tableView.backgroundColor = theme.browsingMenuBackgroundColor
+        view.backgroundColor = theme.browsingMenuBackgroundColor
         
         tableView.reloadData()
     }

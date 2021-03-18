@@ -26,34 +26,88 @@ extension MainViewController {
         
         let entries = tab.buildBrowsingMenu()
         let controller = BrowsingMenuViewController(nibName: "BrowsingMenuViewController", bundle: nil)
-        controller.loadViewIfNeeded()
+        controller.attachTo(self.view) { [weak self, weak controller] in
+            guard let controller = controller else { return }
+            self?.presentedMenuButton.setState(.menuImage, animated: true)
+            self?.dismiss(controller)
+        }
+        addChild(controller)
+        
         controller.setHeaderEntires(tab.buildBrowsingMenuHeaderContent())
         controller.setMenuEntires(entries)
+    
+        layoutAndPresent(controller)
         
-        controller.view.alpha = 0
-        UIView.animate(withDuration: 0.3) {
-            controller.attachTo(self.view) { [weak self] in
-                self?.presentedMenuButton.setState(.menuImage, animated: true)
-                UIView.animate(withDuration: 0.2, animations: {
-                    controller.view.alpha = 0
-                }, completion: { _ in
-                    self?.dismissBrowsingMenu()
-                })
-            }
-            controller.view.alpha = 1
-        }
-        
+        browsingMenu = controller
+        presentedMenuButton.setState(.closeImage, animated: true)
+        tab.didLaunchBrowsingMenu()
+    }
+    
+    fileprivate func layoutAndPresent(_ controller: BrowsingMenuViewController) {
+                
         if AppWidthObserver.shared.isLargeWidth {
             refreshConstraintsForTablet(browsingMenu: controller)
         } else {
             refreshConstraintsForPhone(browsingMenu: controller)
         }
         
-        addChild(controller)
+        view.layoutIfNeeded()
         
-        browsingMenu = controller
-        presentedMenuButton.setState(.closeImage, animated: true)
-        tab.didLaunchBrowsingMenu()
+        let snapshot = controller.view.snapshotView(afterScreenUpdates: true)
+        if let snapshot = snapshot {
+            snapshot.frame = menuOriginFrameForAnimation(controller: controller)
+            snapshot.alpha = 0
+            view.addSubview(snapshot)
+        }
+        
+        controller.view.alpha = 0
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+            // Reset to desired dimensions
+            snapshot?.frame = controller.view.frame
+            snapshot?.alpha = 1
+        }, completion: { _ in
+            controller.view.alpha = 1
+            snapshot?.removeFromSuperview()
+            controller.tableView.flashScrollIndicators()
+        })
+    }
+        
+    fileprivate func dismiss(_ controller: BrowsingMenuViewController) {
+        
+        guard let snapshot = controller.view.snapshotView(afterScreenUpdates: false) else {
+            dismissBrowsingMenu()
+            return
+        }
+        
+        view.addSubview(snapshot)
+        snapshot.frame = controller.view.frame
+        
+        controller.view.alpha = 0
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            snapshot.alpha = 0
+            snapshot.frame = self.menuOriginFrameForAnimation(controller: controller)
+        }, completion: { _ in
+            snapshot.removeFromSuperview()
+            self.dismissBrowsingMenu()
+        })
+    }
+    
+    fileprivate func menuOriginFrameForAnimation(controller: BrowsingMenuViewController) -> CGRect {
+        if AppWidthObserver.shared.isLargeWidth {
+            let frame = controller.view.frame
+            var rect = frame.offsetBy(dx: frame.width - 100, dy: 0)
+            rect.size.width = 100
+            rect.size.height = 100
+            return rect
+        } else {
+            let frame = controller.view.frame
+            var rect = frame.offsetBy(dx: frame.width - 100, dy: frame.height - 100)
+            rect.size.width = 100
+            rect.size.height = 100
+            return rect
+        }
     }
     
     func refreshConstraintsForPhone(browsingMenu: BrowsingMenuViewController) {
@@ -79,7 +133,9 @@ extension MainViewController {
             constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: 10))
             
             // Constant width
-            constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
+            let constraint = browsingMenu.view.widthAnchor.constraint(equalToConstant: 280)
+            constraint.identifier = "width"
+            constraints.append(constraint)
         }
         
         NSLayoutConstraint.deactivate(browsingMenu.parentConstraits)
@@ -92,7 +148,9 @@ extension MainViewController {
         
         var constraints = [NSLayoutConstraint]()
         constraints.append(view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: browsingMenu.view.trailingAnchor, constant: 67))
-        constraints.append(browsingMenu.view.widthAnchor.constraint(equalToConstant: 280))
+        let constraint = browsingMenu.view.widthAnchor.constraint(equalToConstant: 280)
+        constraint.identifier = "width"
+        constraints.append(constraint)
         
         constraints.append(browsingMenu.view.bottomAnchor.constraint(lessThanOrEqualTo: tab.webView.bottomAnchor, constant: -40))
         
@@ -106,6 +164,7 @@ extension MainViewController {
     
     func refreshMenuButtonState() {
         let expectedState: MenuButton.State = browsingMenu == nil ? .menuImage : .closeImage
+        presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
         presentedMenuButton.setState(expectedState, animated: false)
     }
     

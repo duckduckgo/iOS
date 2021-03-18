@@ -241,10 +241,10 @@
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="Xrl-6Y-ll0" userLabel="RightButtons">
-                    <rect key="frame" x="767" y="5" width="226" height="42"/>
+                    <rect key="frame" x="767" y="4.5" width="226" height="43"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hor-Jd-3kw">
-                            <rect key="frame" x="0.0" y="0.0" width="30" height="42"/>
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="43"/>
                             <accessibility key="accessibilityConfiguration" label="Share"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="QdK-eJ-q8O"/>
@@ -255,7 +255,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
-                            <rect key="frame" x="54" y="0.0" width="30" height="42"/>
+                            <rect key="frame" x="54" y="0.0" width="30" height="43"/>
                             <accessibility key="accessibilityConfiguration" label="Settings"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="LgT-YY-fGl"/>
@@ -266,18 +266,18 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
-                            <rect key="frame" x="108" y="0.0" width="30" height="42"/>
+                            <rect key="frame" x="108" y="0.0" width="30" height="43"/>
                             <accessibility key="accessibilityConfiguration" label="Browsing Menu"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="JrJ-da-Qn3"/>
                             </constraints>
-                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="20"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="21"/>
                             <connections>
                                 <action selector="onMenuButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="Ixc-Oz-zYw"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-9R-ERy">
-                            <rect key="frame" x="162" y="0.0" width="64" height="42"/>
+                            <rect key="frame" x="162" y="0.0" width="64" height="43"/>
                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
                             <state key="normal" title="Cancel">

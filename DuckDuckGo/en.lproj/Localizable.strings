@@ -610,6 +610,12 @@
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Not Now";
 
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Remove Fireproofing";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Fireproof This Site";
+
 /* Alert title */
 "preserveLogins.remove.all" = "Remove All";
 

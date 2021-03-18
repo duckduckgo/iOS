@@ -28,5 +28,6 @@ class BrowsingMenuSeparatorViewCell: UITableViewCell {
         super.awakeFromNib()
         
         separatorHeight.constant = 1.0 / UIScreen.main.scale
+        contentView.backgroundColor = .clear
     }
 }

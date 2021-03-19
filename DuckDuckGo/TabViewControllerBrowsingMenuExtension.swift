@@ -150,7 +150,7 @@ extension TabViewController {
             return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
                                              image: UIImage(named: "MenuBookmark")!,
                                              action: { [weak self] in
-                                                self?.performEditBookmarkAction(for: link)
+                                                self?.performSaveBookmarkAction(for: link)
                                              })
         }
     }
@@ -159,7 +159,6 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         
         BookmarksManager().save(bookmark: link)
-        view.showBottomToast(UserText.webSaveBookmarkDone)
         
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit) {

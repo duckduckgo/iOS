@@ -340,8 +340,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func removeOverlay() {
-        window?.makeKeyAndVisible()
+        if overlayWindow == nil {
+            tryToObtainOverlayWindow()
+        }
+        
+        overlayWindow?.isHidden = true
         overlayWindow = nil
+        window?.makeKeyAndVisible()
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

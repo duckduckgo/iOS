@@ -25,8 +25,11 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 
+// swiftlint:disable type_body_length
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+// swiftlint:enable type_body_length
 
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     

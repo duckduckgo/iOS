@@ -1100,7 +1100,7 @@ extension MainViewController: HomeControllerDelegate {
 }
 
 extension MainViewController: TabDelegate {
-
+    
     func tab(_ tab: TabViewController,
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
              for navigationAction: WKNavigationAction) -> WKWebView? {
@@ -1238,6 +1238,10 @@ extension MainViewController: TabDelegate {
             view.removeFromSuperview()
             completion()
         })
+    }
+    
+    func tab(_ tab: TabViewController, didRequestPresentingAlert alert: UIAlertController) {
+        present(alert, animated: true)
     }
 
     func selectTab(_ tab: Tab) {

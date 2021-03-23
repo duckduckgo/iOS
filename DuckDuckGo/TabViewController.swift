@@ -716,7 +716,7 @@ class TabViewController: UIViewController {
         alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
             self.openExternally(url: url)
         }))
-        show(alert, sender: self)
+        delegate?.tab(self, didRequestPresentingAlert: alert)
     }
 
     func dismiss() {
@@ -809,7 +809,7 @@ extension TabViewController: WKNavigationDelegate {
             completionHandler(.rejectProtectionSpace, nil)
         })
         
-        present(alert, animated: true)
+        delegate?.tab(self, didRequestPresentingAlert: alert)
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {

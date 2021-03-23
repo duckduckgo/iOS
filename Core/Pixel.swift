@@ -281,7 +281,7 @@ extension Pixel {
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
             newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
-        } else if let sqlErrorCode =  nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
+        } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
             newParams[PixelParameters.underlyingErrorDesc] = "NSSQLiteErrorDomain"
         }

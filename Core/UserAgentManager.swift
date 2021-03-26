@@ -86,7 +86,8 @@ struct UserAgent {
         "cvs.com",
         "sovietgames.su",
         "accounts.google.com",
-        "facebook.com"
+        "facebook.com",
+        "koine.community"
     ]
     
     private let baseAgent: String

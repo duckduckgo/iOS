@@ -25,8 +25,11 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 
+// swiftlint:disable type_body_length
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+// swiftlint:enable type_body_length
 
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     
@@ -136,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppConfigurationFetch().start { newData in
             if newData {
-                NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+                ContentBlockerRulesManager.shared.recompile()
             }
         }
     }
@@ -340,8 +343,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func removeOverlay() {
-        window?.makeKeyAndVisible()
+        if overlayWindow == nil {
+            tryToObtainOverlayWindow()
+        }
+        
+        overlayWindow?.isHidden = true
         overlayWindow = nil
+        window?.makeKeyAndVisible()
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

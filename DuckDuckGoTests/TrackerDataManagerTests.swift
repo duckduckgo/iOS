@@ -113,7 +113,7 @@ class TrackerDataManagerTests: XCTestCase {
     func testWhenEmbeddedDataIsUpdatedThenUpdateSHAAndEtag() {
         
         let hash = calculateHash(for: TrackerDataManager.embeddedUrl)
-        XCTAssertEqual(hash, TrackerDataManager.Constants.embeddedDatsSetSHA, "Error: please update SHA and ETag when changing embedded TDS")
+        XCTAssertEqual(hash, TrackerDataManager.Constants.embeddedDataSetSHA, "Error: please update SHA and ETag when changing embedded TDS")
     }
     
     private func calculateHash(for fileURL: URL) -> String {

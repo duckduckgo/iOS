@@ -24,8 +24,23 @@ class PreserveLoginsAlert {
   
     static let wwwPrefix = "www."
     
-    static func showFireproofToast(usingController controller: UIViewController, forDomain domain: String) {
-        controller.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain.dropPrefix(prefix: wwwPrefix)))
+    static func showFireproofDisabledToast(usingController controller: UIViewController,
+                                           worker: PreserveLoginsWorker,
+                                           forDomain domain: String) {
+        
+        let message = UserText.preserveLoginsRemovalConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+            worker.handleUserEnablingFireproofing(forDomain: domain)
+        }
+    }
+    
+    static func showFireproofEnabledToast(usingController controller: UIViewController,
+                                          worker: PreserveLoginsWorker,
+                                          forDomain domain: String) {
+        let message = UserText.preserveLoginsFireproofConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+            worker.handleUserDisablingFireproofing(forDomain: domain)
+        }
     }
     
     static func showConfirmFireproofWebsite(usingController controller: UIViewController,

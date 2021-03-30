@@ -55,12 +55,13 @@ class ActionMessageView: UIView {
     static func present(message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
         guard let window = UIApplication.shared.keyWindow else { return }
         
-        let messageView = loadFromXib()
+        dismissAllMessages()
         
+        let messageView = loadFromXib()
         messageView.message.setAttributedTextString(message)
         
-        if let actionTitle = actionTitle {
-            messageView.actionButton.setTitle(actionTitle, for: .normal)
+        if let actionTitle = actionTitle, let title = messageView.actionButton.attributedTitle(for: .normal) {
+            messageView.actionButton.setAttributedTitle(title.withText(actionTitle), for: .normal)
             messageView.action = onAction
         } else {
             messageView.labelToButton.isActive = false

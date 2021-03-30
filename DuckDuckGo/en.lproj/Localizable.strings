@@ -640,9 +640,6 @@
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Ask to Fireproof Sites";
 
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ is now Fireproof! Visit Settings to manage.";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithm";
 

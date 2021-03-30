@@ -408,8 +408,15 @@ class TabViewController: UIViewController {
         updateSiteRating()
     }
     
-    func fireproofWebsite(domain: String) {
-        preserveLoginsWorker?.handleUserFireproofing(forDomain: domain)        
+    func enableFireproofingForDomain(_ domain: String) {
+        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
+            Pixel.fire(pixel: .browsingMenuFireproof)
+            self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
+        }    
+    }
+    
+    func disableFireproofingForDomain(_ domain: String) {
+        preserveLoginsWorker?.handleUserDisablingFireproofing(forDomain: domain)
     }
     
     private func checkForReloadOnError() {

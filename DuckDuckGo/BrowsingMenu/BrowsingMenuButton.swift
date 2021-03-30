@@ -40,9 +40,10 @@ class BrowsingMenuButton: UIView {
         highlight.isHidden = true
     }
     
-    func configure(with icon: UIImage, label: String, action: @escaping () -> Void) {
+    func configure(with icon: UIImage, label: String, accessibilityLabel: String?, action: @escaping () -> Void) {
         image.image = icon
         self.label.setAttributedTextString(label)
+        self.label.accessibilityLabel = accessibilityLabel
         self.action = action
     }
     

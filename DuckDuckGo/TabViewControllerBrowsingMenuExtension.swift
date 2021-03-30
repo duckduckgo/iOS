@@ -40,6 +40,7 @@ extension TabViewController {
             guard let url = self?.webView.url else { return }
             
             self?.onCopyAction(forUrl: url)
+            ActionMessageView.present(message: UserText.actionCopyMessage)
         }))
         
         entires.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
@@ -201,8 +202,6 @@ extension TabViewController {
                 self?.performSaveFavoriteAction(for: link)
             })
         }
-        // TODO
-//        action.accessibilityLabel = UserText.actionSaveFavorite
     }
     
     private func performSaveFavoriteAction(for link: Link) {
@@ -220,7 +219,7 @@ extension TabViewController {
         
         bookmarksManager.deleteFavorite(at: index)
         
-        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
+        ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
             self.performSaveFavoriteAction(for: link)
         }
     }
@@ -252,20 +251,28 @@ extension TabViewController {
         let isProtected = manager.isProtected(domain: domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
         let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
+    
+        return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
+            Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
+            self?.togglePrivacyProtection(manager: manager, domain: domain)
+        })
+    }
+    
+    private func togglePrivacyProtection(manager: UnprotectedSitesManager, domain: String) {
+        let isProtected = manager.isProtected(domain: domain)
         let operation = isProtected ? manager.add : manager.remove
         
-        return BrowsingMenuEntry.regular(name: title, image: image, action: {
-            let window = UIApplication.shared.keyWindow
-            window?.hideAllToasts()
-            
-            if isProtected {
-               window?.showBottomToast(UserText.toastProtectionDisabled.format(arguments: domain), duration: 1)
-            } else {
-                window?.showBottomToast(UserText.toastProtectionEnabled.format(arguments: domain), duration: 1)
-            }
-            
-            Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-            operation(domain)
-        })
+        operation(domain)
+        
+        let message: String
+        if isProtected {
+            message = UserText.toastProtectionDisabled.format(arguments: domain)
+        } else {
+            message = UserText.toastProtectionEnabled.format(arguments: domain)
+        }
+        
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
+            self?.togglePrivacyProtection(manager: manager, domain: domain)
+        }
     }
 }

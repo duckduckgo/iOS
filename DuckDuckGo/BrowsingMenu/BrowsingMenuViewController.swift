@@ -26,7 +26,7 @@ protocol BrowsingMenu {
 
 enum BrowsingMenuEntry {
     
-    case regular(name: String, image: UIImage, action: () -> Void)
+    case regular(name: String, accessibilityLabel: String? = nil, image: UIImage, action: () -> Void)
     case separator
 }
 
@@ -199,11 +199,11 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         }
         
         for (entry, view) in zip(entries, headerButtons) {
-            guard case .regular(let name, let image, let action) = entry else {
+            guard case .regular(let name, let accessibilityLabel, let image, let action) = entry else {
                 fatalError("Regular entry not found")
             }
             
-            view.configure(with: image, label: name) { [weak self] in
+            view.configure(with: image, label: name, accessibilityLabel: accessibilityLabel) { [weak self] in
                 self?.dismiss?()
                 action()
             }
@@ -219,7 +219,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     private func recalculatePreferredWidthConstraint() {
         
         let longestEntry = menuEntries.reduce("") { (result, entry) -> String in
-            guard case BrowsingMenuEntry.regular(let name, _, _) = entry else { return result }
+            guard case BrowsingMenuEntry.regular(let name, _, _, _) = entry else { return result }
             if result.length() < name.length() {
                 return name
             }
@@ -243,7 +243,7 @@ extension BrowsingMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         switch menuEntries[indexPath.row] {
-        case .regular(_, _, let action):
+        case .regular(_, _, _, let action):
             dismiss?()
             action()
         case .separator:
@@ -264,12 +264,12 @@ extension BrowsingMenuViewController: UITableViewDataSource {
         let theme = ThemeManager.shared.currentTheme
         
         switch menuEntries[indexPath.row] {
-        case .regular(let name, let image, _):
+        case .regular(let name, let accessibilityLabel, let image, _):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuEntryViewCell", for: indexPath) as? BrowsingMenuEntryViewCell else {
                 fatalError()
             }
             
-            cell.configure(image: image, label: name, theme: theme)
+            cell.configure(image: image, label: name, accessibilityLabel: accessibilityLabel, theme: theme)
             return cell
         case .separator:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuSeparatorViewCell", for: indexPath) as? BrowsingMenuSeparatorViewCell else {

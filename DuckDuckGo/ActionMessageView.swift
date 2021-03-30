@@ -66,6 +66,7 @@ class ActionMessageView: UIView {
         } else {
             messageView.labelToButton.isActive = false
             messageView.labelToTrailing.isActive = true
+            messageView.actionButton.isHidden = true
         }
         
         window.addSubview(messageView)

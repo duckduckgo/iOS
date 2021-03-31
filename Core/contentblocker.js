@@ -533,9 +533,9 @@ _utf8_encode : function (string) {
         // Tracker blocking is dealt with by content rules
         // Only handle surrogates here
         if (blocked && result.matchedRule && result.matchedRule.surrogate) {
-            if (!loadedSurrogates[trackerUrl]) {
+            if (!loadedSurrogates[result.matchedRule.surrogate]) {
                 loadSurrogate(result.matchedRule.surrogate)
-                loadedSurrogates[trackerUrl] = true
+                loadedSurrogates[result.matchedRule.surrogate] = true
             }
 
             duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",

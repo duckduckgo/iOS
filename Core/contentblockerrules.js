@@ -112,24 +112,10 @@
       }
     }
 
-    document.addEventListener("beforeload", function(event) {
-        if (event.target.nodeName == "LINK") {
-            type = event.target.rel
-        } else if (event.target.nodeName == "IMG") {
-            type = "image"
-        } else if (event.target.nodeName == "IFRAME") {
-            type = "subdocument"
-        } else {
-            type = event.target.nodeName
-        }
-
-        sendMessage(event.url, type)
-    }, false)
-
-
     function onLoadNativeCallback() {
       // Send back the sources of every script and image in the DOM back to the host application.
       [].slice.apply(document.scripts).forEach(function(el) { sendMessage(el.src, "script"); });
+      [].slice.apply(document.links).forEach(function(el) { sendMessage(el.src, "link"); });
       [].slice.apply(document.images).forEach(function(el) {
         // If the image's natural width is zero, then it has not loaded so we
         // can assume that it may have been blocked.
@@ -137,6 +123,7 @@
           sendMessage(el.src, "image");
         }
       });
+      [].slice.apply(document.querySelectorAll('iframe')).forEach(function(el) { sendMessage(el.src, "iframe" )})
     }
 
     let originalOpen = null;

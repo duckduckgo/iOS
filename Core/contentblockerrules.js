@@ -115,7 +115,7 @@
     function onLoadNativeCallback() {
       // Send back the sources of every script and image in the DOM back to the host application.
       [].slice.apply(document.scripts).forEach(function(el) { sendMessage(el.src, "script"); });
-      [].slice.apply(document.links).forEach(function(el) { sendMessage(el.src, "link"); });
+      [].slice.apply(document.querySelectorAll('link')).forEach(function(el) { sendMessage(el.src, "link"); });
       [].slice.apply(document.images).forEach(function(el) {
         // If the image's natural width is zero, then it has not loaded so we
         // can assume that it may have been blocked.

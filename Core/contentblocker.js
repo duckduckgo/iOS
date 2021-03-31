@@ -576,6 +576,14 @@ _utf8_encode : function (string) {
                   }
               }
             });
+            [].slice.apply(document.querySelectorAll('link')).forEach(function(el) {
+                if (shouldBlock(el.src, 'LINK')) {
+                    duckduckgoDebugMessaging.log("blocking load")
+                } else {
+                    duckduckgoDebugMessaging.log("don't block " + el.src);
+                    return
+                }
+            });
             [].slice.apply(document.querySelectorAll('iframe')).forEach(function(el) {
               if (shouldBlock(el.src, 'IFRAME')) {
                   duckduckgoDebugMessaging.log("blocking load")

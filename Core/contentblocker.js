@@ -581,7 +581,7 @@ _utf8_encode : function (string) {
             if (shouldBlock(el.src, 'LINK')) {
                 duckduckgoDebugMessaging.log("blocking load")
             } else {
-                duckduckgoDebugMessaging.log("don't block " + el.src);
+                duckduckgoDebugMessaging.log("don't block " + el.href);
                 return
             }
         });

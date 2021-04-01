@@ -25,7 +25,6 @@ public enum PixelName: String {
     
     case appLaunch = "ml"
     case defaultBrowserLaunch = "m_dl"
-    case navigationDetected = "m_n"
     case refreshPressed = "m_r"
 
     case forgetAllPressedBrowsing = "mf_bp"

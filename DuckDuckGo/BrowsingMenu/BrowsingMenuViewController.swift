@@ -188,7 +188,13 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         super.traitCollectionDidChange(previousTraitCollection)
         
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.flashScrollIndicators()
+            self?.flashScrollIndicatorsIfNeeded()
+        }
+    }
+    
+    func flashScrollIndicatorsIfNeeded() {
+        if tableView.bounds.height < tableView.contentSize.height {
+            tableView.flashScrollIndicators()
         }
     }
     

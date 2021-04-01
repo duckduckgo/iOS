@@ -44,11 +44,11 @@
                         <constraint firstAttribute="height" constant="1" identifier="separatorHeightConstraint" id="E0g-nd-VVj"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-er-PvS">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-er-PvS">
                     <rect key="frame" x="0.0" y="86" width="280" height="414"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="750" constant="200" identifier="tableViewHeightContraint" id="Qwc-LA-MWe"/>
+                        <constraint firstAttribute="height" priority="750" constant="1000" identifier="tableViewHeightContraint" id="Qwc-LA-MWe"/>
                     </constraints>
                 </tableView>
             </subviews>

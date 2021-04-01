@@ -69,7 +69,7 @@ extension MainViewController {
         }, completion: { _ in
             controller.view.alpha = 1
             snapshot?.removeFromSuperview()
-            controller.tableView.flashScrollIndicators()
+            controller.flashScrollIndicatorsIfNeeded()
         })
     }
         

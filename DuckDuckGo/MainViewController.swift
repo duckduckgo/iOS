@@ -291,7 +291,7 @@ class MainViewController: UIViewController {
     @objc func quickSaveBookmark() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
-            view.showBottomToast(UserText.webSaveBookmarkNone)
+            ActionMessageView.present(message: UserText.webSaveBookmarkNone)
             return
         }
         

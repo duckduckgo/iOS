@@ -172,17 +172,13 @@ class PrivacyProtectionOverviewController: UITableViewController {
         guard let domain = siteRating.domain else { return }
         
         let isProtected = toggle.isOn
-        let window = UIApplication.shared.keyWindow
-        window?.hideAllToasts()
         
         if isProtected {
             protectionStore.enableProtection(forDomain: domain)
-            
-            window?.showBottomToast(UserText.toastProtectionEnabled.format(arguments: domain), duration: 1)
+            ActionMessageView.present(message: UserText.toastProtectionEnabled.format(arguments: domain))
         } else {
             protectionStore.disableProtection(forDomain: domain)
-            
-            window?.showBottomToast(UserText.toastProtectionDisabled.format(arguments: domain), duration: 1)
+            ActionMessageView.present(message: UserText.toastProtectionDisabled.format(arguments: domain))
         }
         Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
     }

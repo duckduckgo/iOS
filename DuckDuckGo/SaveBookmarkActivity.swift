@@ -64,16 +64,16 @@ class SaveBookmarkActivity: UIActivity {
         }
 
         if bookmarksManager.contains(url: bookmark.url) {
-            controller?.view.showBottomToast(UserText.webBookmarkAlreadySaved)
+            ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
             return nil
         }
 
         if isFavorite {
             bookmarksManager.save(favorite: bookmark)
-            controller?.view.showBottomToast(UserText.webSaveFavoriteDone)
+            ActionMessageView.present(message: UserText.webSaveFavoriteDone)
         } else {
             bookmarksManager.save(bookmark: bookmark)
-            controller?.view.showBottomToast(UserText.webSaveBookmarkDone)
+            ActionMessageView.present(message: UserText.webSaveBookmarkDone)
         }
         return nil
     }

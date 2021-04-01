@@ -67,7 +67,7 @@ class ReportBrokenSiteViewController: UIViewController {
         }
         
         brokenSiteInfo?.send(with: categories[selectedCategory].rawValue)
-        view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
+        ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         dismiss(animated: true)
     }
     

@@ -693,7 +693,7 @@ class TabViewController: UIViewController {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
-                self.view.window?.showBottomToast(UserText.failedToOpenExternally)
+                ActionMessageView.present(message: UserText.failedToOpenExternally)
             }
 
             // just showing a blank tab at this point, so close it

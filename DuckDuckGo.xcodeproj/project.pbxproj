@@ -479,7 +479,6 @@
 		F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ECF1F40EBE200B73467 /* JsonTestDataLoader.swift */; };
 		F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED41F40F15800B73467 /* StatisticsUserDefaultsTests.swift */; };
 		F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED91F40FC3F00B73467 /* InfoBundle.swift */; };
-		F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */; };
 		F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114C55A1E66EB020018F95F /* NibLoading.swift */; };
 		F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E22F51ED31CB600523BC9 /* JsonError.swift */; };
 		F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */; };
@@ -577,7 +576,6 @@
 		F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */; };
 		F486D306250697AF002D07D7 /* Punnycode in Frameworks */ = {isa = PBXBuildFile; productRef = F486D305250697AF002D07D7 /* Punnycode */; };
 		F486D31D2506980E002D07D7 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = F486D31C2506980E002D07D7 /* Swifter */; };
-		F486D33025069993002D07D7 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = F486D32F25069993002D07D7 /* Toast */; };
 		F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F486D33325069BBB002D07D7 /* Kingfisher */; };
 		F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3352506A037002D07D7 /* OHHTTPStubs */; };
 		F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3372506A225002D07D7 /* OHHTTPStubsSwift */; };
@@ -1908,7 +1906,6 @@
 		F1134ECF1F40EBE200B73467 /* JsonTestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonTestDataLoader.swift; sourceTree = "<group>"; };
 		F1134ED41F40F15800B73467 /* StatisticsUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsUserDefaultsTests.swift; sourceTree = "<group>"; };
 		F1134ED91F40FC3F00B73467 /* InfoBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBundle.swift; sourceTree = "<group>"; };
-		F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewToastExtension.swift; sourceTree = "<group>"; };
 		F114C55A1E66EB020018F95F /* NibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoading.swift; sourceTree = "<group>"; };
 		F11E22F51ED31CB600523BC9 /* JsonError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonError.swift; sourceTree = "<group>"; };
 		F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestError.swift; sourceTree = "<group>"; };
@@ -2069,7 +2066,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
-				F486D33025069993002D07D7 /* Toast in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				F4D1BFA42587EA0600469046 /* Lottie in Frameworks */,
 			);
@@ -3741,7 +3737,6 @@
 				982C87C32255559A00919035 /* UITableViewCellExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
-				F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
@@ -3942,7 +3937,6 @@
 			);
 			name = DuckDuckGo;
 			packageProductDependencies = (
-				F486D32F25069993002D07D7 /* Toast */,
 				F4D1BFA32587EA0600469046 /* Lottie */,
 			);
 			productName = DuckDuckGo;
@@ -4220,7 +4214,6 @@
 			mainGroup = 84E341891E2F7EFB00BDBA6F;
 			packageReferences = (
 				F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				F486D2F7250695DE002D07D7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */,
 				F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
@@ -4697,7 +4690,6 @@
 				F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */,
 				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
-				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
 				F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				98DD03D025064FD20017FE36 /* PrivacyProtectionHeaderCell.swift in Sources */,
@@ -7001,14 +6993,6 @@
 				minimumVersion = 5.14.1;
 			};
 		};
-		F486D2F7250695DE002D07D7 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
-			};
-		};
 		F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gumob/PunycodeSwift.git";
@@ -7058,11 +7042,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */;
 			productName = Swifter;
-		};
-		F486D32F25069993002D07D7 /* Toast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F486D2F7250695DE002D07D7 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
-			productName = Toast;
 		};
 		F486D33325069BBB002D07D7 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

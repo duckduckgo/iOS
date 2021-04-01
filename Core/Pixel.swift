@@ -43,10 +43,6 @@ public enum PixelName: String {
     case privacyDashboardManageProtection = "mp_mw"
     case privacyDashboardReportBrokenSite = "mp_rb"
     
-    case httpsNoLookup = "m_https_nl"
-    case httpsLocalUpgrade = "m_https_lu"
-    case httpsNoUpgrade = "m_https_nu"
-    
     case tabSwitcherNewLayoutSeen = "m_ts_n"
     case tabSwitcherListEnabled = "m_ts_l"
     case tabSwitcherGridEnabled = "m_ts_g"

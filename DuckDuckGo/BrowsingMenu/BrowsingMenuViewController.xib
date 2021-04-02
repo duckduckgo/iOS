@@ -11,7 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowsingMenuViewController" customModule="DuckDuckGo" customModuleProvider="target">
             <connections>
                 <outlet property="arrowView" destination="lSn-fQ-bFY" id="2vK-ev-LhW"/>
-                <outlet property="horizontalContainer" destination="iBS-aZ-obk" id="54V-Gn-ybA"/>
+                <outlet property="horizontalContainer" destination="xsB-hA-CpK" id="Y0H-8P-m0g"/>
+                <outlet property="horizontalStackView" destination="iBS-aZ-obk" id="y8F-sY-e2w"/>
                 <outlet property="preferredWidth" destination="bAB-s6-TsU" id="jZ8-Ma-ZNa"/>
                 <outlet property="separatorHeight" destination="E0g-nd-VVj" id="cI2-Ch-uaC"/>
                 <outlet property="tableView" destination="bcd-er-PvS" id="Miv-wM-xpE"/>
@@ -23,13 +24,23 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="280" height="500"/>
             <subviews>
-                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBS-aZ-obk">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsB-hA-CpK" userLabel="Container View">
                     <rect key="frame" x="0.0" y="0.0" width="280" height="85"/>
+                    <subviews>
+                        <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBS-aZ-obk">
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="85"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="85" identifier="stackViewHeightConstraint" id="mZd-2l-FZb"/>
+                        <constraint firstItem="iBS-aZ-obk" firstAttribute="leading" secondItem="xsB-hA-CpK" secondAttribute="leading" id="5Mh-1Z-jk2"/>
+                        <constraint firstItem="iBS-aZ-obk" firstAttribute="top" secondItem="xsB-hA-CpK" secondAttribute="top" id="8aE-e8-F3L"/>
+                        <constraint firstAttribute="bottom" secondItem="iBS-aZ-obk" secondAttribute="bottom" id="YYh-ZC-Tup"/>
+                        <constraint firstAttribute="trailing" secondItem="iBS-aZ-obk" secondAttribute="trailing" id="tPH-VG-5sz"/>
+                        <constraint firstAttribute="height" constant="85" id="yIA-ld-cYt"/>
                     </constraints>
-                </stackView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSn-fQ-bFY">
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSn-fQ-bFY" userLabel="Arrow View">
                     <rect key="frame" x="280" y="21" width="15" height="30"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -54,14 +65,14 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Re3-rU-zGN" firstAttribute="top" secondItem="iBS-aZ-obk" secondAttribute="bottom" id="0Uz-qT-HFf"/>
                 <constraint firstItem="bcd-er-PvS" firstAttribute="top" secondItem="Re3-rU-zGN" secondAttribute="bottom" id="0eJ-6D-cnz"/>
-                <constraint firstItem="Re3-rU-zGN" firstAttribute="centerX" secondItem="iBS-aZ-obk" secondAttribute="centerX" id="Bf0-wA-NX4"/>
-                <constraint firstItem="Re3-rU-zGN" firstAttribute="width" secondItem="iBS-aZ-obk" secondAttribute="width" id="Exa-Vy-cRj"/>
-                <constraint firstItem="iBS-aZ-obk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MwX-4b-89J"/>
-                <constraint firstAttribute="top" secondItem="iBS-aZ-obk" secondAttribute="top" id="Spg-sz-0V2"/>
-                <constraint firstAttribute="trailing" secondItem="iBS-aZ-obk" secondAttribute="trailing" id="Y2n-ZL-OKV"/>
+                <constraint firstItem="xsB-hA-CpK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6Cf-IG-JcF"/>
+                <constraint firstItem="xsB-hA-CpK" firstAttribute="centerX" secondItem="Re3-rU-zGN" secondAttribute="centerX" id="FAn-JT-tOV"/>
+                <constraint firstItem="Re3-rU-zGN" firstAttribute="top" secondItem="xsB-hA-CpK" secondAttribute="bottom" id="Jhu-TH-sLe"/>
+                <constraint firstItem="xsB-hA-CpK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="L4H-dX-MCb"/>
+                <constraint firstItem="xsB-hA-CpK" firstAttribute="width" secondItem="Re3-rU-zGN" secondAttribute="width" id="SEA-so-p4h"/>
                 <constraint firstItem="lSn-fQ-bFY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="ZT7-HW-Vud"/>
+                <constraint firstAttribute="trailing" secondItem="xsB-hA-CpK" secondAttribute="trailing" id="afk-Iw-Jvj"/>
                 <constraint firstAttribute="width" priority="750" constant="280" id="bAB-s6-TsU"/>
                 <constraint firstItem="lSn-fQ-bFY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="21" id="iTV-4y-dzJ"/>
                 <constraint firstAttribute="bottom" secondItem="bcd-er-PvS" secondAttribute="bottom" id="plY-wl-wcZ"/>

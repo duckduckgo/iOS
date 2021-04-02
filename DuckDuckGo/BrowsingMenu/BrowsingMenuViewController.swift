@@ -38,7 +38,8 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     
     typealias DismissHandler = () -> Void
     
-    @IBOutlet weak var horizontalContainer: UIStackView!
+    @IBOutlet weak var horizontalContainer: UIView!
+    @IBOutlet weak var horizontalStackView: UIStackView!
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var arrowView: UIView!
@@ -82,8 +83,8 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
             var previousButton: UIView?
             for _ in 1...4 {
                 let button = BrowsingMenuButton.loadFromXib()
-                horizontalContainer.addArrangedSubview(button)
-                button.heightAnchor.constraint(equalTo: horizontalContainer.heightAnchor, multiplier: 1.0).isActive = true
+                horizontalStackView.addArrangedSubview(button)
+                button.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 1.0).isActive = true
                 previousButton?.widthAnchor.constraint(equalTo: button.widthAnchor, multiplier: 1.0).isActive = true
                 
                 headerButtons.append(button)
@@ -137,6 +138,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     private func configureShadow() {
         view.clipsToBounds = false
         
+        horizontalContainer.clipsToBounds = true
         horizontalContainer.layer.cornerRadius = 10
         tableView.layer.cornerRadius = 10
         

@@ -38,7 +38,12 @@ extension MainViewController {
     
         layoutAndPresent(controller)
         
+        if canDisplayAddFavoriteVisualIndicator {
+            controller.highlightCell(atIndex: IndexPath(row: tab.favoriteEntryIndex, section: 0))
+        }
+        
         browsingMenu = controller
+        
         presentedMenuButton.setState(.closeImage, animated: true)
         tab.didLaunchBrowsingMenu()
     }

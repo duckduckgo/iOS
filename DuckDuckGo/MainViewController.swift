@@ -662,7 +662,7 @@ class MainViewController: UIViewController {
             applyWidth()
         }
 
-        self.currentTab?.showMenuHighlighterIfNeeded()
+        self.showMenuHighlighterIfNeeded()
     }
     
     private func applyWidth() {
@@ -1005,7 +1005,7 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
-        self.currentTab?.showMenuHighlighterIfNeeded()
+        self.showMenuHighlighterIfNeeded()
     }
     
     private var isSERPPresented: Bool {
@@ -1270,6 +1270,10 @@ extension MainViewController: TabDelegate {
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
         return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
     }
+    
+    func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
+        showMenuHighlighterIfNeeded()
+    }
 
     private func newTabAnimation(completion: @escaping () -> Void) {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
@@ -1385,7 +1389,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
 extension MainViewController: MenuButtonDelegate {
     
     func showMenu(_ button: MenuButton) {
-        launchBrowsingMenu()
+        onMenuPressed()
     }
 }
 

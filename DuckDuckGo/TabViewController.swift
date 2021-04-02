@@ -200,8 +200,7 @@ class TabViewController: UIViewController {
         super.viewDidAppear(animated)
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
-        showMenuHighlighterIfNeeded()
-
+        delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -211,20 +210,6 @@ class TabViewController: UIViewController {
         activities.append(FindInPageActivity(controller: self))
 
         return activities
-    }
-
-    func showMenuHighlighterIfNeeded() {
-        guard DaxDialogs.shared.isAddFavoriteFlow,
-              !isError else { return }
-
-        guard let menuButton = chromeDelegate?.omniBar.menuButton,
-              let window = view.window else { return }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            ViewHighlighter.hideAll()
-            ViewHighlighter.showIn(window, focussedOnView: menuButton)
-        }
-
     }
 
     func initUserScripts() {
@@ -679,7 +664,6 @@ class TabViewController: UIViewController {
     
     func didLaunchBrowsingMenu() {
         Pixel.fire(pixel: .browsingMenuOpened)
-//        guard let button = chromeDelegate?.omniBar.menuButton else { return }
         DaxDialogs.shared.resumeRegularFlow()
     }
     
@@ -928,7 +912,7 @@ extension TabViewController: WKNavigationDelegate {
         guard !isLinkPreview else { return }
 
         if DaxDialogs.shared.isAddFavoriteFlow {
-            showMenuHighlighterIfNeeded()
+            delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
             return
         }
 

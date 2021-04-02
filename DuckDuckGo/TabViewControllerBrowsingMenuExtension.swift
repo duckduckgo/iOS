@@ -50,6 +50,8 @@ extension TabViewController {
         return entires
     }
     
+    var favoriteEntryIndex: Int { 1 }
+    
     func buildBrowsingMenu() -> [BrowsingMenuEntry] {
         
         var entires = [BrowsingMenuEntry]()
@@ -60,6 +62,7 @@ extension TabViewController {
             }
             
             if let entry = buildFavoriteEntry(for: link) {
+                assert(favoriteEntryIndex == entires.count, "Entry index should be in sync with entry placement")
                 entires.append(entry)
             }
             
@@ -180,7 +183,7 @@ extension TabViewController {
         if isFavorite {
             
             let action: () -> Void = { [weak self] in
-                Pixel.fire(pixel: .browsingMenuAddToFavorites)
+                Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
                 self?.performRemoveFavoriteAction(for: link)
             }
             

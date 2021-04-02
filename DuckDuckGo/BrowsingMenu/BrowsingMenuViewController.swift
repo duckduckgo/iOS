@@ -175,6 +175,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     }
     
     @objc func backgroundTapped() {
+        ViewHighlighter.hideAll()
         dismiss?()
     }
     
@@ -184,6 +185,15 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         view.removeFromSuperview()
         
         dismiss = nil
+    }
+    
+    func highlightCell(atIndex index: IndexPath) {
+        guard let cell = tableView.cellForRow(at: index) as? BrowsingMenuEntryViewCell,
+              let window = view.window else {
+            return
+        }
+        
+        ViewHighlighter.showIn(window, focussedOnView: cell.entryImage)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

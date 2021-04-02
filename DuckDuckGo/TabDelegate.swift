@@ -59,6 +59,8 @@ protocol TabDelegate: class {
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
     
+    func tabDidRequestShowingMenuHighlighter(tab: TabViewController)
+    
     func tab(_ tab: TabViewController, didRequestPresentingAlert alert: UIAlertController)
 
     func showBars()

@@ -1487,6 +1487,8 @@ extension MainViewController: Themable {
         gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
         
+        presentedMenuButton.decorate(with: theme)
+        
         tabManager.decorate(with: theme)
 
         findInPageView.decorate(with: theme)

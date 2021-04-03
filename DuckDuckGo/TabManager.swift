@@ -224,6 +224,18 @@ class TabManager {
 
     func save() {
         model.save()
+        assertTabPreviewCount()
+    }
+
+    private func assertTabPreviewCount() {
+        let totalStoredPreviews = previewsSource.totalStoredPreviews()
+        let totalTabs = model.tabs.count
+
+        if totalStoredPreviews > totalTabs {
+            Pixel.fire(pixel: .cachedTabPreviewsExceedsTabCount, withAdditionalParameters: [
+                PixelParameters.tabPreviewCountDelta: "\(totalStoredPreviews - totalTabs)"
+            ])
+        }
     }
 }
 

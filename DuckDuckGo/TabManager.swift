@@ -231,9 +231,9 @@ class TabManager {
         let totalStoredPreviews = previewsSource.totalStoredPreviews()
         let totalTabs = model.tabs.count
 
-        if totalStoredPreviews > totalTabs {
+        if let storedPreviews = totalStoredPreviews, storedPreviews > totalTabs {
             Pixel.fire(pixel: .cachedTabPreviewsExceedsTabCount, withAdditionalParameters: [
-                PixelParameters.tabPreviewCountDelta: "\(totalStoredPreviews - totalTabs)"
+                PixelParameters.tabPreviewCountDelta: "\(storedPreviews - totalTabs)"
             ])
         }
     }

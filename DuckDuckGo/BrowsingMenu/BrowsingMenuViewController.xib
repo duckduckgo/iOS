@@ -14,6 +14,7 @@
                 <outlet property="horizontalContainer" destination="xsB-hA-CpK" id="Y0H-8P-m0g"/>
                 <outlet property="horizontalStackView" destination="iBS-aZ-obk" id="y8F-sY-e2w"/>
                 <outlet property="preferredWidth" destination="bAB-s6-TsU" id="jZ8-Ma-ZNa"/>
+                <outlet property="separator" destination="Re3-rU-zGN" id="4H8-Cc-RJU"/>
                 <outlet property="separatorHeight" destination="E0g-nd-VVj" id="cI2-Ch-uaC"/>
                 <outlet property="tableView" destination="bcd-er-PvS" id="Miv-wM-xpE"/>
                 <outlet property="tableViewHeight" destination="Qwc-LA-MWe" id="D6c-cm-Bld"/>

@@ -971,6 +971,7 @@ extension MainViewController: OmniBarDelegate {
     func onMenuPressed() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
+        ActionMessageView.dismissAllMessages()
         launchBrowsingMenu()
     }
     

@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ixL-08-GlI">
-                        <rect key="frame" x="24" y="12" width="16" height="16"/>
+                        <rect key="frame" x="24" y="13" width="16" height="16"/>
                         <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="Dd6-w4-oNp"/>
@@ -45,7 +45,7 @@
                 <constraints>
                     <constraint firstItem="ixL-08-GlI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="CN5-Qf-X8E"/>
                     <constraint firstAttribute="bottom" secondItem="qWj-8a-8jk" secondAttribute="bottom" constant="10" id="UZs-M1-4Ux"/>
-                    <constraint firstItem="ixL-08-GlI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="chn-gh-o3S"/>
+                    <constraint firstItem="ixL-08-GlI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="chn-gh-o3S"/>
                     <constraint firstAttribute="trailing" secondItem="qWj-8a-8jk" secondAttribute="trailing" constant="12" id="cpo-HZ-Wr4"/>
                     <constraint firstItem="qWj-8a-8jk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="jrv-Y0-BbN"/>
                     <constraint firstItem="qWj-8a-8jk" firstAttribute="leading" secondItem="ixL-08-GlI" secondAttribute="trailing" constant="17" id="xQM-6N-B1C"/>

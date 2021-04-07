@@ -40,6 +40,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     
     @IBOutlet weak var horizontalContainer: UIView!
     @IBOutlet weak var horizontalStackView: UIStackView!
+    @IBOutlet weak var separator: UIView!
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var arrowView: UIView!
@@ -125,7 +126,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
 
         let shape = CAShapeLayer()
         shape.bounds = bounds
-        shape.position = CGPoint(x: -2, y: 15)
+        shape.position = CGPoint(x: -2, y: 19)
         shape.path = bezierPath.cgPath
         shape.fillColor = color.cgColor
         shape.name = Contants.arrowLayerKey
@@ -143,10 +144,10 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         tableView.layer.cornerRadius = 10
         
         view.layer.cornerRadius = 10
-        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        view.layer.shadowOffset = CGSize(width: 0, height: 8)
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.12
-        view.layer.shadowRadius = 3
+        view.layer.shadowOpacity = 0.25
+        view.layer.shadowRadius = 20
     }
     
     func attachTo(_ targetView: UIView, onDismiss: @escaping DismissHandler) {
@@ -318,6 +319,8 @@ extension BrowsingMenuViewController: Themable {
         horizontalContainer.backgroundColor = theme.browsingMenuBackgroundColor
         tableView.backgroundColor = theme.browsingMenuBackgroundColor
         view.backgroundColor = theme.browsingMenuBackgroundColor
+        
+        separator.backgroundColor = theme.browsingMenuSeparatorColor
         
         tableView.reloadData()
     }

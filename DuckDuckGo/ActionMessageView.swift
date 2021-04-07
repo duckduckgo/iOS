@@ -26,7 +26,7 @@ class ActionMessageView: UIView {
     private static var presentedMessages = [ActionMessageView]()
     
     private enum Constants {
-        static var maxWidth: CGFloat = 300
+        static var maxWidth: CGFloat = 346
         
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
@@ -61,7 +61,7 @@ class ActionMessageView: UIView {
         messageView.message.setAttributedTextString(message)
         
         if let actionTitle = actionTitle, let title = messageView.actionButton.attributedTitle(for: .normal) {
-            messageView.actionButton.setAttributedTitle(title.withText(actionTitle), for: .normal)
+            messageView.actionButton.setAttributedTitle(title.withText(actionTitle.uppercased()), for: .normal)
             messageView.action = onAction
         } else {
             messageView.labelToButton.isActive = false

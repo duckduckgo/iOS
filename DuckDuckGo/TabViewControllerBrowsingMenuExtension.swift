@@ -80,7 +80,7 @@ extension TabViewController {
             }
             
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-            let image = tabModel.isDesktop ? UIImage(named: "MenuDesktopMode")! : UIImage(named: "MenuMobileMode")!
+            let image = tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
             entires.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
                 self?.onToggleDesktopSiteAction(forUrl: link.url)
             }))

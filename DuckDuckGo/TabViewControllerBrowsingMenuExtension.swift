@@ -195,12 +195,7 @@ extension TabViewController {
             // Capture flow state here as will be reset after menu is shown
             let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
 
-            let title = [
-                addToFavoriteFlow ? "👋 " : "",
-                UserText.actionSaveFavorite
-            ].joined()
-
-            return BrowsingMenuEntry.regular(name: title, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
+            return BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
                 Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
                 self?.performSaveFavoriteAction(for: link)
             })

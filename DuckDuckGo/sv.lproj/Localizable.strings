@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Redigera";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Återställ";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lägg till";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Spara bokmärke";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Bokmärken";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Avbryt";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopiera";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "Webbadress kopierad";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Inaktivera integritetsskydd";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Redigera bokmärke";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Aktivera integritetsskydd";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Öppna i bakgrunden";
 
 /* Create New Tab action */
-"action.title.newTab" = "Ny flik";
+"action.title.newTabAction" = "Ny";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Öppna i ny flik";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Klistra in och gå";
 
+/* Print action */
+"action.title.print" = "Skriv ut";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Uppdatera";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Ta bort favorit";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Rapportera skadad webbplats";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Begär webbplats för dator";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Begär webbplats för mobil";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Spara";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lägg till i bokmärken";
+"action.title.save.bookmark" = "Lägg till bokmärke för den här sidan";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Lägg till i favoriter";
+"action.title.save.favorite" = "Lägg till den här sidan som favorit";
 
 /* Settings action */
 "action.title.settings" = "Inställningar";
 
 /* Share action */
-"action.title.share" = "Dela ...";
+"action.title.share" = "Dela";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Befintliga bokmärken kommer inte att kopieras.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Redigera bokmärke";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Spara bokmärke";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Brandsäker webbplats";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ är nu brandsäkrad";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Inte nu";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Ta bort brandsäkring";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Brandsäkra den här webbplatsen";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Brandsäkring har tagits bort";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Ta bort alla";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Fråga om webbplatser ska brandsäkras";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ är nu brandsäkrad! Gå till Inställningar för att hantera.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "På DuckDuckGo sätter vi en ny standard för förtroende på nätet.\n\nDuckDuckGo Privacy Browser tillhandahåller alla de grundläggande sekretesstjänster du behöver för att skydda dig själv när du söker och surfar på nätet, inklusive blockering av spårare, smartare kryptering och DuckDuckGo privat sökning.\n\nInternet borde ju trots allt inte kännas så skrämmande och det bör vara lika enkelt att få det integritetsskydd du förtjänar som det är att dra ner rullgardinen.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Andra sökmotorer spårar dina sökningar även när du bytt till privat surfningsläge. Vi spårar dig inte. Punkt.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigera till *Safari* och sedan till *Sökmotor*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Starta appen *Inställningar*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Välj *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Skicka in rapport";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Ljus";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ har lagts till i oskyddade webbplatser";
+"toast.protection.disabled" = "Integritetsskydd inaktiverat för %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ har tagits bort från oskyddade webbplatser";
+"toast.protection.enabled" = "Integritetsskydd aktiverat för %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ett okänt fel uppstod.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favorit borttagen";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Bokmärket har lagts till";

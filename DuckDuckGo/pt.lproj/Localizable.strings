@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Editar";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Anular";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adicionar";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Marcador";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Marcadores";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Cancelar";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Copiar";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL copiada";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Desativar Proteção de Privacidade";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Editar marcador";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Ativar Proteção de Privacidade";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Abrir em segundo plano";
 
 /* Create New Tab action */
-"action.title.newTab" = "Novo separador";
+"action.title.newTabAction" = "Novo";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Abrir em novo separador";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Colar e ir";
 
+/* Print action */
+"action.title.print" = "Imprimir";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Atualizar";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Remover favorito";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Denunciar site danificado";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Solicitar site de área de trabalho";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Solicitar site móvel";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Guardar";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Adicionar aos marcadores";
+"action.title.save.bookmark" = "Marcar esta página";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Adicionar aos favoritos";
+"action.title.save.favorite" = "Torne esta página sua favorita";
 
 /* Settings action */
 "action.title.settings" = "Definições";
 
 /* Share action */
-"action.title.share" = "Partilhar...";
+"action.title.share" = "Partilhar";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Os marcadores existentes não serão duplicados.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.exemplo.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Editar marcador";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Guardar marcador";
@@ -179,7 +191,7 @@
 "dax.onboarding.browsing.fire.button.cta" = "Limpar todos os separadores e dados";
 
 /* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "É isso — os seus dados já eram!\n\nAqui fica uma dica: coloque uma barreira de segurança num site e não tem de iniciar a sessão novamente de cada vez.\n\nQuer ver como funciona? Visite um dos seus sites preferidos e inicie a sessão.";
+"dax.onboarding.browsing.fire.button.subsequent" = "É isso — os seus dados já eram!\n\nAqui fica uma dica: coloque uma barreira de segurança num site e não tem de iniciar a sessão de cada vez.\n\nQuer ver como funciona? Visite um dos seus sites favoritos e inicie a sessão.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Site à prova de fogo";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ já tem barreira de segurança";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Agora não";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Remover barreira de segurança";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Coloque uma barreira de segurança neste site";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Barreira de segurança removida";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Remover tudo";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Pedir para avaliar as barreiras de segurança de sites";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ já tem barreira de segurança! Visite as Definições para gerir.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "No DuckDuckGo, estamos a estabelecer o novo padrão de confiança online.\n\nO Navegador de Privacidade DuckDuckGo fornece todos os elementos essenciais de privacidade que precisa para se proteger enquanto pesquisa e navega na web, incluindo o bloqueio de rastreamento, a criptografia mais inteligente e a pesquisa privada DuckDuckGo.\n\nAfinal de contas, a internet não deve ser tão assustadora e obter a privacidade que merece online deve ser tão simples quanto fechar as cortinas.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Outros motores de pesquisa monitorizam as suas pesquisas mesmo quando está em modo de navegação privada. Nós não monitorizamos. Ponto final.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Vá a *Safari* e, depois, *Motor de pesquisa*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Abra a aplicação *Definições*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Selecione *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submeter relatório";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Claro";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ adicionado aos sites desprotegidos";
+"toast.protection.disabled" = "Proteção de privacidade desativada para %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ removido dos sites desprotegidos";
+"toast.protection.enabled" = "Proteção de privacidade ativada para %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ocorreu um erro desconhecido.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favorito removido";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Marcador adicionado";

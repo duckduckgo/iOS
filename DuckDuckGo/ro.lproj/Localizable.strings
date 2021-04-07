@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Editați";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Anulați";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Marcat";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Semne de carte";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Renunță";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Copiere";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL copiat";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Dezactivează protecția confidențialității";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Editare semn de carte";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Activează protecția confidențialității";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Deschide în fundal";
 
 /* Create New Tab action */
-"action.title.newTab" = "Filă nouă";
+"action.title.newTabAction" = "Nouă";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Deschide într-o filă nouă";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Lipește și pornește";
 
+/* Print action */
+"action.title.print" = "Tipărire";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Reîmprospătare";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Elimină Favoritul";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Raportați site-ul defect";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Solicită versiunea desktop";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Solicită site-ul mobil";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Salvează";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Adaugă la marcaje";
+"action.title.save.bookmark" = "Marchează această pagină";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Adaugă la preferințe";
+"action.title.save.favorite" = "Adaugă pagina la Favorite";
 
 /* Settings action */
 "action.title.settings" = "Setări";
 
 /* Share action */
-"action.title.share" = "Partajare…";
+"action.title.share" = "Partajare";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Marcajele existente nu vor fi duplicate.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Editare semn de carte";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Salvare marcaj";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Site cu ștergerea activității și istoricului din browser la ieșire";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ nu mai păstrează acum activitatea și istoricul";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Nu acum";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Elimină ștergerea activității și istoricului din browser";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Șterge activitatea și istoricul din browser pentru acest site";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Ștergerea activității și istoricului din browser a fost eliminată";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Elimină tot";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Solicită ștergea activității și istoricului din browser la site-uri";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ nu mai păstrează acum activitatea și istoricul! Accesează setările pentru a gestiona.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "Aici, la DuckDuckGo, stabilim noul standard de încredere online.\n\nDuckDuckGo Privacy Browser oferă toate elementele esențiale de confidențialitate de care aveți nevoie pentru a vă proteja în timp ce căutați și navigați pe web, inclusiv blocarea cookie-urilor de urmărire, criptare mai inteligentă și căutare privată DuckDuckGo.\n\nLa urma urmei, internetul nu ar trebui să fie perceput atât de ciudat, iar obținerea confidențialității pe care o meritați online ar trebui să fie la fel de simplă ca a trage perdeaua.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Alte motoare de căutare îți monitorizează căutările chiar și în modul privat de navigare. Noi nu te monitorizăm. Punct.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navighează la *Safari*, apoi *Motor de căutare*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Deschide aplicația *Setări*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Selectează *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Trimite raportul";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Lumină";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ adăugat la site-uri neprotejate";
+"toast.protection.disabled" = "Protecția confidențialității este dezactivată pentru %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ eliminat de la site-uri neprotejate";
+"toast.protection.enabled" = "Protecția confidențialității este activată pentru %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "A apărut o eroare necunoscută.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favorit eliminat";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Semn de carte adăugat";

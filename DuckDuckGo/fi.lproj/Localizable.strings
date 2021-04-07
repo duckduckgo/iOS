@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Muokkaa";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Kumoa";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lisää";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Lisää kirjanmerkki";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Kirjanmerkit";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Peruuta";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopioi";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL kopioitu";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Poista yksityisyyden suoja käytöstä";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Muokkaa kirjanmerkkiä";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Ota yksityisyyden suoja käyttöön";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Avaa taustalla";
 
 /* Create New Tab action */
-"action.title.newTab" = "Uusi välilehti";
+"action.title.newTabAction" = "Uusi";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Avaa uudella välilehdellä";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Liitä ja avaa";
 
+/* Print action */
+"action.title.print" = "Tulosta";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Päivitä";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Poista suosikki";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Ilmoita viallisesta sivustosta";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Pyydä pöytäkonesivustoa";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Pyydä mobiilisivustoa";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Tallenna";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lisää kirjanmerkkeihin";
+"action.title.save.bookmark" = "Lisää sivu kirjanmerkkeihin";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Lisää suosikkeihin";
+"action.title.save.favorite" = "Lisää sivu suosikkeihin";
 
 /* Settings action */
 "action.title.settings" = "Asetukset";
 
 /* Share action */
-"action.title.share" = "Jaa…";
+"action.title.share" = "Jaa";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.esimerkki.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Muokkaa kirjanmerkkiä";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Tallenna kirjanmerkki";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Palonkestävä verkkosivusto";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ on nyt palonkestävä";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ei nyt";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Poista palonkestävyys";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Tee sivustosta palonkestäviä";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Palonkestävyys poistettu";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Poista kaikki";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Kysy tehdäänkö sivustoista palonkestäviä";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ on nyt palonkestävä! Hallitse tätä asetuksissa.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo asettaa uudet standardit luottamukselle verkossa.\n\nDuckDuckGo-tietosuojaselain tarjoaa kaikki keskeiset tietosuojaominaisuudet nettihakujesi ja -selailusi turvaksi, kuten seurantapalvelinten eston, älykkäämmän salauksen ja yksityisen DuckDuckGo-haun.\n\nInternetin ei pitäisi tuntua karmivalta paikalta ja nettiyksityisyyden pitäisi olla yhtä helppoa kuin verhojen vetäminen ikkunan eteen.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Muut hakukoneet seuraavat hakujasi, vaikka käyttäisit yksityistä selausta. Me emme seuraa sinua – piste.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Siirry *Safariin* ja sitten *hakukoneeseen*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Avaa *Asetukset*-sovellus.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Valitse *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Vaalea";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ lisätty suojaamattomiin sivustoihin";
+"toast.protection.disabled" = "Yksityisyydensuoja poistettu käytöstä osoitteessa %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ poistettu suojaamattomista sivustoista";
+"toast.protection.enabled" = "Yksityisyydensuoja otettu käyttöön osoitteessa %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Tapahtui tuntematon virhe.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Suosikki poistettu";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Kirjanmerkki lisätty";

@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Redigeeri";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Võta tagasi";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lisa";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Järjehoidja";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Järjehoidjad";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Tühista";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopeeri";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL on kopeeritud";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Keela privaatsuse kaitse";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Redigeeri järjehoidjat";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Luba privaatsuse kaitse";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Ava taustal";
 
 /* Create New Tab action */
-"action.title.newTab" = "Uus vaheleht";
+"action.title.newTabAction" = "Uus";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Ava uuel vahelehel";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Kleebi ja mine";
 
+/* Print action */
+"action.title.print" = "Prindi";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Värskenda";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Eemalda lemmik";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Teata mittetoimivast saidist";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Taotle töölaua saiti";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Taotle mobiilisaiti";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Salvesta";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lisa järjehoidjatesse";
+"action.title.save.bookmark" = "Lisa see lehekülg järjehoidjatesse";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Lisa lemmikutesse";
+"action.title.save.favorite" = "Määra see leht lemmikuks";
 
 /* Settings action */
 "action.title.settings" = "Seaded";
 
 /* Share action */
-"action.title.share" = "Jaga...";
+"action.title.share" = "Jaga";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Redigeeri järjehoidjat";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Salvesta järjehoidjasse";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Tulekindel veebisait";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ on nüüd tulekindel";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Mitte praegu";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Eemalda tulekindlus";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Muuda see sait tulekindlaks";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Tulekindlus on eemaldatud";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Eemalda kõik";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Küsi tulekindlaid veebisaite";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ on nüüd tulekindel! Lisateabe saamiseks vaata üle seaded.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo on veebi usaldusväärsuse uus standard.\n \nDuckDuckGo privaatsusbrauser pakub kõiki privaatsuse põhifunktsioone, mida peate enda kaitsmiseks veebist otsides ja sirvides kasutama, sealhulgas jälgijate blokeerimist, nutikamat krüptimist ja DuckDuckGo privaatset otsingut.\n\nLõppude lõpuks ei tohiks Internet nii jube olla ja Internetis väärilise privaatsuse saavutamine peaks olema sama lihtne kui ruloo alla tõmbamine.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Teised otsingumootorid jälgivad sinu otsinguid ka siis, kui oled privaatse sirvimise režiimis. Me ei jälgi sind. Punkt.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigeeri jaotisesse *Safari*, seejärel *Otsingumootor*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Ava rakendus *Sätted*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Vali *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Hele";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ lisatud kaitsmata saitidele";
+"toast.protection.disabled" = "%@ privaatsuse kaitse on keelatud";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ eemaldatud kaitsmata saitidelt";
+"toast.protection.enabled" = "%@ privaatsuse kaitse on lubatud";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Tekkis tundmatu tõrge.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Lemmik on eemaldatud";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Järjehoidja lisatud";

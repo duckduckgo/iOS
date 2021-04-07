@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Редактиране";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Отмяна";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Отметка";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Отметки";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Отмени";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Копиране";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL адресът е копиран";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Деактивиране на защита на поверителността";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Редактиране на отметка";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Активиране на защита на поверителността";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Отваряне във фонов режим";
 
 /* Create New Tab action */
-"action.title.newTab" = "Нов раздел";
+"action.title.newTabAction" = "Нов";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Отваряне в нов раздел";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Поставяне и отваряне";
 
+/* Print action */
+"action.title.print" = "Отпечатване";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Опресняване";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Премахване от любими";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Подаване на сигнал за повреден сайт";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Заявка за сайт на работния плот";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Заявка за мобилен сайт";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Запази";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Добавяне към отметки";
+"action.title.save.bookmark" = "Отметка за тази страница";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Добавяне към любими";
+"action.title.save.favorite" = "Направи тази страница любима";
 
 /* Settings action */
 "action.title.settings" = "Настройки";
 
 /* Share action */
-"action.title.share" = "Споделяне...";
+"action.title.share" = "Споделяне";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Редактиране на отметка";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Запазване на отметка";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Огнеустойчив уебсайт";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ вече е огнеустойчив";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Не сега";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Премахване на огнеустойчивост";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Направи този сайт огнеустойчив";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Премахната огнеустойчивост";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Премахване на всички";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Питай дали да направиш сайтовете огнеустойчиви";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ вече е огнеустойчив! Отворете настройките за управление.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритъм";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "В DuckDuckGo задаваме новия стандарт на доверие онлайн.\n\nБраузърът за поверителност DuckDuckGo осигурява всички необходими елементи за защита на поверителността, докато търсите и сърфирате в мрежата, включително блокиране на тракери, по-интелигентно криптиране и поверително търсене с DuckDuckGo.\n\nВ крайна сметка интернет не трябва да създава чувство на страх, а получаването на поверителността, която заслужавате онлайн, трябва да е толкова просто, колкото пускането на щорите.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Другите търсачки проследяват вашето търсене дори когато сте в режим на поверително сърфиране. Ние не ви проследяваме. Точка.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Отворете *Safari* и след това *Търсачка*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Отворете приложението *Настройки*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Изберете *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Светла";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ е добавен към незащитените сайтове";
+"toast.protection.disabled" = "Деактивирана защита на поверителността за %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ е премахнат от незащитените сайтове";
+"toast.protection.enabled" = "Активирана защита на поверителността за %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Възникна неизвестна грешка.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Премахнато от любими";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Добавена е отметка";

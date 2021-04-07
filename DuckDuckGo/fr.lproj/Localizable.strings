@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Modifier";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Annuler";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ajouter";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Ajouter aux signets";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Signets";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Annuler";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Copier";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL copiée";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Désactiver la protection de la confidentialité";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Modifier le signet";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Activer la protection de la confidentialité";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Ouvrir en arrière-plan";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nouvel onglet";
+"action.title.newTabAction" = "Nouveau";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Ouvrir dans un nouvel onglet";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Coller et valider";
 
+/* Print action */
+"action.title.print" = "Imprimer";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Actualiser";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Supprimer le favori";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Signaler un problème de site";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Afficher en version ordinateur";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Afficher en version mobile";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Enregistrer";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Ajouter aux signets";
+"action.title.save.bookmark" = "Ajouter cette page aux signets";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Ajouter aux favoris";
+"action.title.save.favorite" = "Ajouter cette page aux favoris";
 
 /* Settings action */
 "action.title.settings" = "Paramètres";
 
 /* Share action */
-"action.title.share" = "Partager…";
+"action.title.share" = "Partager";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Les signets existants ne seront pas dupliqués.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.exemple.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Modifier le signet";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Enregistrer le signet";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Site Web coupe-feu";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ est maintenant en mode coupe-feu";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Pas maintenant";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Désactiver le mode coupe-feu";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Activer le mode coupe-feu pour ce site";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Mode coupe-feu désactivé";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Tout supprimer";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Demander à placer des sites en mode coupe-feu";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ est maintenant en mode coupe-feu ! Accédez aux paramètres pour le gérer.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithme";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "Chez DuckDuckGo, nous mettons en place un nouveau concept de confiance en ligne.\n\nLe navigateur confidentiel DuckDuckGo fournit tous les éléments de confidentialité essentiels dont vous avez besoin pour vous protéger lorsque vous faites des recherches et naviguez sur le Web, notamment le blocage des traqueurs, un cryptage plus intelligent et la recherche privée DuckDuckGo.\n\nAprès tout, la sphère Internet gagnerait à s’affranchir d’un éventail de pratiques douteuses. Avec nous, protégez votre vie privée en ligne aussi aisément que vous fermez les rideaux.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "D'autres moteurs de recherche pistent vos recherches même lorsque vous êtes en mode de navigation privée. Nous ne vous pisterons jamais.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Accédez à *Safari*, puis *Moteur de recherche*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Accédez à l'application *Réglages*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Sélectionnez *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Envoyer le rapport";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Clair";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ ajouté aux sites non protégés";
+"toast.protection.disabled" = "Protection de la confidentialité désactivée pour %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ supprimé des sites non protégés";
+"toast.protection.enabled" = "Protection de la confidentialité activée pour %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Une erreur inconnue s'est produite.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favori supprimé";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Signet ajouté";

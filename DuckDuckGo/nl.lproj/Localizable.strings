@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Bewerken";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Ongedaan maken";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Toevoegen";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Toevoegen als bladwijzer";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Bladwijzers";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Annuleren";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopiëren";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL gekopieerd";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Privacybescherming uitschakelen";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Bladwijzer bewerken";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Privacybescherming inschakelen";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Openen op de achtergrond";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nieuw tabblad";
+"action.title.newTabAction" = "Nieuw";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Openen in nieuw tabblad";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Plakken en gaan";
 
+/* Print action */
+"action.title.print" = "Afdrukken";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Vernieuwen";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Favoriet verwijderen";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Defecte website melden";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Desktopsite bekijken";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Mobiele site bekijken";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Opslaan";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Toevoegen aan bladwijzers";
+"action.title.save.bookmark" = "Bladwijzer toevoegen aan deze pagina";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Toevoegen aan favorieten";
+"action.title.save.favorite" = "Deze pagina markeren als favoriet";
 
 /* Settings action */
 "action.title.settings" = "Instellingen";
 
 /* Share action */
-"action.title.share" = "Delen...";
+"action.title.share" = "Delen";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Bestaande bladwijzers worden niet gedupliceerd.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.voorbeeld.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Bladwijzer bewerken";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Bladwijzer opslaan";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Website brandveilig maken";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ is nu brandveilig";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Niet nu";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Brandveiligheid uitschakelen";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Deze website brandveilig maken";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Brandveiligheid uitgeschakeld";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Alles verwijderen";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Vragen om websites brandveilig te maken";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ is nu brandveilig! Ga naar Instellingen om dit te beheren.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "Bij DuckDuckGo zetten we de nieuwe standaard voor vertrouwen online.\n\nDe DuckDuckGo Privacy Browser biedt alle essentiële facetten van privacy die je nodig hebt om jezelf te beschermen tijdens het zoeken en browsen op het internet, zoals het blokkeren van trackers, slimmere versleuteling en privézoekopdrachten.\n\nHet internet zou namelijk helemaal niet zo griezelig moeten zijn en de privacy die je online verdient, moet net zo eenvoudig zijn als het sluiten van de gordijnen.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Andere zoekmachines volgen je zoekopdrachten zelfs in privémodus. Wij volgen je niet. Punt.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigeer naar *Safari*, vervolgens naar *Zoekmachine*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Open de app *Instellingen*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Selecteer *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Licht";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ toegevoegd aan onbeschermde sites";
+"toast.protection.disabled" = "Privacybescherming uitgeschakeld voor %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ verwijderd uit onbeschermde sites";
+"toast.protection.enabled" = "Privacybescherming ingeschakeld voor %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Er is een onbekende fout opgetreden.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favoriet verwijderd";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Bladwijzer toegevoegd";

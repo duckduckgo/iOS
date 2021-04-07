@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Redaguoti";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Anuliuoti";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Žymė";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Žymės";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Atšaukti";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopijuoti";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL nukopijuotas";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Išjungti privatumo apsaugą";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Redaguoti žymę";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Įjungti privatumo apsaugą";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Atidaryti fone";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nauja kortelė";
+"action.title.newTabAction" = "Naujas";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Atverti naujoje kortelėje";
@@ -37,32 +52,32 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Klijuoti ir eiti";
 
+/* Print action */
+"action.title.print" = "Spausdinti";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Atnaujinti";
 
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Šalinti mėgstamą";
+
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Pranešti apie sugadintą svetainę";
-
-/* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Įkelti iš naujo darbalaukyje";
-
-/* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Įkelti iš naujo mobiliajame";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Išsaugoti";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Pridėti prie žymų";
+"action.title.save.bookmark" = "Pažymėti šį puslapį";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Pridėti prie mėgstamų";
+"action.title.save.favorite" = "Mėgti šį puslapį";
 
 /* Settings action */
 "action.title.settings" = "Nustatymai";
 
 /* Share action */
-"action.title.share" = "Bendrinti...";
+"action.title.share" = "Bendrinti";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
@@ -75,9 +90,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Redaguoti žymę";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Įrašyti žymę";
@@ -179,7 +191,7 @@
 "dax.onboarding.browsing.fire.button.cta" = "Valyti visas korteles ir duomenis";
 
 /* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Viskas — jūsų duomenys yra tostai! \n\nŠtai patarimas: svetainei naudokite parinktį „Fireproof“ ir nereikės kaskart prisijungti iš naujo. \n\nNorite pamatyti, kaip tai veikia? Apsilankykite vienoje iš mėgstamiausių svetainių ir prisijunkite.";
+"dax.onboarding.browsing.fire.button.subsequent" = "Viskas – jūsų duomenys parengti!\n\nŠtai patarimas: apsaugokite svetainę ir nereikės kaskart prisijungti iš naujo.\n\nNorite pamatyti, kaip tai veikia? Apsilankykite vienoje iš mėgstamų svetainių ir prisijunkite.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -598,8 +610,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Patikrinti svetainę";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ jau apsaugota";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ne dabar";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Šalinti apsaugą";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Apsaugoti šią svetainę";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Apsauga pašalinta";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Pašalinti visus";
@@ -609,9 +633,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Prašyti apsaugoti svetaines";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ dabar yra apsaugota! Apsilankykite „Nustatymai“ ir sužinokite daugiau.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmas";
@@ -805,18 +826,6 @@
 /* No comment provided by engineer. */
 "settings.about.text" = "„DuckDuckGo“ nustatome naują patikimumo tinkle standartą.\n\n„DuckDuckGo“ privatumo naršyklė užtikrina visus svarbiausius įrankius, kurie padės apsaugoti savo privatumą ieškant ir naršant tinkle, įskaitant sekiklių blokavimą, išmanųjį šifravimą ir „DuckDuckGo“ privačias paieškas.\n\nMūsų komanda tiki, kad internetas neturėtų būti toks baisus, o privatumas, kurio nusipelnėte internete, turėtų būti ranka pasiekiamas.";
 
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Kitos paieškos sistemos seka jūsų paieškas net tada, kai esate pasirinkę privatų naršymo režimą. Mes jūsų nesekame. Taškas.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Eikite į *Safari*, tuomet rinkitės *paieškos sistemą*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Atidarykite programoje *nustatymus*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Pasirinkite *DuckDuckGo*.";
-
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
 
@@ -869,13 +878,16 @@
 "theme.name.light" = "Šviesi";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ pridėtas prie neapsaugotų svetainių";
+"toast.protection.disabled" = "Privatumo apsauga išjungta %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ pašalintas iš neapsaugotų svetainių";
+"toast.protection.enabled" = "Privatumo apsauga įjungta %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Įvyko nežinoma klaida.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Mėgstamas pašalintas";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Žymė pridėta";

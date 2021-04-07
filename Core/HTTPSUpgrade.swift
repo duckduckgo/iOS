@@ -38,19 +38,16 @@ public class HTTPSUpgrade {
     public func isUgradeable(url: URL, completion: @escaping UpgradeCheckCompletion) {
         
         guard url.scheme == "http" else {
-            Pixel.fire(pixel: .httpsNoLookup)
             completion(false)
             return
         }
         
         guard let host = url.host else {
-            Pixel.fire(pixel: .httpsNoLookup)
             completion(false)
             return
         }
         
         if store.shouldExcludeDomain(host) {
-            Pixel.fire(pixel: .httpsNoLookup)
             completion(false)
             return
         }
@@ -58,7 +55,6 @@ public class HTTPSUpgrade {
         waitForAnyReloadsToComplete()
         let isUpgradable = isInUpgradeList(host: host)
         os_log("%s %s upgradable", log: generalLog, type: .debug, host, isUpgradable ? "is" : "is not")
-        Pixel.fire(pixel: isUpgradable ? .httpsLocalUpgrade : .httpsNoUpgrade)
         completion(isUpgradable)
            
     }

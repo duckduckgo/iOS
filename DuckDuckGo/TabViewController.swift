@@ -868,8 +868,6 @@ extension TabViewController: WKNavigationDelegate {
         hideErrorMessage()
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
-        
-        detectedNewNavigation()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -960,10 +958,6 @@ extension TabViewController: WKNavigationDelegate {
         trackersInfoWorkItem = nil
     }
     
-    private func detectedNewNavigation() {
-        Pixel.fire(pixel: .navigationDetected)
-    }
-    
     private func checkLoginDetectionAfterNavigation() {
         if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL, currentURL: url) ?? false {
             detectedLoginURL = nil
@@ -1013,7 +1007,6 @@ extension TabViewController: WKNavigationDelegate {
         self.url = url
         self.siteRating = makeSiteRating(url: url)
         updateSiteRating()
-        detectedNewNavigation()
         checkLoginDetectionAfterNavigation()
     }
     

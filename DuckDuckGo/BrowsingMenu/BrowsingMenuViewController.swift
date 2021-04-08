@@ -72,7 +72,6 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         
         configureHeader()
         configureTableView()
-        configureShadow()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -136,7 +135,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         arrowView.layer.addSublayer(shape)
     }
     
-    private func configureShadow() {
+    private func configureShadow(for theme: Theme) {
         view.clipsToBounds = false
         
         horizontalContainer.clipsToBounds = true
@@ -146,8 +145,14 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         view.layer.cornerRadius = 10
         view.layer.shadowOffset = CGSize(width: 0, height: 8)
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.25
         view.layer.shadowRadius = 20
+        
+        switch theme.currentImageSet {
+        case .dark:
+            view.layer.shadowOpacity = 0.5
+        case .light:
+            view.layer.shadowOpacity = 0.25
+        }
     }
     
     func attachTo(_ targetView: UIView, onDismiss: @escaping DismissHandler) {
@@ -306,6 +311,8 @@ extension BrowsingMenuViewController: UITableViewDataSource {
 extension BrowsingMenuViewController: Themable {
     
     func decorate(with theme: Theme) {
+        
+        configureShadow(for: theme)
         
         for headerButton in headerButtons {
             headerButton.image.tintColor = theme.browsingMenuIconsColor

@@ -125,7 +125,7 @@ extension MainViewController {
             // iPhone - landscape:
             
             // Move menu up, as bottom toolbar shrinks
-            constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 0))
+            constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: -2))
             
             // Make it go above WebView
             constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: -10))

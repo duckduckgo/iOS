@@ -161,7 +161,7 @@ DuckDuckGo!</string>
             <objects>
                 <viewController storyboardIdentifier="DaxDialog" id="UUS-R7-a2i" customClass="DaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="im0-JF-Sin">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UzU-6y-Vfa">
@@ -173,7 +173,7 @@ DuckDuckGo!</string>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="Background">
-                                <rect key="frame" x="10" y="82" width="355" height="113"/>
+                                <rect key="frame" x="10" y="82" width="355" height="318"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
                                         <rect key="frame" x="16" y="10" width="323" height="22"/>
@@ -189,7 +189,7 @@ DuckDuckGo!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
-                                        <rect key="frame" x="16" y="45" width="323" height="44"/>
+                                        <rect key="frame" x="16" y="250" width="323" height="44"/>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Gta-qP-xcx"/>
@@ -285,15 +285,6 @@ DuckDuckGo!</string>
                         <subviews>
                             <view opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G3-x9-wwM" customClass="HighlightCutOutView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-VQ-vvO">
-                                        <rect key="frame" x="487" y="359" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="onTapFireButtonOverlay:" destination="yGQ-WA-daz" eventType="touchUpInside" id="UoJ-cu-Egl"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmT-SX-w7H">
@@ -333,7 +324,6 @@ DuckDuckGo!</string>
                     </view>
                     <connections>
                         <outlet property="containerHeight" destination="V8D-Hc-dLK" id="mNj-Zf-ZTG"/>
-                        <outlet property="fireButtonOverlayButton" destination="JIA-VQ-vvO" id="fDK-Al-xN3"/>
                         <outlet property="highlightCutOutView" destination="7G3-x9-wwM" id="lug-DV-qRe"/>
                     </connections>
                 </viewController>
@@ -388,9 +378,71 @@ DuckDuckGo!</string>
             </objects>
             <point key="canvasLocation" x="4088" y="27"/>
         </scene>
+        <!--Action Sheet Dax Dialog View Controller-->
+        <scene sceneID="X4h-Bl-eEn">
+            <objects>
+                <viewController storyboardIdentifier="ActionSheetDaxDialog" id="v7i-nE-U3i" customClass="ActionSheetDaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="M4Y-u7-W4x">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iPq-Jh-rNQ" customClass="HighlightCutOutView" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="T0e-wM-ZV2" appends="YES" id="Foa-gc-4mP"/>
+                                </connections>
+                            </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OaR-Oy-k45">
+                                <rect key="frame" x="324.5" y="276" width="375" height="400"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="RWw-1w-Uhi"/>
+                                    <constraint firstAttribute="height" constant="400" id="yAP-iu-Hwg"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="UUS-R7-a2i" kind="embed" id="x63-BY-KWY"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhN-3W-Wva">
+                                <rect key="frame" x="8" y="700" width="1008" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="R3I-Ky-7UV"/>
+                                </constraints>
+                            </containerView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="SFT-9F-Q2B"/>
+                        <constraints>
+                            <constraint firstItem="OaR-Oy-k45" firstAttribute="centerX" secondItem="SFT-9F-Q2B" secondAttribute="centerX" id="0gg-i9-OQN"/>
+                            <constraint firstItem="OaR-Oy-k45" firstAttribute="width" secondItem="SFT-9F-Q2B" secondAttribute="width" priority="750" id="6WL-ii-Q2S"/>
+                            <constraint firstItem="rhN-3W-Wva" firstAttribute="top" secondItem="OaR-Oy-k45" secondAttribute="bottom" constant="24" id="BGw-vv-Wr5"/>
+                            <constraint firstItem="iPq-Jh-rNQ" firstAttribute="top" secondItem="M4Y-u7-W4x" secondAttribute="top" id="GtZ-0X-G44"/>
+                            <constraint firstItem="iPq-Jh-rNQ" firstAttribute="leading" secondItem="M4Y-u7-W4x" secondAttribute="leading" id="H91-SY-0sz"/>
+                            <constraint firstItem="SFT-9F-Q2B" firstAttribute="bottom" secondItem="rhN-3W-Wva" secondAttribute="bottom" id="P8i-34-k35"/>
+                            <constraint firstItem="iPq-Jh-rNQ" firstAttribute="trailing" secondItem="M4Y-u7-W4x" secondAttribute="trailing" id="UAh-OQ-VeB"/>
+                            <constraint firstItem="SFT-9F-Q2B" firstAttribute="trailing" secondItem="rhN-3W-Wva" secondAttribute="trailing" constant="8" id="ZGr-KP-EpL"/>
+                            <constraint firstAttribute="bottom" secondItem="iPq-Jh-rNQ" secondAttribute="bottom" id="ge0-tm-aqc"/>
+                            <constraint firstItem="rhN-3W-Wva" firstAttribute="leading" secondItem="SFT-9F-Q2B" secondAttribute="leading" constant="8" id="gnv-xc-brd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="actionSheetContainerView" destination="rhN-3W-Wva" id="Io2-EY-wUP"/>
+                        <outlet property="containerHeight" destination="yAP-iu-Hwg" id="cMW-WA-IaT"/>
+                        <outlet property="highlightCutOutView" destination="iPq-Jh-rNQ" id="Hjc-DI-eEE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UgW-MU-FrD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="T0e-wM-ZV2">
+                    <connections>
+                        <action selector="onTapOutside:" destination="v7i-nE-U3i" id="FGs-LD-W1B"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="121" y="1533"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z8u-vf-YsD"/>
+        <segue reference="x63-BY-KWY"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>

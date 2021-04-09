@@ -553,6 +553,7 @@
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
+		F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
 		F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F446B9B625115C1700324016 /* HomeMessageCell.xib */; };
 		F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B825115F9700324016 /* HomeMessageCell.swift */; };
@@ -1981,6 +1982,7 @@
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
+		F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDaxDialogViewController.swift; sourceTree = "<group>"; };
 		F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewSectionRenderer.swift; sourceTree = "<group>"; };
 		F446B9B625115C1700324016 /* HomeMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeMessageCell.xib; sourceTree = "<group>"; };
 		F446B9B825115F9700324016 /* HomeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCell.swift; sourceTree = "<group>"; };
@@ -2616,6 +2618,7 @@
 				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
 				8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */,
 				8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */,
+				F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */,
 				F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */,
 				85C297032476C1FD0063A335 /* DaxDialogsSettings.swift */,
 				85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */,
@@ -4676,6 +4679,7 @@
 				989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */,
 				8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
+				F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,

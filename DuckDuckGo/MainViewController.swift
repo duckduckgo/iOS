@@ -1456,17 +1456,16 @@ extension MainViewController: AutoClearWorker {
         DaxDialogs.shared.fireButtonPulseStarted()
         guard let window = view.window else { return }
         
-        ViewHighlighter.hideAll()
+        let fireButtonView: UIView?
         if toolbar.isHidden {
-            guard let view = tabsBarController?.fireButton else {
-                return
-            }
-            ViewHighlighter.showIn(window, focussedOnView: view)
+            fireButtonView = tabsBarController?.fireButton
         } else {
-            guard let view = fireButton.value(forKey: "view") as? UIView else {
-                return
-            }
-            
+            fireButtonView = fireButton.value(forKey: "view") as? UIView
+        }
+        guard let view = fireButtonView else { return }
+        
+        if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
+            ViewHighlighter.hideAll()
             ViewHighlighter.showIn(window, focussedOnView: view)
         }
     }

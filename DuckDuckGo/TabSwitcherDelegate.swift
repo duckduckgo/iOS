@@ -29,4 +29,6 @@ protocol TabSwitcherDelegate: class {
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController)
     
+    func tabSwitcherDidRequestFireEducationDialog(tabSwitcher: TabSwitcherViewController)
+    
 }

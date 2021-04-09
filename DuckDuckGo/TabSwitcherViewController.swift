@@ -136,6 +136,18 @@ class TabSwitcherViewController: UIViewController {
         self.scrollToInitialTab()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        ViewHighlighter.hideAll()
+        
+        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
+            let spec = sender as? DaxDialogs.ActionSheetSpec
+            controller.spec = spec
+            controller.delegate = self
+        }
+
+    }
+    
     @objc func handleTap(gesture: UITapGestureRecognizer) {
         dismiss()
     }
@@ -265,14 +277,20 @@ class TabSwitcherViewController: UIViewController {
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.forgetAll()
-        })
-        
-        if let anchor = sender as? UIView {
-            self.present(controller: alert, fromView: anchor)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            //self.delegate.tabSwitcherDidRequestFireEducationDialog(tabSwitcher: self)
+            let spec = DaxDialogs.shared.fireButtonEducationMessage()
+            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
-            self.present(controller: alert, fromView: toolbar)
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                self?.forgetAll()
+            })
+            
+            if let anchor = sender as? UIView {
+                self.present(controller: alert, fromView: anchor)
+            } else {
+                self.present(controller: alert, fromView: toolbar)
+            }
         }
     }
 

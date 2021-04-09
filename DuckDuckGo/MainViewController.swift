@@ -399,7 +399,6 @@ class MainViewController: UIViewController {
         } else {
             attachHomeScreen()
         }
-        //TODO fire pulse here?
     }
 
     @available(iOS 13.4, *)
@@ -1315,12 +1314,15 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        //TODO. we don't need this, android doesn't use it :)
         self.forgetAllWithAnimation {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
     
+    func tabSwitcherDidRequestFireEducationDialog(tabSwitcher: TabSwitcherViewController) {
+        let spec = DaxDialogs.shared.fireButtonEducationMessage()
+        performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+    }
 }
 
 extension MainViewController: BookmarksDelegate {

@@ -76,7 +76,7 @@ class ActionSheetDaxDialogViewController: UIViewController {
         
         containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0        
     }
-    //TODO I need to check the dax dialog width is correct
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let spec = spec {
@@ -102,5 +102,11 @@ class ActionSheetDaxDialogViewController: UIViewController {
 extension MainViewController: ActionSheetDaxDialogDelegate {
     func actionSheetDaxDialogDidConfirmAction(controller: ActionSheetDaxDialogViewController) {
         forgetAllWithAnimation(showNextDaxDialog: true)
+    }
+}
+
+extension TabSwitcherViewController: ActionSheetDaxDialogDelegate {
+    func actionSheetDaxDialogDidConfirmAction(controller: ActionSheetDaxDialogViewController) {
+        delegate?.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
 }

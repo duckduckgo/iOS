@@ -49,59 +49,70 @@ class DaxDialogs {
         static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
-                                              highlightFireButton: false,
                                               pixelName: .daxDialogsSerp)
         
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
-                                                  highlightFireButton: false,
                                                   pixelName: .daxDialogsWithoutTrackers)
         
         static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
-                                                     highlightFireButton: false,
                                                      pixelName: .daxDialogsSiteIsMajor)
         
         static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
-                                                          highlightFireButton: false,
                                                           pixelName: .daxDialogsSiteOwnedByMajor)
         
         static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                  highlightAddressBar: true,
-                                                 highlightFireButton: false,
                                                  pixelName: .daxDialogsWithTrackers)
         
         static let withMutipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
-                                                      highlightFireButton: false,
                                                       pixelName: .daxDialogsWithTrackers)
-        
-        static let fireButtonEducation = BrowsingSpec(message: UserText.daxDialogBrowsingFireButtonEducation,
-                                                      cta: UserText.daxDialogBrowsingFireButtonEducationCTA,
-                                                      highlightAddressBar: false,
-                                                      highlightFireButton: true,
-                                                      pixelName: .daxDialogsFireEducation)
         
         let message: String
         let cta: String
         let highlightAddressBar: Bool
-        let highlightFireButton: Bool
         let pixelName: PixelName
         
         func format(args: CVarArg...) -> BrowsingSpec {
             return BrowsingSpec(message: String(format: message, arguments: args),
                                 cta: cta,
                                 highlightAddressBar: highlightAddressBar,
-                                highlightFireButton: highlightFireButton,
                                 pixelName: pixelName)
         }
         
+    }
+    
+    struct ActionSheetSpec: Equatable {
+        //TODO should not be shown if dialogs have been hidden
+        //TODO this text is different somewhat
+        //I _guess_ we might want to change the pixels too, depends on how hard it is to seperate by version in Graphana?
+        //buttons and that are different, I think we will have to define a new one of these...
+        static let fireButtonEducation = ActionSheetSpec(message: UserText.daxDialogFireButtonEducation,
+                                                         confirmAction: UserText.daxDialogFireButtonEducationConfirmAction,
+                                                         cancelAction: UserText.daxDialogFireButtonEducationCancelAction,
+                                                         isConfirmActionDestructive: true,
+                                                         displayedPixelName: .daxDialogsFireEducationShown,
+                                                         confirmActionPixelName: .daxDialogsFireEducationConfirmed,
+                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled,
+                                                         cancelOutsideOfButtonPixelName: .daxDialogsFireEducationCancelledOutsideOfButton)
+        
+        let message: String
+        let confirmAction: String
+        let cancelAction: String
+        let isConfirmActionDestructive: Bool
+        
+        let displayedPixelName: PixelName
+        let confirmActionPixelName: PixelName
+        let cancelActionPixelName: PixelName
+        let cancelOutsideOfButtonPixelName: PixelName
     }
 
     public static let shared = DaxDialogs()
@@ -131,8 +142,8 @@ class DaxDialogs {
         || settings.browsingMajorTrackingSiteShown
     }
     
-    private var fireButtonBrowsingMessageSeen: Bool {
-        return settings.browsingFireButtonEducationShown
+    private var fireButtonBrowsingMessageSeenOrExpired: Bool {
+        return settings.fireButtonEducationShownOrExpired
     }
     
     var isEnabled: Bool {
@@ -146,7 +157,18 @@ class DaxDialogs {
     }
     
     var isFireButtonEducationEnabled: Bool {
-        return variantManager.isSupported(feature: .fireButtonEducation)
+        //TODO
+        return true
+        return variantManager.isSupported(feature: .fireButtonEducationIteration)
+    }
+    
+    var shouldShowFireButtonPulse: Bool {
+        let thing = nonDDGBrowsingMessageSeen
+        let thing2 = !fireButtonBrowsingMessageSeenOrExpired
+        let thing3 = isFireButtonEducationEnabled
+        let thing4 = isEnabled
+        print(thing, thing2, thing3, thing4)
+        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isFireButtonEducationEnabled && isEnabled
     }
 
     func dismiss() {
@@ -166,14 +188,39 @@ class DaxDialogs {
     func resumeRegularFlow() {
         nextHomeScreenMessageOverride = nil
     }
+    
+    private var fireButtonPulseTimer: Timer?
+    private static let timeToFireButtonExpire: TimeInterval = 10//TODO, made ten secs for testing 1 * 60 * 60
+    
+    func fireButtonPulseStarted() {
+        if settings.fireButtonPulseDateShown == nil {
+            settings.fireButtonPulseDateShown = Date()
+        }
+        if fireButtonPulseTimer == nil, let date = settings.fireButtonPulseDateShown {
+            let timeSinceShown = Date().timeIntervalSince(date)
+            let timerTime = DaxDialogs.timeToFireButtonExpire - timeSinceShown
+            fireButtonPulseTimer = Timer(timeInterval: timerTime, repeats: false) { _ in
+                ViewHighlighter.hideAll()
+                self.settings.fireButtonEducationShownOrExpired = true
+            }
+            RunLoop.current.add(fireButtonPulseTimer!, forMode: RunLoop.Mode.common)
+        }
+    }
+    
+    func fireButtonPulseCancelled() {
+        fireButtonPulseTimer?.invalidate()
+        settings.fireButtonEducationShownOrExpired = true
+    }
+    
+    func fireButtonEducationMessage() -> ActionSheetSpec? {
+        guard shouldShowFireButtonPulse else { return nil }
+        settings.fireButtonEducationShownOrExpired = true
+        return ActionSheetSpec.fireButtonEducation
+    }
 
     func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = siteRating.domain else { return nil }
-                
-        if nonDDGBrowsingMessageSeen && isFireButtonEducationEnabled && !fireButtonBrowsingMessageSeen {
-            return fireButtonBrowsingMessage()
-        }
         
         if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
             return searchMessage()
@@ -211,13 +258,7 @@ class DaxDialogs {
             return .initial
         }
         
-        if isFireButtonEducationEnabled {
-            // make sure we don't show the home message until the fire button education has been seen
-            if fireButtonBrowsingMessageSeen {
-                settings.homeScreenMessagesSeen += 1
-                return .subsequent
-            }
-        } else if firstBrowsingMessageSeen {
+        if firstBrowsingMessageSeen {
             settings.homeScreenMessagesSeen += 1
             return .subsequent
         }
@@ -278,12 +319,6 @@ class DaxDialogs {
                                                            entitiesBlocked[1].displayName ?? "")
         }
 
-    }
-    
-    private func fireButtonBrowsingMessage() -> BrowsingSpec? {
-        guard !fireButtonBrowsingMessageSeen && isFireButtonEducationEnabled else { return nil }
-        settings.browsingFireButtonEducationShown = true
-        return BrowsingSpec.fireButtonEducation
     }
  
     private func entitiesBlocked(_ siteRating: SiteRating) -> [Entity]? {

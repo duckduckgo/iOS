@@ -148,6 +148,10 @@ class MainViewController: UIViewController {
         
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     func startAddFavoriteFlow() {
@@ -325,6 +329,12 @@ class MainViewController: UIViewController {
         if var onboarding = segue.destination as? Onboarding {
             onboarding.delegate = self
         }
+        
+        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
+            let spec = sender as? DaxDialogs.ActionSheetSpec
+            controller.spec = spec
+            controller.delegate = self
+        }
 
     }
     
@@ -389,6 +399,7 @@ class MainViewController: UIViewController {
         } else {
             attachHomeScreen()
         }
+        //TODO fire pulse here?
     }
 
     @available(iOS 13.4, *)
@@ -442,11 +453,26 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.forgetAllWithAnimation {}
-        })
-        self.present(controller: alert, fromView: self.toolbar)
+        
+        if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+        } else {
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                self?.forgetAllWithAnimation {}
+            })
+            self.present(controller: alert, fromView: self.toolbar)
+        }
+        
+        //TODO hmm, will the tab need this set?
+        //quite possibly, it uses it to avoid presenting a new dax dialog whilst one is showing.
+        //isShowingFullScreenDaxDialog = true
+        //we have the current tab, so I reckon we can do that
+        //I think it's fine, how could it show a new one?
+        
+        //So I think we have three fire buttons, does this get called in all instances? (iphone, ipad, tab scree)
+        //doesn't get called from tab or from ipad. God damn, that's annoying
+        //we don't need the tab one cos android doesn't use it
+        //performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
     }
     
     func onQuickFirePressed() {
@@ -543,6 +569,9 @@ class MainViewController: UIViewController {
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     private func addToView(tab: TabViewController) {
@@ -573,6 +602,8 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func refreshControls() {
+        //TODO I think maybe we just put in here
+        //this had issues...
         refreshTabIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
@@ -782,6 +813,10 @@ class MainViewController: UIViewController {
     }
 
     func newTab(reuseExisting: Bool = false) {
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
+        DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
         currentTab?.dismiss()
 
@@ -836,7 +871,12 @@ extension MainViewController: BrowserChromeDelegate {
     }
     
     func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
-        if percent < 1 { hideKeyboard() }
+        if percent < 1 {
+            hideKeyboard()
+            if DaxDialogs.shared.shouldShowFireButtonPulse {
+                return
+            }
+        }
         
         let updateBlock = {
             self.updateToolbarConstant(percent)
@@ -1201,16 +1241,8 @@ extension MainViewController: TabDelegate {
         forgetAllWithAnimation(showNextDaxDialog: true)
     }
     
-    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint? {
-        if toolbar.isHidden {
-            return tabsBarController?.fireButtonCenterPosition
-        }
-        
-        guard let view = fireButton.value(forKey: "view") as? UIView else {
-            return nil
-        }
-        let point = view.convert(view.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
-        return CGPoint(x: point.x + view.frame.size.width / 2.0, y: point.y + view.frame.size.height / 2.0)
+    func tabDidRequestFireButtonPulse(tab: TabViewController) {
+        showFireButtonPulse()
     }
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
@@ -1260,6 +1292,7 @@ extension MainViewController: TabSwitcherDelegate {
         newTab()
     }
 
+    //TODO this func more flashy pls
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         selectTab(tab)
     }
@@ -1282,6 +1315,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
+        //TODO. we don't need this, android doesn't use it :)
         self.forgetAllWithAnimation {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
@@ -1395,6 +1429,25 @@ extension MainViewController: AutoClearWorker {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
+        }
+    }
+    
+    private func showFireButtonPulse() {
+        DaxDialogs.shared.fireButtonPulseStarted()
+        guard let window = view.window else { return }
+        
+        ViewHighlighter.hideAll()
+        if toolbar.isHidden {
+            guard let view = tabsBarController?.fireButton else {
+                return
+            }
+            ViewHighlighter.showIn(window, focussedOnView: view)
+        } else {
+            guard let view = fireButton.value(forKey: "view") as? UIView else {
+                return
+            }
+            
+            ViewHighlighter.showIn(window, focussedOnView: view)
         }
     }
     

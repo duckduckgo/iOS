@@ -201,7 +201,6 @@ class TabViewController: UIViewController {
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         showMenuHighlighterIfNeeded()
-
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -923,16 +922,24 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         guard let siteRating = self.siteRating,
-              !isShowingFullScreenDaxDialog,
-              let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
+              !isShowingFullScreenDaxDialog else {
+                            
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return
         }
         
-        isShowingFullScreenDaxDialog = true
-        if spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
-            scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
+            
+            if DaxDialogs.shared.shouldShowFireButtonPulse {
+                delegate?.tabDidRequestFireButtonPulse(tab: self)
+            }
+            
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
         }
+        
+        isShowingFullScreenDaxDialog = true
+        scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)

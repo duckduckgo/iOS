@@ -27,6 +27,7 @@ protocol TabsBarDelegate: NSObjectProtocol {
     func tabsBar(_ controller: TabsBarViewController, didRequestMoveTabFromIndex fromIndex: Int, toIndex: Int)
     func tabsBarDidRequestNewTab(_ controller: TabsBarViewController)
     func tabsBarDidRequestForgetAll(_ controller: TabsBarViewController)
+    func tabsBarDidRequestFireEducationDialog(_ controller: TabsBarViewController)
     func tabsBarDidRequestTabSwitcher(_ controller: TabsBarViewController)
 
 }
@@ -68,11 +69,6 @@ class TabsBarViewController: UIViewController {
         return Int(collectionView.frame.size.width / Constants.minItemWidth)
     }
     
-    var fireButtonCenterPosition: CGPoint {
-        let point = fireButton.convert(fireButton.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
-        return CGPoint(x: point.x + fireButton.frame.size.width / 2.0, y: point.y + fireButton.frame.size.height / 2.0)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,11 +95,15 @@ class TabsBarViewController: UIViewController {
 
     @IBAction func onFireButtonPressed() {
         
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.tabsBarDidRequestForgetAll(self)
-        })
-        self.present(controller: alert, fromView: fireButton)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            delegate?.tabsBarDidRequestFireEducationDialog(self)
+        } else {
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.tabsBarDidRequestForgetAll(self)
+            })
+            self.present(controller: alert, fromView: fireButton)
+        }
 
     }
 
@@ -311,6 +311,15 @@ extension MainViewController: TabsBarDelegate {
     
     func tabsBarDidRequestForgetAll(_ controller: TabsBarViewController) {
         forgetAllWithAnimation()
+    }
+    
+    func tabsBarDidRequestFireEducationDialog(_ controller: TabsBarViewController) {
+        let spec = DaxDialogs.shared
+                    .fireButtonEducationMessage()
+        if spec == nil {
+            Swift.print("Oh no!!")
+        }
+        performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
     }
     
     func tabsBarDidRequestTabSwitcher(_ controller: TabsBarViewController) {

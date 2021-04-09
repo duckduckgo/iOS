@@ -286,7 +286,9 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
 
         if let controller = segue.destination as? SuggestionTrayViewController {
             controller.dismissHandler = dismissSuggestionTray
@@ -332,6 +334,9 @@ class MainViewController: UIViewController {
         
         if let controller = segue.destination as? ActionSheetDaxDialogViewController {
             let spec = sender as? DaxDialogs.ActionSheetSpec
+            if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
+                ViewHighlighter.hideAll()
+            }
             controller.spec = spec
             controller.delegate = self
         }
@@ -702,7 +707,9 @@ class MainViewController: UIViewController {
             applyWidthToTrayController()
 
             if !AppWidthObserver.shared.isLargeWidth {
-                ViewHighlighter.hideAll()
+                if !DaxDialogs.shared.shouldShowFireButtonPulse {
+                    ViewHighlighter.hideAll()
+                }
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()
                 }
@@ -954,7 +961,9 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onOmniQuerySubmitted(_ query: String) {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         loadQuery(query)
         hideSuggestionTray()
         showHomeRowReminder()
@@ -962,19 +971,25 @@ extension MainViewController: OmniBarDelegate {
 
     func onSiteRatingPressed() {
         if isSERPPresented { return }
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         hideSuggestionTray()
         launchBrowsingMenu()
     }
 
     @objc func onBookmarksPressed() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
@@ -990,7 +1005,9 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSettingsPressed() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         launchSettings()
     }
     
@@ -1021,7 +1038,9 @@ extension MainViewController: OmniBarDelegate {
         let selectQueryText = !(isSERPPresented && !skipSERPFlow)
         skipSERPFlow = false
         
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         guard let homeController = homeController else {
             return selectQueryText
         }
@@ -1291,7 +1310,6 @@ extension MainViewController: TabSwitcherDelegate {
         newTab()
     }
 
-    //TODO this func more flashy pls
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         selectTab(tab)
     }

@@ -26,7 +26,7 @@ public enum FeatureName: String {
     case dummy
     
     // Fire button education
-    case fireButtonEducation
+    case fireButtonEducationIteration
 }
 
 public struct Variant {
@@ -62,8 +62,8 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.inRequiredCountry, features: []),
         
-        Variant(name: "mc", weight: 1, isIncluded: When.always, features: []),
-        Variant(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonEducation])
+        Variant(name: "mn", weight: 1, isIncluded: When.always, features: []),
+        Variant(name: "me", weight: 1, isIncluded: When.always, features: [.fireButtonEducationIteration])
     ]
     
     public let name: String

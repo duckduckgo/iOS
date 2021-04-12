@@ -91,10 +91,6 @@ class DaxDialogs {
     }
     
     struct ActionSheetSpec: Equatable {
-        //TODO should not be shown if dialogs have been hidden
-        //TODO this text is different somewhat
-        //I _guess_ we might want to change the pixels too, depends on how hard it is to seperate by version in Graphana?
-        //buttons and that are different, I think we will have to define a new one of these...
         static let fireButtonEducation = ActionSheetSpec(message: UserText.daxDialogFireButtonEducation,
                                                          confirmAction: UserText.daxDialogFireButtonEducationConfirmAction,
                                                          cancelAction: UserText.daxDialogFireButtonEducationCancelAction,
@@ -157,17 +153,12 @@ class DaxDialogs {
     }
     
     var isFireButtonEducationEnabled: Bool {
-        //TODO
+        // Thing
         return true
         return variantManager.isSupported(feature: .fireButtonEducationIteration)
     }
     
     var shouldShowFireButtonPulse: Bool {
-        let thing = nonDDGBrowsingMessageSeen
-        let thing2 = !fireButtonBrowsingMessageSeenOrExpired
-        let thing3 = isFireButtonEducationEnabled
-        let thing4 = isEnabled
-        print(thing, thing2, thing3, thing4)
         return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isFireButtonEducationEnabled && isEnabled
     }
 

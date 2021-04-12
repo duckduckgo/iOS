@@ -83,6 +83,6 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     
     var fireButtonEducationShownOrExpired: Bool = false
     
-    var fireButtonPulseDateShown: Date? = nil
+    var fireButtonPulseDateShown: Date?
     
 }

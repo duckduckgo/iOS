@@ -467,17 +467,6 @@ class MainViewController: UIViewController {
             })
             self.present(controller: alert, fromView: self.toolbar)
         }
-        
-        //TODO hmm, will the tab need this set?
-        //quite possibly, it uses it to avoid presenting a new dax dialog whilst one is showing.
-        //isShowingFullScreenDaxDialog = true
-        //we have the current tab, so I reckon we can do that
-        //I think it's fine, how could it show a new one?
-        
-        //So I think we have three fire buttons, does this get called in all instances? (iphone, ipad, tab scree)
-        //doesn't get called from tab or from ipad. God damn, that's annoying
-        //we don't need the tab one cos android doesn't use it
-        //performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
     }
     
     func onQuickFirePressed() {
@@ -607,8 +596,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func refreshControls() {
-        //TODO I think maybe we just put in here
-        //this had issues...
         refreshTabIcon()
         refreshOmniBar()
         refreshBackForwardButtons()

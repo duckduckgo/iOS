@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Over tid kan det hope seg opp med personlige opplysninger i nettleseren din. Fysj. Bruk brannknappen for å fjerne alt. Prøv den 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Tøm alle faner og data";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Dett var dett – dataene dine er brent til aske!\n\nTips: Du kan sikre en side sånn at du slipper å logge inn hver gang.\n\nLurer du på hvordan det funker? Besøk en av favorittsidene dine og logg inn.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Den er grei";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Det kan samles opp personopplysninger i nettleseren din. Fysj. Bruk brannknappen til å sette fyr på alt sammen. Prøv det nå! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Avbryt";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Lukk faner og slett data";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Besøk favorittsidene dine på et blunk!\n\nGå til et nettsted du liker. Trykk deretter på «…»-ikonet og velg *Legg til i Favoritter*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "Hos DuckDuckGo setter vi den nye standarden for tillit på nett.\n\nDuckDuckGo privatnettleser gir deg verktøyene du trenger for å sikre personvernet mens du søker og surfer på nett, med funksjoner som blokkering av sporingsanordninger, smartere kryptering og DuckDuckGo privatsøk.\n\nInternett burde ikke føles ekkelt å bruke, og det å få privatlivet du fortjener på nett, bør være like enkelt som å lukke persiennene.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Andre søkemotorer sporer søkene dine, til og med når du er i privat nettlesermodus. Vi sporer deg ikke. Punktum.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Gå til *Safari*, deretter *Søkemotor*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Åpne *Innstillinger*-appen.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Velg *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";

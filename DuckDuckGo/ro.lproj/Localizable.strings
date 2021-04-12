@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfiu!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "În timp, în browserul tău se pot acumula date personale. Bleah. Utilizează butonul Foc pentru a șterge totul. Încearcă acum 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Șterge toate filele și datele";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Gata — datele tale sunt afectate!\n\nIată un sfat: șterge activitatea și istoricul unui site și nu va trebui să te conectezi din nou de fiecare dată.\n\nVrei să vezi cum funcționează? Vizitează unul dintre site-urile preferate și conectează-te.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Am înțeles";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "În browserul tău se pot acumula date personale. Bleah. Utilizează butonul Ștergere activitate și istoric pentru a șterge totul. Încearcă acum! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Renunță";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Închide filele și șterge datele";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Vizitează site-urile preferate într-o clipă!\n\nAccesează un site care îți place. Apoi atinge pictograma „⋯” și selectează *Adaugă la preferințe*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "Aici, la DuckDuckGo, stabilim noul standard de încredere online.\n\nDuckDuckGo Privacy Browser oferă toate elementele esențiale de confidențialitate de care aveți nevoie pentru a vă proteja în timp ce căutați și navigați pe web, inclusiv blocarea cookie-urilor de urmărire, criptare mai inteligentă și căutare privată DuckDuckGo.\n\nLa urma urmei, internetul nu ar trebui să fie perceput atât de ciudat, iar obținerea confidențialității pe care o meritați online ar trebui să fie la fel de simplă ca a trage perdeaua.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Alte motoare de căutare îți monitorizează căutările chiar și în modul privat de navigare. Noi nu te monitorizăm. Punct.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navighează la *Safari*, apoi *Motor de căutare*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Deschide aplicația *Setări*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Selectează *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Trimite raportul";

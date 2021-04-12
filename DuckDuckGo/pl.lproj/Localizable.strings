@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uff!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Z czasem dane osobowe mogą gromadzić się w Twojej przeglądarce. Fuj. Użyj przycisku Zabezpiecz, aby to wszystko wyczyścić. Spróbuj 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Wyczyść wszystkie karty i dane";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "To wszystko – Twoje dane zostały usunięte!\n\nOto wskazówka: zabezpiecz witrynę, aby nie trzeba było się ponownie logować za każdym razem.\n\nChcesz zobaczyć, jak to działa? Odwiedź jedną ze swoich ulubionych witryn i zaloguj się.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Rozumiem";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Dane osobowe mogą gromadzić się w Twojej przeglądarce. Fuj. Użyj przycisku Zabezpiecz, aby to wszystko zniszczyć. Spróbuj teraz! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Anuluj";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Zamknij karty i wyczyść dane";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Odwiedź swoje ulubione strony w mgnieniu oka!\n\nPrzejdź do swojej ulubionej witryny. Następnie dotknij ikony „⋯” i wybierz *Dodaj do ulubionych*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo ustanawia nowy standard zaufania w sieci.\n\nPrzeglądarka DuckDuckGo Privacy Browser zapewnia wszelkie niezbędne rozwiązania w zakresie prywatności, które gwarantują ochronę podczas wyszukiwania i przeglądania treści w sieci, między innymi blokowanie skryptów śledzących, bardziej inteligentne szyfrowanie oraz prywatne wyszukiwanie DuckDuckGo.\n\nW końcu w Internecie nie wszystko powinno być widoczne, a uzyskanie niezbędnej prywatności powinno być tak proste jak zasunięcie rolety.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Inne wyszukiwarki śledzą Twoje wyszukiwania nawet wtedy, gdy jesteś w trybie incognito. My nie. I kropka.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Przejdź do *Safari*, a następnie do *Wyszukiwarki*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Otwórz aplikację *Ustawienia*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Wybierz *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Prześlij raport";

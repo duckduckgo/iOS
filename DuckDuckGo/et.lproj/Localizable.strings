@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Aja jooksul võivad sinu brauserisse koguneda isikuandmed. Õudne. Kasuta tulenuppu, et need kõik ära kustutada. Proovi 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Kustuta kõik vahekaardid ja andmed";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Ongi korras — sinu andmed on hävitatud!\n\nSoovitus: muuda sait tulekindlaks ja sa ei pea enam iga kord uuesti sisse logima. \n\nTahad näha, kuidas see töötab? Külasta ühte oma lemmiksaitidest ja logi sisse.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Sain aru";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Sinu brauserisse võivad koguneda isikuandmed. Õudne. Kasuta tule nuppu, et see kõik ära põletada. Proovi kohe! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Tühista";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Sulge vahekaardid ja kustuta andmed";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Külasta oma lemmiksaite hetkega!\n\nMine saidile, mis sulle meeldib. Seejärel puuduta ikooni „⋯“ ja vali *Lisa lemmikutesse*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo on veebi usaldusväärsuse uus standard.\n \nDuckDuckGo privaatsusbrauser pakub kõiki privaatsuse põhifunktsioone, mida peate enda kaitsmiseks veebist otsides ja sirvides kasutama, sealhulgas jälgijate blokeerimist, nutikamat krüptimist ja DuckDuckGo privaatset otsingut.\n\nLõppude lõpuks ei tohiks Internet nii jube olla ja Internetis väärilise privaatsuse saavutamine peaks olema sama lihtne kui ruloo alla tõmbamine.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Teised otsingumootorid jälgivad sinu otsinguid ka siis, kui oled privaatse sirvimise režiimis. Me ei jälgi sind. Punkt.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigeeri jaotisesse *Safari*, seejärel *Otsingumootor*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Ava rakendus *Sätted*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Vali *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";

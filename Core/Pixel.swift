@@ -25,7 +25,6 @@ public enum PixelName: String {
     
     case appLaunch = "ml"
     case defaultBrowserLaunch = "m_dl"
-    case navigationDetected = "m_n"
     case refreshPressed = "m_r"
 
     case forgetAllPressedBrowsing = "mf_bp"
@@ -43,10 +42,6 @@ public enum PixelName: String {
     case privacyDashboardProtectionEnabled = "mp_wlr"
     case privacyDashboardManageProtection = "mp_mw"
     case privacyDashboardReportBrokenSite = "mp_rb"
-    
-    case httpsNoLookup = "m_https_nl"
-    case httpsLocalUpgrade = "m_https_lu"
-    case httpsNoUpgrade = "m_https_nu"
     
     case tabSwitcherNewLayoutSeen = "m_ts_n"
     case tabSwitcherListEnabled = "m_ts_l"

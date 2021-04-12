@@ -278,7 +278,6 @@ class TabSwitcherViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
-            //self.delegate.tabSwitcherDidRequestFireEducationDialog(tabSwitcher: self)
             let spec = DaxDialogs.shared.fireButtonEducationMessage()
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {

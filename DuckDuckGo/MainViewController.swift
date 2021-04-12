@@ -1337,10 +1337,6 @@ extension MainViewController: TabSwitcherDelegate {
         }
     }
     
-    func tabSwitcherDidRequestFireEducationDialog(tabSwitcher: TabSwitcherViewController) {
-        let spec = DaxDialogs.shared.fireButtonEducationMessage()
-        performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
-    }
 }
 
 extension MainViewController: BookmarksDelegate {

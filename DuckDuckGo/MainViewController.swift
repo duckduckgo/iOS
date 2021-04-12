@@ -1304,6 +1304,9 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         selectTab(tab)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
@@ -1314,6 +1317,10 @@ extension MainViewController: TabSwitcherDelegate {
             }
         }
         closeTab(tab)
+        
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
     
     func closeTab(_ tab: Tab) {
@@ -1364,6 +1371,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                                                forTab: currentTab.tabModel)
                     
                 }
+                ViewHighlighter.hideAll()
                 self.performSegue(withIdentifier: "ShowTabs", sender: self)
             })
         }

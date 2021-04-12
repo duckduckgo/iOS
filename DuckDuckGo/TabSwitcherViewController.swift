@@ -131,6 +131,28 @@ class TabSwitcherViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            DaxDialogs.shared.fireButtonPulseStarted()
+            guard let window = view.window else { return }
+            
+            let fireButtonView: UIView?
+            if !topFireButton.isHidden {
+                fireButtonView = topFireButton
+            } else {
+                fireButtonView = fireButton.value(forKey: "view") as? UIView
+            }
+            guard let view = fireButtonView else { return }
+            
+            if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
+                ViewHighlighter.hideAll()
+                ViewHighlighter.showIn(window, focussedOnView: view)
+            }
+        }
+    }
+    
     func prepareForPresentation() {
         view.layoutIfNeeded()
         self.scrollToInitialTab()

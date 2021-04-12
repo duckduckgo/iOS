@@ -52,5 +52,15 @@ class ViewHighlighter {
         addedViews = []
         highlightedViews = []
     }
+    
+    static func updatePositions() {
+        for (index, highlight) in addedViews.enumerated() {
+            if let highlightedView = highlightedViews[index].view,
+               let view = highlight.view,
+               let center = highlightedView.superview?.convert(highlightedView.center, to: nil) {
+                view.center = center
+            }
+        }
+    }
 
 }

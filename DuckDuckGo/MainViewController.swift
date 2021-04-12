@@ -644,6 +644,10 @@ class MainViewController: UIViewController {
         }
 
         self.currentTab?.showMenuHighlighterIfNeeded()
+        
+        coordinator.animate(alongsideTransition: nil) { _ in
+            ViewHighlighter.updatePositions()
+        }
     }
     
     private func applyWidth() {

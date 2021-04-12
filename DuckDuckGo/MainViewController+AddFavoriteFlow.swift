@@ -22,6 +22,16 @@ import Core
 
 extension MainViewController {
     
+    func registerForApplicationEvents() {
+        
+        _ = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,
+                                                   object: nil,
+                                                   queue: .main) { [weak self] _ in
+            DaxDialogs.shared.resumeRegularFlow()
+            self?.hideMenuHighlighter()
+        }
+    }
+    
     var canDisplayAddFavoriteVisualIndicator: Bool {
         
         guard DaxDialogs.shared.isAddFavoriteFlow,
@@ -30,8 +40,12 @@ extension MainViewController {
         return !AppUrls().isDuckDuckGo(url: url)
     }
     
+    func hideMenuHighlighter() {
+        ViewHighlighter.hideAll()
+    }
+    
     func showMenuHighlighterIfNeeded() {
-        guard canDisplayAddFavoriteVisualIndicator, let window = view.window else { return }
+        guard canDisplayAddFavoriteVisualIndicator, let window = view.window, presentedViewController == nil else { return }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             ViewHighlighter.hideAll()

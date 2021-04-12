@@ -148,6 +148,8 @@ class MainViewController: UIViewController {
 
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
+        
+        registerForApplicationEvents()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -876,7 +878,12 @@ extension MainViewController: BrowserChromeDelegate {
     }
     
     func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
-        if percent < 1 { hideKeyboard() }
+        if percent < 1 {
+            hideKeyboard()
+            hideMenuHighlighter()
+        } else {
+            showMenuHighlighterIfNeeded()
+        }
         
         let updateBlock = {
             self.updateToolbarConstant(percent)

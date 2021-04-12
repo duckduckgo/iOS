@@ -1418,6 +1418,8 @@ extension MainViewController: AutoClearWorker {
     
     func clearNavigationStack() {
         dismissOmniBar()
+        dismissBrowsingMenu()
+        refreshMenuButtonState()
         
         if let presented = presentedViewController {
             presented.dismiss(animated: false) { [weak self] in

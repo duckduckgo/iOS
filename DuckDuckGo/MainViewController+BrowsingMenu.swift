@@ -177,6 +177,8 @@ extension MainViewController {
         guard let controller = browsingMenu else { return }
         
         controller.detachFrom(view)
+        controller.removeFromParent()
+        
         browsingMenu = nil
     }
     

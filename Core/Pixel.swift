@@ -136,6 +136,11 @@ public enum PixelName: String {
     case daxDialogsFireEducationConfirmed = "m_dx_fe_co"
     case daxDialogsFireEducationCancelled = "m_dx_fe_ca"
     case daxDialogsFireEducationCancelledOutsideOfButton = "m_dx_fe_ca_o"
+    case fireEducationPulseShown = "m_fe_p_s"
+    case fireEducationPulseCancelledBecauseTabOpened = "m_fe_p_c_ta"
+    case fireEducationPulseCancelledBecauseTimeout = "m_fe_p_c_to"
+    case fireEducationFireButtonPressedWhilstPulseShowing = "m_fe_p_b"
+    case fireEducationFireButtonOnTabSwitcherScreenPressedWhilstPulseShowing = "m_fe_p_ts_b"
     
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"

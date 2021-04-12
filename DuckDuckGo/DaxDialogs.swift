@@ -190,17 +190,21 @@ class DaxDialogs {
     }
     
     private var fireButtonPulseTimer: Timer?
-    private static let timeToFireButtonExpire: TimeInterval = 10//TODO, made ten secs for testing 1 * 60 * 60
+    private static let timeToFireButtonExpire: TimeInterval = 1 * 60 * 60
     
     func fireButtonPulseStarted() {
         if settings.fireButtonPulseDateShown == nil {
             settings.fireButtonPulseDateShown = Date()
+            Pixel.fire(pixel: .fireEducationPulseShown)
         }
         if fireButtonPulseTimer == nil, let date = settings.fireButtonPulseDateShown {
             let timeSinceShown = Date().timeIntervalSince(date)
             let timerTime = DaxDialogs.timeToFireButtonExpire - timeSinceShown
             fireButtonPulseTimer = Timer(timeInterval: timerTime, repeats: false) { _ in
                 ViewHighlighter.hideAll()
+                if !self.settings.fireButtonEducationShownOrExpired {
+                    Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTimeout)
+                }
                 self.settings.fireButtonEducationShownOrExpired = true
             }
             RunLoop.current.add(fireButtonPulseTimer!, forMode: RunLoop.Mode.common)
@@ -209,6 +213,9 @@ class DaxDialogs {
     
     func fireButtonPulseCancelled() {
         fireButtonPulseTimer?.invalidate()
+        if !self.settings.fireButtonEducationShownOrExpired {
+            Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTabOpened)
+        }
         settings.fireButtonEducationShownOrExpired = true
     }
     

@@ -314,6 +314,7 @@ extension MainViewController: TabsBarDelegate {
     }
     
     func tabsBarDidRequestFireEducationDialog(_ controller: TabsBarViewController) {
+        Pixel.fire(pixel: .fireEducationFireButtonPressedWhilstPulseShowing)
         let spec = DaxDialogs.shared.fireButtonEducationMessage()
         performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
     }

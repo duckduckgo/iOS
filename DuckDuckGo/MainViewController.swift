@@ -459,6 +459,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+            Pixel.fire(pixel: .fireEducationFireButtonPressedWhilstPulseShowing)
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in

@@ -50,13 +50,13 @@ class ActionSheetDaxDialogViewController: UIViewController {
         if let spec = spec {
             let alertController = UIAlertController()
             alertController.addAction(title: spec.confirmAction, style: spec.isConfirmActionDestructive ? .destructive : .default) {
+                Pixel.fire(pixel: spec.confirmActionPixelName)
                 self.delegate?.actionSheetDaxDialogDidConfirmAction(controller: self)
                 self.dismiss(animated: false)
-                //TODO probs want pixel
             }
             alertController.addAction(title: spec.cancelAction, style: .cancel) {
+                Pixel.fire(pixel: spec.cancelActionPixelName)
                 self.dismiss(animated: true)
-                //TODO probs want pixel
             }
             addChild(alertController)
             alertController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +95,9 @@ class ActionSheetDaxDialogViewController: UIViewController {
 
     @IBAction func onTapOutside(_ sender: Any) {
         self.dismiss(animated: true)
-        //TODO pixel and that
+        if let spec = spec {
+            Pixel.fire(pixel: spec.cancelOutsideOfButtonPixelName)
+        }
     }
 }
 

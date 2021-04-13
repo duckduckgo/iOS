@@ -44,6 +44,10 @@ class TabManager {
         registerForNotifications()
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     private func buildController(forTab tab: Tab) -> TabViewController {
         let url = tab.link?.url
         return buildController(forTab: tab, url: url)

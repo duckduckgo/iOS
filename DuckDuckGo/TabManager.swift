@@ -40,6 +40,8 @@ class TabManager {
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
         }
+
+        registerForNotifications()
     }
 
     private func buildController(forTab tab: Tab) -> TabViewController {
@@ -224,6 +226,33 @@ class TabManager {
 
     func save() {
         model.save()
+    }
+
+}
+
+extension TabManager: Themable {
+    
+    func decorate(with theme: Theme) {
+        for tabController in tabControllerCache {
+            tabController.decorate(with: theme)
+        }
+    }
+    
+}
+
+// MARK: - Debugging Pixels
+
+extension TabManager {
+
+    fileprivate func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onApplicationBecameActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+    }
+
+    @objc
+    private func onApplicationBecameActive(_ notification: NSNotification) {
         assertTabPreviewCount()
     }
 
@@ -237,14 +266,4 @@ class TabManager {
             ])
         }
     }
-}
-
-extension TabManager: Themable {
-    
-    func decorate(with theme: Theme) {
-        for tabController in tabControllerCache {
-            tabController.decorate(with: theme)
-        }
-    }
-    
 }

@@ -578,7 +578,7 @@ _utf8_encode : function (string) {
           }
         });
         [].slice.apply(document.querySelectorAll('link')).forEach(function(el) {
-            if (shouldBlock(el.src, 'LINK')) {
+            if (shouldBlock(el.href, 'LINK')) {
                 duckduckgoDebugMessaging.log("blocking load")
             } else {
                 duckduckgoDebugMessaging.log("don't block " + el.href);

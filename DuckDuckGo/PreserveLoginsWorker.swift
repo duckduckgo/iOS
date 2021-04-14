@@ -55,14 +55,14 @@ struct PreserveLoginsWorker {
         guard let controller = controller else { return }
         PreserveLogins.shared.addToAllowed(domain: domain)
         Favicons.shared.loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
-        PreserveLoginsAlert.showFireproofEnabledToast(usingController: controller, worker: self, forDomain: domain)
+        PreserveLoginsAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
     
     private func removeDomain(_ domain: String) {
         guard let controller = controller else { return }
         PreserveLogins.shared.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
-        PreserveLoginsAlert.showFireproofDisabledToast(usingController: controller, worker: self, forDomain: domain)
+        PreserveLoginsAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
     
 }

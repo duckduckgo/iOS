@@ -264,9 +264,9 @@ extension TabViewController {
         
         let message: String
         if isProtected {
-            message = UserText.toastProtectionDisabled.format(arguments: domain)
+            message = UserText.messageProtectionDisabled.format(arguments: domain)
         } else {
-            message = UserText.toastProtectionEnabled.format(arguments: domain)
+            message = UserText.messageProtectionEnabled.format(arguments: domain)
         }
         
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in

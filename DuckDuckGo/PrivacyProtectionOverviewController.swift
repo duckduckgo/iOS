@@ -175,10 +175,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
         
         if isProtected {
             protectionStore.enableProtection(forDomain: domain)
-            ActionMessageView.present(message: UserText.toastProtectionEnabled.format(arguments: domain))
+            ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))
         } else {
             protectionStore.disableProtection(forDomain: domain)
-            ActionMessageView.present(message: UserText.toastProtectionDisabled.format(arguments: domain))
+            ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
         }
         Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
     }

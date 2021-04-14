@@ -33,8 +33,8 @@ extension MainViewController {
         }
         addChild(controller)
         
-        controller.setHeaderEntires(tab.buildBrowsingMenuHeaderContent())
-        controller.setMenuEntires(entries)
+        controller.setHeaderEntries(tab.buildBrowsingMenuHeaderContent())
+        controller.setMenuEntries(entries)
     
         layoutAndPresent(controller)
         

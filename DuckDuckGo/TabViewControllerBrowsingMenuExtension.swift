@@ -24,87 +24,87 @@ extension TabViewController {
     
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
         
-        var entires = [BrowsingMenuEntry]()
+        var entries = [BrowsingMenuEntry]()
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab, image: UIImage(named: "MenuNewTab")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab, image: UIImage(named: "MenuNewTab")!, action: { [weak self] in
             self?.onNewTabAction()
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "MenuShare")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "MenuShare")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
             self.onShareAction(forLink: self.link!, fromView: menu)
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
             guard let url = self?.webView.url else { return }
             
             self?.onCopyAction(forUrl: url)
             ActionMessageView.present(message: UserText.actionCopyMessage)
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
             self?.print()
         }))
         
-        return entires
+        return entries
     }
     
     var favoriteEntryIndex: Int { 1 }
     
     func buildBrowsingMenu() -> [BrowsingMenuEntry] {
         
-        var entires = [BrowsingMenuEntry]()
+        var entries = [BrowsingMenuEntry]()
         
         if let link = link, !isError {
             if let entry = buildBookmarkEntry(for: link) {
-                entires.append(entry)
+                entries.append(entry)
             }
             
             if let entry = buildFavoriteEntry(for: link) {
-                assert(favoriteEntryIndex == entires.count, "Entry index should be in sync with entry placement")
-                entires.append(entry)
+                assert(favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
+                entries.append(entry)
             }
             
-            entires.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
                                                      image: UIImage(named: "MenuBookmarks")!,
                                                      action: { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
             }))
             
-            entires.append(.separator)
+            entries.append(.separator)
 
             if let entry = buildKeepSignInEntry(forLink: link) {
-                entires.append(entry)
+                entries.append(entry)
             }
             
             let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
             let image = tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
-            entires.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
+            entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
                 self?.onToggleDesktopSiteAction(forUrl: link.url)
             }))
             
-            entires.append(buildFindInPageEntry(forLink: link))
+            entries.append(buildFindInPageEntry(forLink: link))
         }
         
         if let domain = siteRating?.domain {
-            entires.append(buildToggleProtectionEntry(forDomain: domain))
+            entries.append(buildToggleProtectionEntry(forDomain: domain))
         }
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
                                                  image: UIImage(named: "MenuFeedback")!,
                                                  action: { [weak self] in
             self?.onReportBrokenSiteAction()
         }))
         
-        entires.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                  image: UIImage(named: "MenuSettings")!,
                                                  action: { [weak self] in
             self?.onBrowsingSettingsAction()
         }))
         
-        return entires
+        return entries
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {

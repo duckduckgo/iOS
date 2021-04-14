@@ -21,7 +21,7 @@ import UIKit
 
 protocol BrowsingMenu {
     
-    func setMenuEntires(_ entries: [BrowsingMenuEntry])
+    func setMenuEntries(_ entries: [BrowsingMenuEntry])
 }
 
 enum BrowsingMenuEntry {
@@ -226,7 +226,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         }
     }
     
-    func setHeaderEntires(_ entries: [BrowsingMenuEntry]) {
+    func setHeaderEntries(_ entries: [BrowsingMenuEntry]) {
         configureHeader()
         guard entries.count == headerButtons.count else {
             fatalError("Mismatched number of entries in \(#file):\(#function) expected: \(headerButtons.count) but found \(entries.count)")
@@ -246,7 +246,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         headerEntries = entries
     }
     
-    func setMenuEntires(_ entries: [BrowsingMenuEntry]) {
+    func setMenuEntries(_ entries: [BrowsingMenuEntry]) {
         menuEntries = entries
     }
     

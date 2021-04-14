@@ -13,13 +13,13 @@
             <rect key="frame" x="0.0" y="0.0" width="346" height="45"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEm-Fo-Kmm">
-                    <rect key="frame" x="14" y="12" width="280" height="21"/>
+                    <rect key="frame" x="14" y="9" width="280" height="24"/>
                     <attributedString key="attributedText">
                         <fragment content="Label">
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <font key="NSFont" size="16" name="ProximaNova-Regular"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="21" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -47,7 +47,7 @@
             <constraints>
                 <constraint firstItem="WEm-Fo-Kmm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="14" id="2qs-X4-9hl"/>
                 <constraint firstItem="oCd-LV-OI1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6rV-Uf-wi9"/>
-                <constraint firstItem="WEm-Fo-Kmm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="Dcw-lz-Qtn"/>
+                <constraint firstItem="WEm-Fo-Kmm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="9" id="Dcw-lz-Qtn"/>
                 <constraint firstAttribute="trailing" secondItem="oCd-LV-OI1" secondAttribute="trailing" constant="12" id="M6a-3L-VQf"/>
                 <constraint firstAttribute="bottom" secondItem="WEm-Fo-Kmm" secondAttribute="bottom" constant="12" id="bGo-Vb-YBZ"/>
                 <constraint firstItem="oCd-LV-OI1" firstAttribute="leading" secondItem="WEm-Fo-Kmm" secondAttribute="trailing" constant="10" id="dLh-j4-VmK"/>

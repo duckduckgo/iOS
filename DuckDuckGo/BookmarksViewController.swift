@@ -57,7 +57,9 @@ class BookmarksViewController: UITableViewController {
             guard let strongSelf = self,
                   let index = strongSelf.dataSource.bookmarksManager.indexOfBookmark(url: link.url) else { return }
             
-            strongSelf.showEditBookmarkAlert(for: IndexPath(row: index, section: 1))
+            let indexPath = IndexPath(row: index, section: 1)
+            strongSelf.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+            strongSelf.showEditBookmarkAlert(for: indexPath)
         }
     }
     

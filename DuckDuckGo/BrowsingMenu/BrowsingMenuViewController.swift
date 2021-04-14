@@ -155,6 +155,16 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if tableView.bounds.height < tableView.contentSize.height + tableView.contentInset.top + tableView.contentInset.bottom {
+            tableView.isScrollEnabled = true
+        } else {
+            tableView.isScrollEnabled = false
+        }
+    }
+    
     func attachTo(_ targetView: UIView, onDismiss: @escaping DismissHandler) {
         assert(background == nil, "\(#file) - view has been already attached")
         loadViewIfNeeded()

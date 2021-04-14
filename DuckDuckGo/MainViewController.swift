@@ -494,6 +494,9 @@ class MainViewController: UIViewController {
     
     func didReturnFromBackground() {
         skipSERPFlow = true
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {

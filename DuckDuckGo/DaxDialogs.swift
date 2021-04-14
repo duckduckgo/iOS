@@ -192,11 +192,11 @@ class DaxDialogs {
             let timeSinceShown = Date().timeIntervalSince(date)
             let timerTime = DaxDialogs.timeToFireButtonExpire - timeSinceShown
             fireButtonPulseTimer = Timer(timeInterval: timerTime, repeats: false) { _ in
+                self.settings.fireButtonEducationShownOrExpired = true
                 ViewHighlighter.hideAll()
                 if !self.settings.fireButtonEducationShownOrExpired {
                     Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTimeout)
                 }
-                self.settings.fireButtonEducationShownOrExpired = true
             }
             RunLoop.current.add(fireButtonPulseTimer!, forMode: RunLoop.Mode.common)
         }

@@ -33,6 +33,8 @@ class BlankSnapshotViewController: UIViewController {
     
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
+    let menuButton = MenuButton()
+    @IBOutlet weak var lastButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
     
     @IBOutlet weak var statusBarBackground: UIView!
@@ -63,6 +65,9 @@ class BlankSnapshotViewController: UIViewController {
         } else {
             tabsButton.customView = tabSwitcherButton
             tabSwitcherButton.delegate = self
+            
+            menuButton.setState(.menuImage, animated: false)
+            lastButton.customView = menuButton
         }
 
         applyTheme(ThemeManager.shared.currentTheme)

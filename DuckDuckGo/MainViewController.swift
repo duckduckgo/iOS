@@ -279,12 +279,20 @@ class MainViewController: UIViewController {
     }
     
     private func attachBookmarksButton() {
+        guard lastToolbarButton.customView != gestureBookmarksButton else { return }
+        lastToolbarButton.customView?.removeFromSuperview()
         lastToolbarButton.customView = gestureBookmarksButton
         lastToolbarButton.isAccessibilityElement = true
         lastToolbarButton.accessibilityTraits = .button
     }
     
     private func attachMenuButton() {
+        guard lastToolbarButton.customView != menuButton else { return }
+        lastToolbarButton.customView?.removeFromSuperview()
+        
+        // This fixes a layout bug where setting a menu button when views are changing would not render customView
+        toolbar.setNeedsLayout()
+        toolbar.layoutIfNeeded()
         lastToolbarButton.customView = menuButton
         lastToolbarButton.isAccessibilityElement = true
         lastToolbarButton.accessibilityTraits = .button

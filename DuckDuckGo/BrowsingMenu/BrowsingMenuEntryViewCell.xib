@@ -26,16 +26,16 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWj-8a-8jk">
-                        <rect key="frame" x="57" y="10" width="251" height="20"/>
+                        <rect key="frame" x="57" y="8" width="251" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="2iM-nN-FLn"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="2iM-nN-FLn"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="a9h-KJ-eDP"/>
                         </constraints>
                         <attributedString key="attributedText">
                             <fragment content="Label">
                                 <attributes>
-                                    <font key="NSFont" size="16" name="ProximaNova-Regular"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="20" tighteningFactorForTruncation="0.0"/>
+                                    <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -47,7 +47,7 @@
                     <constraint firstAttribute="bottom" secondItem="qWj-8a-8jk" secondAttribute="bottom" constant="10" id="UZs-M1-4Ux"/>
                     <constraint firstItem="ixL-08-GlI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="chn-gh-o3S"/>
                     <constraint firstAttribute="trailing" secondItem="qWj-8a-8jk" secondAttribute="trailing" constant="12" id="cpo-HZ-Wr4"/>
-                    <constraint firstItem="qWj-8a-8jk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="jrv-Y0-BbN"/>
+                    <constraint firstItem="qWj-8a-8jk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="jrv-Y0-BbN"/>
                     <constraint firstItem="qWj-8a-8jk" firstAttribute="leading" secondItem="ixL-08-GlI" secondAttribute="trailing" constant="17" id="xQM-6N-B1C"/>
                 </constraints>
             </tableViewCellContentView>

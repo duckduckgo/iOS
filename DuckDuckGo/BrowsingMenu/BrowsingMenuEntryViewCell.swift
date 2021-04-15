@@ -38,9 +38,9 @@ class BrowsingMenuEntryViewCell: UITableViewCell {
     
     static func preferredWidth(for text: String) -> CGFloat {
         
-        let size = (text as NSString).boundingRect(with: CGSize(width: 1000, height: 20),
+        let size = (text as NSString).boundingRect(with: CGSize(width: 1000, height: 22),
                                                    options: [.usesFontLeading, .usesLineFragmentOrigin],
-                                                   attributes: [.font: UIFont.appFont(ofSize: 16)],
+                                                   attributes: [.font: UIFont.appFont(ofSize: 17)],
                                                    context: nil)
         
         return size.width + 69 // Left Margin + Icon width + Spacing + Right Margin

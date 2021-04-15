@@ -63,6 +63,8 @@ extension MainViewController {
             snapshot.frame = menuOriginFrameForAnimation(controller: controller)
             snapshot.alpha = 0
             view.addSubview(snapshot)
+            
+            BrowsingMenuViewController.applyShadowTo(view: snapshot, for: ThemeManager.shared.currentTheme)
         }
         
         controller.view.alpha = 0
@@ -87,6 +89,8 @@ extension MainViewController {
         
         view.addSubview(snapshot)
         snapshot.frame = controller.view.frame
+        
+        BrowsingMenuViewController.applyShadowTo(view: snapshot, for: ThemeManager.shared.currentTheme)
         
         controller.view.alpha = 0
         

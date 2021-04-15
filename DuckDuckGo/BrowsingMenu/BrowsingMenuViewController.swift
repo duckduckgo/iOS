@@ -142,6 +142,10 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         horizontalContainer.layer.cornerRadius = 10
         tableView.layer.cornerRadius = 10
         
+        Self.applyShadowTo(view: view, for: theme)
+    }
+    
+    class func applyShadowTo(view: UIView, for theme: Theme) {
         view.layer.cornerRadius = 10
         view.layer.shadowOffset = CGSize(width: 0, height: 8)
         view.layer.shadowColor = UIColor.black.cgColor

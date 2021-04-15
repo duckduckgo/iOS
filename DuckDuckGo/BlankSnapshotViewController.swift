@@ -173,6 +173,8 @@ extension BlankSnapshotViewController: Themable {
         
         tabSwitcherButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
+        
+        menuButton.decorate(with: theme)
     }
     
 }

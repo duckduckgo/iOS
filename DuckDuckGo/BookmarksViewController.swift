@@ -193,7 +193,7 @@ class BookmarksViewController: UITableViewController {
         if let link = currentDataSource.link(at: indexPath) {
             let appUrls: AppUrls = AppUrls()
             let url = appUrls.removeATBAndSource(fromUrl: link.url)
-            presentShareSheet(withItems: [ url, link ], fromView: self.view)
+            presentShareSheet(withItems: [ link ], fromView: self.view)
         } else {
             os_log("Invalid share link found", log: generalLog, type: .debug)
         }

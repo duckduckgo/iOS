@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Personuppgifter kan efter hand samlas i din webbläsare. Usch. Använd brännarknappen för att bränna alltihopa. Testa 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Rensa alla flikar och data";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Då var det klart! Dina data har bränts till aska. \n\nHär är ett tips: du kan brandsäkra en webbplats för att inte behöva logga in på den igen varje gång. \n\nVill du se hur det fungerar? Besök en av dina favoritwebbplatser och logga in.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Jag fattar";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Personuppgifter kan samlas i din webbläsare. Usch. Använd brännarknappen för att bränna alltihopa. Prova nu! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Avbryt";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Stäng flikar och rensa data";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Besök dina favoritsidor på ett ögonblick!\n\nGå till en webbplats du gillar. Tryck sedan på ikonen \"⋯\" och välj *Lägg till i favoriter*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "På DuckDuckGo sätter vi en ny standard för förtroende på nätet.\n\nDuckDuckGo Privacy Browser tillhandahåller alla de grundläggande sekretesstjänster du behöver för att skydda dig själv när du söker och surfar på nätet, inklusive blockering av spårare, smartare kryptering och DuckDuckGo privat sökning.\n\nInternet borde ju trots allt inte kännas så skrämmande och det bör vara lika enkelt att få det integritetsskydd du förtjänar som det är att dra ner rullgardinen.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Andra sökmotorer spårar dina sökningar även när du bytt till privat surfningsläge. Vi spårar dig inte. Punkt.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigera till *Safari* och sedan till *Sökmotor*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Starta appen *Inställningar*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Välj *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Skicka in rapport";

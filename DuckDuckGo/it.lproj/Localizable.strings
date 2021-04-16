@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Accidenti!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Di tanto in tanto, i dati personali possono accumularsi nel tuo browser. Non va bene. Usa il pulsante Proteggi per sbarazzarti di tutto. Provalo 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Elimina tutte le schede e i dati";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Ecco, i tuoi dati sono spacciati!\n\nEcco un suggerimento: aggiungi un sito ai siti protetti e non dovrai più eseguire l'accesso ogni volta.\n\nVuoi vedere come funziona? Visita uno dei tuoi siti preferiti ed effettua l'accesso.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Fatto";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "I dati personali possono accumularsi nel tuo browser. Non va bene! Usa il pulsante Proteggi per sbarazzarti di tutto. Prova subito! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Annulla";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Chiudi le schede e cancella i dati";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Visita i tuoi siti preferiti in un batter d'occhio!\n\nVai su un sito che ti piace. Poi tocca l'icona \"⋯\" e seleziona *Aggiungi ai preferiti*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo è il nuovo standard di sicurezza online.\n\nIl Privacy Browser di DuckDuckGo ti offre tutti i privacy essentials di cui hai bisogno per proteggerti mentre navighi ed effettui ricerche online, inclusi il blocco dei sistemi di tracciamento, una crittografia più sofisticata e la navigazione in incognito DuckDuckGo.\n\nDel resto, Internet non deve essere percepito come un luogo inquietante e avere la meritata privacy online dovrebbe essere semplice come chiudere le persiane.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Gli altri motori di ricerca tracciano le tue ricerche anche quando sei in modalità di navigazione in incognito. Noi non lo facciamo. Mai.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Passa a *Safari*, quindi a *Motore di ricerca*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Apri l'app *Impostazioni*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Seleziona *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Invia segnalazione";

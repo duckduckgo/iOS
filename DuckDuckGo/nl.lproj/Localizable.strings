@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "In de loop der tijd kunnen persoonlijke gegevens zich ophopen in je browser. Bah. Gebruik de vuurknop om alles te verbranden. Probeer het maar 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Alle tabbladen en gegevens wissen";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Klaar: je gegevens zijn niets meer dan een hoopje as!\n\nHier heb je een tip: als je een site brandveilig maakt, hoef je niet elke keer opnieuw in te loggen.\n\nWil je zien hoe dit werkt? Bezoek dan een van je favoriete websites en log in.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Ik snap het";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Persoonlijke gegevens kunnen zich ophopen in je browser. Bah. Gebruik de vuurknop om alles te verbranden. Probeer het maar! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Annuleren";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Tabbladen sluiten en gegevens wissen";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Bezoek je favoriete websites in een oogwenk!\n\nGa naar een van je favoriete sites, tik op het pictogram '⋯' en selecteer *Toevoegen aan favorieten*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "Bij DuckDuckGo zetten we de nieuwe standaard voor vertrouwen online.\n\nDe DuckDuckGo Privacy Browser biedt alle essentiële facetten van privacy die je nodig hebt om jezelf te beschermen tijdens het zoeken en browsen op het internet, zoals het blokkeren van trackers, slimmere versleuteling en privézoekopdrachten.\n\nHet internet zou namelijk helemaal niet zo griezelig moeten zijn en de privacy die je online verdient, moet net zo eenvoudig zijn als het sluiten van de gordijnen.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Andere zoekmachines volgen je zoekopdrachten zelfs in privémodus. Wij volgen je niet. Punt.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Navigeer naar *Safari*, vervolgens naar *Zoekmachine*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Open de app *Instellingen*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Selecteer *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";

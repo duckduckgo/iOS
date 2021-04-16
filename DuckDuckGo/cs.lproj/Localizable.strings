@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pche!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "V průběhu času se mohou vytvářet osobní data ve vašem prohlížeči. Fuj. Použijte tlačítko pro mazání a všechno smažte. Zkuste to 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Vymazat všechny karty a data";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "To je ono — vaše údaje jsou jako toast!\n\nZde je tip: Ochraňte web a nebudete se muset pokaždé znovu přihlašovat.\n\nChcete vidět, jak to funguje? Navštivte některé ze svých oblíbených stránek a přihlaste se.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Mám to";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Osobní údaje se mohou vytvářet ve vašem prohlížeči. Fuj. Použijte tlačítko pro mazání a všechno smažte. Vyzkoušejte to hned teď! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Zrušit";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Zavřít karty a vymazat data";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Navštivte v mžiku své oblíbené stránky!\n\nPřejděte na stránky, které máte rádi. Pak klepněte na ikonu „⋯“ a zvolte *Přidat do oblíbených*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "V DuckDuckGo přinášíme nový standard důvěry online.\n\nDuckDuckGo Privacy Browser poskytuje všechny základní prvky ochrany osobních údajů, které potřebujete k ochraně při vyhledávání a prohlížení webu, včetně blokování sledovacích zařízení, chytřejšího šifrování a soukromého vyhledávání DuckDuckGo.\n\nInternet by v konečném důsledku neměl být tak nebezpečný a získat ochranu osobních údajů, kterou si zasloužíte online, by mělo být stejně jednoduché jako zatáhnout žaluzie.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Ostatní vyhledávače sledují vaše vyhledávání, i když jste v režimu anonymního procházení. My vás nesledujeme. Tečka.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Přejděte na *Safari*, potom *Vyhledávač*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Otevřete aplikaci *Nastavení*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Vyberte *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odešlete zprávu";

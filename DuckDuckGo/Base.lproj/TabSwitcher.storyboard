@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -416,6 +416,7 @@
                         <outlet property="topDoneButton" destination="kW3-ZC-Axl" id="zsi-5z-PHb"/>
                         <outlet property="topFireButton" destination="5nO-MZ-vSY" id="7Ab-ye-3JK"/>
                         <outlet property="topPlusButton" destination="uIV-4q-5mj" id="KDp-Ls-wWU"/>
+                        <segue destination="JZX-S3-Ir9" kind="presentation" identifier="ActionSheetDaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="Zno-fp-7xb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -611,6 +612,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2qS-F2-HbF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2393.4782608695655" y="-304.07608695652175"/>
+        </scene>
+        <!--ActionSheetDaxDialog-->
+        <scene sceneID="fNV-GZ-WSm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DaxOnboarding" referencedIdentifier="ActionSheetDaxDialog" id="JZX-S3-Ir9" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W6h-ie-pGh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1958" y="51"/>
         </scene>
     </scenes>
     <resources>

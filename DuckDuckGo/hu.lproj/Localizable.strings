@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfuj!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Idővel személyes adatok halmozódhatnak fel a böngésződben. Fúj. A Tűz gombbal mindet törölheted. Próbáld ki 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Összes lap és adat törlése";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Ennyi — az adatok megsütve! \n\nÍme egy tipp: tedd tűzállóvá a webhelyeket, hogy ne kelljen minden alkalommal újra bejelentkezned.\n\nKíváncsi vagy, hogyan működik? Látogass el az egyik kedvenc webhelyedre, és jelentkezz be.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Megvan";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Személyes adatok halmozódhatnak fel a böngésződben. Fúj. A Tűz gombbal mindet elégetheted. Próbáld ki most! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Mégsem";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Lapok bezárása és adattörlés";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Látogasd meg a kedvenc weboldalaidat egy pillanat alatt!\n\nLépj egy olyan weboldalra, amelyet szeretsz. Ezután koppints a(z) „⋯” ikonra, és válaszd a *Hozzáadás a kedvencekhez* elemet.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "A DuckDuckGo célja egy új online bizalmi szint megteremtése.\n\nA DuckDuckGo Adatvédelmi Böngésző minden olyan alapvető adatvédelmi elemet tartalmaz, amelyre szükséged lehet ahhoz, hogy megvédd magad az internetes keresés és böngészés során, beleértve a nyomkövetők letiltását, az intelligensebb titkosítást és a DuckDuckGo privát keresést.\n\nAz internet végső soron nem feltétlenül kell, hogy ellenséges közeg legyen, és hisszük, hogy az általad megérdemelt adatvédelem olyan egyszerű is lehet, mint a redőny lehúzása.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Más keresőmotorok még akkor is követik a kereséseidet, amikor privát módban böngészel. Mi nem követünk. Pont.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Lépj a *Safari*, majd a *Keresőmotor* elemre.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Nyisd meg a *Beállítások* alkalmazást.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Válaszd a *DuckDuckGo* lehetőséget.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Jelentés beküldése";

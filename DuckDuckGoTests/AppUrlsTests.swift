@@ -30,7 +30,7 @@ class AppUrlsTests: XCTestCase {
         mockStatisticsStore = MockStatisticsStore()
     }
 
-    func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsUnchanged() {
+    func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
 
         let searchUrl = testee.searchUrl(text: "example")

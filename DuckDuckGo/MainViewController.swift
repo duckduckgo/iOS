@@ -282,6 +282,7 @@ class MainViewController: UIViewController {
         guard lastToolbarButton.customView != gestureBookmarksButton else { return }
         lastToolbarButton.customView?.removeFromSuperview()
         lastToolbarButton.customView = gestureBookmarksButton
+        lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
         lastToolbarButton.isAccessibilityElement = true
         lastToolbarButton.accessibilityTraits = .button
     }
@@ -294,6 +295,7 @@ class MainViewController: UIViewController {
         toolbar.setNeedsLayout()
         toolbar.layoutIfNeeded()
         lastToolbarButton.customView = menuButton
+        lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
         lastToolbarButton.isAccessibilityElement = true
         lastToolbarButton.accessibilityTraits = .button
     }

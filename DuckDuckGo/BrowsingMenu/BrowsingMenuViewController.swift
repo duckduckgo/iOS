@@ -176,6 +176,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         dismiss = onDismiss
         
         let background = UIView()
+        background.accessibilityIdentifier = "Browsing Menu Background"
         background.backgroundColor = .clear
         targetView.addSubview(background)
         background.frame = targetView.bounds

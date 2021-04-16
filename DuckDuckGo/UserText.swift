@@ -230,6 +230,8 @@ public struct UserText {
     }
     
     public static let privacyGradeHint = NSLocalizedString("privacy.protection.site.hint", value: "Press to open Privacy Protection screen", comment: "")
+    public static let menuButtonHint = NSLocalizedString("menu.button.hint", value: "Browsing Menu", comment: "")
+    public static let bookmarksButtonHint = NSLocalizedString("bookmarks.button.hint", value: "Bookmarks", comment: "")
     
     public static func numberOfTabs(_ number: Int) -> String {
         let message = NSLocalizedString("number.of.tabs", comment: "Do not translate - stringsdict entry")

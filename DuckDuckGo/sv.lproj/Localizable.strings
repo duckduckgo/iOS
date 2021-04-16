@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Rapportera skadad webbplats";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Webbplats för dator";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Webbplats för mobil";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Spara";
 

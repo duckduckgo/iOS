@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Raportați site-ul defect";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Versiune desktop";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Site mobil";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Salvează";
 

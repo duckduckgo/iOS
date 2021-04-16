@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Nahlásit nefunkční webové stránky";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Stránka plochy";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Mobilní režim";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Uložit";
 

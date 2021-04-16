@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Prijavi neispravno web-mjesto";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Mjesto radne površine";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Mobilno mrežno mjesto";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Spremi";
 

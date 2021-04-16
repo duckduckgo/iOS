@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Hibás weboldal jelentése";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Weboldal asztali nézete";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Weboldal mobil nézete";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Mentés";
 

@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Αναφορά ιστότοπου που δεν λειτουργεί";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Ιστότοπος επιφάνειας εργασίας";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Ιστότοπος για κινητά";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Αποθήκευση";
 

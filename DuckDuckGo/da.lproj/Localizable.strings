@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Rapporter ødelagt websted";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Stationær computer";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Mobilwebsted";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Gem";
 

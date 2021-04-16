@@ -64,6 +64,12 @@
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Ilmoita viallisesta sivustosta";
 
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Pöytäkonesivusto";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Mobiilisivusto";
+
 /* Save action - button shown in alert */
 "action.title.save" = "Tallenna";
 

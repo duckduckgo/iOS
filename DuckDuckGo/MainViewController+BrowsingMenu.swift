@@ -83,7 +83,7 @@ extension MainViewController {
     fileprivate func dismiss(_ controller: BrowsingMenuViewController) {
         
         guard let snapshot = controller.view.snapshotView(afterScreenUpdates: false) else {
-            dismissBrowsingMenu()
+            dismissBrowsingMenu(updateMenuButtonState: false)
             return
         }
         
@@ -99,7 +99,7 @@ extension MainViewController {
             snapshot.frame = self.menuOriginFrameForAnimation(controller: controller)
         }, completion: { _ in
             snapshot.removeFromSuperview()
-            self.dismissBrowsingMenu()
+            self.dismissBrowsingMenu(updateMenuButtonState: false)
         })
     }
     
@@ -177,13 +177,17 @@ extension MainViewController {
         presentedMenuButton.setState(expectedState, animated: false)
     }
     
-    func dismissBrowsingMenu() {
+    func dismissBrowsingMenu(updateMenuButtonState: Bool = true) {
         guard let controller = browsingMenu else { return }
         
         controller.detachFrom(view)
         controller.removeFromParent()
         
         browsingMenu = nil
+        
+        if updateMenuButtonState {
+            refreshMenuButtonState()
+        }
     }
     
 }

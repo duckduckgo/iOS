@@ -579,6 +579,8 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
+        dismissBrowsingMenu()
+
         if tab.link == nil {
             attachHomeScreen()
         } else {
@@ -833,6 +835,7 @@ class MainViewController: UIViewController {
 
     func newTab(reuseExisting: Bool = false) {
         hideSuggestionTray()
+        dismissBrowsingMenu()
         currentTab?.dismiss()
 
         if reuseExisting, let existing = tabManager.firstHomeTab() {
@@ -1351,6 +1354,7 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
+        dismissBrowsingMenu()
         tabManager.remove(at: index)
         updateCurrentTab()
     }
@@ -1427,7 +1431,6 @@ extension MainViewController: AutoClearWorker {
     func clearNavigationStack() {
         dismissOmniBar()
         dismissBrowsingMenu()
-        refreshMenuButtonState()
         
         if let presented = presentedViewController {
             presented.dismiss(animated: false) { [weak self] in

@@ -261,9 +261,9 @@ public struct AppUrls {
         return url
     }
     
-    public func removeATBAndSource(fromUrl url: URL) -> URL {
+    public func removeInternalSearchParameters(fromUrl url: URL) -> URL {
         guard isDuckDuckGoSearch(url: url) else { return url }
-        return url.removeParam(name: Param.atb).removeParam(name: Param.source)
+        return url.removeParam(name: Param.atb).removeParam(name: Param.source).removeParam(name: Param.searchHeader)
     }
 
 }

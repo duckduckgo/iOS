@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Všetky karty sú uložené medzi záložky";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Záložky";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentáre sa nepodarilo načítať";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Ponuka prehliadania";
 
 /* Edit button */
 "navigation.title.edit" = "Upraviť";

@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Összes lap könyvjelzőzve";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Könyvjelzők";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "A megjegyzések nem töltődtek be";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Tallózás a menüben";
 
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";

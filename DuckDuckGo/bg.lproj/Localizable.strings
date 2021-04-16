@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Всички раздели са поставени в отметки";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Отметки";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Коментарите не се зареждат";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добре дошли в\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Меню за сърфиране";
 
 /* Edit button */
 "navigation.title.edit" = "Редактиране";

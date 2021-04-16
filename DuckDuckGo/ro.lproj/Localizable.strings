@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Toate filele marcate";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Semne de carte";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Comentariile nu s-au încărcat";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bine ai venit la\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Meniul de navigare";
 
 /* Edit button */
 "navigation.title.edit" = "Editați";

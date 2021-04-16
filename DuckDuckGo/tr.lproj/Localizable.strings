@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Tüm sekmelere yer imi eklendi";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Yer İmleri";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Yorumlar yüklenmedi";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Göz Atma Menüsü";
 
 /* Edit button */
 "navigation.title.edit" = "Düzenle";

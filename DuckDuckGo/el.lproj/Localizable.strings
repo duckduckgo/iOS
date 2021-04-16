@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Προστέθηκαν σελιδοδείκτες σε όλες τις καρτέλες";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Σελιδοδείκτες";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Τα σχόλια δεν φορτώθηκαν";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Μενού περιήγησης";
 
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";

@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Visi skirtukai pažymėti";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Žymės";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentarai neįkelti";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Naršymo meniu";
 
 /* Edit button */
 "navigation.title.edit" = "Redaguoti";

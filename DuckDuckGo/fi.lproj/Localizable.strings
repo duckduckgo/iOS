@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Kaikki välilehdet lisätty kirjanmerkkeihin";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Kirjanmerkit";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentit eivät latautuneet";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Selausvalikko";
 
 /* Edit button */
 "navigation.title.edit" = "Muokkaa";

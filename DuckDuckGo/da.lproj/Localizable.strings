@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Alle faner bogmærket";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Bogmærker";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentarer blev ikke indlæst";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Browsingmenu";
 
 /* Edit button */
 "navigation.title.edit" = "Rediger";

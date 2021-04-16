@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Sve su kartice označene";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Knjižne oznake";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentari se nisu učitali";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Izbornik pregledavanja";
 
 /* Edit button */
 "navigation.title.edit" = "Uredi";

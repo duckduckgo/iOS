@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Kõik vahekaardid on järjehoidjatesse lisatud";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Järjehoidjad";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentaare ei laaditud";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tere tulemast\nDuckDuckGo kasutajaks!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Sirvimismenüü";
 
 /* Edit button */
 "navigation.title.edit" = "Redigeeri";

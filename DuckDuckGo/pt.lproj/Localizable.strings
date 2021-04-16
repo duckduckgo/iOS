@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Todos os separadores foram marcados";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Marcadores";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Os comentários não carregaram";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Damos-lhe as boas-vindas ao\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Menu de navegação";
 
 /* Edit button */
 "navigation.title.edit" = "Editar";

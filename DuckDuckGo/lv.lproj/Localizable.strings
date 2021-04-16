@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Visām cilnēm ir pievienotas grāmatzīmes";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Grāmatzīmes";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentāri netika ielādēti";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Pārlūkošanas izvēlne";
 
 /* Edit button */
 "navigation.title.edit" = "Rediģēt";

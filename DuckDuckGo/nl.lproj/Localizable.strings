@@ -142,6 +142,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Alle tabbladen toegevoegd als bladwijzer";
 
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Bladwijzers";
+
 /* Broken Site Category */
 "brokensite.category.comments" = "Opmerkingen zijn niet geladen";
 
@@ -564,6 +567,9 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welkom bij\nDuckDuckGo!";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Optiemenu";
 
 /* Edit button */
 "navigation.title.edit" = "Bewerken";

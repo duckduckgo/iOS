@@ -746,6 +746,7 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height
+        ViewHighlighter.updatePositions()
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {

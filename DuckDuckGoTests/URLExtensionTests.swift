@@ -216,7 +216,7 @@ class URLExtensionTests: XCTestCase {
 
     func testWhenEmptyParamArrayIsUsedThenRemovingReturnsSameUrl() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
-        let actual = url?.removeParams(named: ["someParam", "someOtherParam"])
+        let actual = url?.removeParams(named: [])
         XCTAssertEqual(actual, url)
     }
 

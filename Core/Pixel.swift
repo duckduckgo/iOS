@@ -180,6 +180,8 @@ public enum PixelName: String {
     case blankOverlayNotDismissed = "m_d_ovs"
 
     case cookieDeletionTimedOut = "m_d_csto"
+
+    case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
 }
 // swiftlint:enable identifier_name
 
@@ -213,6 +215,8 @@ public struct PixelParameters {
 
     static let removeCookiesTimedOut = "rc"
     static let clearWebDataTimedOut = "cd"
+
+    public static let tabPreviewCountDelta = "cd"
 }
 
 public struct PixelValues {

@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Over tid kan det hope seg opp med personlige opplysninger i nettleseren din. Fysj. Bruk brannknappen for å fjerne alt. Prøv den 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Tøm alle faner og data";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Dett var dett – dataene dine er brent til aske!\n\nTips: Du kan sikre en side sånn at du slipper å logge inn hver gang.\n\nLurer du på hvordan det funker? Besøk en av favorittsidene dine og logg inn.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Den er grei";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Det kan samles opp personopplysninger i nettleseren din. Fysj. Bruk brannknappen til å sette fyr på alt sammen. Prøv det nå! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Avbryt";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Lukk faner og slett data";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Besøk favorittsidene dine på et blunk!\n\nGå til et nettsted du liker. Trykk deretter på «…»-ikonet og velg *Legg til i Favoritter*.";

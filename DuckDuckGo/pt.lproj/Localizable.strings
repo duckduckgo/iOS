@@ -232,6 +232,15 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Entendi";
 
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Os dados pessoais podem ser acumulados no seu navegador. Que nojo. Use o botão de fogo para queimar tudo. Experimente agora! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Cancelar";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Fechar separadores e limpar os dados";
+
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Visite os seus sites favoritos num instante!\n\nVá a um site que ame. De seguida, toque no ''⋯'' ícone e selecione *Adicionar aos Favoritos*.";
 

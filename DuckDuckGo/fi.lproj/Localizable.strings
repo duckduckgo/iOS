@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh huh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Henkilökohtaisia tietoja voi ajan myötä tallentua selaimeesi. Hyi. Poista ne kaikki Liekki-painikkeella. Kokeile nyt! 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Poista kaikki välilehdet ja tiedot";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Siinä se – tiedot on hävitetty!\n\nVinkki: Tee sivustosta palonkestävä, niin et joudu kirjautumaan joka kerta uudelleen.\n\nHaluatko tietää, miten se toimii? Mene suosikkisivustollesi ja kirjaudu sisään.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Selvä";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Henkilökohtaisia tietoja voi tallentua selaimeesi. Hyi. Hävitä ne kaikki Liekki-painikkeella. Kokeile nyt! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Peruuta";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Sulje välilehdet ja tyhjennä tiedot";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Käy lempisivustoillasi hetkessä!\n\nSiirry lempisivustollesi. Napauta \"...\"-kuvaketta ja valitse *Lisää suosikkeihin*.";

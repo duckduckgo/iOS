@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pē!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Laika gaitā tavā pārlūkā var uzkrāties personas dati. Fui. Izmanto Uguns pogu, lai to visu notīrītu. Izmēģini 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Notīrīt visas cilnes un datus";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Gatavs — tavi dati ir nodedzināti!\n\nPadoms: padari vietni ugunsdrošu un tev nevajadzēs katru reizi atkārtoti pierakstīties.\n\nVai gribi redzēt, kā tas darbojas? Atver kādu no savām iecienītākajām vietnēm un pieraksties.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Sapratu";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Personas dati var uzkrāties tavā pārlūkā. Pē! Izmanto Uguns pogu, lai tos visus nodedzinātu. Pamēģini tagad! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Atcelt";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Aizvērt cilnes un notīrīt datus";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Atver savas iecienītākās vietnes zibens ātrumā!\n\nEj uz savu mīļāko vietni. Pēc tam pieskaries ikonai “⋯” un atlasi *Pievienot izlasei*.";

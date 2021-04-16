@@ -157,6 +157,10 @@ class MainViewController: UIViewController {
         
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     func startAddFavoriteFlow() {
@@ -312,9 +316,12 @@ class MainViewController: UIViewController {
         currentTab!.saveAsBookmark(favorite: true)
     }
     
+    // swiftlint:disable cyclomatic_complexity
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
 
         if let controller = segue.destination as? SuggestionTrayViewController {
             controller.dismissHandler = dismissSuggestionTray
@@ -362,8 +369,18 @@ class MainViewController: UIViewController {
         if var onboarding = segue.destination as? Onboarding {
             onboarding.delegate = self
         }
+        
+        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
+            let spec = sender as? DaxDialogs.ActionSheetSpec
+            if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
+                ViewHighlighter.hideAll()
+            }
+            controller.spec = spec
+            controller.delegate = self
+        }
 
     }
+    // swiftlint:enable cyclomatic_complexity
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -487,11 +504,16 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.forgetAllWithAnimation {}
-        })
-        self.present(controller: alert, fromView: self.toolbar)
+        
+        if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+            Pixel.fire(pixel: .fireEducationFireButtonPressedWhilstPulseShowing)
+            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+        } else {
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                self?.forgetAllWithAnimation {}
+            })
+            self.present(controller: alert, fromView: self.toolbar)
+        }
     }
     
     func onQuickFirePressed() {
@@ -519,6 +541,9 @@ class MainViewController: UIViewController {
     
     func didReturnFromBackground() {
         skipSERPFlow = true
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
@@ -590,6 +615,9 @@ class MainViewController: UIViewController {
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     private func addToView(tab: TabViewController) {
@@ -677,6 +705,10 @@ class MainViewController: UIViewController {
         }
 
         self.showMenuHighlighterIfNeeded()
+        
+        coordinator.animate(alongsideTransition: nil) { _ in
+            ViewHighlighter.updatePositions()
+        }
     }
     
     private func applyWidth() {
@@ -699,6 +731,10 @@ class MainViewController: UIViewController {
             
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
+            
+            if DaxDialogs.shared.shouldShowFireButtonPulse {
+                self.showFireButtonPulse()
+            }
             
             self.refreshMenuButtonState()
         }
@@ -730,7 +766,9 @@ class MainViewController: UIViewController {
             applyWidthToTrayController()
 
             if !AppWidthObserver.shared.isLargeWidth {
-                ViewHighlighter.hideAll()
+                if !DaxDialogs.shared.shouldShowFireButtonPulse {
+                    ViewHighlighter.hideAll()
+                }
                 if type.hideOmnibarSeparator() {
                     omniBar.hideSeparator()
                 }
@@ -764,6 +802,7 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height
+        ViewHighlighter.updatePositions()
     }
 
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -836,6 +875,10 @@ class MainViewController: UIViewController {
     }
 
     func newTab(reuseExisting: Bool = false) {
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
+        DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
         dismissBrowsingMenu()
         currentTab?.dismiss()
@@ -894,6 +937,10 @@ extension MainViewController: BrowserChromeDelegate {
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
+
+            if DaxDialogs.shared.shouldShowFireButtonPulse {
+                return
+            }
         } else {
             showMenuHighlighterIfNeeded()
         }
@@ -975,7 +1022,9 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onOmniQuerySubmitted(_ query: String) {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         loadQuery(query)
         hideSuggestionTray()
         showHomeRowReminder()
@@ -983,20 +1032,26 @@ extension MainViewController: OmniBarDelegate {
 
     func onSiteRatingPressed() {
         if isSERPPresented { return }
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         hideSuggestionTray()
         currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         hideSuggestionTray()
         ActionMessageView.dismissAllMessages()
         launchBrowsingMenu()
     }
     
     @objc func onBookmarksPressed() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
     }
@@ -1018,7 +1073,9 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSettingsPressed() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         launchSettings()
     }
     
@@ -1049,7 +1106,9 @@ extension MainViewController: OmniBarDelegate {
         let selectQueryText = !(isSERPPresented && !skipSERPFlow)
         skipSERPFlow = false
         
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         guard let homeController = homeController else {
             return selectQueryText
         }
@@ -1276,16 +1335,8 @@ extension MainViewController: TabDelegate {
         forgetAllWithAnimation(showNextDaxDialog: true)
     }
     
-    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint? {
-        if toolbar.isHidden {
-            return tabsBarController?.fireButtonCenterPosition
-        }
-        
-        guard let view = fireButton.value(forKey: "view") as? UIView else {
-            return nil
-        }
-        let point = view.convert(view.bounds.origin, to: UIApplication.shared.keyWindow?.rootViewController?.view)
-        return CGPoint(x: point.x + view.frame.size.width / 2.0, y: point.y + view.frame.size.height / 2.0)
+    func tabDidRequestFireButtonPulse(tab: TabViewController) {
+        showFireButtonPulse()
     }
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
@@ -1341,6 +1392,9 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         selectTab(tab)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
@@ -1351,6 +1405,10 @@ extension MainViewController: TabSwitcherDelegate {
             }
         }
         closeTab(tab)
+        
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            showFireButtonPulse()
+        }
     }
     
     func closeTab(_ tab: Tab) {
@@ -1402,6 +1460,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                                                forTab: currentTab.tabModel)
                     
                 }
+                ViewHighlighter.hideAll()
                 self.performSegue(withIdentifier: "ShowTabs", sender: self)
             })
         }
@@ -1483,6 +1542,24 @@ extension MainViewController: AutoClearWorker {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
+        }
+    }
+    
+    private func showFireButtonPulse() {
+        DaxDialogs.shared.fireButtonPulseStarted()
+        guard let window = view.window else { return }
+        
+        let fireButtonView: UIView?
+        if toolbar.isHidden {
+            fireButtonView = tabsBarController?.fireButton
+        } else {
+            fireButtonView = fireButton.value(forKey: "view") as? UIView
+        }
+        guard let view = fireButtonView else { return }
+        
+        if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
+            ViewHighlighter.hideAll()
+            ViewHighlighter.showIn(window, focussedOnView: view)
         }
     }
     

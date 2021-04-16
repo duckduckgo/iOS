@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Aja jooksul võivad sinu brauserisse koguneda isikuandmed. Õudne. Kasuta tulenuppu, et need kõik ära kustutada. Proovi 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Kustuta kõik vahekaardid ja andmed";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Ongi korras — sinu andmed on hävitatud!\n\nSoovitus: muuda sait tulekindlaks ja sa ei pea enam iga kord uuesti sisse logima. \n\nTahad näha, kuidas see töötab? Külasta ühte oma lemmiksaitidest ja logi sisse.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Sain aru";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Sinu brauserisse võivad koguneda isikuandmed. Õudne. Kasuta tule nuppu, et see kõik ära põletada. Proovi kohe! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Tühista";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Sulge vahekaardid ja kustuta andmed";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Külasta oma lemmiksaite hetkega!\n\nMine saidile, mis sulle meeldib. Seejärel puuduta ikooni „⋯“ ja vali *Lisa lemmikutesse*.";

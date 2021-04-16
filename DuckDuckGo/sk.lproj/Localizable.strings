@@ -232,6 +232,15 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Rozumiem";
 
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Vo vašom prehliadači sa môžu zhromažďovať osobné údaje. Fuj. Pomocou tlačidla na vymazanie ich môžete všetky odstrániť. Vyskúšajte to! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Zrušiť";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Zatvoriť karty a vymazať údaje";
+
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Navštívte svoje obľúbené stránky bleskurýchlo!\n\nPrejdite na stránku, ktorá sa vám páči. Potom kliknite na ikonu „⋯“ a vyberte možnosť *Pridať k obľúbeným*.";
 

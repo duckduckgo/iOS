@@ -131,9 +131,43 @@ class TabSwitcherViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            DaxDialogs.shared.fireButtonPulseStarted()
+            guard let window = view.window else { return }
+            
+            let fireButtonView: UIView?
+            if !topFireButton.isHidden {
+                fireButtonView = topFireButton
+            } else {
+                fireButtonView = fireButton.value(forKey: "view") as? UIView
+            }
+            guard let view = fireButtonView else { return }
+            
+            if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
+                ViewHighlighter.hideAll()
+                ViewHighlighter.showIn(window, focussedOnView: view)
+            }
+        }
+    }
+    
     func prepareForPresentation() {
         view.layoutIfNeeded()
         self.scrollToInitialTab()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        ViewHighlighter.hideAll()
+        
+        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
+            let spec = sender as? DaxDialogs.ActionSheetSpec
+            controller.spec = spec
+            controller.delegate = self
+        }
+
     }
     
     @objc func handleTap(gesture: UITapGestureRecognizer) {
@@ -265,14 +299,20 @@ class TabSwitcherViewController: UIViewController {
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         
-        let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-            self?.forgetAll()
-        })
-        
-        if let anchor = sender as? UIView {
-            self.present(controller: alert, fromView: anchor)
+        if DaxDialogs.shared.shouldShowFireButtonPulse {
+            Pixel.fire(pixel: .fireEducationFireButtonOnTabSwitcherScreenPressedWhilstPulseShowing)
+            let spec = DaxDialogs.shared.fireButtonEducationMessage()
+            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
-            self.present(controller: alert, fromView: toolbar)
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                self?.forgetAll()
+            })
+            
+            if let anchor = sender as? UIView {
+                self.present(controller: alert, fromView: anchor)
+            } else {
+                self.present(controller: alert, fromView: toolbar)
+            }
         }
     }
 

@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Слава Богу!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "С течение на времето личните данни могат да се натрупват в браузъра. Много неприятно. Използвайте огнения бутон, за да изчистите всички данни. Опитайте 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Изчистване на всички раздели и данни";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Готово — Вашите данни вече са изчистени!\n\nЕто един съвет: Направете сайта огнеустойчив и няма да се налага да се вписвате всеки път.\n\nИскате да видите как става това? Посетете някой от любимите си сайтове и се впишете.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Разбрах";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Личните данни могат да се натрупват в браузъра. Много неприятно. Използвайте огнения бутон, за да изгорите всичко. Опитайте сега! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Отмени";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Затваряне на разделите и изчистване на данните";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Отварянето на любимите ви сайтове става светкавично!\n\nОтворете сайт, който харесвате. След това докоснете иконата \"⋯\" и изберете *Добавяне към любими*.";

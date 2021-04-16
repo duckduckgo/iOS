@@ -24,7 +24,6 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
     func hideDaxDialogs(controller: FullscreenDaxDialogViewController)
     func closedDaxDialogs(controller: FullscreenDaxDialogViewController)
-    func daxDialogDidRequestFireButtonPosition(controller: FullscreenDaxDialogViewController) -> CGPoint?
     func daxDialogDidRquestAddressBarRect(controller: FullscreenDaxDialogViewController) -> CGRect?
     
 }
@@ -38,7 +37,6 @@ class FullscreenDaxDialogViewController: UIViewController {
     }
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
-    @IBOutlet weak var fireButtonOverlayButton: UIButton!
     
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
@@ -54,9 +52,6 @@ class FullscreenDaxDialogViewController: UIViewController {
         daxDialogViewController?.onTapCta = dismissCta
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
-        let highlightFireButton = spec?.highlightFireButton ?? false
-        fireButtonOverlayButton.accessibilityLabel = UserText.daxDialogBrowsingFireButtonEducationCTA
-        fireButtonOverlayButton.isHidden = !highlightFireButton
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(orientationDidChange),
@@ -110,18 +105,6 @@ class FullscreenDaxDialogViewController: UIViewController {
                                     width: rect.size.width + padding * 2,
                                     height: rect.size.height + padding * 2)
             highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: paddedRect, cornerRadius: paddedRect.height / 2.0)
-        } else if spec?.highlightFireButton ?? false, let pos = delegate?.daxDialogDidRequestFireButtonPosition(controller: self) {
-            var size: CGFloat = 56
-            var offset: CGFloat = 1
-            let hasBottomSafeArea = UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0 > 20
-            if !hasBottomSafeArea && !isPad {
-                size = 40
-                offset = 0
-            }
-            let point = CGPoint(x: pos.x - size / 2.0, y: pos.y - size / 2.0 + offset)
-            let rect = CGRect(origin: point, size: CGSize(width: size, height: size))
-            fireButtonOverlayButton.frame = rect
-            highlightCutOutView.cutOutPath = UIBezierPath(ovalIn: rect)
         } else {
             highlightCutOutView.cutOutPath = nil
         }
@@ -135,16 +118,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     
     private func dismissCta() {
         dismiss(animated: true)
-        if spec == DaxDialogs.BrowsingSpec.fireButtonEducation {
-            Pixel.fire(pixel: .daxDialogsFireEducationCTA)
-        }
         delegate?.closedDaxDialogs(controller: self)
-    }
-    
-    @IBAction func onTapFireButtonOverlay(_ sender: Any) {
-        dismiss(animated: true)
-        Pixel.fire(pixel: .daxDialogsFireEducationFireButton)
-        self.delegate?.closedDaxDialogs(controller: self)
     }
 }
 
@@ -157,20 +131,11 @@ extension TabViewController: FullscreenDaxDialogDelegate {
                                            preferredStyle: isPad ? .alert : .actionSheet)
 
         alertController.addAction(title: UserText.daxDialogHideButton, style: .default) {
-            if controller.spec == DaxDialogs.BrowsingSpec.fireButtonEducation {
-                Pixel.fire(pixel: .daxDialogsFireEducationHidden)
-            } else if DaxDialogs.shared.isFireButtonEducationEnabled {
-                Pixel.fire(pixel: .daxDialogsHiddenBeforeFireEducation)
-            }
             Pixel.fire(pixel: .daxDialogsHidden, withAdditionalParameters: [ "c": DefaultDaxDialogsSettings().browsingDialogsSeenCount ])
             DaxDialogs.shared.dismiss()
         }
         alertController.addAction(title: UserText.daxDialogHideCancel, style: .cancel) {
-            if controller.spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
-                self.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
-            } else {
-                Pixel.fire(pixel: .daxDialogsFireEducationHiddenCanceled)
-            }
+            self.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
         }
         present(alertController, animated: true)
         isShowingFullScreenDaxDialog = false
@@ -185,17 +150,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
             chromeDelegate?.omniBar.completeAnimations()
         }
         
-        if controller.spec != DaxDialogs.BrowsingSpec.fireButtonEducation {
-            showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
-        }
-        
-        if controller.spec == DaxDialogs.BrowsingSpec.fireButtonEducation {
-            delegate?.tabDidRequestForgetAll(tab: self)
-        }
-    }
-
-    func daxDialogDidRequestFireButtonPosition(controller: FullscreenDaxDialogViewController) -> CGPoint? {
-        return delegate?.tabDidRequestFireButtonLocation(tab: self)
+        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
     }
     
     func daxDialogDidRquestAddressBarRect(controller: FullscreenDaxDialogViewController) -> CGRect? {
@@ -209,8 +164,7 @@ fileprivate extension DefaultDaxDialogsSettings {
         let count = [ browsingMajorTrackingSiteShown,
                       browsingWithoutTrackersShown,
                       browsingWithTrackersShown,
-                      browsingAfterSearchShown,
-                      browsingFireButtonEducationShown].reduce(0, { $0 + ($1 ? 1 : 0) })
+                      browsingAfterSearchShown ].reduce(0, { $0 + ($1 ? 1 : 0) })
         return "\(count)"
     }
     

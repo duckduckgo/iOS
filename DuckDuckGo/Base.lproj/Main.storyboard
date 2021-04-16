@@ -334,6 +334,7 @@
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
                         <segue destination="HTt-o2-2gp" kind="presentation" identifier="DaxOnboarding" animates="NO" modalPresentationStyle="overFullScreen" id="eix-GD-QaT"/>
+                        <segue destination="CeD-SH-IsP" kind="presentation" identifier="ActionSheetDaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="PjE-Cf-1P2"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEditCurrent" id="lgJ-lb-xgS"/>
                     </connections>
                 </viewController>
@@ -372,6 +373,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tVd-3C-mpV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="941" y="83"/>
+        </scene>
+        <!--ActionSheetDaxDialog-->
+        <scene sceneID="Mey-L0-qHE">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DaxOnboarding" referencedIdentifier="ActionSheetDaxDialog" id="CeD-SH-IsP" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zEK-ZP-MaO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="839" y="152"/>
         </scene>
         <!--Settings-->
         <scene sceneID="bSV-mo-fgW">

@@ -232,6 +232,15 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Supratau";
 
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Asmeniniai duomenys gali kauptis jūsų naršyklėje. Fui. Naudokite mygtuką „Fire“, kad juos panaikintumėte. Išbandykite dabar! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Atšaukti";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Uždaryti skirtukus ir valyti duomenis";
+
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Apsilankykite savo mėgstamose svetainėse akimirksniu!\n\nEikite į savo mėgstamą svetainę. Tuomet bakstelėkite „⋯“ piktogramą ir pasirinkite *Pridėti prie mėgstamų*.";
 

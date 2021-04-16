@@ -89,6 +89,13 @@ class TabPreviewsSource {
             }
         }
     }
+
+    func totalStoredPreviews() -> Int? {
+        guard let directory = previewStoreDir else { return nil }
+
+        let contents = try? FileManager.default.contentsOfDirectory(atPath: directory.path)
+        return contents?.count
+    }
     
     static private var previewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }

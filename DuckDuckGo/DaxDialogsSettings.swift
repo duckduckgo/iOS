@@ -33,7 +33,9 @@ protocol DaxDialogsSettings {
     
     var browsingMajorTrackingSiteShown: Bool { get set }
     
-    var browsingFireButtonEducationShown: Bool { get set }
+    var fireButtonEducationShownOrExpired: Bool { get set }
+    
+    var fireButtonPulseDateShown: Date? { get set }
 
 }
 
@@ -57,8 +59,11 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     @UserDefaultsWrapper(key: .daxBrowsingMajorTrackingSiteShown, defaultValue: false)
     var browsingMajorTrackingSiteShown: Bool
     
-    @UserDefaultsWrapper(key: .daxBrowsingFireButtonEducationShown, defaultValue: false)
-    var browsingFireButtonEducationShown: Bool
+    @UserDefaultsWrapper(key: .daxFireButtonEducationShownOrExpired, defaultValue: false)
+    var fireButtonEducationShownOrExpired: Bool
+    
+    @UserDefaultsWrapper(key: .fireButtonPulseDateShown, defaultValue: nil)
+    var fireButtonPulseDateShown: Date?
     
 }
 
@@ -76,6 +81,8 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     
     var browsingMajorTrackingSiteShown: Bool = false
     
-    var browsingFireButtonEducationShown: Bool = false
+    var fireButtonEducationShownOrExpired: Bool = false
+    
+    var fireButtonPulseDateShown: Date?
     
 }

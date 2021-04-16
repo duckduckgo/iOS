@@ -55,8 +55,8 @@ protocol TabDelegate: class {
     
     func tabDidRequestForgetAll(tab: TabViewController)
     
-    func tabDidRequestFireButtonLocation(tab: TabViewController) -> CGPoint?
-    
+    func tabDidRequestFireButtonPulse(tab: TabViewController)
+        
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController)

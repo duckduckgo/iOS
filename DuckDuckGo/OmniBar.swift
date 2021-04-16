@@ -34,7 +34,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
     @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TextFieldWithInsets!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
@@ -125,6 +125,11 @@ class OmniBar: UIView {
                                                object: textField)
         
         textField.textDragInteraction?.isEnabled = false
+        
+        textField.onCopyAction = { field in
+            guard let range = field.selectedTextRange else { return }
+            UIPasteboard.general.string = field.text(in: range)
+        }
     }
     
     private func configureSeparator() {

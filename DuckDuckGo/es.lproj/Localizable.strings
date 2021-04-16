@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "¡Uf!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Con el tiempo, los datos personales se pueden acumular en tu navegador. Puaj. Utiliza el botón Fuego para quemarlos. Pruébalo 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Borrar todos los datos y pestañas";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Ya está: ¡tus datos se han chamuscado!\n\nUn consejo: Pon un sitio a prueba de fuego y no tendrás que volver a iniciar sesión cada vez.\n\n¿Quieres ver cómo funciona? Visita uno de tus sitios favoritos e inicia sesión.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Entendido";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Los datos personales se pueden acumular en tu navegador. ¡Puaj! Utiliza el botón Fuego para quemarlos. ¡Pruébalo! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Cancelar";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Cerrar pestañas y borrar datos";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "¡Visita tus sitios web favoritos en un instante!\n\nVe a un sitio que te guste. Y luego pulsa el icono \"...\" y selecciona *Añadir a Favoritos*.";

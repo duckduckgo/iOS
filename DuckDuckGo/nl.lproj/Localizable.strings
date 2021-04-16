@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "In de loop der tijd kunnen persoonlijke gegevens zich ophopen in je browser. Bah. Gebruik de vuurknop om alles te verbranden. Probeer het maar 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Alle tabbladen en gegevens wissen";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Klaar: je gegevens zijn niets meer dan een hoopje as!\n\nHier heb je een tip: als je een site brandveilig maakt, hoef je niet elke keer opnieuw in te loggen.\n\nWil je zien hoe dit werkt? Bezoek dan een van je favoriete websites en log in.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Ik snap het";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Persoonlijke gegevens kunnen zich ophopen in je browser. Bah. Gebruik de vuurknop om alles te verbranden. Probeer het maar! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Annuleren";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Tabbladen sluiten en gegevens wissen";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Bezoek je favoriete websites in een oogwenk!\n\nGa naar een van je favoriete sites, tik op het pictogram '⋯' en selecteer *Toevoegen aan favorieten*.";

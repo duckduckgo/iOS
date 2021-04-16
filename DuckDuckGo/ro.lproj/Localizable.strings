@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfiu!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "În timp, în browserul tău se pot acumula date personale. Bleah. Utilizează butonul Foc pentru a șterge totul. Încearcă acum 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Șterge toate filele și datele";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Gata — datele tale sunt afectate!\n\nIată un sfat: șterge activitatea și istoricul unui site și nu va trebui să te conectezi din nou de fiecare dată.\n\nVrei să vezi cum funcționează? Vizitează unul dintre site-urile preferate și conectează-te.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -231,6 +222,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Am înțeles";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "În browserul tău se pot acumula date personale. Bleah. Utilizează butonul Ștergere activitate și istoric pentru a șterge totul. Încearcă acum! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Renunță";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Închide filele și șterge datele";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Vizitează site-urile preferate într-o clipă!\n\nAccesează un site care îți place. Apoi atinge pictograma „⋯” și selectează *Adaugă la preferințe*.";

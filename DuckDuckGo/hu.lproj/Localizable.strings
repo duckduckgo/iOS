@@ -232,6 +232,15 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Megvan";
 
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Személyes adatok halmozódhatnak fel a böngésződben. Fúj. A Tűz gombbal mindet elégetheted. Próbáld ki most! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Mégsem";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Lapok bezárása és adattörlés";
+
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Látogasd meg a kedvenc weboldalaidat egy pillanat alatt!\n\nLépj egy olyan weboldalra, amelyet szeretsz. Ezután koppints a(z) „⋯” ikonra, és válaszd a *Hozzáadás a kedvencekhez* elemet.";
 

@@ -88,6 +88,14 @@ extension URL {
         return components.url ?? self
     }
 
+    public func removeParams(named parameters: [String]) -> URL {
+        var url = self
+        for param in parameters {
+            url = url.removeParam(name: param)
+        }
+        return url
+    }
+
     public func isHttps() -> Bool {
         return absoluteString.hasPrefix(URLProtocol.https.scheme)
     }

@@ -263,7 +263,7 @@ public struct AppUrls {
     
     public func removeInternalSearchParameters(fromUrl url: URL) -> URL {
         guard isDuckDuckGoSearch(url: url) else { return url }
-        return url.removeParam(name: Param.atb).removeParam(name: Param.source).removeParam(name: Param.searchHeader)
+        return url.removeParams(named: [Param.atb, Param.source, Param.searchHeader])
     }
 
 }

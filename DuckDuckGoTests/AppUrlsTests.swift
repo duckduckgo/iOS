@@ -30,18 +30,22 @@ class AppUrlsTests: XCTestCase {
         mockStatisticsStore = MockStatisticsStore()
     }
 
-    func testWhenRemoveATBAndSourceFromSearchUrlThenUrlIsUnchanged() {
+    func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
+
         let searchUrl = testee.searchUrl(text: "example")
-        let result = testee.removeATBAndSource(fromUrl: searchUrl)
+        let searchUrlWithSearchHeader = testee.applySearchHeaderParams(for: searchUrl)
+        let result = testee.removeInternalSearchParameters(fromUrl: searchUrlWithSearchHeader)
+
         XCTAssertNil(result.getParam(name: "atb"))
         XCTAssertNil(result.getParam(name: "t"))
+        XCTAssertNil(result.getParam(name: "ko"))
     }
 
-    func testWhenRemoveATBAndSourceFromNonSearchUrlThenUrlIsUnchanged() {
+    func testWhenRemoveInternalSearchParametersFromNonSearchUrlThenUrlIsUnchanged() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let example = "https://duckduckgo.com?atb=x&t=y"
-        let result = testee.removeATBAndSource(fromUrl: URL(string: example)!)
+        let example = "https://duckduckgo.com?atb=x&t=y&ko=z"
+        let result = testee.removeInternalSearchParameters(fromUrl: URL(string: example)!)
         XCTAssertEqual(example, result.absoluteString)
     }
     

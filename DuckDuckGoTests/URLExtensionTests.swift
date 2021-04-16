@@ -201,6 +201,32 @@ class URLExtensionTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
+    func testWhenRemovingParamsThenRemovingReturnsUrlWithoutParams() {
+        let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue&thirdParam=thirdValue")
+        let expected = URL(string: "http://test.com?secondParam=secondValue")
+        let actual = url?.removeParams(named: ["firstParam", "thirdParam"])
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testWhenParamsDoNotExistThenRemovingReturnsSameUrl() {
+        let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
+        let actual = url?.removeParams(named: ["someParam", "someOtherParam"])
+        XCTAssertEqual(actual, url)
+    }
+
+    func testWhenEmptyParamArrayIsUsedThenRemovingReturnsSameUrl() {
+        let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
+        let actual = url?.removeParams(named: [])
+        XCTAssertEqual(actual, url)
+    }
+
+    func testWhenRemovingParamsThenRemainingUrlWebPlusesAreEncodedToEnsureTheyAreMaintainedAsSpaces_bugFix() {
+        let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=45+%2B+5")
+        let expected = URL(string: "http://test.com?secondParam=45%20+%205")
+        let actual = url?.removeParams(named: ["firstParam"])
+        XCTAssertEqual(actual, expected)
+    }
+
     func testWhenNoParamsThenAddingAppendsQuery() {
         let url = URL(string: "http://test.com")
         let expected = URL(string: "http://test.com?aParam=aValue")

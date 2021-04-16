@@ -76,14 +76,17 @@ extension URL {
     }
 
     public func removeParam(name: String) -> URL {
+        return self.removeParams(named: [name])
+    }
+
+    public func removeParams(named parametersToRemove: Set<String>) -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         guard let encodedQuery = components.percentEncodedQuery else { return self }
         components.percentEncodedQuery = switchWebSpacesToSystemEncoding(text: encodedQuery)
         guard var query = components.queryItems else { return self }
-        
-        for (index, param) in query.enumerated() where param.name == name {
-            query.remove(at: index)
-        }
+
+        query.removeAll { parametersToRemove.contains($0.name) }
+
         components.queryItems = query
         return components.url ?? self
     }

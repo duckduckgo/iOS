@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh huh!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Henkilökohtaisia tietoja voi ajan myötä tallentua selaimeesi. Hyi. Poista ne kaikki Liekki-painikkeella. Kokeile nyt! 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Poista kaikki välilehdet ja tiedot";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Siinä se – tiedot on hävitetty!\n\nVinkki: Tee sivustosta palonkestävä, niin et joudu kirjautumaan joka kerta uudelleen.\n\nHaluatko tietää, miten se toimii? Mene suosikkisivustollesi ja kirjaudu sisään.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Selvä";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Henkilökohtaisia tietoja voi tallentua selaimeesi. Hyi. Hävitä ne kaikki Liekki-painikkeella. Kokeile nyt! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Peruuta";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Sulje välilehdet ja tyhjennä tiedot";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Käy lempisivustoillasi hetkessä!\n\nSiirry lempisivustollesi. Napauta \"...\"-kuvaketta ja valitse *Lisää suosikkeihin*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo asettaa uudet standardit luottamukselle verkossa.\n\nDuckDuckGo-tietosuojaselain tarjoaa kaikki keskeiset tietosuojaominaisuudet nettihakujesi ja -selailusi turvaksi, kuten seurantapalvelinten eston, älykkäämmän salauksen ja yksityisen DuckDuckGo-haun.\n\nInternetin ei pitäisi tuntua karmivalta paikalta ja nettiyksityisyyden pitäisi olla yhtä helppoa kuin verhojen vetäminen ikkunan eteen.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Muut hakukoneet seuraavat hakujasi, vaikka käyttäisit yksityistä selausta. Me emme seuraa sinua – piste.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Siirry *Safariin* ja sitten *hakukoneeseen*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Avaa *Asetukset*-sovellus.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Valitse *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";

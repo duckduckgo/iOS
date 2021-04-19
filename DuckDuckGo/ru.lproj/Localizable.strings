@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Уф!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "В браузере могут скапливаться личные данные. Фу. Пользуйтесь кнопкой «Пожар», чтобы сжечь весь лишний мусор. Попробуйте сами 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Сбросить все вкладки и данные";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Вот и всё: старым данным крышка!\n\nСовет: наделите отдельные сайты огнеупорностью, чтобы каждый раз не вводить учетную информацию.\n\nХотите проверить эту функцию в деле? Посетите любимый сайт и выполните вход.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Понятно";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "В браузере могут скапливаться личные данные. Фу! Пользуйтесь кнопкой «Пожар», чтобы сжечь весь лишний мусор. Попробуйте сами! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Отменить";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Закрыть вкладки и удалить данные";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Посещайте любимые сайты в мгновение ока! \n\nЗайдите на сайт, который вам нравится. Затем нажмите значок «⋯» и выберите *Добавить в избранное*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "DuckDuckGo задает новый стандарт доверия в сети.\n\nНаш браузер оснащен всеми функциями защиты личных данных в интернете, включая блокировку трекеров, надежное шифрование и конфиденциальный поиск DuckDuckGo.\n\nИнтернет — не место для постоянной слежки, а скрыться от посторонних глаз должно быть не сложнее, чем закрыть жалюзи на окнах.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Другие поисковые системы отслеживают ваши запросы даже в приватном режиме. Мы же просто не шпионим, и точка!";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Найдите Safari и откройте раздел «Поисковая машина».";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Запустите приложение «Настройки».";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Выберите DuckDuckGo.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Отправить жалобу";

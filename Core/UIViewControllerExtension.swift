@@ -78,12 +78,12 @@ extension UIViewController {
 extension Core.Link: UIActivityItemSource {
 
     public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        return AppUrls().removeATBAndSource(fromUrl: url)
+        return AppUrls().removeInternalSearchParameters(fromUrl: url)
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        return AppUrls().removeATBAndSource(fromUrl: url)
+        return AppUrls().removeInternalSearchParameters(fromUrl: url)
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,

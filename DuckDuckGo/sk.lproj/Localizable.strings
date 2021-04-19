@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Vo vašom prehliadači sa časom môžu zhromažďovať osobné údaje. Fuj. Použitím tlačidla na vymazanie ich môžete všetky odstrániť. Vyskúšajte to 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Vymazať všetky karty a údaje";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "A je to – vaše údaje sú chránené!\n\nTip pre vás: Zabezpečte stránku a nebudete sa musieť zakaždým znova prihlasovať.\n\nChcete vidieť, ako to funguje? Navštívte jednu zo svojich obľúbených stránok a prihláste sa.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Rozumiem";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Vo vašom prehliadači sa môžu zhromažďovať osobné údaje. Fuj. Pomocou tlačidla na vymazanie ich môžete všetky odstrániť. Vyskúšajte to! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Zrušiť";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Zatvoriť karty a vymazať údaje";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Navštívte svoje obľúbené stránky bleskurýchlo!\n\nPrejdite na stránku, ktorá sa vám páči. Potom kliknite na ikonu „⋯“ a vyberte možnosť *Pridať k obľúbeným*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "V službe DuckDuckGo zavádzame nový štandard dôvery online.\n\nSúkromný prehliadač DuckDuckGo poskytuje všetky základné informácie o ochrane súkromia, ktoré potrebujete, aby ste sa ochránili pri vyhľadávaní a prehliadaní webu, vrátane blokovania sledovacích zariadení, inteligentnejšieho šifrovania a súkromného vyhľadávania v prehliadači DuckDuckGo.\n\nPri používaní internetu by sme predsa nemali mať zlý pocit a dopriať si zaslúžené online súkromie by nemalo byť o nič ťažšie ako obyčajné zatiahnutie rolety.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Ostatné vyhľadávače zaznamenávajú vaše výsledky vyhľadávania aj v režime súkromného prehliadania. Nesledujeme vás. Bodka.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Prejdite do *Safari* a potom na *Vyhľadávať pomocou*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Otvorte aplikáciu *Nastavenia*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Vyberte *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odoslať správu";

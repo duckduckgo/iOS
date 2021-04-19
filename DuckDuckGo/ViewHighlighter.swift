@@ -27,6 +27,7 @@ class ViewHighlighter {
     }
 
     static var addedViews = [WeaklyHeldView]()
+    static var highlightedViews = [WeaklyHeldView]()
 
     static func showIn(_ window: UIWindow, focussedOnView view: UIView) {
         guard let center = view.superview?.convert(view.center, to: nil) else { return }
@@ -43,11 +44,23 @@ class ViewHighlighter {
         highlightView.play()
 
         addedViews.append(WeaklyHeldView(view: highlightView))
+        highlightedViews.append(WeaklyHeldView(view: view))
     }
 
     static func hideAll() {
         addedViews.forEach { $0.view?.removeFromSuperview() }
         addedViews = []
+        highlightedViews = []
+    }
+    
+    static func updatePositions() {
+        for (index, highlight) in addedViews.enumerated() {
+            if let highlightedView = highlightedViews[index].view,
+               let view = highlight.view,
+               let center = highlightedView.superview?.convert(highlightedView.center, to: nil) {
+                view.center = center
+            }
+        }
     }
 
 }

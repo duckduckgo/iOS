@@ -126,14 +126,17 @@ public enum PixelName: String {
     case daxDialogsWithTrackers = "m_dx_wt"
     case daxDialogsSiteIsMajor = "m_dx_sm"
     case daxDialogsSiteOwnedByMajor = "m_dx_so"
-    case daxDialogsFireEducation = "m_dx_fe"
     case daxDialogsHidden = "m_dx_h"
-    case daxDialogsFireEducationHidden = "m_dx_fe_h"
-    case daxDialogsFireEducationHiddenCanceled = "m_dx_fe_hc"
-    case daxDialogsFireEducationCTA = "m_dx_fe_c"
-    case daxDialogsFireEducationFireButton = "m_dx_fe_f"
-    case daxDialogsHiddenBeforeFireEducation = "m_dx_h_bfe"
-
+    case daxDialogsFireEducationShown = "m_dx_fe_s"
+    case daxDialogsFireEducationConfirmed = "m_dx_fe_co"
+    case daxDialogsFireEducationCancelled = "m_dx_fe_ca"
+    case daxDialogsFireEducationCancelledOutsideOfButton = "m_dx_fe_ca_o"
+    case fireEducationPulseShown = "m_fe_p_s"
+    case fireEducationPulseCancelledBecauseTabOpened = "m_fe_p_c_ta"
+    case fireEducationPulseCancelledBecauseTimeout = "m_fe_p_c_to"
+    case fireEducationFireButtonPressedWhilstPulseShowing = "m_fe_p_b"
+    case fireEducationFireButtonOnTabSwitcherScreenPressedWhilstPulseShowing = "m_fe_p_ts_b"
+    
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"
     case widgetAddFavoriteLaunch = "m_w_af"
@@ -180,6 +183,8 @@ public enum PixelName: String {
     case blankOverlayNotDismissed = "m_d_ovs"
 
     case cookieDeletionTimedOut = "m_d_csto"
+
+    case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
 }
 // swiftlint:enable identifier_name
 
@@ -213,6 +218,8 @@ public struct PixelParameters {
 
     static let removeCookiesTimedOut = "rc"
     static let clearWebDataTimedOut = "cd"
+
+    public static let tabPreviewCountDelta = "cd"
 }
 
 public struct PixelValues {

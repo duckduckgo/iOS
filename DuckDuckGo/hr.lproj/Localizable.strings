@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Vremenom se u pregledniku mogu nakupljati osobni podaci. Fuj. Upotrijebite gumb Vatre da sve to očistite. Pokušajte 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Obriši sve kartice i podatke";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "To je to – vaših podataka nema više! \n\nEvo savjeta: označite da je mrežno mjesto sigurno i nećete se morati svaki put ponovno prijavljivati. \n\nŽelite li vidjeti kako to funkcionira? Posjetite jedno od svojih omiljenih mrežnih mjesta i prijavite se.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Shvatio/la sam";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Osobni podaci mogu se nakupljati u tvojem pregledniku. Fuj. Koristite gumb Vatre da bi ih sve spalio/la. Pokušaj sada! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Otkaži";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Zatvori kartice i obriši podatke";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Brzo posjeti svoja omiljena web-mjesta!\n\nPosjeti web-mjesto koje voliš. Zatim dodirni ikonu \"⋯\" i odaberite *Dodaj u omiljene*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "U DuckDuckGou postavljamo novi standard povjerenja na internetu.\n\nDuckDuckGo anonimni je preglednik koji pruža sve što ti je potrebno da se zaštitiš dok pretražuješ i pregledavaš internet, uključujući blokiranje alata za praćenje, pametnije šifriranje i privatno pretraživanje uz pomoć DuckDuckGoa.\n\nUostalom, internet ne bi trebao biti neugodno mjesto, a zaštita privatnosti na internetu koju zaslužuješ trebala bi biti jednostavna poput spuštanja roleta.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Ostali pretraživači prate tvoja pretraživanja čak i u privatnom načinu pretraživanja. Mi te ne pratimo. Nikada.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Uđi u *Safari*, zatim *Pretraživač*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Otvori aplikaciju *Postavke*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Odaberi *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";

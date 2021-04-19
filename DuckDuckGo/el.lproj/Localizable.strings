@@ -172,15 +172,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Φιου!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Με τον καιρό, τα προσωπικά δεδομένα μπορούν να αυξηθούν σταδιακά στο πρόγραμμα περιήγησής σας. Απαίσιο. Χρησιμοποιήστε το κουμπί φωτιάς για να τα εκκαθαρίσετε όλα. Δοκιμάστε το 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Εκκαθάριση όλων των καρτελών και δεδομένων";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Αυτό ήταν — τα δεδομένα σας είναι παρελθόν!\n\nΑκολουθεί συμβουλή: Καταστήστε έναν ιστότοπο ασφαλή και δεν θα χρειάζεται να συνδέεστε ξανά και ξανά κάθε φορά. \n\nΘέλετε να δείτε πώς λειτουργεί; Επισκεφθείτε έναν από τους αγαπημένους σας ιστότοπους και συνδεθείτε.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -210,6 +201,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Το κατάλαβα";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Τα προσωπικά δεδομένα μπορούν να αυξηθούν σταδιακά στο πρόγραμμα περιήγησής σας. Απαίσιο. Χρησιμοποιήστε το κουμπί φωτιάς για να τα κάψετε όλα. Δοκιμάστε το τώρα! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Ακύρωση";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Κλείσιμο καρτελών και εκκαθάριση δεδομένων";
 
 /* Encourage user to add favorite site using the browsing menu. */
 "dax.onboarding.home.add.favorite" = "Επισκεφθείτε τους αγαπημένους σας ιστότοπους στη στιγμή! \n\nΜεταβείτε σε έναν ιστότοπο που αγαπάτε. Έπειτα, πατήστε το εικονίδιο \"⋯\" και επιλέξτε *Προσθήκη στα αγαπημένα*.";
@@ -804,18 +804,6 @@
 
 /* No comment provided by engineer. */
 "settings.about.text" = "Στην DuckDuckGo, θέτουμε τα νέα πρότυπα σε ό,τι αφορά την αξιοπιστία του διαδικτύου.\n\nΤο πρόγραμμα περιήγησης Προστασίας προσωπικών δεδομένων DuckDuckGo παρέχει όλα όσα χρειάζεστε για να προστατεύετε τον εαυτό σας όταν πραγματοποιείτε αναζήτηση και περιήγηση στο διαδίκτυο, συμπεριλαμβανομένου του αποκλεισμού παρακολούθησης, πιο έξυπνης κρυπτογράφησης και ιδιωτικής αναζήτησης DuckDuckGo.\n\nΆλλωστε, στο διαδίκτυο δεν θα πρέπει να αισθάνεστε άβολα, ενώ το να απολαμβάνετε την ιδιωτικότητα που σας αξίζει στο διαδίκτυο θα πρέπει να είναι τόσο απλό όσο το κλείσιμο μιας πόρτας.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.info" = "Άλλες μηχανές αναζήτησης παρακολουθούν τις αναζητήσεις σας ακόμα και όταν είστε σε Λειτουργία ιδιωτικής περιήγησης. Δεν σας παρακολουθούμε. Τελεία.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.navigate" = "Περιηγηθείτε στο *Safari* κι έπειτα στη *Μηχανή αναζήτησης*.";
-
-/* Asterix is an indicator of a bold text. Settings is a native iOS app. */
-"settings.tutorial.open" = "Ανοίξτε τις *Ρυθμίσεις*.";
-
-/* No comment provided by engineer. */
-"settings.tutorial.select" = "Επιλέξτε *DuckDuckGo*.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Υποβολή αναφοράς";

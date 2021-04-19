@@ -1,1 +1,3 @@
 See "What's New in This Version"
+
+This app does not include Siri Shortcuts.

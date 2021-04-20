@@ -29,10 +29,7 @@ class TabViewController: UIViewController {
 
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
-        
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
-        
-        static let secGPCHeader = "Sec-GPC"
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -1011,73 +1008,49 @@ extension TabViewController: WKNavigationDelegate {
         updateSiteRating()
         checkLoginDetectionAfterNavigation()
     }
-    
-    private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
-        /*
-         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com),
-         while the DOM signal is available to all websites.
-         This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
-         */
-        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
-        
-        var request = incomingRequest
-        // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
-            if let headers = request.allHTTPHeaderFields,
-               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
-                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-                return request
-            }
-        } else {
-            // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
-                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-                return request
-            }
-        }
-        return nil
-    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        if navigationAction.isTargetingMainFrame(),
-           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
-           navigationAction.navigationType != .backForward,
-           let request = requestForDoNotSell(basedOn: navigationAction.request) {
-            
-            decisionHandler(.cancel)
-            load(urlRequest: request)
-            return
-        }
 
-        if navigationAction.navigationType == .linkActivated,
-           let url = navigationAction.request.url,
-           let modifierFlags = delegate?.tabWillRequestNewTab(self) {
+        let bucket = PolicyBucket()
+        bucket.add(GPCPolicy(webView: self.webView))
+        bucket.checkPoliciesFor(navigationAction: navigationAction) { decision, cancelAction in
 
-            if modifierFlags.contains(.command) {
-                if modifierFlags.contains(.shift) {
-                    decisionHandler(.cancel)
-                    delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
-                    return
-                } else {
-                    decisionHandler(.cancel)
-                    delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
-                    return
+            if decision == .cancel {
+                decisionHandler(decision)
+                cancelAction?()
+                return
+            }
+
+            if navigationAction.navigationType == .linkActivated,
+               let url = navigationAction.request.url,
+               let modifierFlags = delegate?.tabWillRequestNewTab(self) {
+
+                if modifierFlags.contains(.command) {
+                    if modifierFlags.contains(.shift) {
+                        decisionHandler(.cancel)
+                        delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+                        return
+                    } else {
+                        decisionHandler(.cancel)
+                        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+                        return
+                    }
                 }
             }
-        }
-        
-        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision != .cancel {
-                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
-                    StatisticsLoader.shared.refreshSearchRetentionAtb()
+
+            decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+                if let url = navigationAction.request.url, decision != .cancel {
+                    if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
+                        StatisticsLoader.shared.refreshSearchRetentionAtb()
+                    }
+
+                    self?.findInPage?.done()
                 }
-                
-                self?.findInPage?.done()
+                decisionHandler(decision)
             }
-            decisionHandler(decision)
+
         }
     }
     

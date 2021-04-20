@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Редактировать";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Отменить";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавить";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Добавить в закладки";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Закладки";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Отменить";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Копировать";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "Адрес скопирован";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Отключить защиту конфиденциальности";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Редактировать закладку";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Включить защиту конфиденциальности";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Открыть в фоновом режиме";
 
 /* Create New Tab action */
-"action.title.newTab" = "Новая вкладка";
+"action.title.newTabAction" = "Новая вкладка";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Открыть в новой вкладке";
@@ -37,8 +52,14 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Вставить и перейти";
 
+/* Print action */
+"action.title.print" = "Распечатать";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Обновить";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Удалить из избранного";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Сообщить о неработающем сайте";
@@ -47,22 +68,22 @@
 "action.title.request.desktop.site" = "Полная версия сайта";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Мобильная версия сайта";
+"action.title.request.mobile.site" = "Мобильная версия";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Сохранить";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Добавить в закладки";
+"action.title.save.bookmark" = "Сохранить в закладках";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Добавить в избранное";
+"action.title.save.favorite" = "Добавить страницу в избранное";
 
 /* Settings action */
 "action.title.settings" = "Настройки";
 
 /* Share action */
-"action.title.share" = "Поделиться…";
+"action.title.share" = "Поделиться";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Существующие закладки дублироваться не будут.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Редактировать закладку";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Сохранить закладку";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Все вкладки добавлены в закладки";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Закладки";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Не загружаются комментарии";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добро пожаловать в\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Меню браузера";
+
 /* Edit button */
 "navigation.title.edit" = "Редактировать";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Обезопасить сайт";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ теперь в безопасности";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Не сейчас";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Снять огнеупорность";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Сделать огнеупорным";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Огнеупорность снята";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Удалить все";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Предлагать обезопасить сайты";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ теперь в безопасности. Огнеупорность можно изменить в настройках.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Светлая";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ включен в незащищенные сайты";
+"toast.protection.disabled" = "Защита конфиденциальности на %@ отключена";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ удален из незащищенных сайтов";
+"toast.protection.enabled" = "Защита конфиденциальности на %@ включена";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Произошла неизвестная ошибка.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Страница удалена из избранного";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Закладка добавлена";

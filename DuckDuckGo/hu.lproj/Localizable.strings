@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Szerkesztés";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Visszavonás";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Könyvjelző";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Könyvjelzők";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Mégsem";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Másolás";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL lemásolva";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Adatvédelem letiltása";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Könyvjelző szerkesztése";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Adatvédelem engedélyezése";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Megnyitás a háttérben";
 
 /* Create New Tab action */
-"action.title.newTab" = "Új lap";
+"action.title.newTabAction" = "Új";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Megnyitás új lapon";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Beillesztés";
 
+/* Print action */
+"action.title.print" = "Nyomtatás";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Frissítés";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Kedvenc eltávolítása";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Hibás weboldal jelentése";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Weboldal asztali nézetének kérése";
+"action.title.request.desktop.site" = "Weboldal asztali nézete";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Weboldal mobil nézetének kérése";
+"action.title.request.mobile.site" = "Weboldal mobil nézete";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Mentés";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Hozzáadás a könyvjelzőkhöz";
+"action.title.save.bookmark" = "Oldal felvétele a könyvjelzők közé";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Hozzáadás a kedvencekhez";
+"action.title.save.favorite" = "Oldal felvétele a kedvencek közé";
 
 /* Settings action */
 "action.title.settings" = "Beállítások";
 
 /* Share action */
-"action.title.share" = "Megosztás…";
+"action.title.share" = "Megosztás";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Könyvjelző szerkesztése";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Könyvjelző mentése";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Összes lap könyvjelzőzve";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Könyvjelzők";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "A megjegyzések nem töltődtek be";
@@ -171,6 +192,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfuj!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Idővel személyes adatok halmozódhatnak fel a böngésződben. Fúj. A Tűz gombbal mindet törölheted. Próbáld ki 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Összes lap és adat törlése";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Ennyi — az adataid megsütve! \n\nÍme egy tipp: tedd tűzállóvá a webhelyeket, hogy ne kelljen minden alkalommal újra bejelentkezned.\n\nKíváncsi vagy, hogyan működik? Látogass el az egyik kedvenc webhelyedre, és jelentkezz be.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -547,6 +577,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Tallózás a menüben";
+
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";
 
@@ -598,8 +631,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Tűzálló weboldal";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "A(z) %@ most már tűzálló!";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Most nem";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Tűzállóság eltávolítása";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Weboldal tűzállóvá tétele";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Tűzállóság eltávolítva";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Összes eltávolítása";
@@ -609,9 +654,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Kérdezzen rá a weboldalak tűzállóvá tételére";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "A(z) %@ most már tűzálló! A kezeléshez lépj a Beállításokra.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
@@ -857,13 +899,16 @@
 "theme.name.light" = "Világos";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ hozzáadva a védelem nélküli weboldalakhoz";
+"toast.protection.disabled" = "Adatvédelem letiltva a következőhöz: %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ eltávolítva a védelem nélküli weboldalak közül";
+"toast.protection.enabled" = "Adatvédelem engedélyezve a következőhöz: %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ismeretlen hiba történt.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Kedvenc eltávolítva";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Könyvjelző hozzáadva";

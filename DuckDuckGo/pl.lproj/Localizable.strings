@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Edytuj";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Cofnij";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Zakładka";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Zakładki";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Anuluj";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopiuj";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "Skopiowano adres URL";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Wyłącz ochronę prywatności";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Edytuj zakładkę";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Włącz ochronę prywatności";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Otwórz w tle";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nowa karta";
+"action.title.newTabAction" = "Nowa";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Otwórz w nowej karcie";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Wklej i przejdź dalej";
 
+/* Print action */
+"action.title.print" = "Drukuj";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Odśwież";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Usuń ulubione";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Zgłoś uszkodzoną witrynę";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Poproś o witrynę w wersji komputerowej";
+"action.title.request.desktop.site" = "Witryna w wersji komputerowej";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Poproś o witrynę na urządzenia mobilne";
+"action.title.request.mobile.site" = "Witryna mobilna";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Zapisz";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Dodaj do zakładek";
+"action.title.save.bookmark" = "Dodaj tę stronę do zakładek";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Dodaj do ulubionych";
+"action.title.save.favorite" = "Dodaj tę stronę do ulubionych";
 
 /* Settings action */
 "action.title.settings" = "Ustawienia";
 
 /* Share action */
-"action.title.share" = "Udostępnij...";
+"action.title.share" = "Udostępnij";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Istniejące zakładki nie zostaną zduplikowane.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.domena.pl";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Edytuj zakładkę";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Zapisz zakładkę";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Wszystkie karty dodane do zakładek";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Zakładki";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Nie wczytano komentarzy";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Witamy\nw DuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Dostępne opcje";
+
 /* Edit button */
 "navigation.title.edit" = "Edytuj";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Bezpieczna strona internetowa";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ jest teraz zabezpieczona";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Nie teraz";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Usuń zabezpieczenie";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Zabezpiecz tę witrynę";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Zabezpieczenie zostało usunięte";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Usuń wszystko";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Proś o zabezpieczanie witryn internetowych";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ jest teraz zabezpieczona! Otwórz Ustawienia, aby zarządzać opcjami.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorytm";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Jasny";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "Dodano %@ do witryn niezabezpieczonych";
+"toast.protection.disabled" = "Ochrona prywatności wyłączona dla %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "Usunięto %@ z witryn niezabezpieczonych";
+"toast.protection.enabled" = "Ochrona prywatności włączona dla %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Wystąpił nieznany błąd.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Usunięto ulubione";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Dodano zakładkę";

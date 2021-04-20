@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Edit";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Undo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Bookmark";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Bookmarks";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Cancel";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Copy";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL copied";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Disable Privacy Protection";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Edit Bookmark";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Enable Privacy Protection";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Open in Background";
 
 /* Create New Tab action */
-"action.title.newTab" = "New Tab";
+"action.title.newTabAction" = "New";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Open in New Tab";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
 
+/* Print action */
+"action.title.print" = "Print";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Refresh";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Remove Favorite";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Report Broken Site";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Request Desktop Site";
+"action.title.request.desktop.site" = "Desktop Site";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Request Mobile Site";
+"action.title.request.mobile.site" = "Mobile Site";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Save";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Add to Bookmarks";
+"action.title.save.bookmark" = "Bookmark This Page";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Add to Favorites";
+"action.title.save.favorite" = "Favorite This Page";
 
 /* Settings action */
 "action.title.settings" = "Settings";
 
 /* Share action */
-"action.title.share" = "Share...";
+"action.title.share" = "Share";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Edit Bookmark";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Save Bookmark";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Bookmarks";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Comments didn’t load";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Browsing Menu";
+
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Fireproof Website";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ is now Fireproof";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Not Now";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Remove Fireproofing";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Fireproof This Site";
+
+/*  Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Fireproofing removed";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Remove All";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Ask to Fireproof Sites";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ is now Fireproof! Visit Settings to manage.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithm";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Light";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ added to Unprotected Sites";
+"toast.protection.disabled" = "Privacy Protection disabled for %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ removed from Unprotected Sites";
+"toast.protection.enabled" = "Privacy Protection enabled for %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "An unknown error occurred.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favorite removed";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Bookmark added";

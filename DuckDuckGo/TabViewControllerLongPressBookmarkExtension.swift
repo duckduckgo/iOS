@@ -31,16 +31,16 @@ extension TabViewController {
 
         let bookmarksManager = BookmarksManager()
         guard !bookmarksManager.contains(url: link.url) else {
-            view.showBottomToast(UserText.webBookmarkAlreadySaved)
+            ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
             return
         }
 
         if favorite {
             bookmarksManager.save(favorite: link)
-            self.view.showBottomToast(UserText.webSaveFavoriteDone)
+            ActionMessageView.present(message: UserText.webSaveFavoriteDone)
         } else {
             bookmarksManager.save(bookmark: link)
-            self.view.showBottomToast(UserText.webSaveBookmarkDone)
+            ActionMessageView.present(message: UserText.webSaveBookmarkDone)
         }
 
     }

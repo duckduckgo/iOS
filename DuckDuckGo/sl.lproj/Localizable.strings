@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Uredi";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Prekliči spremembe";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Zaznamek";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Zaznamki";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Prekliči";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopiraj";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL naslov kopiran";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Onemogoči zaščito zasebnosti";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Uredi zaznamek";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Omogoči zaščito zasebnosti";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Odpri v ozadju";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nov zavihek";
+"action.title.newTabAction" = "Nov";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Odpri v novem zavihku";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Prilepi in nadaljuj";
 
+/* Print action */
+"action.title.print" = "Natisni";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osveži";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Odstrani priljubljene";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Prijavi nedelujočo stran";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Zahteva za namizno stran";
+"action.title.request.desktop.site" = "Namizna stran";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Zahteva za mobilno stran";
+"action.title.request.mobile.site" = "Mobilna stran";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Shrani";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Dodaj med zaznamke";
+"action.title.save.bookmark" = "Označi to stran";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Dodaj med priljubljene";
+"action.title.save.favorite" = "Označi to stran kot priljubljeno";
 
 /* Settings action */
 "action.title.settings" = "Nastavitve";
 
 /* Share action */
-"action.title.share" = "Deli …";
+"action.title.share" = "Deli";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Obstoječi zaznamki ne bodo podvojeni.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Uredi zaznamek";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Shrani zaznamek";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Vsi zavihki dodani med zaznamke";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Zaznamki";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentarji se niso naložili";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Brskanje po meniju";
+
 /* Edit button */
 "navigation.title.edit" = "Uredi";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Spletna stran s požarno zaščito";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ ima sedaj požarno zaščito";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ne zdaj";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Odstrani požarno zaščito";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Ta stran je požarno zaščitena";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Požarna zaščita je odstranjena";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Odstrani vse";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Poziv ob straneh s požarno zaščito";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ ima sedaj požarno zaščito! Za upravljanje odprite Nastavitve.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritem";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Luč";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ dodano na nezaščitene strani";
+"toast.protection.disabled" = "Zaščita zasebnosti je onemogočena za %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ odstranjeno z nezaščitenih spletnih strani";
+"toast.protection.enabled" = "Zaščita zasebnosti je omogočena za %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Prišlo je do neznane napake.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Priljubljeni odstranjeni";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Zaznamek je dodan";

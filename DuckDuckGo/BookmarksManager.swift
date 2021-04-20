@@ -162,7 +162,7 @@ class BookmarksManager {
         Favicons.shared.loadFavicon(forDomain: new.url.host, intoCache: .bookmarks)
     }
     
-    private func indexOfBookmark(url: URL) -> Int? {
+    func indexOfBookmark(url: URL) -> Int? {
         let bookmarks = dataStore.bookmarks
         return indexOf(url, in: bookmarks)
     }
@@ -179,7 +179,7 @@ class BookmarksManager {
         return indexOfBookmark(url: url) != nil
     }
 
-    private func indexOfFavorite(url: URL) -> Int? {
+    func indexOfFavorite(url: URL) -> Int? {
         let favorites = dataStore.favorites
         return indexOf(url, in: favorites)
     }

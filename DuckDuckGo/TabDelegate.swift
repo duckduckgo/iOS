@@ -42,6 +42,10 @@ protocol TabDelegate: class {
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?)
 
     func tabDidRequestReportBrokenSite(tab: TabViewController)
+    
+    func tabDidRequestBookmarks(tab: TabViewController)
+    
+    func tabDidRequestEditBookmark(tab: TabViewController)
 
     func tabDidRequestSettings(tab: TabViewController)
     
@@ -54,6 +58,8 @@ protocol TabDelegate: class {
     func tabDidRequestFireButtonPulse(tab: TabViewController)
         
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
+    
+    func tabDidRequestShowingMenuHighlighter(tab: TabViewController)
     
     func tab(_ tab: TabViewController, didRequestPresentingAlert alert: UIAlertController)
 

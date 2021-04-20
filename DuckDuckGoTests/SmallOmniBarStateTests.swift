@@ -290,7 +290,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
-        XCTAssertTrue(testee.showMenu)
+        XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
@@ -299,7 +299,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.showShareButton)
+        XCTAssertTrue(testee.showShareButton)
     }
 
     func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {

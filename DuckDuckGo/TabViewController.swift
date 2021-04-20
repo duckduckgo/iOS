@@ -200,7 +200,7 @@ class TabViewController: UIViewController {
         super.viewDidAppear(animated)
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
-        showMenuHighlighterIfNeeded()
+        delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -210,20 +210,6 @@ class TabViewController: UIViewController {
         activities.append(FindInPageActivity(controller: self))
 
         return activities
-    }
-
-    func showMenuHighlighterIfNeeded() {
-        guard DaxDialogs.shared.isAddFavoriteFlow,
-              !isError else { return }
-
-        guard let menuButton = chromeDelegate?.omniBar.menuButton,
-              let window = view.window else { return }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            ViewHighlighter.hideAll()
-            ViewHighlighter.showIn(window, focussedOnView: menuButton)
-        }
-
     }
 
     func initUserScripts() {
@@ -407,8 +393,15 @@ class TabViewController: UIViewController {
         updateSiteRating()
     }
     
-    func fireproofWebsite(domain: String) {
-        preserveLoginsWorker?.handleUserFireproofing(forDomain: domain)        
+    func enableFireproofingForDomain(_ domain: String) {
+        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
+            Pixel.fire(pixel: .browsingMenuFireproof)
+            self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
+        }    
+    }
+    
+    func disableFireproofingForDomain(_ domain: String) {
+        preserveLoginsWorker?.handleUserDisablingFireproofing(forDomain: domain)
     }
     
     private func checkForReloadOnError() {
@@ -669,11 +662,8 @@ class TabViewController: UIViewController {
         privacyController?.updateSiteRating(siteRating)
     }
     
-    func launchBrowsingMenu() {
+    func didLaunchBrowsingMenu() {
         Pixel.fire(pixel: .browsingMenuOpened)
-        guard let button = chromeDelegate?.omniBar.menuButton else { return }
-        let alert = buildBrowsingMenu()
-        present(controller: alert, fromView: button)
         DaxDialogs.shared.resumeRegularFlow()
     }
     
@@ -687,7 +677,7 @@ class TabViewController: UIViewController {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
-                self.view.window?.showBottomToast(UserText.failedToOpenExternally)
+                ActionMessageView.present(message: UserText.failedToOpenExternally)
             }
 
             // just showing a blank tab at this point, so close it
@@ -767,6 +757,11 @@ class TabViewController: UIViewController {
         printController.printInfo = printInfo
         printController.printFormatter = printFormatter
         printController.present(animated: true, completionHandler: nil)
+    }
+    
+    func onCopyAction(forUrl url: URL) {
+        let copyText = url.absoluteString
+        UIPasteboard.general.string = copyText
     }
     
     deinit {
@@ -915,7 +910,7 @@ extension TabViewController: WKNavigationDelegate {
         guard !isLinkPreview else { return }
 
         if DaxDialogs.shared.isAddFavoriteFlow {
-            showMenuHighlighterIfNeeded()
+            delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
             return
         }
 

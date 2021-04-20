@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Upraviť";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Vrátenie späť";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Pridať";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Záložka";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Záložky";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Zrušiť";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopírovať";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "Adresa URL bola skopírovaná";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Vypnúť ochranu súkromia";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Upraviť záložku";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Povoliť ochranu súkromia";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Otvoriť na pozadí";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nová karta";
+"action.title.newTabAction" = "Nové";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Otvoriť v novej karte";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Prilepiť a odísť";
 
+/* Print action */
+"action.title.print" = "Vytlačiť";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Obnoviť";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Odstrániť obľúbenú položku";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Nahlásiť nefunkčnú stránku";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Požiadavka na desktopový režim";
+"action.title.request.desktop.site" = "Stránka pre stolové počítače";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Požiadavka na mobilný režim";
+"action.title.request.mobile.site" = "Mobilný režim";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Uložiť";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Pridať medzi záložky";
+"action.title.save.bookmark" = "Pridať túto stránku medzi záložky";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Pridať k obľúbeným";
+"action.title.save.favorite" = "Pridať túto stránku medzi obľúbené";
 
 /* Settings action */
 "action.title.settings" = "Nastavenia";
 
 /* Share action */
-"action.title.share" = "Zdieľať...";
+"action.title.share" = "Zdieľať";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existujúce záložky sa nebudú duplikovať.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Upraviť záložku";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Uložiť medzi záložky";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Všetky karty sú uložené medzi záložky";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Záložky";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentáre sa nepodarilo načítať";
@@ -171,6 +192,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Vo vašom prehliadači sa časom môžu zhromažďovať osobné údaje. Fuj. Použitím tlačidla na vymazanie ich môžete všetky odstrániť. Vyskúšajte to 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Vymazať všetky karty a údaje";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "A je to – vaše údaje sú chránené!\n\nTip pre vás: Zabezpečte lokalitu a nebudete sa musieť zakaždým znova prihlasovať.\n\nChcete vidieť, ako to funguje? Navštívte jednu zo svojich obľúbených lokalít a prihláste sa.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -547,6 +577,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Ponuka prehliadania";
+
 /* Edit button */
 "navigation.title.edit" = "Upraviť";
 
@@ -598,8 +631,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Zabezpečiť webovú stránku funkciou ohňovzdornosti";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "Lokalita %@ je teraz zabezpečená!";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Teraz nie";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Odstrániť zabezpečenie";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Zabezpečiť túto lokalitu";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Zabezpečenie bolo odstránené";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Odstrániť všetky";
@@ -609,9 +654,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Požiadať o zabezpečenie stránok";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "Stránka %@ je teraz zabezpečená! Spravovať to môžete v Nastaveniach.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
@@ -857,13 +899,16 @@
 "theme.name.light" = "Svetlá";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ pridané na nezabezpečených webových stránkach";
+"toast.protection.disabled" = "Ochrana súkromia na doméne %@ bola vypnutá";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ odstránené z nezabezpečených webových stránok";
+"toast.protection.enabled" = "Ochrana súkromia na doméne %@ bola zapnutá";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla sa neznáma chyba.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Obľúbená položka bola odstránená";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Záložka je pridaná";

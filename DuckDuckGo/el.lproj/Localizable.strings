@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Επεξεργασία";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Αναίρεση";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Προσθήκη";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Σελιδοδείκτης";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Σελιδοδείκτες";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Ακύρωση";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Αντιγραφή";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "Η διεύθυνση URL αντιγράφτηκε";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Απενεργοποίηση Προστασίας προσωπικών δεδομένων";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Επεξεργασία σελιδοδείκτη";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Ενεργοποίηση Προστασίας προσωπικών δεδομένων";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Άνοιγμα στο παρασκήνιο";
 
 /* Create New Tab action */
-"action.title.newTab" = "Νέα καρτέλα";
+"action.title.newTabAction" = "Νέο";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Άνοιγμα σε νέα καρτέλα";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Επικόλληση & μετάβαση";
 
+/* Print action */
+"action.title.print" = "Εκτύπωση";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Ανανέωση";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Αφαίρεση αγαπημένου";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Αναφορά ιστότοπου που δεν λειτουργεί";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Αίτηση ιστότοπου για υπολογιστή";
+"action.title.request.desktop.site" = "Ιστότοπος επιφάνειας εργασίας";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Αίτηση ιστότοπου για κινητό";
+"action.title.request.mobile.site" = "Ιστότοπος για κινητά";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Αποθήκευση";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Προσθήκη στους Σελιδοδείκτες";
+"action.title.save.bookmark" = "Προσθήκη σελιδοδείκτη σε αυτή τη σελίδα";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Προσθήκη στα Αγαπημένα";
+"action.title.save.favorite" = "Προσθήκη της σελίδας αυτής στα αγαπημένα";
 
 /* Settings action */
 "action.title.settings" = "Ρυθμίσεις";
 
 /* Share action */
-"action.title.share" = "Κοινοποίηση...";
+"action.title.share" = "Κοινή χρήση";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Επεξεργασία σελιδοδείκτη";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Αποθήκευση σελιδοδείκτη";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Προστέθηκαν σελιδοδείκτες σε όλες τις καρτέλες";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Σελιδοδείκτες";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Τα σχόλια δεν φορτώθηκαν";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Μενού περιήγησης";
+
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Ασφαλής ιστότοπος";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "Έχει γίνει πλέον διαγραφή δραστηριότητας για το %@";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Όχι τώρα";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Αφαίρεση διαγραφής δραστηριότητας";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Διαγράψτε τη δραστηριότητα γι' αυτόν τον ιστότοπο";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Η διαγραφή δραστηριότητας αφαιρέθηκε";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Αφαίρεση όλων";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Ζητήστε διαγραφή δραστηριότητας για ιστότοπους";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "Έχει γίνει πλέον διαγραφή δραστηριότητας για το %@! Επισκεφτείτε τις Ρυθμίσεις για να το διαχειριστείτε.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Αλγόριθμος";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Φωτεινό";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "Το %@ προστέθηκε στους μη προστατευόμενους ιστότοπους";
+"toast.protection.disabled" = "Η Προστασία προσωπικών δεδομένων απενεργοποιήθηκε για το %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "Το %@ αφαιρέθηκε από τους μη προστατευόμενους ιστότοπους";
+"toast.protection.enabled" = "Η Προστασία προσωπικών δεδομένων ενεργοποιήθηκε για το %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Προέκυψε άγνωστο σφάλμα.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Το Αγαπημένο αφαιρέθηκε";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Προστέθηκε σελιδοδείκτης";

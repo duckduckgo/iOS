@@ -31,15 +31,14 @@ struct NewTabPolicy: NavigationActionPolicy {
 
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
-           let modifierFlags = tab.delegate?.tabWillRequestNewTab(tab) {
+           let modifierFlags = tab.delegate?.tabWillRequestNewTab(tab),
+           modifierFlags.contains(.command) {
 
             completion(.cancel) {
-                if modifierFlags.contains(.command) {
-                    if modifierFlags.contains(.shift) {
-                        tab.delegate?.tab(tab, didRequestNewTabForUrl: url, openedByPage: false)
-                    } else {
-                        tab.delegate?.tab(tab, didRequestNewBackgroundTabForUrl: url)
-                    }
+                if modifierFlags.contains(.shift) {
+                    tab.delegate?.tab(tab, didRequestNewTabForUrl: url, openedByPage: false)
+                } else {
+                    tab.delegate?.tab(tab, didRequestNewBackgroundTabForUrl: url)
                 }
             }
         } else {

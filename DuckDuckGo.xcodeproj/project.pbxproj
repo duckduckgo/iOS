@@ -198,6 +198,7 @@
 		8582BAD1262F8D5400635C66 /* PolicyBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAD0262F8D5400635C66 /* PolicyBucket.swift */; };
 		8582BAE7262F8E7700635C66 /* GPCPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAE6262F8E7700635C66 /* GPCPolicy.swift */; };
 		8582BAF3262F9DB500635C66 /* NewTabPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */; };
+		8582BAFF262FA90C00635C66 /* BookmarkletPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */; };
 		858566E8252E4F56007501B8 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858566E7252E4F56007501B8 /* Debug.storyboard */; };
 		858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */; };
 		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
@@ -919,6 +920,7 @@
 		8582BAD0262F8D5400635C66 /* PolicyBucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyBucket.swift; sourceTree = "<group>"; };
 		8582BAE6262F8E7700635C66 /* GPCPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCPolicy.swift; sourceTree = "<group>"; };
 		8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPolicy.swift; sourceTree = "<group>"; };
+		8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkletPolicy.swift; sourceTree = "<group>"; };
 		858566E7252E4F56007501B8 /* Debug.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheDebugViewController.swift; sourceTree = "<group>"; };
 		85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTrayViewController.swift; sourceTree = "<group>"; };
@@ -2638,6 +2640,7 @@
 				8582BAD0262F8D5400635C66 /* PolicyBucket.swift */,
 				8582BAE6262F8E7700635C66 /* GPCPolicy.swift */,
 				8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */,
+				8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */,
 			);
 			name = Policies;
 			sourceTree = "<group>";
@@ -4704,6 +4707,7 @@
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
+				8582BAFF262FA90C00635C66 /* BookmarkletPolicy.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,

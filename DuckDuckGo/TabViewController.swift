@@ -1013,9 +1013,22 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
+        let tld = storageCache.tld
+        if navigationAction.isTargetingMainFrame()
+            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
+            lastUpgradedURL = nil
+        }
+
         let bucket = PolicyBucket()
         bucket.add(GPCPolicy(webView: self.webView))
         bucket.add(NewTabPolicy(tab: self))
+        bucket.add(BookmarkletPolicy(webView: self.webView))
+        // open external policy
+        // open in extern app policy
+        // reissue search policy
+        // reissue static ddg navigation policy
+        // target blank request policy
+        // https upgrade policy
         bucket.checkPoliciesFor(navigationAction: navigationAction) { decision, cancelAction in
 
             if decision == .cancel {
@@ -1024,30 +1037,26 @@ extension TabViewController: WKNavigationDelegate {
                 return
             }
 
-            decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-                if let url = navigationAction.request.url, decision != .cancel {
-                    if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
-                        StatisticsLoader.shared.refreshSearchRetentionAtb()
-                    }
+            let allowPolicy = determineAllowPolicy()
 
-                    self?.findInPage?.done()
-                }
-                decisionHandler(decision)
+            // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
+            if #available(iOS 12, *) {
+                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
             }
+
+            if let url = navigationAction.request.url, self.appUrls.isDuckDuckGoSearch(url: url) {
+                StatisticsLoader.shared.refreshSearchRetentionAtb()
+                self.findInPage?.done()
+            }
+
+            decisionHandler(allowPolicy)
 
         }
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
-        
-        let tld = storageCache.tld
-        
-        if navigationAction.isTargetingMainFrame()
-            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
-            lastUpgradedURL = nil
-        }
-        
+
         guard navigationAction.request.mainDocumentURL != nil else {
             completion(allowPolicy)
             return
@@ -1058,15 +1067,6 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        if url.isBookmarklet() {
-            completion(.cancel)
-
-            if let js = url.toDecodedBookmarklet() {
-                webView.evaluateJavaScript(js)
-            }
-            return
-        }
-        
         let schemeType = SchemeHandler.schemeType(for: url)
         
         switch schemeType {
@@ -1113,13 +1113,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
-        if #available(iOS 12, *) {
-            if allowPolicy != WKNavigationActionPolicy.cancel {
-                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
-            }
-        }
-        
+        // TODO find out why we prevent https upgrades on unprotected sites        
         if !contentBlockerProtection.isProtected(domain: url.host) {
             completion(allowPolicy)
             return

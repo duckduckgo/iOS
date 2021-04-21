@@ -266,6 +266,10 @@ class MainViewController: UIViewController {
     }
     
     private func initMenuButton() {
+        lastToolbarButton.customView = menuButton
+        lastToolbarButton.isAccessibilityElement = true
+        lastToolbarButton.accessibilityTraits = .button
+        
         menuButton.delegate = self
     }
     
@@ -282,26 +286,14 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func attachBookmarksButton() {
-        guard lastToolbarButton.customView != gestureBookmarksButton else { return }
-        lastToolbarButton.customView?.removeFromSuperview()
-        lastToolbarButton.customView = gestureBookmarksButton
+    private func enableBookmarksButton() {
+        menuButton.setState(.bookmarksImage, animated: false)
         lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
-        lastToolbarButton.isAccessibilityElement = true
-        lastToolbarButton.accessibilityTraits = .button
     }
     
-    private func attachMenuButton() {
-        guard lastToolbarButton.customView != menuButton else { return }
-        lastToolbarButton.customView?.removeFromSuperview()
-        
-        // This fixes a layout bug where setting a menu button when views are changing would not render customView
-        toolbar.setNeedsLayout()
-        toolbar.layoutIfNeeded()
-        lastToolbarButton.customView = menuButton
+    private func enableMenuButton() {
+        menuButton.setState(.menuImage, animated: false)
         lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
-        lastToolbarButton.isAccessibilityElement = true
-        lastToolbarButton.accessibilityTraits = .button
     }
     
     @objc func quickSaveBookmark() {
@@ -662,9 +654,9 @@ class MainViewController: UIViewController {
     
     private func refreshMenuIcon() {
         if homeController != nil {
-            attachBookmarksButton()
+            enableBookmarksButton()
         } else {
-            attachMenuButton()
+            enableMenuButton()
         }
     }
 

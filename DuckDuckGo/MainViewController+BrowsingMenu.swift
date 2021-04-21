@@ -172,7 +172,14 @@ extension MainViewController {
     }
     
     func refreshMenuButtonState() {
-        let expectedState: MenuButton.State = browsingMenu == nil ? .menuImage : .closeImage
+        let expectedState: MenuButton.State
+        if homeController != nil {
+            expectedState = .bookmarksImage
+        } else if browsingMenu == nil {
+            expectedState = .menuImage
+        } else {
+            expectedState = .closeImage
+        }
         presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
         presentedMenuButton.setState(expectedState, animated: false)
     }

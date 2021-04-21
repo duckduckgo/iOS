@@ -35,6 +35,7 @@ class GPCPolicy: NavigationActionPolicy {
     }
 
     func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
+        assert(webView != nil)
         if navigationAction.isTargetingMainFrame(),
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,

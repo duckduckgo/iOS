@@ -197,6 +197,7 @@
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		8582BAD1262F8D5400635C66 /* PolicyBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAD0262F8D5400635C66 /* PolicyBucket.swift */; };
 		8582BAE7262F8E7700635C66 /* GPCPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAE6262F8E7700635C66 /* GPCPolicy.swift */; };
+		8582BAF3262F9DB500635C66 /* NewTabPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */; };
 		858566E8252E4F56007501B8 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858566E7252E4F56007501B8 /* Debug.storyboard */; };
 		858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */; };
 		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
@@ -917,6 +918,7 @@
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
 		8582BAD0262F8D5400635C66 /* PolicyBucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyBucket.swift; sourceTree = "<group>"; };
 		8582BAE6262F8E7700635C66 /* GPCPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCPolicy.swift; sourceTree = "<group>"; };
+		8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPolicy.swift; sourceTree = "<group>"; };
 		858566E7252E4F56007501B8 /* Debug.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheDebugViewController.swift; sourceTree = "<group>"; };
 		85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTrayViewController.swift; sourceTree = "<group>"; };
@@ -2635,6 +2637,7 @@
 			children = (
 				8582BAD0262F8D5400635C66 /* PolicyBucket.swift */,
 				8582BAE6262F8E7700635C66 /* GPCPolicy.swift */,
+				8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */,
 			);
 			name = Policies;
 			sourceTree = "<group>";
@@ -4719,6 +4722,7 @@
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
+				8582BAF3262F9DB500635C66 /* NewTabPolicy.swift in Sources */,
 				98999D5922FDA41500CBBE1B /* BasicAuthenticationAlert.swift in Sources */,
 				98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,

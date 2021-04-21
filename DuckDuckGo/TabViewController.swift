@@ -1015,29 +1015,13 @@ extension TabViewController: WKNavigationDelegate {
 
         let bucket = PolicyBucket()
         bucket.add(GPCPolicy(webView: self.webView))
+        bucket.add(NewTabPolicy(tab: self))
         bucket.checkPoliciesFor(navigationAction: navigationAction) { decision, cancelAction in
 
             if decision == .cancel {
                 decisionHandler(decision)
                 cancelAction?()
                 return
-            }
-
-            if navigationAction.navigationType == .linkActivated,
-               let url = navigationAction.request.url,
-               let modifierFlags = delegate?.tabWillRequestNewTab(self) {
-
-                if modifierFlags.contains(.command) {
-                    if modifierFlags.contains(.shift) {
-                        decisionHandler(.cancel)
-                        delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
-                        return
-                    } else {
-                        decisionHandler(.cancel)
-                        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
-                        return
-                    }
-                }
             }
 
             decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in

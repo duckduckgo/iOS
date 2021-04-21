@@ -199,6 +199,7 @@
 		8582BAE7262F8E7700635C66 /* GPCPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAE6262F8E7700635C66 /* GPCPolicy.swift */; };
 		8582BAF3262F9DB500635C66 /* NewTabPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */; };
 		8582BAFF262FA90C00635C66 /* BookmarkletPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */; };
+		8582BB0B262FB30F00635C66 /* OpenExternallyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582BB0A262FB30F00635C66 /* OpenExternallyPolicy.swift */; };
 		858566E8252E4F56007501B8 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858566E7252E4F56007501B8 /* Debug.storyboard */; };
 		858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */; };
 		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
@@ -921,6 +922,7 @@
 		8582BAE6262F8E7700635C66 /* GPCPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPCPolicy.swift; sourceTree = "<group>"; };
 		8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPolicy.swift; sourceTree = "<group>"; };
 		8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkletPolicy.swift; sourceTree = "<group>"; };
+		8582BB0A262FB30F00635C66 /* OpenExternallyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenExternallyPolicy.swift; sourceTree = "<group>"; };
 		858566E7252E4F56007501B8 /* Debug.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheDebugViewController.swift; sourceTree = "<group>"; };
 		85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTrayViewController.swift; sourceTree = "<group>"; };
@@ -2641,6 +2643,7 @@
 				8582BAE6262F8E7700635C66 /* GPCPolicy.swift */,
 				8582BAF2262F9DB500635C66 /* NewTabPolicy.swift */,
 				8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */,
+				8582BB0A262FB30F00635C66 /* OpenExternallyPolicy.swift */,
 			);
 			name = Policies;
 			sourceTree = "<group>";
@@ -4692,6 +4695,7 @@
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
 				986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */,
+				8582BB0B262FB30F00635C66 /* OpenExternallyPolicy.swift in Sources */,
 				988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,

@@ -1023,7 +1023,7 @@ extension TabViewController: WKNavigationDelegate {
         bucket.add(GPCPolicy(webView: self.webView))
         bucket.add(NewTabPolicy(tab: self))
         bucket.add(BookmarkletPolicy(webView: self.webView))
-        // open external policy
+        bucket.add(OpenExternallyPolicy(openExternally: self.openExternally(url:)))
         // open in extern app policy
         // reissue search policy
         // reissue static ddg navigation policy
@@ -1113,7 +1113,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        // TODO find out why we prevent https upgrades on unprotected sites        
+        // TODO find out why we prevent https upgrades on unprotected sites
         if !contentBlockerProtection.isProtected(domain: url.host) {
             completion(allowPolicy)
             return

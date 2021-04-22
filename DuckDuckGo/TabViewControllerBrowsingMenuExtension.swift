@@ -37,9 +37,13 @@ extension TabViewController {
         }))
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
-            guard let url = self?.webView.url else { return }
+            guard let strongSelf = self else { return }
+            if !strongSelf.isError, let url = strongSelf.webView.url {
+                strongSelf.onCopyAction(forUrl: url)
+            } else if let text = self?.chromeDelegate?.omniBar.textField.text {
+                strongSelf.onCopyAction(for: text)
+            }
             
-            self?.onCopyAction(forUrl: url)
             ActionMessageView.present(message: UserText.actionCopyMessage)
         }))
         

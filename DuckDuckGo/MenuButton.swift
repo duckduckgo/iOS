@@ -26,6 +26,7 @@ import Core
 protocol MenuButtonDelegate: NSObjectProtocol {
     
     func showMenu(_ button: MenuButton)
+    func showBookmarks(_ button: MenuButton)
     
 }
 
@@ -119,7 +120,12 @@ class MenuButton: UIView {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tint(alpha: 1)
-        delegate?.showMenu(self)
+        switch currentState {
+        case .bookmarksImage:
+            delegate?.showBookmarks(self)
+        case .menuImage, .closeImage:
+            delegate?.showMenu(self)
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -167,6 +173,7 @@ class MenuButton: UIView {
     
         let setAlpha = {
             self.anim.alpha = alpha
+            self.bookmarksIconView.alpha = alpha
         }
         
         if animated {

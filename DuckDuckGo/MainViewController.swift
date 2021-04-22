@@ -1464,6 +1464,11 @@ extension MainViewController: MenuButtonDelegate {
     func showMenu(_ button: MenuButton) {
         onMenuPressed()
     }
+    
+    func showBookmarks(_ button: MenuButton) {
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
+    }
 }
 
 extension MainViewController: GestureToolbarButtonDelegate {

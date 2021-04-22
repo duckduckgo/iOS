@@ -94,6 +94,8 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
+    
+    /// Do not referecen directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
         AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
@@ -287,13 +289,15 @@ class MainViewController: UIViewController {
     }
     
     private func enableBookmarksButton() {
-        menuButton.setState(.bookmarksImage, animated: false)
+        presentedMenuButton.setState(.bookmarksImage, animated: false)
         lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
+        omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
     }
     
     private func enableMenuButton() {
-        menuButton.setState(.menuImage, animated: false)
+        presentedMenuButton.setState(.menuImage, animated: false)
         lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
+        omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
     }
     
     @objc func quickSaveBookmark() {

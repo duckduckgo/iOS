@@ -87,6 +87,7 @@ class MenuButton: UIView {
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         anim.center = center
         pointerView.center = center
+        bookmarksIconView.center = center
     }
     
     private func configureBookmarksView() {

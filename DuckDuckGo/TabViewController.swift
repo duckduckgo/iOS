@@ -1276,12 +1276,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
-        return gestureRecognizer == showBarsTapGestureRecogniser && chromeDelegate?.isToolbarHidden == true &&
-            (isBottom(yPosition: y) || isTop(yPosition: y))
-    }
-
-    private func isTop(yPosition y: CGFloat) -> Bool {
-        return y < (view.safeAreaInsets.top + 25)
+        return gestureRecognizer == showBarsTapGestureRecogniser && chromeDelegate?.isToolbarHidden == true && isBottom(yPosition: y)
     }
 
     private func isBottom(yPosition y: CGFloat) -> Bool {

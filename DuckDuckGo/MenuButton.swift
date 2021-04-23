@@ -26,6 +26,7 @@ import Core
 protocol MenuButtonDelegate: NSObjectProtocol {
     
     func showMenu(_ button: MenuButton)
+    func showBookmarks(_ button: MenuButton)
     
 }
 
@@ -34,6 +35,7 @@ class MenuButton: UIView {
     enum State {
         case menuImage
         case closeImage
+        case bookmarksImage
     }
     
     struct Constants {
@@ -49,6 +51,8 @@ class MenuButton: UIView {
     
     weak var delegate: MenuButtonDelegate?
     private var currentState: State = .menuImage
+    
+    private let bookmarksIconView = UIImageView()
 
     let anim = LOTAnimationView(name: "menu_light")
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
@@ -67,8 +71,10 @@ class MenuButton: UIView {
         
         addSubview(pointerView)
         addSubview(anim)
+        addSubview(bookmarksIconView)
         
         configureAnimationView()
+        configureBookmarksView()
         
         if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
@@ -81,6 +87,16 @@ class MenuButton: UIView {
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         anim.center = center
         pointerView.center = center
+        bookmarksIconView.center = center
+    }
+    
+    private func configureBookmarksView() {
+        bookmarksIconView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        bookmarksIconView.image = UIImage(named: "Bookmarks")
+        
+        bookmarksIconView.center = CGPoint(x: bounds.midX, y: bounds.midY)
+        
+        bookmarksIconView.isHidden = true
     }
 
     private func configureAnimationView() {
@@ -105,7 +121,12 @@ class MenuButton: UIView {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tint(alpha: 1)
-        delegate?.showMenu(self)
+        switch currentState {
+        case .bookmarksImage:
+            delegate?.showBookmarks(self)
+        case .menuImage, .closeImage:
+            delegate?.showMenu(self)
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -123,12 +144,16 @@ class MenuButton: UIView {
         
         switch state {
         case .closeImage:
+            bookmarksIconView.isHidden = true
+            anim.isHidden = false
             if animated {
                 anim.play()
             } else {
                 anim.animationProgress = 1.0
             }
         case .menuImage:
+            bookmarksIconView.isHidden = true
+            anim.isHidden = false
             if animated {
                 // Work around a bug that caused glitches when rapidly toggling button
                 anim.stop()
@@ -137,6 +162,9 @@ class MenuButton: UIView {
             } else {
                 anim.animationProgress = 0.0
             }
+        case .bookmarksImage:
+            bookmarksIconView.isHidden = false
+            anim.isHidden = true
         }
         
         currentState = state
@@ -146,6 +174,7 @@ class MenuButton: UIView {
     
         let setAlpha = {
             self.anim.alpha = alpha
+            self.bookmarksIconView.alpha = alpha
         }
         
         if animated {

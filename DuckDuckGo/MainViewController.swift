@@ -94,6 +94,8 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
+    
+    /// Do not referecen directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
         AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
@@ -266,6 +268,10 @@ class MainViewController: UIViewController {
     }
     
     private func initMenuButton() {
+        lastToolbarButton.customView = menuButton
+        lastToolbarButton.isAccessibilityElement = true
+        lastToolbarButton.accessibilityTraits = .button
+        
         menuButton.delegate = self
     }
     
@@ -282,26 +288,16 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func attachBookmarksButton() {
-        guard lastToolbarButton.customView != gestureBookmarksButton else { return }
-        lastToolbarButton.customView?.removeFromSuperview()
-        lastToolbarButton.customView = gestureBookmarksButton
+    private func enableBookmarksButton() {
+        presentedMenuButton.setState(.bookmarksImage, animated: false)
         lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
-        lastToolbarButton.isAccessibilityElement = true
-        lastToolbarButton.accessibilityTraits = .button
+        omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
     }
     
-    private func attachMenuButton() {
-        guard lastToolbarButton.customView != menuButton else { return }
-        lastToolbarButton.customView?.removeFromSuperview()
-        
-        // This fixes a layout bug where setting a menu button when views are changing would not render customView
-        toolbar.setNeedsLayout()
-        toolbar.layoutIfNeeded()
-        lastToolbarButton.customView = menuButton
+    private func enableMenuButton() {
+        presentedMenuButton.setState(.menuImage, animated: false)
         lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
-        lastToolbarButton.isAccessibilityElement = true
-        lastToolbarButton.accessibilityTraits = .button
+        omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
     }
     
     @objc func quickSaveBookmark() {
@@ -662,9 +658,9 @@ class MainViewController: UIViewController {
     
     private func refreshMenuIcon() {
         if homeController != nil {
-            attachBookmarksButton()
+            enableBookmarksButton()
         } else {
-            attachMenuButton()
+            enableMenuButton()
         }
     }
 
@@ -1471,6 +1467,11 @@ extension MainViewController: MenuButtonDelegate {
     
     func showMenu(_ button: MenuButton) {
         onMenuPressed()
+    }
+    
+    func showBookmarks(_ button: MenuButton) {
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
     }
 }
 

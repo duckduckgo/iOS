@@ -18,10 +18,11 @@
 //
 
 import WebKit
+import BrowserServicesKit
 
 public class FullScreenVideoUserScript: NSObject, UserScript {
     public var source: String {
-        return loadJS("fullscreenvideo")
+        return Self.loadJS("fullscreenvideo", from: Bundle.core)
     }
 
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

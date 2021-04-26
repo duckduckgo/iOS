@@ -40,11 +40,13 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     public private(set) var unprotectedDomains: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.unprotectedDomains) else { return Set<String>() }
-            guard let unprotectedDomains = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
+            guard let unprotectedDomains = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSSet.self, from: data) as? Set<String> else {
+                return Set<String>()
+            }
             return unprotectedDomains
         }
         set(newUnprotectedDomain) {
-            let data = NSKeyedArchiver.archivedData(withRootObject: newUnprotectedDomain)
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newUnprotectedDomain, requiringSecureCoding: true) else { return }
             userDefaults?.set(data, forKey: Keys.unprotectedDomains)
             onStoreChanged()
         }

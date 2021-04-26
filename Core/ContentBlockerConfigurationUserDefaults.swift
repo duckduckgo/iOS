@@ -46,7 +46,7 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
             return unprotectedDomains
         }
         set(newUnprotectedDomain) {
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newUnprotectedDomain, requiringSecureCoding: true) else { return }
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newUnprotectedDomain, requiringSecureCoding: false) else { return }
             userDefaults?.set(data, forKey: Keys.unprotectedDomains)
             onStoreChanged()
         }

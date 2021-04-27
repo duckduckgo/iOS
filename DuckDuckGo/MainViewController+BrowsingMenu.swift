@@ -56,6 +56,7 @@ extension MainViewController {
             refreshConstraintsForPhone(browsingMenu: controller)
         }
         
+        view.sendSubviewToBack(controller.view)
         view.layoutIfNeeded()
         
         let snapshot = controller.view.snapshotView(afterScreenUpdates: true)
@@ -68,6 +69,7 @@ extension MainViewController {
         }
         
         controller.view.alpha = 0
+        view.bringSubviewToFront(controller.view)
         
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
             // Reset to desired dimensions
@@ -172,7 +174,14 @@ extension MainViewController {
     }
     
     func refreshMenuButtonState() {
-        let expectedState: MenuButton.State = browsingMenu == nil ? .menuImage : .closeImage
+        let expectedState: MenuButton.State
+        if homeController != nil {
+            expectedState = .bookmarksImage
+        } else if browsingMenu == nil {
+            expectedState = .menuImage
+        } else {
+            expectedState = .closeImage
+        }
         presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
         presentedMenuButton.setState(expectedState, animated: false)
     }

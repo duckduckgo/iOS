@@ -757,8 +757,19 @@ class TabViewController: UIViewController {
     }
     
     func onCopyAction(forUrl url: URL) {
-        let copyText = url.absoluteString
-        UIPasteboard.general.string = copyText
+        let copyText: String
+        if appUrls.isDuckDuckGo(url: url) {
+            let cleanURL = appUrls.removeInternalSearchParameters(fromUrl: url)
+            copyText = cleanURL.absoluteString
+        } else {
+            copyText = url.absoluteString
+        }
+        
+        onCopyAction(for: copyText)
+    }
+    
+    func onCopyAction(for text: String) {
+        UIPasteboard.general.string = text
     }
     
     deinit {

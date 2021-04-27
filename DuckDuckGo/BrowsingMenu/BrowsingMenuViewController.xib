@@ -25,6 +25,14 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="280" height="500"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSn-fQ-bFY" userLabel="Arrow View">
+                    <rect key="frame" x="280" y="21" width="15" height="30"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="GKk-e7-UEY"/>
+                        <constraint firstAttribute="width" constant="15" id="WmD-5d-cVI"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsB-hA-CpK" userLabel="Container View">
                     <rect key="frame" x="0.0" y="0.0" width="280" height="85"/>
                     <subviews>
@@ -39,14 +47,6 @@
                         <constraint firstAttribute="bottom" secondItem="iBS-aZ-obk" secondAttribute="bottom" id="YYh-ZC-Tup"/>
                         <constraint firstAttribute="trailing" secondItem="iBS-aZ-obk" secondAttribute="trailing" id="tPH-VG-5sz"/>
                         <constraint firstAttribute="height" constant="85" id="yIA-ld-cYt"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSn-fQ-bFY" userLabel="Arrow View">
-                    <rect key="frame" x="280" y="21" width="15" height="30"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="GKk-e7-UEY"/>
-                        <constraint firstAttribute="width" constant="15" id="WmD-5d-cVI"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Re3-rU-zGN" userLabel="SeparatorView">

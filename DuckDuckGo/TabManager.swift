@@ -264,6 +264,7 @@ extension TabManager {
             Pixel.fire(pixel: .cachedTabPreviewsExceedsTabCount, withAdditionalParameters: [
                 PixelParameters.tabPreviewCountDelta: "\(storedPreviews - totalTabs)"
             ])
+            TabPreviewsCleanup.shared.startCleanup(with: model, source: previewsSource)
         }
     }
 }

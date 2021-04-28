@@ -188,4 +188,57 @@ class TabPreviewsSourceTests: XCTestCase {
         }
     }
     
+    func testWhenExcessPreviewsExistThenTheseAreRemoved() {
+        guard let containerUrl = containerUrl else {
+            XCTFail("Could not determine containerUrl")
+            return
+        }
+        
+        let storeURL = containerUrl.appendingPathComponent("src", isDirectory: true)
+        let legacyURL = containerUrl.appendingPathComponent("oldsrc", isDirectory: true)
+        
+        let source = TabPreviewsSource(storeDir: storeURL, legacyDir: legacyURL)
+        source.prepare()
+        source.removeAllPreviews()
+        
+        do {
+            let storeBlock: (String) throws -> Void = { name in
+                let pngFile = storeURL.appendingPathComponent("\(name).png")
+                try "".write(to: pngFile, atomically: false, encoding: .utf8)
+            }
+            
+            // Prepare valid files
+            try storeBlock("v1")
+            try storeBlock("v2")
+            
+            // Prepare invalid files
+            try storeBlock("v3")
+            try storeBlock("v4")
+            
+        } catch {
+            XCTFail("Could not prepare source directory")
+        }
+        
+        var isDir: ObjCBool = false
+        
+        XCTAssert(FileManager.default.fileExists(atPath: storeURL.path, isDirectory: &isDir))
+        XCTAssert(isDir.boolValue)
+        
+        let contents = try? FileManager.default.contentsOfDirectory(atPath: storeURL.path)
+        XCTAssertEqual(contents?.count, 4)
+        
+        let model = TabsModel(tabs: [Tab(uid: "v1", link: nil, viewed: true, desktop: false),
+                                     Tab(uid: "v2", link: nil, viewed: true, desktop: false)], currentIndex: 0, desktop: false)
+        
+        let cleanup = expectation(description: "Cleanup completed")
+        
+        TabPreviewsCleanup.shared.startCleanup(with: model, source: source) {
+            cleanup.fulfill()
+            
+            let contents = try? FileManager.default.contentsOfDirectory(atPath: storeURL.path)
+            XCTAssert(contents?.count == 2)
+        }
+        
+        waitForExpectations(timeout: 3.0)
+    }
 }

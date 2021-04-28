@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class TabPreviewsSource {
     
@@ -76,7 +77,11 @@ class TabPreviewsSource {
         
         cache[tab.uid] = nil
         
-        try? FileManager.default.removeItem(at: url)
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            Pixel.fire(pixel: .cachedTabPreviewRemovalError, error: error)
+        }
     }
     
     func removeAllPreviews() {
@@ -182,10 +187,11 @@ class TabPreviewsCleanup {
     private let lock = NSLock()
     private var isCleaning = false
     
-    func startCleanup(with model: TabsModel, source: TabPreviewsSource) {
+    func startCleanup(with model: TabsModel, source: TabPreviewsSource, completion: @escaping () -> Void = {}) {
         lock.lock()
         guard let storeDir = source.previewStoreDir, !isCleaning else {
             lock.unlock()
+            completion()
             return
         }
         isCleaning = true
@@ -209,6 +215,8 @@ class TabPreviewsCleanup {
             self.lock.lock()
             self.isCleaning = false
             self.lock.unlock()
+            
+            completion()
         }
     }
     

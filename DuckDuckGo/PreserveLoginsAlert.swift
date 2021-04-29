@@ -24,8 +24,23 @@ class PreserveLoginsAlert {
   
     static let wwwPrefix = "www."
     
-    static func showFireproofToast(usingController controller: UIViewController, forDomain domain: String) {
-        controller.view.showBottomToast(UserText.preserveLoginsToast.format(arguments: domain.dropPrefix(prefix: wwwPrefix)))
+    static func showFireproofDisabledMessage(usingController controller: UIViewController,
+                                             worker: PreserveLoginsWorker,
+                                             forDomain domain: String) {
+        
+        let message = UserText.preserveLoginsRemovalConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+            worker.handleUserEnablingFireproofing(forDomain: domain)
+        }
+    }
+    
+    static func showFireproofEnabledMessage(usingController controller: UIViewController,
+                                            worker: PreserveLoginsWorker,
+                                            forDomain domain: String) {
+        let message = UserText.preserveLoginsFireproofConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+            worker.handleUserDisablingFireproofing(forDomain: domain)
+        }
     }
     
     static func showConfirmFireproofWebsite(usingController controller: UIViewController,
@@ -34,7 +49,7 @@ class PreserveLoginsAlert {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsFireproofConfirm, style: .default) {
+        prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction, style: .default) {
             onConfirmHandler()
         }
         prompt.addAction(title: UserText.actionCancel, style: .cancel)
@@ -47,7 +62,7 @@ class PreserveLoginsAlert {
         let prompt = UIAlertController(title: nil,
                                        message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsFireproofConfirm) {
+        prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction) {
             onConfirmHandler()
         }
         prompt.addAction(title: UserText.preserveLoginsFireproofDefer, style: .cancel)

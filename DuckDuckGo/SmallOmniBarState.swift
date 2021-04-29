@@ -162,7 +162,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let showShareButton: Bool = false
+        let showShareButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = true
         let showSearchLoupe = false
@@ -170,7 +170,7 @@ struct SmallOmniBarState {
         let showBackground = true
         let showClear = false
         let showRefresh = true
-        let showMenu = true
+        let showMenu = false
         let showSettings = false
         let showCancel: Bool = false
         var name: String { return "Phone" + Type.name(self) }

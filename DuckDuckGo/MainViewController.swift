@@ -38,7 +38,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
-    @IBOutlet weak var bookmarksButton: UIBarButtonItem!
+    @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
@@ -82,6 +82,7 @@ class MainViewController: UIViewController {
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
+    var browsingMenu: BrowsingMenuViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -93,6 +94,13 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
+    
+    /// Do not referecen directly, use `presentedMenuButton`
+    let menuButton = MenuButton()
+    var presentedMenuButton: MenuButton {
+        AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
+    }
+    
     let gestureBookmarksButton = GestureToolbarButton()
     
     private var fireButtonAnimator: FireButtonAnimator?
@@ -124,6 +132,7 @@ class MainViewController: UIViewController {
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
+        initMenuButton()
         initBookmarksButton()
         configureTabManager()
         loadInitialView()
@@ -141,6 +150,8 @@ class MainViewController: UIViewController {
 
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
+        
+        registerForApplicationEvents()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -256,14 +267,19 @@ class MainViewController: UIViewController {
         tabsButton.accessibilityTraits = .button
     }
     
+    private func initMenuButton() {
+        lastToolbarButton.customView = menuButton
+        lastToolbarButton.isAccessibilityElement = true
+        lastToolbarButton.accessibilityTraits = .button
+        
+        menuButton.delegate = self
+    }
+    
     private func initBookmarksButton() {
         omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
-        bookmarksButton.customView = gestureBookmarksButton
-        bookmarksButton.isAccessibilityElement = true
-        bookmarksButton.accessibilityTraits = .button
     }
     
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
@@ -272,10 +288,22 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func enableBookmarksButton() {
+        presentedMenuButton.setState(.bookmarksImage, animated: false)
+        lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
+        omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+    }
+    
+    private func enableMenuButton() {
+        presentedMenuButton.setState(.menuImage, animated: false)
+        lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
+        omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
+    }
+    
     @objc func quickSaveBookmark() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
-            view.showBottomToast(UserText.webSaveBookmarkNone)
+            ActionMessageView.present(message: UserText.webSaveBookmarkNone)
             return
         }
         
@@ -284,6 +312,7 @@ class MainViewController: UIViewController {
         currentTab!.saveAsBookmark(favorite: true)
     }
     
+    // swiftlint:disable cyclomatic_complexity
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -307,6 +336,11 @@ class MainViewController: UIViewController {
         if segue.destination.children.count > 0,
             let controller = segue.destination.children[0] as? BookmarksViewController {
             controller.delegate = self
+            
+            if segue.identifier == "BookmarksEditCurrent",
+               let link = currentTab?.link {
+                controller.openEditFormWhenPresented(link: link)
+            }
             return
         }
 
@@ -342,6 +376,7 @@ class MainViewController: UIViewController {
         }
 
     }
+    // swiftlint:enable cyclomatic_complexity
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -350,7 +385,14 @@ class MainViewController: UIViewController {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
-
+        
+        if let menu = browsingMenu {
+            if AppWidthObserver.shared.isLargeWidth {
+                refreshConstraintsForTablet(browsingMenu: menu)
+            } else {
+                refreshConstraintsForPhone(browsingMenu: menu)
+            }
+        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -426,6 +468,7 @@ class MainViewController: UIViewController {
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
+        omniBar.menuButtonContent.delegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
     }
@@ -559,6 +602,8 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
+        dismissBrowsingMenu()
+
         if tab.link == nil {
             attachHomeScreen()
         } else {
@@ -600,6 +645,7 @@ class MainViewController: UIViewController {
 
     fileprivate func refreshControls() {
         refreshTabIcon()
+        refreshMenuIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
     }
@@ -608,6 +654,14 @@ class MainViewController: UIViewController {
         tabsButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
         tabSwitcherButton.tabCount = tabManager.count
         tabSwitcherButton.hasUnread = tabManager.hasUnread
+    }
+    
+    private func refreshMenuIcon() {
+        if homeController != nil {
+            enableBookmarksButton()
+        } else {
+            enableMenuButton()
+        }
     }
 
     private func refreshOmniBar() {
@@ -646,7 +700,7 @@ class MainViewController: UIViewController {
             applyWidth()
         }
 
-        self.currentTab?.showMenuHighlighterIfNeeded()
+        self.showMenuHighlighterIfNeeded()
         
         coordinator.animate(alongsideTransition: nil) { _ in
             ViewHighlighter.updatePositions()
@@ -677,6 +731,8 @@ class MainViewController: UIViewController {
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 self.showFireButtonPulse()
             }
+            
+            self.refreshMenuButtonState()
         }
     }
     
@@ -723,10 +779,6 @@ class MainViewController: UIViewController {
         omniBar.showSeparator()
         suggestionTrayContainer.isHidden = true
         suggestionTrayController?.didHide()
-    }
-    
-    fileprivate func launchBrowsingMenu() {
-        currentTab?.launchBrowsingMenu()
     }
     
     fileprivate func launchReportBrokenSite() {
@@ -824,6 +876,7 @@ class MainViewController: UIViewController {
         }
         DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
+        dismissBrowsingMenu()
         currentTab?.dismiss()
 
         if reuseExisting, let existing = tabManager.firstHomeTab() {
@@ -879,9 +932,13 @@ extension MainViewController: BrowserChromeDelegate {
     func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
         if percent < 1 {
             hideKeyboard()
+            hideMenuHighlighter()
+
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 return
             }
+        } else {
+            showMenuHighlighterIfNeeded()
         }
         
         let updateBlock = {
@@ -983,15 +1040,22 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
+        ActionMessageView.dismissAllMessages()
         launchBrowsingMenu()
     }
-
+    
     @objc func onBookmarksPressed() {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
         performSegue(withIdentifier: "Bookmarks", sender: self)
+    }
+    
+    func onBookmarkEdit() {
+        ViewHighlighter.hideAll()
+        hideSuggestionTray()
+        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
     }
     
     func onEnterPressed() {
@@ -1015,7 +1079,7 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
-        self.currentTab?.showMenuHighlighterIfNeeded()
+        self.showMenuHighlighterIfNeeded()
     }
     
     private var isSERPPresented: Bool {
@@ -1236,6 +1300,14 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         launchReportBrokenSite()
     }
+    
+    func tabDidRequestBookmarks(tab: TabViewController) {
+        onBookmarksPressed()
+    }
+    
+    func tabDidRequestEditBookmark(tab: TabViewController) {
+        onBookmarkEdit()
+    }
 
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
@@ -1265,6 +1337,10 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
         return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+    }
+    
+    func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
+        showMenuHighlighterIfNeeded()
     }
 
     private func newTabAnimation(completion: @escaping () -> Void) {
@@ -1334,6 +1410,7 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
+        dismissBrowsingMenu()
         tabManager.remove(at: index)
         updateCurrentTab()
     }
@@ -1386,6 +1463,18 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 }
 
+extension MainViewController: MenuButtonDelegate {
+    
+    func showMenu(_ button: MenuButton) {
+        onMenuPressed()
+    }
+    
+    func showBookmarks(_ button: MenuButton) {
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
+    }
+}
+
 extension MainViewController: GestureToolbarButtonDelegate {
     
     func singleTapDetected(in sender: GestureToolbarButton) {
@@ -1403,6 +1492,7 @@ extension MainViewController: AutoClearWorker {
     
     func clearNavigationStack() {
         dismissOmniBar()
+        dismissBrowsingMenu()
         
         if let presented = presentedViewController {
             presented.dismiss(animated: false) { [weak self] in
@@ -1501,6 +1591,8 @@ extension MainViewController: Themable {
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
+        
+        presentedMenuButton.decorate(with: theme)
         
         tabManager.decorate(with: theme)
 

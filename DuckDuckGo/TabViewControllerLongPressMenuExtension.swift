@@ -84,11 +84,6 @@ extension TabViewController {
             webView.load(URLRequest(url: url))
         }
     }
-
-    private func onCopyAction(forUrl url: URL) {
-        let copyText = url.absoluteString
-        UIPasteboard.general.string = copyText
-    }
     
     private func onShareAction(forUrl url: URL, atPoint point: Point?) {
         guard let webView = webView else { return }

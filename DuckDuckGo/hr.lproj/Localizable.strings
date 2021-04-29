@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Uredi";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Poništi";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Knjižna oznaka";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Knjižne oznake";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Otkaži";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopiraj";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL je kopiran";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Onemogući zaštitu privatnosti";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Uredi knjižnu oznaku";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Omogući zaštitu privatnosti";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Otvori u pozadini";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nova kartica";
+"action.title.newTabAction" = "Novo";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Otvori u novoj kartici";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Zalijepi i nastavi";
 
+/* Print action */
+"action.title.print" = "Ispis";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osvježi";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Ukloni omiljeno";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Prijavi neispravno web-mjesto";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Zatraži prikaz desktop verzije web-mjesta";
+"action.title.request.desktop.site" = "Mjesto radne površine";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Zatraži prikaz mobilne verzije web-mjesta";
+"action.title.request.mobile.site" = "Mobilno mrežno mjesto";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Spremi";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Dodaj u Knjižne oznake";
+"action.title.save.bookmark" = "Označi ovu stranicu knjižnom oznakom";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Dodaj u Omiljeno";
+"action.title.save.favorite" = "Dodaj ovu stranicu u omiljene";
 
 /* Settings action */
 "action.title.settings" = "Postavke";
 
 /* Share action */
-"action.title.share" = "Podijeli...";
+"action.title.share" = "Podijeli";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Uredi knjižnu oznaku";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Sačuvaj knjižnu oznaku";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Sve su kartice označene";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Knjižne oznake";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentari se nisu učitali";
@@ -171,6 +192,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Vremenom se u pregledniku mogu nakupljati osobni podaci. Fuj. Upotrijebite gumb Vatre da sve to očistite. Pokušajte 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Obriši sve kartice i podatke";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "To je to – vaših podataka nema više! \n\nEvo savjeta: označite da je web-mjesto sigurno i nećete se morati svaki put ponovno prijavljivati. \n\nŽelite li vidjeti kako to funkcionira? Posjetite jedno od svojih omiljenih web-mjesta i prijavite se.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -547,6 +577,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Izbornik pregledavanja";
+
 /* Edit button */
 "navigation.title.edit" = "Uredi";
 
@@ -598,8 +631,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Zaštićeno web-mjesto";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ je sada sigurno web-mjesto!";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ne sada";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Ukloni oznaku sigurnog web-mjesta";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Uključi oznaku da je ovo web-mjesto sigurno";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Oznaka sigurnog web-mjesta je uklonjena";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Odstrani sve";
@@ -609,9 +654,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Pitaj za označavanje web-mjesta kao zaštićenog";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ je sada zaštićen! Posjetite Postavke da biste saznali više.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritam";
@@ -857,13 +899,16 @@
 "theme.name.light" = "Svijetla";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ dodan je među nezaštićena web-mjesta";
+"toast.protection.disabled" = "Zaštita privatnosti je onemogućena za %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ je uklonjen iz nezaštićenih web-mjesta";
+"toast.protection.enabled" = "Zaštita privatnosti je omogućena za %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Došlo je do nepoznate pogreške.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Omiljena je stavka uklonjena";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Knjižna oznaka je dodana";

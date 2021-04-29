@@ -208,13 +208,13 @@ class TabSwitcherViewController: UIViewController {
         titleView.text = UserText.numberOfTabs(tabsModel.count)
     }
     
-    fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {
+    fileprivate func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
         if results.newBookmarksCount == openTabsCount {
-            view.showBottomToast(UserText.bookmarkAllTabsSaved)
+            ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
             os_log("Failed to save %d tabs", log: generalLog, type: .debug, failedToSaveCount)
-            view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
+            ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }
     
@@ -249,7 +249,7 @@ class TabSwitcherViewController: UIViewController {
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
             let savedState = self.bookmarkAll(self.tabsModel.tabs)
-            self.displayBookmarkAllStatusToast(with: savedState, openTabsCount: self.tabsModel.tabs.count)
+            self.displayBookmarkAllStatusMessage(with: savedState, openTabsCount: self.tabsModel.tabs.count)
         }
         
         present(alert, animated: true, completion: nil)

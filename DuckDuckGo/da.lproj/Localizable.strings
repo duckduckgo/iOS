@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Rediger";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Fortryd";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Tilføj";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Bogmærke";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Bogmærker";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Annullér";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopi";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL kopieret";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Deaktiver Beskyttelse af privatlivet";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Rediger bogmærke";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Aktiver Beskyttelse af privatlivet";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Åbn i baggrunden";
 
 /* Create New Tab action */
-"action.title.newTab" = "Ny fane";
+"action.title.newTabAction" = "Ny";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Åbn i ny fane";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Indsæt og fortsæt";
 
+/* Print action */
+"action.title.print" = "Print";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Opdater";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Fjern favorit";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Rapporter ødelagt websted";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Anmod om desktop-sted";
+"action.title.request.desktop.site" = "Stationær computer";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Anmod om mobilwebsted";
+"action.title.request.mobile.site" = "Mobilwebsted";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Gem";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Føj til bogmærker";
+"action.title.save.bookmark" = "Bogmærk denne side";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Tilføj til favoritter";
+"action.title.save.favorite" = "Gem denne side som favorit";
 
 /* Settings action */
 "action.title.settings" = "Indstillinger";
 
 /* Share action */
-"action.title.share" = "Del...";
+"action.title.share" = "Del";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bogmærker duplikeres ikke.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Rediger bogmærke";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Gem bogmærke";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Alle faner bogmærket";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Bogmærker";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentarer blev ikke indlæst";
@@ -171,6 +192,15 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pyha!";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button" = "Personoplysninger kan opbygges i din browser over tid. Adr. Brug Ildknappen til at brænde det hele væk. Prøv det! 👇";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.browsing.fire.button.cta" = "Ryd alle faner og data";
+
+/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
+"dax.onboarding.browsing.fire.button.subsequent" = "Sådan — dine oplysninger er væk!\n\nHer er et tip: Gør et websted brandsikkert, og du behøver ikke logge ind igen hver gang.\n\nVil du se, hvordan det fungerer? Besøg et af dine foretrukne websteder og log ind.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
@@ -547,6 +577,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Browsingmenu";
+
 /* Edit button */
 "navigation.title.edit" = "Rediger";
 
@@ -598,8 +631,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Brandsikkert websted";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ er nu brandsikker";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Ikke nu";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Fjern brandsikring";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Gør dette websted brandsikkert";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Brandsikring fjernet";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Fjern alt";
@@ -609,9 +654,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Spørg til brandsikre websteder";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ er nu brandsikker! Besøg Indstillinger for at administrere.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
@@ -857,13 +899,16 @@
 "theme.name.light" = "Let";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ tilføjet til ubeskyttede websteder";
+"toast.protection.disabled" = "Beskyttelse af privatlivet deaktiveret for %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ fjernet fra ubeskyttede websteder";
+"toast.protection.enabled" = "Beskyttelse af privatlivet aktiveret for %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Der opstod en ukendt fejl.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favorit fjernet";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Bogmærke tilføjet";

@@ -116,7 +116,7 @@ class FireButtonAnimator {
         
         guard let composition = preLoadedComposition else {
             onAnimationStart()
-            window.showBottomToast(UserText.actionForgetAllDone, duration: 1.0)
+            ActionMessageView.present(message: UserText.actionForgetAllDone)
             onTransitionCompleted()
             completion()
             return
@@ -136,7 +136,7 @@ class FireButtonAnimator {
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
-            window.showBottomToast(UserText.actionForgetAllDone, duration: 1.0)
+            ActionMessageView.present(message: UserText.actionForgetAllDone)
             onTransitionCompleted()
         }
         

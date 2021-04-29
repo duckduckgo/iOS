@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Upravit";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Vrátit";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Přidat";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Záložka";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Záložky";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "Zrušit";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopírovat";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "Adrese URL zkopírována";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Zakázat ochranu soukromí";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Upravit záložku";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Povolit ochranu soukromí";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Otevřít na pozadí";
 
 /* Create New Tab action */
-"action.title.newTab" = "Nová karta";
+"action.title.newTabAction" = "Nová";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Otevřít v nové kartě";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Vložit a jít";
 
+/* Print action */
+"action.title.print" = "Vytisknout";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Obnovit";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Odebrat oblíbenou položku";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Nahlásit nefunkční webové stránky";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Načíst stránku v režimu plochy";
+"action.title.request.desktop.site" = "Stránka plochy";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Načíst stránku v mobilním režimu";
+"action.title.request.mobile.site" = "Mobilní režim";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Uložit";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Přidat do záložek";
+"action.title.save.bookmark" = "Přidejte si tuto stránku do záložek";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Přidat do oblíbených";
+"action.title.save.favorite" = "Označit tuto stránku jako oblíbenou";
 
 /* Settings action */
 "action.title.settings" = "Nastavení";
 
 /* Share action */
-"action.title.share" = "Sdílet...";
+"action.title.share" = "Sdílet";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Upravit záložku";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Uložit záložku";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Všechny karty v záložkách";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Záložky";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentáře se nenačetly";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Procházení nabídky";
+
 /* Edit button */
 "navigation.title.edit" = "Upravit";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Webová stránka pro ochranu souborů";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "Adresa %@ je nyní chráněná";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Teď ne";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Odstranit ochranu";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Ochránit tento web";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Ochrana odstraněna";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Odstranit vše";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Požádat o ochranu stránek";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ je nyní chráněný! Pro správu navštivte Nastavení.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Světlo";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ přidáno na nechráněné stránky";
+"toast.protection.disabled" = "Ochrana deaktivována u domény %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ odstraněno z nechráněných stránek";
+"toast.protection.enabled" = "Ochrana aktivována u domény %@";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla se neznámá chyba.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Oblíbená položka odstraněna";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Záložka přidána";

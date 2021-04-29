@@ -1,8 +1,17 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Düzenle";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Geri al";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Yer imi ekle";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Yer İmleri";
 
 /* Cancel action - button shown in alert */
 "action.title.cancel" = "İptal";
@@ -10,8 +19,14 @@
 /* Copy action */
 "action.title.copy" = "Kopyala";
 
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL kopyalandı";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Gizlilik Korumasını Devre Dışı Bırak";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Yer İşaretini Düzenle";
 
 /* Enable protection action */
 "action.title.enable.protection" = "Gizlilik Korumasını Etkinleştir";
@@ -26,7 +41,7 @@
 "action.title.newBackgroundTabForUrl" = "Arka Planda Aç";
 
 /* Create New Tab action */
-"action.title.newTab" = "Yeni Sekme";
+"action.title.newTabAction" = "Yeni";
 
 /* Open in New Tab action */
 "action.title.newTabForUrl" = "Yeni Sekmede Aç";
@@ -37,32 +52,38 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Yapıştır ve Git";
 
+/* Print action */
+"action.title.print" = "Yazdır";
+
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Yenile";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Favoriyi Kaldır";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Hatalı Siteyi Bildir";
 
 /* Action to reload current page in desktop mode */
-"action.title.request.desktop.site" = "Masaüstü Sitesini Yükle";
+"action.title.request.desktop.site" = "Masaüstü Sitesi";
 
 /* Action to reload current page in mobile mode */
-"action.title.request.mobile.site" = "Mobil Siteyi Yükle";
+"action.title.request.mobile.site" = "Mobil Site";
 
 /* Save action - button shown in alert */
 "action.title.save" = "Kaydet";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Yer İmlerine Ekle";
+"action.title.save.bookmark" = "Bu Sayfaya Yer İşareti Koy";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Favorilere Ekle";
+"action.title.save.favorite" = "Bu Sayfayı Favorilere Ekle";
 
 /* Settings action */
 "action.title.settings" = "Ayarlar";
 
 /* Share action */
-"action.title.share" = "Paylaş...";
+"action.title.share" = "Paylaş";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
@@ -75,9 +96,6 @@
 
 /* Disable potection alert placeholder - leave as it is */
 "alert.title.disable.protection.placeholder" = "www.example.com";
-
-/* Edit Bookmark action */
-"alert.title.edit.bookmark" = "Yer İşaretini Düzenle";
 
 /* Save Bookmark action */
 "alert.title.save.bookmark" = "Yer İmi Kaydet";
@@ -123,6 +141,9 @@
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "Tüm sekmelere yer imi eklendi";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Yer İmleri";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Yorumlar yüklenmedi";
@@ -547,6 +568,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
 
+/* No comment provided by engineer. */
+"menu.button.hint" = "Göz Atma Menüsü";
+
 /* Edit button */
 "navigation.title.edit" = "Düzenle";
 
@@ -598,8 +622,20 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Korumalı Web Sitesi";
 
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ artık Korumalı";
+
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Şimdi Değil";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Korumayı Kaldır";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Bu Siteyi Korumalı Yap";
+
+/* Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Koruma kaldırıldı";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Tümünü Kaldır";
@@ -609,9 +645,6 @@
 
 /* Ask to Fireproof Sites */
 "preserveLogins.switch.title" = "Siteleri Korumalı Yapmadan Önce Sor";
-
-/* Parameter is a string - domain name */
-"preserveLogins.toast" = "%@ artık Korumalı! Yönetmek için Ayarlar bölümünü ziyaret edin.";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritma";
@@ -857,13 +890,16 @@
 "theme.name.light" = "Açık";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled" = "%@ Korumasız Sitelere eklendi";
+"toast.protection.disabled" = "Gizlilik Koruması %@ için devre dışı";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.enabled" = "%@ Korumasız Sitelerden kaldırıldı";
+"toast.protection.enabled" = "Gizlilik Koruması %@ için etkinleştirildi";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Bilinmeyen bir hata oluştu.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Favori kaldırıldı";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Yer imi eklendi";

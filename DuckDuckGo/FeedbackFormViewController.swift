@@ -140,7 +140,7 @@ class FeedbackFormViewController: UIViewController {
     }
     
     @IBAction func submitFeedbackPressed() {
-        view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
+        ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         
         sendFeedback()
         dismiss(animated: true, completion: nil)

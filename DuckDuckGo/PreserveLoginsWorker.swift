@@ -32,12 +32,12 @@ struct PreserveLoginsWorker {
         return true
     }
     
-    func handleUserFireproofing(forDomain domain: String) {
-        guard let controller = controller else { return }
-        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: controller, forDomain: domain) {
-            Pixel.fire(pixel: .browsingMenuFireproof)
-            self.addDomain(domain)
-        }
+    func handleUserEnablingFireproofing(forDomain domain: String) {
+        addDomain(domain)
+    }
+    
+    func handleUserDisablingFireproofing(forDomain domain: String) {
+        removeDomain(domain)
     }
     
     private func domainOrPathDidChange(_ detectedURL: URL, _ currentURL: URL) -> Bool {
@@ -55,7 +55,14 @@ struct PreserveLoginsWorker {
         guard let controller = controller else { return }
         PreserveLogins.shared.addToAllowed(domain: domain)
         Favicons.shared.loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
-        PreserveLoginsAlert.showFireproofToast(usingController: controller, forDomain: domain)
+        PreserveLoginsAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
+    }
+    
+    private func removeDomain(_ domain: String) {
+        guard let controller = controller else { return }
+        PreserveLogins.shared.remove(domain: domain)
+        Favicons.shared.removeFireproofFavicon(forDomain: domain)
+        PreserveLoginsAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
     
 }

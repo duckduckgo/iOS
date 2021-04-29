@@ -130,7 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
-        
+
+        mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()
         
         if !privacyStore.authenticationEnabled {

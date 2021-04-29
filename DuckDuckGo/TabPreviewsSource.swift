@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class TabPreviewsSource {
     
@@ -29,7 +30,7 @@ class TabPreviewsSource {
     
     private lazy var tabSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     
-    private var previewStoreDir: URL?
+    fileprivate var previewStoreDir: URL?
     private var legacyPreviewStoreDir: URL?
     
     init(storeDir: URL? = TabPreviewsSource.previewStoreDir,
@@ -76,7 +77,11 @@ class TabPreviewsSource {
         
         cache[tab.uid] = nil
         
-        try? FileManager.default.removeItem(at: url)
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            Pixel.fire(pixel: .cachedTabPreviewRemovalError, error: error)
+        }
     }
     
     func removeAllPreviews() {
@@ -89,6 +94,10 @@ class TabPreviewsSource {
             }
         }
     }
+    
+    fileprivate func cleanupCache() {
+        cache.removeAll()
+    }
 
     func totalStoredPreviews() -> Int? {
         guard let directory = previewStoreDir else { return nil }
@@ -97,7 +106,7 @@ class TabPreviewsSource {
         return contents?.count
     }
     
-    static private var previewStoreDir: URL? {
+    static fileprivate var previewStoreDir: URL? {
         guard var cachesDirURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
         cachesDirURL.appendPathComponent(Constants.previewsDirectoryName, isDirectory: true)
         return cachesDirURL
@@ -169,4 +178,46 @@ class TabPreviewsSource {
         
         return UIImage(data: data)
     }
+}
+
+class TabPreviewsCleanup {
+    
+    static let shared = TabPreviewsCleanup()
+    
+    private let lock = NSLock()
+    private var isCleaning = false
+    
+    func startCleanup(with model: TabsModel, source: TabPreviewsSource, completion: @escaping () -> Void = {}) {
+        lock.lock()
+        guard let storeDir = source.previewStoreDir, !isCleaning else {
+            lock.unlock()
+            completion()
+            return
+        }
+        isCleaning = true
+        lock.unlock()
+        
+        source.cleanupCache()
+        
+        let validIDs = Set(model.tabs.map { $0.uid })
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            if let previews = try? FileManager.default.contentsOfDirectory(at: storeDir, includingPropertiesForKeys: nil) {
+                for previewURL in previews where previewURL.lastPathComponent.hasSuffix(".png") {
+                    let previewID = previewURL.lastPathComponent.dropLast(4)
+                    
+                    if !validIDs.contains(String(previewID)) {
+                        try? FileManager.default.removeItem(at: previewURL)
+                    }
+                }
+            }
+            
+            self.lock.lock()
+            self.isCleaning = false
+            self.lock.unlock()
+            
+            completion()
+        }
+    }
+    
 }

@@ -46,17 +46,39 @@ class FingerprintUITest: XCTestCase {
         sleep(5) // let site load
         
         app.buttons["Browsing Menu"].tap()
-        if app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].waitForExistence(timeout: 2) {
-            app.sheets.scrollViews.otherElements.buttons["Add to Bookmarks"].tap()
-        } else {
-            app.sheets.scrollViews.otherElements.buttons["Cancel"].tap()
+        if app.tables.staticTexts["Bookmark This Page"].waitForExistence(timeout: 2) {
+            app.tables.staticTexts["Bookmark This Page"].tap()
+        } else if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
+            dismissMenu()
+            removeTheBookmark()
+            
+            app.buttons["Browsing Menu"].tap()
+            if app.tables.staticTexts["Bookmark This Page"].waitForExistence(timeout: 2) {
+                app.tables.staticTexts["Bookmark This Page"].tap()
+            } else {
+                XCTFail("Could not ensure one bookmark is present")
+            }
         }
     }
-
+    
     override func tearDownWithError() throws {
+        removeTheBookmark()
+    }
+    
+    func dismissMenu() {
+        let app = XCUIApplication()
+        app.otherElements["Browsing Menu Background"].tap()
+    }
+    
+    func removeTheBookmark() {
         // Remove the bookmark we added
         let app = XCUIApplication()
-        app.toolbars["Toolbar"].buttons["Bookmarks"].tap()
+        app.buttons["Browsing Menu"].tap()
+        
+        if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
+            app.tables.staticTexts["Bookmarks"].tap()
+        }
+        
         let tablesQuery = app.tables
         tablesQuery.staticTexts["DuckDuckGo — Privacy, simplified."].swipeLeft()
         tablesQuery.buttons["Delete"].tap()
@@ -66,8 +88,9 @@ class FingerprintUITest: XCTestCase {
     func test() throws {
         let app = XCUIApplication()
         
-        if app.toolbars["Toolbar"].buttons["Bookmarks"].waitForExistence(timeout: 2) {
-            app.toolbars["Toolbar"].buttons["Bookmarks"].tap()
+        app.buttons["Browsing Menu"].tap()
+        if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
+            app.tables.staticTexts["Bookmarks"].tap()
         } else {
             XCTFail("Bookmarks button missing")
         }
@@ -105,7 +128,12 @@ class FingerprintUITest: XCTestCase {
         XCTAssertTrue(webview.staticTexts["⚠️ Please note that:"].firstMatch.waitForExistence(timeout: 25), "Page not loaded")
         
         // Run the new bookmarklet
-        app.toolbars["Toolbar"].buttons["Bookmarks"].tap()
+        app.buttons["Browsing Menu"].tap()
+        if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
+            app.tables.staticTexts["Bookmarks"].tap()
+        } else {
+            XCTFail("Bookmarks button missing")
+        }
         app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
         
         // Verify the test passed

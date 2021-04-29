@@ -52,6 +52,12 @@ struct LightTheme: Theme {
     var searchBarBorderColor = UIColor.lightGreyish
     var searchBarClearTextIconColor = UIColor.greyish2
     
+    var browsingMenuTextColor = UIColor.nearlyBlack
+    var browsingMenuIconsColor = UIColor.nearlyBlackLight
+    var browsingMenuBackgroundColor = UIColor.white
+    var browsingMenuSeparatorColor = UIColor.mercury
+    var browsingMenuHighlightColor = UIColor.lightGreyish
+    
     var progressBarGradientDarkColor = UIColor.cornflowerBlue
     var progressBarGradientLightColor = UIColor.skyBlueLight
 

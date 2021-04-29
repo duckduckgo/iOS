@@ -1,8 +1,8 @@
 //
-//  UIViewToastExtension.swift
+//  BrowsingMenuSeparatorViewCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,21 +18,16 @@
 //
 
 import UIKit
-import Toast
 
-private struct ViewConstants {
-    static let marginBottom: CGFloat = 80
-}
+class BrowsingMenuSeparatorViewCell: UITableViewCell {
 
-extension UIView {
-
-    func showBottomToast(_ text: String, duration: TimeInterval = ToastManager.shared.duration) {
-        let x = bounds.size.width / 2.0
-        let y = bounds.size.height - ViewConstants.marginBottom
+    @IBOutlet weak var separator: UIView!
+    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
-        var style = ToastManager.shared.style
-        style.messageAlignment = .center
-        makeToast(text, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
+        separatorHeight.constant = 1.0 / UIScreen.main.scale
+        contentView.backgroundColor = .clear
     }
-
 }

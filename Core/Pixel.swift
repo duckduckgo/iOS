@@ -55,7 +55,9 @@ public enum PixelName: String {
     case browsingMenuRefresh = "mb_rf"
     case browsingMenuNewTab = "mb_tb"
     case browsingMenuAddToBookmarks = "mb_abk"
+    case browsingMenuEditBookmark = "mb_ebk"
     case browsingMenuAddToFavorites = "mb_af"
+    case browsingMenuRemoveFromFavorites = "mb_df"
     case browsingMenuAddToFavoritesAddFavoriteFlow = "mb_aff"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
@@ -185,6 +187,7 @@ public enum PixelName: String {
     case cookieDeletionTimedOut = "m_d_csto"
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
+    case cachedTabPreviewRemovalError = "m_d_tpre"
 }
 // swiftlint:enable identifier_name
 

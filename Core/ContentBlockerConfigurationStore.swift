@@ -23,7 +23,7 @@ public struct ContentBlockerProtectionChangedNotification {
     public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
 }
 
-public protocol ContentBlockerProtectionStore: class {
+public protocol ContentBlockerProtectionStore: AnyObject {
 
     var unprotectedDomains: Set<String> { get }
 

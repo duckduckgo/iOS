@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-protocol PrivacyProtectionDelegate: class {
+protocol PrivacyProtectionDelegate: AnyObject {
 
     func omniBarTextTapped()
 

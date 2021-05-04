@@ -19,7 +19,7 @@
 
 import UIKit
 
-protocol HomeMessageCellDelegate: class {
+protocol HomeMessageCellDelegate: AnyObject {
     func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell)
     func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell)
 }

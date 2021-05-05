@@ -187,6 +187,7 @@ public enum PixelName: String {
     case cookieDeletionTimedOut = "m_d_csto"
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
+    case cachedTabPreviewRemovalError = "m_d_tpre"
 }
 // swiftlint:enable identifier_name
 

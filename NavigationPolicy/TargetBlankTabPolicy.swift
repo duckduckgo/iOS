@@ -1,5 +1,5 @@
 //
-//  NewTabPolicy.swift
+//  TargetBlankTabPolicy.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -20,31 +20,27 @@
 import Foundation
 import WebKit
 
-struct NewTabPolicy: NavigationActionPolicy {
+public class TargetBlankTabPolicy: NavigationActionPolicy {
 
-    weak var tab: TabViewController?
+    private let openInNewTab: (URL) -> Void
 
-    func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
-        assert(tab != nil)
+    public init(openInNewTab: @escaping (URL) -> Void) {
+        self.openInNewTab = openInNewTab
+    }
 
-        guard let tab = tab else { return }
+    public func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
 
-        if navigationAction.navigationType == .linkActivated,
-           let url = navigationAction.request.url,
-           let modifierFlags = tab.delegate?.tabWillRequestNewTab(tab),
-           modifierFlags.contains(.command) {
+        if let url = navigationAction.request.url,
+           navigationAction.navigationType == .linkActivated,
+           navigationAction.targetFrame == nil {
 
             completion(.cancel) {
-                if modifierFlags.contains(.shift) {
-                    tab.delegate?.tab(tab, didRequestNewTabForUrl: url, openedByPage: false)
-                } else {
-                    tab.delegate?.tab(tab, didRequestNewBackgroundTabForUrl: url)
-                }
+                self.openInNewTab(url)
             }
+
         } else {
             completion(.allow, nil)
         }
-
     }
 
 }

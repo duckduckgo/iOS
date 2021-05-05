@@ -19,17 +19,16 @@
 
 import Foundation
 import WebKit
-import Core
 
-class OpenExternallyPolicy: NavigationActionPolicy {
+public class OpenExternallyPolicy: NavigationActionPolicy {
 
     var openExternally: (URL) -> Void
 
-    init(openExternally: @escaping (URL) -> Void) {
+    public init(openExternally: @escaping (URL) -> Void) {
         self.openExternally = openExternally
     }
 
-    func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
+    public func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
 
         guard let url = navigationAction.request.url else {
             completion(.allow, nil)

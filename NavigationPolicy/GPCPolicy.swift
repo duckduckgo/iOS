@@ -19,30 +19,33 @@
 
 import Foundation
 import WebKit
-import Core
 
-class GPCPolicy: NavigationActionPolicy {
+public class GPCPolicy: NavigationActionPolicy {
 
     static let secGPCHeader = "Sec-GPC"
 
-    private(set) lazy var appUrls: AppUrls = AppUrls()
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    static let gpcEnabledDomains = [
+        "global-privacy-control.glitch.me",
+        "washingtonpost.com",
+        "nytimes.com"
+    ]
 
-    private weak var webView: WKWebView?
+    private let gpcEnabled: () -> Bool
+    private let load: (URLRequest) -> Void
 
-    init(webView: WKWebView) {
-        self.webView = webView
+    public init(gpcEnabled: @autoclosure @escaping () -> Bool, load: @escaping (URLRequest) -> Void) {
+        self.gpcEnabled = gpcEnabled
+        self.load = load
     }
 
-    func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
-        assert(webView != nil)
-        if navigationAction.isTargetingMainFrame(),
-           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
+    public func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
+        if navigationAction.targetFrame?.isMainFrame ?? false,
+           ["http", "https"].contains(navigationAction.request.url?.scheme),
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {
 
             completion(.cancel) {
-                self.webView?.load(request)
+                self.load(request)
             }
             return
         }
@@ -56,24 +59,31 @@ class GPCPolicy: NavigationActionPolicy {
          while the DOM signal is available to all websites.
          This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
          */
-        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
+        guard let url = incomingRequest.url, isGPCEnabledFor(url) else { return nil }
 
         var request = incomingRequest
-        // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
+        if gpcEnabled() {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Self.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Self.secGPCHeader)
                 return request
             }
         } else {
-            // Check if DN$ header is still there and remove it
             if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Self.secGPCHeader }) != nil {
                 request.setValue(nil, forHTTPHeaderField: Self.secGPCHeader)
                 return request
             }
         }
         return nil
+    }
+
+    private func isGPCEnabledFor(_ url: URL) -> Bool {
+        guard let navigationDomain = url.host else { return false }
+        let urls = Self.gpcEnabledDomains.compactMap { URL(string: "https://\($0)") }
+        return urls.contains(where: {
+            guard let domain = $0.host else { return false }
+            return navigationDomain == domain || domain.hasSuffix(".\(domain)")
+        })
     }
 
 }

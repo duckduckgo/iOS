@@ -1,5 +1,5 @@
 //
-//  BookmarkletPolicy.swift
+//  NavigationPolicy.h
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -17,30 +17,14 @@
 //  limitations under the License.
 //
 
-import Foundation
-import WebKit
+#import <Foundation/Foundation.h>
 
-class BookmarkletPolicy: NavigationActionPolicy {
+//! Project version number for NavigationPolicy.
+FOUNDATION_EXPORT double NavigationPolicyVersionNumber;
 
-    private weak var webView: WKWebView?
+//! Project version string for NavigationPolicy.
+FOUNDATION_EXPORT const unsigned char NavigationPolicyVersionString[];
 
-    init(webView: WKWebView) {
-        self.webView = webView
-    }
+// In this header, you should import all the public headers of your framework using statements like #import <NavigationPolicy/PublicHeader.h>
 
-    func check(navigationAction: WKNavigationAction, completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
 
-        guard let url = navigationAction.request.url,
-              url.isBookmarklet(),
-              let js = url.toDecodedBookmarklet() else {
-            completion(.allow, nil)
-            return
-        }
-
-        completion(.cancel) {
-            self.webView?.evaluateJavaScript(js)
-        }
-
-    }
-
-}

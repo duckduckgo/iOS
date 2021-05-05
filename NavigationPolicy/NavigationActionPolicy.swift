@@ -1,5 +1,5 @@
 //
-//  PolicyBucket.swift
+//  NavigationActionPolicy.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -20,39 +20,32 @@
 import Foundation
 import WebKit
 
-protocol NavigationActionPolicy {
+public protocol NavigationActionPolicy {
 
+    /// The completion handler must be called or else `webView:decidePolicyForNavigationAction:decisionHandler:` will not be called and will crash the app.
     func check(navigationAction: WKNavigationAction,
                completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void)
-    
+
 }
 
-class PolicyBucket {
+public struct NavigationActionPolicyChecker {
 
-    var policies = [NavigationActionPolicy]()
+    public static func checkAllPolicies(_ policies: [NavigationActionPolicy],
+                                        forNavigationAction action: WKNavigationAction,
+                                        _ completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
 
-    func add(_ policy: NavigationActionPolicy) {
-        policies.append(policy)
-    }
-
-    func checkPoliciesFor(navigationAction: WKNavigationAction,
-                          _ completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
-
-        // If we run out of policies, assume we're good to allow the navigation
-        if policies.isEmpty {
+        guard let nextPolicy = policies.first else {
             completion(.allow, nil)
             return
         }
 
-        let policy = policies.remove(at: 0)
-        policy.check(navigationAction: navigationAction) { policy, action in
-            if policy == .cancel {
-                completion(policy, action)
-                return
+        nextPolicy.check(navigationAction: action) { result, cancellationAction in
+            if result == .cancel {
+                completion(result, cancellationAction)
+            } else {
+                Self.checkAllPolicies(Array(policies.dropFirst()), forNavigationAction: action, completion)
             }
-            self.checkPoliciesFor(navigationAction: navigationAction, completion)
         }
-
     }
 
 }

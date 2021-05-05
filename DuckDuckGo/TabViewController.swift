@@ -21,6 +21,7 @@ import WebKit
 import Core
 import StoreKit
 import os.log
+import NavigationPolicy
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -1030,17 +1031,44 @@ extension TabViewController: WKNavigationDelegate {
             lastUpgradedURL = nil
         }
 
-        let bucket = PolicyBucket()
-        bucket.add(GPCPolicy(webView: self.webView))
-        bucket.add(NewTabPolicy(tab: self))
-        bucket.add(BookmarkletPolicy(webView: self.webView))
-        bucket.add(OpenExternallyPolicy(openExternally: self.openExternally(url:)))
-        // open in extern app policy
-        // reissue search policy
-        // reissue static ddg navigation policy
-        // target blank request policy
-        // https upgrade policy
-        bucket.checkPoliciesFor(navigationAction: navigationAction) { decision, cancelAction in
+        let policies: [NavigationActionPolicy] = [
+
+            GPCPolicy(gpcEnabled: self.appSettings.sendDoNotSell) { webView.load($0) },
+
+            makeOpenInNewTabPolicy(),
+
+            BookmarkletPolicy(js: navigationAction.request.url?.toDecodedBookmarklet()) { self.webView.evaluateJavaScript($0) },
+
+            OpenExternallyPolicy(openExternally: self.openExternally(url:)),
+
+            OpenInExternalAppPolicy(presentOpenInExternalAppAlert: self.presentOpenInExternalAppAlert(url:)),
+
+            ReissueSearchPolicy(isDuckDuckGoSearch: appUrls.isDuckDuckGo(url:),
+                                hasCorrectStatsParams: appUrls.hasCorrectMobileStatsParams(url:),
+                                hasCorrectSearchHeaderParams: appUrls.hasCorrectSearchHeaderParams(url:),
+                                reissueSearch: self.reissueSearchWithRequiredParams(for:)),
+
+            ReissueStaticNavigationPolicy(isDuckDuckGoStatic: appUrls.isDuckDuckGoStatic(url:),
+                                          hasCorrectSearchHeaderParams: appUrls.hasCorrectSearchHeaderParams(url:),
+                                          reissueSearch: self.reissueNavigationWithSearchHeaderParams(for:)),
+
+            TargetBlankTabPolicy { self.delegate?.tab(self, didRequestNewTabForUrl: $0, openedByPage: true) },
+
+            SmarterEncryptionUpgradePolicy(isProtected: contentBlockerProtection.isProtected(domain:), isUpgradeable: {
+                httpsUpgrade.isUgradeable(url: $0, completion: $1)
+            }) { _ in
+                //            if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
+                //                NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                //                self?.lastUpgradedURL = upgradedUrl
+                //                self?.load(url: upgradedUrl)
+                //                completion(.cancel)
+                //                return
+                //            }
+                //            completion(allowPolicy)
+            }
+        ]
+
+        NavigationActionPolicyChecker.checkAllPolicies(policies, forNavigationAction: navigationAction) { decision, cancelAction in
 
             if decision == .cancel {
                 decisionHandler(decision)
@@ -1064,97 +1092,15 @@ extension TabViewController: WKNavigationDelegate {
 
         }
     }
-    
-    private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        let allowPolicy = determineAllowPolicy()
 
-        guard navigationAction.request.mainDocumentURL != nil else {
-            completion(allowPolicy)
-            return
-        }
-        
-        guard let url = navigationAction.request.url else {
-            completion(allowPolicy)
-            return
-        }
-
-        let schemeType = SchemeHandler.schemeType(for: url)
-        
-        switch schemeType {
-        case .navigational:
-            performNavigationFor(url: url,
-                                 navigationAction: navigationAction,
-                                 allowPolicy: allowPolicy,
-                                 completion: completion)
-            
-        case .external(let action):
-            performExternalNavigationFor(url: url, action: action)
-            completion(.cancel)
-            
-        case .unknown:
-            if navigationAction.navigationType == .linkActivated {
-                openExternally(url: url)
-            } else {
-                presentOpenInExternalAppAlert(url: url)
-            }
-            completion(.cancel)
-        }
-    }
-    
-    private func performNavigationFor(url: URL,
-                                      navigationAction: WKNavigationAction,
-                                      allowPolicy: WKNavigationActionPolicy,
-                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        if shouldReissueSearch(for: url) {
-            reissueSearchWithRequiredParams(for: url)
-            completion(.cancel)
-            return
-        }
-        
-        if shouldReissueDDGStaticNavigation(for: url) {
-            reissueNavigationWithSearchHeaderParams(for: url)
-            completion(.cancel)
-            return
-        }
-        
-        if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true)
-            completion(.cancel)
-            return
-        }
-
-        // TODO find out why we prevent https upgrades on unprotected sites
-        if !contentBlockerProtection.isProtected(domain: url.host) {
-            completion(allowPolicy)
-            return
-        }
-
-        httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
-            if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
-                NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                self?.lastUpgradedURL = upgradedUrl
-                self?.load(url: upgradedUrl)
-                completion(.cancel)
-                return
-            }
-            completion(allowPolicy)
-        }
-    }
-
-    private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {
-        switch action {
-        case .open:
-            openExternally(url: url)
-        case .askForConfirmation:
-            presentOpenInExternalAppAlert(url: url)
-        case .cancel:
-            break
-        }
-    }
-    
-    private func isNewTargetBlankRequest(navigationAction: WKNavigationAction) -> Bool {
-        return navigationAction.navigationType == .linkActivated && navigationAction.targetFrame == nil
+    func makeOpenInNewTabPolicy() -> OpenInNewTabPolicy {
+        return OpenInNewTabPolicy(keyModifiers: self.delegate?.tabWillRequestNewTab(self).map {
+           (command: $0.contains(.command), shift: $0.contains(.shift))
+        }, newTabForUrl: { [weak self] in
+            self?.delegate?.tab(self!, didRequestNewTabForUrl: $0, openedByPage: false)
+        }, newBackgroundTabForURL: { [weak self] in
+            self?.delegate?.tab(self!, didRequestNewBackgroundTabForUrl: $0)
+        })
     }
 
     private func determineAllowPolicy() -> WKNavigationActionPolicy {

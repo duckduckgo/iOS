@@ -273,6 +273,7 @@
 		85CA99FC264306C600145393 /* ReissueStaticNavigationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA99FB264306C600145393 /* ReissueStaticNavigationPolicy.swift */; };
 		85CA99FE2643094800145393 /* TargetBlankTabPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA99FD2643094800145393 /* TargetBlankTabPolicy.swift */; };
 		85CA9A0026430AF600145393 /* SmarterEncryptionUpgradePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA99FF26430AF600145393 /* SmarterEncryptionUpgradePolicy.swift */; };
+		85CA9A1F2643A09F00145393 /* TabViewControllerNavigationPolicyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA9A1E2643A09F00145393 /* TabViewControllerNavigationPolicyExtension.swift */; };
 		85D2187024BF24DB004373D2 /* FaviconRequestModifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2186F24BF24DB004373D2 /* FaviconRequestModifierTests.swift */; };
 		85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187124BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift */; };
 		85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187324BF25CD004373D2 /* FaviconsTests.swift */; };
@@ -1005,6 +1006,7 @@
 		85CA99FB264306C600145393 /* ReissueStaticNavigationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReissueStaticNavigationPolicy.swift; sourceTree = "<group>"; };
 		85CA99FD2643094800145393 /* TargetBlankTabPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBlankTabPolicy.swift; sourceTree = "<group>"; };
 		85CA99FF26430AF600145393 /* SmarterEncryptionUpgradePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmarterEncryptionUpgradePolicy.swift; sourceTree = "<group>"; };
+		85CA9A1E2643A09F00145393 /* TabViewControllerNavigationPolicyExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerNavigationPolicyExtension.swift; sourceTree = "<group>"; };
 		85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NetworkLeaderboard 2.xcdatamodel"; sourceTree = "<group>"; };
 		85D2186F24BF24DB004373D2 /* FaviconRequestModifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconRequestModifierTests.swift; sourceTree = "<group>"; };
 		85D2187124BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundCachingDownloaderTests.swift; sourceTree = "<group>"; };
@@ -2670,13 +2672,6 @@
 			path = OpenAction;
 			sourceTree = "<group>";
 		};
-		8582BAC5262F8D4200635C66 /* Policies */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Policies;
-			sourceTree = "<group>";
-		};
 		858566F1252E55AE007501B8 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -2819,21 +2814,29 @@
 		85CA99E72642F2BB00145393 /* NavigationPolicy */ = {
 			isa = PBXGroup;
 			children = (
+				85CA9A012643996200145393 /* Policies */,
+				85CA99E92642F2BB00145393 /* Info.plist */,
+				85CA99E82642F2BB00145393 /* NavigationPolicy.h */,
+			);
+			path = NavigationPolicy;
+			sourceTree = "<group>";
+		};
+		85CA9A012643996200145393 /* Policies */ = {
+			isa = PBXGroup;
+			children = (
 				8582BAFE262FA90C00635C66 /* BookmarkletPolicy.swift */,
 				8582BAE6262F8E7700635C66 /* GPCPolicy.swift */,
-				85CA99E92642F2BB00145393 /* Info.plist */,
 				8582BAD0262F8D5400635C66 /* NavigationActionPolicy.swift */,
-				85CA99E82642F2BB00145393 /* NavigationPolicy.h */,
 				8582BB0A262FB30F00635C66 /* OpenExternallyPolicy.swift */,
 				85CA99DF2642D82F00145393 /* OpenInExternalAppPolicy.swift */,
 				8582BAF2262F9DB500635C66 /* OpenInNewTabPolicy.swift */,
 				85CA99F92642FCAA00145393 /* ReissueSearchPolicy.swift */,
-				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
 				85CA99FB264306C600145393 /* ReissueStaticNavigationPolicy.swift */,
-				85CA99FD2643094800145393 /* TargetBlankTabPolicy.swift */,
+				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
 				85CA99FF26430AF600145393 /* SmarterEncryptionUpgradePolicy.swift */,
+				85CA99FD2643094800145393 /* TargetBlankTabPolicy.swift */,
 			);
-			path = NavigationPolicy;
+			path = Policies;
 			sourceTree = "<group>";
 		};
 		85D2186E24BF24BA004373D2 /* Favicons */ = {
@@ -3309,7 +3312,6 @@
 				8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */,
 				F1617C141E57336D00DEDCAF /* TabManager.swift */,
 				F13B4BF51F18C75D00814661 /* Model */,
-				8582BAC5262F8D4200635C66 /* Policies */,
 				F13B4BF61F18C76600814661 /* UI */,
 			);
 			name = Tabs;
@@ -3329,17 +3331,18 @@
 		F13B4BF61F18C76600814661 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				98999D5822FDA41500CBBE1B /* BasicAuthenticationAlert.swift */,
+				8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */,
 				984147C224F026A300362052 /* Tab.storyboard */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
-				9820EAF422613CD30089094D /* WebProgressWorker.swift */,
 				83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */,
-				83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */,
 				8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */,
-				98999D5822FDA41500CBBE1B /* BasicAuthenticationAlert.swift */,
-				8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */,
-				8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */,
+				83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */,
+				85CA9A1E2643A09F00145393 /* TabViewControllerNavigationPolicyExtension.swift */,
 				8548D96725262C33005AAE49 /* view_highlight.json */,
+				8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */,
+				9820EAF422613CD30089094D /* WebProgressWorker.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -4253,6 +4256,7 @@
 					};
 					85CA99E52642F2BA00145393 = {
 						CreatedOnToolsVersion = 12.5;
+						LastSwiftMigration = 1250;
 					};
 					85D33FCA25C97B6E002B91A6 = {
 						CreatedOnToolsVersion = 12.4;
@@ -4867,6 +4871,7 @@
 				83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */,
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
+				85CA9A1F2643A09F00145393 /* TabViewControllerNavigationPolicyExtension.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
@@ -6799,6 +6804,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -6825,6 +6831,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.NavigationPolicy;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -6837,6 +6844,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;

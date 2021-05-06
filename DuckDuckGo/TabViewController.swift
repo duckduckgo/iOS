@@ -69,7 +69,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
+    let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
@@ -79,7 +79,7 @@ class TabViewController: UIViewController {
     private let requeryLogic = RequeryLogic()
     
     private var httpsForced: Bool = false
-    private var lastUpgradedURL: URL?
+    var lastUpgradedURL: URL?
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
@@ -408,25 +408,6 @@ class TabViewController: UIViewController {
         reload(scripts: false)
     }
     
-    private func shouldReissueDDGStaticNavigation(for url: URL) -> Bool {
-        guard appUrls.isDuckDuckGoStatic(url: url) else { return false }
-        return  !appUrls.hasCorrectSearchHeaderParams(url: url)
-    }
-    
-    private func reissueNavigationWithSearchHeaderParams(for url: URL) {
-        load(url: appUrls.applySearchHeaderParams(for: url))
-    }
-    
-    private func shouldReissueSearch(for url: URL) -> Bool {
-        guard appUrls.isDuckDuckGoSearch(url: url) else { return false }
-        return  !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
-    }
-    
-    private func reissueSearchWithRequiredParams(for url: URL) {
-        let mobileSearch = appUrls.applyStatsParams(for: url)
-        reissueNavigationWithSearchHeaderParams(for: mobileSearch)
-    }
-    
     private func showProgressIndicator() {
         progressWorker.didStartLoading()
     }
@@ -670,7 +651,7 @@ class TabViewController: UIViewController {
         present(controller: alert, fromView: webView, atPoint: point)
     }
     
-    private func openExternally(url: URL) {
+    func openExternally(url: URL) {
         self.url = webView.url
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
@@ -857,13 +838,6 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationResponse: WKNavigationResponse,
-                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
-        url = webView.url
-    }
-    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
         cancelTrackerNetworksAnimation()
@@ -1020,104 +994,7 @@ extension TabViewController: WKNavigationDelegate {
         updateSiteRating()
         checkLoginDetectionAfterNavigation()
     }
-            
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        let tld = storageCache.tld
-        if navigationAction.isTargetingMainFrame()
-            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
-            lastUpgradedURL = nil
-        }
-
-        let policies: [NavigationActionPolicy] = [
-
-            GPCPolicy(gpcEnabled: self.appSettings.sendDoNotSell) { webView.load($0) },
-
-            makeOpenInNewTabPolicy(),
-
-            BookmarkletPolicy(js: navigationAction.request.url?.toDecodedBookmarklet()) { self.webView.evaluateJavaScript($0) },
-
-            OpenExternallyPolicy(openExternally: self.openExternally(url:)),
-
-            OpenInExternalAppPolicy(presentOpenInExternalAppAlert: self.presentOpenInExternalAppAlert(url:)),
-
-            ReissueSearchPolicy(isDuckDuckGoSearch: appUrls.isDuckDuckGo(url:),
-                                hasCorrectStatsParams: appUrls.hasCorrectMobileStatsParams(url:),
-                                hasCorrectSearchHeaderParams: appUrls.hasCorrectSearchHeaderParams(url:),
-                                reissueSearch: self.reissueSearchWithRequiredParams(for:)),
-
-            ReissueStaticNavigationPolicy(isDuckDuckGoStatic: appUrls.isDuckDuckGoStatic(url:),
-                                          hasCorrectSearchHeaderParams: appUrls.hasCorrectSearchHeaderParams(url:),
-                                          reissueSearch: self.reissueNavigationWithSearchHeaderParams(for:)),
-
-            TargetBlankTabPolicy { self.delegate?.tab(self, didRequestNewTabForUrl: $0, openedByPage: true) },
-
-            SmarterEncryptionUpgradePolicy(isProtected: contentBlockerProtection.isProtected(domain:), isUpgradeable: {
-                httpsUpgrade.isUgradeable(url: $0, completion: $1)
-            }) { _ in
-                //            if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
-                //                NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                //                self?.lastUpgradedURL = upgradedUrl
-                //                self?.load(url: upgradedUrl)
-                //                completion(.cancel)
-                //                return
-                //            }
-                //            completion(allowPolicy)
-            }
-        ]
-
-        NavigationActionPolicyChecker.checkAllPolicies(policies, forNavigationAction: navigationAction) { decision, cancelAction in
-
-            if decision == .cancel {
-                decisionHandler(decision)
-                cancelAction?()
-                return
-            }
-
-            let allowPolicy = determineAllowPolicy()
-
-            // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
-            if #available(iOS 12, *) {
-                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
-            }
-
-            if let url = navigationAction.request.url, self.appUrls.isDuckDuckGoSearch(url: url) {
-                StatisticsLoader.shared.refreshSearchRetentionAtb()
-                self.findInPage?.done()
-            }
-
-            decisionHandler(allowPolicy)
-
-        }
-    }
-
-    func makeOpenInNewTabPolicy() -> OpenInNewTabPolicy {
-        return OpenInNewTabPolicy(keyModifiers: self.delegate?.tabWillRequestNewTab(self).map {
-           (command: $0.contains(.command), shift: $0.contains(.shift))
-        }, newTabForUrl: { [weak self] in
-            self?.delegate?.tab(self!, didRequestNewTabForUrl: $0, openedByPage: false)
-        }, newBackgroundTabForURL: { [weak self] in
-            self?.delegate?.tab(self!, didRequestNewBackgroundTabForUrl: $0)
-        })
-    }
-
-    private func determineAllowPolicy() -> WKNavigationActionPolicy {
-        let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
-        return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks
-    }
-    
-    private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
-        guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
-        
-        if let upgradedUrl: URL = url.toHttps(), lastUpgradedURL != upgradedUrl {
-            return upgradedUrl
-        }
-        
-        return nil
-    }
-    
     private func showErrorNow() {
         guard let error = lastError as NSError? else { return }
         hideProgressIndicator()

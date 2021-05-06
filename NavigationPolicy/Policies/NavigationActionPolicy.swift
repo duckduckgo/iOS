@@ -24,7 +24,7 @@ public protocol NavigationActionPolicy {
 
     /// The completion handler must be called or else `webView:decidePolicyForNavigationAction:decisionHandler:` will not be called and will crash the app.
     func check(navigationAction: WKNavigationAction,
-               completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void)
+               completion: @escaping (WKNavigationActionPolicy, (() -> Void)?) -> Void)
 
 }
 
@@ -32,7 +32,7 @@ public struct NavigationActionPolicyChecker {
 
     public static func checkAllPolicies(_ policies: [NavigationActionPolicy],
                                         forNavigationAction action: WKNavigationAction,
-                                        _ completion: (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
+                                        _ completion: @escaping (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
 
         guard let nextPolicy = policies.first else {
             completion(.allow, nil)

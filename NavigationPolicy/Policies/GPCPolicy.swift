@@ -30,10 +30,10 @@ public class GPCPolicy: NavigationActionPolicy {
         "nytimes.com"
     ]
 
-    private let gpcEnabled: () -> Bool
+    private let gpcEnabled: Bool
     private let load: (URLRequest) -> Void
 
-    public init(gpcEnabled: @autoclosure @escaping () -> Bool, load: @escaping (URLRequest) -> Void) {
+    public init(gpcEnabled: Bool, load: @escaping (URLRequest) -> Void) {
         self.gpcEnabled = gpcEnabled
         self.load = load
     }
@@ -62,7 +62,7 @@ public class GPCPolicy: NavigationActionPolicy {
         guard let url = incomingRequest.url, isGPCEnabledFor(url) else { return nil }
 
         var request = incomingRequest
-        if gpcEnabled() {
+        if gpcEnabled {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Self.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Self.secGPCHeader)

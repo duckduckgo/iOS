@@ -82,11 +82,9 @@ struct UserAgent {
         static let osVersion = " OS ([0-9_]+)"
     }
     
-    private static let sitesThatOmitApplication = [
-        "cvs.com",
-        "sovietgames.su",
-        "accounts.google.com",
-        "facebook.com"
+    private static let sitesThatIncludeApplication = [
+        "duckduckgo.com",
+        "wikipedia.org"
     ]
     
     private let baseAgent: String
@@ -103,11 +101,11 @@ struct UserAgent {
     }
     
     public func agent(forUrl url: URL?, isDesktop: Bool) -> String {
-        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { domain in
+        let includeApplicationComponent = UserAgent.sitesThatIncludeApplication.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }
         
-        let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+        let resolvedApplicationComponent = includeApplicationComponent ? applicationComponent : nil
         if isDesktop {
             return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
         } else {

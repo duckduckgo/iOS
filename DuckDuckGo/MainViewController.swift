@@ -1336,7 +1336,8 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
-        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
+        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {

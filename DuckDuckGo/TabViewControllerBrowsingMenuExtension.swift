@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 extension TabViewController {
     
@@ -80,6 +81,10 @@ extension TabViewController {
             entries.append(.separator)
 
             if let entry = buildKeepSignInEntry(forLink: link) {
+                entries.append(entry)
+            }
+            
+            if let entry = buildUseNewDuckAddressEntry(forLink: link) {
                 entries.append(entry)
             }
             
@@ -223,6 +228,24 @@ extension TabViewController {
         
         ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
             self.performSaveFavoriteAction(for: link)
+        }
+    }
+    
+    private func buildUseNewDuckAddressEntry(forLink link: Link) -> BrowsingMenuEntry? {
+        guard emailManager.isSignedIn else { return nil }
+        let title = UserText.emailBrowsingMenuUseNewDuckAddress
+        let image = UIImage(named: "MenuEmail")!
+
+        return BrowsingMenuEntry.regular(name: title, image: image) { [weak self] in
+            self?.emailManager.getAliasEmailIfNeededAndConsume { alias, _ in
+                guard let alias = alias else {
+                    // we may want to communicate this failure to the user in the future
+                    return
+                }
+                let pasteBoard = UIPasteboard.general
+                pasteBoard.string = alias
+                ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
+            }
         }
     }
 

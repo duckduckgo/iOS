@@ -19,6 +19,7 @@
 
 import WebKit
 import os
+import BrowserServicesKit
 
 public class DebugUserScript: NSObject, UserScript {
     
@@ -30,7 +31,7 @@ public class DebugUserScript: NSObject, UserScript {
     }
     
     public lazy var source: String = {
-        return loadJS(isDebugBuild ? "debug-messaging-enabled" : "debug-messaging-disabled")
+        return Self.loadJS(isDebugBuild ? "debug-messaging-enabled" : "debug-messaging-disabled", from: Bundle.core)
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

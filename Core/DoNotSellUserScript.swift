@@ -19,10 +19,11 @@
 
 import UIKit
 import WebKit
+import BrowserServicesKit
 
 public class DoNotSellUserScript: NSObject, UserScript {
     public var source: String {
-        return loadJS("donotsell")
+        return Self.loadJS("donotsell", from: Bundle.core)
     }
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

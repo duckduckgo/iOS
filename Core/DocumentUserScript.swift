@@ -18,11 +18,12 @@
 //
 
 import WebKit
+import BrowserServicesKit
 
 public class DocumentUserScript: NSObject, UserScript {
     
     public lazy var source: String = {
-       return loadJS("document")
+        return Self.loadJS("document", from: Bundle.core)
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

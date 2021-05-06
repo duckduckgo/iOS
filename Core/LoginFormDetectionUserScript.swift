@@ -18,6 +18,7 @@
 //
 
 import WebKit
+import BrowserServicesKit
 
 public protocol LoginFormDetectionDelegate: NSObjectProtocol {
     
@@ -28,7 +29,7 @@ public protocol LoginFormDetectionDelegate: NSObjectProtocol {
 public class LoginFormDetectionUserScript: NSObject, UserScript {
 
     public lazy var source: String = {
-       return loadJS("login-form-detection")
+        return Self.loadJS("login-form-detection", from: Bundle.core)
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

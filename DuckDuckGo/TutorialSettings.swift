@@ -59,4 +59,5 @@ struct DefaultTutorialSettings: TutorialSettings {
             userDefaults().set(newValue, forKey: Keys.hasSeenOnboarding)
         }
     }
+
 }

@@ -24,32 +24,32 @@ extension TabSwitcherViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             
-            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow),
-                         discoverabilityTitle: UserText.keyCommandClose),
+            UIKeyCommand(title: "", action: #selector(keyboardCloseWindow), input: UIKeyCommand.inputEscape,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandClose),
                         
-            UIKeyCommand(input: "w", modifierFlags: [.command], action: #selector(keyboardCloseWindow),
-                         discoverabilityTitle: UserText.keyCommandClose),
+            UIKeyCommand(title: "", action: #selector(keyboardCloseWindow), input: "w",
+                         modifierFlags: [.command], discoverabilityTitle: UserText.keyCommandClose),
 
-            UIKeyCommand(input: "t", modifierFlags: [ .command ], action: #selector(keyboardNewTab),
-                        discoverabilityTitle: UserText.keyCommandNewTab),
-            UIKeyCommand(input: "n", modifierFlags: [ .command ], action: #selector(keyboardNewTab),
-                discoverabilityTitle: UserText.keyCommandNewTab),
+            UIKeyCommand(title: "", action: #selector(keyboardNewTab), input: "t",
+                         modifierFlags: [ .command ], discoverabilityTitle: UserText.keyCommandNewTab),
+            UIKeyCommand(title: "", action: #selector(keyboardNewTab), input: "n",
+                         modifierFlags: [ .command ], discoverabilityTitle: UserText.keyCommandNewTab),
             
-            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardSelectCurrent),
-                         discoverabilityTitle: UserText.keyCommandSelect),
+            UIKeyCommand(title: "", action: #selector(keyboardSelectCurrent), input: UIKeyCommand.inputEnter,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandSelect),
             
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp),
-                         discoverabilityTitle: UserText.keyCommandPreviousTab),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown),
-                         discoverabilityTitle: UserText.keyCommandNextTab),
+            UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionUp), input: UIKeyCommand.inputUpArrow,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandPreviousTab),
+            UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionDown), input: UIKeyCommand.inputDownArrow,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandNextTab),
             
-            UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp),
-                         discoverabilityTitle: UserText.keyCommandPreviousTab),
-            UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown),
-                         discoverabilityTitle: UserText.keyCommandNextTab),
+            UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionUp), input: UIKeyCommand.inputLeftArrow,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandPreviousTab),
+            UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionDown), input: UIKeyCommand.inputRightArrow,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandNextTab),
 
-            UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab),
-                         discoverabilityTitle: UserText.keyCommandCloseTab)
+            UIKeyCommand(title: "", action: #selector(keyboardRemoveTab), input: UIKeyCommand.inputBackspace,
+                         modifierFlags: [], discoverabilityTitle: UserText.keyCommandCloseTab)
         ]
     }
     

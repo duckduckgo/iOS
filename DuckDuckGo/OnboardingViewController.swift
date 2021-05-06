@@ -1,5 +1,5 @@
 //
-//  OnboardingSummaryViewController.swift
+//  OnboardingViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.

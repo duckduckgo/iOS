@@ -1,5 +1,5 @@
 //
-//  DaxDialogTests.swift
+//  DaxDialogFireEducationTests.swift
 //  UnitTests
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.

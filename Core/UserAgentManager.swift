@@ -1,5 +1,5 @@
 //
-//  UserAgentConfiguration.swift
+//  UserAgentManager.swift
 //  Core
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.

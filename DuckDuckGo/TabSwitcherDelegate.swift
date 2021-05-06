@@ -19,7 +19,7 @@
 
 import Core
 
-protocol TabSwitcherDelegate: class {
+protocol TabSwitcherDelegate: AnyObject {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController)
 

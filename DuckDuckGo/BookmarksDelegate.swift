@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-protocol BookmarksDelegate: class {
+protocol BookmarksDelegate: AnyObject {
 
     func bookmarksDidSelect(link: Link)
     

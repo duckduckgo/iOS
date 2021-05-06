@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-protocol TabViewCellDelegate: class {
+protocol TabViewCellDelegate: AnyObject {
 
     func deleteTab(tab: Tab)
 

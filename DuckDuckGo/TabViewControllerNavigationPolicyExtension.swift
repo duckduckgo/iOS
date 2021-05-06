@@ -37,7 +37,7 @@ extension TabViewController {
 
         let tld = AppDependencyProvider.shared.storageCache.current.tld
         if navigationAction.isTargetingMainFrame()
-            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
+            && tld.domain(navigationAction.request.url?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
         }
 

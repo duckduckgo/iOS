@@ -24,59 +24,53 @@ public class SmarterEncryptionUpgradePolicy: NavigationActionPolicy {
     private let lastUpgradedURL: URL?
     private let isProtected: (String?) -> Bool
     private let isUpgradeable: (URL, @escaping (Bool) -> Void) -> Void
-    private let upgrade: (URL) -> Void
+    private let upgradeWith: (URL) -> Void
 
     public init(lastUpgradedURL: URL?,
                 isProtected: @escaping (String?) -> Bool,
                 isUpgradeable: @escaping (URL, @escaping (Bool) -> Void) -> Void,
-                upgrade: @escaping (URL) -> Void) {
+                upgradeWith: @escaping (URL) -> Void) {
 
         self.lastUpgradedURL = lastUpgradedURL
         self.isProtected = isProtected
         self.isUpgradeable = isUpgradeable
-        self.upgrade = upgrade
+        self.upgradeWith = upgradeWith
 
     }
 
     public func check(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy, (() -> Void)?) -> Void) {
 
         guard let url = navigationAction.request.url,
+              navigationAction.targetFrame?.isMainFrame ?? false,
               !isProtected(url.host) else {
             completion(.allow, nil)
             return
         }
 
+        // assumption is that this always completes
         isUpgradeable(url) { isUpgradeable in
-
-            if isUpgradeable {
-                completion(.cancel) {
-
-                }
+            guard isUpgradeable else {
+                completion(.allow, nil)
+                return
             }
 
+            completion(.cancel) {
+                if let upgradedUrl = url.toHttps() {
+                    self.upgradeWith(upgradedUrl)
+                }
+            }
         }
+    }
 
-//        isUpgradeable(url) { isUpgradable in
-//            if isUpgradable {
-//                completion(.cancel) {
-//                    self.upgrade(url)
-//                }
-//            } else {
-//                completion(.allow, nil)
-//            }
-//        }
-        //
-        //    private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
-        //        guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
-        //
-        //        if let upgradedUrl: URL = url.toHttps(), lastUpgradedURL != upgradedUrl {
-        //            return upgradedUrl
-        //        }
-        //
-        //        return nil
-        //    }
+}
 
+fileprivate extension URL {
 
+    func toHttps() -> URL? {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
+        guard components.scheme == "http" else { return self }
+        components.scheme = "https"
+        return components.url
     }
 
 }

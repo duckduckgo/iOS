@@ -53,7 +53,7 @@ class ActionMessageView: UIView {
     }
     
     static func present(message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
-        guard let window = UIApplication.shared.keyWindow else { return }
+        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
         
         dismissAllMessages()
         

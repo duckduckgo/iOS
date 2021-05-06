@@ -43,12 +43,12 @@ public class BookmarkUserDefaults: BookmarkStore {
     public var bookmarks: [Link] {
         get {
             if let data = userDefaults.data(forKey: Keys.bookmarkKey) {
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link] ?? []
+                return (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Link]) ?? []
             }
             return []
         }
         set(newBookmarks) {
-            let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newBookmarks, requiringSecureCoding: false) else { return }
             userDefaults.set(data, forKey: Keys.bookmarkKey)
             NotificationCenter.default.post(name: Notifications.bookmarkStoreDidChange, object: self)
         }
@@ -57,12 +57,12 @@ public class BookmarkUserDefaults: BookmarkStore {
     public var favorites: [Link] {
         get {
             if let data = userDefaults.data(forKey: Keys.favoritesKey) {
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link] ?? []
+                return (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Link]) ?? []
             }
             return []
         }
         set(newFavorites) {
-            let data = NSKeyedArchiver.archivedData(withRootObject: newFavorites)
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newFavorites, requiringSecureCoding: false) else { return }
             userDefaults.set(data, forKey: Keys.favoritesKey)
             NotificationCenter.default.post(name: Notifications.bookmarkStoreDidChange, object: self)
         }

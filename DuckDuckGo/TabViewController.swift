@@ -857,7 +857,6 @@ extension TabViewController: WKNavigationDelegate {
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
         trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
@@ -922,7 +921,6 @@ extension TabViewController: WKNavigationDelegate {
         siteRating?.finishedLoading = true
         updateSiteRating()
         tabModel.link = link
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
@@ -1001,7 +999,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         siteRating?.finishedLoading = true
         updateSiteRating()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1338,12 +1335,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload(scripts: false)
         }
     }
-    
-    // Prevents rare accidental display of preview previous to iOS 12
-    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
-        return false
-    }
-    
 }
 
 extension TabViewController: ContentBlockerUserScriptDelegate {

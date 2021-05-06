@@ -59,7 +59,7 @@ public class Database {
                     parameters[PixelParameters.dataAvailiability] = "\(application.isProtectedDataAvailable)"
                 }
                 
-                Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters, isCounted: true)
+                Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters)
                 // Give Pixel a chance to be sent, but not too long
                 Thread.sleep(forTimeInterval: 1)
                 fatalError("Could not load DB: \(error.localizedDescription)")

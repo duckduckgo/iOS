@@ -19,7 +19,7 @@
 
 import Foundation
 
-protocol OmniBarDelegate: class {
+protocol OmniBarDelegate: AnyObject {
 
     func onOmniQueryUpdated(_ query: String)
     

@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-protocol HomeMessageViewSectionRendererDelegate: class {
+protocol HomeMessageViewSectionRendererDelegate: AnyObject {
     
     func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer,
                              didDismissHomeMessage homeMessage: HomeMessage)

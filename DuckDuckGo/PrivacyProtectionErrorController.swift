@@ -21,7 +21,7 @@ import Foundation
 import UIKit
 import Core
 
-protocol PrivacyProtectionErrorDelegate: class {
+protocol PrivacyProtectionErrorDelegate: AnyObject {
 
     func canTryAgain(controller: PrivacyProtectionErrorController) -> Bool
 

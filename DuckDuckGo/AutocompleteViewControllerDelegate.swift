@@ -19,7 +19,7 @@
 
 import UIKit
 
-protocol AutocompleteViewControllerDelegate: class {
+protocol AutocompleteViewControllerDelegate: AnyObject {
 
     func autocomplete(selectedSuggestion suggestion: Suggestion)
 
@@ -30,7 +30,7 @@ protocol AutocompleteViewControllerDelegate: class {
     func autocompleteWasDismissed()
 }
 
-protocol AutocompleteViewControllerPresentationDelegate: class {
+protocol AutocompleteViewControllerPresentationDelegate: AnyObject {
     
     func autocompleteDidChangeContentHeight(height: CGFloat)
 

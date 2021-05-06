@@ -19,7 +19,7 @@
 
 import Foundation
 
-public protocol StatisticsStore: class {
+public protocol StatisticsStore: AnyObject {
 
     var hasInstallStatistics: Bool { get }
     var installDate: Date? { get set }

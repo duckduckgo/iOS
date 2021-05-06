@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-protocol FavoritesOverlayDelegate: class {
+protocol FavoritesOverlayDelegate: AnyObject {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link)
 }

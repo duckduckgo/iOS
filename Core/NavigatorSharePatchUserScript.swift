@@ -19,10 +19,11 @@
 
 import UIKit
 import WebKit
+import BrowserServicesKit
 
 public class NavigatorSharePatchUserScript: NSObject, UserScript {
     public var source: String {
-        return loadJS("navigatorsharepatch")
+        return Self.loadJS("navigatorsharepatch", from: Bundle.core)
     }
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

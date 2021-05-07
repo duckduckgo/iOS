@@ -101,7 +101,7 @@ class ThemeManager {
         }
     }
 
-    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.keyWindow) {
+    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first) {
         guard #available(iOS 13.0, *) else { return }
         switch appSettings.currentThemeName {
 

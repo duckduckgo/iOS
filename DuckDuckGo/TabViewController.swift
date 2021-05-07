@@ -22,6 +22,7 @@ import Core
 import StoreKit
 import os.log
 import NavigationPolicy
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -164,6 +165,13 @@ class TabViewController: UIViewController {
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
+    lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.aliasPermissionDelegate = self
+        emailManager.requestDelegate = self
+        return emailManager
+    }()
+    private var emailScript = EmailUserScript()
     private var debugScript = DebugUserScript()
     
     private var userScripts: [UserScript] = []
@@ -220,7 +228,8 @@ class TabViewController: UIViewController {
             contentBlockerRulesScript,
             fingerprintScript,
             faviconScript,
-            fullScreenVideoScript
+            fullScreenVideoScript,
+            emailScript
         ]
         
         if #available(iOS 13, *) {
@@ -242,6 +251,8 @@ class TabViewController: UIViewController {
         contentBlockerScript.delegate = self
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
+        emailScript.webView = webView
+        emailScript.delegate = emailManager
     }
     
     func updateTabModel() {
@@ -774,7 +785,7 @@ extension TabViewController: WKNavigationDelegate {
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
-            performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
+            performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
             guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
@@ -782,8 +793,8 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
-    func performBascHTTPAuthentication(protectionSpace: URLProtectionSpace,
-                                       completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    func performBasicHTTPAuthentication(protectionSpace: URLProtectionSpace,
+                                        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         let isHttps = protectionSpace.protocol == "https"
         let alert = BasicAuthenticationAlert(host: protectionSpace.host,
                                              isEncrypted: isHttps,
@@ -825,7 +836,6 @@ extension TabViewController: WKNavigationDelegate {
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
         trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
@@ -883,7 +893,6 @@ extension TabViewController: WKNavigationDelegate {
         siteRating?.finishedLoading = true
         updateSiteRating()
         tabModel.link = link
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
@@ -962,7 +971,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         siteRating?.finishedLoading = true
         updateSiteRating()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1101,12 +1109,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload(scripts: false)
         }
     }
-    
-    // Prevents rare accidental display of preview previous to iOS 12
-    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
-        return false
-    }
-    
 }
 
 extension TabViewController: ContentBlockerUserScriptDelegate {
@@ -1156,6 +1158,72 @@ extension TabViewController: FaviconUserScriptDelegate {
         tabModel.didUpdateFavicon()
     }
     
+}
+
+extension TabViewController: EmailManagerAliasPermissionDelegate {
+
+    func emailManager(_ emailManager: EmailManager,
+                      didRequestPermissionToProvideAliasWithCompletion completionHandler: @escaping (EmailManagerPermittedAddressType) -> Void) {
+
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
+            alert.overrideUserInterfaceStyle()
+
+            if let userEmail = emailManager.userEmail {
+                let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
+                alert.addAction(title: actionTitle) {
+                    Pixel.fire(pixel: .emailUserPressedUseAddress)
+                    completionHandler(.user)
+                }
+            }
+
+            alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
+                Pixel.fire(pixel: .emailUserPressedUseAlias)
+                completionHandler(.generated)
+            }
+
+            alert.addAction(title: UserText.emailAliasAlertDecline) {
+                Pixel.fire(pixel: .emailTooltipDismissed)
+                completionHandler(.none)
+            }
+
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                // make sure the completion handler is called if the alert is dismissed by tapping outside the alert
+                alert.addAction(title: "", style: .cancel) {
+                    completionHandler(.none)
+                }
+            }
+
+            alert.popoverPresentationController?.permittedArrowDirections = []
+            alert.popoverPresentationController?.delegate = self
+            let bounds = self.view.bounds
+            let point = Point(x: Int((bounds.maxX - bounds.minX) / 2.0), y: Int(bounds.maxY))
+            self.present(controller: alert, fromView: self.view, atPoint: point)
+        }
+
+    }
+
+}
+
+extension TabViewController: EmailManagerRequestDelegate {
+
+    // swiftlint:disable function_parameter_count
+    func emailManager(_ emailManager: EmailManager,
+                      didRequestAliasWithURL url: URL,
+                      method: String,
+                      headers: [String: String],
+                      timeoutInterval: TimeInterval,
+                      completion: @escaping (Data?, Error?) -> Void) {
+        APIRequest.request(url: url,
+                           method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
+                           headers: headers,
+                           timeoutInterval: timeoutInterval) { response, error in
+            
+            completion(response?.data, error)
+        }
+    }
+    // swiftlint:enable function_parameter_count
+
 }
 
 extension TabViewController: Themable {

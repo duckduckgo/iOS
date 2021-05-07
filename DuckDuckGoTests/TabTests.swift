@@ -61,10 +61,14 @@ class TabTests: XCTestCase {
     }
 
     func testWhenEncodedWithDesktopPropertyThenDecodesSuccessfully() {
-        let data = NSKeyedArchiver.archivedData(withRootObject: Tab(link: link(), viewed: false, desktop: true))
+        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: Tab(link: link(), viewed: false, desktop: true),
+                                                           requiringSecureCoding: false) else {
+            XCTFail("Data is nil")
+            return
+        }
         XCTAssertFalse(data.isEmpty)
 
-        let tab = NSKeyedUnarchiver.unarchiveObject(with: data) as? Tab
+        let tab = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Tab
         
         XCTAssertNotNil(tab?.link)
         XCTAssertFalse(tab?.viewed ?? true)

@@ -1,5 +1,5 @@
 //
-//  BookmarksButton.swift
+//  GestureToolbarButton.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.

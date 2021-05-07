@@ -151,7 +151,11 @@ public enum PixelName: String {
     case widgetsOnboardingCTAPressed = "m_o_w_a"
     case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
     case widgetsOnboardingMovedToBackground = "m_o_w_b"
-    
+
+    case emailUserPressedUseAddress = "m_e_uad"
+    case emailUserPressedUseAlias = "m_e_ua"
+    case emailTooltipDismissed = "m_e_t_d"
+
     // MARK: SERP pixels
     
     case serpRequerySame = "rq_0"

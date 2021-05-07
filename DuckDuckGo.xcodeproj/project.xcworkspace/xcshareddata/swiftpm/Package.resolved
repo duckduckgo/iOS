@@ -5,8 +5,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "feature/sam/package-manifest-updates",
-          "revision": "1197627560217eef413f3905b6d92c1089f2dfa8",
+          "branch": null,
+          "revision": "d8d6579ff2b1e78f5a2e264b4a9a2cf77701e7eb",
           "version": null
         }
       },

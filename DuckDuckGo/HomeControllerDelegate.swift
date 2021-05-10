@@ -19,7 +19,7 @@
 
 import UIKit
 
-protocol HomeControllerDelegate: class {
+protocol HomeControllerDelegate: AnyObject {
 
     func home(_ home: HomeViewController, didRequestUrl url: URL)
 

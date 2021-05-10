@@ -155,7 +155,7 @@ class DatabaseMigration {
             do {
                 try destination.save()
             } catch {
-                Pixel.fire(pixel: .dbMigrationError, error: error, isCounted: true)
+                Pixel.fire(pixel: .dbMigrationError, error: error)
                 completion(false)
                 return
             }

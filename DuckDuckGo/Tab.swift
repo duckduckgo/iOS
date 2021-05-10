@@ -19,7 +19,7 @@
 
 import Core
 
-protocol TabObserver: class {
+protocol TabObserver: AnyObject {
  
     func didChange(tab: Tab)
     

@@ -19,6 +19,7 @@
 
 import WebKit
 import os
+import BrowserServicesKit
 
 public protocol ContentBlockerUserScriptDelegate: NSObjectProtocol {
     
@@ -47,7 +48,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work
         let trackerData = TrackerDataManager.shared.encodedTrackerData!
         
-        return loadJS("contentblocker", withReplacements: [
+        return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
             "${surrogates}": surrogates

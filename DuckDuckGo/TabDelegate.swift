@@ -20,7 +20,7 @@
 import WebKit
 import Core
 
-protocol TabDelegate: class {
+protocol TabDelegate: AnyObject {
 
     func tabWillRequestNewTab(_ tab: TabViewController) -> UIKeyModifierFlags?
 

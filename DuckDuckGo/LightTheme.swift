@@ -108,7 +108,7 @@ struct LightTheme: Theme {
     
     var privacyReportCellBackgroundColor = UIColor.white
     
-    var activityStyle: UIActivityIndicatorView.Style = .gray
+    var activityStyle: UIActivityIndicatorView.Style = .medium
     
     var destructiveColor: UIColor = UIColor.destructive
     

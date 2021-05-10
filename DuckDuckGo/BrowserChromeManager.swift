@@ -19,7 +19,7 @@
 
 import UIKit
 
-protocol BrowserChromeDelegate: class {
+protocol BrowserChromeDelegate: AnyObject {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool)
     func setNavigationBarHidden(_ hidden: Bool)

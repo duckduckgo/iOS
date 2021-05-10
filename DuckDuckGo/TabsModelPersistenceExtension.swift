@@ -27,7 +27,7 @@ extension TabsModel {
 
     public static func get() -> TabsModel? {
         guard let data = UserDefaults.standard.object(forKey: Constants.key) as? Data else { return nil }
-        return NSKeyedUnarchiver.unarchiveObject(with: data) as? TabsModel
+        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? TabsModel
     }
 
     public static func clear() {
@@ -35,7 +35,7 @@ extension TabsModel {
     }
 
     func save() {
-        let data = NSKeyedArchiver.archivedData(withRootObject: self)
+        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) else { return }
         UserDefaults.standard.set(data, forKey: Constants.key)
     }
     

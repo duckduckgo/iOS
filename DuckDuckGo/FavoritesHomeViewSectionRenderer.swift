@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-protocol FavoritesHomeViewSectionRendererDelegate: class {
+protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
                            didSelect link: Link)

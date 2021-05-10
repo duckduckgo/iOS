@@ -20,6 +20,7 @@
 import UIKit
 import WebKit
 import TrackerRadarKit
+import BrowserServicesKit
 
 public class ContentBlockerRulesUserScript: NSObject, UserScript {
     
@@ -35,7 +36,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             + "\n"
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
         
-        return loadJS("contentblockerrules", withReplacements: [
+        return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains
         ])
     }

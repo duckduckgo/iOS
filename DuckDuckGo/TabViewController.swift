@@ -603,13 +603,15 @@ class TabViewController: UIViewController {
     
     @objc func onContentBlockerConfigurationChanged() {
         ContentBlockerRulesManager.shared.compiledRules { [weak self] rulesList in
-            guard let self = self else { return }
-            if let rulesList = rulesList {
-                self.webView.configuration.userContentController.remove(rulesList)
-                self.webView.configuration.userContentController.add(rulesList)
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                if let rulesList = rulesList {
+                    self.webView.configuration.userContentController.remove(rulesList)
+                    self.webView.configuration.userContentController.add(rulesList)
+                }
+
+                self.reload(scripts: true)
             }
-            
-            self.reload(scripts: true)
         }
     }
 

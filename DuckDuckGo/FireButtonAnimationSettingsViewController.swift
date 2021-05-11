@@ -26,6 +26,8 @@ class FireButtonAnimationSettingsViewController: UITableViewController {
     
     private lazy var availableAnimations = FireButtonAnimationType.allCases
 
+    private var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,6 +68,15 @@ class FireButtonAnimationSettingsViewController: UITableViewController {
         appSettings.currentFireButtonAnimation = type
         NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
         tableView.reloadData()
+
+        animator.animate {
+            // no op
+        } onTransitionCompleted: {
+            // no op
+        } completion: {
+            // no op
+        }
+
     }
 }
 

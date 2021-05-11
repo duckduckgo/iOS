@@ -12,7 +12,7 @@
       },
       {
         "package": "GRDB",
-        "repositoryURL": "git@github.com:duckduckgo/GRDB.swift.git",
+        "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
           "branch": "SQLCipher",
           "revision": "e5714d4b6ee1651d2271b04ae85aaf5a327fe70a",

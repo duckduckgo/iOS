@@ -24,6 +24,15 @@ import os.log
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
+protocol CompletableTask {
+
+    func setTaskCompleted(success: Bool)
+
+}
+
+@available(iOS 13.0, *)
+extension BGTask: CompletableTask { }
+
 protocol AppConfigurationFetchStatistics {
     var foregroundStartCount: Int { get set }
     var foregroundNoDataCount: Int { get set }
@@ -348,7 +357,7 @@ extension AppConfigurationFetch {
     @available(iOS 13.0, *)
     static func backgroundRefreshTaskCompletionHandler(store: AppConfigurationFetchStatistics,
                                                        refreshStartDate: Date,
-                                                       task: BGTask,
+                                                       task: CompletableTask,
                                                        status: BackgroundRefreshCompletionStatus,
                                                        previousStatus: BackgroundRefreshCompletionStatus?) -> BackgroundRefreshCompletionStatus {
 

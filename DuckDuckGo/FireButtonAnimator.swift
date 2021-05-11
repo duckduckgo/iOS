@@ -116,7 +116,6 @@ class FireButtonAnimator {
         
         guard let composition = preLoadedComposition else {
             onAnimationStart()
-            ActionMessageView.present(message: UserText.actionForgetAllDone)
             onTransitionCompleted()
             completion()
             return

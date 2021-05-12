@@ -55,7 +55,10 @@ public class ContentBlockerRulesManager {
 
         store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, _ in
             guard list == nil else {
-                completion?(list)
+                DispatchQueue.main.async {
+                    completion?(list)
+                }
+
                 return
             }
 
@@ -91,7 +94,10 @@ fileprivate extension WKContentRuleListStore {
 
         let ruleList = String(data: data, encoding: .utf8)!
         compileContentRuleList(forIdentifier: rulesIdentifier, encodedContentRuleList: ruleList) { ruleList, error in
-            completion?(ruleList)
+            DispatchQueue.main.async {
+                completion?(ruleList)
+            }
+
             if let error = error {
                 os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
             }

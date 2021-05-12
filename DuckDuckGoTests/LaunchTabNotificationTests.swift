@@ -34,11 +34,12 @@ class LaunchTabNotificationTests: XCTestCase {
 
     func testWhenNotificationPostedItIsHandled() {
         var x: String?
-        _ = LaunchTabNotification.addObserver { urlString in
+        let observer = LaunchTabNotification.addObserver { urlString in
             x = urlString
         }
         LaunchTabNotification.postLaunchTabNotification(urlString: "y")
         XCTAssertEqual(x, "y")
+        observer.remove()
     }
 
 }

@@ -75,7 +75,10 @@ fileprivate extension WKContentRuleListStore {
     func compileRules(withIdentifier rulesIdentifier: String, completion: ((WKContentRuleList?) -> Void)?) {
 
         guard let trackerData = TrackerDataManager.shared.trackerData else {
-            completion?(nil)
+            DispatchQueue.main.async {
+                completion?(nil)
+            }
+
             return
         }
 

@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Vremenom se u pregledniku mogu nakupljati osobni podaci. Fuj. Upotrijebite gumb Vatre da sve to očistite. Pokušajte 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Obriši sve kartice i podatke";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "To je to – vaših podataka nema više! \n\nEvo savjeta: označite da je web-mjesto sigurno i nećete se morati svaki put ponovno prijavljivati. \n\nŽelite li vidjeti kako to funkcionira? Posjetite jedno od svojih omiljenih web-mjesta i prijavite se.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -260,19 +251,13 @@
 "donotsell.disabled" = "Onemogućeno";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Budući da je Globalna kontrola privatnosti (GPC) novi standard, većina web-mjesta još ga neće prepoznati; međutim, naporno radimo na tome da postane prihvaćen u cijelome svijetu.";
-
-/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Saznajte više";
-
-/* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Međutim, mrežna mjesta moraju djelovati na signal samo u mjeri u kojoj ih obvezuju važeći zakoni. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Omogućeno";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Vaši podaci ne bi trebali biti na prodaju. Mi u DuckDuckGo se slažemo. Aktivirajte postavku „Globalna kontrola privatnosti” (GPC) i obavijestit ćemo web-mjesta da:\n\n• Ne prodaju vaše osobne podatke.\n• Ograniče dijeljenje vaših osobnih podataka s drugim tvrtkama.";
+"donotsell.info.headertext" = "DuckDuckGo automatski blokira mnoge alate za indeksiranje. S globalnom kontrolom privatnosti (GPC) također možete tražiti od web-mjesta koja sudjeluju u programu da ograniče prodaju ili dijeljenje vaših osobnih podataka drugim tvrtkama.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Još nema dodanih knjižnih oznaka";

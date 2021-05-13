@@ -23,5 +23,5 @@ import UIKit
 ///
 /// Device orientation contains multiple states including unknown and flat, where as this approach is binary.
 var isPortrait: Bool {
-    return UIApplication.shared.statusBarOrientation.isPortrait
+    return  UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.windowScene?.interfaceOrientation.isPortrait ?? false
 }

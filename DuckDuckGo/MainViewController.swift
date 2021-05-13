@@ -1336,7 +1336,8 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
-        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: UIApplication.shared.keyWindow?.rootViewController?.view)
+        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
+        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
@@ -1531,6 +1532,7 @@ extension MainViewController: AutoClearWorker {
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
         } onTransitionCompleted: {
+            ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)

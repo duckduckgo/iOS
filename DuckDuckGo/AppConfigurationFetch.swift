@@ -24,6 +24,15 @@ import os.log
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
+protocol CompletableTask {
+
+    func setTaskCompleted(success: Bool)
+
+}
+
+@available(iOS 13.0, *)
+extension BGTask: CompletableTask { }
+
 protocol AppConfigurationFetchStatistics {
     var foregroundStartCount: Int { get set }
     var foregroundNoDataCount: Int { get set }
@@ -41,7 +50,7 @@ class AppConfigurationFetch {
     private struct Constants {
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
-        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
+        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 30
     }
     
     private struct Keys {
@@ -348,7 +357,7 @@ extension AppConfigurationFetch {
     @available(iOS 13.0, *)
     static func backgroundRefreshTaskCompletionHandler(store: AppConfigurationFetchStatistics,
                                                        refreshStartDate: Date,
-                                                       task: BGTask,
+                                                       task: CompletableTask,
                                                        status: BackgroundRefreshCompletionStatus,
                                                        previousStatus: BackgroundRefreshCompletionStatus?) -> BackgroundRefreshCompletionStatus {
 

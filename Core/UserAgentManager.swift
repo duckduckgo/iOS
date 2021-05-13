@@ -1,5 +1,5 @@
 //
-//  UserAgentConfiguration.swift
+//  UserAgentManager.swift
 //  Core
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -82,9 +82,11 @@ struct UserAgent {
         static let osVersion = " OS ([0-9_]+)"
     }
     
-    private static let sitesThatIncludeApplication = [
-        "duckduckgo.com",
-        "wikipedia.org"
+    private static let sitesThatOmitApplication = [
+        "cvs.com",
+        "sovietgames.su",
+        "accounts.google.com",
+        "facebook.com"
     ]
     
     private let baseAgent: String
@@ -101,11 +103,11 @@ struct UserAgent {
     }
     
     public func agent(forUrl url: URL?, isDesktop: Bool) -> String {
-        let includeApplicationComponent = UserAgent.sitesThatIncludeApplication.contains { domain in
+        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }
         
-        let resolvedApplicationComponent = includeApplicationComponent ? applicationComponent : nil
+        let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
         if isDesktop {
             return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
         } else {

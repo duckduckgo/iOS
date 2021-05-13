@@ -151,7 +151,11 @@ public enum PixelName: String {
     case widgetsOnboardingCTAPressed = "m_o_w_a"
     case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
     case widgetsOnboardingMovedToBackground = "m_o_w_b"
-    
+
+    case emailUserPressedUseAddress = "m_e_uad"
+    case emailUserPressedUseAlias = "m_e_ua"
+    case emailTooltipDismissed = "m_e_t_d"
+
     // MARK: SERP pixels
     
     case serpRequerySame = "rq_0"
@@ -272,16 +276,11 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:], isCounted: Bool = false) {
+    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:]) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
         newParams[PixelParameters.errorDesc] = nsError.domain
-        
-        if isCounted {
-            let count = PixelCounterStore().incrementCountFor(pixel)
-            newParams[PixelParameters.errorCount] = "\(count)"
-        }
         
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"

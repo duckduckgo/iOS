@@ -183,12 +183,9 @@ private class MockAppConfigurationFetch: AppConfigurationFetch {
 }
 
 @available(iOS 13.0, *)
-private class MockBackgroundTask: BGTask {
+private class MockBackgroundTask: CompletableTask {
 
-    /// Used to instantiate background tasks, as `BGTask` marks its `init` unavailable.
-    init(_ unusedValue: String? = nil) {}
-
-    override func setTaskCompleted(success: Bool) {
+    func setTaskCompleted(success: Bool) {
         // no-op
     }
 

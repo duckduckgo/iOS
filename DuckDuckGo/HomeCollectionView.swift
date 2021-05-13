@@ -66,7 +66,7 @@ class HomeCollectionView: UICollectionView {
     }
     
     deinit {
-        UIMenuController.shared.setMenuVisible(false, animated: true)
+        UIMenuController.shared.hideMenu()
     }
     
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {
@@ -102,7 +102,7 @@ class HomeCollectionView: UICollectionView {
         case .began:
             if let indexPath = indexPathForItem(at: gesture.location(in: self)) {
                 UISelectionFeedbackGenerator().selectionChanged()
-                UIMenuController.shared.setMenuVisible(false, animated: true)
+                UIMenuController.shared.hideMenu()
                 beginInteractiveMovementForItem(at: indexPath)
             }
             
@@ -133,9 +133,8 @@ class HomeCollectionView: UICollectionView {
         
         let menuController = UIMenuController.shared
         
-        menuController.setTargetRect(menuView.frame, in: self)
         menuController.menuItems = menuItems
-        menuController.setMenuVisible(true, animated: true)
+        menuController.showMenu(from: self, rect: menuView.frame)
     }
     
     func omniBarCancelPressed() {

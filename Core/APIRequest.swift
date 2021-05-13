@@ -37,9 +37,9 @@ public class APIRequest {
     
     public struct Response {
         
-        var data: Data?
-        var etag: String?
-        var urlResponse: URLResponse?
+        public var data: Data?
+        public var etag: String?
+        public var urlResponse: URLResponse?
         
     }
     

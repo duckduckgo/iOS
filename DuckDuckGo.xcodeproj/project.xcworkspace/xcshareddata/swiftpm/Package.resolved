@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
+        "state": {
+          "branch": "main",
+          "revision": "80f324da2518f172fb72b884c3710ad3d448dfad",
+          "version": null
+        }
+      },
+      {
+        "package": "GRDB",
+        "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
+        "state": {
+          "branch": "SQLCipher",
+          "revision": "e5714d4b6ee1651d2271b04ae85aaf5a327fe70a",
+          "version": null
+        }
+      },
+      {
         "package": "Kingfisher",
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {

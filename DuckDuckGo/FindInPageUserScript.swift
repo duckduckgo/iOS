@@ -19,11 +19,12 @@
 
 import Core
 import WebKit
+import BrowserServicesKit
 
 public class FindInPageUserScript: NSObject, UserScript {
 
     public lazy var source: String = {
-        return loadJS("findinpage")
+        return Self.loadJS("findinpage", from: Bundle.core)
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

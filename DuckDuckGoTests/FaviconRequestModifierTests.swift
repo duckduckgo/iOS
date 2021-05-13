@@ -22,10 +22,15 @@ import XCTest
 
 class FaviconRequestModifierTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        _ = UserAgentManager.shared
+    }
+    
     func test() {
         let request = URLRequest(url: URL(string: "https://www.example.com")!)
         let result = FaviconRequestModifier().modified(for: request)
-        XCTAssertFalse(result?.allHTTPHeaderFields?["User-Agent"]?.contains("DuckDuckGo") ?? false)
+        XCTAssertTrue(result?.allHTTPHeaderFields?["User-Agent"]?.contains("DuckDuckGo") ?? false)
     }
     
 }

@@ -259,6 +259,24 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automatically blocks many trackers. With Global Privacy Control (GPC), you can also ask participating websites to restrict selling or sharing your personal data with other companies.";
 
+/* Cancel option for the email alias alert */
+"email.aliasAlert.decline" = "Cancel";
+
+/* Option for generating a private email address */
+"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+
+/* Title for the email alias selection alert */
+"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+
+/* Parameter is an email address (string) */
+"email.aliasAlert.useUserAddress" = "Use %@";
+
+/* Title for the email copy browsing menu alert */
+"email.browsingMenu.alert" = "New address copied to your clipboard";
+
+/* Email option title in the browsing menu */
+"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
 

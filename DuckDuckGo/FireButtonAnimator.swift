@@ -106,7 +106,7 @@ class FireButtonAnimator {
         
     func animate(onAnimationStart: @escaping () -> Void, onTransitionCompleted: @escaping () -> Void, completion: @escaping () -> Void) {
         
-        guard let window = UIApplication.shared.keyWindow,
+        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
             onAnimationStart()
             onTransitionCompleted()
@@ -116,7 +116,6 @@ class FireButtonAnimator {
         
         guard let composition = preLoadedComposition else {
             onAnimationStart()
-            ActionMessageView.present(message: UserText.actionForgetAllDone)
             onTransitionCompleted()
             completion()
             return
@@ -136,7 +135,6 @@ class FireButtonAnimator {
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
-            ActionMessageView.present(message: UserText.actionForgetAllDone)
             onTransitionCompleted()
         }
         

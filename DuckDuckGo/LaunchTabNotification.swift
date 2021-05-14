@@ -29,6 +29,10 @@ class LaunchTabNotification {
             self.observer = observer
         }
 
+        deinit {
+            remove()
+        }
+
         func remove() {
             NotificationCenter.default.removeObserver(observer)
         }

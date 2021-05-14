@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
-    private weak var launchTabObserver: LaunchTabNotification.Observer?
+    private var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -432,8 +432,8 @@ class MainViewController: UIViewController {
     }
 
     private func addLaunchTabNotificationObserver() {
-        launchTabObserver = LaunchTabNotification.addObserver(handler: { urlString in
-            guard let url = URL(string: urlString) else { return }
+        launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
+            guard let self = self, let url = URL(string: urlString) else { return }
 
             self.loadUrlInNewTab(url)
         })

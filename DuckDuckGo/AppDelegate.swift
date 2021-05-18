@@ -25,6 +25,7 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 
+// swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
 @UIApplicationMain
@@ -102,6 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         }
         
+        window?.windowScene?.screenshotService?.delegate = self
+
         appIsLaunching = true
         return true
     }
@@ -380,4 +383,29 @@ extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
         window?.makeKeyAndVisible()
     }
     
+}
+
+extension AppDelegate: UIScreenshotServiceDelegate {
+    func screenshotService(_ screenshotService: UIScreenshotService,
+                           generatePDFRepresentationWithCompletion completionHandler: @escaping (Data?, Int, CGRect) -> Void) {
+        guard #available(iOS 14.0, *), let webView = mainViewController?.currentTab?.webView else {
+            completionHandler(nil, 0, .zero)
+            return
+        }
+
+        let zoomScale = webView.scrollView.zoomScale
+
+        // The PDF's coordinate space has its origin at the bottom left, so the view's origin.y needs to be converted
+        let visibleBounds = CGRect(
+            x: webView.scrollView.contentOffset.x / zoomScale,
+            y: (webView.scrollView.contentSize.height - webView.scrollView.contentOffset.y - webView.bounds.height) / zoomScale,
+            width: webView.bounds.width / zoomScale,
+            height: webView.bounds.height / zoomScale
+        )
+
+        webView.createPDF { result in
+            let data = try? result.get()
+            completionHandler(data, 0, visibleBounds)
+        }
+    }
 }

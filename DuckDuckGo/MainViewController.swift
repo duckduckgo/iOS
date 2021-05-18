@@ -231,7 +231,6 @@ class MainViewController: UIViewController {
         height = intersection.height
 
         findInPageBottomLayoutConstraint.constant = height
-        currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)

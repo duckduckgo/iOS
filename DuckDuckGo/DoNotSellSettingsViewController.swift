@@ -26,9 +26,7 @@ class DoNotSellSettingsViewController: UITableViewController {
     
     @IBOutlet weak var doNotSellToggle: UISwitch!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var infoTextView: UITextView!
-    @IBOutlet weak var disclaimerTextView: UITextView!
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
         
@@ -36,19 +34,7 @@ class DoNotSellSettingsViewController: UITableViewController {
         super.viewDidLoad()
         
         doNotSellToggle.isOn = appSettings.sendDoNotSell
-        
-        let fontSize = SettingsViewController.fontSizeForHeaderView
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.16
-        infoTextView.attributedText = NSAttributedString(string: UserText.doNotSellInfoText,
-                                                         attributes: [
-                                                            NSAttributedString.Key.kern: -0.08,
-                                                            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                                                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
-                                                         ])
-        
         infoTextView.backgroundColor = .clear
-        disclaimerTextView.backgroundColor = .clear
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -61,14 +47,6 @@ class DoNotSellSettingsViewController: UITableViewController {
             header.frame.size.height = newSize.height
             DispatchQueue.main.async {
                 self.tableView.tableHeaderView = header
-            }
-        }
-        
-        if let footer = tableView.tableFooterView {
-            let newSize = footer.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-            footer.frame.size.height = newSize.height
-            DispatchQueue.main.async {
-                self.tableView.tableFooterView = footer
             }
         }
     }
@@ -90,26 +68,19 @@ extension DoNotSellSettingsViewController: Themable {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
+        let fontSize = SettingsViewController.fontSizeForHeaderView
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
-        let fontSize = SettingsViewController.fontSizeForHeaderView
-        let tempStr = NSMutableAttributedString(string: UserText.doNotSellDisclaimerBold,
+        let tempStr = NSMutableAttributedString(string: UserText.doNotSellInfoText + " ",
                                                 attributes: [
                                                     NSAttributedString.Key.kern: -0.08,
                                                     NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                                                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: fontSize),
+                                                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
                                                     NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
                                                 ])
-        tempStr.append(NSAttributedString(string: UserText.doNotSellDisclaimerSuffix,
-                                          attributes: [
-                                              NSAttributedString.Key.kern: -0.08,
-                                              NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
-                                              NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
-                                          ]))
         tempStr.append(NSAttributedString(string: UserText.doNotSellLearnMore,
                                           attributes: [
-                                            NSAttributedString.Key.link: "ddgQuickLink://duckduckgo.com/global-privacy-control-learn-more",
+                                            NSAttributedString.Key.link: "ddgQuickLink://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/",
                                             NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
                                           ]))
         let linkAttributes: [NSAttributedString.Key: Any] = [
@@ -119,8 +90,9 @@ extension DoNotSellSettingsViewController: Themable {
             NSAttributedString.Key.foregroundColor: theme.searchBarTextColor,
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
         ]
-        disclaimerTextView.attributedText = tempStr
-        disclaimerTextView.linkTextAttributes = linkAttributes
+        
+        infoTextView.attributedText = tempStr
+        infoTextView.linkTextAttributes = linkAttributes
     }
     
     func decorate(with theme: Theme) {
@@ -135,7 +107,6 @@ extension DoNotSellSettingsViewController: Themable {
         doNotSellToggle.onTintColor = theme.buttonTintColor
         
         headerView.backgroundColor = theme.backgroundColor
-        footerView.backgroundColor = theme.backgroundColor
 
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

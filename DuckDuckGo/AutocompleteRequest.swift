@@ -54,8 +54,16 @@ class AutocompleteRequest {
 
         return entries.compactMap {
             guard let phrase = $0.phrase else { return nil }
-            let url = ($0.nav ?? false) ? URL(string: "http://\(phrase)") : nil
-            return Suggestion(source: .remote, type: "phrase", suggestion: $0.phrase!, url: url)
+
+            if let nav = $0.nav {
+                // We definitely have a nav indication so use it
+                let url = nav ? URL(string: "http://\(phrase)") : nil
+                return Suggestion(source: .remote, type: "phrase", suggestion: phrase, url: url)
+            } else {
+                // We need to infer nav based on the phrase to maintain previous behaviour (ie treat phrase that look like URLs like URLs)
+                let url = URL.webUrl(fromText: phrase)
+                return Suggestion(source: .remote, type: "phrase", suggestion: phrase, url: url)
+            }
         }
     }
 

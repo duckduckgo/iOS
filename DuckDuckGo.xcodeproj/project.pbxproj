@@ -6996,7 +6996,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				branch = main;
+				branch = b5fc6060969f658f0ad599bef910f7a5140dfea6;
 				kind = branch;
 			};
 		};

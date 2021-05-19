@@ -5,8 +5,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "main",
-          "revision": "80f324da2518f172fb72b884c3710ad3d448dfad",
+          "branch": null,
+          "revision": "b5fc6060969f658f0ad599bef910f7a5140dfea6",
           "version": null
         }
       },
@@ -14,9 +14,9 @@
         "package": "GRDB",
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
-          "branch": "SQLCipher",
-          "revision": "e5714d4b6ee1651d2271b04ae85aaf5a327fe70a",
-          "version": null
+          "branch": null,
+          "revision": "995e7b639e4e5194fdff30778dbe080220bdb810",
+          "version": "1.0.0"
         }
       },
       {
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {
           "branch": null,
-          "revision": "2d795b521934b02357fec781b33e2c407655eebb",
+          "revision": "e7f7599c04c850bac84e3a2fa766ef0a0d5f401a",
           "version": "5.15.4"
         }
       },

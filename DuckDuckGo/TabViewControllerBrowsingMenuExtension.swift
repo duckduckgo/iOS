@@ -237,7 +237,7 @@ extension TabViewController {
         let image = UIImage(named: "MenuEmail")!
 
         return BrowsingMenuEntry.regular(name: title, image: image) { [weak self] in
-            self?.emailManager.getAliasEmailIfNeededAndConsume { alias, _ in
+            self?.emailManager.getAliasIfNeededAndConsume { alias, _ in
                 guard let alias = alias else {
                     // we may want to communicate this failure to the user in the future
                     return

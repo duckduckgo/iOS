@@ -1563,93 +1563,6 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <constraint firstItem="Jw1-Ty-6VJ" firstAttribute="leading" secondItem="Ioy-SL-amy" secondAttribute="leadingMargin" id="jW4-YB-uTX"/>
                             </constraints>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="i9Y-nk-P1r">
-                            <rect key="frame" x="0.0" y="208.66666793823242" width="414" height="212"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JtH-yN-KpS">
-                                    <rect key="frame" x="8" y="-10" width="398" height="222"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <attributedString key="attributedText">
-                                        <fragment>
-                                            <string key="content">*The Global Privacy Control is intended to convey a general request that data controllers limit the sale or sharing of your personal data to other data controllers (i.e. to other companies besides the website you are on).</string>
-                                            <attributes>
-                                                <font key="NSFont" metaFont="system" size="14"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                                            <attributes>
-                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" metaFont="system"/>
-                                                <real key="NSKern" value="0.0"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <real key="NSStrokeWidth" value="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                                            <attributes>
-                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" metaFont="system"/>
-                                                <real key="NSKern" value="0.0"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                    <tabStops/>
-                                                </paragraphStyle>
-                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <real key="NSStrokeWidth" value="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content">Since the Global Privacy control is setting a new standard, most websites won't recognize it yet, but we're woking hard to ensure it becomes recognized worldwide.</string>
-                                            <attributes>
-                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" metaFont="systemBold" size="14"/>
-                                                <real key="NSKern" value="0.0"/>
-                                                <font key="NSOriginalFont" metaFont="systemBold" size="14"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                    <tabStops/>
-                                                </paragraphStyle>
-                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <real key="NSStrokeWidth" value="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content"> By enabling it, you're not only taking a stand for your own right to online privacy, you're also helping us raise the standard of trust online. Learn More</string>
-                                            <attributes>
-                                                <color key="NSBackgroundColor" red="1" green="0.96767636687379599" blue="0.99949044138427212" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="NSColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" metaFont="system" size="14"/>
-                                                <real key="NSKern" value="0.0"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                    <tabStops/>
-                                                </paragraphStyle>
-                                                <color key="NSStrokeColor" red="0.08235294371843338" green="0.10588235408067703" blue="0.14901961386203766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <real key="NSStrokeWidth" value="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                </textView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="trailingMargin" secondItem="JtH-yN-KpS" secondAttribute="trailing" id="AIm-FL-2b5"/>
-                                <constraint firstItem="JtH-yN-KpS" firstAttribute="top" secondItem="i9Y-nk-P1r" secondAttribute="top" constant="-10" id="T1p-QI-DGf"/>
-                                <constraint firstAttribute="bottom" secondItem="JtH-yN-KpS" secondAttribute="bottom" id="TD7-0d-t3T"/>
-                                <constraint firstItem="JtH-yN-KpS" firstAttribute="leading" secondItem="i9Y-nk-P1r" secondAttribute="leadingMargin" id="kak-Yn-nml"/>
-                            </constraints>
-                        </view>
                         <sections>
                             <tableViewSection id="KJY-jI-68Y">
                                 <cells>
@@ -1700,9 +1613,7 @@ Cg
                     </tableView>
                     <navigationItem key="navigationItem" title="Global Privacy Control (GPC)" id="tWw-Lh-ZT1"/>
                     <connections>
-                        <outlet property="disclaimerTextView" destination="JtH-yN-KpS" id="B4W-GL-YHh"/>
                         <outlet property="doNotSellToggle" destination="mpn-np-GLZ" id="BYG-ZW-qXU"/>
-                        <outlet property="footerView" destination="i9Y-nk-P1r" id="N5b-ld-Gx7"/>
                         <outlet property="headerView" destination="Ioy-SL-amy" id="0uu-Hz-W0t"/>
                         <outlet property="infoTextView" destination="Jw1-Ty-6VJ" id="n4b-wC-vBe"/>
                         <outletCollection property="labels" destination="cW7-OM-2oW" collectionClass="NSMutableArray" id="3T7-l5-7BW"/>

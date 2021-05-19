@@ -40,6 +40,10 @@ class SuggestionTrayViewController: UIViewController {
 
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
+
+    var selectedSuggestion: Suggestion? {
+        autocompleteController?.selectedSuggestion
+    }
     
     enum SuggestionType: Equatable {
         

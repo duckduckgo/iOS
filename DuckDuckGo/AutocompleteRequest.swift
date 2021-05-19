@@ -50,9 +50,13 @@ class AutocompleteRequest {
     private func processResult(data: Data?, error: Error?) throws -> [Suggestion] {
         if let error = error { throw error }
         guard let data = data else { throw ApiRequestError.noData }
-        let suggestions = try JSONDecoder().decode([Suggestion].self, from: data)
+        let entries = try JSONDecoder().decode([AutocompleteEntry].self, from: data)
 
-        return suggestions
+        return entries.compactMap {
+            guard let phrase = $0.phrase else { return nil }
+            let url = ($0.nav ?? false) ? URL(string: "http://\(phrase)") : nil
+            return Suggestion(source: .remote, type: "phrase", suggestion: $0.phrase!, url: url)
+        }
     }
 
     private func complete(_ completion: @escaping Completion, withSuccess suggestions: [Suggestion]) {

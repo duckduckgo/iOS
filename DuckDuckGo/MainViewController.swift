@@ -1004,6 +1004,14 @@ extension MainViewController: BrowserChromeDelegate {
 
 extension MainViewController: OmniBarDelegate {
 
+    func selectedSuggestion() -> Suggestion? {
+        return suggestionTrayController?.selectedSuggestion
+    }
+
+    func onOmniSuggestionSelected(_ suggestion: Suggestion) {
+        autocomplete(selectedSuggestion: suggestion)
+    }
+
     func onOmniQueryUpdated(_ updatedQuery: String) {
         if updatedQuery.isEmpty {
             if homeController != nil {
@@ -1144,7 +1152,8 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         if let url = suggestion.url {
             loadUrl(url)
         } else {
-            loadQuery(suggestion.suggestion)
+            let queryUrl = appUrls.searchUrl(text: suggestion.suggestion)
+            loadUrl(queryUrl)
         }
         showHomeRowReminder()
     }

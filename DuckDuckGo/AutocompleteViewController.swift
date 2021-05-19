@@ -53,7 +53,11 @@ class AutocompleteViewController: UIViewController {
             view.backgroundColor = showBackground ? UIColor.black.withAlphaComponent(0.2) : UIColor.clear
         }
     }
-    
+
+    var selectedSuggestion: Suggestion? {
+        (selectedItem >= 0 && selectedItem < suggestions.count) ? suggestions[selectedItem] : nil
+    }
+
     private var hidesBarsOnSwipeDefault = true
     
     private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)

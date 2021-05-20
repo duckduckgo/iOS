@@ -28,13 +28,11 @@ struct Suggestion {
     }
     
     let source: Source
-    let type: String
     let suggestion: String
     let url: URL?
     
-    init(source: Source = .local, type: String, suggestion: String, url: URL?) {
+    init(source: Source, suggestion: String, url: URL?) {
         self.source = source
-        self.type = type
         self.suggestion = suggestion
         self.url = url
     }

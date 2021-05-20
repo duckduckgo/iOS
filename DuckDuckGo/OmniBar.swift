@@ -387,6 +387,8 @@ class OmniBar: UIView {
     }
     
     @IBAction func onBookmarksPressed(_ sender: Any) {
+        Pixel.fire(pixel: .bookmarksButtonPressed,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
         omniDelegate?.onBookmarksPressed()
     }
     

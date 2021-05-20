@@ -34,7 +34,7 @@ extension TabViewController {
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "MenuShare")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
-            self.onShareAction(forLink: self.link!, fromView: menu)
+            self.onShareAction(forLink: self.link!, fromView: menu, orginatedFromMenu: true)
         }))
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
@@ -45,10 +45,12 @@ extension TabViewController {
                 strongSelf.onCopyAction(for: text)
             }
             
+            Pixel.fire(pixel: .browsingMenuCopy)
             ActionMessageView.present(message: UserText.actionCopyMessage)
         }))
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
+            Pixel.fire(pixel: .browsingMenuPrint)
             self?.print()
         }))
         
@@ -249,8 +251,9 @@ extension TabViewController {
         }
     }
 
-    func onShareAction(forLink link: Link, fromView view: UIView) {
-        Pixel.fire(pixel: .browsingMenuShare)
+    func onShareAction(forLink link: Link, fromView view: UIView, orginatedFromMenu: Bool) {
+        Pixel.fire(pixel: .browsingMenuShare,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: orginatedFromMenu ? "1" : "0"])
         presentShareSheet(withItems: [ link, webView.viewPrintFormatter() ], fromView: view)
     }
     

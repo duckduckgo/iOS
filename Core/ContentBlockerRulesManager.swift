@@ -23,64 +23,91 @@ import os.log
 import TrackerRadarKit
 
 public class ContentBlockerRulesManager {
+    
+    public typealias CompletionBlock = (WKContentRuleList?) -> Void
+    
+    enum State {
+        case idle
+        case recompiling
+        case recompilingAndScheduled
+    }
 
     private static let rulesIdentifier = "tds"
 
     public static let shared = ContentBlockerRulesManager()
 
     private init() {}
+    
+    /**
+     Variables protected by this lock:
+      - state
+      - currentRules
+     */
+    private let lock = NSLock()
+    
+    private var state = State.idle
+    
+    private var _currentRules: WKContentRuleList?
+    public private(set) var currentRules: WKContentRuleList? {
+        get {
+            lock.lock(); defer { lock.unlock() }
+            return _currentRules
+        }
+        set {
+            lock.lock()
+            self._currentRules = newValue
+            lock.unlock()
+        }
+    }
 
     public func recompile() {
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore")
         }
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             store.removeContentRuleList(forIdentifier: Self.rulesIdentifier) { _ in
-                DispatchQueue.global(qos: .background).async {
-                    self.compiledRules { _ in
-                        NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
-                    }
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.requestCompilation()
                 }
             }
         }
     }
 
-    /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
-    public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
-
-        guard let store = WKContentRuleListStore.default() else {
-            fatalError("Failed to access the default WKContentRuleListStore for rules compiliation checking")
-        }
-
-        store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, _ in
-            guard list == nil else {
-                DispatchQueue.main.async {
-                    completion?(list)
-                }
-
-                return
-            }
-
-            DispatchQueue.global(qos: .background).async {
-                store.compileRules(withIdentifier: Self.rulesIdentifier, completion: completion)
-            }
-        }
+    static func generateIdentifier(from cache: StorageCache) -> String {
+        // TODO combine:
+        //  - TDS etag
+        //  - TMP Lists etag
+        //  - Add UID to Unprotected Domains state / cosider hashing!
+        return rulesIdentifier
     }
 
-}
-
-fileprivate extension WKContentRuleListStore {
-
-    func compileRules(withIdentifier rulesIdentifier: String, completion: ((WKContentRuleList?) -> Void)?) {
-
-        guard let trackerData = TrackerDataManager.shared.trackerData else {
-            DispatchQueue.main.async {
-                completion?(nil)
+    private func requestCompilation() {
+        os_log("Requesting compilation...", log: generalLog, type: .default)
+        
+        lock.lock()
+        guard state == .idle else {
+            if state == .recompiling {
+                // Schedule reload
+                state = .recompilingAndScheduled
             }
-
+            lock.unlock()
             return
         }
+        
+        state = .recompiling
+        lock.unlock()
+        
+        // TODO: refactor it so it always returns either downloaded or built-in list
+        guard let trackerData = TrackerDataManager.shared.trackerData else {
+            return
+        }
+        
+        compile(trackerData: trackerData)
+    }
+        
+    private func compile(trackerData: TrackerData) {
+        os_log("Starting CBR compilation", log: generalLog, type: .default)
 
         let storageCache = StorageCacheProvider().current
         let unprotectedSites = UnprotectedSitesManager().domains
@@ -96,16 +123,61 @@ fileprivate extension WKContentRuleListStore {
         }
 
         let ruleList = String(data: data, encoding: .utf8)!
-        compileContentRuleList(forIdentifier: rulesIdentifier, encodedContentRuleList: ruleList) { ruleList, error in
-            DispatchQueue.main.async {
-                completion?(ruleList)
-            }
-
-            if let error = error {
-                os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
+        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: Self.generateIdentifier(from: storageCache),
+                                     encodedContentRuleList: ruleList) { ruleList, error in
+            
+            if let ruleList = ruleList {
+                self.compilationSucceeded(with: ruleList)
+            } else if let error = error {
+                self.compilationFailed(with: error)
+            } else {
+                // TODO: assertion
             }
         }
 
+    }
+    
+    private func compilationFailed(with error: Error) {
+        os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
+        
+        lock.lock()
+                
+        if self.state == .recompilingAndScheduled, let trackerData = TrackerDataManager.shared.trackerData {
+            // Recompilation is scheduled - it may fix the problem
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.compile(trackerData: trackerData)
+            }
+        } else {
+            // Fallback to built - in tracker data
+            
+        }
+        
+        state = .recompiling
+        lock.unlock()
+    }
+    
+    private func compilationSucceeded(with ruleList: WKContentRuleList) {
+        os_log("Rules compiled", log: generalLog, type: .default)
+        lock.lock()
+        
+        _currentRules = ruleList
+        
+        if self.state == .recompilingAndScheduled, let trackerData = TrackerDataManager.shared.trackerData {
+            // New work has been scheduled - prepare for execution.
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.compile(trackerData: trackerData)
+            }
+            
+            state = .recompiling
+        } else {
+            state = .idle
+        }
+        
+        lock.unlock()
+        
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name, object: nil)
+        }
     }
 
 }

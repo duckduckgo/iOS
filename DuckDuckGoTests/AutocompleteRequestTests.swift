@@ -55,7 +55,7 @@ class AutocompleteRequestTests: XCTestCase {
             return $0.url?.path == "/ac"
         }, response: { _ in
             return HTTPStubsResponse(data: """
-                [ { "phrase": "healthcare.gov", "nav": true }, {  "phrase": "healthcare.gov", "nav": false } ]
+                [ { "phrase": "healthcare.gov", "isNav": true }, {  "phrase": "healthcare.gov", "isNav": false } ]
                 """.data(using: .utf8)!, statusCode: 200, headers: nil)
         })
 
@@ -91,7 +91,7 @@ class AutocompleteRequestTests: XCTestCase {
             return $0.url?.path == "/ac"
         }, response: { _ in
             return HTTPStubsResponse(data: """
-                [ { "phrase": "test", "nav": false }, { "phrase": "test", "random": 22 } ]
+                [ { "phrase": "test", "isNav": false }, { "phrase": "test", "random": 22 } ]
                 """.data(using: .utf8)!, statusCode: 200, headers: nil)
         })
 

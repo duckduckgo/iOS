@@ -41,6 +41,6 @@ struct Suggestion {
 struct AutocompleteEntry: Decodable {
 
     let phrase: String?
-    let nav: Bool?
+    let isNav: Bool?
 
 }

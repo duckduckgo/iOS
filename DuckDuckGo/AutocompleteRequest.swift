@@ -55,7 +55,7 @@ class AutocompleteRequest {
         return entries.compactMap {
             guard let phrase = $0.phrase else { return nil }
 
-            if let isNav = $0.nav {
+            if let isNav = $0.isNav {
                 // We definitely have a nav indication so use it. Phrase should be a fully qualified URL.
                 //  Assume HTTP and that we'll auto-upgrade if needed.
                 let url = isNav ? URL(string: "http://\(phrase)") : nil

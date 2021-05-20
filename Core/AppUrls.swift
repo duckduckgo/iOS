@@ -70,7 +70,7 @@ public struct AppUrls {
         static let vertical = "ia"
         static let verticalRewrite = "iar"
         static let verticalMaps = "iaxm"
-        static let enableNavSuggestions = "nav"
+        static let enableNavSuggestions = "is_nav"
     }
 
     private struct ParamValue {

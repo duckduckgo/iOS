@@ -55,7 +55,8 @@ class AutocompleteViewController: UIViewController {
     }
 
     var selectedSuggestion: Suggestion? {
-        (selectedItem >= 0 && selectedItem < suggestions.count) ? suggestions[selectedItem] : nil
+        let state = (suggestions: self.suggestions, selectedIndex: self.selectedItem)
+        return state.suggestions.indices.contains(state.selectedIndex) ? state.suggestions[state.selectedIndex] : nil
     }
 
     private var hidesBarsOnSwipeDefault = true

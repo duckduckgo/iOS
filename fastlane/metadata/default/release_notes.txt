@@ -1,3 +1,4 @@
+• You can now see a preview of the animation used for the Fire Button when you change it in settings.
 • Bug fixes and other improvements.
 
 Join our fully distributed team and help raise the standard of trust online — from anywhere! https://duckduckgo.com/hiring

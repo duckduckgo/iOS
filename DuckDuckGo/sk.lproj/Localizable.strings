@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Vo vašom prehliadači sa časom môžu zhromažďovať osobné údaje. Fuj. Použitím tlačidla na vymazanie ich môžete všetky odstrániť. Vyskúšajte to 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Vymazať všetky karty a údaje";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "A je to – vaše údaje sú chránené!\n\nTip pre vás: Zabezpečte lokalitu a nebudete sa musieť zakaždým znova prihlasovať.\n\nChcete vidieť, ako to funguje? Navštívte jednu zo svojich obľúbených lokalít a prihláste sa.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -260,19 +251,13 @@
 "donotsell.disabled" = "Zakázané";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Vzhľadom na to, že Globálna kontrola súkromia (GPC) je novým štandardom, väčšina webových stránok ho ešte nerozpozná, ale usilovne pracujeme na tom, aby sa stal celosvetovo akceptovaným.";
-
-/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Zistite viac";
-
-/* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Od webových stránok sa však vyžaduje, aby konali na základe signálu iba v rozsahu, v akom ich k tomu prinútia príslušné zákony. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Zapnuté";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Vaše údaje by nemali byť na predaj. V DuckDuckGo s tým súhlasíme. Aktivujte si nastavenie Globálna kontrola súkromia (GPC) a my webové stránky upozorníme na vaše preferencie:\n\n • Nepredávať vaše osobné údaje.\n• Obmedziť zdieľanie vašich osobných údajov s inými spoločnosťami.";
+"donotsell.info.headertext" = "DuckDuckGo automaticky blokuje množstvo trackerov. Vďaka Globálnej kontrole súkromia (GPC) môžete tiež požiadať partnerské webové lokality o obmedzenie predaja alebo zdieľania vašich osobných údajov s inými spoločnosťami.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatiaľ neboli pridané žiadne záložky";

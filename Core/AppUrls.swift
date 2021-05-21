@@ -70,13 +70,15 @@ public struct AppUrls {
         static let vertical = "ia"
         static let verticalRewrite = "iar"
         static let verticalMaps = "iaxm"
+        static let enableNavSuggestions = "is_nav"
     }
 
     private struct ParamValue {
         static let source = "ddg_ios"
         static let appUsage = "app_use"
         static let searchHeader = "-1"
-        
+        static let enableNavSuggestions = "1"
+
         static let majorVerticals: Set<String> = ["images", "videos", "news"]
     }
 
@@ -94,7 +96,9 @@ public struct AppUrls {
     }
     
     public func autocompleteUrl(forText text: String) -> URL {
-        return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
+        return URL(string: Url.autocomplete)!
+            .addParam(name: Param.search, value: text)
+            .addParam(name: Param.enableNavSuggestions, value: ParamValue.enableNavSuggestions)
     }
 
     public var surrogates: URL {

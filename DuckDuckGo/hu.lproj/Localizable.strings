@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfuj!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Idővel személyes adatok halmozódhatnak fel a böngésződben. Fúj. A Tűz gombbal mindet törölheted. Próbáld ki 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Összes lap és adat törlése";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "Ennyi — az adataid megsütve! \n\nÍme egy tipp: tedd tűzállóvá a webhelyeket, hogy ne kelljen minden alkalommal újra bejelentkezned.\n\nKíváncsi vagy, hogyan működik? Látogass el az egyik kedvenc webhelyedre, és jelentkezz be.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -260,19 +251,13 @@
 "donotsell.disabled" = "Letiltva";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Mivel a Nemzetközi Adatvédelmi Szabályozás (Global Privacy Control, GPC) új szabvány, a legtöbb weboldal még nem fogja felismerni, de keményen dolgozunk azon, hogy világszerte elfogadottá váljon.";
-
-/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "További részletek";
-
-/* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " A weboldalaknak azonban csak olyan mértékben kell eleget tenniük a kérésnek, amennyire a hatályos törvények ezt megkövetelik tőlük. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Engedélyezve";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Az adataidnak nem lenne szabad eladónak lenniük. A DuckDuckGo-nál mi egyetértünk ezzel. Aktiváld a „Globális adatvédelmi szabályozás” (GPC) beállítást, és mi jelezzük a webhelyeknek, hogy te a következőket szeretnéd:\n\n• Ne adják el a személyes adataidat.\n• Korlátozzák a személyes adataid megosztását más vállalatokkal.";
+"donotsell.info.headertext" = "A DuckDuckGo számos nyomkövetőt automatikusan blokkol. A Global Privacy Control (GPC, Globális Adatvédelmi Ellenőrzés) segítségével arra is megkérheted a részt vevő webhelyeket, hogy korlátozzák személyes adataid eladását vagy megosztását más vállalatokkal.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";

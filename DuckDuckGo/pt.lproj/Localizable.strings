@@ -193,15 +193,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Ufa!";
 
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button" = "Com o tempo, os dados pessoais podem ser acumulados no seu navegador. Nojento. Use o botão de segurança para limpar tudo. Experimente 👇";
-
-/* Encourage user to try clearing data with the fire button */
-"dax.onboarding.browsing.fire.button.cta" = "Limpar todos os separadores e dados";
-
-/* Educate user about fireproofing (i.e. stopping a site being affected by the fire button */
-"dax.onboarding.browsing.fire.button.subsequent" = "É isso — os seus dados já eram!\n\nAqui fica uma dica: coloque uma barreira de segurança num site e não tem de iniciar a sessão de cada vez.\n\nQuer ver como funciona? Visite um dos seus sites favoritos e inicie a sessão.";
-
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
@@ -260,19 +251,13 @@
 "donotsell.disabled" = "Desativado";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Uma vez que o Controlo Global de Privacidade (CGP) é um padrão novo, a maioria dos websites ainda não o reconhecem, mas estamos a trabalhar arduamente para garantir que esse reconhecimento aconteça mundialmente.";
-
-/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Saiba mais";
-
-/* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Contudo, os websites só são obrigados a agir ao sinal da medida em que as leis aplicáveis os obrigam a fazê-lo. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Ativado";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Os seus dados não devem estar à venda. Na DuckDuckGo, concordamos. Ative a definição de ''Controlo Global de Privacidade'' (CGP) e enviaremos as suas preferências aos websites para: \n\n• Não venderem os seus dados pessoais.\n• Partilha limitada dos seus dados pessoais a outras empresas.";
+"donotsell.info.headertext" = "DuckDuckGo bloqueia automaticamente muitos rastreadores. Com o Controlo de Privacidade Global (CPG), pode também solicitar aos websites participantes para restringir a venda ou a partilha dos seus dados pessoais com outras empresas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda não foram adicionados marcadores";

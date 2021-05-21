@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
-    private weak var launchTabObserver: LaunchTabNotification.Observer?
+    private var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -432,8 +432,8 @@ class MainViewController: UIViewController {
     }
 
     private func addLaunchTabNotificationObserver() {
-        launchTabObserver = LaunchTabNotification.addObserver(handler: { urlString in
-            guard let url = URL(string: urlString) else { return }
+        launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
+            guard let self = self, let url = URL(string: urlString) else { return }
 
             self.loadUrlInNewTab(url)
         })
@@ -1004,6 +1004,14 @@ extension MainViewController: BrowserChromeDelegate {
 
 extension MainViewController: OmniBarDelegate {
 
+    func selectedSuggestion() -> Suggestion? {
+        return suggestionTrayController?.selectedSuggestion
+    }
+
+    func onOmniSuggestionSelected(_ suggestion: Suggestion) {
+        autocomplete(selectedSuggestion: suggestion)
+    }
+
     func onOmniQueryUpdated(_ updatedQuery: String) {
         if updatedQuery.isEmpty {
             if homeController != nil {
@@ -1120,7 +1128,7 @@ extension MainViewController: OmniBarDelegate {
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton)
+        currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton, orginatedFromMenu: false)
     }
     
 }
@@ -1128,6 +1136,7 @@ extension MainViewController: OmniBarDelegate {
 extension MainViewController: FavoritesOverlayDelegate {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
+        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
@@ -1144,7 +1153,8 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         if let url = suggestion.url {
             loadUrl(url)
         } else {
-            loadQuery(suggestion.suggestion)
+            let queryUrl = appUrls.searchUrl(text: suggestion.suggestion)
+            loadUrl(queryUrl)
         }
         showHomeRowReminder()
     }
@@ -1302,6 +1312,8 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestBookmarks(tab: TabViewController) {
+        Pixel.fire(pixel: .bookmarksButtonPressed,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
         onBookmarksPressed()
     }
     
@@ -1471,7 +1483,8 @@ extension MainViewController: MenuButtonDelegate {
     }
     
     func showBookmarks(_ button: MenuButton) {
-        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        Pixel.fire(pixel: .bookmarksButtonPressed,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
         onBookmarksPressed()
     }
 }
@@ -1479,7 +1492,8 @@ extension MainViewController: MenuButtonDelegate {
 extension MainViewController: GestureToolbarButtonDelegate {
     
     func singleTapDetected(in sender: GestureToolbarButton) {
-        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        Pixel.fire(pixel: .bookmarksButtonPressed,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
         onBookmarksPressed()
     }
     
@@ -1532,6 +1546,7 @@ extension MainViewController: AutoClearWorker {
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
         } onTransitionCompleted: {
+            ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)

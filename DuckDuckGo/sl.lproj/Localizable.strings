@@ -251,19 +251,13 @@
 "donotsell.disabled" = "Onemogočeno";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Ker je globalni nadzor zasebnosti (Global Privacy Control (GPC)) nov standard, ga večina spletnih mest še ne prepozna, vendar si močno prizadevamo, da bi bil sprejet po vsem svetu.";
-
-/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Več";
-
-/* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Vendar morajo spletna mesta na podlagi signala ukrepati le v meri, ki jo določajo veljavni zakoni. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Omogočeno";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Vaši podatki ne bi smeli biti naprodaj. Pri DuckDuckGo se strinjamo. Aktivirajte nastavitev globalni nadzor zasebnosti (Global Privacy Control (GPC) in spletnim mestom bomo sporočili vaše nastavitve:\n\n• Ne prodajajte svojih osebnih podatkov.\n• Omejite skupno rabo svojih osebnih podatkov z drugimi podjetji.";
+"donotsell.info.headertext" = "DuckDuckGo samodejno blokira številne sledilce. Z globalnim nadzorom zasebnosti (GPC) lahko tudi od sodelujočih spletnih mest zahtevate, da omejijo prodajo ali skupno rabo vaših osebnih podatkov z drugimi podjetji.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zaznamki še niso dodani";

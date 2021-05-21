@@ -33,13 +33,12 @@ class SuggestionTableViewCell: UITableViewCell {
     @IBOutlet weak var plusButton: UIButton!
 
     func updateFor(query: String, suggestion: Suggestion, with theme: Theme) {
-        let text = suggestion.suggestion
-        
+
         switch suggestion.source {
         case .local:
             typeImage.image = UIImage(named: "BookmarkSuggestion")
         case .remote:
-            if URL.isWebUrl(text: text) {
+            if suggestion.url != nil {
                 typeImage.image = UIImage(named: "SuggestGlobe")
             } else {
                 typeImage.image = UIImage(named: "SuggestLoupe")

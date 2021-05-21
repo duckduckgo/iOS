@@ -197,5 +197,5 @@
     }
 
     const injectionScript = buildInjectionScript()
-    inject(injectionScript)
+    inject(injectionScript, true)
 })()

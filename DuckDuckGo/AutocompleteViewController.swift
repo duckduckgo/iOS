@@ -53,7 +53,12 @@ class AutocompleteViewController: UIViewController {
             view.backgroundColor = showBackground ? UIColor.black.withAlphaComponent(0.2) : UIColor.clear
         }
     }
-    
+
+    var selectedSuggestion: Suggestion? {
+        let state = (suggestions: self.suggestions, selectedIndex: self.selectedItem)
+        return state.suggestions.indices.contains(state.selectedIndex) ? state.suggestions[state.selectedIndex] : nil
+    }
+
     private var hidesBarsOnSwipeDefault = true
     
     private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
@@ -153,7 +158,7 @@ class AutocompleteViewController: UIViewController {
             let matches = strongSelf.bookmarksSearch.search(query: query)
             let notQueryMatches = matches.filter { $0.url.absoluteString != query }
             let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
-            let localSuggestions = filteredMatches.map { Suggestion(type: "", suggestion: $0.displayTitle!, url: $0.url)}
+            let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.displayTitle!, url: $0.url)}
             
             guard let suggestions = suggestions, error == nil else {
                 os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")

@@ -251,19 +251,13 @@
 "donotsell.disabled" = "Desactivado";
 
 /* No comment provided by engineer. */
-"donotsell.disclaimer.footertext" = "Dado que el Control Global de Privacidad (GPC) es un nuevo estándar, la mayoría de los sitios web no lo reconoce todavía, pero estamos trabajando para garantizar que se acepte en todo el mundo.";
-
-/* No comment provided by engineer. */
 "donotsell.disclaimer.learnmore" = "Más información";
-
-/* No comment provided by engineer. */
-"donotsell.disclaimer.suffix" = " Sin embargo, solo se exige a los sitios web que actúen conforme a esta indicación en la medida en que lo dictamine la normativa vigente. ";
 
 /* GPC Setting state */
 "donotsell.enabled" = "Activado";
 
 /* No comment provided by engineer. */
-"donotsell.info.headertext" = "Tus datos no deberían poder venderse. En DuckDuckGo, estamos de acuerdo. Activa la opción «Control Global de Privacidad» (GPC) e indicaremos a los sitios web tu preferencia de:\n\n • No vender tus datos personales.\n• Limitar el uso compartido de tus datos personales con otras empresas.";
+"donotsell.info.headertext" = "DuckDuckGo bloquea automáticamente muchos rastreadores. Con el Control Global de Privacidad (GPC), también puedes solicitar a los sitios web participantes que restrinjan la venta o el uso compartido de tus datos personales con otras empresas.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aún no se han añadido marcadores";

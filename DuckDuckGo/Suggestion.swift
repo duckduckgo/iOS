@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-struct Suggestion: Decodable {
+struct Suggestion {
 
     enum Source {
         case remote
@@ -28,28 +28,19 @@ struct Suggestion: Decodable {
     }
     
     let source: Source
-    let type: String
     let suggestion: String
     let url: URL?
     
-    init(source: Source = .local, type: String, suggestion: String, url: URL?) {
+    init(source: Source, suggestion: String, url: URL?) {
         self.source = source
-        self.type = type
         self.suggestion = suggestion
         self.url = url
     }
+}
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let dictionary = try container.decode([String: String].self)
+struct AutocompleteEntry: Decodable {
 
-        if let element = dictionary.first {
-            self.source = .remote
-            self.type = element.key
-            self.suggestion = element.value
-            self.url = nil
-        } else {
-            throw JsonError.invalidJson
-        }
-    }
+    let phrase: String?
+    let isNav: Bool?
+
 }

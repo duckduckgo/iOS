@@ -50,9 +50,22 @@ class AutocompleteRequest {
     private func processResult(data: Data?, error: Error?) throws -> [Suggestion] {
         if let error = error { throw error }
         guard let data = data else { throw ApiRequestError.noData }
-        let suggestions = try JSONDecoder().decode([Suggestion].self, from: data)
+        let entries = try JSONDecoder().decode([AutocompleteEntry].self, from: data)
 
-        return suggestions
+        return entries.compactMap {
+            guard let phrase = $0.phrase else { return nil }
+
+            if let isNav = $0.isNav {
+                // We definitely have a nav indication so use it. Phrase should be a fully qualified URL.
+                //  Assume HTTP and that we'll auto-upgrade if needed.
+                let url = isNav ? URL(string: "http://\(phrase)") : nil
+                return Suggestion(source: .remote, suggestion: phrase, url: url)
+            } else {
+                // We need to infer nav based on the phrase to maintain previous behaviour (ie treat phrase that look like URLs like URLs)
+                let url = URL.webUrl(fromText: phrase)
+                return Suggestion(source: .remote, suggestion: phrase, url: url)
+            }
+        }
     }
 
     private func complete(_ completion: @escaping Completion, withSuccess suggestions: [Suggestion]) {

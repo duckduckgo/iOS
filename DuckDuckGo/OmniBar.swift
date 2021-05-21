@@ -334,17 +334,20 @@ class OmniBar: UIView {
     }
 
     func onQuerySubmitted() {
-        guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
-            return
-        }
-        resignFirstResponder()
-        
-        if let url = query.punycodedUrl {
-            omniDelegate?.onOmniQuerySubmitted(url.absoluteString)
+        if let suggestion = omniDelegate?.selectedSuggestion() {
+            omniDelegate?.onOmniSuggestionSelected(suggestion)
         } else {
-            omniDelegate?.onOmniQuerySubmitted(query)
+            guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
+                return
+            }
+            resignFirstResponder()
+
+            if let url = query.punycodedUrl {
+                omniDelegate?.onOmniQuerySubmitted(url.absoluteString)
+            } else {
+                omniDelegate?.onOmniQuerySubmitted(query)
+            }
         }
-        
     }
 
     @IBAction func onClearButtonPressed(_ sender: Any) {

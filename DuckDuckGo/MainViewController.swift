@@ -46,6 +46,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
     @IBOutlet weak var containerViewTop: NSLayoutConstraint!
+    @IBOutlet var containerViewBottomToFindInPageTop: NSLayoutConstraint!
     
     @IBOutlet weak var tabsBar: UIView!
     @IBOutlet weak var tabsBarTop: NSLayoutConstraint!
@@ -891,6 +892,7 @@ class MainViewController: UIViewController {
     func updateFindInPage() {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
+        containerViewBottomToFindInPageTop?.isActive = true
     }
         
 }
@@ -907,6 +909,7 @@ extension MainViewController: FindInPageViewDelegate {
     
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
+        containerViewBottomToFindInPageTop?.isActive = false
     }
     
 }

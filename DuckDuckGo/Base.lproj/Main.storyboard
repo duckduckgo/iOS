@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,11 +47,11 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="96" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="651"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vw-jR-X6Q" userLabel="Suggestion Tray">
-                                <rect key="frame" x="0.0" y="96" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="651"/>
                                 <connections>
                                     <segue destination="j6c-LM-dZE" kind="embed" id="1ri-Fa-CEp"/>
                                 </connections>
@@ -161,13 +161,13 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-zZ-iud">
-                                                        <rect key="frame" x="231" y="11" width="37" height="14"/>
+                                                        <rect key="frame" x="224.5" y="10" width="43.5" height="16.5"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="IBB-TQ-d5c">
-                                                        <rect key="frame" x="38" y="0.0" width="185" height="36"/>
+                                                        <rect key="frame" x="38" y="0.0" width="178.5" height="36"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -275,7 +275,7 @@
                             <constraint firstItem="kFG-OX-YkL" firstAttribute="width" secondItem="nQT-PV-ULm" secondAttribute="width" id="HdJ-g2-Ov8"/>
                             <constraint firstItem="kFG-OX-YkL" firstAttribute="bottom" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="LiF-mb-9zs"/>
                             <constraint firstItem="0vw-jR-X6Q" firstAttribute="centerX" secondItem="Ylj-oJ-fqD" secondAttribute="centerX" id="M0o-nm-oqt"/>
-                            <constraint firstItem="Krm-hA-s9u" firstAttribute="top" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" id="N6y-rD-Nne"/>
+                            <constraint firstItem="Krm-hA-s9u" firstAttribute="top" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" priority="750" id="N6y-rD-Nne"/>
                             <constraint firstItem="lJT-0B-l2J" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="NuH-hE-pWg"/>
                             <constraint firstItem="lJT-0B-l2J" firstAttribute="top" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="P7O-RF-g4h"/>
                             <constraint firstItem="Ylj-oJ-fqD" firstAttribute="leading" secondItem="Vxt-xD-aBt" secondAttribute="leading" id="Piz-bL-YZd"/>
@@ -296,6 +296,7 @@
                             <constraint firstAttribute="trailing" secondItem="Ylj-oJ-fqD" secondAttribute="trailing" id="ssm-8i-6VT"/>
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="ukv-lF-Gp0"/>
                             <constraint firstItem="yPc-P1-sCk" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="vAO-OO-UEQ"/>
+                            <constraint firstItem="yPc-P1-sCk" firstAttribute="top" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" id="xRc-q1-z5b"/>
                             <constraint firstAttribute="top" secondItem="iiL-6e-jxs" secondAttribute="top" id="yOu-69-e3q"/>
                         </constraints>
                     </view>
@@ -305,6 +306,7 @@
                     <connections>
                         <outlet property="backButton" destination="Kc6-IR-lKx" id="eo5-dT-718"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
+                        <outlet property="containerViewBottomToFindInPageTop" destination="xRc-q1-z5b" id="OgK-8o-Lun"/>
                         <outlet property="containerViewTop" destination="h5k-Sy-jb2" id="def-Jc-VHg"/>
                         <outlet property="customNavigationBar" destination="nQT-PV-ULm" id="OGt-AV-tQb"/>
                         <outlet property="findInPageBottomLayoutConstraint" destination="FWX-GD-c7o" id="sOR-Dj-VkC"/>
@@ -411,15 +413,15 @@
             <objects>
                 <viewController id="j6c-LM-dZE" customClass="SuggestionTrayViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jEf-yR-5Dz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IT2-Wd-hHA" userLabel="Background View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFZ-vQ-cny">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="908" id="Jcf-as-Vyd"/>

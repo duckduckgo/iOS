@@ -57,6 +57,7 @@ public class ContentBlockerRulesManager {
     /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
     public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
         guard !isCompilingRules else {
+            completion?(nil)
             return
         }
 

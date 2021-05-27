@@ -30,15 +30,13 @@ public class ContentBlockerRulesManager {
 
     private init() {}
 
-    private var isCompilingRules: Bool = false
+    private var isCompilingRules = false
 
     public func recompile() {
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore")
         }
 
-        // The `compiledRules` function has this check internally, but it needs to be checked here so that `removeContentRuleList` doesn't get
-        // called accidentally.
         guard !isCompilingRules else {
             return
         }

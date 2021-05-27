@@ -28,12 +28,24 @@ public class ContentBlockerRulesManager {
 
     public static let shared = ContentBlockerRulesManager()
 
+    fileprivate static let contentBlockerLog = OSLog(subsystem: "com.duckduckgo.instrumentation", category: "ContentBlockerInstrumentation")
+
     private init() {}
+
+    private var isCompilingRules: Bool = false
 
     public func recompile() {
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore")
         }
+
+        // The `compiledRules` function has this check internally, but it needs to be checked here so that `removeContentRuleList` doesn't get
+        // called accidentally.
+        guard !isCompilingRules else {
+            return
+        }
+
+        isCompilingRules = true
 
         DispatchQueue.global(qos: .background).async {
             store.removeContentRuleList(forIdentifier: Self.rulesIdentifier) { _ in
@@ -48,6 +60,11 @@ public class ContentBlockerRulesManager {
 
     /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
     public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
+        guard !isCompilingRules else {
+            return
+        }
+
+        isCompilingRules = true
 
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore for rules compiliation checking")
@@ -57,13 +74,17 @@ public class ContentBlockerRulesManager {
             guard list == nil else {
                 DispatchQueue.main.async {
                     completion?(list)
+                    self.isCompilingRules = false
                 }
 
                 return
             }
 
             DispatchQueue.global(qos: .background).async {
-                store.compileRules(withIdentifier: Self.rulesIdentifier, completion: completion)
+                store.compileRules(withIdentifier: Self.rulesIdentifier) { ruleList in
+                    self.isCompilingRules = false
+                    completion?(ruleList)
+                }
             }
         }
     }

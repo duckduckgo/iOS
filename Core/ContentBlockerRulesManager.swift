@@ -43,8 +43,6 @@ public class ContentBlockerRulesManager {
             return
         }
 
-        isCompilingRules = true
-
         DispatchQueue.global(qos: .background).async {
             store.removeContentRuleList(forIdentifier: Self.rulesIdentifier) { _ in
                 DispatchQueue.global(qos: .background).async {

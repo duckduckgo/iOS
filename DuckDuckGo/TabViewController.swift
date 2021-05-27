@@ -1442,13 +1442,15 @@ extension TabViewController: EmailManagerRequestDelegate {
 
     // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager,
-                      didRequestAliasWithURL url: URL,
+                      requested url: URL,
                       method: String,
                       headers: [String: String],
+                      parameters: [String: String]?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
         APIRequest.request(url: url,
                            method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
+                           parameters: parameters,
                            headers: headers,
                            timeoutInterval: timeoutInterval) { response, error in
             

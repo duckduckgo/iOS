@@ -52,6 +52,15 @@ public struct AppUrls {
         static let washingtonPostBase = "https://washingtonpost.com"
         static let newYorkTimesBase = "https://nytimes.com"
         static let gpcEnabled = [gpcGlitchBase, washingtonPostBase, newYorkTimesBase]
+
+        static var loginQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/login"
+        static var privacyGuaranteesQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/privacy-guarantees"
+        static var addressBlogPostQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/learn-more"
+        static var emailLoginQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/login"
+        static var signUpQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/signup"
+        static func signUpWithCodeQuickLink(code: String) -> String {
+            return "ddgQuickLink://https://quack.duckduckgo.com/email/signup?inviteCode=\(code)"
+        }
     }
     
     private enum DDGStaticURL: String {
@@ -253,6 +262,30 @@ public struct AppUrls {
 
     public var httpsExcludedDomains: URL {
         return URL(string: Url.httpsExcludedDomains)!
+    }
+
+    public var loginQuickLink: URL {
+        return URL(string: Url.loginQuickLink)!
+    }
+
+    public var signUpQuickLink: URL {
+        return URL(string: Url.signUpQuickLink)!
+    }
+
+    public func signUpWithCodeQuickLink(code: String) -> URL {
+        return URL(string: Url.signUpWithCodeQuickLink(code: code))!
+    }
+
+    public var privacyGuaranteesQuickLink: URL {
+        return URL(string: Url.privacyGuaranteesQuickLink)!
+    }
+
+    public var addressBlogPostQuickLink: URL {
+        return URL(string: Url.addressBlogPostQuickLink)!
+    }
+
+    public var emailLoginQuickLink: URL {
+        return URL(string: Url.emailLoginQuickLink)!
     }
     
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil) -> URL {

@@ -277,6 +277,63 @@
 /* Email option title in the browsing menu */
 "email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
 
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Enabled";
+
+/* Signed out state for the email feature */
+"email.settings.join-waitlist" = "Join the Waitlist";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Off";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Cancel";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Removing Email Protection from this device will not delete your Duck Address.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Remove";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Remove Email Protection?";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Get Started";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "I have an Invite Code";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "You're invited!";
+
+/* Description text for the email waitlist */
+"email.waitlist.invited-summary" = "Need a refresher? Read our Announcement to learn about Email Protection from DuckDuckGo.";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Join the Waitlist";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "You're on the list";
+
+/* Description text for the email waitlist */
+"email.waitlist.joined-summary" = "Your invitation will be available soon. If you asked us to notify you, we’ll do just that. Read our Announcement to learn more about Email Protection from DuckDuckGo.";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
+
+/* Footer text for the email waitlist */
+"email.waitlist.privacy-guarantee" = "We never store your emails. Learn more in our Privacy Guarantees. If you already have a Duck Address, add it to this device.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Email Privacy, Simplified";
+
+/* Description text for the email waitlist */
+"email.waitlist.summary" = "Enjoy privacy while reading your email and giving out your email address, without the pain of switching email providers. Read our Announcement to learn more about Email Protection from DuckDuckGo.";
+
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
 

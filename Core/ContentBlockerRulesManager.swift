@@ -70,8 +70,8 @@ public class ContentBlockerRulesManager {
         store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, _ in
             guard list == nil else {
                 DispatchQueue.main.async {
-                    completion?(list)
                     self.isCompilingRules = false
+                    completion?(list)
                 }
 
                 return

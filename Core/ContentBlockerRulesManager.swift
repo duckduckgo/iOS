@@ -28,8 +28,6 @@ public class ContentBlockerRulesManager {
 
     public static let shared = ContentBlockerRulesManager()
 
-    fileprivate static let contentBlockerLog = OSLog(subsystem: "com.duckduckgo.instrumentation", category: "ContentBlockerInstrumentation")
-
     private init() {}
 
     private var isCompilingRules: Bool = false

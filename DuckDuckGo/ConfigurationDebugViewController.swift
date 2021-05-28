@@ -53,6 +53,11 @@ class ConfigurationDebugViewController: UITableViewController {
         case surrogates
         case trackerDataSet
         case temporaryUnprotectedSites
+        case resetEtags = "Reset ETags"
+
+        var showDetail: Bool {
+            return self != .resetEtags
+        }
 
     }
 
@@ -121,7 +126,7 @@ class ConfigurationDebugViewController: UITableViewController {
             if let etag = etag(for: row) {
                 cell.detailTextLabel?.text = etag
             } else {
-                cell.detailTextLabel?.text = "None"
+                cell.detailTextLabel?.text = row.showDetail ? "None" : nil
             }
 
         default: break
@@ -148,6 +153,13 @@ class ConfigurationDebugViewController: UITableViewController {
                 tableView.reloadData()
             default: break
             }
+        case .etags:
+            switch ETagRows.allCases[indexPath.row] {
+            case .resetEtags:
+                resetETags()
+                tableView.reloadData()
+            default: break
+            }
         default: break
         }
     }
@@ -158,6 +170,12 @@ class ConfigurationDebugViewController: UITableViewController {
 
     private func etag(for config: ETagRows) -> String? {
         return defaults?.string(forKey: config.rawValue)
+    }
+
+    private func resetETags() {
+        for row in ETagRows.allCases {
+            defaults?.removeObject(forKey: row.rawValue)
+        }
     }
 
 }

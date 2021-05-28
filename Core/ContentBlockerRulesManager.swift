@@ -30,9 +30,15 @@ public class ContentBlockerRulesManager {
 
     private init() {}
 
+    private var isCompilingRules = false
+
     public func recompile() {
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore")
+        }
+
+        guard !isCompilingRules else {
+            return
         }
 
         DispatchQueue.global(qos: .background).async {
@@ -48,6 +54,12 @@ public class ContentBlockerRulesManager {
 
     /// Return compiled rules for the current content blocking configuration.  This may return a precompiled rule set.
     public func compiledRules(completion: ((WKContentRuleList?) -> Void)?) {
+        guard !isCompilingRules else {
+            completion?(nil)
+            return
+        }
+
+        isCompilingRules = true
 
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore for rules compiliation checking")
@@ -56,6 +68,7 @@ public class ContentBlockerRulesManager {
         store.lookUpContentRuleList(forIdentifier: Self.rulesIdentifier) { list, _ in
             guard list == nil else {
                 DispatchQueue.main.async {
+                    self.isCompilingRules = false
                     completion?(list)
                 }
 
@@ -63,7 +76,10 @@ public class ContentBlockerRulesManager {
             }
 
             DispatchQueue.global(qos: .background).async {
-                store.compileRules(withIdentifier: Self.rulesIdentifier, completion: completion)
+                store.compileRules(withIdentifier: Self.rulesIdentifier) { ruleList in
+                    self.isCompilingRules = false
+                    completion?(ruleList)
+                }
             }
         }
     }

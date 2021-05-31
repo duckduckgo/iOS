@@ -221,6 +221,9 @@
 		85A313972028E78A00327D00 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 85A313962028E78A00327D00 /* release_notes.txt */; };
 		85A53ECA200D1FA20010D13F /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* FileStore.swift */; };
 		85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A9C37820E0E00C00073340 /* HomeRow.xcassets */; };
+		85ACCE9D26650C6800CFAE75 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ACCE9C26650C6800CFAE75 /* WebView.swift */; };
+		85ACCEA32665278900CFAE75 /* DefineTermViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ACCEA22665278900CFAE75 /* DefineTermViewController.swift */; };
+		85ACCEA5266528A700CFAE75 /* DefineTerm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85ACCEA4266528A700CFAE75 /* DefineTerm.storyboard */; };
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
 		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
 		85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85B718F31FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld */; };
@@ -934,6 +937,9 @@
 		85A313962028E78A00327D00 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = release_notes.txt; path = fastlane/metadata/default/release_notes.txt; sourceTree = "<group>"; };
 		85A53EC9200D1FA20010D13F /* FileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStore.swift; sourceTree = "<group>"; };
 		85A9C37820E0E00C00073340 /* HomeRow.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeRow.xcassets; sourceTree = "<group>"; };
+		85ACCE9C26650C6800CFAE75 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		85ACCEA22665278900CFAE75 /* DefineTermViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineTermViewController.swift; sourceTree = "<group>"; };
+		85ACCEA4266528A700CFAE75 /* DefineTerm.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DefineTerm.storyboard; sourceTree = "<group>"; };
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		85B718F41FD071E50031A14F /* HTTPSUpgrade.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HTTPSUpgrade.xcdatamodel; sourceTree = "<group>"; };
@@ -2438,6 +2444,7 @@
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
 				9830A05725ED0C5D00DB64DE /* BrowsingMenu */,
+				85ACCEA12665276700CFAE75 /* DefineTerm */,
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				839F119520DBC489007CD8C2 /* Feedback */,
 				85F2FFFE2215C163006BB258 /* FindInPage */,
@@ -2680,6 +2687,15 @@
 				F4B594E2257E9806006BC1F0 /* NewFireAnimation */,
 			);
 			name = FireAnimation;
+			sourceTree = "<group>";
+		};
+		85ACCEA12665276700CFAE75 /* DefineTerm */ = {
+			isa = PBXGroup;
+			children = (
+				85ACCEA22665278900CFAE75 /* DefineTermViewController.swift */,
+				85ACCEA4266528A700CFAE75 /* DefineTerm.storyboard */,
+			);
+			name = DefineTerm;
 			sourceTree = "<group>";
 		};
 		85AE668C20971FCA0014CF04 /* Notifications */ = {
@@ -3374,6 +3390,7 @@
 				02C57C5425153330009E5129 /* DoNotSellUserScript.swift */,
 				4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */,
 				02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */,
+				85ACCE9C26650C6800CFAE75 /* WebView.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -4400,6 +4417,7 @@
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				AA4D6AA323DE4CC4007E8790 /* AppIconBlue40x40@3x.png in Resources */,
+				85ACCEA5266528A700CFAE75 /* DefineTerm.storyboard in Resources */,
 				AAF2E28123E0495400962AF8 /* AppIconBlack83.5x83.5@2x.png in Resources */,
 				AA4D6ABF23DE4D15007E8790 /* AppIconYellow40x40@3x.png in Resources */,
 				AA4D6A8F23DE49A5007E8790 /* AppIconBlack29x29@3x.png in Resources */,
@@ -4714,6 +4732,7 @@
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */,
+				85ACCEA32665278900CFAE75 /* DefineTermViewController.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
@@ -5065,6 +5084,7 @@
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,
 				85CA53AA24BB376800A6288C /* NotFoundCachingDownloader.swift in Sources */,
 				4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */,
+				85ACCE9D26650C6800CFAE75 /* WebView.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				9896632422C56716007BE4FE /* EtagStorage.swift in Sources */,

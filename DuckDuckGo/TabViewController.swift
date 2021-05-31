@@ -66,7 +66,7 @@ class TabViewController: UIViewController {
     
     let progressWorker = WebProgressWorker()
 
-    private(set) var webView: WKWebView!
+    private(set) var webView: WebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyController: PrivacyProtectionController?
     
@@ -273,7 +273,7 @@ class TabViewController: UIViewController {
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
-        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        webView = WebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         if #available(iOS 13, *) {
@@ -290,6 +290,7 @@ class TabViewController: UIViewController {
         
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        webView.webViewDelegate = self
         webViewContainer.addSubview(webView)
 
         reloadUserScripts()
@@ -566,7 +567,12 @@ class TabViewController: UIViewController {
                 chromeDelegate.omniBar.cancelAllAnimations()
             }
         }
-        
+
+        if let controller = segue.destination as? DefineTermViewController {
+            controller.term = sender as? String
+            controller.parentTabViewController = self
+        }
+
     }
     
     private func addLoginDetectionStateObserver() {
@@ -1474,6 +1480,14 @@ extension NSError {
 
     var failedUrl: URL? {
         return userInfo[NSURLErrorFailingURLErrorKey] as? URL
+    }
+
+}
+
+extension TabViewController: WebViewDelegate {
+
+    func webView(_: WebView, didRequestDefinitionOfTerm term: String) {
+        performSegue(withIdentifier: "DefineTerm", sender: term)
     }
 
 }

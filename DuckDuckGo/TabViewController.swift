@@ -519,12 +519,20 @@ class TabViewController: UIViewController {
         initUserScripts()
         
         userScripts.forEach { script in
+
             webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
             
-            script.messageNames.forEach { messageName in
-                webView.configuration.userContentController.add(script, name: messageName)
+            if #available(iOS 14, *),
+               let replyHandler = script as? WKScriptMessageHandlerWithReply {
+                script.messageNames.forEach { messageName in
+                    webView.configuration.userContentController.addScriptMessageHandler(replyHandler, contentWorld: .page, name: messageName)
+                }
+            } else {
+                script.messageNames.forEach { messageName in
+                    webView.configuration.userContentController.add(script, name: messageName)
+                }
             }
 
         }

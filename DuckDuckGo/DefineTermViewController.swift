@@ -22,13 +22,19 @@ import Core
 
 class DefineTermViewController: UIViewController {
 
-    var term: String?
+    var term: String? {
+        didSet {
+            title = term
+        }
+    }
     weak var parentTabViewController: TabViewController?
 
     let webView = WebView(frame: .zero, configuration: .nonPersistent())
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        applyTheme(ThemeManager.shared.currentTheme)
 
         webView.webViewDelegate = self
         webView.frame = view.frame
@@ -49,6 +55,13 @@ class DefineTermViewController: UIViewController {
         webView.load(URLRequest(url: url))
     }
 
+    @IBAction func onDoneTapped() {
+        dismiss(animated: true)
+    }
+
+    @IBAction func onOrganizeTapped() {
+    }
+
 }
 
 extension DefineTermViewController: WebViewDelegate {
@@ -57,4 +70,11 @@ extension DefineTermViewController: WebViewDelegate {
         load(term: term)
     }
 
+}
+
+extension DefineTermViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        decorateNavigationBar(with: theme)
+    }
 }

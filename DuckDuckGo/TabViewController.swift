@@ -573,6 +573,11 @@ class TabViewController: UIViewController {
             controller.parentTabViewController = self
         }
 
+        if let controller = (segue.destination as? UINavigationController)?.viewControllers[0] as? DefineTermViewController {
+            controller.term = sender as? String
+            controller.parentTabViewController = self
+        }
+
     }
     
     private func addLoginDetectionStateObserver() {

@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import WebKit
 
 class DefineTermViewController: UIViewController {
 
@@ -39,6 +40,7 @@ class DefineTermViewController: UIViewController {
         webView.webViewDelegate = self
         webView.frame = view.frame
         webView.autoresizingMask = [ .flexibleWidth, .flexibleHeight ]
+        webView.navigationDelegate = self
         view.addSubview(webView)
 
         if let term = term {
@@ -60,6 +62,14 @@ class DefineTermViewController: UIViewController {
     }
 
     @IBAction func onOrganizeTapped() {
+        guard let url = webView.url else { return }
+        openAsNewTab(url: url)
+    }
+
+    func openAsNewTab(url: URL) {
+        guard let tab = parentTabViewController else { return }
+        tab.delegate?.tab(tab, didRequestNewTabForUrl: url, openedByPage: true)
+        dismiss(animated: false)
     }
 
 }
@@ -67,6 +77,7 @@ class DefineTermViewController: UIViewController {
 extension DefineTermViewController: WebViewDelegate {
 
     func webView(_: WebView, didRequestDefinitionOfTerm term: String) {
+        self.term = term
         load(term: term)
     }
 
@@ -77,4 +88,25 @@ extension DefineTermViewController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
     }
+}
+
+extension DefineTermViewController: WKNavigationDelegate {
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.cancel)
+            return
+        }
+
+        if AppUrls().isDuckDuckGo(url: url) {
+            decisionHandler(.allow)
+        } else {
+            decisionHandler(.cancel)
+            openAsNewTab(url: url)
+        }
+
+    }
+
 }

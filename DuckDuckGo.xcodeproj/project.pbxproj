@@ -7010,8 +7010,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				kind = revision;
+				revision = 1e912a4e44ed0fcb4322c0876ce8b1a92e79e021;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

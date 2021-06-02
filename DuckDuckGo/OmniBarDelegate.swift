@@ -24,6 +24,8 @@ protocol OmniBarDelegate: AnyObject {
     func onOmniQueryUpdated(_ query: String)
     
     func onOmniQuerySubmitted(_ query: String)
+
+    func onOmniSuggestionSelected(_ suggestion: Suggestion)
     
     func onDismissed()
     
@@ -51,6 +53,8 @@ protocol OmniBarDelegate: AnyObject {
     
     // Returns whether field should select the text or not
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool
+
+    func selectedSuggestion() -> Suggestion?
 
 }
 

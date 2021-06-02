@@ -121,7 +121,15 @@ class BlankSnapshotViewController: UIViewController {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
-    
+
+    func selectedSuggestion() -> Suggestion? {
+        return nil
+    }
+
+    func onOmniSuggestionSelected(_ suggestion: Suggestion) {
+        // No-op
+    }
+
     func onSettingsPressed() {
         userInteractionDetected()
     }

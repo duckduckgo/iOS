@@ -61,6 +61,8 @@ public enum PixelName: String {
     case browsingMenuAddToFavoritesAddFavoriteFlow = "mb_aff"
     case browsingMenuToggleBrowsingMode = "mb_dm"
     case browsingMenuShare = "mb_sh"
+    case browsingMenuCopy = "mb_cp"
+    case browsingMenuPrint = "mb_pr"
     case browsingMenuSettings = "mb_st"
     case browsingMenuFindInPage = "mb_fp"
     case browsingMenuDisableProtection = "mb_wla"
@@ -70,7 +72,7 @@ public enum PixelName: String {
     
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
-    case tabBarBookmarksPressed = "mt_bm"
+    case bookmarksButtonPressed = "mt_bm"
     case tabBarBookmarksLongPressed = "mt_bl"
     case tabBarTabSwitcherPressed = "mt_tb"
 
@@ -203,6 +205,8 @@ public struct PixelParameters {
     
     public static let autocompleteBookmarkCapable = "bc"
     public static let autocompleteIncludedLocalResults = "sb"
+    
+    public static let originatedFromMenu = "om"
     
     static let applicationState = "as"
     static let dataAvailiability = "dp"

@@ -245,7 +245,7 @@ extension TabViewController {
                     return
                 }
                 let pasteBoard = UIPasteboard.general
-                pasteBoard.string = alias
+                pasteBoard.string = self?.emailManager.emailAddressFor(alias)
                 ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
             }
         }

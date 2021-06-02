@@ -173,7 +173,7 @@ class TabViewController: UIViewController {
         emailManager.requestDelegate = self
         return emailManager
     }()
-    private var emailScript = EmailUserScript()
+    private var autofillUserScript = AutofillUserScript()
     private var debugScript = DebugUserScript()
     
     private var userScripts: [UserScript] = []
@@ -231,7 +231,7 @@ class TabViewController: UIViewController {
             fingerprintScript,
             faviconScript,
             fullScreenVideoScript,
-            emailScript
+            autofillUserScript
         ]
         
         if #available(iOS 13, *) {
@@ -253,8 +253,7 @@ class TabViewController: UIViewController {
         contentBlockerScript.delegate = self
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
-        emailScript.webView = webView
-        emailScript.delegate = emailManager
+        autofillUserScript.emailDelegate = emailManager
     }
     
     func updateTabModel() {
@@ -521,12 +520,20 @@ class TabViewController: UIViewController {
         initUserScripts()
         
         userScripts.forEach { script in
+
             webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
             
-            script.messageNames.forEach { messageName in
-                webView.configuration.userContentController.add(script, name: messageName)
+            if #available(iOS 14, *),
+               let replyHandler = script as? WKScriptMessageHandlerWithReply {
+                script.messageNames.forEach { messageName in
+                    webView.configuration.userContentController.addScriptMessageHandler(replyHandler, contentWorld: .page, name: messageName)
+                }
+            } else {
+                script.messageNames.forEach { messageName in
+                    webView.configuration.userContentController.add(script, name: messageName)
+                }
             }
 
         }

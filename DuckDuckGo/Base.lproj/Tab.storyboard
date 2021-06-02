@@ -141,9 +141,7 @@
                             <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
                         </segue>
                         <segue destination="fuG-ev-dKt" kind="presentation" identifier="DaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="cG3-cw-u7d"/>
-                        <segue destination="MTs-CV-vxe" kind="popoverPresentation" identifier="DefineTerm" popoverAnchorView="ypz-s2-KJB" id="OfB-hC-mWG">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
-                        </segue>
+                        <segue destination="MTs-CV-vxe" kind="presentation" identifier="DefineTerm" id="OfB-hC-mWG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xy9-lL-XjG" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,6 +10,11 @@
 		021812072667E96D002EC2FA /* piexif.js in Resources */ = {isa = PBXBuildFile; fileRef = 021812062667E96D002EC2FA /* piexif.js */; };
 		021812092667E997002EC2FA /* metadata-stripper.js in Resources */ = {isa = PBXBuildFile; fileRef = 021812082667E997002EC2FA /* metadata-stripper.js */; };
 		0218120B2667EDD2002EC2FA /* MetadataStripperUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0218120A2667EDD2002EC2FA /* MetadataStripperUserScript.swift */; };
+		0218120E266931F6002EC2FA /* geo.js in Resources */ = {isa = PBXBuildFile; fileRef = 0218120D266931F6002EC2FA /* geo.js */; };
+		0218121026693263002EC2FA /* userprompt.js in Resources */ = {isa = PBXBuildFile; fileRef = 0218120F26693263002EC2FA /* userprompt.js */; };
+		0218121226693298002EC2FA /* city-data.js in Resources */ = {isa = PBXBuildFile; fileRef = 0218121126693298002EC2FA /* city-data.js */; };
+		02181214266932C0002EC2FA /* country-data.js in Resources */ = {isa = PBXBuildFile; fileRef = 02181213266932C0002EC2FA /* country-data.js */; };
+		021812162669330C002EC2FA /* GeoFuzzerUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021812152669330C002EC2FA /* GeoFuzzerUserScript.swift */; };
 		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
 		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
@@ -730,6 +735,11 @@
 		021812062667E96D002EC2FA /* piexif.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = piexif.js; sourceTree = "<group>"; };
 		021812082667E997002EC2FA /* metadata-stripper.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "metadata-stripper.js"; sourceTree = "<group>"; };
 		0218120A2667EDD2002EC2FA /* MetadataStripperUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataStripperUserScript.swift; sourceTree = "<group>"; };
+		0218120D266931F6002EC2FA /* geo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = geo.js; sourceTree = "<group>"; };
+		0218120F26693263002EC2FA /* userprompt.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = userprompt.js; sourceTree = "<group>"; };
+		0218121126693298002EC2FA /* city-data.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "city-data.js"; sourceTree = "<group>"; };
+		02181213266932C0002EC2FA /* country-data.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "country-data.js"; sourceTree = "<group>"; };
+		021812152669330C002EC2FA /* GeoFuzzerUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoFuzzerUserScript.swift; sourceTree = "<group>"; };
 		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
 		0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesUserScript.swift; sourceTree = "<group>"; };
 		0254AC2324EDACDE004855DF /* contentblockerrules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = contentblockerrules.js; sourceTree = "<group>"; };
@@ -2156,6 +2166,17 @@
 			name = "metadata-stripper";
 			sourceTree = "<group>";
 		};
+		0218120C266931DA002EC2FA /* geo-fuzzer */ = {
+			isa = PBXGroup;
+			children = (
+				0218120D266931F6002EC2FA /* geo.js */,
+				0218120F26693263002EC2FA /* userprompt.js */,
+				0218121126693298002EC2FA /* city-data.js */,
+				02181213266932C0002EC2FA /* country-data.js */,
+			);
+			name = "geo-fuzzer";
+			sourceTree = "<group>";
+		};
 		025CCFE32582601C001CD5BB /* FingerprintingUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -3390,6 +3411,7 @@
 				4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */,
 				02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */,
 				0218120A2667EDD2002EC2FA /* MetadataStripperUserScript.swift */,
+				021812152669330C002EC2FA /* GeoFuzzerUserScript.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3537,6 +3559,7 @@
 		F18608DE1E5E648100361C30 /* Javascript */ = {
 			isa = PBXGroup;
 			children = (
+				0218120C266931DA002EC2FA /* geo-fuzzer */,
 				021812052667E94D002EC2FA /* metadata-stripper */,
 				02DC6A50255D8BE700B03BC2 /* fingerprinting */,
 				835750931F8E9A610059E07B /* contentblocking */,
@@ -4491,6 +4514,7 @@
 				02C57C5F251533CE009E5129 /* donotsell.js in Resources */,
 				850559C923C61B5D0055C0D5 /* login-form-detection.js in Resources */,
 				83E2D2B3253CC16B005605F5 /* httpsMobileV2FalsePositives.json in Resources */,
+				0218120E266931F6002EC2FA /* geo.js in Resources */,
 				856D57C5206568BE000170B5 /* tlds.json in Resources */,
 				4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */,
 				83E2D2B2253CC16B005605F5 /* httpsMobileV2Bloom.bin in Resources */,
@@ -4499,8 +4523,11 @@
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
+				0218121026693263002EC2FA /* userprompt.js in Resources */,
 				021812092667E997002EC2FA /* metadata-stripper.js in Resources */,
+				02181214266932C0002EC2FA /* country-data.js in Resources */,
 				02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */,
+				0218121226693298002EC2FA /* city-data.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5056,6 +5083,7 @@
 				85CA53AC24BBD39300A6288C /* FaviconRequestModifier.swift in Sources */,
 				85BDC3172434E55D0053DB07 /* ContentBlockerUserScript.swift in Sources */,
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,
+				021812162669330C002EC2FA /* GeoFuzzerUserScript.swift in Sources */,
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				02DC6A64255D8C5000B03BC2 /* FingerprintUserScript.swift in Sources */,

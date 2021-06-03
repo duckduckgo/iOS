@@ -163,6 +163,7 @@ class TabViewController: UIViewController {
     private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var fingerprintScript = FingerprintUserScript()
     private var metadataStripperScript = MetadataStripperUserScript()
+    private var geoFuzzerScript = GeoFuzzerUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
     private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
@@ -233,7 +234,8 @@ class TabViewController: UIViewController {
             faviconScript,
             fullScreenVideoScript,
             autofillUserScript,
-            metadataStripperScript
+            metadataStripperScript,
+            geoFuzzerScript
         ]
         
         if #available(iOS 13, *) {

@@ -30,6 +30,11 @@ class DefineTermViewController: UIViewController {
     }
     weak var parentTabViewController: TabViewController?
 
+    let selectionScript = SelectionDetectionUserScript()
+    lazy var userScripts: UserScripts = {
+        UserScripts(userScripts: [ selectionScript ])
+    }()
+
     let webView = WebView(frame: .zero, configuration: .nonPersistent())
 
     override func viewDidLoad() {
@@ -41,6 +46,7 @@ class DefineTermViewController: UIViewController {
         webView.frame = view.frame
         webView.autoresizingMask = [ .flexibleWidth, .flexibleHeight ]
         webView.navigationDelegate = self
+        userScripts.applyTo(webView)
         view.addSubview(webView)
 
         if let term = term {
@@ -71,12 +77,16 @@ class DefineTermViewController: UIViewController {
         dismiss(animated: false)
     }
 
+    deinit {
+        userScripts.removeMessageHandlersFrom(webView)
+    }
 }
 
 extension DefineTermViewController: WebViewDelegate {
 
-    func webView(_: WebView, didRequestDefinitionOfTerm term: String) {
-        self.term = term
+    func webViewDidRequestLookUp(_: WebView) {
+        self.term = selectionScript.selection
+        guard let term = term, !term.trimWhitespace().isEmpty else { return }
         load(term: term)
     }
 

@@ -21,7 +21,7 @@ import WebKit
 
 public protocol WebViewDelegate: AnyObject {
 
-    func webView(_ :WebView, didRequestDefinitionOfTerm term: String)
+    func webViewDidRequestLookUp(_ :WebView)
 
 }
 
@@ -31,10 +31,7 @@ public class WebView: WKWebView {
 
     // swiftlint:disable identifier_name
     @IBAction func _lookup(_ sender: UIMenuController?) {
-        evaluateJavaScript("window.getSelection().toString()") { result, _ in
-            guard let term = result as? String else { return }
-            self.webViewDelegate?.webView(self, didRequestDefinitionOfTerm: term)
-        }
+        self.webViewDelegate?.webViewDidRequestLookUp(self)
     }
     // swiftlint:enable identifier_name
 

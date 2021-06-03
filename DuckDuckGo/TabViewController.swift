@@ -175,8 +175,9 @@ class TabViewController: UIViewController {
     }()
     private var autofillUserScript = AutofillUserScript()
     private var debugScript = DebugUserScript()
-    
-    private var userScripts: [UserScript] = []
+    private var selectionScript = SelectionDetectionUserScript()
+
+    private var userScripts: UserScripts = UserScripts(userScripts: [])
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -196,7 +197,6 @@ class TabViewController: UIViewController {
         super.viewDidLoad()
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
-        initUserScripts()
         applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
@@ -221,8 +221,8 @@ class TabViewController: UIViewController {
     }
 
     func initUserScripts() {
-        
-        userScripts = [
+
+        var userScripts: [UserScript] = [
             debugScript,
             findInPageScript,
             navigatorPatchScript,
@@ -231,7 +231,8 @@ class TabViewController: UIViewController {
             fingerprintScript,
             faviconScript,
             fullScreenVideoScript,
-            autofillUserScript
+            autofillUserScript,
+            selectionScript
         ]
         
         if #available(iOS 13, *) {
@@ -254,6 +255,8 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
+
+        self.userScripts = UserScripts(userScripts: userScripts)
     }
     
     func updateTabModel() {
@@ -274,7 +277,7 @@ class TabViewController: UIViewController {
         instrumentation.willPrepareWebView()
         webView = WebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+ 
         if #available(iOS 13, *) {
             webView.allowsLinkPreview = true
         } else {
@@ -514,30 +517,8 @@ class TabViewController: UIViewController {
     }
     
     private func reloadUserScripts() {
-        removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
-        webView.configuration.userContentController.removeAllUserScripts()
-        
         initUserScripts()
-        
-        userScripts.forEach { script in
-
-            webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
-                                                                                   injectionTime: script.injectionTime,
-                                                                                   forMainFrameOnly: script.forMainFrameOnly))
-            
-            if #available(iOS 14, *),
-               let replyHandler = script as? WKScriptMessageHandlerWithReply {
-                script.messageNames.forEach { messageName in
-                    webView.configuration.userContentController.addScriptMessageHandler(replyHandler, contentWorld: .page, name: messageName)
-                }
-            } else {
-                script.messageNames.forEach { messageName in
-                    webView.configuration.userContentController.add(script, name: messageName)
-                }
-            }
-
-        }
-
+        self.userScripts.applyTo(webView)
     }
     
     private func isDuckDuckGoUrl() -> Bool {
@@ -563,6 +544,7 @@ class TabViewController: UIViewController {
             controller.omniBarText = chromeDelegate.omniBar.textField.text
             controller.siteRating = siteRating
             controller.errorText = isError ? errorText : nil
+            return
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -573,16 +555,21 @@ class TabViewController: UIViewController {
             if controller.spec?.highlightAddressBar ?? false {
                 chromeDelegate.omniBar.cancelAllAnimations()
             }
+            return
         }
 
         if let controller = segue.destination as? DefineTermViewController {
             controller.term = sender as? String
             controller.parentTabViewController = self
+            return
         }
 
-        if let controller = (segue.destination as? UINavigationController)?.viewControllers[0] as? DefineTermViewController {
+        if let navController = segue.destination as? UINavigationController,
+           !navController.viewControllers.isEmpty,
+           let controller = navController.viewControllers[0] as? DefineTermViewController {
             controller.term = sender as? String
             controller.parentTabViewController = self
+            return
         }
 
     }
@@ -746,15 +733,6 @@ class TabViewController: UIViewController {
         view.removeFromSuperview()
     }
     
-    private func removeMessageHandlers() {
-        let controller = webView.configuration.userContentController
-        userScripts.forEach { script in
-            script.messageNames.forEach { messageName in
-                controller.removeScriptMessageHandler(forName: messageName)
-            }
-        }
-    }
-    
     private func removeObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
@@ -805,7 +783,7 @@ class TabViewController: UIViewController {
     }
     
     deinit {
-        removeMessageHandlers()
+        userScripts.removeMessageHandlersFrom(webView)
         removeObservers()
     }    
 }   
@@ -1498,7 +1476,9 @@ extension NSError {
 
 extension TabViewController: WebViewDelegate {
 
-    func webView(_: WebView, didRequestDefinitionOfTerm term: String) {
+    func webViewDidRequestLookUp(_: WebView) {
+        guard let term = selectionScript.selection,
+              !term.trimWhitespace().isEmpty else { return }
         performSegue(withIdentifier: "DefineTerm", sender: term)
     }
 

@@ -49,7 +49,6 @@ class DefineTermViewController: UIViewController {
     }
 
     func load(term: String) {
-        print("***", #function, term)
         let appUrls = AppUrls()
         let query = "define: \(term)"
         let queryUrl = appUrls.url(forQuery: query)

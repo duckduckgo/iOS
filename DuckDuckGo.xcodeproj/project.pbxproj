@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021812072667E96D002EC2FA /* piexif.js in Resources */ = {isa = PBXBuildFile; fileRef = 021812062667E96D002EC2FA /* piexif.js */; };
+		021812092667E997002EC2FA /* metadata-stripper.js in Resources */ = {isa = PBXBuildFile; fileRef = 021812082667E997002EC2FA /* metadata-stripper.js */; };
+		0218120B2667EDD2002EC2FA /* MetadataStripperUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0218120A2667EDD2002EC2FA /* MetadataStripperUserScript.swift */; };
 		0254AC2024ED8B82004855DF /* ContentBlockerRulesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */; };
 		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
@@ -724,6 +727,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		021812062667E96D002EC2FA /* piexif.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = piexif.js; sourceTree = "<group>"; };
+		021812082667E997002EC2FA /* metadata-stripper.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "metadata-stripper.js"; sourceTree = "<group>"; };
+		0218120A2667EDD2002EC2FA /* MetadataStripperUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataStripperUserScript.swift; sourceTree = "<group>"; };
 		0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesManager.swift; sourceTree = "<group>"; };
 		0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesUserScript.swift; sourceTree = "<group>"; };
 		0254AC2324EDACDE004855DF /* contentblockerrules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = contentblockerrules.js; sourceTree = "<group>"; };
@@ -2141,6 +2147,15 @@
 			name = ContentBlockerRules;
 			sourceTree = "<group>";
 		};
+		021812052667E94D002EC2FA /* metadata-stripper */ = {
+			isa = PBXGroup;
+			children = (
+				021812062667E96D002EC2FA /* piexif.js */,
+				021812082667E997002EC2FA /* metadata-stripper.js */,
+			);
+			name = "metadata-stripper";
+			sourceTree = "<group>";
+		};
 		025CCFE32582601C001CD5BB /* FingerprintingUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -3374,6 +3389,7 @@
 				02C57C5425153330009E5129 /* DoNotSellUserScript.swift */,
 				4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */,
 				02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */,
+				0218120A2667EDD2002EC2FA /* MetadataStripperUserScript.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3521,6 +3537,7 @@
 		F18608DE1E5E648100361C30 /* Javascript */ = {
 			isa = PBXGroup;
 			children = (
+				021812052667E94D002EC2FA /* metadata-stripper */,
 				02DC6A50255D8BE700B03BC2 /* fingerprinting */,
 				835750931F8E9A610059E07B /* contentblocking */,
 				F18608DF1E5E649400361C30 /* document.js */,
@@ -4477,10 +4494,12 @@
 				856D57C5206568BE000170B5 /* tlds.json in Resources */,
 				4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */,
 				83E2D2B2253CC16B005605F5 /* httpsMobileV2Bloom.bin in Resources */,
+				021812072667E96D002EC2FA /* piexif.js in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */,
 				9833FD7222BCE44C00E95CD8 /* debug-messaging-disabled.js in Resources */,
+				021812092667E997002EC2FA /* metadata-stripper.js in Resources */,
 				02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5030,6 +5049,7 @@
 				F1134EAB1F3E2C6A00B73467 /* StatisticsUserDefaults.swift in Sources */,
 				85C11E3E20904B8400BFFEB4 /* VariantManager.swift in Sources */,
 				F16956401ECC9C66009C35C9 /* ContentBlockerProtectionStore.swift in Sources */,
+				0218120B2667EDD2002EC2FA /* MetadataStripperUserScript.swift in Sources */,
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
 				85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */,
 				8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */,

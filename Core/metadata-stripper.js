@@ -104,6 +104,10 @@
             <p><button id='strip-yes' class='default'>Yes</button></p>
             <p><button id='strip-no'>No</button></p>
         </div>
+        <p>
+            <input type="checkbox" id="dontShowAgain" name="dontShowAgain">
+            <label for="dontShowAgain">Remember for all images</label>
+        </p>
     </div>
     </div>
         `;
@@ -148,13 +152,18 @@
                 if (alreadySeen.has(event) || event.type !== 'change' || !(event.target instanceof HTMLInputElement) || !(event.target.type === 'file')) {
                     return;
                 }
+                
+                function cacheAndDispatch(ev) {
+                    /* modify event and add it to events that should be allowed so that we don't get into a loop */
+                    alreadySeen.add(event);
+                    ev.target.dispatchEvent(ev);
+                }
 
                 console.log('caught event', event);
                 
                 event.cancelBubble = true;
                 event.stopPropagation();
-                /* modify event and add it to events that should be allowed so that we don't get into a loop */
-                alreadySeen.add(event);
+                
                 
                 if (alertShowing) {
                     console.log('Alert already showing');
@@ -162,9 +171,10 @@
                 }
 
                 const choice = await askUser();
+                console.log(choice);
                 if (choice !== 'yes') {
                     console.log('User declined metadata stripping');
-                    event.target.dispatchEvent(event);
+                    cacheAndDispatch(event);
                     return;
                 }
 
@@ -172,6 +182,7 @@
                 let file = event.target.files[0];
                 if (!file.type.includes('image/jpeg')) {
                     console.log('Not a JPEG');
+                    cacheAndDispatch(event);
                     return;
                 }
 
@@ -187,7 +198,7 @@
 
                     console.log('resending event');
 
-                    event.target.dispatchEvent(event);
+                    cacheAndDispatch(event);
                 };
                 reader.readAsDataURL(file);
 

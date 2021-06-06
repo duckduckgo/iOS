@@ -278,19 +278,15 @@ public class Favicons {
 
         let additionalSources = sourcesProvider.additionalSources(forDomain: domain)
 
-        if #available(iOS 13.0, *) {
-            retrieveLinkPresentationImage(from: domain) {
-                guard let image = $0, image.size.width >= Constants.targetImageSizePoints else {
-                    self.retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
-                    return
-                }
-
-                completion(image)
+        // Try LinkPresentation first, before falling back to standard favicon fetching logic.
+        retrieveLinkPresentationImage(from: domain) {
+            guard let image = $0, image.size.width >= Constants.targetImageSizePoints else {
+                self.retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
+                return
             }
-        } else {
-            retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
-        }
 
+            completion(image)
+        }
     }
 
     private func retrieveBestImage(bestSources: [URL], additionalSources: [URL], completion: @escaping (UIImage?) -> Void) {

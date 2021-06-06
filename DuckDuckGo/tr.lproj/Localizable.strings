@@ -62,7 +62,7 @@
 "action.title.remove.favorite" = "Favoriyi Kaldır";
 
 /* Report broken site action */
-"action.title.reportBrokenSite" = "Hatalı Siteyi Bildir";
+"action.title.reportBrokenSite" = "Bozuk Siteyi Bildir";
 
 /* Action to reload current page in desktop mode */
 "action.title.request.desktop.site" = "Masaüstü Sitesi";
@@ -74,7 +74,7 @@
 "action.title.save" = "Kaydet";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Bu Sayfaya Yer İşareti Koy";
+"action.title.save.bookmark" = "Bu Sayfayı Yer İmlerine Ekle";
 
 /* Add to Favorites action */
 "action.title.save.favorite" = "Bu Sayfayı Favorilere Ekle";
@@ -479,7 +479,7 @@
 "home.message.header" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
 
 /* No comment provided by engineer. */
-"home.message.subheader" = "Her zaman gönül rahatlığıyla açık bağlantılar.";
+"home.message.subheader" = "Her zaman gönül rahatlığıyla  bağlantıları açın.";
 
 /* No comment provided by engineer. */
 "home.message.topText" = "IOS 14'TE YENİ";
@@ -494,7 +494,7 @@
 "home.row.reminder.title" = "DuckDuckGo'yu ana sayfaya ekleyin";
 
 /* This describes empty tab */
-"homeTab.searchAndFavorites" = "Adres ara veya gir";
+"homeTab.searchAndFavorites" = "Ara ya da adres gir";
 
 /* Home tab title */
 "homeTab.title" = "Ana Sayfa";
@@ -821,7 +821,7 @@
 "report.brokensite.header" = "Anonim olarak hatalı site raporu göndermeniz, bu sorunları ayıklamamıza ve uygulamayı geliştirmemize yardımcı olur.";
 
 /* No comment provided by engineer. */
-"search.hint.duckduckgo" = "Adres ara veya gir";
+"search.hint.duckduckgo" = "Ara ya da adres gir";
 
 /* No comment provided by engineer. */
 "section.title.bookmarks" = "Yer İmleri";

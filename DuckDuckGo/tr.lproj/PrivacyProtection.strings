@@ -11,7 +11,7 @@
 "2T4-dB-Wu0.text" = "Veriler Şifrelenmemiş";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "2xP-ZS-UtN"; */
-"2xP-ZS-UtN.normalTitle" = "Hatalı Siteyi Bildir";
+"2xP-ZS-UtN.normalTitle" = "Bozuk Siteyi Bildir";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "3UG-EO-bt5"; */
 "3UG-EO-bt5.text" = "İZLEYİCİ AĞ İLK SIRADAKİ SUÇLULARI";
@@ -62,7 +62,7 @@
 "GZ4-PW-wOG.text" = "8 İzleyici Engellendi";
 
 /* Class = "UIButton"; normalTitle = "Report Broken Site"; ObjectID = "hDv-jp-eaS"; */
-"hDv-jp-eaS.normalTitle" = "Hatalı Siteyi Bildir";
+"hDv-jp-eaS.normalTitle" = "Bozuk Siteyi Bildir";
 
 /* Class = "UILabel"; text = "Privacy Practices"; ObjectID = "iF1-sO-WXk"; */
 "iF1-sO-WXk.text" = "Gizlilik Uygulamaları";

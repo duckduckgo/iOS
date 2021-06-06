@@ -56,7 +56,7 @@
 "TMj-NM-j3b.placeholder" = "Hangi web sitesi hatalı?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Hatalı Siteyi Bildir";
+"WjT-HM-yim.title" = "Bozuk Siteyi Bildir";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
 "Wx3-Vb-ItS.text" = "Bozuk Site Sebebi";

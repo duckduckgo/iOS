@@ -29,7 +29,7 @@
 "9fc-9r-4aA.text" = "Sekmeleri ve Verileri Temizle";
 
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
-"13n-KI-KLq.text" = "Uygulamayı Başlatma";
+"13n-KI-KLq.text" = "Uygulamayı Başlatınca";
 
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Bağlantıları İlişkili Uygulamalarda Aç";

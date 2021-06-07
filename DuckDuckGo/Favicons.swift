@@ -20,8 +20,9 @@
 import Kingfisher
 import UIKit
 import os
+import LinkPresentation
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 public class Favicons {
 
     public struct Constants {
@@ -277,7 +278,18 @@ public class Favicons {
 
         let additionalSources = sourcesProvider.additionalSources(forDomain: domain)
 
-        // Try best sources first
+        // Try LinkPresentation first, before falling back to standard favicon fetching logic.
+        retrieveLinkPresentationImage(from: domain) {
+            guard let image = $0, image.size.width >= Constants.targetImageSizePoints else {
+                self.retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
+                return
+            }
+
+            completion(image)
+        }
+    }
+
+    private func retrieveBestImage(bestSources: [URL], additionalSources: [URL], completion: @escaping (UIImage?) -> Void) {
         retrieveBestImage(from: bestSources) {
 
             // Fallback to favicons
@@ -289,6 +301,25 @@ public class Favicons {
             }
 
             completion(image)
+        }
+    }
+
+    private func retrieveLinkPresentationImage(from domain: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: "https://\(domain)") else {
+            completion(nil)
+            return
+        }
+
+        let metadataFetcher = LPMetadataProvider()
+        metadataFetcher.startFetchingMetadata(for: url) { metadata, metadataError in
+            guard let iconProvider = metadata?.iconProvider, metadataError == nil else {
+                completion(nil)
+                return
+            }
+
+            iconProvider.loadObject(ofClass: UIImage.self) { potentialImage, _ in
+                completion(potentialImage as? UIImage)
+            }
         }
     }
 
@@ -376,4 +407,4 @@ public class Favicons {
     }
 
 }
-// swiftlint:enable type_body_length
+// swiftlint:enable type_body_length file_length

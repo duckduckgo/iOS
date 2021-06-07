@@ -305,7 +305,7 @@ public class Favicons {
     }
 
     private func retrieveLinkPresentationImage(from domain: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: "http://\(domain)") else {
+        guard let url = URL(string: "https://\(domain)") else {
             completion(nil)
             return
         }

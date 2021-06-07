@@ -304,7 +304,6 @@ public class Favicons {
         }
     }
 
-    @available(iOS 13.0, *)
     private func retrieveLinkPresentationImage(from domain: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: "http://\(domain)") else {
             completion(nil)

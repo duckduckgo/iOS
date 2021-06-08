@@ -348,6 +348,7 @@
 		984FD95823018E6700B3E4DE /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FD95723018E6700B3E4DE /* LocalNotifications.swift */; };
 		985892522260B1B200EEB31B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985892512260B1B200EEB31B /* ProgressView.swift */; };
 		985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985AAE4424899369007A43EC /* HomeScreenTransition.swift */; };
+		98647994266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98647993266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift */; };
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
 		9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */; };
 		986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B16C225E92DF0007D23E8 /* BrowsingMenuViewController.swift */; };
@@ -1161,6 +1162,7 @@
 		9858AF80251EAC0300025687 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9858AF81251EAC0300025687 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		985AAE4424899369007A43EC /* HomeScreenTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenTransition.swift; sourceTree = "<group>"; };
+		98647993266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesIdentifier.swift; sourceTree = "<group>"; };
 		9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesOverlay.swift; sourceTree = "<group>"; };
 		9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteHomeCell.xib; sourceTree = "<group>"; };
 		9866DB8B251CA8F300612E3A /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Autocomplete.strings; sourceTree = "<group>"; };
@@ -2137,6 +2139,7 @@
 				0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */,
 				0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */,
 				0254AC2324EDACDE004855DF /* contentblockerrules.js */,
+				98647993266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift */,
 			);
 			name = ContentBlockerRules;
 			sourceTree = "<group>";
@@ -5057,6 +5060,7 @@
 				850559D023CF647C0055C0D5 /* PreserveLogins.swift in Sources */,
 				9813F79822BA71AA00A80EDB /* StorageCache.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
+				98647994266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */,

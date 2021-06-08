@@ -27,14 +27,15 @@ public class ContentBlockerRulesManager {
     public typealias CompletionBlock = (WKContentRuleList?) -> Void
     
     enum State {
-        case idle
-        case recompiling
-        case recompilingAndScheduled
+        case idle // Waiting for work
+        case recompiling // Executing work
+        case recompilingAndScheduled // New work has been requested while one is currently being executed
     }
 
     private static let rulesIdentifier = "tds"
 
     public static let shared = ContentBlockerRulesManager()
+    private let workQueue = DispatchQueue(label: "ContentBlockerManagerQueue", qos: .userInitiated)
 
     private init() {}
     
@@ -59,27 +60,22 @@ public class ContentBlockerRulesManager {
             lock.unlock()
         }
     }
+    
+    private var etagForFailedTDSCompilation: String?
+    private var etagForFailedTempListCompilation: String?
 
     public func recompile() {
         guard let store = WKContentRuleListStore.default() else {
             fatalError("Failed to access the default WKContentRuleListStore")
         }
 
-        DispatchQueue.global(qos: .userInitiated).async {
+        workQueue.async {
             store.removeContentRuleList(forIdentifier: Self.rulesIdentifier) { _ in
-                DispatchQueue.global(qos: .userInitiated).async {
+                self.workQueue.async {
                     self.requestCompilation()
                 }
             }
         }
-    }
-
-    static func generateIdentifier(from cache: StorageCache) -> String {
-        // TODO combine:
-        //  - TDS etag
-        //  - TMP Lists etag
-        //  - Add UID to Unprotected Domains state / cosider hashing!
-        return rulesIdentifier
     }
 
     private func requestCompilation() {
@@ -98,24 +94,47 @@ public class ContentBlockerRulesManager {
         state = .recompiling
         lock.unlock()
         
-        // TODO: refactor it so it always returns either downloaded or built-in list
-        guard let trackerData = TrackerDataManager.shared.trackerData else {
-            return
+        performCompilation()
+    }
+    
+    private func performCompilation() {
+        // Get ETags first, as these change only after underlying data is being updated.
+        // Even if underlying file is chnged by other thread, so will the etag and in the end rules will be refreshed.
+        let etags = UserDefaultsETagStorage()
+        let tempSitesEtag = etags.etag(for: .temporaryUnprotectedSites)
+        
+        let storageCache = StorageCacheProvider().current
+        
+        // Check which Tracker Data Set to use
+        let tds: TrackerDataManager.DataSet
+        if let trackerData = TrackerDataManager.shared.fetchedData,
+           trackerData.etag != etagForFailedTDSCompilation {
+            tds = trackerData
+        } else {
+            tds = TrackerDataManager.shared.embeddedData
         }
         
-        compile(trackerData: trackerData)
+        var tempSites: (sites: [String]?, etag: String)?
+        if let etag = tempSitesEtag, etag != etagForFailedTempListCompilation {
+            let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty }
+            tempSites = (tempUnprotectedDomains, etag)
+        }
+        
+        compile(tds: tds.tds, tdsEtag: tds.etag,
+                tempList: tempSites?.sites, tempListEtag: tempSites?.etag)
     }
         
-    private func compile(trackerData: TrackerData) {
+    private func compile(tds: TrackerData, tdsEtag: String,
+                         tempList: [String]?, tempListEtag: String?) {
         os_log("Starting CBR compilation", log: generalLog, type: .default)
 
-        let storageCache = StorageCacheProvider().current
         let unprotectedSites = UnprotectedSitesManager().domains
-        let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
+        
+        let identifier = ContentBlockerRulesIdentifier(tdsEtag: tdsEtag, tempListEtag: tempListEtag, unprotectedSites: unprotectedSites)
 
-        let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: unprotectedSites,
-                                                                                    andTemporaryUnprotectedDomains: tempUnprotectedDomains)
+        let rules = ContentBlockerRulesBuilder(trackerData: tds).buildRules(withExceptions: unprotectedSites,
+                                                                            andTemporaryUnprotectedDomains: tempList)
 
         guard let data = try? JSONEncoder().encode(rules) else {
             os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
@@ -123,33 +142,40 @@ public class ContentBlockerRulesManager {
         }
 
         let ruleList = String(data: data, encoding: .utf8)!
-        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: Self.generateIdentifier(from: storageCache),
+        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: identifier.stringValue,
                                      encodedContentRuleList: ruleList) { ruleList, error in
             
             if let ruleList = ruleList {
                 self.compilationSucceeded(with: ruleList)
             } else if let error = error {
-                self.compilationFailed(with: error)
+                self.compilationFailed(with: error, tdsEtag: tdsEtag, tempListEtag: tempListEtag)
             } else {
-                // TODO: assertion
+                assertionFailure("Rule list has not been returned properly by the engine")
             }
         }
 
     }
     
-    private func compilationFailed(with error: Error) {
+    private func compilationFailed(with error: Error, tdsEtag: String, tempListEtag: String?) {
         os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
         
         lock.lock()
                 
-        if self.state == .recompilingAndScheduled, let trackerData = TrackerDataManager.shared.trackerData {
+        if self.state == .recompilingAndScheduled {
             // Recompilation is scheduled - it may fix the problem
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.compile(trackerData: trackerData)
-            }
         } else {
-            // Fallback to built - in tracker data
-            
+            if tdsEtag != TrackerDataManager.shared.embeddedData.etag {
+                // We failed compilation for non-embedded TDS, marking as broken.
+                etagForFailedTDSCompilation = tdsEtag
+            } else if tempListEtag != nil {
+                etagForFailedTempListCompilation = tempListEtag
+            } else {
+                // We failed for embedded data, this is unlikely, unless we break it by adding unprotected sites
+            }
+        }
+        
+        workQueue.async {
+            self.performCompilation()
         }
         
         state = .recompiling
@@ -162,10 +188,10 @@ public class ContentBlockerRulesManager {
         
         _currentRules = ruleList
         
-        if self.state == .recompilingAndScheduled, let trackerData = TrackerDataManager.shared.trackerData {
+        if self.state == .recompilingAndScheduled {
             // New work has been scheduled - prepare for execution.
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.compile(trackerData: trackerData)
+            workQueue.async {
+                self.performCompilation()
             }
             
             state = .recompiling

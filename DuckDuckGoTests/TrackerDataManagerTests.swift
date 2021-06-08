@@ -101,9 +101,9 @@ class TrackerDataManagerTests: XCTestCase {
         """
 
         XCTAssertTrue(FileStore().persist(update.data(using: .utf8), forConfiguration: .trackerDataSet))
-        XCTAssertEqual(TrackerDataManager.shared.etag, TrackerDataManager.Constants.embeddedDataSetETag)
+        XCTAssertEqual(TrackerDataManager.shared.embeddedData.etag, TrackerDataManager.Constants.embeddedDataSetETag)
         XCTAssertEqual(TrackerDataManager.shared.reload(etag: "new etag"), .downloaded)
-        XCTAssertEqual(TrackerDataManager.shared.etag, "new etag")
+        XCTAssertEqual(TrackerDataManager.shared.fetchedData?.etag, "new etag")
         XCTAssertNil(TrackerDataManager.shared.findEntity(byName: "Google LLC"))
         XCTAssertNotNil(TrackerDataManager.shared.findEntity(byName: "Not Real"))
 

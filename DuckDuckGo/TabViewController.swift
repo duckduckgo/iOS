@@ -609,9 +609,9 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        if let rulesList = ContentBlockerRulesManager.shared.currentRules {
-            self.webView.configuration.userContentController.remove(rulesList)
-            self.webView.configuration.userContentController.add(rulesList)
+        if let rules = ContentBlockerRulesManager.shared.currentRules {
+            self.webView.configuration.userContentController.removeAllContentRuleLists()
+            self.webView.configuration.userContentController.add(rules.rulesList)
             
             self.reload(scripts: true)
         }
@@ -758,7 +758,7 @@ class TabViewController: UIViewController {
                               blockedTrackerDomains: blockedTrackerDomains,
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
-                              tdsETag: TrackerDataManager.shared.etag)
+                              tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "")
     }
     
     public func print() {

@@ -21,7 +21,23 @@ import Foundation
 
 class ContentBlockerRulesIdentifier {
     
-    let stringValue: String
+    private let tdsEtag: String
+    private let tempListEtag: String
+    private let unprotectedSitesHash: String
+    
+    public var stringValue: String {
+        return tdsEtag + tempListEtag + unprotectedSitesHash
+    }
+    
+    struct Difference: OptionSet {
+        let rawValue: Int
+        
+        static let tdsEtag = Difference(rawValue: 1 << 0)
+        static let tempListEtag = Difference(rawValue: 1 << 1)
+        static let unprotectedSites = Difference(rawValue: 1 << 2)
+        
+        static let all: Difference = [.tdsEtag, .tempListEtag, .unprotectedSites]
+    }
     
     private class func normalize(etag: String?) -> String {
         // Ensure etag is in double quotes
@@ -41,15 +57,44 @@ class ContentBlockerRulesIdentifier {
     }
     
     private class func hash(domains: [String]?) -> String {
-        guard let domains = domains else {
-            return "\"\""
+        guard let domains = domains, !domains.isEmpty else {
+            return ""
         }
         
         return domains.joined().sha1
     }
     
+    init?(identifier: String) {
+        guard let betweenEtags = identifier.range(of: "\"\""), let lastEtagChar = identifier.lastIndex(of: "\"") else {
+            // Error?
+            return nil
+        }
+        
+        tdsEtag = String(identifier[identifier.startIndex...betweenEtags.lowerBound])
+        tempListEtag = String(identifier[identifier.index(before: betweenEtags.upperBound)...lastEtagChar])
+        unprotectedSitesHash = String(identifier[identifier.index(after: lastEtagChar)..<identifier.endIndex])
+    }
+    
     init(tdsEtag: String, tempListEtag: String?, unprotectedSites: [String]?) {
         
-        stringValue = Self.normalize(etag: tdsEtag) + Self.normalize(etag: tempListEtag) + Self.hash(domains: unprotectedSites)
+        self.tdsEtag = Self.normalize(etag: tdsEtag)
+        self.tempListEtag = Self.normalize(etag: tempListEtag)
+        self.unprotectedSitesHash = Self.hash(domains: unprotectedSites)
+    }
+    
+    func compare(with id: ContentBlockerRulesIdentifier) -> Difference {
+        
+        var result = Difference()
+        if tdsEtag != id.tdsEtag {
+            result.insert(.tdsEtag)
+        }
+        if tempListEtag != id.tempListEtag {
+            result.insert(.tempListEtag)
+        }
+        if unprotectedSitesHash != id.unprotectedSitesHash {
+            result.insert(.unprotectedSites)
+        }
+        
+        return result
     }
 }

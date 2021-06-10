@@ -283,7 +283,8 @@ class DaxDialogs {
     
     private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
-        guard let entity = TrackerDataManager.shared.findEntity(forHost: host),
+        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+              let entity = currentTrackerData.findEntity(forHost: host),
             let entityName = entity.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithoutTrackersShown = true
@@ -330,7 +331,8 @@ class DaxDialogs {
     }
     
     private func isOwnedByFacebookOrGoogle(_ host: String) -> Entity? {
-        guard let entity = TrackerDataManager.shared.findEntity(forHost: host) else { return nil }
+        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+              let entity = currentTrackerData.findEntity(forHost: host) else { return nil }
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
     }
     

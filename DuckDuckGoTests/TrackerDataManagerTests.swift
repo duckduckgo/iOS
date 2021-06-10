@@ -33,19 +33,19 @@ class TrackerDataManagerTests: XCTestCase {
     }
 
     func testFindTrackerByUrl() {
-        let tracker = TrackerDataManager.shared.findTracker(forUrl: "http://googletagmanager.com")
+        let tracker = TrackerDataManager.shared.embeddedData.tds.findTracker(forUrl: "http://googletagmanager.com")
         XCTAssertNotNil(tracker)
         XCTAssertEqual("Google", tracker?.owner?.displayName)
     }
     
     func testFindEntityByName() {
-        let entity = TrackerDataManager.shared.findEntity(byName: "Google LLC")
+        let entity = TrackerDataManager.shared.embeddedData.tds.findEntity(byName: "Google LLC")
         XCTAssertNotNil(entity)
         XCTAssertEqual("Google", entity?.displayName)
     }
     
     func testFindEntityForHost() {
-        let entity = TrackerDataManager.shared.findEntity(forHost: "www.google.com")
+        let entity = TrackerDataManager.shared.embeddedData.tds.findEntity(forHost: "www.google.com")
         XCTAssertNotNil(entity)
         XCTAssertEqual("Google", entity?.displayName)
     }
@@ -104,8 +104,8 @@ class TrackerDataManagerTests: XCTestCase {
         XCTAssertEqual(TrackerDataManager.shared.embeddedData.etag, TrackerDataManager.Constants.embeddedDataSetETag)
         XCTAssertEqual(TrackerDataManager.shared.reload(etag: "new etag"), .downloaded)
         XCTAssertEqual(TrackerDataManager.shared.fetchedData?.etag, "new etag")
-        XCTAssertNil(TrackerDataManager.shared.findEntity(byName: "Google LLC"))
-        XCTAssertNotNil(TrackerDataManager.shared.findEntity(byName: "Not Real"))
+        XCTAssertNil(TrackerDataManager.shared.fetchedData?.tds.findEntity(byName: "Google LLC"))
+        XCTAssertNotNil(TrackerDataManager.shared.fetchedData?.tds.findEntity(byName: "Not Real"))
 
     }
     // swiftlint:enable function_body_length

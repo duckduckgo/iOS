@@ -38,7 +38,7 @@ public class TrackerDataManager {
     private let lock = NSLock()
     
     private var _fetchedData: DataSet?
-    private(set) var fetchedData: DataSet? {
+    private(set) public var fetchedData: DataSet? {
         get {
             lock.lock()
             let data = _fetchedData
@@ -53,7 +53,7 @@ public class TrackerDataManager {
     }
     
     private var _embeddedData: DataSet!
-    private(set) var embeddedData: DataSet {
+    private(set) public var embeddedData: DataSet {
         get {
             lock.lock()
             let data: DataSet
@@ -84,9 +84,6 @@ public class TrackerDataManager {
         }
         return embeddedData.tds
     }
-    
-    private(set) public var encodedTrackerData: String!
-    private(set) public var etag: String?
 
     init(trackerData: TrackerData) {
         _fetchedData = (trackerData, "")
@@ -119,44 +116,6 @@ public class TrackerDataManager {
         }
         
         return result
-    }
-    
-    public func findTracker(forUrl url: String) -> KnownTracker? {
-        guard let host = URL(string: url)?.host else { return nil }
-        for host in variations(of: host) {
-            if let tracker = trackerData.trackers[host] {
-                return tracker                
-            } else if let cname = trackerData.cnames?[host] {
-                var tracker = trackerData.findTracker(byCname: cname)
-                tracker = tracker?.copy(withNewDomain: cname)
-                return tracker
-            }
-        }
-        return nil
-    }
-    
-    public func findEntity(byName name: String) -> Entity? {
-        return trackerData.entities[name]
-    }
-    
-    public func findEntity(forHost host: String) -> Entity? {
-        for host in variations(of: host) {
-            if let entityName = trackerData.domains[host] {
-                return trackerData.entities[entityName]
-            }
-        }
-        return nil
-    }
-
-    private func variations(of host: String) -> [String] {
-        var parts = host.components(separatedBy: ".")
-        var domains = [String]()
-        while parts.count > 1 {
-            let domain = parts.joined(separator: ".")
-            domains.append(domain)
-            parts.removeFirst()
-        }
-        return domains
     }
     
     static var embeddedUrl: URL {

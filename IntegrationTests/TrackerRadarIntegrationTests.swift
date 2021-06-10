@@ -42,15 +42,25 @@ class TrackerRadarIntegrationTests: XCTestCase {
 extension TrackerDataManager {
 
     func assertIsMajorTracker(domain: String, file: StaticString = #file, line: UInt = #line) {
-        let entity = findEntity(forHost: domain)
+        guard let tds = fetchedData?.tds else {
+            XCTFail()
+            return
+        }
+        
+        let entity = tds.findEntity(forHost: domain)
         XCTAssertNotNil(entity, "no entity found for domain \(domain)", file: file, line: line)
         XCTAssertGreaterThan(entity?.prevalence ?? 0, SiteRating.Constants.majorNetworkPrevalence, file: file, line: line)
     }
 
     func assertEntityAndDomainLookups(file: StaticString = #file, line: UInt = #line) {
-        trackerData.domains.forEach { domain, entityName in
-            let entityFromHost = findEntity(forHost: domain)
-            let entityFromName = findEntity(byName: entityName)
+        guard let tds = fetchedData?.tds else {
+            XCTFail()
+            return
+        }
+        
+        tds.domains.forEach { domain, entityName in
+            let entityFromHost = tds.findEntity(forHost: domain)
+            let entityFromName = tds.findEntity(byName: entityName)
             XCTAssertNotNil(entityFromHost, file: file, line: line)
             XCTAssertNotNil(entityFromName, file: file, line: line)
             XCTAssertEqual(entityFromHost, entityFromName, file: file, line: line)

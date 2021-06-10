@@ -37,13 +37,23 @@ class DaxDialogFireEducationTests: XCTestCase {
 
     lazy var mockVariantManager = MockVariantManager(isSupportedReturns: true)
     lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(), variantManager: mockVariantManager)
+    
+    static var rulesManager: ContentBlockerRulesManager!
+    
+    override class func setUp() {
+        super.setUp()
+        
+        // ensure we use the embedded version
+        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
+        
+        rulesManager = ContentBlockerRulesManager.prepareEmbeddedInstanceForTests()
+    }
 
     override func setUp() {
         super.setUp()
         UserDefaults.clearStandard()
-
-        // ensure we use the embedded version
-        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
+        
+        ContentBlockerRulesManager.replaceSharedInstance(with: Self.rulesManager)
     }
 
     func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessagesShown() {
@@ -249,8 +259,9 @@ class DaxDialogFireEducationTests: XCTestCase {
     }
         
     private func detectedTrackerFrom(_ url: URL) -> DetectedTracker {
-        let entity = TrackerDataManager.shared.findEntity(forHost: url.host!)
-        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: url.absoluteString)
+        let tds = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let entity = tds?.findEntity(forHost: url.host!)
+        let knownTracker = tds?.findTracker(forUrl: url.absoluteString)
         return DetectedTracker(url: url.absoluteString,
                                       knownTracker: knownTracker,
                                       entity: entity,

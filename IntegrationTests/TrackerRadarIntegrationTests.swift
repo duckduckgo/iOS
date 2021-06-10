@@ -43,7 +43,7 @@ extension TrackerDataManager {
 
     func assertIsMajorTracker(domain: String, file: StaticString = #file, line: UInt = #line) {
         guard let tds = fetchedData?.tds else {
-            XCTFail()
+            XCTFail("No TDS found")
             return
         }
         
@@ -54,7 +54,7 @@ extension TrackerDataManager {
 
     func assertEntityAndDomainLookups(file: StaticString = #file, line: UInt = #line) {
         guard let tds = fetchedData?.tds else {
-            XCTFail()
+            XCTFail("No TDS found")
             return
         }
         

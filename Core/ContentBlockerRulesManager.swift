@@ -152,7 +152,8 @@ public class ContentBlockerRulesManager {
                     unprotectedSites: unprotectedSites, identifier: identifier)
         }
     }
-        
+    
+    // swiftlint:disable function_parameter_count
     fileprivate func compile(tds: TrackerData, tdsEtag: String,
                              tempList: [String]?, tempListEtag: String?,
                              unprotectedSites: [String]?,
@@ -207,6 +208,7 @@ public class ContentBlockerRulesManager {
         state = .recompiling
         lock.unlock()
     }
+    // swiftlint:enable function_parameter_count
     
     private func compilationSucceeded(with ruleList: WKContentRuleList, trackerData: TrackerData, etag: String) {
         os_log("Rules compiled", log: generalLog, type: .default)

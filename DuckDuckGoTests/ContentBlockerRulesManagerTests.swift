@@ -88,4 +88,3 @@ class ContentBlockerRulesManagerTests: XCTestCase {
     // swiftlint:enable function_body_length
     
 }
-

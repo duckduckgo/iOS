@@ -238,17 +238,16 @@ public class ContentBlockerRulesManager {
             NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name,
                                             object: self)
             
-//            WKContentRuleListStore.default()?.getAvailableContentRuleListIdentifiers({ ids in
-//                guard let ids = ids else { return }
-//
-//                var idsSet = Set(ids)
-//                idsSet.remove(ruleList.identifier)
-//
-//                for id in idsSet {
-//                    WKContentRuleListStore.default()?.removeContentRuleList(forIdentifier: id,
-//                                                                            completionHandler: nil)
-//                }
-//            })
+            WKContentRuleListStore.default()?.getAvailableContentRuleListIdentifiers({ ids in
+                guard let ids = ids else { return }
+
+                var idsSet = Set(ids)
+                idsSet.remove(ruleList.identifier)
+
+                for id in idsSet {
+                    WKContentRuleListStore.default()?.removeContentRuleList(forIdentifier: id) { _ in }
+                }
+            })
         }
     }
 
@@ -256,14 +255,8 @@ public class ContentBlockerRulesManager {
 
 extension ContentBlockerRulesManager {
     
-    class func prepareEmbeddedInstanceForTests() -> ContentBlockerRulesManager {
+    class func test_prepareEmbeddedInstance() -> ContentBlockerRulesManager {
         let cbrm = ContentBlockerRulesManager(forTests: true)
-        var completed = false
-        let token = NotificationCenter.default.addObserver(forName: ContentBlockerProtectionChangedNotification.name,
-                                                           object: cbrm,
-                                                           queue: nil) { _ in
-            completed = true
-        }
         
         let embedded = TrackerDataManager.shared.embeddedData
         let id = ContentBlockerRulesIdentifier(identifier: "\"\(UUID().uuidString)\"\"\"")!
@@ -271,16 +264,10 @@ extension ContentBlockerRulesManager {
                      tempList: nil, tempListEtag: nil,
                      unprotectedSites: nil, identifier: id)
         
-        while !completed {
-            RunLoop.current.run(mode: RunLoop.Mode.default, before: .distantFuture)
-        }
-        
-        _ = token.self
-        
         return cbrm
     }
     
-    class func replaceSharedInstance(with instance: ContentBlockerRulesManager) {
+    class func test_replaceSharedInstance(with instance: ContentBlockerRulesManager) {
         shared = instance
     }
     

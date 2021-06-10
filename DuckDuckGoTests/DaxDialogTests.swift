@@ -39,22 +39,27 @@ class DaxDialogTests: XCTestCase {
     lazy var mockVariantManager = MockVariantManager()
     lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(), variantManager: mockVariantManager)
     
-    static var cbrm: ContentBlockerRulesManager!
-    
-    override class func setUp() {
-        super.setUp()
-        
-        // ensure we use the embedded version
-        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
-        
-        cbrm = ContentBlockerRulesManager.prepareEmbeddedInstanceForTests()
-    }
+    static var rulesManager: ContentBlockerRulesManager?
 
     override func setUp() {
         super.setUp()
         UserDefaults.clearStandard()
-
-        ContentBlockerRulesManager.replaceSharedInstance(with: Self.cbrm)
+        
+        if let cbrl = Self.rulesManager {
+            // ensure we use the embedded version
+            try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
+            
+            ContentBlockerRulesManager.test_replaceSharedInstance(with: cbrl)
+        } else {
+            let cbrm = ContentBlockerRulesManager.test_prepareEmbeddedInstance()
+            Self.rulesManager = cbrm
+            
+            let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                                  object: cbrm,
+                                  handler: nil)
+    
+            wait(for: [exp], timeout: 15.0)
+        }
     }
 
     func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessageShown() {

@@ -159,6 +159,7 @@ class EmailWaitlistViewController: UIViewController {
         alertController.addAction(title: "No Thanks", style: .cancel)
 
         alertController.addAction(title: "Notify Me", style: .default, handler: {
+            EmailWaitlistStatus.showWaitlistNotification = true
             self.showNotificationPermissionAlert()
         })
 

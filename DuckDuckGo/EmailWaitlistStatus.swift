@@ -56,12 +56,12 @@ struct EmailWaitlistStatus {
     }
 
     /// This is a permission granted by the user when enrolling in the email waitlist.
-    @UserDefaultsWrapper(key: .shouldRefreshEmailWaitlist, defaultValue: false)
-    static var shouldRefreshEmailWaitlist: Bool
+    @UserDefaultsWrapper(key: .showWaitlistNotification, defaultValue: false)
+    static var showWaitlistNotification: Bool
 
     static func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            guard shouldRefreshEmailWaitlist else {
+            guard showWaitlistNotification else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
                 return
@@ -83,7 +83,7 @@ struct EmailWaitlistStatus {
     }
 
     static func scheduleBackgroundRefreshTask() {
-        guard shouldRefreshEmailWaitlist else {
+        guard showWaitlistNotification else {
             return
         }
 

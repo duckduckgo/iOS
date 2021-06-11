@@ -41,7 +41,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     }
 
     public var source: String {
-        let unprotectedDomains = (UnprotectedSitesManager().domains?.joined(separator: "\n") ?? "")
+        let unprotectedDomains = (UnprotectedSitesManager().domains.joined(separator: "\n") ?? "")
             + "\n"
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
         let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""

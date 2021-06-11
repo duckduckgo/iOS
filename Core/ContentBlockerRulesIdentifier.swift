@@ -19,7 +19,7 @@
 
 import Foundation
 
-class ContentBlockerRulesIdentifier {
+public class ContentBlockerRulesIdentifier {
     
     private let tdsEtag: String
     private let tempListEtag: String
@@ -29,14 +29,18 @@ class ContentBlockerRulesIdentifier {
         return tdsEtag + tempListEtag + unprotectedSitesHash
     }
     
-    struct Difference: OptionSet {
-        let rawValue: Int
+    public struct Difference: OptionSet {
+        public let rawValue: Int
         
-        static let tdsEtag = Difference(rawValue: 1 << 0)
-        static let tempListEtag = Difference(rawValue: 1 << 1)
-        static let unprotectedSites = Difference(rawValue: 1 << 2)
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
         
-        static let all: Difference = [.tdsEtag, .tempListEtag, .unprotectedSites]
+        public static let tdsEtag = Difference(rawValue: 1 << 0)
+        public static let tempListEtag = Difference(rawValue: 1 << 1)
+        public static let unprotectedSites = Difference(rawValue: 1 << 2)
+        
+        public static let all: Difference = [.tdsEtag, .tempListEtag, .unprotectedSites]
     }
     
     private class func normalize(etag: String?) -> String {
@@ -82,7 +86,7 @@ class ContentBlockerRulesIdentifier {
         self.unprotectedSitesHash = Self.hash(domains: unprotectedSites)
     }
     
-    func compare(with id: ContentBlockerRulesIdentifier) -> Difference {
+    public func compare(with id: ContentBlockerRulesIdentifier) -> Difference {
         
         var result = Difference()
         if tdsEtag != id.tdsEtag {

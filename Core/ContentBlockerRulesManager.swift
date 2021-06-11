@@ -37,15 +37,19 @@ public class ContentBlockerRulesManager {
         public let trackerData: TrackerData
         public let encodedTrackerData: String
         public let etag: String
+        public let identifier: ContentBlockerRulesIdentifier
     }
 
-    private static let rulesIdentifier = "tds"
+    private let dataSource: ContentBlockerRulesSource
 
     fileprivate(set) public static var shared = ContentBlockerRulesManager()
     private let workQueue = DispatchQueue(label: "ContentBlockerManagerQueue", qos: .userInitiated)
 
-    private init(forTests: Bool = false) {
-        if !forTests {
+    private init(source: ContentBlockerRulesSource = DefaultContentBlockerRulesSource(),
+                 skipInitialSetup: Bool = false) {
+        dataSource = source
+        
+        if !skipInitialSetup {
             requestCompilation()
         }
     }
@@ -72,8 +76,8 @@ public class ContentBlockerRulesManager {
         }
     }
     
-    private var etagForFailedTDSCompilation: String?
-    private var etagForFailedTempListCompilation: String?
+    private(set) public var etagForFailedTDSCompilation: String?
+    private(set) public var etagForFailedTempListCompilation: String?
 
     public func recompile() {
         workQueue.async {
@@ -104,28 +108,26 @@ public class ContentBlockerRulesManager {
     private func performCompilation(isInitial: Bool = false) {
         // Get ETags first, as these change only after underlying data is being updated.
         // Even if underlying file is chnged by other thread, so will the etag and in the end rules will be refreshed.
-        let etags = UserDefaultsETagStorage()
-        let tempSitesEtag = etags.etag(for: .temporaryUnprotectedSites)
-        
-        let storageCache = StorageCacheProvider().current
+        let tempSitesEtag = dataSource.tempListEtag
         
         // Check which Tracker Data Set to use
         let tds: TrackerDataManager.DataSet
-        if let trackerData = TrackerDataManager.shared.fetchedData,
+        if let trackerData = dataSource.trackerData,
            trackerData.etag != etagForFailedTDSCompilation {
             tds = trackerData
         } else {
-            tds = TrackerDataManager.shared.embeddedData
+            tds = dataSource.embeddedTrackerData
         }
         
         var tempSites: (sites: [String]?, etag: String)?
         if let etag = tempSitesEtag, etag != etagForFailedTempListCompilation {
-            let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-                .filter { !$0.trimWhitespace().isEmpty }
-            tempSites = (tempUnprotectedDomains, etag)
+            let tempUnprotectedDomains = dataSource.tempList
+            if !tempUnprotectedDomains.isEmpty {
+                tempSites = (tempUnprotectedDomains, etag)
+            }
         }
         
-        let unprotectedSites = UnprotectedSitesManager().domains
+        let unprotectedSites = dataSource.unprotectedSites
         
         let identifier = ContentBlockerRulesIdentifier(tdsEtag: tds.etag,
                                                        tempListEtag: tempSites?.etag,
@@ -136,7 +138,7 @@ public class ContentBlockerRulesManager {
             DispatchQueue.main.async {
                 WKContentRuleListStore.default()?.lookUpContentRuleList(forIdentifier: identifier.stringValue, completionHandler: { ruleList, _ in
                     if let ruleList = ruleList {
-                        self.compilationSucceeded(with: ruleList, trackerData: tds.tds, etag: tds.etag)
+                        self.compilationSucceeded(with: ruleList, trackerData: tds.tds, etag: tds.etag, identifier: identifier)
                     } else {
                         self.workQueue.async {
                             self.compile(tds: tds.tds, tdsEtag: tds.etag,
@@ -161,10 +163,14 @@ public class ContentBlockerRulesManager {
         os_log("Starting CBR compilation", log: generalLog, type: .default)
 
         let rules = ContentBlockerRulesBuilder(trackerData: tds).buildRules(withExceptions: unprotectedSites,
+            
                                                                             andTemporaryUnprotectedDomains: tempList)
-
-        guard let data = try? JSONEncoder().encode(rules) else {
+        let data: Data
+        do {
+            data = try JSONEncoder().encode(rules)
+        } catch {
             os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
+            compilationFailed(with: error, tdsEtag: tdsEtag, tempListEtag: tempListEtag)
             return
         }
 
@@ -173,7 +179,7 @@ public class ContentBlockerRulesManager {
                                      encodedContentRuleList: ruleList) { ruleList, error in
             
             if let ruleList = ruleList {
-                self.compilationSucceeded(with: ruleList, trackerData: tds, etag: tdsEtag)
+                self.compilationSucceeded(with: ruleList, trackerData: tds, etag: tdsEtag, identifier: identifier)
             } else if let error = error {
                 self.compilationFailed(with: error, tdsEtag: tdsEtag, tempListEtag: tempListEtag)
             } else {
@@ -191,7 +197,7 @@ public class ContentBlockerRulesManager {
         if self.state == .recompilingAndScheduled {
             // Recompilation is scheduled - it may fix the problem
         } else {
-            if tdsEtag != TrackerDataManager.shared.embeddedData.etag {
+            if tdsEtag != dataSource.embeddedTrackerData.etag {
                 // We failed compilation for non-embedded TDS, marking as broken.
                 etagForFailedTDSCompilation = tdsEtag
             } else if tempListEtag != nil {
@@ -210,7 +216,10 @@ public class ContentBlockerRulesManager {
     }
     // swiftlint:enable function_parameter_count
     
-    private func compilationSucceeded(with ruleList: WKContentRuleList, trackerData: TrackerData, etag: String) {
+    private func compilationSucceeded(with ruleList: WKContentRuleList,
+                                      trackerData: TrackerData,
+                                      etag: String,
+                                      identifier: ContentBlockerRulesIdentifier) {
         os_log("Rules compiled", log: generalLog, type: .default)
         
         let encodedData = try? JSONEncoder().encode(trackerData)
@@ -221,7 +230,8 @@ public class ContentBlockerRulesManager {
         _currentRules = CurrentRules(rulesList: ruleList,
                                      trackerData: trackerData,
                                      encodedTrackerData: encodedTrackerData,
-                                     etag: etag)
+                                     etag: etag,
+                                     identifier: identifier)
         
         if self.state == .recompilingAndScheduled {
             // New work has been scheduled - prepare for execution.
@@ -258,7 +268,7 @@ public class ContentBlockerRulesManager {
 extension ContentBlockerRulesManager {
     
     class func test_prepareEmbeddedInstance() -> ContentBlockerRulesManager {
-        let cbrm = ContentBlockerRulesManager(forTests: true)
+        let cbrm = ContentBlockerRulesManager(skipInitialSetup: true)
         
         let embedded = TrackerDataManager.shared.embeddedData
         let id = ContentBlockerRulesIdentifier(identifier: "\"\(UUID().uuidString)\"\"\"")!
@@ -267,6 +277,13 @@ extension ContentBlockerRulesManager {
                      unprotectedSites: nil, identifier: id)
         
         return cbrm
+    }
+    
+    class func test_prepareRegularInstance(source: ContentBlockerRulesSource? = nil, skipInitialSetup: Bool = false) -> ContentBlockerRulesManager {
+        if let source = source {
+            return ContentBlockerRulesManager(source: source, skipInitialSetup: skipInitialSetup)
+        }
+        return ContentBlockerRulesManager(skipInitialSetup: skipInitialSetup)
     }
     
     class func test_replaceSharedInstance(with instance: ContentBlockerRulesManager) {

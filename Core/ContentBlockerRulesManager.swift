@@ -229,12 +229,18 @@ public class ContentBlockerRulesManager {
             if tdsEtag != dataSource.embeddedTrackerData.etag {
                 // We failed compilation for non-embedded TDS, marking as broken.
                 etagForFailedTDSCompilation = tdsEtag
+                Pixel.fire(pixel: .contentBlockingTDSCompilationFailed,
+                           withAdditionalParameters: [PixelParameters.etag: tdsEtag])
             } else if tempListEtag != nil {
                 etagForFailedTempListCompilation = tempListEtag
+                Pixel.fire(pixel: .contentBlockingTempListCompilationFailed,
+                           withAdditionalParameters: [PixelParameters.etag: tempListEtag ?? "empty"])
             } else if !unprotectedSitesHash.isEmpty {
                 hashForFailedUnprotectedSitesCompilation = unprotectedSitesHash
+                Pixel.fire(pixel: .contentBlockingUnpSitesCompilationFailed)
             } else {
                 // We failed for embedded data, this is unlikely.
+                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed)
             }
         }
         

@@ -180,6 +180,11 @@ public enum PixelName: String {
     case trackerDataCouldNotBeLoaded = "m_d_tds_l"
     case fileStoreWriteFailed = "m_d_fswf"
     
+    case contentBlockingTDSCompilationFailed = "m_d_cb_ct"
+    case contentBlockingTempListCompilationFailed = "m_d_cb_cl"
+    case contentBlockingUnpSitesCompilationFailed = "m_d_cb_cu"
+    case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
+    
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 
@@ -231,6 +236,8 @@ public struct PixelParameters {
     static let clearWebDataTimedOut = "cd"
 
     public static let tabPreviewCountDelta = "cd"
+    
+    public static let etag = "et"
 }
 
 public struct PixelValues {

@@ -78,6 +78,7 @@ public class ContentBlockerRulesManager {
     
     private(set) public var etagForFailedTDSCompilation: String?
     private(set) public var etagForFailedTempListCompilation: String?
+    private(set) public var hashForFailedUnprotectedSitesCompilation: String?
 
     public func recompile() {
         workQueue.async {
@@ -105,6 +106,7 @@ public class ContentBlockerRulesManager {
         performCompilation(isInitial: isInitial)
     }
     
+    // swiftlint:disable function_body_length
     private func performCompilation(isInitial: Bool = false) {
         // Get ETags first, as these change only after underlying data is being updated.
         // Even if underlying file is chnged by other thread, so will the etag and in the end rules will be refreshed.
@@ -115,6 +117,7 @@ public class ContentBlockerRulesManager {
         if let trackerData = dataSource.trackerData,
            trackerData.etag != etagForFailedTDSCompilation {
             tds = trackerData
+            etagForFailedTDSCompilation = nil
         } else {
             tds = dataSource.embeddedTrackerData
         }
@@ -124,10 +127,28 @@ public class ContentBlockerRulesManager {
             let tempUnprotectedDomains = dataSource.tempList
             if !tempUnprotectedDomains.isEmpty {
                 tempSites = (tempUnprotectedDomains, etag)
+                
+                // In case we had an error last time, clear it and retry to re-fetch TDS
+                if etagForFailedTempListCompilation != nil {
+                    etagForFailedTDSCompilation = nil
+                    etagForFailedTempListCompilation = nil
+                    performCompilation(isInitial: isInitial)
+                    return
+                }
             }
         }
         
-        let unprotectedSites = dataSource.unprotectedSites
+        var unprotectedSites = dataSource.unprotectedSites
+        if ContentBlockerRulesIdentifier.hash(domains: unprotectedSites) == hashForFailedUnprotectedSitesCompilation {
+            unprotectedSites = []
+        } else if hashForFailedUnprotectedSitesCompilation != nil {
+            etagForFailedTDSCompilation = nil
+            etagForFailedTempListCompilation = nil
+            hashForFailedUnprotectedSitesCompilation = nil
+            // Retry to re-fetch TDS & TempList
+            performCompilation(isInitial: isInitial)
+            return
+        }
         
         let identifier = ContentBlockerRulesIdentifier(tdsEtag: tds.etag,
                                                        tempListEtag: tempSites?.etag,
@@ -154,6 +175,7 @@ public class ContentBlockerRulesManager {
                     unprotectedSites: unprotectedSites, identifier: identifier)
         }
     }
+    // swiftlint:enable function_body_length
     
     // swiftlint:disable function_parameter_count
     fileprivate func compile(tds: TrackerData, tdsEtag: String,
@@ -165,12 +187,16 @@ public class ContentBlockerRulesManager {
         let rules = ContentBlockerRulesBuilder(trackerData: tds).buildRules(withExceptions: unprotectedSites,
             
                                                                             andTemporaryUnprotectedDomains: tempList)
+        let unprotectedSitesHash = ContentBlockerRulesIdentifier.hash(domains: unprotectedSites)
         let data: Data
         do {
             data = try JSONEncoder().encode(rules)
         } catch {
             os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
-            compilationFailed(with: error, tdsEtag: tdsEtag, tempListEtag: tempListEtag)
+            compilationFailed(with: error,
+                              tdsEtag: tdsEtag,
+                              tempListEtag: tempListEtag,
+                              unprotectedSitesHash: unprotectedSitesHash)
             return
         }
 
@@ -181,7 +207,10 @@ public class ContentBlockerRulesManager {
             if let ruleList = ruleList {
                 self.compilationSucceeded(with: ruleList, trackerData: tds, etag: tdsEtag, identifier: identifier)
             } else if let error = error {
-                self.compilationFailed(with: error, tdsEtag: tdsEtag, tempListEtag: tempListEtag)
+                self.compilationFailed(with: error,
+                                       tdsEtag: tdsEtag,
+                                       tempListEtag: tempListEtag,
+                                       unprotectedSitesHash: unprotectedSitesHash)
             } else {
                 assertionFailure("Rule list has not been returned properly by the engine")
             }
@@ -189,7 +218,7 @@ public class ContentBlockerRulesManager {
 
     }
     
-    private func compilationFailed(with error: Error, tdsEtag: String, tempListEtag: String?) {
+    private func compilationFailed(with error: Error, tdsEtag: String, tempListEtag: String?, unprotectedSitesHash: String) {
         os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
         
         lock.lock()
@@ -202,8 +231,10 @@ public class ContentBlockerRulesManager {
                 etagForFailedTDSCompilation = tdsEtag
             } else if tempListEtag != nil {
                 etagForFailedTempListCompilation = tempListEtag
+            } else if !unprotectedSitesHash.isEmpty {
+                hashForFailedUnprotectedSitesCompilation = unprotectedSitesHash
             } else {
-                // We failed for embedded data, this is unlikely, unless we break it by adding unprotected sites
+                // We failed for embedded data, this is unlikely.
             }
         }
         
@@ -227,6 +258,13 @@ public class ContentBlockerRulesManager {
         
         lock.lock()
         
+        let diff: ContentBlockerRulesIdentifier.Difference
+        if let id = _currentRules?.identifier {
+            diff = id.compare(with: identifier)
+        } else {
+            diff = .all
+        }
+        
         _currentRules = CurrentRules(rulesList: ruleList,
                                      trackerData: trackerData,
                                      encodedTrackerData: encodedTrackerData,
@@ -248,7 +286,8 @@ public class ContentBlockerRulesManager {
                 
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name,
-                                            object: self)
+                                            object: self,
+                                            userInfo: [ContentBlockerProtectionChangedNotification.diffKey: diff])
             
             WKContentRuleListStore.default()?.getAvailableContentRuleListIdentifiers({ ids in
                 guard let ids = ids else { return }

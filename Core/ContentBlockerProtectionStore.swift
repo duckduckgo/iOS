@@ -21,6 +21,8 @@ import Foundation
 
 public struct ContentBlockerProtectionChangedNotification {
     public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
+    
+    public static let diffKey = "ContentBlockingDiff"
 }
 
 public protocol ContentBlockerProtectionStore: AnyObject {

@@ -60,7 +60,7 @@ public class ContentBlockerRulesIdentifier {
         return etag
     }
     
-    private class func hash(domains: [String]?) -> String {
+    public class func hash(domains: [String]?) -> String {
         guard let domains = domains, !domains.isEmpty else {
             return ""
         }

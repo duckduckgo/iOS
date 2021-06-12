@@ -608,12 +608,16 @@ class TabViewController: UIViewController {
         reload(scripts: true)
     }
     
-    @objc func onContentBlockerConfigurationChanged() {
+    @objc func onContentBlockerConfigurationChanged(notification: Notification) {
         if let rules = ContentBlockerRulesManager.shared.currentRules {
             self.webView.configuration.userContentController.removeAllContentRuleLists()
             self.webView.configuration.userContentController.add(rules.rulesList)
             
-            self.reload(scripts: true)
+            if let diff = notification.userInfo?[ContentBlockerProtectionChangedNotification.diffKey] as? ContentBlockerRulesIdentifier.Difference {
+                if diff.contains(.unprotectedSites) {
+                    reload(scripts: true)
+                }
+            }
         }
     }
 

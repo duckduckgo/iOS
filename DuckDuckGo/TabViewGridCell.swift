@@ -149,6 +149,11 @@ class TabViewGridCell: TabViewCell {
             
             title.text = UserText.homeTabTitle
             favicon.image = UIImage(named: "Logo")
+            unread.isHidden = true
+            self.preview.isHidden = !tab.viewed
+            title.isHidden = !tab.viewed
+            favicon.isHidden = !tab.viewed
+            removeButton.isHidden = !tab.viewed
         } else {
             if let preview = preview {
                 self.updatePreviewToDisplay(image: preview)

@@ -268,7 +268,9 @@ public class ContentBlockerRulesManager {
         if let id = _currentRules?.identifier {
             diff = id.compare(with: identifier)
         } else {
-            diff = .all
+            diff = identifier.compare(with: ContentBlockerRulesIdentifier(tdsEtag: "",
+                                                                          tempListEtag: nil,
+                                                                          unprotectedSites: nil))
         }
         
         _currentRules = CurrentRules(rulesList: ruleList,

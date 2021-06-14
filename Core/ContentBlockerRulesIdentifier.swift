@@ -53,7 +53,7 @@ public class ContentBlockerRulesIdentifier {
             etag += "\""
         }
         
-        if !etag.hasPrefix("\"") {
+        if !etag.hasPrefix("\"") || etag.count == 1 {
             etag = "\"" + etag
         }
         
@@ -70,7 +70,7 @@ public class ContentBlockerRulesIdentifier {
     
     init?(identifier: String) {
         guard let betweenEtags = identifier.range(of: "\"\""), let lastEtagChar = identifier.lastIndex(of: "\"") else {
-            // Error?
+            Pixel.fire(pixel: .contentBlockingIdentifierError)
             return nil
         }
         

@@ -59,11 +59,28 @@ class ContentBlockerRulesIdentifierTests: XCTestCase {
     
     func testForEquality() {
         
+        let empty = ContentBlockerRulesIdentifier(tdsEtag: "", tempListEtag: nil, unprotectedSites: nil)
+        
+        let a = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: nil, unprotectedSites: nil)
         let ab = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: "b", unprotectedSites: [])
         let abc = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: "b", unprotectedSites: ["c"])
         let bbc = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "b", unprotectedSites: ["c"])
         let bac = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "a", unprotectedSites: ["c"])
         let bacd = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "a", unprotectedSites: ["c", "d"])
+        
+        XCTAssertTrue(empty.compare(with: a).contains(.tdsEtag))
+        XCTAssertFalse(empty.compare(with: a).contains(.tempListEtag))
+        XCTAssertFalse(empty.compare(with: a).contains(.unprotectedSites))
+        
+        XCTAssertTrue(empty.compare(with: ab).contains(.tdsEtag))
+        XCTAssertTrue(empty.compare(with: ab).contains(.tempListEtag))
+        XCTAssertFalse(empty.compare(with: ab).contains(.unprotectedSites))
+        
+        XCTAssertTrue(empty.compare(with: abc).contains(.tdsEtag))
+        XCTAssertTrue(empty.compare(with: abc).contains(.tempListEtag))
+        XCTAssertTrue(empty.compare(with: abc).contains(.unprotectedSites))
+        
+        XCTAssertTrue(a.compare(with: ab).contains(.tempListEtag))
         
         XCTAssertTrue(ab.compare(with: abc).contains(.unprotectedSites))
         

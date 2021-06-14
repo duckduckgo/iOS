@@ -185,6 +185,8 @@ public enum PixelName: String {
     case contentBlockingUnpSitesCompilationFailed = "m_d_cb_cu"
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     
+    case contentBlockingIdentifierError = "m_d_cb_ie"
+    
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 

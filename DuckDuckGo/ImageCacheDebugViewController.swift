@@ -18,8 +18,8 @@
 //
 
 import UIKit
+import Core
 
-@available(iOS 13.0, *)
 class ImageCacheDebugViewController: UITableViewController {
 
     private let titles = [
@@ -40,6 +40,17 @@ class ImageCacheDebugViewController: UITableViewController {
     let imageError = UIImage(systemName: "exclamationmark.triangle")
     let bookmarksManager = BookmarksManager()
     let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let clearCacheItem = UIBarButtonItem(image: UIImage(systemName: "trash")!,
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(presentClearCachePrompt(_:)))
+        clearCacheItem.tintColor = .systemRed
+        navigationItem.rightBarButtonItem = clearCacheItem
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -124,6 +135,32 @@ class ImageCacheDebugViewController: UITableViewController {
         guard let image = image else { return "No image" }
         let size = image.size
         return "\(size.width) x \(size.height)"
+    }
+
+    @objc
+    private func presentClearCachePrompt(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Clear Image Cache?", message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
+            self.clearCacheAndReload()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        present(alert, animated: true)
+    }
+
+    private func clearCacheAndReload() {
+        let caches = Favicons.Constants.caches
+
+        caches.values.forEach {
+            $0.clearMemoryCache()
+            $0.clearDiskCache()
+        }
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
 }

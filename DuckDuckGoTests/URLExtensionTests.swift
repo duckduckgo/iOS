@@ -19,6 +19,7 @@
 
 import XCTest
 
+// swiftlint:disable type_body_length
 class URLExtensionTests: XCTestCase {
     
     func testWhenHostnameHasMultiplePunycodedPartsThenItIsConsideredValid() {
@@ -338,3 +339,4 @@ class URLExtensionTests: XCTestCase {
     }
 
 }
+// swiftlint:enable type_body_length

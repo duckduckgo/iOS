@@ -299,4 +299,42 @@ class URLExtensionTests: XCTestCase {
         XCTAssertFalse(URL.isValidBookmarklet(url: invalidSyntax2))
     }
 
+    func testWhenNormalizingURLWithNoParametersThenURLIsUnchanged() {
+        let url = URL(string: "http://example.com/index.html")!
+        let normalized = url.normalized()
+
+        XCTAssertEqual(url, normalized)
+    }
+
+    func testWhenNormalizingURLWithParametersThenParametersAreRemoved() {
+        let url = URL(string: "https://example.com/Path?abc=xyz")!
+        let expected = URL(string: "https://example.com/Path")!
+        let normalized = url.normalized()
+
+        XCTAssertEqual(normalized, expected)
+    }
+
+    func testWhenNormalizingURLWithNoFragmentThenURLIsUnchanged() {
+        let url = URL(string: "http://example.com/index.html")!
+        let normalized = url.normalized()
+
+        XCTAssertEqual(url, normalized)
+    }
+
+    func testWhenNormalizingURLWithFragmentThenFragmentIsRemoved() {
+        let url = URL(string: "https://example.com/Path#fragment")!
+        let expected = URL(string: "https://example.com/Path")!
+        let normalized = url.normalized()
+
+        XCTAssertEqual(normalized, expected)
+    }
+
+    func testWhenNormalizingURLWithParametersAndFragmentThenBothAreRemoved() {
+        let url = URL(string: "https://example.com/Path#fragment&firstParam=1&secondParam=2")!
+        let expected = URL(string: "https://example.com/Path")!
+        let normalized = url.normalized()
+
+        XCTAssertEqual(normalized, expected)
+    }
+
 }

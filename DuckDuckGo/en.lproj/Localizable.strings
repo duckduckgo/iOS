@@ -326,7 +326,7 @@
 "email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
 
 /* Footer text for the email waitlist */
-"email.waitlist.privacy-guarantee" = "We never store your emails. Learn more in our Privacy Guarantees. If you already have a Duck Address, add it to this device.";
+"email.waitlist.privacy-guarantee" = "We never store your emails. Learn more.";
 
 /* Header text for the email waitlist */
 "email.waitlist.privacy-simplified" = "Email Privacy, Simplified";

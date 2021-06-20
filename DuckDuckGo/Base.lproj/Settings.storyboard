@@ -425,15 +425,15 @@
                                             <segue destination="UEu-y1-KbY" kind="show" id="uBZ-rJ-Opp"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="kyY-Fb-Oh6" userLabel="Beta Features Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="kyY-Fb-Oh6" userLabel="Email Protection Cell">
                                         <rect key="frame" x="0.0" y="617" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kyY-Fb-Oh6" id="uZd-se-xLZ">
                                             <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Beta Features" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAK-LL-HUH" userLabel="Beta Features">
-                                                    <rect key="frame" x="20" y="10" width="100" height="24"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Email Protection (Beta)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAK-LL-HUH" userLabel="Email Protection">
+                                                    <rect key="frame" x="20" y="10" width="162.66666666666666" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="VfE-hn-SnR"/>
                                                     </constraints>
@@ -450,9 +450,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="8DT-EJ-FpQ" kind="show" id="peh-I1-0ic"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mSQ-M3-da5">
                                         <rect key="frame" x="0.0" y="661" width="414" height="44"/>
@@ -570,7 +567,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
-                                                    <rect key="frame" x="15" y="0.0" width="391" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -594,11 +591,11 @@
                                         <rect key="frame" x="0.0" y="1024.3333301544189" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="356.33333333333331" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -667,6 +664,7 @@
                         <outlet property="defaultBrowserCell" destination="TFL-da-OrV" id="b59-Ul-Qut"/>
                         <outlet property="doNotSellAccessoryText" destination="3Eb-dV-4ZX" id="i3h-XN-Jzz"/>
                         <outlet property="doNotSellCell" destination="X9R-j6-TtK" id="T8Q-4B-bvp"/>
+                        <outlet property="emailProtectionCell" destination="kyY-Fb-Oh6" id="7aW-RF-fJy"/>
                         <outlet property="fireButtonAnimationAccessoryText" destination="AtR-nS-Gun" id="hxe-n6-40j"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
@@ -1746,7 +1744,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
-                                <rect key="frame" x="20" y="240" width="374" height="88"/>
+                                <rect key="frame" x="20" y="240" width="374" height="160"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvN-QG-WsD">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1761,13 +1759,25 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMC-7O-hSw">
-                                        <rect key="frame" x="0.0" y="60" width="374" height="28"/>
+                                        <rect key="frame" x="0.0" y="60" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I have an Invite Code">
                                             <color key="titleColor" name="AccentColor"/>
                                         </state>
                                         <connections>
                                             <action selector="existingInviteCodeButtonTapped:" destination="nB1-eu-sN0" eventType="touchUpInside" id="XAY-Cw-cEp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-NI-TIu">
+                                        <rect key="frame" x="0.0" y="120" width="374" height="40"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
+                                        <state key="normal" title="I already have a Duck Address">
+                                            <color key="titleColor" name="AccentColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="existingDuckAddressButtonTapped:" destination="nB1-eu-sN0" eventType="touchUpInside" id="q4N-93-cUE"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1805,6 +1815,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                     <navigationItem key="navigationItem" title="Email Protection" id="Br7-C6-EmT"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="existingDuckAddressButton" destination="ehC-NI-TIu" id="exg-Ce-Dj0"/>
                         <outlet property="existingInviteCodeButton" destination="yMC-7O-hSw" id="ykg-wu-zTq"/>
                         <outlet property="footerTextView" destination="XvR-D4-LMg" id="Um6-Fz-s97"/>
                         <outlet property="headerDescriptionTextView" destination="rOy-6J-i8L" id="AKm-aL-hsV"/>
@@ -1930,7 +1941,7 @@ If you would like to delete your Duck Addresses entirely, or for any other quest
             <objects>
                 <tableViewController title="Beta Features" id="8DT-EJ-FpQ" customClass="BetaFeaturesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="9oe-YG-xsf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="IdB-BL-AQ1" userLabel="Header View">

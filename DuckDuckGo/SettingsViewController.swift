@@ -39,6 +39,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
+    @IBOutlet weak var emailProtectionCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
 
@@ -46,6 +47,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var accessoryLabels: [UILabel]!
     
     private let defaultBroswerSectionIndex = 0
+    private lazy var emailManager = EmailManager()
     
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
@@ -187,6 +189,18 @@ class SettingsViewController: UITableViewController {
         performSegue(withIdentifier: "Debug", sender: nil)
     }
 
+    private func showEmailProtectionViewController() {
+        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(identifier: "EmailProtectionViewController")
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func showEmailWaitlistViewController() {
+        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(identifier: "EmailWaitlistViewController")
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -198,6 +212,13 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
+
+        case emailProtectionCell:
+            if emailManager.isSignedIn {
+                showEmailProtectionViewController()
+            } else {
+                showEmailWaitlistViewController()
+            }
 
         case versionCell:
             showDebug()

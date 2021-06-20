@@ -49,11 +49,21 @@ class EmailWaitlistViewController: UIViewController {
 
     @IBOutlet weak var waitlistActionButton: UIButton! {
         didSet {
-            waitlistActionButton.layer.cornerRadius = 6.0
+            applyWaitlistButtonStyle(to: waitlistActionButton, hasSolidBackground: true)
         }
     }
 
-    @IBOutlet weak var existingInviteCodeButton: UIButton!
+    @IBOutlet weak var existingInviteCodeButton: UIButton! {
+        didSet {
+            applyWaitlistButtonStyle(to: existingInviteCodeButton)
+        }
+    }
+
+    @IBOutlet weak var existingDuckAddressButton: UIButton! {
+        didSet {
+            applyWaitlistButtonStyle(to: existingDuckAddressButton)
+        }
+    }
 
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -81,7 +91,23 @@ class EmailWaitlistViewController: UIViewController {
         UIApplication.shared.open(AppUrls().signUpQuickLink, options: [:], completionHandler: nil)
     }
 
+    @IBAction func existingDuckAddressButtonTapped(_ sender: UIButton) {
+        UIApplication.shared.open(AppUrls().emailLoginQuickLink, options: [:], completionHandler: nil)
+    }
+
     // MARK: - Private
+
+    private func applyWaitlistButtonStyle(to button: UIButton, hasSolidBackground: Bool = false) {
+        let color = UIColor(named: "AccentColor")!.cgColor
+
+        button.layer.cornerRadius = button.bounds.height / 2
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = color
+
+        if hasSolidBackground {
+            button.layer.backgroundColor = UIColor(named: "AccentColor")!.cgColor
+        }
+    }
 
     private func renderCurrentWaitlistState() {
         render(waitlistState: emailManager.waitlistState)
@@ -274,16 +300,14 @@ class EmailWaitlistViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
         ])
 
-        let firstLinkRange = text.range(of: "Privacy Guarantees")
-        let secondLinkRange = text.range(of: "add it to this device")
+        let range = text.range(of: "Learn more")
 
-        if firstLinkRange.location == NSNotFound || secondLinkRange.location == NSNotFound {
+        if range.location == NSNotFound {
             return attributedString
         }
 
         let urls = AppUrls()
-        attributedString.addAttribute(.link, value: urls.privacyGuaranteesQuickLink.absoluteString, range: firstLinkRange)
-        attributedString.addAttribute(.link, value: urls.emailLoginQuickLink.absoluteString, range: secondLinkRange)
+        attributedString.addAttribute(.link, value: urls.privacyGuaranteesQuickLink.absoluteString, range: range)
 
         return attributedString
     }

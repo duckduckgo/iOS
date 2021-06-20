@@ -364,7 +364,7 @@ public struct UserText {
     public static let emailWaitlistGetStarted = NSLocalizedString("email.waitlist.get-started", value: "Get Started", comment: "Action button text for the email waitlist")
 
     public static let emailWaitlistHaveInviteCode = NSLocalizedString("email.waitlist.have-invite-code", value: "I have an Invite Code", comment: "Invite code button text for the email waitlist")
-    public static let emailWaitlistPrivacyGuarantee = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We never store your emails. Learn more in our Privacy Guarantees. If you already have a Duck Address, add it to this device.", comment: "Footer text for the email waitlist")
+    public static let emailWaitlistPrivacyGuarantee = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We never store your emails. Learn more.", comment: "Footer text for the email waitlist")
 
     public static let emailWaitlistAvailableNotificationTitle = NSLocalizedString("email.waitlist.notification.title", value: "Your Email Protection Invitation is Here!", comment: "Title for the email waitlist notification")
     public static let emailWaitlistAvailableNotificationBody = NSLocalizedString("email.waitlist.notification.body", value: "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.", comment: "Body text for the email waitlist notification")

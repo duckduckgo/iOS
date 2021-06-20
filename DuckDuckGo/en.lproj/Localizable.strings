@@ -290,7 +290,7 @@
 "email.signOutAlert.cancel" = "Cancel";
 
 /* Description for the email sign out alert */
-"email.signOutAlert.description" = "Removing Email Protection from this device will not delete your Duck Address.";
+"email.signOutAlert.description" = "Note: Removing Email Protection from this device will not delete your Duck Address.";
 
 /* Remove option for the email sign out alert */
 "email.signOutAlert.remove" = "Remove";

@@ -40,7 +40,7 @@ class EmailWaitlistViewController: UIViewController {
             let linkAttributes: [NSAttributedString.Key: Any] = [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
                 NSAttributedString.Key.font: 16,
-                NSAttributedString.Key.foregroundColor: UIColor(named: "AccentColor")!
+                NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
             ]
 
             footerTextView.linkTextAttributes = linkAttributes
@@ -98,14 +98,12 @@ class EmailWaitlistViewController: UIViewController {
     // MARK: - Private
 
     private func applyWaitlistButtonStyle(to button: UIButton, hasSolidBackground: Bool = false) {
-        let color = UIColor(named: "AccentColor")!.cgColor
-
         button.layer.cornerRadius = button.bounds.height / 2
         button.layer.borderWidth = 2.0
-        button.layer.borderColor = color
+        button.layer.borderColor = UIColor.emailWaitlistLinkColor.cgColor
 
         if hasSolidBackground {
-            button.layer.backgroundColor = UIColor(named: "AccentColor")!.cgColor
+            button.layer.backgroundColor = UIColor.emailWaitlistLinkColor.cgColor
         }
     }
 
@@ -269,7 +267,7 @@ class EmailWaitlistViewController: UIViewController {
 
             attributedString.addAttribute(.link, value: highlightURL, range: range)
             attributedString.addAttribute(.font, value: UIFont.boldAppFont(ofSize: 16), range: range)
-            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "AccentColor")!, range: range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.emailWaitlistLinkColor.cgColor, range: range)
         }
 
         return attributedString

@@ -112,6 +112,10 @@ extension UIColor {
     public static var destructive: UIColor {
         return UIColor.systemRed
     }
+
+    public static var emailWaitlistLinkColor: UIColor {
+        UIColor(named: "EmailWaitlistLinkColor")!
+    }
     
 }
 

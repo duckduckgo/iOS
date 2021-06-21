@@ -365,13 +365,13 @@ public struct UserText {
     public static let emailWaitlistHaveInviteCode = NSLocalizedString("email.waitlist.have-invite-code", value: "I have an Invite Code", comment: "Invite code button text for the email waitlist")
     public static let emailWaitlistPrivacyGuarantee = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We never store your emails. Learn more.", comment: "Footer text for the email waitlist")
 
-    public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification.title", value: "Your Email Protection Invitation is Here!", comment: "Title for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionBody = NSLocalizedString("email.waitlist.notification.body", value: "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.", comment: "Body text for the permission notification for the email waitlist")
+    public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like to us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
+    public static let emailWaitlistNotificationPermissionBody = NSLocalizedString("email.waitlist.notification-permission.body", value: "We’ll send you a notification when you can start using Email Protection.", comment: "Body text for the permission notification for the email waitlist")
     public static let emailWaitlistNotificationPermissionNotifyMe = NSLocalizedString("email.waitlist.notification.notify-me", value: "Notify Me", comment: "Accept option for the permission notification for the email waitlist")
     public static let emailWaitlistNotificationPermissionNoThanks = NSLocalizedString("email.waitlist.notification.no-thanks", value: "No Thanks", comment: "Decline option for the permission notification for the email waitlist")
 
-    public static let emailWaitlistAvailableNotificationTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like to us to notify you when it’s your turn?", comment: "Title for the email waitlist notification")
-    public static let emailWaitlistAvailableNotificationBody = NSLocalizedString("email.waitlist.notification-permission.body", value: "We’ll send you a notification when you can start using Email Protection.", comment: "Body text for the email waitlist notification")
+    public static let emailWaitlistAvailableNotificationTitle = NSLocalizedString("email.waitlist.notification.title", value: "Your Email Protection Invitation is Here!", comment: "Title for the email waitlist notification")
+    public static let emailWaitlistAvailableNotificationBody = NSLocalizedString("email.waitlist.notification.body", value: "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.", comment: "Body text for the email waitlist notification")
 
     public static let fireButtonAnimationFireRisingName = NSLocalizedString("fireButtonAnimation.fireRising.name", value: "Inferno", comment: "")
     public static let fireButtonAnimationWaterSwirlName = NSLocalizedString("fireButtonAnimation.waterSwirl.name", value: "Whirlpool", comment: "")

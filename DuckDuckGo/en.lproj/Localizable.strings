@@ -308,7 +308,7 @@
 "email.waitlist.invited" = "You're invited!";
 
 /* Description text for the email waitlist */
-"email.waitlist.invited-summary" = "Need a refresher? Read our Announcement to learn about Email Protection from DuckDuckGo.";
+"email.waitlist.invited-summary" = "Block email trackers and hide your address without switching your email provider. Learn more.";
 
 /* Action button text for the email waitlist */
 "email.waitlist.join" = "Join the Waitlist";

@@ -236,7 +236,7 @@ class EmailWaitlistViewController: UIViewController {
 
     private func createAttributedWaitlistInvitedSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistInvitedSummary, highlights: [
-            (text: "Announcement", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
 
@@ -269,6 +269,7 @@ class EmailWaitlistViewController: UIViewController {
 
             attributedString.addAttribute(.link, value: highlightURL, range: range)
             attributedString.addAttribute(.font, value: UIFont.boldAppFont(ofSize: 16), range: range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "AccentColor")!, range: range)
         }
 
         return attributedString

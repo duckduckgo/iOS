@@ -1,5 +1,5 @@
 //
-//  EmailWaitlistStatus.swift
+//  EmailWaitlist.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -47,42 +47,45 @@ private class EmailWaitlistRequestDelegate: EmailManagerRequestDelegate {
 
 }
 
-struct EmailWaitlistStatus {
+struct EmailWaitlist {
 
     struct Constants {
         static let backgroundTaskName = "Waitlist Status Task"
-        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.waitlistStatus"
+        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.waitlist"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
     }
 
-    /// This is a permission granted by the user when enrolling in the email waitlist.
+    static var shared = EmailWaitlist()
+
+    lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.requestDelegate = EmailWaitlistRequestDelegate.shared
+        return emailManager
+    }()
+
+    /// This is a permission granted by the user when enrolling in the email waitlist. It is used to determine whether to schedule the background task.
     @UserDefaultsWrapper(key: .showWaitlistNotification, defaultValue: false)
-    static var showWaitlistNotification: Bool
+    var showWaitlistNotification: Bool
 
-    static func registerBackgroundRefreshTaskHandler() {
+    func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            guard showWaitlistNotification else {
-                task.setTaskCompleted(success: true)
-                scheduleBackgroundRefreshTask()
-                return
-            }
-
             let emailManager = EmailManager()
             emailManager.requestDelegate = EmailWaitlistRequestDelegate.shared
 
             emailManager.fetchInviteCodeIfAvailable { result in
                 switch result {
                 case .success:
-                    fireInviteCodeNotification()
+                    sendInviteCodeNotification()
                     task.setTaskCompleted(success: true)
                 case .failure:
                     task.setTaskCompleted(success: false)
+                    scheduleBackgroundRefreshTask()
                 }
             }
         }
     }
 
-    static func scheduleBackgroundRefreshTask() {
+    func scheduleBackgroundRefreshTask() {
         guard showWaitlistNotification else {
             return
         }
@@ -107,7 +110,7 @@ struct EmailWaitlistStatus {
         #endif
     }
 
-    private static func fireInviteCodeNotification() {
+    func sendInviteCodeNotification() {
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.emailWaitlistAvailableNotificationTitle

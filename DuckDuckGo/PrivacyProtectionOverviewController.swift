@@ -320,7 +320,8 @@ class TrackerNetworkPillView: UIView {
 fileprivate extension PPTrackerNetwork {
 
     var image: UIImage {
-        let name = TrackerDataManager.shared.findEntity(byName: self.name ?? "")?.displayName ?? ""
+        let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let name = currentTrackerData?.findEntity(byName: self.name ?? "")?.displayName ?? ""
         let imageName = "PP Pill \(name.lowercased())"
         return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
     }

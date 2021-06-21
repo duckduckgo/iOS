@@ -19,6 +19,7 @@
 
 import WebKit
 import os
+import TrackerRadarKit
 import BrowserServicesKit
 
 public protocol ContentBlockerUserScriptDelegate: NSObjectProtocol {
@@ -40,13 +41,19 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     }
 
     public var source: String {
-        let unprotectedDomains = (UnprotectedSitesManager().domains?.joined(separator: "\n") ?? "")
+        let unprotectedDomains = (UnprotectedSitesManager().domains.joined(separator: "\n") ?? "")
             + "\n"
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
         let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
 
         // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work
-        let trackerData = TrackerDataManager.shared.encodedTrackerData!
+        let trackerData: String
+        if let rules = ContentBlockerRulesManager.shared.currentRules {
+            trackerData = rules.encodedTrackerData
+        } else {
+            let encodedData = try? JSONEncoder().encode(TrackerData(trackers: [:], entities: [:], domains: [:], cnames: [:]))
+            trackerData = String(data: encodedData!, encoding: .utf8)!
+        }
         
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains,
@@ -86,8 +93,9 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     }
             
     private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
-        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: urlString)
-        let entity = TrackerDataManager.shared.findEntity(byName: knownTracker?.owner?.name ?? "")
+        let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let knownTracker = currentTrackerData?.findTracker(forUrl: urlString)
+        let entity = currentTrackerData?.findEntity(byName: knownTracker?.owner?.name ?? "")
         return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
     }
 }

@@ -140,7 +140,13 @@ class EmailWaitlistViewController: UIViewController {
         headerImageView.image = Constants.weHatchedImage
 
         headerTitleLabel.text = UserText.emailWaitlistJoinedWaitlist
-        headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedSummary()
+
+        if EmailWaitlistStatus.showWaitlistNotification {
+            headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
+        } else {
+            headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
+        }
+
         footerTextView.attributedText = createAttributedPrivacyGuaranteeString()
 
         waitlistActionButton.isHidden = true
@@ -178,13 +184,13 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     private func promptForNotificationPermissions() {
-        let alertController = UIAlertController(title: "Would you like to us to notify you when it’s your turn?",
-                                                message: "We’ll send you a notification when you can start using Email Protection.",
+        let alertController = UIAlertController(title: UserText.emailWaitlistNotificationPermissionTitle,
+                                                message: UserText.emailWaitlistNotificationPermissionBody,
                                                 preferredStyle: .alert)
 
-        alertController.addAction(title: "No Thanks", style: .cancel)
+        alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel)
 
-        alertController.addAction(title: "Notify Me", style: .default, handler: {
+        alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default, handler: {
             EmailWaitlistStatus.showWaitlistNotification = true
             self.showNotificationPermissionAlert()
         })
@@ -217,97 +223,53 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.22
-        paragraphStyle.alignment = .center
-
-        let text = UserText.emailWaitlistSummary as NSString
-        let attributedString = NSMutableAttributedString(string: text as String, attributes: [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: UIFont.appFont(ofSize: 16),
-            NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+        return createAttributedString(text: UserText.emailWaitlistSummary, highlights: [
+            (text: "Announcement", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
-
-        let linkRange = text.range(of: "Announcement")
-
-        if linkRange.location == NSNotFound {
-            return attributedString
-        }
-
-        let urls = AppUrls()
-        attributedString.addAttribute(.link, value: urls.addressBlogPostQuickLink.absoluteString, range: linkRange)
-
-        return attributedString
     }
 
-    private func createAttributedWaitlistJoinedSummary() -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.22
-        paragraphStyle.alignment = .center
-
-        let text = UserText.emailWaitlistJoinedSummary as NSString
-        let attributedString = NSMutableAttributedString(string: text as String, attributes: [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: UIFont.appFont(ofSize: 16),
-            NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+    private func createAttributedWaitlistJoinedWithNotificationSummary() -> NSAttributedString {
+        return createAttributedString(text: UserText.emailWaitlistJoinedWithNotificationSummary, highlights: [
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
-
-        let linkRange = text.range(of: "Announcement")
-
-        if linkRange.location == NSNotFound {
-            return attributedString
-        }
-
-        let urls = AppUrls()
-        attributedString.addAttribute(.link, value: urls.addressBlogPostQuickLink.absoluteString, range: linkRange)
-
-        return attributedString
     }
 
     private func createAttributedWaitlistInvitedSummary() -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.22
-        paragraphStyle.alignment = .center
-
-        let text = UserText.emailWaitlistInvitedSummary as NSString
-        let attributedString = NSMutableAttributedString(string: text as String, attributes: [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: UIFont.appFont(ofSize: 16),
-            NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+        return createAttributedString(text: UserText.emailWaitlistInvitedSummary, highlights: [
+            (text: "Announcement", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
-
-        let linkRange = text.range(of: "Announcement")
-
-        if linkRange.location == NSNotFound {
-            return attributedString
-        }
-
-        let urls = AppUrls()
-        attributedString.addAttribute(.link, value: urls.addressBlogPostQuickLink.absoluteString, range: linkRange)
-
-        return attributedString
     }
 
     private func createAttributedPrivacyGuaranteeString() -> NSAttributedString {
+        return createAttributedString(text: UserText.emailWaitlistPrivacyGuarantee, highlights: [
+            (text: "Learn more", link: AppUrls().privacyGuaranteesQuickLink.absoluteString)
+        ])
+    }
+
+    private typealias HighlightedText = (text: String, link: String)
+
+    private func createAttributedString(text: String, highlights: [HighlightedText]) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
         paragraphStyle.alignment = .center
 
-        let text = UserText.emailWaitlistPrivacyGuarantee as NSString
+        let text = text as NSString
         let attributedString = NSMutableAttributedString(string: text as String, attributes: [
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
             NSAttributedString.Key.font: UIFont.appFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
         ])
 
-        let range = text.range(of: "Learn more")
+        for (highlightedValue, highlightURL) in highlights {
+            let range = text.range(of: highlightedValue)
 
-        if range.location == NSNotFound {
-            return attributedString
+            if range.location == NSNotFound {
+                continue
+            }
+
+            attributedString.addAttribute(.link, value: highlightURL, range: range)
+            attributedString.addAttribute(.font, value: UIFont.boldAppFont(ofSize: 16), range: range)
         }
-
-        let urls = AppUrls()
-        attributedString.addAttribute(.link, value: urls.privacyGuaranteesQuickLink.absoluteString, range: range)
 
         return attributedString
     }

@@ -317,12 +317,24 @@
 "email.waitlist.joined" = "You're on the list";
 
 /* Description text for the email waitlist */
-"email.waitlist.joined-summary" = "Your invitation will be available soon. If you asked us to notify you, we’ll do just that. Read our Announcement to learn more about Email Protection from DuckDuckGo.";
+"email.waitlist.joined-summary" = "We'll send you a notification when we're ready for you. Learn more about Email Protection.";
 
 /* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.";
+"email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";
 
 /* Title for the email waitlist notification */
+"email.waitlist.notification-permission.title" = "Would you like to us to notify you when it’s your turn?";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification.body" = "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "No Thanks";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "Notify Me";
+
+/* Title for the permission notification for the email waitlist */
 "email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
 
 /* Footer text for the email waitlist */

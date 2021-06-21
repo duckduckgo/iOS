@@ -1743,8 +1743,8 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
-                                <rect key="frame" x="20" y="240" width="374" height="160"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
+                                <rect key="frame" x="20" y="240" width="374" height="144"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvN-QG-WsD">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1759,7 +1759,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMC-7O-hSw">
-                                        <rect key="frame" x="0.0" y="60" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="52" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I have an Invite Code">
@@ -1770,7 +1770,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-NI-TIu">
-                                        <rect key="frame" x="0.0" y="120" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="104" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I already have a Duck Address">
@@ -1812,7 +1812,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <constraint firstAttribute="trailingMargin" secondItem="ghI-g4-R9Q" secondAttribute="trailing" id="wn7-Vk-Kuy"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Email Protection" id="Br7-C6-EmT"/>
+                    <navigationItem key="navigationItem" title="Email Protection (Beta)" id="Br7-C6-EmT"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="existingDuckAddressButton" destination="ehC-NI-TIu" id="exg-Ce-Dj0"/>
@@ -1925,7 +1925,7 @@ If you would like to delete your Duck Addresses entirely, or for any other quest
                             <outlet property="delegate" destination="TC3-Kg-XJt" id="PPv-uh-E1w"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Email Protection" id="bJo-qn-f57"/>
+                    <navigationItem key="navigationItem" title="Email Protection (Beta)" id="bJo-qn-f57"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="disableCellLabel" destination="qEh-V1-QaM" id="06z-9A-LJ1"/>

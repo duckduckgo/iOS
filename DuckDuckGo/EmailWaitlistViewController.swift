@@ -139,7 +139,7 @@ class EmailWaitlistViewController: UIViewController {
 
         headerTitleLabel.text = UserText.emailWaitlistJoinedWaitlist
 
-        if EmailWaitlistStatus.showWaitlistNotification {
+        if EmailWaitlist.shared.showWaitlistNotification {
             headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
         } else {
             headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
@@ -189,7 +189,7 @@ class EmailWaitlistViewController: UIViewController {
         alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel)
 
         alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default, handler: {
-            EmailWaitlistStatus.showWaitlistNotification = true
+            EmailWaitlist.shared.showWaitlistNotification = true
             self.showNotificationPermissionAlert()
         })
 
@@ -205,7 +205,7 @@ class EmailWaitlistViewController: UIViewController {
             if granted {
                 // The task handler will already registered in didFinishLaunching. The background task is checked & scheduled on didBecomeActive, but
                 // it should be scheduled after receiving notification permission here to be safe.
-                EmailWaitlistStatus.scheduleBackgroundRefreshTask()
+                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }

@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        EmailWaitlistStatus.registerBackgroundRefreshTaskHandler()
+        EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -293,9 +293,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
 
-            let hasWaitlistTask = tasks.contains { $0.identifier == EmailWaitlistStatus.Constants.backgroundRefreshTaskIdentifier }
+            let hasWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
             if !hasWaitlistTask {
-                EmailWaitlistStatus.scheduleBackgroundRefreshTask()
+                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }

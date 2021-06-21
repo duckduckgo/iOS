@@ -57,6 +57,7 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
         webView.navigationDelegate = self
 
         reloadUserScripts()
+        updateContentMode()
 
         let request = URLRequest(url: baseURL)
         webView.load(request)
@@ -79,6 +80,11 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
                 webView.configuration.userContentController.add(script, name: messageName)
             }
         }
+    }
+
+    func updateContentMode() {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
+        UserAgentManager.shared.update(webView: webView, isDesktop: false, url: nil)
     }
 
     // MARK: - WKNavigationDelegate

@@ -88,11 +88,11 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     @IBAction func existingInviteCodeButtonTapped(_ sender: UIButton) {
-        UIApplication.shared.open(AppUrls().signUpQuickLink, options: [:], completionHandler: nil)
+        showEmailWaitlistWebViewController(url: AppUrls().signUpQuickLink)
     }
 
     @IBAction func existingDuckAddressButtonTapped(_ sender: UIButton) {
-        UIApplication.shared.open(AppUrls().emailLoginQuickLink, options: [:], completionHandler: nil)
+        showEmailWaitlistWebViewController(url: AppUrls().emailLoginQuickLink)
     }
 
     // MARK: - Private
@@ -217,7 +217,7 @@ class EmailWaitlistViewController: UIViewController {
         }
 
         let signUpURL = AppUrls().signUpWithCodeQuickLink(code: code)
-        UIApplication.shared.open(signUpURL, options: [:], completionHandler: nil)
+        showEmailWaitlistWebViewController(url: signUpURL)
     }
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {

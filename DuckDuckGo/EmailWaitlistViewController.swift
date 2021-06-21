@@ -242,7 +242,7 @@ class EmailWaitlistViewController: UIViewController {
 
     private func createAttributedPrivacyGuaranteeString() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistPrivacyGuarantee, highlights: [
-            (text: "Learn more", link: AppUrls().privacyGuaranteesQuickLink.absoluteString)
+            (text: "Learn more", link: AppUrls().emailPrivacyGuarantees.absoluteString)
         ])
     }
 
@@ -274,6 +274,18 @@ class EmailWaitlistViewController: UIViewController {
         return attributedString
     }
 
+    fileprivate func showEmailWaitlistWebViewController(url: URL) {
+        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+        let view = storyboard.instantiateViewController(identifier: "EmailWaitlistWebViewController") { (coder) -> EmailWaitlistWebViewController? in
+            return EmailWaitlistWebViewController(
+                coder: coder,
+                baseURL: url
+            )
+        }
+
+        navigationController?.pushViewController(view, animated: true)
+    }
+
 }
 
 extension EmailWaitlistViewController: Themable {
@@ -287,8 +299,9 @@ extension EmailWaitlistViewController: Themable {
 extension EmailWaitlistViewController: UITextViewDelegate {
 
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        UIApplication.shared.open(URL, options: [:], completionHandler: nil)
-        return true
+        // UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+        showEmailWaitlistWebViewController(url: URL)
+        return false
     }
 
 }

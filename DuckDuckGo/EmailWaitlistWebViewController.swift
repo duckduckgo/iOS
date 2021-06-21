@@ -1,0 +1,115 @@
+//
+//  EmailWaitlistWebViewController.swift
+//  DuckDuckGo
+//
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import Foundation
+
+import UIKit
+import Core
+import BrowserServicesKit
+import WebKit
+
+class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
+
+    @IBOutlet var webView: WKWebView!
+
+    private let baseURL: URL
+
+    private lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.requestDelegate = self
+        return emailManager
+    }()
+
+    private lazy var autofillUserScript: AutofillUserScript = {
+        let script = AutofillUserScript()
+        script.emailDelegate = self.emailManager
+        return script
+    }()
+
+    init?(coder: NSCoder, baseURL: URL) {
+        self.baseURL = baseURL
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        webView.navigationDelegate = self
+
+        reloadUserScripts()
+
+        let request = URLRequest(url: baseURL)
+        webView.load(request)
+    }
+
+    private func reloadUserScripts() {
+        webView.configuration.userContentController.removeAllUserScripts()
+
+        let script = autofillUserScript
+        webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
+                                                                               injectionTime: script.injectionTime,
+                                                                               forMainFrameOnly: script.forMainFrameOnly))
+
+        if #available(iOS 14, *) {
+            script.messageNames.forEach { messageName in
+                webView.configuration.userContentController.addScriptMessageHandler(script, contentWorld: .page, name: messageName)
+            }
+        } else {
+            script.messageNames.forEach { messageName in
+                webView.configuration.userContentController.add(script, name: messageName)
+            }
+        }
+    }
+
+    // MARK: - WKNavigationDelegate
+
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+
+}
+
+extension EmailWaitlistWebViewController: EmailManagerRequestDelegate {
+
+    // swiftlint:disable function_parameter_count
+    func emailManager(_ emailManager: EmailManager,
+                      requested url: URL,
+                      method: String,
+                      headers: [String: String],
+                      parameters: [String: String]?,
+                      timeoutInterval: TimeInterval,
+                      completion: @escaping (Data?, Error?) -> Void) {
+        APIRequest.request(url: url,
+                           method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
+                           parameters: parameters,
+                           headers: headers,
+                           timeoutInterval: timeoutInterval) { response, error in
+
+            completion(response?.data, error)
+        }
+    }
+    // swiftlint:enable function_parameter_count
+
+}

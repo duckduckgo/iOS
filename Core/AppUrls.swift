@@ -54,7 +54,7 @@ public struct AppUrls {
         static let gpcEnabled = [gpcGlitchBase, washingtonPostBase, newYorkTimesBase]
 
         static var loginQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/login"
-        static var privacyGuaranteesQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/privacy-guarantees"
+        static var emailPrivacyGuarantees = "https://quack.duckduckgo.com/email/privacy-guarantees"
         static var addressBlogPostQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/learn-more"
         static var emailLoginQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/login"
         static var signUpQuickLink = "ddgQuickLink://https://quack.duckduckgo.com/email/signup"
@@ -276,8 +276,8 @@ public struct AppUrls {
         return URL(string: Url.signUpWithCodeQuickLink(code: code))!
     }
 
-    public var privacyGuaranteesQuickLink: URL {
-        return URL(string: Url.privacyGuaranteesQuickLink)!
+    public var emailPrivacyGuarantees: URL {
+        return URL(string: Url.emailPrivacyGuarantees)!
     }
 
     public var addressBlogPostQuickLink: URL {

@@ -1936,6 +1936,45 @@ If you would like to delete your Duck Addresses entirely, or for any other quest
             </objects>
             <point key="canvasLocation" x="8519" y="1592"/>
         </scene>
+        <!--Email Protection (Beta)-->
+        <scene sceneID="dak-53-rSU">
+            <objects>
+                <viewController storyboardIdentifier="EmailWaitlistWebViewController" title="Email Protection (Beta)" id="b9u-ZD-F95" customClass="EmailWaitlistWebViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yAF-pT-OUd"/>
+                        <viewControllerLayoutGuide type="bottom" id="fol-IF-0tM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cDn-sG-4zZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Dr-4G-e7N">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="1Dr-4G-e7N" secondAttribute="trailing" id="3id-Zn-PLI"/>
+                            <constraint firstItem="1Dr-4G-e7N" firstAttribute="leading" secondItem="cDn-sG-4zZ" secondAttribute="leading" id="BG3-D6-gue"/>
+                            <constraint firstAttribute="bottom" secondItem="1Dr-4G-e7N" secondAttribute="bottom" id="Deo-xz-cgb"/>
+                            <constraint firstItem="1Dr-4G-e7N" firstAttribute="top" secondItem="yAF-pT-OUd" secondAttribute="bottom" id="aDf-Zu-Mwd"/>
+                        </constraints>
+                        <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="webView" destination="1Dr-4G-e7N" id="xAX-QQ-1GY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="suF-XV-Bc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9217" y="1592"/>
+        </scene>
         <!--Beta Features-->
         <scene sceneID="a8G-qD-vof">
             <objects>

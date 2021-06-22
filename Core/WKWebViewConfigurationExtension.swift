@@ -34,7 +34,7 @@ extension WKWebViewConfiguration {
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
-        configuration.dataDetectorTypes = [.link, .phoneNumber]
+        configuration.dataDetectorTypes = [.phoneNumber]
 
         configuration.installContentBlockingRules()
 

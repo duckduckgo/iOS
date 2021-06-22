@@ -66,14 +66,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f1O-6u-LFY">
-                                                    <rect key="frame" x="20" y="13.000000000000002" width="49" height="18.666666666666668"/>
+                                                    <rect key="frame" x="19.999999999999996" y="14" width="49.666666666666664" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gbx-kl-uOO">
-                                                    <rect key="frame" x="325.33333333333331" y="13.000000000000002" width="51" height="18.666666666666668"/>
+                                                    <rect key="frame" x="326" y="14" width="50.333333333333336" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.99999064209999999" green="0.9999936223" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -622,14 +622,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="14.999999999999996" y="6" width="52.666666666666664" height="18.666666666666668"/>
+                                                    <rect key="frame" x="15" y="8" width="54" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="15" y="24.666666666666668" width="107" height="14"/>
+                                                    <rect key="frame" x="15.000000000000007" y="24" width="98.666666666666671" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1731,13 +1731,13 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-g4-R9Q">
-                                <rect key="frame" x="20" y="140" width="374" height="28"/>
+                                <rect key="frame" x="20" y="140" width="374" height="24"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="250" scrollEnabled="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
-                                <rect key="frame" x="20" y="180" width="374" height="35.333333333333343"/>
+                                <rect key="frame" x="20" y="176" width="374" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
@@ -1747,10 +1747,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 </connections>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
-                                <rect key="frame" x="20" y="247.33333333333331" width="374" height="153"/>
+                                <rect key="frame" x="20" y="240" width="374" height="144"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvN-QG-WsD">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
                                         <color key="backgroundColor" name="AccentColor"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
@@ -1762,7 +1762,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMC-7O-hSw">
-                                        <rect key="frame" x="0.0" y="55" width="374" height="43"/>
+                                        <rect key="frame" x="0.0" y="52" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I have an Invite Code">
@@ -1773,7 +1773,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-NI-TIu">
-                                        <rect key="frame" x="0.0" y="110" width="374" height="43"/>
+                                        <rect key="frame" x="0.0" y="104" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I already have a Duck Address">
@@ -1786,7 +1786,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" scrollEnabled="NO" text="Footer Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XvR-D4-LMg">
-                                <rect key="frame" x="20" y="730.66666666666663" width="374" height="35.333333333333371"/>
+                                <rect key="frame" x="20" y="734" width="374" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
@@ -1829,7 +1829,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Era-SU-zWf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7832" y="1592"/>
+            <point key="canvasLocation" x="7828" y="929"/>
         </scene>
         <!--Email Protection-->
         <scene sceneID="faG-Pg-KZS">
@@ -1937,7 +1937,7 @@ If you would like to delete your Duck Addresses entirely, or for any other quest
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wsP-Bz-Fv6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8519" y="1592"/>
+            <point key="canvasLocation" x="8493" y="929"/>
         </scene>
         <!--Email Protection (Beta)-->
         <scene sceneID="dak-53-rSU">
@@ -1976,90 +1976,7 @@ If you would like to delete your Duck Addresses entirely, or for any other quest
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suF-XV-Bc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9217" y="1592"/>
-        </scene>
-        <!--Beta Features-->
-        <scene sceneID="a8G-qD-vof">
-            <objects>
-                <tableViewController title="Beta Features" id="8DT-EJ-FpQ" customClass="BetaFeaturesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="9oe-YG-xsf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="IdB-BL-AQ1" userLabel="Header View">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2KH-g9-poE">
-                                    <rect key="frame" x="14" y="4" width="386" height="76"/>
-                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                    <string key="text">Try new features before we release them. Beta features are experimental and may have bugs. You can report issues or provide feedback by following the specific instructions within the relevant feature.</string>
-                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="2KH-g9-poE" secondAttribute="bottom" id="HVn-bp-2ja"/>
-                                <constraint firstItem="2KH-g9-poE" firstAttribute="top" secondItem="IdB-BL-AQ1" secondAttribute="top" constant="4" id="SV5-gu-aZ1"/>
-                                <constraint firstAttribute="trailing" secondItem="2KH-g9-poE" secondAttribute="trailing" constant="14" id="VEx-kU-dz7"/>
-                                <constraint firstItem="2KH-g9-poE" firstAttribute="leading" secondItem="IdB-BL-AQ1" secondAttribute="leading" constant="14" id="zzE-6A-qKn"/>
-                            </constraints>
-                        </view>
-                        <sections>
-                            <tableViewSection headerTitle="Email" footerTitle="Block email trackers and protect your address" id="LKR-zg-VVw">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="1SI-aQ-3Ln">
-                                        <rect key="frame" x="0.0" y="129" width="414" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1SI-aQ-3Ln" id="SFI-ja-0Ns">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Email Protection" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jar-Va-h0w">
-                                                    <rect key="frame" x="20.000000000000007" y="10" width="116.66666666666669" height="24"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="pA8-c6-3MS"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="dax@duck.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPX-LD-1O5">
-                                                    <rect key="frame" x="273.66666666666669" y="0.0" width="105.66666666666669" height="44"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="IPX-LD-1O5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jar-Va-h0w" secondAttribute="trailing" constant="8" symbolic="YES" id="1Bf-JN-2vO"/>
-                                                <constraint firstAttribute="bottom" secondItem="Jar-Va-h0w" secondAttribute="bottom" constant="10" id="3bj-qj-syB"/>
-                                                <constraint firstAttribute="bottom" secondItem="IPX-LD-1O5" secondAttribute="bottom" id="9ui-EZ-aBA"/>
-                                                <constraint firstItem="Jar-Va-h0w" firstAttribute="leading" secondItem="SFI-ja-0Ns" secondAttribute="leading" constant="20" symbolic="YES" id="d03-z3-xX9"/>
-                                                <constraint firstAttribute="trailing" secondItem="IPX-LD-1O5" secondAttribute="trailing" constant="5" id="g1d-eL-ShQ"/>
-                                                <constraint firstItem="Jar-Va-h0w" firstAttribute="top" secondItem="SFI-ja-0Ns" secondAttribute="top" constant="10" id="l2c-fo-k3r"/>
-                                                <constraint firstItem="IPX-LD-1O5" firstAttribute="top" secondItem="SFI-ja-0Ns" secondAttribute="top" id="sNX-Az-xXf"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="8DT-EJ-FpQ" id="TAn-nN-czf"/>
-                            <outlet property="delegate" destination="8DT-EJ-FpQ" id="p7T-d6-hsb"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Beta Features" id="xKw-Wi-oJP"/>
-                    <connections>
-                        <outlet property="emailAccessoryText" destination="IPX-LD-1O5" id="uIG-RE-no6"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aff-Rg-9sC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7832" y="929"/>
+            <point key="canvasLocation" x="9161" y="929"/>
         </scene>
         <!--FireButton-->
         <scene sceneID="F6y-i5-ywC">

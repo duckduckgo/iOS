@@ -27,6 +27,7 @@ class EmailWaitlistViewController: UIViewController {
     private enum Constants {
         static var contactUsImage = UIImage(named: "EmailWaitlistContactUs")!
         static var weHatchedImage = UIImage(named: "EmailWaitlistWeHatched")!
+        static var showWaitlistNotificationPrompt = URL(string: "ddgAction://showWaitlistNotificationPrompt")!
     }
 
     @IBOutlet weak var headerImageView: UIImageView!
@@ -73,6 +74,11 @@ class EmailWaitlistViewController: UIViewController {
         renderCurrentWaitlistState()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        replaceViewControllerWithSignedInStateIfNeeded()
+    }
+
     @IBAction func waitlistActionButtonTapped(_ sender: UIButton) {
         switch emailManager.waitlistState {
         case .notJoinedQueue: joinWaitlist()
@@ -116,6 +122,16 @@ class EmailWaitlistViewController: UIViewController {
         }
     }
 
+    private func replaceViewControllerWithSignedInStateIfNeeded() {
+        if emailManager.isSignedIn, let existingViewControllers = navigationController?.viewControllers {
+            let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+            let viewController = storyboard.instantiateViewController(identifier: "EmailProtectionViewController")
+
+            let newViewControllers = existingViewControllers.dropLast() + [viewController]
+            navigationController?.setViewControllers(Array(newViewControllers), animated: false)
+        }
+    }
+
     private func renderCurrentWaitlistState() {
         render(waitlistState: emailManager.waitlistState)
     }
@@ -149,7 +165,7 @@ class EmailWaitlistViewController: UIViewController {
         headerTitleLabel.text = UserText.emailWaitlistJoinedWaitlist
 
         if EmailWaitlist.shared.showWaitlistNotification {
-            headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
+            headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithoutNotificationSummary()
         } else {
             headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
         }
@@ -184,25 +200,31 @@ class EmailWaitlistViewController: UIViewController {
                 // When joining the waitlist, the user will be asked whether they want to receive a notification when their invitation is ready.
                 self.renderCurrentWaitlistState()
                 self.promptForNotificationPermissions()
-            case .failure(let error):
-                print("Got error: \(error)")
+            case .failure: break
             }
         }
     }
 
     private func promptForNotificationPermissions() {
-        let alertController = UIAlertController(title: UserText.emailWaitlistNotificationPermissionTitle,
-                                                message: UserText.emailWaitlistNotificationPermissionBody,
-                                                preferredStyle: .alert)
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            if settings.authorizationStatus == .denied { return }
 
-        alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel)
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title: UserText.emailWaitlistNotificationPermissionTitle,
+                                                        message: UserText.emailWaitlistNotificationPermissionBody,
+                                                        preferredStyle: .alert)
 
-        alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default, handler: {
-            EmailWaitlist.shared.showWaitlistNotification = true
-            self.showNotificationPermissionAlert()
-        })
+                alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel)
 
-        present(alertController, animated: true)
+                alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default, handler: {
+                    EmailWaitlist.shared.showWaitlistNotification = true
+                    self.showNotificationPermissionAlert()
+                })
+
+                self.present(alertController, animated: true)
+            }
+        }
+
     }
 
     private func showNotificationPermissionAlert() {
@@ -237,6 +259,13 @@ class EmailWaitlistViewController: UIViewController {
 
     private func createAttributedWaitlistJoinedWithNotificationSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistJoinedWithNotificationSummary, highlights: [
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+        ])
+    }
+
+    private func createAttributedWaitlistJoinedWithoutNotificationSummary() -> NSAttributedString {
+        return createAttributedString(text: UserText.emailWaitlistJoinedWithoutNotificationSummary, highlights: [
+            (text: "get a notification", link: Constants.showWaitlistNotificationPrompt.absoluteString),
             (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
@@ -307,8 +336,13 @@ extension EmailWaitlistViewController: Themable {
 extension EmailWaitlistViewController: UITextViewDelegate {
 
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        // UIApplication.shared.open(URL, options: [:], completionHandler: nil)
-        showEmailWaitlistWebViewController(url: URL)
+        switch URL {
+        case Constants.showWaitlistNotificationPrompt:
+            showNotificationPermissionAlert()
+        default:
+            showEmailWaitlistWebViewController(url: URL)
+        }
+
         return false
     }
 

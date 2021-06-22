@@ -57,9 +57,9 @@ public struct AppUrls {
         static var emailPrivacyGuarantees = "https://quack.duckduckgo.com/email/privacy-guarantees"
         static var addressBlogPostQuickLink = "https://quack.duckduckgo.com/email/learn-more"
         static var emailLoginQuickLink = "https://quack.duckduckgo.com/email/login"
-        static var signUpQuickLink = "https://quack.duckduckgo.com/email/signup"
+        static var signUpQuickLink = "https://quack.duckduckgo.com/email/signup" // TODO: Change to `email/start`
         static func signUpWithCodeQuickLink(code: String) -> String {
-            return "https://quack.duckduckgo.com/email/signup?inviteCode=\(code)"
+            return "https://quack.duckduckgo.com/email/signup?inviteCode=\(code)" // TODO: Change to `email/start`
         }
     }
     

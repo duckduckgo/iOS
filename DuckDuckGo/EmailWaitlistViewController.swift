@@ -30,6 +30,11 @@ class EmailWaitlistViewController: UIViewController {
         static var showWaitlistNotificationPrompt = URL(string: "ddgAction://showWaitlistNotificationPrompt")!
     }
 
+    static func loadFromStoryboard() -> UIViewController {
+        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+        return storyboard.instantiateViewController(identifier: "EmailWaitlistViewController")
+    }
+
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var headerDescriptionTextView: UITextView! {

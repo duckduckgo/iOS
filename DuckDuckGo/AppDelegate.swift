@@ -434,15 +434,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
+
         guard let code = EmailManager().inviteCode else {
             completionHandler()
             return
         }
 
-        let signUpURL = AppUrls().signUpWithCodeQuickLink(code: code)
-        UIApplication.shared.open(signUpURL, options: [:]) { _ in
-            completionHandler()
-        }
+        presentWaitlistSettingsModal()
+        completionHandler()
+    }
+
+    private func presentWaitlistSettingsModal() {
+        guard let window = window, let rootViewController = window.rootViewController else { return }
+
+        rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+        let navigationController = rootViewController.presentedViewController as? UINavigationController
+
+        let waitlist = EmailWaitlistViewController.loadFromStoryboard()
+        navigationController?.pushViewController(waitlist, animated: true)
     }
 
 }

@@ -196,9 +196,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showEmailWaitlistViewController() {
-        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
-        let viewController = storyboard.instantiateViewController(identifier: "EmailWaitlistViewController")
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(EmailWaitlistViewController.loadFromStoryboard(), animated: true)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

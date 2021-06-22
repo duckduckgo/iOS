@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 import BrowserServicesKit
 
 final class EmailWaitlistDebugViewController: UITableViewController {
@@ -25,7 +26,8 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     private let titles = [
         Rows.waitlistTimestamp: "Timestamp",
         Rows.waitlistToken: "Token",
-        Rows.waitlistInviteCode: "Invite Code"
+        Rows.waitlistInviteCode: "Invite Code",
+        Rows.shouldNotifyWhenAvailable: "Notify When Available"
     ]
 
     enum Rows: Int, CaseIterable {
@@ -33,6 +35,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
         case waitlistTimestamp
         case waitlistToken
         case waitlistInviteCode
+        case shouldNotifyWhenAvailable
 
     }
 
@@ -77,6 +80,14 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
         case .waitlistInviteCode:
             cell.detailTextLabel?.text = storage.getWaitlistInviteCode() ?? "None"
+
+        case .shouldNotifyWhenAvailable:
+            // Not using `bool(forKey:)` as it's useful to tell whether a value has been set at all, and `bool(forKey:)` returns false by default.
+            if let shouldNotify = UserDefaults.standard.value(forKey: UserDefaultsWrapper<Any>.Key.showWaitlistNotification.rawValue) as? Bool {
+                cell.detailTextLabel?.text = shouldNotify ? "Yes" : "No"
+            } else {
+                cell.detailTextLabel?.text = "TBD"
+            }
         }
 
         return cell
@@ -97,6 +108,15 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
     private func clearDataAndReload() {
         storage.deleteWaitlistState()
+        UserDefaultsWrapper<Any>.clearWaitlistValues()
         tableView.reloadData()
     }
+}
+
+extension UserDefaultsWrapper {
+
+    public static func clearWaitlistValues() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper.Key.showWaitlistNotification.rawValue)
+    }
+
 }

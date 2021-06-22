@@ -170,9 +170,9 @@ class EmailWaitlistViewController: UIViewController {
         headerTitleLabel.text = UserText.emailWaitlistJoinedWaitlist
 
         if EmailWaitlist.shared.showWaitlistNotification {
-            headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithoutNotificationSummary()
-        } else {
             headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
+        } else {
+            headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithoutNotificationSummary()
         }
 
         footerTextView.attributedText = createAttributedPrivacyGuaranteeString()
@@ -219,12 +219,16 @@ class EmailWaitlistViewController: UIViewController {
                                                         message: UserText.emailWaitlistNotificationPermissionBody,
                                                         preferredStyle: .alert)
 
-                alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel)
+                alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel) {
+                    EmailWaitlist.shared.showWaitlistNotification = false
+                    self.renderCurrentWaitlistState()
+                }
 
-                alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default, handler: {
+                alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default) {
                     EmailWaitlist.shared.showWaitlistNotification = true
+                    self.renderCurrentWaitlistState()
                     self.showNotificationPermissionAlert()
-                })
+                }
 
                 self.present(alertController, animated: true)
             }
@@ -343,7 +347,7 @@ extension EmailWaitlistViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch URL {
         case Constants.showWaitlistNotificationPrompt:
-            showNotificationPermissionAlert()
+            promptForNotificationPermissions()
         default:
             showEmailWaitlistWebViewController(url: URL)
         }

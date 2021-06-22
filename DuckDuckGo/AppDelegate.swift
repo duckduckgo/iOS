@@ -149,6 +149,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ContentBlockerRulesManager.shared.recompile()
             }
         }
+
+        EmailWaitlist.shared.emailManager.fetchInviteCodeIfAvailable { result in
+            switch result {
+            case .success: EmailWaitlist.shared.sendInviteCodeAvailableNotification()
+            case .failure: break
+            }
+        }
     }
 
     private func fireAppLaunchPixel() {

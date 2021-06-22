@@ -75,11 +75,14 @@ struct EmailWaitlist {
             emailManager.fetchInviteCodeIfAvailable { result in
                 switch result {
                 case .success:
-                    sendInviteCodeNotification()
+                    sendInviteCodeAvailableNotification()
                     task.setTaskCompleted(success: true)
                 case .failure:
-                    task.setTaskCompleted(success: false)
                     scheduleBackgroundRefreshTask()
+
+                    // Even though no code was retrieved, failure is still an expected outcome and considered a success from the point of view of the
+                    // background task.
+                    task.setTaskCompleted(success: true)
                 }
             }
         }
@@ -110,7 +113,7 @@ struct EmailWaitlist {
         #endif
     }
 
-    func sendInviteCodeNotification() {
+    func sendInviteCodeAvailableNotification() {
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.emailWaitlistAvailableNotificationTitle

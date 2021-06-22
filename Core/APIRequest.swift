@@ -60,12 +60,18 @@ public class APIRequest {
                                method: HTTPMethod = .get,
                                parameters: [String: String]? = nil,
                                headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                               httpBody: Data? = nil,
                                timeoutInterval: TimeInterval = 60.0,
                                callBackOnMainThread: Bool = false,
                                completion: @escaping APIRequestCompletion) -> URLSessionDataTask {
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
         
-        let urlRequest = urlRequestFor(url: url, method: method, parameters: parameters, headers: headers, timeoutInterval: timeoutInterval)
+        let urlRequest = urlRequestFor(url: url,
+                                       method: method,
+                                       parameters: parameters,
+                                       headers: headers,
+                                       httpBody: httpBody,
+                                       timeoutInterval: timeoutInterval)
         
         let session = callBackOnMainThread ? mainThreadCallbackSession : defaultSession
 
@@ -100,11 +106,13 @@ public class APIRequest {
                                      method: HTTPMethod = .get,
                                      parameters: [String: String]? = nil,
                                      headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                                     httpBody: Data? = nil,
                                      timeoutInterval: TimeInterval = 60.0) -> URLRequest {
         let url = url.addParams(parameters ?? [:])
         var urlRequest = URLRequest(url: url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue
+        urlRequest.httpBody = httpBody
         urlRequest.timeoutInterval = timeoutInterval
         return urlRequest
     }

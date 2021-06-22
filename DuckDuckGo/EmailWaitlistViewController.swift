@@ -361,12 +361,14 @@ extension EmailWaitlistViewController: EmailManagerRequestDelegate {
                       method: String,
                       headers: [String: String],
                       parameters: [String: String]?,
+                      httpBody: Data?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
         APIRequest.request(url: url,
                            method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
                            parameters: parameters,
                            headers: headers,
+                           httpBody: httpBody,
                            timeoutInterval: timeoutInterval) { response, error in
 
             completion(response?.data, error)

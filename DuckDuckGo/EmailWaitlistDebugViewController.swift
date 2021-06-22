@@ -23,19 +23,36 @@ import BrowserServicesKit
 
 final class EmailWaitlistDebugViewController: UITableViewController {
 
-    private let titles = [
-        Rows.waitlistTimestamp: "Timestamp",
-        Rows.waitlistToken: "Token",
-        Rows.waitlistInviteCode: "Invite Code",
-        Rows.shouldNotifyWhenAvailable: "Notify When Available"
+    enum Sections: Int, CaseIterable {
+
+        case waitlistInformation
+        case debuggingActions
+
+    }
+
+    private let waitlistInformationTitles = [
+        WaitlistInformationRows.waitlistTimestamp: "Timestamp",
+        WaitlistInformationRows.waitlistToken: "Token",
+        WaitlistInformationRows.waitlistInviteCode: "Invite Code",
+        WaitlistInformationRows.shouldNotifyWhenAvailable: "Notify When Available"
     ]
 
-    enum Rows: Int, CaseIterable {
+    enum WaitlistInformationRows: Int, CaseIterable {
 
         case waitlistTimestamp
         case waitlistToken
         case waitlistInviteCode
         case shouldNotifyWhenAvailable
+
+    }
+
+    private let debuggingActionTitles = [
+        DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code"
+    ]
+
+    enum DebuggingActionRows: Int, CaseIterable {
+
+        case setMockInviteCode
 
     }
 
@@ -54,43 +71,76 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return Sections.allCases.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Rows.allCases.count
+        switch Sections(rawValue: section)! {
+        case .waitlistInformation: return WaitlistInformationRows.allCases.count
+        case .debuggingActions: return DebuggingActionRows.allCases.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let row = Rows(rawValue: indexPath.row)!
+        let section = Sections(rawValue: indexPath.section)!
 
-        cell.textLabel?.text = titles[row]
+        switch section {
+        case .waitlistInformation:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath)
+            let row = WaitlistInformationRows(rawValue: indexPath.row)!
+            cell.textLabel?.text = waitlistInformationTitles[row]
 
-        switch row {
-        case .waitlistTimestamp:
-            if let timestamp = storage.getWaitlistTimestamp() {
-                cell.detailTextLabel?.text = String(timestamp)
-            } else {
-                cell.detailTextLabel?.text = "None"
+            switch row {
+            case .waitlistTimestamp:
+                if let timestamp = storage.getWaitlistTimestamp() {
+                    cell.detailTextLabel?.text = String(timestamp)
+                } else {
+                    cell.detailTextLabel?.text = "None"
+                }
+
+            case .waitlistToken:
+                cell.detailTextLabel?.text = storage.getWaitlistToken() ?? "None"
+
+            case .waitlistInviteCode:
+                cell.detailTextLabel?.text = storage.getWaitlistInviteCode() ?? "None"
+
+            case .shouldNotifyWhenAvailable:
+                // Not using `bool(forKey:)` as it's useful to tell whether a value has been set at all, and `bool(forKey:)` returns false by default.
+                if let shouldNotify = UserDefaults.standard.value(forKey: UserDefaultsWrapper<Any>.Key.showWaitlistNotification.rawValue) as? Bool {
+                    cell.detailTextLabel?.text = shouldNotify ? "Yes" : "No"
+                } else {
+                    cell.detailTextLabel?.text = "TBD"
+                }
             }
 
-        case .waitlistToken:
-            cell.detailTextLabel?.text = storage.getWaitlistToken() ?? "None"
+            return cell
 
-        case .waitlistInviteCode:
-            cell.detailTextLabel?.text = storage.getWaitlistInviteCode() ?? "None"
+        case .debuggingActions:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath)
+            let row = DebuggingActionRows(rawValue: indexPath.row)!
+            cell.textLabel?.text = debuggingActionTitles[row]
 
-        case .shouldNotifyWhenAvailable:
-            // Not using `bool(forKey:)` as it's useful to tell whether a value has been set at all, and `bool(forKey:)` returns false by default.
-            if let shouldNotify = UserDefaults.standard.value(forKey: UserDefaultsWrapper<Any>.Key.showWaitlistNotification.rawValue) as? Bool {
-                cell.detailTextLabel?.text = shouldNotify ? "Yes" : "No"
-            } else {
-                cell.detailTextLabel?.text = "TBD"
+            return cell
+        }
+
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = Sections(rawValue: indexPath.section)!
+
+        switch section {
+        case .waitlistInformation: break
+        case .debuggingActions:
+            let row = DebuggingActionRows(rawValue: indexPath.row)!
+
+            switch row {
+            case .setMockInviteCode:
+                storage.store(inviteCode: "ABCDE")
             }
         }
 
-        return cell
+        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.reloadData()
     }
 
     @objc

@@ -212,7 +212,10 @@ class EmailWaitlistViewController: UIViewController {
 
     private func promptForNotificationPermissions() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            if settings.authorizationStatus == .denied { return }
+            if settings.authorizationStatus == .denied {
+                self.renderCurrentWaitlistState()
+                return
+            }
 
             DispatchQueue.main.async {
                 let alertController = UIAlertController(title: UserText.emailWaitlistNotificationPermissionTitle,

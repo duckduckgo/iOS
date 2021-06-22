@@ -59,7 +59,7 @@ struct EmailWaitlist {
 
     static var shared = EmailWaitlist()
 
-    lazy var emailManager: EmailManager = {
+    let emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.requestDelegate = EmailWaitlistRequestDelegate.shared
         return emailManager
@@ -71,8 +71,16 @@ struct EmailWaitlist {
 
     func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
+            // DEBUG: Send the notification every time the task fires.
+            sendInviteCodeAvailableNotification()
+
             let emailManager = EmailManager()
             emailManager.requestDelegate = EmailWaitlistRequestDelegate.shared
+
+            guard emailManager.isInWaitlist else {
+                task.setTaskCompleted(success: true)
+                return
+            }
 
             emailManager.fetchInviteCodeIfAvailable { result in
                 switch result {
@@ -82,8 +90,7 @@ struct EmailWaitlist {
                 case .failure:
                     scheduleBackgroundRefreshTask()
 
-                    // Even though no code was retrieved, failure is still an expected outcome and considered a success from the point of view of the
-                    // background task.
+                    // Though no code was retrieved, failure is still an expected outcome and considered a success from the point of view of the task.
                     task.setTaskCompleted(success: true)
                 }
             }
@@ -91,7 +98,7 @@ struct EmailWaitlist {
     }
 
     func scheduleBackgroundRefreshTask() {
-        guard showWaitlistNotification else {
+        guard showWaitlistNotification && emailManager.isInWaitlist else {
             return
         }
 

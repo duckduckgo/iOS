@@ -51,7 +51,7 @@ struct EmailWaitlist {
 
     struct Constants {
         static let backgroundTaskName = "Waitlist Status Task"
-        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.waitlist"
+        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.waitlistStatus"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
     }
 

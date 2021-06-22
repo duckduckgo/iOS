@@ -31,19 +31,15 @@ class EmailWaitlistViewController: UIViewController {
 
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var headerTitleLabel: UILabel!
-    @IBOutlet weak var headerDescriptionTextView: UITextView!
+    @IBOutlet weak var headerDescriptionTextView: UITextView! {
+        didSet {
+            headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
+        }
+    }
+
     @IBOutlet weak var footerTextView: UITextView! {
         didSet {
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineHeightMultiple = 1.16
-
-            let linkAttributes: [NSAttributedString.Key: Any] = [
-                NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                NSAttributedString.Key.font: 16,
-                NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
-            ]
-
-            footerTextView.linkTextAttributes = linkAttributes
+            footerTextView.linkTextAttributes = textViewLinkAttributes()
         }
     }
 
@@ -96,6 +92,19 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     // MARK: - Private
+
+    private func textViewLinkAttributes() -> [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.16
+
+        let linkAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font: 16,
+            NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
+        ]
+
+        return linkAttributes
+    }
 
     private func applyWaitlistButtonStyle(to button: UIButton, hasSolidBackground: Bool = false) {
         button.layer.cornerRadius = button.bounds.height / 2
@@ -222,7 +231,7 @@ class EmailWaitlistViewController: UIViewController {
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistSummary, highlights: [
-            (text: "Announcement", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
 
@@ -233,7 +242,7 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     private func createAttributedWaitlistInvitedSummary() -> NSAttributedString {
-        return createAttributedString(text: UserText.emailWaitlistInvitedSummary, highlights: [
+        return createAttributedString(text: UserText.emailWaitlistSummary, highlights: [
             (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }

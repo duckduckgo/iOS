@@ -351,13 +351,12 @@ public struct UserText {
     public static let emailSignOutAlertRemove = NSLocalizedString("email.signOutAlert.remove", value: "Remove", comment: "Remove option for the email sign out alert")
 
     public static let emailWaitlistPrivacySimplified = NSLocalizedString("email.waitlist.privacy-simplified", value: "Email Privacy, Simplified", comment: "Header text for the email waitlist")
-    public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You're on the list", comment: "Header text for the email waitlist")
+    public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You're on the list!", comment: "Header text for the email waitlist")
     public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You're invited!", comment: "Header text for the email waitlist")
 
-    public static let emailWaitlistSummary = NSLocalizedString("email.waitlist.summary", value: "Enjoy privacy while reading your email and giving out your email address, without the pain of switching email providers. Read our Announcement to learn more about Email Protection from DuckDuckGo.", comment: "Description text for the email waitlist")
+    public static let emailWaitlistSummary = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address without switching your email provider. Learn more.", comment: "Description text for the email waitlist")
     public static let emailWaitlistJoinedWithNotificationSummary = NSLocalizedString("email.waitlist.joined-summary", value: "We'll send you a notification when we're ready for you. Learn more about Email Protection.", comment: "Description text for the email waitlist")
     public static let emailWaitlistJoinedWithoutNotificationSummary = NSLocalizedString("email.waitlist.joined-summary", value: "Your invite will show up here when we're ready for you. Want to get a notification when it arrives? Learn more about Email Protection.", comment: "Description text for the email waitlist")
-    public static let emailWaitlistInvitedSummary = NSLocalizedString("email.waitlist.invited-summary", value: "Block email trackers and hide your address without switching your email provider. Learn more.", comment: "Description text for the email waitlist")
 
     public static let emailWaitlistJoinWaitlist = NSLocalizedString("email.waitlist.join", value: "Join the Waitlist", comment: "Action button text for the email waitlist")
     public static let emailWaitlistGetStarted = NSLocalizedString("email.waitlist.get-started", value: "Get Started", comment: "Action button text for the email waitlist")

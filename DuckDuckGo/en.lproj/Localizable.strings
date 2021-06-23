@@ -344,7 +344,7 @@
 "email.waitlist.privacy-guarantee" = "We do not save your emails. Learn more.";
 
 /* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Email Privacy, Simplified";
+"email.waitlist.privacy-simplified" = "Email privacy, simplified.";
 
 /* Description text for the email waitlist */
 "email.waitlist.summary" = "Block email trackers and hide your address,\nwithout switching your email provider. Learn more.";

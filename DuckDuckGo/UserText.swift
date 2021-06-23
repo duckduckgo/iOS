@@ -350,7 +350,7 @@ public struct UserText {
     public static let emailSignOutAlertCancel = NSLocalizedString("email.signOutAlert.cancel", value: "Cancel", comment: "Cancel option for the email sign out alert")
     public static let emailSignOutAlertRemove = NSLocalizedString("email.signOutAlert.remove", value: "Remove", comment: "Remove option for the email sign out alert")
 
-    public static let emailWaitlistPrivacySimplified = NSLocalizedString("email.waitlist.privacy-simplified", value: "Email Privacy, Simplified", comment: "Header text for the email waitlist")
+    public static let emailWaitlistPrivacySimplified = NSLocalizedString("email.waitlist.privacy-simplified", value: "Email privacy, simplified.", comment: "Header text for the email waitlist")
     public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the list!", comment: "Header text for the email waitlist")
     public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’re invited!", comment: "Header text for the email waitlist")
 

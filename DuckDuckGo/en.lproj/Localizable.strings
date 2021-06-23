@@ -305,19 +305,19 @@
 "email.waitlist.have-invite-code" = "I have an Invite Code";
 
 /* Header text for the email waitlist */
-"email.waitlist.invited" = "You're invited!";
+"email.waitlist.invited" = "You’re invited!";
 
 /* Action button text for the email waitlist */
 "email.waitlist.join" = "Join the Waitlist";
 
 /* Header text for the email waitlist */
-"email.waitlist.joined" = "You're on the list!";
+"email.waitlist.joined" = "You’re on the list!";
 
 /* Description text for the email waitlist */
-"email.waitlist.joined.no-notification" = "Your invite will show up here when we're ready for you. Want to get a notification when it arrives? Learn more about Email Protection.";
+"email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.";
 
 /* Description text for the email waitlist */
-"email.waitlist.joined.notification" = "We'll send you a notification when we're ready for you. Learn more about Email Protection.";
+"email.waitlist.joined.notification" = "We’ll send you a notification when we’re ready for you. Learn more about Email Protection.";
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";

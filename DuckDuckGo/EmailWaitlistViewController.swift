@@ -37,35 +37,11 @@ class EmailWaitlistViewController: UIViewController {
 
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var headerTitleLabel: UILabel!
-    @IBOutlet weak var headerDescriptionTextView: UITextView! {
-        didSet {
-            headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
-        }
-    }
-
-    @IBOutlet weak var footerTextView: UITextView! {
-        didSet {
-            footerTextView.linkTextAttributes = textViewLinkAttributes()
-        }
-    }
-
-    @IBOutlet weak var waitlistActionButton: UIButton! {
-        didSet {
-            applyWaitlistButtonStyle(to: waitlistActionButton, hasSolidBackground: true)
-        }
-    }
-
-    @IBOutlet weak var existingInviteCodeButton: UIButton! {
-        didSet {
-            applyWaitlistButtonStyle(to: existingInviteCodeButton)
-        }
-    }
-
-    @IBOutlet weak var existingDuckAddressButton: UIButton! {
-        didSet {
-            applyWaitlistButtonStyle(to: existingDuckAddressButton)
-        }
-    }
+    @IBOutlet weak var headerDescriptionTextView: UITextView!
+    @IBOutlet weak var footerTextView: UITextView!
+    @IBOutlet weak var waitlistActionButton: UIButton!
+    @IBOutlet weak var existingInviteCodeButton: UIButton!
+    @IBOutlet weak var existingDuckAddressButton: UIButton!
 
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -75,7 +51,15 @@ class EmailWaitlistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
+        footerTextView.linkTextAttributes = textViewLinkAttributes()
+
+        applyWaitlistButtonStyle(to: waitlistActionButton, hasSolidBackground: true)
+        applyWaitlistButtonStyle(to: existingInviteCodeButton)
+        applyWaitlistButtonStyle(to: existingDuckAddressButton)
         applyTheme(ThemeManager.shared.currentTheme)
+
         renderCurrentWaitlistState()
     }
 

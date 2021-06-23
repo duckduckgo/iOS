@@ -71,9 +71,6 @@ struct EmailWaitlist {
 
     func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            // FIXME: Send the notification every time the task fires, used to determine how often this task runs.
-            sendInviteCodeAvailableNotification()
-
             let emailManager = EmailManager()
             emailManager.requestDelegate = EmailWaitlistRequestDelegate.shared
 

@@ -362,7 +362,7 @@ public struct UserText {
     public static let emailWaitlistGetStarted = NSLocalizedString("email.waitlist.get-started", value: "Get Started", comment: "Action button text for the email waitlist")
 
     public static let emailWaitlistHaveInviteCode = NSLocalizedString("email.waitlist.have-invite-code", value: "I have an Invite Code", comment: "Invite code button text for the email waitlist")
-    public static let emailWaitlistPrivacyGuarantee = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We never store your emails. Learn more.", comment: "Footer text for the email waitlist")
+    public static let emailWaitlistPrivacyGuarantee = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We do not save your emails. Learn more.", comment: "Footer text for the email waitlist")
     public static let emailWaitlistErrorJoining = NSLocalizedString("email.waitlist.error-joining", value: "An error occurred while joining the Waitlist, please try again later", comment: "Error text when failing to join the waitlist")
 
     public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like to us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")

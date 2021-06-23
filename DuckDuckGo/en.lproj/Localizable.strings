@@ -341,7 +341,7 @@
 "email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
 
 /* Footer text for the email waitlist */
-"email.waitlist.privacy-guarantee" = "We never store your emails. Learn more.";
+"email.waitlist.privacy-guarantee" = "We do not save your emails. Learn more.";
 
 /* Header text for the email waitlist */
 "email.waitlist.privacy-simplified" = "Email Privacy, Simplified";

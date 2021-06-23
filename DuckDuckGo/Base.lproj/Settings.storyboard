@@ -1849,22 +1849,26 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <rect key="frame" x="0.0" y="159.33333587646484" width="414" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fY3-ol-sy4">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">
                                     <rect key="frame" x="14" y="0.0" width="386" height="120"/>
-                                    <string key="text">The Email Protection integration gives you the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <string key="text">Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.
 
-If you would like to delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.</string>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+To delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.</string>
                                     <color key="textColor" systemColor="secondaryLabelColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="TC3-Kg-XJt" id="r8g-xa-2ar"/>
+                                    </connections>
+                                </textView>
                             </subviews>
                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="fY3-ol-sy4" secondAttribute="trailing" constant="14" id="4TT-Sf-VHN"/>
-                                <constraint firstItem="fY3-ol-sy4" firstAttribute="top" secondItem="4WC-3q-ccD" secondAttribute="top" id="Hy6-it-4GX"/>
-                                <constraint firstItem="fY3-ol-sy4" firstAttribute="leading" secondItem="4WC-3q-ccD" secondAttribute="leading" constant="14" id="Kbx-IJ-Gda"/>
-                                <constraint firstAttribute="bottom" secondItem="fY3-ol-sy4" secondAttribute="bottom" id="hwD-nY-VPl"/>
+                                <constraint firstAttribute="trailing" secondItem="pT6-FQ-9d9" secondAttribute="trailing" constant="14" id="1bN-qb-qG0"/>
+                                <constraint firstItem="pT6-FQ-9d9" firstAttribute="top" secondItem="4WC-3q-ccD" secondAttribute="top" id="a5t-Aw-EJS"/>
+                                <constraint firstItem="pT6-FQ-9d9" firstAttribute="leading" secondItem="4WC-3q-ccD" secondAttribute="leading" constant="14" id="aY5-1f-djR"/>
+                                <constraint firstAttribute="bottom" secondItem="pT6-FQ-9d9" secondAttribute="bottom" id="bIM-JQ-RWR"/>
                             </constraints>
                         </view>
                         <sections>
@@ -1939,6 +1943,7 @@ If you would like to delete your Duck Addresses entirely, or for any other quest
                     <connections>
                         <outlet property="disableCellLabel" destination="qEh-V1-QaM" id="06z-9A-LJ1"/>
                         <outlet property="emailAccessoryText" destination="25v-n4-wJD" id="J2O-qe-brq"/>
+                        <outlet property="footerTextView" destination="pT6-FQ-9d9" id="fPW-GF-xM9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wsP-Bz-Fv6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

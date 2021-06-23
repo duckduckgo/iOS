@@ -280,8 +280,8 @@
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Enabled";
 
-/* Signed out state for the email feature */
-"email.settings.join-waitlist" = "Join the Waitlist";
+/* Footer text for the email feature */
+"email.settings.footer" = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.";
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Off";

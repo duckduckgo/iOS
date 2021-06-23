@@ -22,10 +22,20 @@ import BrowserServicesKit
 
 final class EmailProtectionViewController: UITableViewController {
 
+    private enum Constants {
+        static var supportEmailAddress = URL(string: "mailto:support@duck.com")!
+    }
+
     @IBOutlet weak var emailAccessoryText: UILabel!
     @IBOutlet weak var disableCellLabel: UILabel!
+    @IBOutlet weak var footerTextView: UITextView!
 
     private lazy var emailManager = EmailManager()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        footerTextView.attributedText = createAttributedFooterText()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -83,6 +93,49 @@ final class EmailProtectionViewController: UITableViewController {
         })
 
         present(alertController, animated: true)
+    }
+
+    private func createAttributedFooterText() -> NSAttributedString {
+        return createAttributedString(text: UserText.emailSettingsFooterText, highlights: [
+            (text: "support@duck.com", link: Constants.supportEmailAddress.absoluteString)
+        ])
+    }
+
+    private typealias HighlightedText = (text: String, link: String)
+
+    private func createAttributedString(text: String, highlights: [HighlightedText]) -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.16
+        paragraphStyle.alignment = .left
+
+        let text = text as NSString
+        let attributedString = NSMutableAttributedString(string: text as String, attributes: [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font: UIFont.appFont(ofSize: 14),
+            NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+        ])
+
+        for (highlightedValue, highlightURL) in highlights {
+            let range = text.range(of: highlightedValue)
+
+            if range.location == NSNotFound {
+                continue
+            }
+
+            attributedString.addAttribute(.link, value: highlightURL, range: range)
+            attributedString.addAttribute(.font, value: UIFont.appFont(ofSize: 14), range: range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.emailWaitlistLinkColor, range: range)
+        }
+
+        return attributedString
+    }
+
+}
+
+extension EmailProtectionViewController: UITextViewDelegate {
+
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
     }
 
 }

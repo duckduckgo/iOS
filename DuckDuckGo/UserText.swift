@@ -342,8 +342,8 @@ public struct UserText {
     public static let emailAliasAlertDecline = NSLocalizedString("email.aliasAlert.decline", value: "Cancel", comment: "Cancel option for the email alias alert")
 
     public static let emailSettingEnabled = NSLocalizedString("email.settings.enabled", value: "Enabled", comment: "Signed in state for the email feature")
-    public static let emailSettingJoinWaitlist = NSLocalizedString("email.settings.join-waitlist", value: "Join the Waitlist", comment: "Signed out state for the email feature")
     public static let emailSettingsOff = NSLocalizedString("email.settings.off", value: "Off", comment: "Signed out state for the email feature")
+    public static let emailSettingsFooterText = NSLocalizedString("email.settings.footer", value: "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.", comment: "Footer text for the email feature")
 
     public static let emailSignOutAlertTitle = NSLocalizedString("email.signOutAlert.title", value: "Remove Email Protection?", comment: "Title for the email sign out alert")
     public static let emailSignOutAlertDescription = NSLocalizedString("email.signOutAlert.description", value: "Note: Removing Email Protection from this device will not delete your Duck Address.", comment: "Description for the email sign out alert")

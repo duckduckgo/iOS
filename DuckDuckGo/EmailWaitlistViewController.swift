@@ -317,7 +317,7 @@ class EmailWaitlistViewController: UIViewController {
 
             attributedString.addAttribute(.link, value: highlightURL, range: range)
             attributedString.addAttribute(.font, value: UIFont.boldAppFont(ofSize: 16), range: range)
-            attributedString.addAttribute(.foregroundColor, value: UIColor.emailWaitlistLinkColor.cgColor, range: range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.emailWaitlistLinkColor, range: range)
         }
 
         return attributedString

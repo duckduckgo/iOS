@@ -47,11 +47,13 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     }
 
     private let debuggingActionTitles = [
+        DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 5s",
         DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code"
     ]
 
     enum DebuggingActionRows: Int, CaseIterable {
 
+        case scheduleWaitlistNotification
         case setMockInviteCode
 
     }
@@ -134,6 +136,9 @@ final class EmailWaitlistDebugViewController: UITableViewController {
             let row = DebuggingActionRows(rawValue: indexPath.row)!
 
             switch row {
+            case .scheduleWaitlistNotification:
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                EmailWaitlist.shared.sendInviteCodeAvailableNotification(trigger: trigger)
             case .setMockInviteCode:
                 storage.store(inviteCode: "ABCDE")
             }

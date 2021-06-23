@@ -71,7 +71,7 @@ struct EmailWaitlist {
 
     func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            // DEBUG: Send the notification every time the task fires.
+            // FIXME: Send the notification every time the task fires, used to determine how often this task runs.
             sendInviteCodeAvailableNotification()
 
             let emailManager = EmailManager()
@@ -122,14 +122,14 @@ struct EmailWaitlist {
         #endif
     }
 
-    func sendInviteCodeAvailableNotification() {
+    func sendInviteCodeAvailableNotification(trigger: UNTimeIntervalNotificationTrigger? = nil) {
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.emailWaitlistAvailableNotificationTitle
         notificationContent.body = UserText.emailWaitlistAvailableNotificationBody
 
         let notificationIdentifier = "com.duckduckgo.ios.waitlist-available"
-        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)
+        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request)
     }

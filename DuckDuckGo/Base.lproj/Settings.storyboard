@@ -597,11 +597,11 @@
                                         <rect key="frame" x="0.0" y="1024.3333301544189" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="15" y="0.0" width="373.33333333333331" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -1733,16 +1733,16 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <rect key="frame" x="157" y="32" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="UaY-e3-r6y"/>
-                                    <constraint firstAttribute="height" constant="100" id="jnH-Y5-J12"/>
+                                    <constraint firstAttribute="width" secondItem="vCK-Tn-TH4" secondAttribute="height" multiplier="1:1" id="m5Y-z4-NG7"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-g4-R9Q">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Header Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-g4-R9Q">
                                 <rect key="frame" x="20" y="140" width="374" height="24"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="250" scrollEnabled="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
                                 <rect key="frame" x="20" y="176" width="374" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -1804,16 +1804,19 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" secondItem="rOy-6J-i8L" secondAttribute="bottom" constant="32" id="11P-cF-Cv4"/>
+                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" secondItem="rOy-6J-i8L" secondAttribute="bottom" priority="750" constant="32" id="11P-cF-Cv4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XvR-D4-LMg" secondAttribute="trailing" id="3qj-cH-ri8"/>
                             <constraint firstItem="XvR-D4-LMg" firstAttribute="leading" secondItem="f5F-f9-mzN" secondAttribute="leadingMargin" id="5xn-BH-HgI"/>
-                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="top" secondItem="ULf-78-SGk" secondAttribute="bottom" constant="32" id="6nU-Ct-A3W"/>
+                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="top" secondItem="ULf-78-SGk" secondAttribute="bottom" priority="750" constant="32" id="6nU-Ct-A3W"/>
+                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="bottom" id="70g-M7-wtO"/>
                             <constraint firstItem="mBG-9u-i8r" firstAttribute="top" secondItem="XvR-D4-LMg" secondAttribute="bottom" constant="8" symbolic="YES" id="Eha-bJ-m5h"/>
                             <constraint firstItem="9vn-oO-SSD" firstAttribute="leading" secondItem="f5F-f9-mzN" secondAttribute="leadingMargin" id="Fll-8y-70d"/>
-                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="bottom" constant="24" id="Mjb-ps-TGW"/>
+                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="bottom" priority="750" constant="24" id="Mjb-ps-TGW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rOy-6J-i8L" secondAttribute="trailing" id="Qsk-EU-31n"/>
                             <constraint firstItem="ghI-g4-R9Q" firstAttribute="leading" secondItem="f5F-f9-mzN" secondAttribute="leadingMargin" id="RcU-Pg-kCO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9vn-oO-SSD" secondAttribute="trailing" id="ZqD-l0-3JI"/>
+                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ULf-78-SGk" secondAttribute="bottom" id="ccM-4N-7Jc"/>
+                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rOy-6J-i8L" secondAttribute="bottom" constant="8" id="cfD-vH-yuZ"/>
                             <constraint firstItem="rOy-6J-i8L" firstAttribute="top" secondItem="ghI-g4-R9Q" secondAttribute="bottom" constant="12" id="hOv-wa-u1W"/>
                             <constraint firstItem="ghI-g4-R9Q" firstAttribute="top" secondItem="vCK-Tn-TH4" secondAttribute="bottom" constant="8" symbolic="YES" id="le4-0a-bhH"/>
                             <constraint firstItem="rOy-6J-i8L" firstAttribute="leading" secondItem="f5F-f9-mzN" secondAttribute="leadingMargin" id="uNL-9A-L3W"/>

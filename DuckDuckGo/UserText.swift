@@ -354,8 +354,8 @@ public struct UserText {
     public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the list!", comment: "Header text for the email waitlist")
     public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’re invited!", comment: "Header text for the email waitlist")
 
-    public static let emailWaitlistSummary = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address without switching your email provider. Learn more.", comment: "Description text for the email waitlist")
-    public static let emailWaitlistJoinedWithNotificationSummary = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when we’re ready for you. Learn more about Email Protection.", comment: "Description text for the email waitlist")
+    public static let emailWaitlistSummary = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address,\nwithout switching your email provider. Learn more.", comment: "Description text for the email waitlist")
+    public static let emailWaitlistJoinedWithNotificationSummary = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when\nEmail Protection is ready for you. Learn more.", comment: "Description text for the email waitlist")
     public static let emailWaitlistJoinedWithoutNotificationSummary = NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.", comment: "Description text for the email waitlist")
 
     public static let emailWaitlistJoinWaitlist = NSLocalizedString("email.waitlist.join", value: "Join the Waitlist", comment: "Action button text for the email waitlist")

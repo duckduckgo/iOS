@@ -320,7 +320,7 @@
 "email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.";
 
 /* Description text for the email waitlist */
-"email.waitlist.joined.notification" = "We’ll send you a notification when we’re ready for you. Learn more about Email Protection.";
+"email.waitlist.joined.notification" = "We’ll send you a notification when\nEmail Protection is ready for you. Learn more.";
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";
@@ -347,7 +347,7 @@
 "email.waitlist.privacy-simplified" = "Email Privacy, Simplified";
 
 /* Description text for the email waitlist */
-"email.waitlist.summary" = "Block email trackers and hide your address without switching your email provider. Learn more.";
+"email.waitlist.summary" = "Block email trackers and hide your address,\nwithout switching your email provider. Learn more.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";

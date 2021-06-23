@@ -187,7 +187,6 @@ class EmailWaitlistViewController: UIViewController {
 
             switch result {
             case .success:
-                self.renderCurrentWaitlistState()
                 self.promptForNotificationPermissions()
             case .failure:
                 self.waitlistActionButton.isEnabled = true
@@ -216,7 +215,7 @@ class EmailWaitlistViewController: UIViewController {
                 alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default) {
                     EmailWaitlist.shared.showWaitlistNotification = true
                     self.renderCurrentWaitlistState()
-                    self.showNotificationPermissionAlert()
+                    self.promptForUserNotificationAuthorization()
                 }
 
                 self.present(alertController, animated: true)
@@ -225,16 +224,13 @@ class EmailWaitlistViewController: UIViewController {
 
     }
 
-    private func showNotificationPermissionAlert() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { granted, error in
-            guard error != nil else {
-                return
-            }
-
+    private func promptForUserNotificationAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { granted, _ in
             if granted {
                 // The task handler will already registered in didFinishLaunching. The background task is checked & scheduled on didBecomeActive, but
                 // it should be scheduled after receiving notification permission here to be safe.
                 EmailWaitlist.shared.scheduleBackgroundRefreshTask()
+                self.triggerFakeInviteCodeAvailableNotification() // TODO: Remove this debugging call
             }
         }
     }
@@ -319,6 +315,27 @@ class EmailWaitlistViewController: UIViewController {
         }
 
         navigationController?.pushViewController(view, animated: true)
+    }
+
+    var backgroundTaskID: UIBackgroundTaskIdentifier?
+
+    // TODO: Remove this debugging call
+    private func triggerFakeInviteCodeAvailableNotification() {
+        self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Fake Invite Code Notification") {
+            UIApplication.shared.endBackgroundTask(self.backgroundTaskID!)
+            self.backgroundTaskID = nil
+        }
+
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 15) {
+            let storage = EmailKeychainManager()
+
+            EmailWaitlist.shared.showWaitlistNotification = true
+            storage.store(inviteCode: "ABCDE")
+            EmailWaitlist.shared.sendInviteCodeAvailableNotification()
+
+            UIApplication.shared.endBackgroundTask(self.backgroundTaskID!)
+            self.backgroundTaskID = nil
+        }
     }
 
 }

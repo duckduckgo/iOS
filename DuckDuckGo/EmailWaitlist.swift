@@ -98,7 +98,7 @@ struct EmailWaitlist {
     }
 
     func scheduleBackgroundRefreshTask() {
-        guard showWaitlistNotification && emailManager.isInWaitlist else {
+        guard emailManager.isInWaitlist else {
             return
         }
 
@@ -122,14 +122,16 @@ struct EmailWaitlist {
         #endif
     }
 
-    func sendInviteCodeAvailableNotification(trigger: UNTimeIntervalNotificationTrigger? = nil) {
+    func sendInviteCodeAvailableNotification() {
+        guard showWaitlistNotification else { return }
+
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.emailWaitlistAvailableNotificationTitle
         notificationContent.body = UserText.emailWaitlistAvailableNotificationBody
 
         let notificationIdentifier = "com.duckduckgo.ios.waitlist-available"
-        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: trigger)
+        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)
 
         UNUserNotificationCenter.current().add(request)
     }

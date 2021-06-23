@@ -76,7 +76,8 @@ class ConfigurationDebugViewController: UITableViewController {
         super.viewDidLoad()
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            self.queuedTasks = tasks
+            let filteredTasks = tasks.filter { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
+            self.queuedTasks = filteredTasks
 
             DispatchQueue.main.async {
                 self.tableView.reloadData()

@@ -48,13 +48,15 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
     private let debuggingActionTitles = [
         DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 3s",
-        DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code"
+        DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code",
+        DebuggingActionRows.deleteInviteCode: "Delete Invite Code"
     ]
 
     enum DebuggingActionRows: Int, CaseIterable {
 
         case scheduleWaitlistNotification
         case setMockInviteCode
+        case deleteInviteCode
 
     }
 
@@ -138,11 +140,15 @@ final class EmailWaitlistDebugViewController: UITableViewController {
             switch row {
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+                    EmailWaitlist.shared.showWaitlistNotification = true
                     self.storage.store(inviteCode: "ABCDE")
                     EmailWaitlist.shared.sendInviteCodeAvailableNotification()
                 }
             case .setMockInviteCode:
                 storage.store(inviteCode: "ABCDE")
+            case .deleteInviteCode:
+                storage.deleteInviteCode()
+                tableView.reloadData()
             }
         }
 

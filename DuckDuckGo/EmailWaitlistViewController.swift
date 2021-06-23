@@ -197,15 +197,17 @@ class EmailWaitlistViewController: UIViewController {
 
     private func joinWaitlist() {
         waitlistActionButton.isEnabled = false
+
         emailManager.joinWaitlist { [weak self] result in
             guard let self = self else { return }
 
             switch result {
             case .success:
-                // When joining the waitlist, the user will be asked whether they want to receive a notification when their invitation is ready.
                 self.renderCurrentWaitlistState()
                 self.promptForNotificationPermissions()
-            case .failure: break
+            case .failure:
+                self.waitlistActionButton.isEnabled = true
+                ActionMessageView.present(message: UserText.emailWaitlistErrorJoining)
             }
         }
     }

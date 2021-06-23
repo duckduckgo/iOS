@@ -298,6 +298,9 @@
 /* Title for the email sign out alert */
 "email.signOutAlert.title" = "Remove Email Protection?";
 
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "An error occurred while joining the Waitlist, please try again later";
+
 /* Action button text for the email waitlist */
 "email.waitlist.get-started" = "Get Started";
 

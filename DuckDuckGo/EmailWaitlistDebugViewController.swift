@@ -47,7 +47,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     }
 
     private let debuggingActionTitles = [
-        DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 5s",
+        DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 3s",
         DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code"
     ]
 
@@ -137,7 +137,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
             switch row {
             case .scheduleWaitlistNotification:
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                     self.storage.store(inviteCode: "ABCDE")
                     EmailWaitlist.shared.sendInviteCodeAvailableNotification()
                 }

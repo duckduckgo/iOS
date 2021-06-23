@@ -439,12 +439,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     private func presentWaitlistSettingsModal() {
-        guard let window = window, let rootViewController = window.rootViewController else { return }
+        guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
         rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
         let navigationController = rootViewController.presentedViewController as? UINavigationController
-
         let waitlist = EmailWaitlistViewController.loadFromStoryboard()
+
+        navigationController?.popToRootViewController(animated: false)
         navigationController?.pushViewController(waitlist, animated: true)
     }
 

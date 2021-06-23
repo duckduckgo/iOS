@@ -34,7 +34,11 @@ final class EmailProtectionViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        footerTextView.linkTextAttributes = textViewLinkAttributes()
         footerTextView.attributedText = createAttributedFooterText()
+
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -128,6 +132,33 @@ final class EmailProtectionViewController: UITableViewController {
         }
 
         return attributedString
+    }
+
+    private func textViewLinkAttributes() -> [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.16
+
+        let linkAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font: 16,
+            NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
+        ]
+
+        return linkAttributes
+    }
+
+}
+
+extension EmailProtectionViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        footerTextView.textColor = theme.tableHeaderTextColor
+        tableView.tableFooterView?.backgroundColor = theme.backgroundColor
+
+        tableView.backgroundColor = theme.backgroundColor
+        tableView.separatorColor = theme.tableCellSeparatorColor
+
+        tableView.reloadData()
     }
 
 }

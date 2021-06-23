@@ -444,15 +444,31 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Beta" translatesAutoresizingMaskIntoConstraints="NO" id="Ij1-YN-FXM">
                                                     <rect key="frame" x="144.66666666666666" y="14" width="33" height="16"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="mtJ-8m-qOK" userLabel="Duck Address">
+                                                    <rect key="frame" x="270.66666666666669" y="14" width="105.66666666666669" height="16"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="dax@duck.com">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="bAK-LL-HUH" firstAttribute="centerY" secondItem="uZd-se-xLZ" secondAttribute="centerY" id="49S-hm-CLg"/>
                                                 <constraint firstItem="Ij1-YN-FXM" firstAttribute="centerY" secondItem="bAK-LL-HUH" secondAttribute="centerY" id="JzO-Rv-bte"/>
+                                                <constraint firstItem="mtJ-8m-qOK" firstAttribute="centerY" secondItem="uZd-se-xLZ" secondAttribute="centerY" id="LgG-za-BqZ"/>
+                                                <constraint firstItem="mtJ-8m-qOK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ij1-YN-FXM" secondAttribute="trailing" constant="20" id="Pbo-Nc-CbV"/>
                                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Ij1-YN-FXM" secondAttribute="trailing" id="YOa-tD-TI9"/>
                                                 <constraint firstItem="Ij1-YN-FXM" firstAttribute="leading" secondItem="bAK-LL-HUH" secondAttribute="trailing" constant="8" id="cum-oH-EwW"/>
                                                 <constraint firstItem="bAK-LL-HUH" firstAttribute="top" secondItem="uZd-se-xLZ" secondAttribute="top" constant="10" id="eVq-c1-n5A"/>
                                                 <constraint firstAttribute="bottom" secondItem="bAK-LL-HUH" secondAttribute="bottom" constant="10" id="l3S-0n-oRu"/>
                                                 <constraint firstItem="bAK-LL-HUH" firstAttribute="leading" secondItem="uZd-se-xLZ" secondAttribute="leadingMargin" id="nXR-4K-7YR"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mtJ-8m-qOK" secondAttribute="trailing" id="uGj-mI-Muo"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -573,7 +589,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
-                                                    <rect key="frame" x="15" y="0.0" width="391" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -597,11 +613,11 @@
                                         <rect key="frame" x="0.0" y="1024.3333301544189" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="356.33333333333331" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -628,14 +644,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="15" y="8" width="54" height="16"/>
+                                                    <rect key="frame" x="20" y="8" width="54" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="15.000000000000007" y="24" width="98.666666666666671" height="12"/>
+                                                    <rect key="frame" x="20.000000000000007" y="24" width="98.666666666666671" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -670,6 +686,7 @@
                         <outlet property="defaultBrowserCell" destination="TFL-da-OrV" id="b59-Ul-Qut"/>
                         <outlet property="doNotSellAccessoryText" destination="3Eb-dV-4ZX" id="i3h-XN-Jzz"/>
                         <outlet property="doNotSellCell" destination="X9R-j6-TtK" id="T8Q-4B-bvp"/>
+                        <outlet property="emailProtectionAccessoryText" destination="mtJ-8m-qOK" id="b4k-OA-YA8"/>
                         <outlet property="emailProtectionCell" destination="kyY-Fb-Oh6" id="7aW-RF-fJy"/>
                         <outlet property="fireButtonAnimationAccessoryText" destination="AtR-nS-Gun" id="hxe-n6-40j"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
@@ -703,6 +720,7 @@
                         <outletCollection property="labels" destination="bAK-LL-HUH" collectionClass="NSMutableArray" id="Xj4-mS-33y"/>
                         <outletCollection property="accessoryLabels" destination="AtR-nS-Gun" collectionClass="NSMutableArray" id="6qq-fa-ps2"/>
                         <outletCollection property="labels" destination="gBo-Cu-e2k" collectionClass="NSMutableArray" id="gh5-J8-R2y"/>
+                        <outletCollection property="accessoryLabels" destination="mtJ-8m-qOK" collectionClass="NSMutableArray" id="Ilp-fa-bjG"/>
                         <segue destination="fzf-7H-o48" kind="show" identifier="Debug" id="o3U-Oe-eLc"/>
                     </connections>
                 </tableViewController>
@@ -1752,8 +1770,8 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <outlet property="delegate" destination="nB1-eu-sN0" id="HJY-yz-rgv"/>
                                 </connections>
                             </textView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
-                                <rect key="frame" x="20" y="240" width="374" height="144"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
+                                <rect key="frame" x="20" y="240" width="374" height="140"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvN-QG-WsD">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1768,7 +1786,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMC-7O-hSw">
-                                        <rect key="frame" x="0.0" y="52" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="50" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I have an Invite Code">
@@ -1779,7 +1797,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-NI-TIu">
-                                        <rect key="frame" x="0.0" y="104" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="100" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I already have a Duck Address">
@@ -1853,8 +1871,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">
-                                    <rect key="frame" x="14" y="0.0" width="386" height="120"/>
+                                    <rect key="frame" x="16" y="0.0" width="382" height="120"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <viewLayoutGuide key="contentLayoutGuide" id="mXE-ck-g6A"/>
+                                    <viewLayoutGuide key="frameLayoutGuide" id="s5u-Vz-fuy"/>
                                     <string key="text">Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.
 
 To delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.</string>
@@ -1868,9 +1888,9 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             </subviews>
                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="pT6-FQ-9d9" secondAttribute="trailing" constant="14" id="1bN-qb-qG0"/>
+                                <constraint firstItem="pT6-FQ-9d9" firstAttribute="leading" secondItem="4WC-3q-ccD" secondAttribute="leadingMargin" constant="8" id="E8g-Y5-gBT"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="pT6-FQ-9d9" secondAttribute="trailing" constant="8" id="Jdn-S1-3kG"/>
                                 <constraint firstItem="pT6-FQ-9d9" firstAttribute="top" secondItem="4WC-3q-ccD" secondAttribute="top" id="a5t-Aw-EJS"/>
-                                <constraint firstItem="pT6-FQ-9d9" firstAttribute="leading" secondItem="4WC-3q-ccD" secondAttribute="leading" constant="14" id="aY5-1f-djR"/>
                                 <constraint firstAttribute="bottom" secondItem="pT6-FQ-9d9" secondAttribute="bottom" id="bIM-JQ-RWR"/>
                             </constraints>
                         </view>

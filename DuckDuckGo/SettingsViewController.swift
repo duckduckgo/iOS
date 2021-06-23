@@ -40,6 +40,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
     @IBOutlet weak var emailProtectionCell: UITableViewCell!
+    @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
 
@@ -90,6 +91,7 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDoNotSell()
         configureIconViews()
+        configureEmailProtectionAccessoryText()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -187,6 +189,10 @@ class SettingsViewController: UITableViewController {
         // Use the "AdhocDebug" scheme when archiving to create a compatible adhoc build
         guard isDebugBuild else { return }
         performSegue(withIdentifier: "Debug", sender: nil)
+    }
+
+    private func configureEmailProtectionAccessoryText() {
+        emailProtectionAccessoryText.text = emailManager.userEmail
     }
 
     private func showEmailProtectionViewController() {

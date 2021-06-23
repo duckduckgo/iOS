@@ -137,8 +137,10 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
             switch row {
             case .scheduleWaitlistNotification:
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-                EmailWaitlist.shared.sendInviteCodeAvailableNotification(trigger: trigger)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+                    self.storage.store(inviteCode: "ABCDE")
+                    EmailWaitlist.shared.sendInviteCodeAvailableNotification()
+                }
             case .setMockInviteCode:
                 storage.store(inviteCode: "ABCDE")
             }

@@ -19,7 +19,7 @@
 
 (function() {
 
-   function trackerDetected(data) {
+   function surrogateInjected(data) {
        try {
            webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
        } catch(error) {
@@ -508,9 +508,6 @@ _utf8_encode : function (string) {
         }, null);
 
         if (result == null) {
-            duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
-                                                   url: trackerUrl,
-                                                   time: performance.now() - startTime})
             return false;
         }
 
@@ -522,34 +519,29 @@ _utf8_encode : function (string) {
             //  we can't do a redirect.
             blocked = true;
         }
-
-        trackerDetected({
-            url: trackerUrl,
-            blocked: blocked,
-            reason: result.reason,
-            isSurrogate: result.matchedRule && result.matchedRule.surrogate
-        })
+        
+        var isSurrogate = !!(result.matchedRule && result.matchedRule.surrogate)
 
         // Tracker blocking is dealt with by content rules
         // Only handle surrogates here
-        if (blocked && result.matchedRule && result.matchedRule.surrogate) {
+        if (blocked && isSurrogate) {
             if (!loadedSurrogates[result.matchedRule.surrogate]) {
                 loadSurrogate(result.matchedRule.surrogate)
                 loadedSurrogates[result.matchedRule.surrogate] = true
             }
+            
+            surrogateInjected({
+                url: trackerUrl,
+                blocked: blocked,
+                reason: result.reason,
+                isSurrogate: isSurrogate
+            })
 
             duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
 
             return true
-        }
-        
-        if (!blocked) {
-            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Allowed",
-                                                    url: trackerUrl,
-                                                    reason: result.reason,
-                                                    time: performance.now() - startTime})
         }
         
         return false

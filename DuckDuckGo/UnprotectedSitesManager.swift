@@ -27,7 +27,7 @@ public class UnprotectedSitesManager {
         return contentBlockerProtectionStore.unprotectedDomains.count
     }
 
-    var domains: [String]? {
+    var domains: [String] {
         Array(contentBlockerProtectionStore.unprotectedDomains).sorted()
     }
 
@@ -48,7 +48,7 @@ public class UnprotectedSitesManager {
     }
 
     public func domain(at index: Int) -> String? {
-        return domains?[index]
+        return domains[index]
     }
 
 }

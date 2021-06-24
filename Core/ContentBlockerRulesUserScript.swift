@@ -32,7 +32,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     }
     
     public var source: String {
-        let unprotectedDomains = (UnprotectedSitesManager().domains?.joined(separator: "\n") ?? "")
+        let unprotectedDomains = (UnprotectedSitesManager().domains.joined(separator: "\n"))
             + "\n"
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
         
@@ -62,7 +62,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
                   let pageHost = pageUrl.host,
-                  let pageEntity = TrackerDataManager.shared.findEntity(forHost: pageHost) else {
+                  let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+                  let pageEntity = currentTrackerData.findEntity(forHost: pageHost) else {
                 delegate.contentBlockerUserScript(self, detectedTracker: tracker)
                 return
             }
@@ -74,7 +75,9 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     }
     
     private func trackerFromUrl(_ trackerUrlString: String, pageUrlString: String, potentiallyBlocked: Bool) -> DetectedTracker? {
-        guard let knownTracker = TrackerDataManager.shared.findTracker(forUrl: trackerUrlString) else {
+        
+        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+              let knownTracker = currentTrackerData.findTracker(forUrl: trackerUrlString) else {
             return nil
         }
 
@@ -98,7 +101,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             blocked = potentiallyBlocked
         }
 
-        if let entity = TrackerDataManager.shared.findEntity(byName: knownTracker.owner?.name ?? "") {
+        if let entity = currentTrackerData.findEntity(byName: knownTracker.owner?.name ?? "") {
             return DetectedTracker(url: trackerUrlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
         }
         

@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import TrackerRadarKit
 @testable import DuckDuckGo
 @testable import Core
 
@@ -37,13 +38,28 @@ class DaxDialogTests: XCTestCase {
     
     lazy var mockVariantManager = MockVariantManager()
     lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(), variantManager: mockVariantManager)
+    
+    static var rulesManager: ContentBlockerRulesManager?
 
     override func setUp() {
         super.setUp()
         UserDefaults.clearStandard()
-
-        // ensure we use the embedded version
-        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
+        
+        if let cbrl = Self.rulesManager {
+            // ensure we use the embedded version
+            try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
+            
+            ContentBlockerRulesManager.test_replaceSharedInstance(with: cbrl)
+        } else {
+            let cbrm = ContentBlockerRulesManager.test_prepareEmbeddedInstance()
+            Self.rulesManager = cbrm
+            
+            let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                                  object: cbrm,
+                                  handler: nil)
+    
+            wait(for: [exp], timeout: 15.0)
+        }
     }
 
     func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessageShown() {
@@ -216,8 +232,9 @@ class DaxDialogTests: XCTestCase {
     }
         
     private func detectedTrackerFrom(_ url: URL) -> DetectedTracker {
-        let entity = TrackerDataManager.shared.findEntity(forHost: url.host!)
-        let knownTracker = TrackerDataManager.shared.findTracker(forUrl: url.absoluteString)
+        let tds = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let entity = tds?.findEntity(forHost: url.host!)
+        let knownTracker = tds?.findTracker(forUrl: url.absoluteString)
         return DetectedTracker(url: url.absoluteString,
                                       knownTracker: knownTracker,
                                       entity: entity,

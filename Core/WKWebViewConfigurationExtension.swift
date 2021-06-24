@@ -34,7 +34,7 @@ extension WKWebViewConfiguration {
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
-        configuration.dataDetectorTypes = [.link, .phoneNumber]
+        configuration.dataDetectorTypes = [.phoneNumber]
 
         configuration.installContentBlockingRules()
 
@@ -51,10 +51,8 @@ extension WKWebViewConfiguration {
             self.userContentController.add(rules)
         }
         
-        ContentBlockerRulesManager.shared.compiledRules { rulesList in
-            if let rulesList = rulesList {
-                addRulesToController(rules: rulesList)
-            }
+        if let rules = ContentBlockerRulesManager.shared.currentRules {
+            addRulesToController(rules: rules.rulesList)
         }
     }
     

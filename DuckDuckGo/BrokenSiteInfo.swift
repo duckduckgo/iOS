@@ -72,13 +72,7 @@ public struct BrokenSiteInfo {
     }
     
     private func normalize(_ url: URL?) -> String {
-        guard let url = url else { return "" }
-        
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        components?.queryItems = nil
-        
-        guard let nomalizedUrl = components?.url else { return "" }
-        return nomalizedUrl.absoluteString
+        return url?.normalized()?.absoluteString ?? ""
     }
     
 }

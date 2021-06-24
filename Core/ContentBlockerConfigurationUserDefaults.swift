@@ -51,10 +51,32 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
             onStoreChanged()
         }
     }
+    
+    private var tempUnprotectedDomains: [String] {
+        return StorageCacheProvider().current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
+    }
 
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
         return !unprotectedDomains.contains(domain)
+    }
+    
+    public func isTempUnprotected(domain: String?) -> Bool {
+        guard let domain = domain else { return false }
+        
+        // Break domain apart to handle www.*
+        var tempDomain = domain
+        while tempDomain.contains(".") {
+            if tempUnprotectedDomains.contains(tempDomain) {
+                return true
+            }
+            
+            let comps = tempDomain.split(separator: ".")
+            tempDomain = comps.dropFirst().joined(separator: ".")
+        }
+        
+        return false
     }
 
     public func disableProtection(forDomain domain: String) {

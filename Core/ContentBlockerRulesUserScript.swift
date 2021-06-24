@@ -40,7 +40,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             "${unprotectedDomains}": unprotectedDomains
         ])
     }
-    
+
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
     
     public var forMainFrameOnly: Bool = false
@@ -48,8 +48,15 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public var messageNames: [String] = [ "processRule" ]
     
     public weak var delegate: ContentBlockerUserScriptDelegate?
-    public weak var storageCache: StorageCache?
-    
+    public weak var storageCache: StorageCache? {
+        didSet {
+            temporaryUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty } ?? []
+        }
+    }
+
+    var temporaryUnprotectedDomains = [String]()
+
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let delegate = delegate else { return }
         guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
@@ -57,7 +64,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
-        guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
+        guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
         
         if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
@@ -82,9 +89,18 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         }
 
         let blocked: Bool
+        
+        let unprotectedSites = UnprotectedSitesManager().domains
 
         if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
             blocked = false
+        } else if let pageDomain = URL(string: pageUrlString),
+                  let pageHost = pageDomain.host {
+            if unprotectedSites.contains(pageHost) || temporaryUnprotectedDomains.contains(pageHost) {
+                blocked = false
+            } else {
+                blocked = potentiallyBlocked
+            }
         } else {
             blocked = potentiallyBlocked
         }

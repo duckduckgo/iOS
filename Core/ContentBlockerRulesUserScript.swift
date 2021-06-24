@@ -88,9 +88,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
             blocked = false
         } else if let pageDomain = URL(string: pageUrlString),
-                  let pageHost = pageDomain.host,
-                  let unprotectedSites = unprotectedSites {
-            if unprotectedSites.contains(pageHost) || tempUnprotectedDomains.contains(pageHost) {
+                  let pageHost = pageDomain.host {
+            if (unprotectedSites?.contains(pageHost) ?? false) || tempUnprotectedDomains.contains(pageHost) {
                 blocked = false
             } else {
                 blocked = potentiallyBlocked

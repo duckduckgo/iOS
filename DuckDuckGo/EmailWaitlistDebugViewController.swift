@@ -147,7 +147,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
             case .setMockInviteCode:
                 storage.store(inviteCode: "ABCDE")
             case .deleteInviteCode:
-                storage.deleteInviteCode()
+                EmailKeychainManager.deleteInviteCode()
                 tableView.reloadData()
             }
         }
@@ -170,7 +170,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     }
 
     private func clearDataAndReload() {
-        storage.deleteWaitlistState()
+        EmailKeychainManager.deleteWaitlistState()
         UserDefaultsWrapper<Any>.clearWaitlistValues()
         tableView.reloadData()
     }

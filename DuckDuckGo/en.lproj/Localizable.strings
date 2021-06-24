@@ -317,7 +317,7 @@
 "email.waitlist.joined" = "You’re on the list!";
 
 /* Description text for the email waitlist */
-"email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.";
+"email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives?\nLearn more about Email Protection.";
 
 /* Description text for the email waitlist */
 "email.waitlist.joined.notification" = "We’ll send you a notification when\nEmail Protection is ready for you. Learn more.";

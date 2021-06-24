@@ -92,7 +92,16 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(.allow)
+        switch navigationAction.navigationType {
+        case .linkActivated:
+            if let host = navigationAction.request.url?.host {
+                let validHost = (host == "duckduckgo.com" || host == "quack.duckduckgo.com")
+                decisionHandler(validHost ? .allow : .cancel)
+            } else {
+                decisionHandler(.allow)
+            }
+        default: decisionHandler(.allow)
+        }
     }
 
 }

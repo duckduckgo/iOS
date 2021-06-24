@@ -40,7 +40,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             "${unprotectedDomains}": unprotectedDomains
         ])
     }
-    
+
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
     
     public var forMainFrameOnly: Bool = false
@@ -48,8 +48,15 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public var messageNames: [String] = [ "processRule" ]
     
     public weak var delegate: ContentBlockerUserScriptDelegate?
-    public weak var storageCache: StorageCache?
-    
+    public weak var storageCache: StorageCache? {
+        didSet {
+            temporaryUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty } ?? []
+        }
+    }
+
+    var temporaryUnprotectedDomains = [String]()
+
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let delegate = delegate else { return }
         guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
@@ -83,16 +90,13 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
 
         let blocked: Bool
         
-        let storageCache = StorageCacheProvider().current
         let unprotectedSites = UnprotectedSitesManager().domains
-        let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
 
         if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
             blocked = false
         } else if let pageDomain = URL(string: pageUrlString),
                   let pageHost = pageDomain.host {
-            if unprotectedSites.contains(pageHost) || tempUnprotectedDomains.contains(pageHost) {
+            if unprotectedSites.contains(pageHost) || temporaryUnprotectedDomains.contains(pageHost) {
                 blocked = false
             } else {
                 blocked = potentiallyBlocked

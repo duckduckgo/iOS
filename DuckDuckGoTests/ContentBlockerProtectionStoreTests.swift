@@ -31,9 +31,12 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
         ].joined(separator: "\n").data(using: .utf8)!
         _ = StorageCacheProvider().current.fileStore.persist(domains, forConfiguration: .temporaryUnprotectedSites)
         let protection = ContentBlockerProtectionUserDefaults()
+
         XCTAssertFalse(protection.isTempUnprotected(domain: "main1.com"))
         XCTAssertFalse(protection.isTempUnprotected(domain: "notdomain1.com"))
         XCTAssertTrue(protection.isTempUnprotected(domain: "domain1.com"))
+
+        XCTAssertTrue(protection.isTempUnprotected(domain: "www.domain1.com"))
     }
 
 }

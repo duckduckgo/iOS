@@ -28,6 +28,8 @@ public protocol ContentBlockerProtectionStore: AnyObject {
     var unprotectedDomains: Set<String> { get }
 
     func isProtected(domain: String?) -> Bool
+    
+    func isTempUnprotected(domain: String?) -> Bool
 
     func disableProtection(forDomain domain: String)
 

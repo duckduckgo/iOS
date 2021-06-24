@@ -57,7 +57,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
-        guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
+        guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
         
         if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
@@ -79,9 +79,21 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         }
 
         let blocked: Bool
+        
+        let storageCache = StorageCacheProvider().current
+        let unprotectedSites = UnprotectedSitesManager().domains
+        let tempUnprotectedDomains = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
 
         if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
             blocked = false
+        } else if let pageDomain = URL(string: pageUrlString),
+                  let pageHost = pageDomain.host {
+            if (unprotectedSites?.contains(pageHost) ?? false) || tempUnprotectedDomains.contains(pageHost) {
+                blocked = false
+            } else {
+                blocked = potentiallyBlocked
+            }
         } else {
             blocked = potentiallyBlocked
         }

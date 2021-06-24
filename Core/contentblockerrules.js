@@ -42,7 +42,11 @@
       try {
           // FROM: https://stackoverflow.com/a/7739035/73479
           // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
-          return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
+          if (window.location != window.parent.location) {
+              return new URL(window.location.href !== 'about:blank' ? document.referrer : window.parent.location.href)
+          } else {
+              return new URL(document.location.href)
+          }
       } catch(error) {
           return new URL(location.href)
       }

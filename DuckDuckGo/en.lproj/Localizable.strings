@@ -311,7 +311,7 @@
 "email.waitlist.invited" = "You’re invited!";
 
 /* Action button text for the email waitlist */
-"email.waitlist.join" = "Join the Waitlist";
+"email.waitlist.join" = "Join the Private Waitlist";
 
 /* Header text for the email waitlist */
 "email.waitlist.joined" = "You’re on the list!";

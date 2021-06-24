@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import Core
 
 class CookieDebugViewController: UITableViewController {
 
@@ -60,7 +61,10 @@ class CookieDebugViewController: UITableViewController {
                 .sorted(by: { $0.path.lowercased() < $1.path.lowercased() })
                 .reversed())
 
-            tmp.append(DomainCookies(domain: domain, cookies: domainCookies))
+            let domainName = domain +
+                (PreserveLogins.shared.isAllowed(cookieDomain: domain) ? " 👩‍🚒" : "")
+
+            tmp.append(DomainCookies(domain: domainName, cookies: domainCookies))
         }
         self.cookies = tmp
     }

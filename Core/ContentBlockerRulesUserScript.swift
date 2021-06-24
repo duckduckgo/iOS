@@ -92,7 +92,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             blocked = false
         } else if let pageDomain = URL(string: pageUrlString),
                   let pageHost = pageDomain.host {
-            if (unprotectedSites?.contains(pageHost) ?? false) || tempUnprotectedDomains.contains(pageHost) {
+            if unprotectedSites.contains(pageHost) || tempUnprotectedDomains.contains(pageHost) {
                 blocked = false
             } else {
                 blocked = potentiallyBlocked

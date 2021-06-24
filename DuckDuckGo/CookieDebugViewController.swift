@@ -22,7 +22,21 @@ import WebKit
 
 class CookieDebugViewController: UITableViewController {
 
-    var cookies = [HTTPCookie]()
+    struct DomainCookies {
+
+        let domain: String
+        let cookies: [HTTPCookie]
+
+    }
+
+    var cookies = [DomainCookies]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+
     var loaded = false
 
     override func viewDidLoad() {
@@ -36,22 +50,31 @@ class CookieDebugViewController: UITableViewController {
 
     private func displayCookies(cookies: [HTTPCookie]) {
         self.loaded = true
-        self.cookies = cookies
-            .sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
-            .sorted(by: { $0.path.lowercased() < $1.path.lowercased() })
-            .sorted(by: { String($0.domain.reversed()) < String($1.domain.reversed())})
-            .reversed()
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+
+        var tmp = [DomainCookies]()
+        let domains = Set<String>(cookies.map { $0.domain })
+        for domain in domains.sorted(by: { String($0.reversed()) < String($1.reversed()) }) {
+            let domainCookies = [HTTPCookie](cookies
+                .filter({ $0.domain == domain })
+                .sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+                .sorted(by: { $0.path.lowercased() < $1.path.lowercased() })
+                .reversed())
+
+            tmp.append(DomainCookies(domain: domain, cookies: domainCookies))
         }
+        self.cookies = tmp
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return cookies.isEmpty ? 1 : cookies.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cookies.isEmpty ? 1 : cookies.count
+        return cookies.isEmpty ? 1 : cookies[section].cookies.count
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return cookies.isEmpty ? "" : cookies[section].domain
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,13 +83,10 @@ class CookieDebugViewController: UITableViewController {
             cell = tableView.dequeueReusableCell(withIdentifier: "Info")!
             cell.textLabel?.text = loaded ? "No cookies" : "Loading"
         } else {
+            let cookie = cookies[indexPath.section].cookies[indexPath.row]
             cell = tableView.dequeueReusableCell(withIdentifier: "Cookie")!
-            cell.textLabel?.text = cookies[indexPath.row].domain + cookies[indexPath.row].path
-            cell.detailTextLabel?.text = cookies[indexPath.row].name +
-                "=" +
-                (cookies[indexPath.row].value.isEmpty ? "<no value>" : cookies[indexPath.row].value) +
-                ", expires=" +
-                (cookies[indexPath.row].expiresDate == nil ? "<no value>" : String(describing: cookies[indexPath.row].expiresDate!))
+            cell.textLabel?.text = cookie.path + " " + cookie.name + "=" + cookie.value
+            cell.detailTextLabel?.text = cookie.expiresDate == nil ? nil : String(describing: cookie.expiresDate!)
         }
         return cell
     }

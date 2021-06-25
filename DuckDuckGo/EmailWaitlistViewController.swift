@@ -229,7 +229,7 @@ class EmailWaitlistViewController: UIViewController {
             if granted {
                 // The task handler will already registered in didFinishLaunching. The background task is checked & scheduled on didBecomeActive, but
                 // it should be scheduled after receiving notification permission here to be safe.
-                EmailWaitlist.shared.scheduleBackgroundRefreshTask() 
+                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }

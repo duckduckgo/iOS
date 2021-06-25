@@ -92,14 +92,25 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        switch navigationAction.navigationType {
-        case .linkActivated:
-            if let host = navigationAction.request.url?.host {
-                let validHost = (host == "duckduckgo.com" || host == "quack.duckduckgo.com")
-                decisionHandler(validHost ? .allow : .cancel)
-            } else {
-                decisionHandler(.allow)
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+
+        let schemeType = SchemeHandler.schemeType(for: url)
+
+        switch schemeType {
+        case .navigational:
+            let validHost = AppUrls().isDuckDuckGo(url: url)
+            decisionHandler(validHost ? .allow : .cancel)
+        case .external:
+            UIApplication.shared.open(url, options: [:]) { opened in
+                if !opened {
+                    ActionMessageView.present(message: UserText.failedToOpenExternally)
+                }
             }
+
+            decisionHandler(.cancel)
         default: decisionHandler(.allow)
         }
     }

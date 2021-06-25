@@ -76,6 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
         }
+
+        if !Database.shared.isDatabaseFileInitialized {
+            let autofillStorage = EmailKeychainManager()
+            autofillStorage.deleteAuthenticationState()
+            autofillStorage.deleteWaitlistState()
+        }
         
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)

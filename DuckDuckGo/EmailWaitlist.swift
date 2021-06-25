@@ -100,7 +100,7 @@ struct EmailWaitlist {
         }
 
         let task = BGAppRefreshTaskRequest(identifier: Constants.backgroundRefreshTaskIdentifier)
-        task.earliestBeginDate = nil // TODO: Set 12 hour delay, using nil for testing purposes.
+        task.earliestBeginDate = Date(timeIntervalSinceNow: Constants.minimumConfigurationRefreshInterval)
 
         // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
         //

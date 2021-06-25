@@ -247,32 +247,32 @@ class EmailWaitlistViewController: UIViewController {
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistSummary, highlights: [
-            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
 
     private func createAttributedWaitlistJoinedWithNotificationSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistJoinedWithNotificationSummary, highlights: [
-            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
 
     private func createAttributedWaitlistJoinedWithoutNotificationSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistJoinedWithoutNotificationSummary, highlights: [
-            (text: "get a notification", link: Constants.showWaitlistNotificationPrompt.absoluteString),
-            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+            (text: "get a notification", link: Constants.showWaitlistNotificationPrompt.absoluteString),
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
 
     private func createAttributedWaitlistInvitedSummary() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistSummary, highlights: [
-            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
+            (text: "Learn more", link: AppUrls().addressBlogPostQuickLink.absoluteString)
         ])
     }
 
     private func createAttributedPrivacyGuaranteeString() -> NSAttributedString {
         return createAttributedString(text: UserText.emailWaitlistPrivacyGuarantee, highlights: [
-            (text: "Learn more", link: AppUrls().emailPrivacyGuarantees.absoluteString)
+            (text: "Learn more", link: AppUrls().emailPrivacyGuarantees.absoluteString)
         ])
     }
 

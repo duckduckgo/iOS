@@ -49,7 +49,7 @@ struct RefTests: Decodable {
 class DomainMatching: XCTestCase {
     private var data = JsonTestDataLoader()
 
-    func test() throws {
+    func testDomainMatchingRules() throws {
         let trackerJSON = data.fromJsonFile("MockFiles/reference-tests/tracker-radar-tests/TR-domain-matching/tracker_radar_reference.json")
         let testJSON = data.fromJsonFile("MockFiles/reference-tests/tracker-radar-tests/TR-domain-matching/domain_matching_tests.json")
 

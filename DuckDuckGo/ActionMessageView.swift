@@ -27,6 +27,9 @@ class ActionMessageView: UIView {
     
     private enum Constants {
         static var maxWidth: CGFloat = 346
+        static var minimumHorizontalPadding: CGFloat = 20
+        static var cornerRadius: CGFloat = 10
+        static var windowBottomPadding: CGFloat = 70
         
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
@@ -49,7 +52,7 @@ class ActionMessageView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        layer.cornerRadius = 10
+        layer.cornerRadius = Constants.cornerRadius
     }
     
     static func present(message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
@@ -70,9 +73,10 @@ class ActionMessageView: UIView {
         }
         
         window.addSubview(messageView)
+        window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: Constants.windowBottomPadding).isActive = true
         
-        window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: 70).isActive = true
-        messageView.widthAnchor.constraint(equalToConstant: Constants.maxWidth).isActive = true
+        let messageViewWidth = window.frame.width <= Constants.maxWidth ? window.frame.width - Constants.minimumHorizontalPadding : Constants.maxWidth
+        messageView.widthAnchor.constraint(equalToConstant: messageViewWidth).isActive = true
         messageView.centerXAnchor.constraint(equalTo: window.centerXAnchor).isActive = true
         
         window.layoutIfNeeded()

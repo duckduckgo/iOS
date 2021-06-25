@@ -1809,7 +1809,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     </button>
                                 </subviews>
                             </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" scrollEnabled="NO" text="Footer Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XvR-D4-LMg">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Footer Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XvR-D4-LMg">
                                 <rect key="frame" x="20" y="734" width="374" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -1834,7 +1834,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <constraint firstItem="ghI-g4-R9Q" firstAttribute="leading" secondItem="f5F-f9-mzN" secondAttribute="leadingMargin" id="RcU-Pg-kCO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9vn-oO-SSD" secondAttribute="trailing" id="ZqD-l0-3JI"/>
                             <constraint firstItem="vCK-Tn-TH4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ULf-78-SGk" secondAttribute="bottom" id="ccM-4N-7Jc"/>
-                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rOy-6J-i8L" secondAttribute="bottom" constant="8" id="cfD-vH-yuZ"/>
+                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rOy-6J-i8L" secondAttribute="bottom" id="cfD-vH-yuZ"/>
                             <constraint firstItem="rOy-6J-i8L" firstAttribute="top" secondItem="ghI-g4-R9Q" secondAttribute="bottom" constant="12" id="hOv-wa-u1W"/>
                             <constraint firstItem="ghI-g4-R9Q" firstAttribute="top" secondItem="vCK-Tn-TH4" secondAttribute="bottom" constant="8" symbolic="YES" id="le4-0a-bhH"/>
                             <constraint firstItem="rOy-6J-i8L" firstAttribute="leading" secondItem="f5F-f9-mzN" secondAttribute="leadingMargin" id="uNL-9A-L3W"/>

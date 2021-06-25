@@ -7,3 +7,6 @@
 [submodule "submodules/privacy-grade"]
 	path = submodules/privacy-grade
 	url = https://github.com/duckduckgo/privacy-grade
+[submodule "DuckDuckGoTests/MockFiles/reference-tests"]
+	path = DuckDuckGoTests/MockFiles/reference-tests
+	url = https://github.com/duckduckgo/privacy-reference-tests

@@ -1229,7 +1229,12 @@ extension TabViewController: WKNavigationDelegate {
     
     private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
         guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
-        return url.toHttps()
+        
+        if let upgradedUrl: URL = url.toHttps(), lastUpgradedURL != upgradedUrl {
+            return upgradedUrl
+        }
+        
+        return nil
     }
     
     private func showErrorNow() {

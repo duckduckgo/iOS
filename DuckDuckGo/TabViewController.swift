@@ -337,6 +337,7 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
+        lastUpgradedURL = nil
         if !url.isBookmarklet() {
             self.url = url
         }

@@ -205,7 +205,8 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
             fatalError("Failed to dequeue cell as PrivacyProtectionNetworkLeaderboardCell")
         }
 
-        let networkName = TrackerDataManager.shared.findEntity(byName: network.name!)?.displayName ?? network.name!
+        let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let networkName = currentTrackerData?.findEntity(byName: network.name!)?.displayName ?? network.name!
         cell.update(network: networkName, percent: percent)
         return cell
     }

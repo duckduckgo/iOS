@@ -80,7 +80,11 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func trackers() -> [DetectedTracker] {
-        let protecting = siteRating.protecting(protectionStore)
+        var protecting = siteRating.protecting(protectionStore)
+        if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+            protecting = false
+        }
+        
         return [DetectedTracker](protecting ? siteRating.trackersBlocked : siteRating.trackersDetected)
     }
 

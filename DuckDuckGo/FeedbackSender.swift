@@ -65,10 +65,17 @@ struct FeedbackSubmitter: FeedbackSender {
                                 comment: String,
                                 model: Feedback.Model? = nil) {
 
+        let normalizedUrlString: String
+        if let urlString = url, let normalizedURL = URL(string: urlString)?.normalized() {
+            normalizedUrlString = normalizedURL.absoluteString
+        } else {
+            normalizedUrlString = url ?? ""
+        }
+
         let parameters = [
             "reason": "general",
             "rating": rating?.rawValue ?? "",
-            "url": url ?? "",
+            "url": normalizedUrlString,
             "comment": comment,
             "category": model?.category?.component ?? "",
             "subcategory": model?.subcategory?.component ?? "",

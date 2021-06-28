@@ -21,6 +21,7 @@ import UIKit
 import LinkPresentation
 import Core
 import Kingfisher
+import WebKit
 
 class RootDebugViewController: UITableViewController {
 
@@ -72,6 +73,9 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
 
     weak var delegate: DiagnosticReportDataSourceDelegate?
 
+    @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
+    private var lastRefreshDate: Date
+
     convenience init(delegate: DiagnosticReportDataSourceDelegate) {
         self.init(placeholderItem: "")
         self.delegate = delegate
@@ -80,12 +84,12 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     override var item: Any {
         delegate?.dataGatheringStarted()
 
-        let report =
-            reportHeader() +
-            fireproofingReport() +
-            imageCacheReport() +
-            configurationReport() +
-            cookiesReport()
+        let report = [reportHeader(),
+                      tabsReport(),
+                      imageCacheReport(),
+                      fireproofingReport(),
+                      configurationReport(),
+                      cookiesReport()].joined(separator: "\n\n")
 
         delegate?.dataGatheringComplete()
         return report
@@ -106,27 +110,63 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func fireproofingReport() -> String {
-        """
-        ## Fireproofing
-        Domains: \(PreserveLogins.shared.allowedDomains.count)
-        """
+
+        let allowedDomains = PreserveLogins.shared.allowedDomains.map { "* \($0)" }
+        let legacyAllowedDomains = PreserveLogins.shared.legacyAllowedDomains.map { "* \($0)" }
+
+        let allowedDomainsEntry = ["### Allowed Domains"] + (allowedDomains.isEmpty ? [""] : allowedDomains)
+        let legacyAllowedDomainsEntry = ["### Legacy Allowed Domains"] + (legacyAllowedDomains.isEmpty ? [""] : legacyAllowedDomains)
+
+        return (["## Fireproofing Report"] + allowedDomainsEntry + legacyAllowedDomainsEntry).joined(separator: "\n")
     }
 
     func imageCacheReport() -> String {
         """
-        ## ImageCache
+        ## Image Cache Report
         Bookmark Cache: \(Favicons.Constants.caches[.bookmarks]?.count ?? -1)
         Tabs Cache: \(Favicons.Constants.caches[.tabs]?.count ?? -1)
         """
     }
 
     func configurationReport() -> String {
-        return ""
+        let etagStorage = DebugEtagStorage()
+        let configs = ContentBlockerRequest.Configuration.allCases.map { $0.rawValue + ": " + (etagStorage.etag(for: $0.rawValue) ?? "<none>") }
+        let lastRefreshDate = "Last refresh date: \(lastRefreshDate == .distantPast ? "Never" : String(describing: lastRefreshDate))"
+        return (["## Configuration Report"] + [lastRefreshDate] + configs).joined(separator: "\n")
     }
 
     func cookiesReport() -> String {
-        return ""
+        var cookies = [HTTPCookie]()
+
+        let group = DispatchGroup()
+        group.enter()
+        DispatchQueue.main.async {
+            WKWebsiteDataStore.default().cookieStore?.getAllCookies { httpCookies in
+                cookies = httpCookies
+                group.leave()
+            }
+        }
+
+        var timeout = [String]()
+        if group.wait(timeout: .now() + 10) == .timedOut {
+            timeout = ["Failed to retrieve cookies in 10 seconds"]
+        }
+
+        let processedCookies = cookies
+            .sorted(by: {$0.domain < $1.domain})
+            .sorted(by: {$0.name < $1.name})
+            .map { $0.debugString }
+
+        return (["## Cookie Report"] + timeout + processedCookies).joined(separator: "\n")
     }
+
+    func tabsReport() -> String {
+        """
+        ### Tabs Report
+        Tabs: \(TabsModel.get()?.count ?? -1)
+        """
+    }
+
 }
 
 fileprivate extension ImageCache {
@@ -139,6 +179,16 @@ fileprivate extension ImageCache {
         } catch {
             return -2
         }
+    }
+
+}
+
+fileprivate extension HTTPCookie {
+
+    var debugString: String {
+        """
+        \(domain)\(path):\(name)=\(value.isEmpty ? "<blank>" : "<value>")\(expiresDate != nil ? ";expires=\(String(describing: expiresDate!))" : "")
+        """
     }
 
 }

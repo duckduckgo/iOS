@@ -215,6 +215,7 @@
 		8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB602684D0600089F6BF /* CookieDebugViewController.swift */; };
 		8590CB632684F10F0089F6BF /* ContentBlockerProtectionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB622684F10F0089F6BF /* ContentBlockerProtectionStoreTests.swift */; };
 		8590CB67268A2E520089F6BF /* RootDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB66268A2E520089F6BF /* RootDebugViewController.swift */; };
+		8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB68268A4E190089F6BF /* DebugEtagStorage.swift */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */; };
 		859C5FB82147E6CE00E2A43D /* grade-cases.json in Resources */ = {isa = PBXBuildFile; fileRef = 859C5FB72147E6CE00E2A43D /* grade-cases.json */; };
@@ -936,6 +937,7 @@
 		8590CB602684D0600089F6BF /* CookieDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieDebugViewController.swift; sourceTree = "<group>"; };
 		8590CB622684F10F0089F6BF /* ContentBlockerProtectionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerProtectionStoreTests.swift; sourceTree = "<group>"; };
 		8590CB66268A2E520089F6BF /* RootDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootDebugViewController.swift; sourceTree = "<group>"; };
+		8590CB68268A4E190089F6BF /* DebugEtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEtagStorage.swift; sourceTree = "<group>"; };
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsTests.swift; sourceTree = "<group>"; };
 		859C5FB72147E6CE00E2A43D /* grade-cases.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "grade-cases.json"; path = "submodules/privacy-grade/test/data/grade-cases.json"; sourceTree = SOURCE_ROOT; };
@@ -2656,6 +2658,7 @@
 				4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */,
 				858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */,
 				8590CB66268A2E520089F6BF /* RootDebugViewController.swift */,
+				8590CB68268A4E190089F6BF /* DebugEtagStorage.swift */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -4711,6 +4714,7 @@
 				9881439C23326DC200573F7C /* ThemeSettingsViewController.swift in Sources */,
 				8540BD5623D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
+				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,

@@ -11,7 +11,7 @@
         <!--Debug-->
         <scene sceneID="xmD-cI-CpO">
             <objects>
-                <tableViewController storyboardIdentifier="DebugMenu" id="aoH-Pp-DbP" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DebugMenu" id="aoH-Pp-DbP" customClass="RootDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gI6-vF-GfI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,7 +87,16 @@
                             <outlet property="delegate" destination="aoH-Pp-DbP" id="P1d-Hi-SPe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Debug" id="VXG-Ea-SIb"/>
+                    <navigationItem key="navigationItem" title="Debug" id="VXG-Ea-SIb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="zus-np-Qbu">
+                            <connections>
+                                <action selector="onShareTapped" destination="aoH-Pp-DbP" id="9Tm-F7-bfq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="shareButton" destination="zus-np-Qbu" id="vL2-iK-7uc"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Er4-0V-4Z6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

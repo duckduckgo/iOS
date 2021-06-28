@@ -22,12 +22,18 @@
 class MockContentBlockerProtectionStore: ContentBlockerProtectionStore {
 
     var unprotectedDomains = Set<String>()
+    var tempUnprotectedDomains = [String]()
     var protecting = true
     var enabled = true
 
     func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
         return unprotectedDomains.contains(domain)
+    }
+    
+    func isTempUnprotected(domain: String?) -> Bool {
+        guard let domain = domain else { return false }
+        return tempUnprotectedDomains.contains(domain)
     }
 
     func disableProtection(forDomain domain: String) {

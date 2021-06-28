@@ -27,27 +27,66 @@ public class TrackerDataManager {
         public static let embeddedDataSetSHA = "uFwyHaQtXyKGmC4SQtLRmFMH1EOn48LRlf2pLQEvd+8="
     }
     
-    public enum DataSet {
-        
+    public enum ReloadResult {
         case embedded
         case embeddedFallback
         case downloaded
-
     }
     
-    public static let shared = TrackerDataManager()
+    public typealias DataSet = (tds: TrackerData, etag: String)
     
-    private(set) public var trackerData: TrackerData! {
-        didSet {
-            let encodedData = try? JSONEncoder().encode(trackerData)
-            encodedTrackerData = String(data: encodedData!, encoding: .utf8)!
+    private let lock = NSLock()
+    
+    private var _fetchedData: DataSet?
+    private(set) public var fetchedData: DataSet? {
+        get {
+            lock.lock()
+            let data = _fetchedData
+            lock.unlock()
+            return data
+        }
+        set {
+            lock.lock()
+            _fetchedData = newValue
+            lock.unlock()
         }
     }
-    private(set) public var encodedTrackerData: String!
-    private(set) public var etag: String?
+    
+    private var _embeddedData: DataSet!
+    private(set) public var embeddedData: DataSet {
+        get {
+            lock.lock()
+            let data: DataSet
+            // List is loaded lazily when needed
+            if let embedded = _embeddedData {
+                data = embedded
+            } else {
+                let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
+                _embeddedData = (trackerData!, Constants.embeddedDataSetETag)
+                data = _embeddedData
+            }
+            lock.unlock()
+            return data
+        }
+        set {
+            lock.lock()
+            _embeddedData = newValue
+            lock.unlock()
+        }
+    }
+    
+    // remove?
+    public static let shared = TrackerDataManager()
+    
+    public var trackerData: TrackerData {
+        if let data = fetchedData {
+            return data.tds
+        }
+        return embeddedData.tds
+    }
 
     init(trackerData: TrackerData) {
-        self.trackerData = trackerData
+        _fetchedData = (trackerData, "")
     }
 
     init() {
@@ -55,72 +94,28 @@ public class TrackerDataManager {
     }
     
     @discardableResult
-    public func reload(etag: String?) -> DataSet {
+    public func reload(etag: String?) -> ReloadResult {
         
-        let dataSet: DataSet
-        let data: Data
+        let result: ReloadResult
         
-        if let loadedData = FileStore().loadAsData(forConfiguration: .trackerDataSet) {
-            data = loadedData
-            dataSet = .downloaded
-            self.etag = etag
+        if let etag = etag, let data = FileStore().loadAsData(forConfiguration: .trackerDataSet) {
+            result = .downloaded
+            
+            do {
+                // This maigh fail if the downloaded data is corrupt or format has changed unexpectedly
+                let data = try JSONDecoder().decode(TrackerData.self, from: data)
+                fetchedData = (data, etag)
+            } catch {
+                Pixel.fire(pixel: .trackerDataParseFailed, error: error)
+                fetchedData = nil
+                return .embeddedFallback
+            }
         } else {
-            data = Self.loadEmbeddedAsData()
-            dataSet = .embedded
-            self.etag = Constants.embeddedDataSetETag
+            fetchedData = nil
+            result = .embedded
         }
         
-        do {
-            // This maigh fail if the downloaded data is corrupt or format has changed unexpectedly
-            trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
-        } catch {
-            // This should NEVER fail
-            let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
-            self.trackerData = trackerData!
-            self.etag = Constants.embeddedDataSetETag
-            Pixel.fire(pixel: .trackerDataParseFailed, error: error)
-            return .embeddedFallback
-        }
-                
-        return dataSet
-    }
-    
-    public func findTracker(forUrl url: String) -> KnownTracker? {
-        guard let host = URL(string: url)?.host else { return nil }
-        for host in variations(of: host) {
-            if let tracker = trackerData.trackers[host] {
-                return tracker                
-            } else if let cname = trackerData.cnames?[host] {
-                var tracker = trackerData.findTracker(byCname: cname)
-                tracker = tracker?.copy(withNewDomain: cname)
-                return tracker
-            }
-        }
-        return nil
-    }
-    
-    public func findEntity(byName name: String) -> Entity? {
-        return trackerData.entities[name]
-    }
-    
-    public func findEntity(forHost host: String) -> Entity? {
-        for host in variations(of: host) {
-            if let entityName = trackerData.domains[host] {
-                return trackerData.entities[entityName]
-            }
-        }
-        return nil
-    }
-
-    private func variations(of host: String) -> [String] {
-        var parts = host.components(separatedBy: ".")
-        var domains = [String]()
-        while parts.count > 1 {
-            let domain = parts.joined(separator: ".")
-            domains.append(domain)
-            parts.removeFirst()
-        }
-        return domains
+        return result
     }
     
     static var embeddedUrl: URL {

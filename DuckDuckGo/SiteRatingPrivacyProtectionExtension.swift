@@ -76,7 +76,12 @@ extension SiteRating {
     }
     
     func networksText(protectionStore: ContentBlockerProtectionStore) -> String {
-        return protecting(protectionStore) ? networksBlockedText() : networksDetectedText()
+        var isProtecting = protecting(protectionStore)
+        if protectionStore.isTempUnprotected(domain: domain) {
+            isProtecting = false
+        }
+        
+        return isProtecting ? networksBlockedText() : networksDetectedText()
     }
     
     func networksSuccess(protectionStore: ContentBlockerProtectionStore) -> Bool {

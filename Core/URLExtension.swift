@@ -190,4 +190,13 @@ extension URL {
         guard let host = host else { return false }
         return host == domain || host.hasSuffix(".\(domain)")
     }
+
+    public func normalized() -> URL? {
+        var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
+        components?.queryItems = nil
+        components?.fragment = nil
+
+        return components?.url
+    }
+
 }

@@ -21,6 +21,8 @@ import Foundation
 
 public struct ContentBlockerProtectionChangedNotification {
     public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
+    
+    public static let diffKey = "ContentBlockingDiff"
 }
 
 public protocol ContentBlockerProtectionStore: AnyObject {
@@ -28,6 +30,8 @@ public protocol ContentBlockerProtectionStore: AnyObject {
     var unprotectedDomains: Set<String> { get }
 
     func isProtected(domain: String?) -> Bool
+    
+    func isTempUnprotected(domain: String?) -> Bool
 
     func disableProtection(forDomain domain: String)
 

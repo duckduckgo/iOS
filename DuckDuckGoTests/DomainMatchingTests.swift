@@ -1,5 +1,5 @@
 //
-//  domainMatching.swift
+//  DomainMatchingTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -21,6 +21,7 @@ import XCTest
 @testable import TrackerRadarKit
 @testable import Core
 import Foundation
+import os.log
 
 struct RefTests: Decodable {
     
@@ -46,12 +47,12 @@ struct RefTests: Decodable {
     let domainTests: DomainTests
 }
 
-class DomainMatching: XCTestCase {
+class DomainMatchingTests: XCTestCase {
     private var data = JsonTestDataLoader()
 
     func testDomainMatchingRules() throws {
-        let trackerJSON = data.fromJsonFile("MockFiles/reference-tests/tracker-radar-tests/TR-domain-matching/tracker_radar_reference.json")
-        let testJSON = data.fromJsonFile("MockFiles/reference-tests/tracker-radar-tests/TR-domain-matching/domain_matching_tests.json")
+        let trackerJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/tracker_radar_reference.json")
+        let testJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/domain_matching_tests.json")
 
         let trackerData = try JSONDecoder().decode(TrackerData.self, from: trackerJSON)
         
@@ -62,16 +63,16 @@ class DomainMatching: XCTestCase {
                 andTemporaryUnprotectedDomains: [])
 
         for test in tests {
-            print("TEST: ", test.name)
+            os_log("TEST: %s", test.name)
             let requestURL = URL(string: test.requestURL)
             let siteURL = URL(string: test.siteURL)
             let requestType = ContentBlockerRulesBuilder.resourceMapping[test.requestType]
             let rule = rules.matchURL(url: requestURL!, topLevel: siteURL!, resourceType: requestType!)
             let result = rule?.action
             if test.expectAction == "block" {
-                XCTAssert(result == .block())
+                XCTAssertEqual(result, .block())
             } else {
-                XCTAssert(result == nil || result == .ignorePreviousRules())
+                XCTAssertTrue(result == nil || result == .ignorePreviousRules())
             }
         }
     }

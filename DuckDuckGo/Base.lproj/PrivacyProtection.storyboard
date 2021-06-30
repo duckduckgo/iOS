@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -33,7 +33,7 @@
                             <tableViewSection id="ria-wo-DGJ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="211" id="s9p-bO-Vdf">
-                                        <rect key="frame" x="0.0" y="24.333333969116211" width="375" height="211"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="211"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s9p-bO-Vdf" id="ihq-Kt-ABs">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
@@ -45,7 +45,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="goO-wb-Nup" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="235.33333396911621" width="375" height="56"/>
+                                        <rect key="frame" x="0.0" y="239" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="goO-wb-Nup" id="afc-cI-Pc9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
@@ -96,7 +96,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="56" id="izo-7V-yei" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="291.33333396911621" width="375" height="56"/>
+                                        <rect key="frame" x="0.0" y="295" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="izo-7V-yei" id="uvS-6F-pqD">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
@@ -148,7 +148,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="56" id="7tG-Dt-rZf" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="347.33333396911621" width="375" height="56"/>
+                                        <rect key="frame" x="0.0" y="351" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7tG-Dt-rZf" id="REe-ji-zYW">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
@@ -199,7 +199,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="112" id="mRu-nR-kiQ" userLabel="Protection Cell">
-                                        <rect key="frame" x="0.0" y="403.33333396911621" width="375" height="112"/>
+                                        <rect key="frame" x="0.0" y="407" width="375" height="112"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mRu-nR-kiQ" id="WZO-aZ-OVC">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="112"/>
@@ -307,7 +307,7 @@
                                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="152" id="8db-vQ-KCj" userLabel="Gathering Data">
-                                        <rect key="frame" x="0.0" y="515.33333396911621" width="375" height="152"/>
+                                        <rect key="frame" x="0.0" y="519" width="375" height="152"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8db-vQ-KCj" id="S90-hK-u6b">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
@@ -333,7 +333,7 @@
 many trackers we've blocked.</string>
                                                             <attributes>
                                                                 <color key="NSColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -358,7 +358,7 @@ many trackers we've blocked.</string>
                                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="116" id="78h-Fz-H0w" userLabel="Leaderboard">
-                                        <rect key="frame" x="0.0" y="667.33333396911621" width="375" height="116"/>
+                                        <rect key="frame" x="0.0" y="671" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="78h-Fz-H0w" id="VL6-RU-YxW">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
@@ -395,12 +395,12 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9.0000000000000071" y="6.6666666666666714" width="8" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="pvT-Xx-v4r">
-                                                                    <rect key="frame" x="28.000000000000007" y="4.3333333333333286" width="40.999999999999993" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="28.000000000000007" y="6" width="40.999999999999993" height="16"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
                                                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>
@@ -440,12 +440,12 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="6.6666666666666714" width="14" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="vrU-Il-Qe2">
-                                                                    <rect key="frame" x="28" y="4.3333333333333286" width="41" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
                                                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>
@@ -485,12 +485,12 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="7" width="13" height="14"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="jwd-nT-Gh9">
-                                                                    <rect key="frame" x="28.000000000000028" y="4.3333333333333286" width="41" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="28.000000000000028" y="6" width="41" height="16"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
                                                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>
@@ -585,7 +585,7 @@ many trackers we've blocked.</string>
                             <tableViewSection id="AdE-kb-aJk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="157" id="nqm-IY-tmU">
-                                        <rect key="frame" x="0.0" y="24.333333969116211" width="375" height="157"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="157"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nqm-IY-tmU" id="mZf-rW-9qr">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="157"/>
@@ -603,7 +603,7 @@ many trackers we've blocked.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="7k3-Qj-oya" style="IBUITableViewCellStyleDefault" id="e0N-pm-mFb">
-                                        <rect key="frame" x="0.0" y="181.33333396911621" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="185" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e0N-pm-mFb" id="nsu-Ag-913">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -621,7 +621,7 @@ many trackers we've blocked.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="3uo-s0-uRc" style="IBUITableViewCellStyleDefault" id="iZV-7A-J2y">
-                                        <rect key="frame" x="0.0" y="225.33333396911621" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="229" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iZV-7A-J2y" id="xuI-ON-z5v">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -639,7 +639,7 @@ many trackers we've blocked.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="6ld-N9-NRF">
-                                        <rect key="frame" x="0.0" y="269.33333396911621" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="273" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6ld-N9-NRF" id="ksZ-bY-p96">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
@@ -673,7 +673,7 @@ many trackers we've blocked.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="112" id="KXC-mU-fXq" userLabel="Protection Cell">
-                                        <rect key="frame" x="0.0" y="339.33333396911621" width="375" height="112"/>
+                                        <rect key="frame" x="0.0" y="343" width="375" height="112"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KXC-mU-fXq" id="rwI-u6-JdJ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="112"/>
@@ -781,7 +781,7 @@ many trackers we've blocked.</string>
                                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="152" id="3o6-qj-XM3" userLabel="Gathering Data">
-                                        <rect key="frame" x="0.0" y="451.33333396911621" width="375" height="152"/>
+                                        <rect key="frame" x="0.0" y="455" width="375" height="152"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3o6-qj-XM3" id="wvI-kA-daZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
@@ -807,7 +807,7 @@ many trackers we've blocked.</string>
 many trackers we've blocked.</string>
                                                             <attributes>
                                                                 <color key="NSColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -832,7 +832,7 @@ many trackers we've blocked.</string>
                                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="116" id="RGg-kl-Roe" userLabel="Leaderboard">
-                                        <rect key="frame" x="0.0" y="603.33333396911621" width="375" height="116"/>
+                                        <rect key="frame" x="0.0" y="607" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RGg-kl-Roe" id="Cyr-Ur-mwP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
@@ -869,12 +869,12 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9.0000000000000071" y="6.6666666666666714" width="8" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1kC-k0-6in">
-                                                                    <rect key="frame" x="28.000000000000007" y="4.3333333333333286" width="40.999999999999993" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="28.000000000000007" y="6" width="40.999999999999993" height="16"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
                                                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>
@@ -914,12 +914,12 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="6.6666666666666714" width="14" height="15"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="NsY-U6-vXG">
-                                                                    <rect key="frame" x="28" y="4.3333333333333286" width="41" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="28" y="6" width="41" height="16"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
                                                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>
@@ -959,12 +959,12 @@ many trackers we've blocked.</string>
                                                                     <rect key="frame" x="9" y="7" width="13" height="14"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1lh-td-W7c">
-                                                                    <rect key="frame" x="28.000000000000028" y="4.3333333333333286" width="41" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="28.000000000000028" y="6" width="41" height="16"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="88%">
                                                                             <attributes>
                                                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>
@@ -1065,7 +1065,7 @@ many trackers we've blocked.</string>
                                             </constraints>
                                             <state key="normal" image="PP Arrow Back"/>
                                         </button>
-                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
+                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
                                             <rect key="frame" x="0.0" y="148" width="414" height="52"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ps0-H9-esy">
@@ -1075,20 +1075,20 @@ many trackers we've blocked.</string>
                                                         <constraint firstAttribute="height" constant="1" id="maQ-hS-Dkh"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
                                                     <rect key="frame" x="24" y="8" width="366" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="An encrypted connection prevents eavesdropping of any personal information you send to a website.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="35G-VL-OEY" userLabel="Custom Divider">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35G-VL-OEY" userLabel="Custom Divider">
                                                     <rect key="frame" x="20" y="50" width="374" height="2"/>
                                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1118,19 +1118,19 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="height" constant="65" id="lZQ-VG-WoB"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5w-e3-JfY">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5w-e3-JfY">
                                             <rect key="frame" x="20" y="90" width="374" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
                                             <rect key="frame" x="20" y="116" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-Zr-WkQ" userLabel="Tap View">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-Zr-WkQ" userLabel="Tap View">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="T2j-bE-D9r" appends="YES" id="fil-e9-tQ3"/>
@@ -1162,7 +1162,7 @@ many trackers we've blocked.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Header" rowHeight="54" id="oAv-be-F2Z" customClass="PrivacyProtectionEncryptionHeaderCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="249" width="414" height="54"/>
+                                        <rect key="frame" x="0.0" y="255.33333206176758" width="414" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oAv-be-F2Z" id="5dA-ue-WjX">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
@@ -1188,7 +1188,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="QuS-cY-xoL" customClass="PrivacyProtectionEncryptionDetailCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="303" width="414" height="22"/>
+                                        <rect key="frame" x="0.0" y="309.33333206176758" width="414" height="22"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QuS-cY-xoL" id="ha0-1b-qhG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="22"/>
@@ -1229,7 +1229,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Unencrypted" rowHeight="162" id="U2L-Z5-GZd" customClass="PrivacyProtectionEncryptionUnencrytedCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="325" width="414" height="162"/>
+                                        <rect key="frame" x="0.0" y="331.33333206176758" width="414" height="162"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U2L-Z5-GZd" id="8mk-HM-777">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="162"/>
@@ -1246,17 +1246,17 @@ many trackers we've blocked.</string>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Data Is Unencrypted" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T4-dB-Wu0">
-                                                            <rect key="frame" x="20" y="53" width="354" height="16.666666666666671"/>
+                                                            <rect key="frame" x="20" y="53" width="354" height="17.333333333333329"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-HR-hpn">
-                                                            <rect key="frame" x="20" y="77.666666666666657" width="354" height="25"/>
+                                                            <rect key="frame" x="20" y="78.333333333333329" width="354" height="24.333333333333329"/>
                                                             <attributedString key="attributedText">
                                                                 <fragment content="Be careful when entering information on this site.">
                                                                     <attributes>
-                                                                        <font key="NSFont" metaFont="system" size="14"/>
+                                                                        <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
@@ -1367,7 +1367,7 @@ many trackers we've blocked.</string>
                                                         <fragment content="Trackers networks were found on 91% of web sites you’ve visited since Jan 23, 2017.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
@@ -1426,7 +1426,7 @@ many trackers we've blocked.</string>
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="43l-Zy-1B0" userLabel="Footer">
-                                    <rect key="frame" x="0.0" y="301.66666828502309" width="375" height="144"/>
+                                    <rect key="frame" x="0.0" y="309" width="375" height="144"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJQ-al-hPw" userLabel="Custom Divider">
@@ -1455,14 +1455,14 @@ many trackers we've blocked.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="34" id="oXY-ER-plc" customClass="PrivacyProtectionNetworkLeaderboardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="243.33333396911621" width="375" height="34"/>
+                                        <rect key="frame" x="0.0" y="247" width="375" height="34"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oXY-ER-plc" id="whY-gS-Srx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="34"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mP-U5-LBV">
-                                                    <rect key="frame" x="16" y="8.6666666666666643" width="84" height="17"/>
+                                                    <rect key="frame" x="16" y="10" width="84" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="84" id="fAv-vR-6yz"/>
                                                     </constraints>
@@ -1470,14 +1470,14 @@ many trackers we've blocked.</string>
                                                         <fragment content="Google">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-83-lMn">
-                                                    <rect key="frame" x="324" y="8.6666666666666643" width="35" height="17"/>
+                                                    <rect key="frame" x="324" y="10" width="35" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="Cds-GZ-p2n"/>
                                                     </constraints>
@@ -1485,7 +1485,7 @@ many trackers we've blocked.</string>
                                                         <fragment content="98%">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.74117647058823533" green="0.0" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Bold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1549,7 +1549,7 @@ many trackers we've blocked.</string>
                                                             <fragment content="These stats are only stored on your device, and are not sent anywhere. Ever.">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
@@ -1653,13 +1653,13 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="width" constant="58" id="ffJ-d1-AFH"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nh-8f-M2e">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nh-8f-M2e">
                                             <rect key="frame" x="40" y="90" width="334" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="n TRACKER NETWORKS BLOCKED" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHN-Tz-cdk" userLabel="Mixed Encryption Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n TRACKER NETWORKS BLOCKED" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHN-Tz-cdk" userLabel="Mixed Encryption Label">
                                             <rect key="frame" x="20" y="116" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1669,7 +1669,7 @@ many trackers we've blocked.</string>
                                             </attributedString>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwM-eP-cbc" userLabel="Description View">
-                                            <rect key="frame" x="0.0" y="134.33333333333334" width="414" height="100.33333333333334"/>
+                                            <rect key="frame" x="0.0" y="148" width="414" height="86.666666666666686"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hx0-Fc-Kk1">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
@@ -1679,13 +1679,13 @@ many trackers we've blocked.</string>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYv-1m-cZo">
-                                                    <rect key="frame" x="16" y="8" width="382" height="84.333333333333329"/>
+                                                    <rect key="frame" x="16" y="8" width="382" height="70.666666666666671"/>
                                                     <attributedString key="attributedText">
                                                         <fragment>
                                                             <string key="content">Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the Internet.</string>
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1693,7 +1693,7 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhE-Km-i1S">
-                                                    <rect key="frame" x="20" y="99.333333333333314" width="374" height="1"/>
+                                                    <rect key="frame" x="20" y="85.666666666666657" width="374" height="1"/>
                                                     <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="OnF-aa-04X"/>
@@ -1729,7 +1729,7 @@ many trackers we've blocked.</string>
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIf-0g-TkK" userLabel="Tap View">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="134.33333333333334"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                             <gestureRecognizers/>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="XGe-f4-wQn" appends="YES" id="R6n-gL-zQ3"/>
@@ -1760,7 +1760,7 @@ many trackers we've blocked.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Section" rowHeight="46" id="rBu-Hc-gjC" userLabel="Header Cell" customClass="PrivacyProtectionTrackerNetworksSectionCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="283.66666666666663" width="414" height="46"/>
+                                        <rect key="frame" x="0.0" y="289.99999872843421" width="414" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rBu-Hc-gjC" id="Wqt-kM-ZJG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
@@ -1772,7 +1772,7 @@ many trackers we've blocked.</string>
                                                         <fragment content="Network">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Bold"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
@@ -1802,14 +1802,14 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Row" rowHeight="25" id="UFd-fT-gX0" userLabel="Row Cell" customClass="PrivacyProtectionTrackerNetworksRowCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="329.66666666666663" width="414" height="25"/>
+                                        <rect key="frame" x="0.0" y="335.99999872843421" width="414" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UFd-fT-gX0" id="qJg-oa-ngh">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-Wf-SyO">
-                                                    <rect key="frame" x="20" y="5" width="294.66666666666669" height="15"/>
+                                                    <rect key="frame" x="20" y="5" width="297.66666666666669" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="teJ-kb-N2f"/>
                                                     </constraints>
@@ -1817,14 +1817,14 @@ many trackers we've blocked.</string>
                                                         <fragment content="www.tracker.com">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4u-yL-AUp">
-                                                    <rect key="frame" x="334.66666666666669" y="5" width="59.333333333333314" height="15"/>
+                                                    <rect key="frame" x="337.66666666666669" y="5" width="56.333333333333314" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="eHg-yD-XGJ"/>
                                                     </constraints>
@@ -1832,7 +1832,7 @@ many trackers we've blocked.</string>
                                                         <fragment content="Category">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
@@ -1907,19 +1907,19 @@ many trackers we've blocked.</string>
                                                 <constraint firstAttribute="height" constant="65" id="fLg-yP-pQD"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SO-8y-5QH">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SO-8y-5QH">
                                             <rect key="frame" x="20" y="90" width="374" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PRIVACY PRACTICES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25V-p3-wsn" userLabel="Mixed Encryption Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY PRACTICES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25V-p3-wsn" userLabel="Mixed Encryption Label">
                                             <rect key="frame" x="20" y="116" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-BI-Cm8">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-BI-Cm8">
                                             <rect key="frame" x="0.0" y="148" width="414" height="52"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvj-uQ-WZu">
@@ -1929,20 +1929,20 @@ many trackers we've blocked.</string>
                                                         <constraint firstAttribute="height" constant="1" id="SXf-WE-VSl"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
                                                     <rect key="frame" x="24" y="8" width="366" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Privacy practices indicate how much the  personal information that you share with a website is protected.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xKS-ZX-vAo">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKS-ZX-vAo">
                                                     <rect key="frame" x="20" y="51" width="374" height="1"/>
                                                     <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -1975,7 +1975,7 @@ many trackers we've blocked.</string>
                                                 <action selector="onBack" destination="3wX-Uf-JRU" eventType="touchUpInside" id="FoO-Kq-0Mq"/>
                                             </connections>
                                         </button>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OWk-Mj-6oF" userLabel="Tap View">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OWk-Mj-6oF" userLabel="Tap View">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                             <gestureRecognizers/>
                                             <connections>
@@ -2007,19 +2007,19 @@ many trackers we've blocked.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="72t-tQ-5SV" imageView="WRK-Wt-JyD" style="IBUITableViewCellStyleDefault" id="LK0-gl-KUB" customClass="PrivacyProtectionPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="224.33333396911621" width="414" height="95"/>
+                                        <rect key="frame" x="0.0" y="228" width="414" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LK0-gl-KUB" id="2Vq-On-UQN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="72t-tQ-5SV">
-                                                    <rect key="frame" x="53" y="0.0" width="345" height="95"/>
+                                                    <rect key="frame" x="53" y="0.0" width="345" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="This website will notify you before transferring your information in the event of a merger or acquisition">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.3100000000000001" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -2027,14 +2027,14 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Result Success" id="WRK-Wt-JyD">
-                                                    <rect key="frame" x="16" y="36.333333333333336" width="22" height="22"/>
+                                                    <rect key="frame" x="16" y="28.333333333333329" width="22" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPractices" rowHeight="300" id="dTH-6q-tGo" customClass="PrivacyProtectionNoPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="319.33333396911621" width="414" height="300"/>
+                                        <rect key="frame" x="0.0" y="307" width="414" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dTH-6q-tGo" id="9KP-Lk-xIX">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
@@ -2050,12 +2050,12 @@ many trackers we've blocked.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATi-1t-ByQ">
-                                                    <rect key="frame" x="23.666666666666657" y="131" width="367" height="43"/>
+                                                    <rect key="frame" x="23.666666666666657" y="131" width="367" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="The privacy practices of this website have not been reviewed.">
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -2084,19 +2084,19 @@ many trackers we've blocked.</string>
                                 <rect key="frame" x="0.0" y="578" width="414" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLZ-Bg-d8p">
-                                        <rect key="frame" x="26" y="26.666666666666629" width="362" height="17"/>
+                                        <rect key="frame" x="26" y="28" width="362" height="14"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Privacy Practices from ">
                                                 <attributes>
                                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content="ToS;DR">
                                                 <attributes>
                                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSFont" size="14" name="ProximaNova-Semibold"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     <integer key="NSUnderline" value="1"/>
                                                 </attributes>
@@ -2173,14 +2173,14 @@ many trackers we've blocked.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="gVe-0B-edv">
-                            <rect key="frame" x="0.0" y="577.66666828502309" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="585" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </view>
                         <sections>
                             <tableViewSection id="bfD-Rs-VRV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="205" id="3Cz-vq-HtK" userLabel="Header Table View Cell">
-                                        <rect key="frame" x="0.0" y="24.333333969116211" width="375" height="205"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="205"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Cz-vq-HtK" id="ERP-CT-0SL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
@@ -2207,7 +2207,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="22" id="e0b-NU-2I0">
-                                        <rect key="frame" x="0.0" y="229.33333396911621" width="375" height="22"/>
+                                        <rect key="frame" x="0.0" y="233" width="375" height="22"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e0b-NU-2I0" id="4WC-O8-gQ0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="22"/>
@@ -2230,7 +2230,7 @@ many trackers we've blocked.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Bfa-LO-5TA" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="251.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="255" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bfa-LO-5TA" id="hIo-y5-j4R">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2266,7 +2266,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="8qZ-Eh-VsF" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="289.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="293" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8qZ-Eh-VsF" id="DO1-wT-u3l">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2302,7 +2302,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="bLw-VQ-f8g" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="327.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="331" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bLw-VQ-f8g" id="fwt-6q-cSP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2338,7 +2338,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="YWf-b0-9Jx" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="365.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="369" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YWf-b0-9Jx" id="AYe-df-fbR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2374,7 +2374,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Djq-pK-0ll" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="403.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="407" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Djq-pK-0ll" id="osH-0E-8uO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2410,7 +2410,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="36" id="ll8-8B-YdJ" userLabel="Separator Table View Cell">
-                                        <rect key="frame" x="0.0" y="441.33333396911621" width="375" height="36"/>
+                                        <rect key="frame" x="0.0" y="445" width="375" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ll8-8B-YdJ" id="yhh-3S-00j">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
@@ -2434,7 +2434,7 @@ many trackers we've blocked.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="THl-q3-0pd" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="477.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="481" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="THl-q3-0pd" id="lbt-f1-TYY">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2470,7 +2470,7 @@ many trackers we've blocked.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="8L0-Nl-oii" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="515.33333396911621" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="519" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8L0-Nl-oii" id="bvX-oz-Oip">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
@@ -2599,6 +2599,12 @@ many trackers we've blocked.</string>
         <image name="PP Unknown" width="53" height="53"/>
         <image name="WarningIcon" width="52" height="45"/>
         <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tableCellGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tableCellGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tableCellGroupedBackgroundColor">

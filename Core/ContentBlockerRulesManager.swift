@@ -270,9 +270,19 @@ public class ContentBlockerRulesManager {
             }
         }
         
-        //TODO: Cnames
+        var cnames = [TrackerData.CnameDomain: TrackerData.TrackerDomain]()
+        if let tdsCnames = tds.cnames {
+            for pair in tdsCnames {
+                for domain in domains.keys {
+                    if pair.value.hasSuffix(domain) {
+                        cnames[pair.key] = pair.value
+                        break
+                    }
+                }
+            }
+        }
         
-        return TrackerData(trackers: trackers, entities: entities, domains: domains, cnames: nil)
+        return TrackerData(trackers: trackers, entities: entities, domains: domains, cnames: cnames)
     }
     
     private func compilationSucceeded(with ruleList: WKContentRuleList,

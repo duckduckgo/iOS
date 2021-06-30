@@ -51,7 +51,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet weak var privacyProtectionsSiteButtonsView: UIView!
     @IBOutlet weak var protectionsSiteButtonsHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
-    @IBOutlet weak var privacyProtectionLabel: UILabel!
     
     @IBOutlet weak var collectingDataInfo: UILabel!
     
@@ -244,12 +243,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
             } else {
                 return 0
             }
-//        case Cells.protection.rawValue:
-//            if protectionStore.isTempUnprotected(domain: siteRating.domain) {
-//                return 56
-//            } else {
-//                return UITableView.automaticDimension
-//            }
         case Cells.gatheringData.rawValue:
             if leaderboard.shouldShow() {
                 return 0

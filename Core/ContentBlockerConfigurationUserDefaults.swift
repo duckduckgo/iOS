@@ -60,18 +60,7 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
         
-        // Break domain apart to handle www.*
-        var tempDomain = domain
-        while tempDomain.contains(".") {
-            if tempUnprotectedDomains.contains(tempDomain) {
-                return false
-            }
-            
-            let comps = tempDomain.split(separator: ".")
-            tempDomain = comps.dropFirst().joined(separator: ".")
-        }
-        
-        return !unprotectedDomains.contains(domain)
+        return !isTempUnprotected(domain: domain) && !unprotectedDomains.contains(domain)
     }
     
     public func isTempUnprotected(domain: String?) -> Bool {

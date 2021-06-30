@@ -47,6 +47,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     @IBOutlet weak var privacyProtectionView: UIView!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
+    @IBOutlet weak var privacyProtectionLabel: UILabel!
     
     @IBOutlet weak var collectingDataInfo: UILabel!
     
@@ -164,8 +165,16 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = isProtecting
-        privacyProtectionView.backgroundColor = isProtecting ? UIColor.ppGreen : UIColor.ppGray
+        if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+            privacyProtectionLabel.text = UserText.privacyProtectionTempDisabled
+            privacyProtectionView.backgroundColor = UIColor.ppGray
+            privacyProtectionSwitch.isHidden = true
+        } else {
+            privacyProtectionLabel.text = UserText.privacyProtectionProtectionLabel
+            privacyProtectionSwitch.isHidden = false
+            privacyProtectionSwitch.isOn = isProtecting
+            privacyProtectionView.backgroundColor = isProtecting ? UIColor.ppGreen : UIColor.ppGray
+        }
     }
     
     @IBAction func protectionToggled(toggle: UISwitch) {

@@ -769,6 +769,12 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "PRIVACY GRADE";
 
+/* No comment provided by engineer. */
+"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.toggle.label" = "Site Privacy Protection";
+
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 

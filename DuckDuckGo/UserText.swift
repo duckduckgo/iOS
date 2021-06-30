@@ -80,6 +80,8 @@ public struct UserText {
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
     
     public static let privacyProtectionProtectionDisabled = NSLocalizedString("privacy.protection.main.disabled", value: "SITE PROTECTION DISABLED", comment: "")
+    public static let privacyProtectionProtectionLabel = NSLocalizedString("privacy.protection.main.toggle.label", value: "Site Privacy Protection", comment: "")
+    public static let privacyProtectionTempDisabled = NSLocalizedString("privacy.protection.main.temp.disabled", value: "Protections are temporarily disabled due to this site being broken.", comment: "")
     public static let privacyProtectionPrivacyGrade = NSLocalizedString("privacy.protection.main.grade", value: "PRIVACY GRADE", comment: "")
     public static let privacyProtectionEnhanced = NSLocalizedString("privacy.protection.main.enhanced", value: "ENHANCED FROM $1 TO $2", comment: "$1 and $2 are grades - letters. Example: Enhanced from D to B")
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Do not translate - stringsdict entry")

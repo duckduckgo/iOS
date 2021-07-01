@@ -64,6 +64,7 @@ class ConfigurationDebugViewController: UITableViewController {
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
     private var queuedTasks: [BGTaskRequest] = []
+    private let etagStorage = DebugEtagStorage()
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -123,7 +124,7 @@ class ConfigurationDebugViewController: UITableViewController {
             let row = ETagRows.allCases[indexPath.row]
             cell.textLabel?.text = row.rawValue
 
-            if let etag = etag(for: row) {
+            if let etag = etagStorage.etag(for: row.rawValue) {
                 cell.detailTextLabel?.text = etag
             } else {
                 cell.detailTextLabel?.text = row.showDetail ? "None" : nil
@@ -156,25 +157,11 @@ class ConfigurationDebugViewController: UITableViewController {
         case .etags:
             switch ETagRows.allCases[indexPath.row] {
             case .resetEtags:
-                resetETags()
+                etagStorage.resetAll()
                 tableView.reloadData()
             default: break
             }
         default: break
-        }
-    }
-
-    // MARK: - ETag User Defaults Wrapper
-
-    lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
-
-    private func etag(for config: ETagRows) -> String? {
-        return defaults?.string(forKey: config.rawValue)
-    }
-
-    private func resetETags() {
-        for row in ETagRows.allCases {
-            defaults?.removeObject(forKey: row.rawValue)
         }
     }
 

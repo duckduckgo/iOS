@@ -584,7 +584,6 @@ many trackers we've blocked.</string>
                         <outlet property="encryptionCell" destination="goO-wb-Nup" id="oyA-Bs-y4l"/>
                         <outlet property="firstPill" destination="i3y-HD-l11" id="kUP-Fe-AJC"/>
                         <outlet property="privacyPracticesCell" destination="7tG-Dt-rZf" id="bRZ-1X-bt7"/>
-                        <outlet property="privacyProtectionLabel" destination="sr7-Qg-P74" id="R5g-x0-ovj"/>
                         <outlet property="privacyProtectionSwitch" destination="SRO-eb-GlB" id="ocm-up-h0D"/>
                         <outlet property="privacyProtectionView" destination="TTX-MK-Qjp" id="l9N-tC-Ney"/>
                         <outlet property="privacyProtectionsSiteButtonsView" destination="Sc9-7T-plf" id="aar-n9-I5E"/>

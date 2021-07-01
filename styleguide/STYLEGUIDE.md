@@ -18,6 +18,8 @@ Xcode won't enforce or autoformat for you, but you can set up a page column at 1
 
 ![Setting page guide column](xcode-page-guide.png)
 
+Also check `Including whitespace-only lines` under `Preferences > Text Editing > Editing > Automatically trim trailing whitespace`.
+
 ### Identifier names
 
 Identifier names (e.g. variables, enum values, etc) must have a minimum length of 1 characters and a maximum length of 60 characters.

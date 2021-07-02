@@ -59,7 +59,8 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
 
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
-        return !unprotectedDomains.contains(domain)
+        
+        return !isTempUnprotected(domain: domain) && !unprotectedDomains.contains(domain)
     }
     
     public func isTempUnprotected(domain: String?) -> Bool {

@@ -351,8 +351,8 @@ public struct UserText {
     public static let emailSignOutAlertRemove = NSLocalizedString("email.signOutAlert.remove", value: "Remove", comment: "Remove option for the email sign out alert")
 
     public static let emailWaitlistPrivacySimplified = NSLocalizedString("email.waitlist.privacy-simplified", value: "Email privacy, simplified.", comment: "Header text for the email waitlist")
-    public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the list!", comment: "Header text for the email waitlist")
-    public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’re invited!", comment: "Header text for the email waitlist")
+    public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the waitlist!", comment: "Header text for the email waitlist")
+    public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’ve been invited!", comment: "Header text for the email waitlist")
 
     public static let emailWaitlistSummary = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address, without switching your email provider. Learn more.", comment: "Description text for the email waitlist")
     public static let emailWaitlistJoinedWithNotificationSummary = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. Learn more.", comment: "Description text for the email waitlist")

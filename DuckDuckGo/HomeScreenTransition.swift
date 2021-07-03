@@ -199,8 +199,6 @@ class ToHomeScreenTransition: HomeScreenTransition {
         if tabSwitcherSettings.isGridViewEnabled {
             imageView.image = TabViewGridCell.logoImage
             imageView.alpha = tab.viewed ? 1 : 0
-        } else {
-            imageContainer.alpha = 0
         }
         imageView.backgroundColor = .clear
         

@@ -358,6 +358,7 @@ class TabViewController: UIViewController {
         }
         webView.stopLoading()
         webView.load(urlRequest)
+        webView.scrollView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
     }
     
     // swiftlint:disable block_based_kvo

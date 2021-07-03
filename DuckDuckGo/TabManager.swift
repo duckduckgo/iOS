@@ -121,16 +121,9 @@ class TabManager {
     }
 
     func addHomeTab() {
-        let tab = Tab()
-        tab.viewed = false
-        model.add(tab: tab)
+        model.add(tab: Tab())
         model.select(tabAt: model.count - 1)
         save()
-        // Delay should be at least the same as the time newly added tab cell is visible before transition begins
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            tab.viewed = true
-            self.model.save()
-        }
     }
 
     func firstHomeTab() -> Tab? {
@@ -181,7 +174,6 @@ class TabManager {
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
         let tab = Tab(link: link)
-        tab.viewed = !inBackground
         let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
 

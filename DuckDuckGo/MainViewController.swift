@@ -481,7 +481,8 @@ class MainViewController: UIViewController {
         currentTab?.dismiss()
         removeHomeScreen()
 
-        let controller = HomeViewController.loadFromStoryboard()
+        let tabModel = currentTab?.tabModel
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!)
         homeController = controller
 
         controller.chromeDelegate = self

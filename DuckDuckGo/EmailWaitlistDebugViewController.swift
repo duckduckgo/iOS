@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BackgroundTasks
 import BrowserServicesKit
 
 final class EmailWaitlistDebugViewController: UITableViewController {
@@ -34,7 +35,8 @@ final class EmailWaitlistDebugViewController: UITableViewController {
         WaitlistInformationRows.waitlistTimestamp: "Timestamp",
         WaitlistInformationRows.waitlistToken: "Token",
         WaitlistInformationRows.waitlistInviteCode: "Invite Code",
-        WaitlistInformationRows.shouldNotifyWhenAvailable: "Notify When Available"
+        WaitlistInformationRows.shouldNotifyWhenAvailable: "Notify When Available",
+        WaitlistInformationRows.backgroundTask: "Earliest Refresh Date"
     ]
 
     enum WaitlistInformationRows: Int, CaseIterable {
@@ -43,6 +45,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
         case waitlistToken
         case waitlistInviteCode
         case shouldNotifyWhenAvailable
+        case backgroundTask
 
     }
 
@@ -63,6 +66,8 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     private let emailManager = EmailManager()
     private let storage = EmailKeychainManager()
 
+    private var backgroundTaskExecutionDate: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -72,6 +77,17 @@ final class EmailWaitlistDebugViewController: UITableViewController {
                                              action: #selector(presentClearDataPrompt(_:)))
         clearDataItem.tintColor = .systemRed
         navigationItem.rightBarButtonItem = clearDataItem
+
+        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+            if let task = tasks.first(where: { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }) {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .short
+                formatter.timeStyle = .medium
+
+                self.backgroundTaskExecutionDate = formatter.string(from: task.earliestBeginDate!)
+                self.tableView.reloadData()
+            }
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -115,6 +131,9 @@ final class EmailWaitlistDebugViewController: UITableViewController {
                 } else {
                     cell.detailTextLabel?.text = "TBD"
                 }
+
+            case .backgroundTask:
+                cell.detailTextLabel?.text = backgroundTaskExecutionDate ?? "None"
             }
 
             return cell

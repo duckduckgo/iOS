@@ -85,7 +85,10 @@ final class EmailWaitlistDebugViewController: UITableViewController {
                 formatter.timeStyle = .medium
 
                 self.backgroundTaskExecutionDate = formatter.string(from: task.earliestBeginDate!)
-                self.tableView.reloadData()
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }

@@ -84,11 +84,12 @@ struct EmailWaitlist {
                 case .success:
                     sendInviteCodeAvailableNotification()
                     task.setTaskCompleted(success: true)
-                case .failure:
-                    scheduleBackgroundRefreshTask()
+                case .failure(let error):
+                    task.setTaskCompleted(success: false)
 
-                    // Though no code was retrieved, failure is still an expected outcome and considered a success from the point of view of the task.
-                    task.setTaskCompleted(success: true)
+                    if error != .notOnWaitlist {
+                        scheduleBackgroundRefreshTask()
+                    }
                 }
             }
         }

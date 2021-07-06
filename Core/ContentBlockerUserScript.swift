@@ -77,18 +77,22 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         guard let delegate = delegate else { return }
         guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
         
-        guard let dict = message.body as? [String: Any] else { return }
-        guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
-        guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
+        guard let messagesArr = message.body as? [Any] else { return }
+        
+        for mess in messagesArr {
+            guard let dict = mess as? [String: Any] else { return }
+            guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
+            guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
 
-        let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
+            let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
 
-        os_log("tracker %s %s", log: generalLog, type: .debug, tracker.blocked ? "BLOCKED" : "ignored", tracker.domain ?? "")
+            os_log("tracker %s %s", log: generalLog, type: .debug, tracker.blocked ? "BLOCKED" : "ignored", tracker.domain ?? "")
 
-        if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
-            delegate.contentBlockerUserScript(self, detectedTracker: tracker, withSurrogate: host)
-        } else {
-            delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+            if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
+                delegate.contentBlockerUserScript(self, detectedTracker: tracker, withSurrogate: host)
+            } else {
+                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+            }
         }
     }
             

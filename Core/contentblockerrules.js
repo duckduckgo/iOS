@@ -103,16 +103,41 @@
         injectStatsTracking(enabled);
       }
     })
+      
+      function throttle (callback, limit) {
+          var waiting = false;                      // Initially, we're not waiting
+          return function () {                      // We return a throttled function
+              if (!waiting) {                       // If we're not waiting
+                  callback.apply(this, arguments);  // Execute users function
+                  waiting = true;                   // Prevent future invocations
+                  setTimeout(function () {          // After a period of time
+                      waiting = false;              // And allow future invocations
+                  }, limit);
+              }
+          }
+      }
 
+     let messages = []
+      
+      function sendTrackersDetected() {
+          webkit.messageHandlers.processRule.postMessage(messages)
+          messages = []
+      }
+
+      const throttledSend = throttle(function() {
+          sendTrackersDetected()
+      }, 500)
+      
     function sendMessage(url, resourceType) {
       if (url) {
         const pageUrl = window.location.href
-        webkit.messageHandlers.processRule.postMessage({ 
+        messages.push({
           url: url,
           resourceType: resourceType === undefined ? null : resourceType,
           blocked: !unprotectedDomain,
           pageUrl: pageUrl
         });
+        throttledSend()
       }
     }
 

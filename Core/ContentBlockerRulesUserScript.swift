@@ -58,25 +58,29 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     var temporaryUnprotectedDomains = [String]()
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard let delegate = delegate else { return }
-        guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
+        guard let delegate = delegate, delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
         
-        guard let dict = message.body as? [String: Any] else { return }
-        guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
-        guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
-        guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
+        guard let messagesArr = message.body as? [Any] else { return }
         
-        if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
-            guard let pageUrl = URL(string: pageUrlStr),
-                  let pageHost = pageUrl.host,
-                  let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
-                  let pageEntity = currentTrackerData.findEntity(forHost: pageHost) else {
-                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
-                return
-            }
+        for mess in messagesArr {
+            guard let dict = mess as? [String: Any] else { return }
+            Swift.print(dict)
+            guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
+            guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
+            guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
             
-            if pageEntity.displayName != tracker.entity?.displayName {
-                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+            if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
+                guard let pageUrl = URL(string: pageUrlStr),
+                      let pageHost = pageUrl.host,
+                      let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+                      let pageEntity = currentTrackerData.findEntity(forHost: pageHost) else {
+                    delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+                    return
+                }
+                
+                if pageEntity.displayName != tracker.entity?.displayName {
+                    delegate.contentBlockerUserScript(self, detectedTracker: tracker)
+                }
             }
         }
     }

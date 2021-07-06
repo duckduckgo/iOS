@@ -18,13 +18,38 @@
 //
 
 (function() {
+    
+    function throttle (callback, limit) {
+        var waiting = false;                      // Initially, we're not waiting
+        return function () {                      // We return a throttled function
+            if (!waiting) {                       // If we're not waiting
+                callback.apply(this, arguments);  // Execute users function
+                waiting = true;                   // Prevent future invocations
+                setTimeout(function () {          // After a period of time
+                    waiting = false;              // And allow future invocations
+                }, limit);
+            }
+        }
+    }
 
+   let messages = []
+    
+    function sendTrackersDetected() {
+        try {
+            webkit.messageHandlers.trackerDetectedMessage.postMessage(messages);
+        } catch(error) {
+            // webkit might not be defined
+        }
+        messages = []
+    }
+    
+    const throttledSend = throttle(function() {
+        sendTrackersDetected()
+    }, 500)
+    
    function trackerDetected(data) {
-       try {
-           webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
-       } catch(error) {
-           // webkit might not be defined
-       }
+       messages.push(data)
+       throttledSend()
    }
 
     // tld.js

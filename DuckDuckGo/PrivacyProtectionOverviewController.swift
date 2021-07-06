@@ -24,6 +24,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     private enum Cells: Int {
         case grade = 0
+        case tempUnprotectedInfo
         case encryptionInfo
         case trackersInfo
         case practicesInfo
@@ -44,8 +45,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet weak var encryptionCell: SummaryCell!
     @IBOutlet weak var trackersCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
+    @IBOutlet weak var tempProtectionDisabledCell: UITableViewCell!
     
     @IBOutlet weak var privacyProtectionView: UIView!
+    @IBOutlet weak var privacyProtectionsSiteButtonsView: UIView!
+    @IBOutlet weak var protectionsSiteButtonsHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     
     @IBOutlet weak var collectingDataInfo: UILabel!
@@ -164,8 +168,21 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = isProtecting
-        privacyProtectionView.backgroundColor = isProtecting ? UIColor.ppGreen : UIColor.ppGray
+        if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+            privacyProtectionView.backgroundColor = UIColor.ppGray
+            privacyProtectionSwitch.isEnabled = false
+            privacyProtectionSwitch.isOn = false
+            privacyProtectionsSiteButtonsView.isHidden = true
+            protectionsSiteButtonsHeightConstraint.constant = 0
+            tempProtectionDisabledCell.isHidden = false
+        } else {
+            privacyProtectionSwitch.isEnabled = true
+            tempProtectionDisabledCell.isHidden = true
+            privacyProtectionsSiteButtonsView.isHidden = false
+            protectionsSiteButtonsHeightConstraint.constant = 56
+            privacyProtectionSwitch.isOn = isProtecting
+            privacyProtectionView.backgroundColor = isProtecting ? UIColor.ppGreen : UIColor.ppGray
+        }
     }
     
     @IBAction func protectionToggled(toggle: UISwitch) {
@@ -220,6 +237,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
+        case Cells.tempUnprotectedInfo.rawValue:
+            if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+                return UITableView.automaticDimension
+            } else {
+                return 0
+            }
         case Cells.gatheringData.rawValue:
             if leaderboard.shouldShow() {
                 return 0

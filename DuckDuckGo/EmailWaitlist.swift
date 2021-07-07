@@ -71,15 +71,14 @@ struct EmailWaitlist {
 
     func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            let emailManager = EmailManager()
-            emailManager.requestDelegate = EmailWaitlistRequestDelegate.shared
+            let manager = EmailWaitlist.shared.emailManager
 
-            guard emailManager.isInWaitlist else {
+            guard manager.isInWaitlist else {
                 task.setTaskCompleted(success: true)
                 return
             }
 
-            emailManager.fetchInviteCodeIfAvailable { result in
+            manager.fetchInviteCodeIfAvailable { result in
                 switch result {
                 case .success:
                     sendInviteCodeAvailableNotification()

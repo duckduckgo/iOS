@@ -50,8 +50,19 @@ class DomainMatchingReportTests: XCTestCase {
             
             if test.expectAction == "block" {
                 XCTAssertNotNil(tracker)
+                XCTAssert(tracker?.blocked ?? false)
+                
+                let t = resolver.trackerFromUrl(test.requestURL,
+                                                pageUrlString: test.siteURL,
+                                                resourceType: test.requestType,
+                                                potentiallyBlocked: true)
             } else {
-                XCTAssertNil(tracker)
+                XCTAssertFalse(tracker?.blocked ?? false)
+                
+                let t = resolver.trackerFromUrl(test.requestURL,
+                                                pageUrlString: test.siteURL,
+                                                resourceType: test.requestType,
+                                                potentiallyBlocked: true)
             }
         }
     }

@@ -37,12 +37,7 @@ class DomainMatchingReportTests: XCTestCase {
         
         let resolver = TrackerResolver(tds: trackerData, unprotectedSites: [], tempList: [])
 
-        for test in tests {
-            os_log("TEST: %s", test.name)
-//            let requestURL = URL(string: test.requestURL)
-//            let siteURL = URL(string: test.siteURL)
-//            let requestType = ContentBlockerRulesBuilder.resourceMapping[test.requestType]
-            
+        for test in tests {            
             let tracker = resolver.trackerFromUrl(test.requestURL,
                                                   pageUrlString: test.siteURL,
                                                   resourceType: test.requestType,
@@ -51,18 +46,8 @@ class DomainMatchingReportTests: XCTestCase {
             if test.expectAction == "block" {
                 XCTAssertNotNil(tracker)
                 XCTAssert(tracker?.blocked ?? false)
-                
-                let t = resolver.trackerFromUrl(test.requestURL,
-                                                pageUrlString: test.siteURL,
-                                                resourceType: test.requestType,
-                                                potentiallyBlocked: true)
             } else {
                 XCTAssertFalse(tracker?.blocked ?? false)
-                
-                let t = resolver.trackerFromUrl(test.requestURL,
-                                                pageUrlString: test.siteURL,
-                                                resourceType: test.requestType,
-                                                potentiallyBlocked: true)
             }
         }
     }

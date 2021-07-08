@@ -21,37 +21,35 @@ import Foundation
 import TrackerRadarKit
 
 protocol ContentBlockerRulesSource {
-    
+
     var trackerData: TrackerDataManager.DataSet? { get }
     var embeddedTrackerData: TrackerDataManager.DataSet { get }
     var tempListEtag: String? { get }
     var tempList: [String] { get }
     var unprotectedSites: [String] { get }
-    
+
 }
 
 class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
-    
+
     var trackerData: TrackerDataManager.DataSet? {
         return TrackerDataManager.shared.fetchedData
     }
-    
+
     var embeddedTrackerData: TrackerDataManager.DataSet {
         return TrackerDataManager.shared.embeddedData
     }
-    
+
     var tempListEtag: String? {
         return UserDefaultsETagStorage().etag(for: .temporaryUnprotectedSites)
     }
-    
+
     var tempList: [String] {
-        let storageCache = StorageCacheProvider().current
-        return storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
+        return FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites).filter { !$0.trimWhitespace().isEmpty }
     }
-    
+
     var unprotectedSites: [String] {
         return UnprotectedSitesManager().domains
     }
-    
+
 }

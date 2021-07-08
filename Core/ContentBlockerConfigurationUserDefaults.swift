@@ -26,11 +26,31 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
         static let unprotectedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
+    
+    private let lock = NSLock()
 
     private let suiteName: String
+    
+    private var _storageCache: StorageCacheProvider?
+    private var storageCache: StorageCacheProvider? {
+        lock.lock()
+        if _storageCache == nil {
+            _storageCache = StorageCacheProvider()
+        }
+        lock.unlock()
+        return _storageCache
+    }
 
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName =  suiteName
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onStorageChange),
+                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
+                                               object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: StorageCacheProvider.didUpdateStorageCacheNotification, object: nil)
     }
 
     private var userDefaults: UserDefaults? {
@@ -52,10 +72,7 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
         }
     }
     
-    private var tempUnprotectedDomains: [String] {
-        return StorageCacheProvider().current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
-    }
+    private var tempUnprotectedDomains: [String]?
 
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
@@ -66,10 +83,15 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     public func isTempUnprotected(domain: String?) -> Bool {
         guard let domain = domain else { return false }
         
+        if tempUnprotectedDomains == nil {
+            tempUnprotectedDomains = storageCache?.current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty }
+        }
+        
         // Break domain apart to handle www.*
         var tempDomain = domain
         while tempDomain.contains(".") {
-            if tempUnprotectedDomains.contains(tempDomain) {
+            if tempUnprotectedDomains!.contains(tempDomain) {
                 return true
             }
             
@@ -94,5 +116,10 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
 
     private func onStoreChanged() {
         ContentBlockerRulesManager.shared.recompile()
+    }
+    
+    @objc private func onStorageChange() {
+        tempUnprotectedDomains = storageCache?.current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
     }
 }

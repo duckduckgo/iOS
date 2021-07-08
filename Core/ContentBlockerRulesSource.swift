@@ -44,14 +44,39 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
         return UserDefaultsETagStorage().etag(for: .temporaryUnprotectedSites)
     }
     
+    private let lock = NSLock()
+    
+    private var _tempList: [String]?
     var tempList: [String] {
-        let storageCache = StorageCacheProvider().current
-        return storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
+        lock.lock()
+        if _tempList == nil {
+            let storageCache = StorageCacheProvider().current
+            _tempList = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty }
+        }
+        lock.unlock()
+        return _tempList ?? []
     }
     
     var unprotectedSites: [String] {
         return UnprotectedSitesManager().domains
+    }
+    
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onStorageUpdate),
+                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
+                                               object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: StorageCacheProvider.didUpdateStorageCacheNotification, object: nil)
+    }
+    
+    @objc func onStorageUpdate() {
+        let storageCache = StorageCacheProvider().current
+        _tempList = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
     }
     
 }

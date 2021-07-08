@@ -26,20 +26,11 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
         static let unprotectedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
-    
-    private let lock = NSLock()
 
     private let suiteName: String
-    
-    private var _storageCache: StorageCacheProvider?
-    private var storageCache: StorageCacheProvider {
-        lock.lock()
-        if _storageCache == nil {
-            _storageCache = StorageCacheProvider()
-        }
-        lock.unlock()
-        return _storageCache!
-    }
+
+    // This variable should be confined to the Main Thread
+    private var tempUnprotectedDomains: [String]?
 
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName =  suiteName
@@ -71,8 +62,6 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
             onStoreChanged()
         }
     }
-    
-    private var tempUnprotectedDomains: [String]?
 
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
@@ -84,7 +73,7 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
         guard let domain = domain else { return false }
         
         if tempUnprotectedDomains == nil {
-            tempUnprotectedDomains = storageCache?.current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            tempUnprotectedDomains = FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites)
                 .filter { !$0.trimWhitespace().isEmpty }
         }
         
@@ -119,7 +108,12 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     }
     
     @objc private func onStorageChange() {
-        tempUnprotectedDomains = storageCache?.current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+        let newList = FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites)
             .filter { !$0.trimWhitespace().isEmpty }
+
+        DispatchQueue.main.async {
+            self.tempUnprotectedDomains = newList
+        }
+
     }
 }

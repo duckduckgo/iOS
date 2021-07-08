@@ -31,12 +31,6 @@ class TrackerResolver {
         self.unprotectedSites = unprotectedSites
         self.tempList = tempList
     }
-
-    public func trackerFromUrl(_ trackerUrlString: String,
-                               pageUrlString: String,
-                               potentiallyBlocked: Bool) -> DetectedTracker? {
-        return trackerFromUrl(trackerUrlString, pageUrlString: pageUrlString, potentiallyBlocked: potentiallyBlocked)
-    }
     
     public func trackerFromUrl(_ trackerUrlString: String,
                                pageUrlString: String,

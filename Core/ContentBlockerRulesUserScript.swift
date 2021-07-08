@@ -66,6 +66,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         // False if domain is in unprotected list
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
+        let resourceType = (dict[ContentBlockerKey.resourceType] as? String) ?? "unknown"
         guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
         
         guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData else {
@@ -76,7 +77,10 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
                                        unprotectedSites: UnprotectedSitesManager().domains,
                                        tempList: temporaryUnprotectedDomains)
         
-        if let tracker = resolver.trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
+        if let tracker = resolver.trackerFromUrl(trackerUrlString,
+                                                 pageUrlString: pageUrlStr,
+                                                 resourceType: resourceType,
+                                                 potentiallyBlocked: blocked) {
             guard let pageUrl = URL(string: pageUrlStr),
                   let pageHost = pageUrl.host,
                   let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,

@@ -32,13 +32,13 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     private let suiteName: String
     
     private var _storageCache: StorageCacheProvider?
-    private var storageCache: StorageCacheProvider? {
+    private var storageCache: StorageCacheProvider {
         lock.lock()
         if _storageCache == nil {
             _storageCache = StorageCacheProvider()
         }
         lock.unlock()
-        return _storageCache
+        return _storageCache!
     }
 
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {

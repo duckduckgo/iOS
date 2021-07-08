@@ -21,62 +21,35 @@ import Foundation
 import TrackerRadarKit
 
 protocol ContentBlockerRulesSource {
-    
+
     var trackerData: TrackerDataManager.DataSet? { get }
     var embeddedTrackerData: TrackerDataManager.DataSet { get }
     var tempListEtag: String? { get }
     var tempList: [String] { get }
     var unprotectedSites: [String] { get }
-    
+
 }
 
 class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
-    
+
     var trackerData: TrackerDataManager.DataSet? {
         return TrackerDataManager.shared.fetchedData
     }
-    
+
     var embeddedTrackerData: TrackerDataManager.DataSet {
         return TrackerDataManager.shared.embeddedData
     }
-    
+
     var tempListEtag: String? {
         return UserDefaultsETagStorage().etag(for: .temporaryUnprotectedSites)
     }
-    
-    private let lock = NSLock()
-    
-    private var _tempList: [String]?
+
     var tempList: [String] {
-        lock.lock()
-        if _tempList == nil {
-            let storageCache = StorageCacheProvider().current
-            _tempList = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-                .filter { !$0.trimWhitespace().isEmpty }
-        }
-        lock.unlock()
-        return _tempList ?? []
+        return FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites).filter { !$0.trimWhitespace().isEmpty }
     }
-    
+
     var unprotectedSites: [String] {
         return UnprotectedSitesManager().domains
     }
-    
-    init() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onStorageUpdate),
-                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
-                                               object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: StorageCacheProvider.didUpdateStorageCacheNotification, object: nil)
-    }
-    
-    @objc func onStorageUpdate() {
-        let storageCache = StorageCacheProvider().current
-        _tempList = storageCache.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
-    }
-    
+
 }

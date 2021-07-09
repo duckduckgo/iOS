@@ -112,6 +112,7 @@
                   waiting = true;                   // Prevent future invocations
                   setTimeout(function () {          // After a period of time
                       waiting = false;              // And allow future invocations
+                      callback.apply(this, arguments);
                   }, limit);
               }
           }

@@ -96,16 +96,10 @@ public class WebCacheManager {
         cookieStore.getAllCookies { cookies in
             let group = DispatchGroup()
             cookies.forEach { cookie in
-                domains.forEach { domain in
-
-                    if self.isDuckDuckGoOrAllowedDomain(cookie: cookie, domain: domain) {
-                        group.enter()
-                        cookieStore.delete(cookie) {
-                            group.leave()
-                        }
-
-                        // don't try to delete the cookie twice as it doesn't always work (esecially on the simulator)
-                        return
+                if domains.contains(where: { self.isCookie(cookie, matchingDomain: $0)}) {
+                    group.enter()
+                    cookieStore.delete(cookie) {
+                        group.leave()
                     }
                 }
             }
@@ -168,7 +162,7 @@ public class WebCacheManager {
     /// The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired
     ///  consequences, i.e. changing the theme, default language, etc.  These cookies are not stored in a personally identifiable way. For example, the large size setting
     ///  is stored as 's=l.' More info in https://duckduckgo.com/privacy
-    private func isDuckDuckGoOrAllowedDomain(cookie: HTTPCookie, domain: String) -> Bool {
+    private func isCookie(_ cookie: HTTPCookie, matchingDomain domain: String) -> Bool {
         return cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain))
     }
 

@@ -29,8 +29,19 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
 
     private let suiteName: String
 
+    // This variable should be confined to the Main Thread
+    private var tempUnprotectedDomains: [String]?
+
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName =  suiteName
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onStorageChange),
+                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
+                                               object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: StorageCacheProvider.didUpdateStorageCacheNotification, object: nil)
     }
 
     private var userDefaults: UserDefaults? {
@@ -51,24 +62,25 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
             onStoreChanged()
         }
     }
-    
-    private var tempUnprotectedDomains: [String] {
-        return StorageCacheProvider().current.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-            .filter { !$0.trimWhitespace().isEmpty }
-    }
 
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
-        return !unprotectedDomains.contains(domain)
+        
+        return !isTempUnprotected(domain: domain) && !unprotectedDomains.contains(domain)
     }
     
     public func isTempUnprotected(domain: String?) -> Bool {
         guard let domain = domain else { return false }
         
+        if tempUnprotectedDomains == nil {
+            tempUnprotectedDomains = FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+                .filter { !$0.trimWhitespace().isEmpty }
+        }
+        
         // Break domain apart to handle www.*
         var tempDomain = domain
         while tempDomain.contains(".") {
-            if tempUnprotectedDomains.contains(tempDomain) {
+            if tempUnprotectedDomains!.contains(tempDomain) {
                 return true
             }
             
@@ -93,5 +105,15 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
 
     private func onStoreChanged() {
         ContentBlockerRulesManager.shared.recompile()
+    }
+    
+    @objc private func onStorageChange() {
+        let newList = FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            .filter { !$0.trimWhitespace().isEmpty }
+
+        DispatchQueue.main.async {
+            self.tempUnprotectedDomains = newList
+        }
+
     }
 }

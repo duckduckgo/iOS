@@ -32,7 +32,7 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case success(etag: String?, data: Data)
     }
 
-    public enum Configuration: String {
+    public enum Configuration: String, CaseIterable {
         case httpsBloomFilterSpec
         case httpsBloomFilter
         case httpsExcludedDomains

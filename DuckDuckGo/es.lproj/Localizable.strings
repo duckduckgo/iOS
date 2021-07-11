@@ -259,6 +259,24 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo bloquea automáticamente muchos rastreadores. Con el Control Global de Privacidad (GPC), también puedes solicitar a los sitios web participantes que restrinjan la venta o el uso compartido de tus datos personales con otras empresas.";
 
+/* Cancel option for the email alias alert */
+"email.aliasAlert.decline" = "Cancelar";
+
+/* Option for generating a private email address */
+"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+
+/* Title for the email alias selection alert */
+"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+
+/* Parameter is an email address (string) */
+"email.aliasAlert.useUserAddress" = "Use %@";
+
+/* Title for the email copy browsing menu alert */
+"email.browsingMenu.alert" = "New address copied to your clipboard";
+
+/* Email option title in the browsing menu */
+"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+
 /* Empty list state placholder */
 "empty.bookmarks" = "Aún no se han añadido marcadores";
 
@@ -750,6 +768,12 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "GRADO DE PRIVACIDAD";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.toggle.label" = "Protección de privacidad del sitio web";
 
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";

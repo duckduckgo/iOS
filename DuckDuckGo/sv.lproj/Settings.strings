@@ -37,6 +37,9 @@
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animation";
 
+/* Class = "UILabel"; text = "Email Autofill"; ObjectID = "bAK-LL-HUH"; */
+"bAK-LL-HUH.text" = "Email Autofill";
+
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Data och/eller flikar kommer att rensas vid omstart av appen.";
 
@@ -145,6 +148,9 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Etikett";
 
+/* Class = "UILabel"; text = "Disable"; ObjectID = "RBZ-pi-KsT"; */
+"RBZ-pi-KsT.text" = "Inaktivera";
+
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Visa tangentbord på";
 
@@ -171,6 +177,9 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Önskad tidpunkt";
+
+/* Class = "UINavigationItem"; title = "Email Autofill"; ObjectID = "xMC-Sf-t5x"; */
+"xMC-Sf-t5x.title" = "Email Autofill";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
 "xof-5k-PkI.text" = "Ställ in som standardwebbläsare";

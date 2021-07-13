@@ -617,8 +617,13 @@ class TabViewController: UIViewController {
             if let diff = notification.userInfo?[ContentBlockerProtectionChangedNotification.diffKey] as? ContentBlockerRulesIdentifier.Difference {
                 if diff.contains(.unprotectedSites) {
                     reload(scripts: true)
+                } else {
+                    reloadUserScripts()
                 }
+            } else {
+                reloadUserScripts()
             }
+
         }
     }
 

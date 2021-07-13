@@ -81,17 +81,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
                                                  pageUrlString: pageUrlStr,
                                                  resourceType: resourceType,
                                                  potentiallyBlocked: blocked) {
-            guard let pageUrl = URL(string: pageUrlStr),
-                  let pageHost = pageUrl.host,
-                  let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
-                  let pageEntity = currentTrackerData.findEntity(forHost: pageHost) else {
-                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
-                return
-            }
-            
-            if pageEntity.displayName != tracker.entity?.displayName {
-                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
-            }
+            delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
     }
 }

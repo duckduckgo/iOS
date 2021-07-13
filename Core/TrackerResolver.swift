@@ -37,7 +37,8 @@ class TrackerResolver {
                                resourceType: String,
                                potentiallyBlocked: Bool) -> DetectedTracker? {
         
-        guard let tracker = tds.findTracker(forUrl: trackerUrlString) else {
+        guard let tracker = tds.findTracker(forUrl: trackerUrlString),
+              let entity = tds.findEntity(byName: tracker.owner?.name ?? "") else {
             return nil
         }
 
@@ -65,12 +66,7 @@ class TrackerResolver {
             }
         }
         
-        // Get entity
-        guard let entity = tds.findEntity(byName: tracker.owner?.name ?? "") else {
-            return nil
-        }
-        
-        // Check if current page is not affilated with the tracker
+        // Make sure current page is not affilated with the tracker
         if let pageUrl = URL(string: pageUrlString),
            let pageHost = pageUrl.host,
            let pageEntity = tds.findEntity(forHost: pageHost),
@@ -89,27 +85,26 @@ class TrackerResolver {
 
     static func isMatching(_ option: KnownTracker.Rule.Matching, host: String, resourceType: String) -> Bool {
 
+        var isEmpty = true // Require either domains or types to be specified
         var matching = true
 
-        if let requiredDomains = option.domains {
+        if let requiredDomains = option.domains, !requiredDomains.isEmpty {
+            isEmpty = false
             matching = requiredDomains.contains(where: { domain in
                 guard domain != host else { return true }
-                return  host.hasSuffix(".\(domain)")
+                return host.hasSuffix(".\(domain)")
             })
         }
 
-        if let requiredTypes = option.types {
-             matching = matching && requiredTypes.contains(resourceType)
+        if let requiredTypes = option.types, !requiredTypes.isEmpty {
+            isEmpty = false
+            matching = matching && requiredTypes.contains(resourceType)
         }
 
-        return matching
+        return !isEmpty && matching
     }
 }
 
-fileprivate extension KnownTracker.Rule.Matching {
-
-}
-    
 fileprivate extension KnownTracker {
 
     func hasRule(for trackerUrlString: String,
@@ -126,6 +121,7 @@ fileprivate extension KnownTracker {
 
             if regex.firstMatch(in: trackerUrlString, options: [], range: range) != nil {
 
+                // If rule is set to 'ignore', we note it is tracker but allow the request.
                 if rule.action == .ignore {
                     return .allowRequest
                 }
@@ -144,24 +140,4 @@ fileprivate extension KnownTracker {
 
         return .none
     }
-
-    func hasExemption(ofType actionType: KnownTracker.ActionType,
-                      for trackerUrlString: String,
-                      pageUrlString: String) -> Bool {
-        let range = NSRange(location: 0, length: trackerUrlString.utf16.count)
-
-        for rule in rules ?? [] where rule.action == actionType {
-            guard let pattern = rule.rule,
-                  let host = URL(string: pageUrlString)?.host,
-                  rule.exceptions?.domains?.contains(host) ?? false == true,
-                  let regex = try? NSRegularExpression(pattern: pattern, options: []) else { continue }
-
-            if regex.firstMatch(in: trackerUrlString, options: [], range: range) != nil {
-                return true
-            }
-        }
-
-        return false
-    }
-
 }

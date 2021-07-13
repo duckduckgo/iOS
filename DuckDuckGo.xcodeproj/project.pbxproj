@@ -369,6 +369,7 @@
 		9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B75D2232B36900D81D9F /* TabInstrumentation.swift */; };
 		98788E9A2521DA1E00D55218 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 98788E9C2521DA1E00D55218 /* Localizable.stringsdict */; };
 		987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */ = {isa = PBXBuildFile; fileRef = 987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */; };
+		987C7CB1269DE37F005DD82D /* TrackerResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987C7CB0269DE37F005DD82D /* TrackerResolverTests.swift */; };
 		9880722A25FA497B0039EF4B /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9880722925FA497B0039EF4B /* MenuButton.swift */; };
 		9880723725FA4E450039EF4B /* menu_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 9880723525FA4E440039EF4B /* menu_dark.json */; };
 		9880723825FA4E450039EF4B /* menu_light.json in Resources */ = {isa = PBXBuildFile; fileRef = 9880723625FA4E450039EF4B /* menu_light.json */; };
@@ -1739,6 +1740,7 @@
 		98788EC32521DA3900D55218 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = sv; path = sv.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		98788EC42521DA3900D55218 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "debug-messaging-enabled.js"; sourceTree = "<group>"; };
+		987C7CB0269DE37F005DD82D /* TrackerResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerResolverTests.swift; sourceTree = "<group>"; };
 		9880722925FA497B0039EF4B /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		9880723525FA4E440039EF4B /* menu_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_dark.json; sourceTree = "<group>"; };
 		9880723625FA4E450039EF4B /* menu_light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_light.json; sourceTree = "<group>"; };
@@ -2213,6 +2215,7 @@
 				8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */,
 				8341D808212D6159000514C2 /* HTTPSBloomFilterSpecificationTest.swift */,
 				8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */,
+				987C7CB0269DE37F005DD82D /* TrackerResolverTests.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -4954,6 +4957,7 @@
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
 				85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */,
 				85C271E61FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift in Sources */,
+				987C7CB1269DE37F005DD82D /* TrackerResolverTests.swift in Sources */,
 				833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */,
 				85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */,
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,

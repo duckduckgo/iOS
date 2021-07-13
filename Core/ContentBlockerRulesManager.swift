@@ -22,6 +22,7 @@ import WebKit
 import os.log
 import TrackerRadarKit
 
+// swiftlint:disable type_body_length
 public class ContentBlockerRulesManager {
     
     public typealias CompletionBlock = (WKContentRuleList?) -> Void
@@ -344,6 +345,7 @@ public class ContentBlockerRulesManager {
     }
 
 }
+// swiftlint:enable type_body_length
 
 extension ContentBlockerRulesManager {
     

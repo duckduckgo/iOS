@@ -23,7 +23,6 @@ import TrackerRadarKit
 
 class TrackerResolverTests: XCTestCase {
 
-
     func testWhenOptionsAreEmptyThenNothingMatches() {
 
         let rule = KnownTracker.Rule.Matching(domains: [], types: [])

@@ -53,13 +53,13 @@ public struct AppUrls {
         static let newYorkTimesBase = "https://nytimes.com"
         static let gpcEnabled = [gpcGlitchBase, washingtonPostBase, newYorkTimesBase]
 
-        static var loginQuickLink = "https://quack.duckduckgo.com/email/login"
-        static var emailPrivacyGuarantees = "https://quack.duckduckgo.com/email/privacy-guarantees"
-        static var addressBlogPostQuickLink = "https://quack.duckduckgo.com/email/learn-more"
-        static var emailLoginQuickLink = "https://quack.duckduckgo.com/email/login"
-        static var signUpQuickLink = "https://quack.duckduckgo.com/email/start"
+        static var loginQuickLink = "https://duckduckgo.com/email/login"
+        static var emailPrivacyGuarantees = "https://duckduckgo.com/email/privacy-guarantees"
+        static var addressBlogPostQuickLink = "https://duckduckgo.com/email/learn-more"
+        static var emailLoginQuickLink = "https://duckduckgo.com/email/login"
+        static var signUpQuickLink = "https://duckduckgo.com/email/start"
         static func signUpWithCodeQuickLink(code: String) -> String {
-            return "https://quack.duckduckgo.com/email/start?inviteCode=\(code)"
+            return "https://duckduckgo.com/email/start?inviteCode=\(code)"
         }
     }
     

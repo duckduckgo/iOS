@@ -152,12 +152,8 @@ class DaxDialogs {
         return nextHomeScreenMessageOverride == .addFavorite
     }
     
-    var isFireButtonEducationEnabled: Bool {
-        return variantManager.isSupported(feature: .fireButtonEducationIteration)
-    }
-    
     var shouldShowFireButtonPulse: Bool {
-        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isFireButtonEducationEnabled && isEnabled
+        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
     }
 
     func dismiss() {

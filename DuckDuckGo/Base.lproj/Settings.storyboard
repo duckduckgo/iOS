@@ -613,11 +613,11 @@
                                         <rect key="frame" x="0.0" y="1024.3333301544189" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="15" y="0.0" width="373.33333333333331" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -1967,6 +1967,7 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                         <outlet property="disableCellLabel" destination="qEh-V1-QaM" id="06z-9A-LJ1"/>
                         <outlet property="emailAccessoryText" destination="25v-n4-wJD" id="J2O-qe-brq"/>
                         <outlet property="footerTextView" destination="pT6-FQ-9d9" id="fPW-GF-xM9"/>
+                        <outlet property="tableViewCellLabel" destination="i4Y-CX-8b6" id="YLC-ha-Tgx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wsP-Bz-Fv6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1989,7 +1990,7 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsPictureInPictureMediaPlayback="NO">
-                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>

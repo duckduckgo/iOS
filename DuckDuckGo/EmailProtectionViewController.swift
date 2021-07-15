@@ -26,6 +26,7 @@ final class EmailProtectionViewController: UITableViewController {
         static var supportEmailAddress = URL(string: "mailto:support@duck.com")!
     }
 
+    @IBOutlet weak var tableViewCellLabel: UILabel!
     @IBOutlet weak var emailAccessoryText: UILabel!
     @IBOutlet weak var disableCellLabel: UILabel!
     @IBOutlet weak var footerTextView: UITextView!
@@ -153,6 +154,9 @@ extension EmailProtectionViewController: Themable {
 
     func decorate(with theme: Theme) {
         footerTextView.textColor = theme.tableHeaderTextColor
+        tableViewCellLabel.textColor = theme.tableCellTextColor
+        emailAccessoryText.textColor = theme.tableCellAccessoryTextColor
+
         tableView.tableFooterView?.backgroundColor = theme.backgroundColor
 
         tableView.backgroundColor = theme.backgroundColor

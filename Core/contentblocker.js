@@ -527,7 +527,7 @@ _utf8_encode : function (string) {
             url: trackerUrl,
             blocked: blocked,
             reason: result.reason,
-            isSurrogate: result.matchedRule && result.matchedRule.surrogate
+            isSurrogate: result.matchedRule && result.matchedRule.surrogate ? true : false
         })
 
         // Tracker blocking is dealt with by content rules

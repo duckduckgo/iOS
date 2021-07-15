@@ -97,8 +97,7 @@ class DaxDialogs {
                                                          isConfirmActionDestructive: true,
                                                          displayedPixelName: .daxDialogsFireEducationShown,
                                                          confirmActionPixelName: .daxDialogsFireEducationConfirmed,
-                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled,
-                                                         cancelOutsideOfButtonPixelName: .daxDialogsFireEducationCancelledOutsideOfButton)
+                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled)
         
         let message: String
         let confirmAction: String
@@ -108,7 +107,6 @@ class DaxDialogs {
         let displayedPixelName: PixelName
         let confirmActionPixelName: PixelName
         let cancelActionPixelName: PixelName
-        let cancelOutsideOfButtonPixelName: PixelName
     }
 
     public static let shared = DaxDialogs()

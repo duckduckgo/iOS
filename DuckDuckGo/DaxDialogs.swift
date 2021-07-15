@@ -180,15 +180,11 @@ class DaxDialogs {
     func fireButtonPulseStarted() {
         if settings.fireButtonPulseDateShown == nil {
             settings.fireButtonPulseDateShown = Date()
-            Pixel.fire(pixel: .fireEducationPulseShown)
         }
         if fireButtonPulseTimer == nil, let date = settings.fireButtonPulseDateShown {
             let timeSinceShown = Date().timeIntervalSince(date)
             let timerTime = DaxDialogs.timeToFireButtonExpire - timeSinceShown
             fireButtonPulseTimer = Timer(timeInterval: timerTime, repeats: false) { _ in
-                if !self.settings.fireButtonEducationShownOrExpired {
-                    Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTimeout)
-                }
                 self.settings.fireButtonEducationShownOrExpired = true
                 ViewHighlighter.hideAll()
             }
@@ -198,9 +194,6 @@ class DaxDialogs {
     
     func fireButtonPulseCancelled() {
         fireButtonPulseTimer?.invalidate()
-        if !self.settings.fireButtonEducationShownOrExpired {
-            Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTabOpened)
-        }
         settings.fireButtonEducationShownOrExpired = true
     }
     

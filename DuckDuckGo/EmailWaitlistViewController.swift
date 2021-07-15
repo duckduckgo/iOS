@@ -48,6 +48,8 @@ class EmailWaitlistViewController: UIViewController {
         emailManager.requestDelegate = self
         return emailManager
     }()
+
+    private var currentTheme: Theme?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -286,7 +288,7 @@ class EmailWaitlistViewController: UIViewController {
         let attributedString = NSMutableAttributedString(string: text as String, attributes: [
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
             NSAttributedString.Key.font: UIFont.appFont(ofSize: 16),
-            NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+            NSAttributedString.Key.foregroundColor: self.currentTheme?.tableHeaderTextColor ?? UIColor.secondaryLabel
         ])
 
         for (highlightedValue, highlightURL) in highlights {
@@ -321,7 +323,12 @@ class EmailWaitlistViewController: UIViewController {
 extension EmailWaitlistViewController: Themable {
     
     func decorate(with theme: Theme) {
+        self.currentTheme = theme
+
         view.backgroundColor = theme.backgroundColor
+        headerTitleLabel.textColor = theme.navigationBarTitleColor
+
+        renderCurrentWaitlistState()
     }
 
 }

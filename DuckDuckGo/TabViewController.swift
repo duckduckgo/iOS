@@ -858,8 +858,12 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.showBars()
 
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
-        if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
-            self.siteRating = makeSiteRating(url: siteRating.url)
+        if let siteRating = siteRating, let url = url,
+           siteRating.url.host == url.host,
+           siteRating.url.scheme == url.scheme,
+           !AppUrls().isDuckDuckGo(url: url) {
+
+            self.siteRating = makeSiteRating(url: url)
         } else {
             resetSiteRating()
         }

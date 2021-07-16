@@ -32,6 +32,13 @@ public class Database {
 
     private let semaphore = DispatchSemaphore(value: 0)
     private let container: NSPersistentContainer
+
+    public var isDatabaseFileInitialized: Bool {
+        var containerURL = DDGPersistentContainer.defaultDirectoryURL()
+        containerURL.appendPathComponent("\(Constants.databaseName).sqlite")
+
+        return FileManager.default.fileExists(atPath: containerURL.path)
+    }
     
     public var model: NSManagedObjectModel {
         return container.managedObjectModel

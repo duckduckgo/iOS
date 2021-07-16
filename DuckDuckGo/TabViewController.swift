@@ -1404,27 +1404,34 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
             let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
             alert.overrideUserInterfaceStyle()
 
+            var pixelParameters: [String: String] = [:]
+
+            if let cohort = emailManager.cohort {
+                pixelParameters[PixelParameters.emailCohort] = cohort
+            }
+
             if let userEmail = emailManager.userEmail {
                 let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
                 alert.addAction(title: actionTitle) {
-                    Pixel.fire(pixel: .emailUserPressedUseAddress)
+                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters)
                     completionHandler(.user)
                 }
             }
 
             alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                Pixel.fire(pixel: .emailUserPressedUseAlias)
+                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters)
                 completionHandler(.generated)
             }
 
             alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed)
+                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
                 completionHandler(.none)
             }
 
             if UIDevice.current.userInterfaceIdiom == .pad {
                 // make sure the completion handler is called if the alert is dismissed by tapping outside the alert
                 alert.addAction(title: "", style: .cancel) {
+                    Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
                     completionHandler(.none)
                 }
             }
@@ -1444,14 +1451,18 @@ extension TabViewController: EmailManagerRequestDelegate {
 
     // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager,
-                      didRequestAliasWithURL url: URL,
+                      requested url: URL,
                       method: String,
                       headers: [String: String],
+                      parameters: [String: String]?,
+                      httpBody: Data?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
         APIRequest.request(url: url,
                            method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
+                           parameters: parameters,
                            headers: headers,
+                           httpBody: httpBody,
                            timeoutInterval: timeoutInterval) { response, error in
             
             completion(response?.data, error)

@@ -240,6 +240,8 @@ public struct PixelParameters {
     public static let tabPreviewCountDelta = "cd"
     
     public static let etag = "et"
+
+    public static let emailCohort = "cohort"
 }
 
 public struct PixelValues {

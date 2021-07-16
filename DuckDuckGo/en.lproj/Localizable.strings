@@ -277,6 +277,78 @@
 /* Email option title in the browsing menu */
 "email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
 
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Enabled";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Off";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Cancel";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Note: Removing Email Protection from this device will not delete your Duck Address.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Remove";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Remove Email Protection?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "An error occurred while joining the Waitlist, please try again later";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Get Started";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "I have an Invite Code";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "You’ve been invited!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Join the Private Waitlist";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "You’re on the waitlist!";
+
+/* Description text for the email waitlist */
+"email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.";
+
+/* Description text for the email waitlist */
+"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. Learn more.";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Would you like to us to notify you when it’s your turn?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "No Thanks";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "Notify Me";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
+
+/* Footer text for the email waitlist */
+"email.waitlist.privacy-guarantee" = "We do not save your emails. Learn more.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Email privacy, simplified.";
+
+/* Description text for the email waitlist */
+"email.waitlist.summary" = "Block email trackers and hide your address, without switching your email provider. Learn more.";
+
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
 

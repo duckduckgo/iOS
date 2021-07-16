@@ -47,7 +47,7 @@ protocol AppConfigurationFetchStatistics {
 
 class AppConfigurationFetch {
     
-    private struct Constants {
+    struct Constants {
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 30

@@ -39,8 +39,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
-    @IBOutlet weak var emailCell: UITableViewCell!
-    @IBOutlet weak var emailAccessoryText: UILabel!
+    @IBOutlet weak var emailProtectionCell: UITableViewCell!
+    @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
 
@@ -48,12 +48,12 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var accessoryLabels: [UILabel]!
     
     private let defaultBroswerSectionIndex = 0
+    private lazy var emailManager = EmailManager()
     
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
-    private lazy var emailManager = EmailManager()
 
     private static var shouldShowDefaultBrowserSection: Bool {
         if #available(iOS 14, *) {
@@ -91,7 +91,7 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDoNotSell()
         configureIconViews()
-        configureEmail()
+        configureEmailProtectionAccessoryText()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -161,15 +161,6 @@ class SettingsViewController: UITableViewController {
     private func configureDoNotSell() {
         doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
     }
-    
-    private func configureEmail() {
-        if emailManager.isSignedIn {
-            emailCell.isHidden = false
-            emailAccessoryText.text = emailManager.userEmail
-        } else {
-            emailCell.isHidden = true
-        }
-    }
      
     private func configureRememberLogins() {
         if #available(iOS 13, *) {
@@ -200,6 +191,20 @@ class SettingsViewController: UITableViewController {
         performSegue(withIdentifier: "Debug", sender: nil)
     }
 
+    private func configureEmailProtectionAccessoryText() {
+        emailProtectionAccessoryText.text = emailManager.userEmail
+    }
+
+    private func showEmailProtectionViewController() {
+        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(identifier: "EmailProtectionViewController")
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func showEmailWaitlistViewController() {
+        navigationController?.pushViewController(EmailWaitlistViewController.loadFromStoryboard(), animated: true)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -212,13 +217,15 @@ class SettingsViewController: UITableViewController {
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
 
+        case emailProtectionCell:
+            if emailManager.isSignedIn {
+                showEmailProtectionViewController()
+            } else {
+                showEmailWaitlistViewController()
+            }
+
         case versionCell:
             showDebug()
-            
-        case emailCell:
-            if emailManager.isSignedIn {
-                performSegue(withIdentifier: "showEmail", sender: self)
-            }
 
         default: break
         }

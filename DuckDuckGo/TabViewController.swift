@@ -167,14 +167,16 @@ class TabViewController: UIViewController {
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
+    private var printingUserScript = PrintingUserScript()
+    private var autofillUserScript = AutofillUserScript()
+    private var debugScript = DebugUserScript()
+
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
         emailManager.requestDelegate = self
         return emailManager
     }()
-    private var autofillUserScript = AutofillUserScript()
-    private var debugScript = DebugUserScript()
     
     private var userScripts: [UserScript] = []
 
@@ -231,7 +233,8 @@ class TabViewController: UIViewController {
             fingerprintScript,
             faviconScript,
             fullScreenVideoScript,
-            autofillUserScript
+            autofillUserScript,
+            printingUserScript
         ]
         
         if #available(iOS 13, *) {
@@ -254,6 +257,7 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
+        printingUserScript.delegate = self
     }
     
     func updateTabModel() {
@@ -1393,6 +1397,16 @@ extension TabViewController: FaviconUserScriptDelegate {
         tabModel.didUpdateFavicon()
     }
     
+}
+
+extension TabViewController: PrintingUserScriptDelegate {
+
+    func printingUserScriptDidRequestPrintController(_ script: PrintingUserScript) {
+        let controller = UIPrintInteractionController.shared
+        controller.printFormatter = webView.viewPrintFormatter()
+        controller.present(animated: true, completionHandler: nil)
+    }
+
 }
 
 extension TabViewController: EmailManagerAliasPermissionDelegate {

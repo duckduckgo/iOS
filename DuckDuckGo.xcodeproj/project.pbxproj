@@ -31,6 +31,7 @@
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
 		4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */; };
 		4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */; };
+		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
 		4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B82E97F25B634B800656FE7 /* TrackerRadarKit */; };
 		4BDCECB92680333100F5C244 /* EmailWaitlistWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDCECB82680333100F5C244 /* EmailWaitlistWebViewController.swift */; };
 		4BE86C5D2633DBD8001C0E77 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE86C5C2633DBD8001C0E77 /* BrowserServicesKit */; };
@@ -768,6 +769,7 @@
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
 		4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoUserScript.swift; sourceTree = "<group>"; };
 		4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationFetchTests.swift; sourceTree = "<group>"; };
+		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
 		4BDCECB82680333100F5C244 /* EmailWaitlistWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlistWebViewController.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
 		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
@@ -3430,19 +3432,20 @@
 			children = (
 				0201A44D24ED81F000C6641C /* ContentBlockerRules */,
 				85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */,
+				85BDC3132434D8F80053DB07 /* DebugUserScript.swift */,
+				85BDC31124339E080053DB07 /* DocumentUserScript.swift */,
+				02C57C5425153330009E5129 /* DoNotSellUserScript.swift */,
+				02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */,
+				4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */,
+				85BDC3182436161C0053DB07 /* LoginFormDetectionUserScript.swift */,
+				850559CF23CF647C0055C0D5 /* PreserveLogins.swift */,
+				4B75EA9126A266CB00018634 /* PrintingUserScript.swift */,
+				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
+				836A941C247F23C600BF8EF5 /* UserAgentManager.swift */,
 				F1A886771F29394E0096251E /* WebCacheManager.swift */,
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
-				830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */,
 				83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */,
-				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
-				850559CF23CF647C0055C0D5 /* PreserveLogins.swift */,
-				85BDC31124339E080053DB07 /* DocumentUserScript.swift */,
-				85BDC3132434D8F80053DB07 /* DebugUserScript.swift */,
-				85BDC3182436161C0053DB07 /* LoginFormDetectionUserScript.swift */,
-				836A941C247F23C600BF8EF5 /* UserAgentManager.swift */,
-				02C57C5425153330009E5129 /* DoNotSellUserScript.swift */,
-				4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */,
-				02DC6A63255D8C5000B03BC2 /* FingerprintUserScript.swift */,
+				830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -5133,6 +5136,7 @@
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				98647994266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
+				4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */,

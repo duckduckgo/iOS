@@ -97,8 +97,7 @@ class DaxDialogs {
                                                          isConfirmActionDestructive: true,
                                                          displayedPixelName: .daxDialogsFireEducationShown,
                                                          confirmActionPixelName: .daxDialogsFireEducationConfirmed,
-                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled,
-                                                         cancelOutsideOfButtonPixelName: .daxDialogsFireEducationCancelledOutsideOfButton)
+                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled)
         
         let message: String
         let confirmAction: String
@@ -108,7 +107,6 @@ class DaxDialogs {
         let displayedPixelName: PixelName
         let confirmActionPixelName: PixelName
         let cancelActionPixelName: PixelName
-        let cancelOutsideOfButtonPixelName: PixelName
     }
 
     public static let shared = DaxDialogs()
@@ -152,12 +150,8 @@ class DaxDialogs {
         return nextHomeScreenMessageOverride == .addFavorite
     }
     
-    var isFireButtonEducationEnabled: Bool {
-        return variantManager.isSupported(feature: .fireButtonEducationIteration)
-    }
-    
     var shouldShowFireButtonPulse: Bool {
-        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isFireButtonEducationEnabled && isEnabled
+        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
     }
 
     func dismiss() {
@@ -184,15 +178,11 @@ class DaxDialogs {
     func fireButtonPulseStarted() {
         if settings.fireButtonPulseDateShown == nil {
             settings.fireButtonPulseDateShown = Date()
-            Pixel.fire(pixel: .fireEducationPulseShown)
         }
         if fireButtonPulseTimer == nil, let date = settings.fireButtonPulseDateShown {
             let timeSinceShown = Date().timeIntervalSince(date)
             let timerTime = DaxDialogs.timeToFireButtonExpire - timeSinceShown
             fireButtonPulseTimer = Timer(timeInterval: timerTime, repeats: false) { _ in
-                if !self.settings.fireButtonEducationShownOrExpired {
-                    Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTimeout)
-                }
                 self.settings.fireButtonEducationShownOrExpired = true
                 ViewHighlighter.hideAll()
             }
@@ -202,9 +192,6 @@ class DaxDialogs {
     
     func fireButtonPulseCancelled() {
         fireButtonPulseTimer?.invalidate()
-        if !self.settings.fireButtonEducationShownOrExpired {
-            Pixel.fire(pixel: .fireEducationPulseCancelledBecauseTabOpened)
-        }
         settings.fireButtonEducationShownOrExpired = true
     }
     

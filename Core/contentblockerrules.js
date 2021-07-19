@@ -194,6 +194,7 @@
       
       delete Image.prototype.src;
       Object.defineProperty(Image.prototype, "src", {
+        configurable: true,
         get: function() {
           return originalImageSrc.get.call(this);
         },

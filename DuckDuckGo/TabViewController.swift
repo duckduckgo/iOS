@@ -1003,6 +1003,7 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         webpageDidFailToLoad()
         checkForReloadOnError()
+        scheduleTrackerNetworksAnimation(collapsing: true)
     }
 
     private func webpageDidFailToLoad() {

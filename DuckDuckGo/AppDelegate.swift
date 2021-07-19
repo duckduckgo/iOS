@@ -24,6 +24,7 @@ import os.log
 import Kingfisher
 import WidgetKit
 import BackgroundTasks
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -75,6 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.global(qos: .background).async {
             ContentBlockerStringCache.removeLegacyData()
         }
+
+        if !Database.shared.isDatabaseFileInitialized {
+            let autofillStorage = EmailKeychainManager()
+            autofillStorage.deleteAuthenticationState()
+            autofillStorage.deleteWaitlistState()
+        }
         
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
@@ -97,11 +104,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         clearLegacyAllowedDomainCookies()
 
-        if #available(iOS 13.0, *) {
-            // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
-            // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
-            AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        }
+        // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
+        // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
+        AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
+        EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
+
+        UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
 
@@ -145,6 +153,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch().start { newData in
             if newData {
                 ContentBlockerRulesManager.shared.recompile()
+            }
+        }
+
+        EmailWaitlist.shared.emailManager.fetchInviteCodeIfAvailable { result in
+            switch result {
+            case .success: EmailWaitlist.shared.sendInviteCodeAvailableNotification()
+            case .failure: break
             }
         }
     }
@@ -279,22 +294,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: private
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
-        if #available(iOS 13.0, *) {
-            guard UIApplication.shared.backgroundRefreshStatus == .available else {
-                return
-            }
-            
-            // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
-            // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
-            BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-                guard tasks.isEmpty else {
-                    return
-                }
+        guard UIApplication.shared.backgroundRefreshStatus == .available else {
+            return
+        }
 
+        // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
+        // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
+        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+            let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
+            if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
-        } else {
-            application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
+
+            let hasWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            if !hasWaitlistTask {
+                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
+            }
         }
     }
     
@@ -408,4 +423,36 @@ extension AppDelegate: UIScreenshotServiceDelegate {
             completionHandler(data, 0, visibleBounds)
         }
     }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if #available(iOS 14.0, *) {
+            completionHandler(.banner)
+        } else {
+            completionHandler(.alert)
+        }
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        presentWaitlistSettingsModal()
+        completionHandler()
+    }
+
+    private func presentWaitlistSettingsModal() {
+        guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
+
+        rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+        let navigationController = rootViewController.presentedViewController as? UINavigationController
+        let waitlist = EmailWaitlistViewController.loadFromStoryboard()
+
+        navigationController?.popToRootViewController(animated: false)
+        navigationController?.pushViewController(waitlist, animated: true)
+    }
+
 }

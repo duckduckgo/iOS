@@ -199,7 +199,7 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
         }
 
         let network = networksDetected[indexPath.row]
-        let percent = drama ? 0 : 100 * Int(network.detectedOnCount) / pagesVisited
+        let percent = pagesVisited == 0 || drama ? 0 : 100 * Int(network.detectedOnCount) / pagesVisited
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? PrivacyProtectionNetworkLeaderboardCell else {
             fatalError("Failed to dequeue cell as PrivacyProtectionNetworkLeaderboardCell")

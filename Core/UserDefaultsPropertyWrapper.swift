@@ -61,6 +61,8 @@ public struct UserDefaultsWrapper<T> {
         
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
 
+        case showWaitlistNotification = "com.duckduckgo.ios.showWaitlistNotification"
+
         case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
         case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
         case downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"

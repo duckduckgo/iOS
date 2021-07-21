@@ -30,6 +30,15 @@ class AppUrlsTests: XCTestCase {
         mockStatisticsStore = MockStatisticsStore()
     }
 
+    func testWhenCanDetectBlogUrl() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+
+        XCTAssertTrue(testee.isBlog(url: URL(string: "https://www.spreadprivacy.com/introducing-email-protection-beta")!))
+        XCTAssertTrue(testee.isBlog(url: URL(string: "https://spreadprivacy.com")!))
+        XCTAssertFalse(testee.isBlog(url: URL(string: "https://notspreadprivacy.com")!))
+
+    }
+
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
 

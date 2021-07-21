@@ -155,6 +155,11 @@ public struct AppUrls {
         }
     }
 
+    public func isBlog(url: URL) -> Bool {
+        guard let host = url.host else { return false }
+        return ["spreadprivacy.com", "www.spreadprivacy.com"].contains(host)
+    }
+
     public func isDuckDuckGo(domain: String?) -> Bool {
         guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
         return isDuckDuckGo(url: url)

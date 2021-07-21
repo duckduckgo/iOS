@@ -11,6 +11,9 @@
 		0254AC2224EDAC41004855DF /* ContentBlockerRulesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */; };
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
+		02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */; };
+		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
+		02BA15B326A89F3A00472DD7 /* PrivacyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA15B226A89F3A00472DD7 /* PrivacyConfiguration.swift */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
 		02C57C5525153330009E5129 /* DoNotSellUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C5425153330009E5129 /* DoNotSellUserScript.swift */; };
 		02C57C5F251533CE009E5129 /* donotsell.js in Resources */ = {isa = PBXBuildFile; fileRef = 02C57C5E251533CE009E5129 /* donotsell.js */; };
@@ -749,6 +752,9 @@
 		025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerprintUITest.swift; sourceTree = "<group>"; };
 		025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FingerprintingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManager.swift; sourceTree = "<group>"; };
+		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
+		02BA15B226A89F3A00472DD7 /* PrivacyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfiguration.swift; sourceTree = "<group>"; };
 		02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotSellSettingsViewController.swift; sourceTree = "<group>"; };
 		02C57C5425153330009E5129 /* DoNotSellUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotSellUserScript.swift; sourceTree = "<group>"; };
 		02C57C5E251533CE009E5129 /* donotsell.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = donotsell.js; sourceTree = "<group>"; };
@@ -2191,6 +2197,16 @@
 			path = FingerprintingUITests;
 			sourceTree = "<group>";
 		};
+		02BA15AD26A89DE100472DD7 /* PrivacyConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				02BA15B026A89ECA00472DD7 /* ios-config.json */,
+				02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */,
+				02BA15B226A89F3A00472DD7 /* PrivacyConfiguration.swift */,
+			);
+			name = PrivacyConfiguration;
+			sourceTree = "<group>";
+		};
 		02DC6A50255D8BE700B03BC2 /* fingerprinting */ = {
 			isa = PBXGroup;
 			children = (
@@ -2308,6 +2324,7 @@
 		837774491F8E1ECE00E17A29 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
+				02BA15AD26A89DE100472DD7 /* PrivacyConfiguration */,
 				83EC09B4212C456000F3797D /* API */,
 				8377744D1F8E1FF700E17A29 /* Converter */,
 				8377744B1F8E1F8000E17A29 /* Domain */,
@@ -4531,6 +4548,7 @@
 				02DC6A52255D8C0A00B03BC2 /* fingerprint.js in Resources */,
 				987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */,
 				98B001B0251EABB40090EC07 /* InfoPlist.strings in Resources */,
+				02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */,
 				4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
@@ -5171,6 +5189,7 @@
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				98DA35C7268CDA3B00159906 /* TrackerResolver.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
+				02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				83E2D2BE253CD772005605F5 /* HTTPSExcludedDomains.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
@@ -5192,6 +5211,7 @@
 				F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */,
 				859C5FBD214972E400E2A43D /* Grade.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
+				02BA15B326A89F3A00472DD7 /* PrivacyConfiguration.swift in Sources */,
 				988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */,
 				9887DC252354D2AA005C85F5 /* Database.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,

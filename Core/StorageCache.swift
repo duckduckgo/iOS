@@ -73,8 +73,16 @@ public class StorageCache: StorageCacheUpdating {
             }
             return false
             
-        case .temporaryUnprotectedSites:
-            return fileStore.persist(data as? Data, forConfiguration: configuration)
+        case .privacyConfiguration:
+            if fileStore.persist(data as? Data, forConfiguration: configuration) {
+                if PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
+                    // TODO: Fix pixel
+                    Pixel.fire(pixel: .trackerDataReloadFailed)
+                    return false
+                }
+                return true
+            }
+            return false
             
         }
     }

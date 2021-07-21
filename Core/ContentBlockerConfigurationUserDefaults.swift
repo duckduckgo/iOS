@@ -73,7 +73,7 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
         guard let domain = domain else { return false }
         
         if tempUnprotectedDomains == nil {
-            tempUnprotectedDomains = FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+            tempUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains
                 .filter { !$0.trimWhitespace().isEmpty }
         }
         
@@ -108,7 +108,7 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     }
     
     @objc private func onStorageChange() {
-        let newList = FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites)
+        let newList = PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains
             .filter { !$0.trimWhitespace().isEmpty }
 
         DispatchQueue.main.async {

@@ -34,7 +34,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public var source: String {
         let unprotectedDomains = UnprotectedSitesManager().domains.joined(separator: "\n")
             + "\n"
-            + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
+            + (PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.joined(separator: "\n"))
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains
@@ -50,8 +50,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public weak var delegate: ContentBlockerUserScriptDelegate?
     public weak var storageCache: StorageCache? {
         didSet {
-            temporaryUnprotectedDomains = storageCache?.fileStore.loadAsArray(forConfiguration: .temporaryUnprotectedSites)
-                .filter { !$0.trimWhitespace().isEmpty } ?? []
+            temporaryUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
         }
     }
 

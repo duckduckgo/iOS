@@ -72,6 +72,7 @@ class AppConfigurationFetch {
         static let fetchSurrogatesCount = "d4"
         static let fetchTrackerDataSetCount = "d5"
         static let fetchTemporaryUnprotectedSitesCount = "d6"
+        static let fetchPrivacyConfigurationCount = "d7"
     }
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
@@ -99,6 +100,9 @@ class AppConfigurationFetch {
 
     @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
     private var downloadedTemporaryUnprotectedSitesCount: Int
+    
+    @UserDefaultsWrapper(key: .downloadedPrivacyConfigurationCount, defaultValue: 0)
+    private var downloadedPrivacyConfigurationCount: Int
 
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
@@ -218,8 +222,8 @@ class AppConfigurationFetch {
         case .httpsBloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
         case .httpsExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
         case .surrogates: downloadedSurrogatesCount += 1
-        case .temporaryUnprotectedSites: downloadedTemporaryUnprotectedSitesCount += 1
         case .trackerDataSet: downloadedTrackerDataSetCount += 1
+        case .privacyConfiguration: downloadedPrivacyConfigurationCount += 1
         }
     }
     
@@ -258,6 +262,7 @@ class AppConfigurationFetch {
             backgroundFetchType = Keys.bgFetchTypeLegacy
         }
         
+        // TODO: PR Review - Adding another entry throws compiler error
         let parameters = [Keys.bgFetchStart: String(store.backgroundStartCount),
                           Keys.bgFetchNoData: String(store.backgroundNoDataCount),
                           Keys.bgFetchWithData: String(store.backgroundNewDataCount),

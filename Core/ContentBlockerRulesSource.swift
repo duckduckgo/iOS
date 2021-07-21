@@ -41,11 +41,11 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
     }
 
     var tempListEtag: String? {
-        return UserDefaultsETagStorage().etag(for: .temporaryUnprotectedSites)
+        return UserDefaultsETagStorage().etag(for: .privacyConfiguration)
     }
 
     var tempList: [String] {
-        return FileStore().loadAsArray(forConfiguration: .temporaryUnprotectedSites).filter { !$0.trimWhitespace().isEmpty }
+        return PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
     }
 
     var unprotectedSites: [String] {

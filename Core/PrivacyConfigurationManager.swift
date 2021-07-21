@@ -1,8 +1,8 @@
 //
-//  TrackerDataManager.swift
-//  Core
+//  PrivacyConfigurationManager.swift
+//  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,13 +18,10 @@
 //
 
 import Foundation
-import TrackerRadarKit
 
-public class TrackerDataManager {
-    
+public class PrivacyConfigurationManager {
     public struct Constants {
-        public static let embeddedDataSetETag = "\"b5a369bfb768bc327fb22575c792a348\""
-        public static let embeddedDataSetSHA = "uFwyHaQtXyKGmC4SQtLRmFMH1EOn48LRlf2pLQEvd+8="
+        public static let embeddedConfigETag = "\"d2a60035e07218b91f951ac872c503e1\""
     }
     
     public enum ReloadResult {
@@ -33,12 +30,12 @@ public class TrackerDataManager {
         case downloaded
     }
     
-    public typealias DataSet = (tds: TrackerData, etag: String)
+    public typealias Configuration = (config: PrivacyConfiguration, etag: String)
     
     private let lock = NSLock()
     
-    private var _fetchedData: DataSet?
-    private(set) public var fetchedData: DataSet? {
+    private var _fetchedData: Configuration?
+    private(set) public var fetchedData: Configuration? {
         get {
             lock.lock()
             let data = _fetchedData
@@ -52,17 +49,17 @@ public class TrackerDataManager {
         }
     }
     
-    private var _embeddedData: DataSet!
-    private(set) public var embeddedData: DataSet {
+    private var _embeddedData: Configuration!
+    private(set) public var embeddedData: Configuration {
         get {
             lock.lock()
-            let data: DataSet
+            let data: Configuration
             // List is loaded lazily when needed
             if let embedded = _embeddedData {
                 data = embedded
             } else {
-                let trackerData = try? JSONDecoder().decode(TrackerData.self, from: Self.loadEmbeddedAsData())
-                _embeddedData = (trackerData!, Constants.embeddedDataSetETag)
+                let configData = try? JSONDecoder().decode(PrivacyConfiguration.self, from: Self.loadEmbeddedAsData())
+                _embeddedData = (configData!, Constants.embeddedConfigETag)
                 data = _embeddedData
             }
             lock.unlock()
@@ -75,22 +72,21 @@ public class TrackerDataManager {
         }
     }
     
-    // remove?
-    public static let shared = TrackerDataManager()
+    public static let shared = PrivacyConfigurationManager()
     
-    public var trackerData: TrackerData {
+    public var privacyConfig: PrivacyConfiguration {
         if let data = fetchedData {
-            return data.tds
+            return data.config
         }
-        return embeddedData.tds
+        return embeddedData.config
     }
 
-    init(trackerData: TrackerData) {
-        _fetchedData = (trackerData, "")
+    init(configData: PrivacyConfiguration) {
+        _fetchedData = (configData, "")
     }
 
     init() {
-        reload(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet))
+        reload(etag: UserDefaultsETagStorage().etag(for: .privacyConfiguration))
     }
     
     @discardableResult
@@ -98,14 +94,15 @@ public class TrackerDataManager {
         
         let result: ReloadResult
         
-        if let etag = etag, let data = FileStore().loadAsData(forConfiguration: .trackerDataSet) {
+        if let etag = etag, let data = FileStore().loadAsData(forConfiguration: .privacyConfiguration) {
             result = .downloaded
             
             do {
                 // This might fail if the downloaded data is corrupt or format has changed unexpectedly
-                let data = try JSONDecoder().decode(TrackerData.self, from: data)
+                let data = try JSONDecoder().decode(PrivacyConfiguration.self, from: data)
                 fetchedData = (data, etag)
             } catch {
+                // TODO: fix pixels
                 Pixel.fire(pixel: .trackerDataParseFailed, error: error)
                 fetchedData = nil
                 return .embeddedFallback
@@ -119,17 +116,11 @@ public class TrackerDataManager {
     }
     
     static var embeddedUrl: URL {
-        return Bundle.core.url(forResource: "trackerData", withExtension: "json")!
+        return Bundle.core.url(forResource: "ios-config", withExtension: "json")!
     }
 
     static func loadEmbeddedAsData() -> Data {
         let json = try? Data(contentsOf: embeddedUrl)
         return json!
     }
-    
-    static func loadEmbeddedAsString() -> String {
-        let json = try? String(contentsOf: embeddedUrl, encoding: .utf8)
-        return json!
-    }
-    
 }

@@ -614,7 +614,8 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        if let rules = ContentBlockerRulesManager.shared.currentRules {
+        if let rules = ContentBlockerRulesManager.shared.currentRules,
+           PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .contentBlocking) {
             self.webView.configuration.userContentController.removeAllContentRuleLists()
             self.webView.configuration.userContentController.add(rules.rulesList)
             

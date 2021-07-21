@@ -26,6 +26,10 @@ public struct PrivacyConfiguration: Codable {
     public let features: [FeatureName: PrivacyFeature]
     public let unprotectedTemporary: UnprotectedList
     
+    public enum SupportedFeatures: String {
+        case contentBlocking
+    }
+    
     public init(features: [String: PrivacyFeature], unprotectedTemporary: [ExceptionEntry]) {
         self.features = features
         self.unprotectedTemporary = unprotectedTemporary
@@ -33,6 +37,12 @@ public struct PrivacyConfiguration: Codable {
     
     public var tempUnprotectedDomains: [String] {
         return unprotectedTemporary.map { $0.domain }
+    }
+    
+    public func isEnabled(featureKey: SupportedFeatures) -> Bool {
+        guard let feature = features[featureKey.rawValue] else { return false }
+        
+        return feature.state == "enabled"
     }
     
     enum CodingKeys: String, CodingKey {

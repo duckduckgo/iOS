@@ -26,6 +26,8 @@ import WebKit
 
 class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
+    let appUrls = AppUrls()
+
     @IBOutlet var webView: WKWebView!
 
     private let baseURL: URL
@@ -101,7 +103,7 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
         switch schemeType {
         case .navigational:
-            let validHost = AppUrls().isDuckDuckGo(url: url)
+            let validHost = appUrls.isDuckDuckGo(url: url) || appUrls.isBlog(url: url)
             decisionHandler(validHost ? .allow : .cancel)
         case .external:
             UIApplication.shared.open(url, options: [:]) { opened in

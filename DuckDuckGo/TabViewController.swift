@@ -866,12 +866,7 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
-        if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
-            self.siteRating = makeSiteRating(url: siteRating.url)
-        } else {
-            resetSiteRating()
-        }
+        resetSiteRating()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -1008,6 +1003,7 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         webpageDidFailToLoad()
         checkForReloadOnError()
+        scheduleTrackerNetworksAnimation(collapsing: true)
     }
 
     private func webpageDidFailToLoad() {

@@ -69,7 +69,6 @@ public struct UserDefaultsWrapper<T> {
         case downloadedHTTPSExcludedDomainsCount = "com.duckduckgo.app.downloadedHTTPSExcludedDomainsCount"
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
-        case downloadedTemporaryUnprotectedSitesCount = "com.duckduckgo.app.downloadedTemporaryUnprotectedSitesCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
     }
 

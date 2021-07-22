@@ -308,6 +308,7 @@ class AppConfigurationFetch {
         downloadedHTTPSExcludedDomainsCount = 0
         downloadedSurrogatesCount = 0
         downloadedTrackerDataSetCount = 0
+        downloadedPrivacyConfigurationCount = 0
     }
 }
 

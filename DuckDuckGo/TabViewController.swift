@@ -1056,7 +1056,7 @@ extension TabViewController: WKNavigationDelegate {
         
         var request = incomingRequest
         // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
+        if appSettings.sendDoNotSell && PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .gpc) {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)

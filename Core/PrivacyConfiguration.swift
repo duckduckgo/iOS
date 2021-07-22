@@ -28,6 +28,10 @@ public struct PrivacyConfiguration: Codable {
     
     public enum SupportedFeatures: String {
         case contentBlocking
+        case fingerprintingTemporaryStorage
+        case fingerprintingBattery
+        case fingerprintingScreenSize
+        case gpc
     }
     
     public init(features: [String: PrivacyFeature], unprotectedTemporary: [ExceptionEntry]) {
@@ -43,6 +47,12 @@ public struct PrivacyConfiguration: Codable {
         guard let feature = features[featureKey.rawValue] else { return false }
         
         return feature.state == "enabled"
+    }
+    
+    public func exceptionsList(forFeature featureKey: SupportedFeatures) -> [String] {
+        guard let feature = features[featureKey.rawValue] else { return [] }
+        
+        return feature.exceptions.map { $0.domain }
     }
     
     enum CodingKeys: String, CodingKey {

@@ -50,7 +50,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public weak var delegate: ContentBlockerUserScriptDelegate?
     public weak var storageCache: StorageCache? {
         didSet {
-            temporaryUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+            temporaryUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig
+                .tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
         }
     }
 

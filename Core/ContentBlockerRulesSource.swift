@@ -45,7 +45,11 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
     }
 
     var tempList: [String] {
-        return PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+        var tempUnprotected = PrivacyConfigurationManager.shared.privacyConfig
+            .tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+        tempUnprotected.append(contentsOf: PrivacyConfigurationManager.shared.privacyConfig
+                                .exceptionsList(forFeature: .contentBlocking))
+        return tempUnprotected
     }
 
     var unprotectedSites: [String] {

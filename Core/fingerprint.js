@@ -18,6 +18,9 @@
 //
 
 (function protect () {
+    
+    const featureSettings = ${featureSettings}
+    
     // Property values to be set and their original values.
     const fingerprintPropertyValues = {
         'screen': {
@@ -171,14 +174,55 @@
         `
         return script
     }
+    
+    let topLevelUrl = getTopLevelURL();
+
+    var excludeTempStorage = false;
+    var excludeBattery = false;
+    var excludeScreenSize = false;
+    var domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split(".") : [];
+
+    // walk up the domain to see if it's unprotected
+    while (domainParts && domainParts.length > 1) {
+        let partialDomain = domainParts.join(".")
+
+        excludeTempStorage = `
+            ${tempStorageExceptions}
+            `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        excludeBattery = `
+            ${batteryExceptions}
+            `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        excludeScreenSize = `
+            ${screenSizeExceptions}
+            `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+
+        domainParts.shift()
+    }
+    
+    function getTopLevelURL() {
+        try {
+            // FROM: https://stackoverflow.com/a/7739035/73479
+            // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+            return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
+        } catch(error) {
+            return new URL(location.href)
+        }
+    }
 
     /**
      * All the steps for building the injection script. Should only be done at initial page load.
      */
     function buildInjectionScript () {
-        let script = buildScriptProperties()
-        script += modifyTemporaryStorage()
-        script += buildBatteryScript()
+        let script = ''
+        if (featureSettings.fingerprintingScreenSize && !excludeScreenSize) {
+            script += buildScriptProperties()
+        }
+        if (featureSettings.fingerprintingTemporaryStorage && !excludeTempStorage) {
+            script += modifyTemporaryStorage()
+        }
+        if (featureSettings.fingerprintingBattery && !excludeBattery) {
+            script += buildBatteryScript()
+        }
         return script
     }
 

@@ -58,7 +58,8 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
-            "${surrogates}": surrogates
+            "${surrogates}": surrogates,
+            "${blockingEnabled}": PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .contentBlocking).description
         ])
     }
     

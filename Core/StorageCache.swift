@@ -64,25 +64,20 @@ public class StorageCache: StorageCacheUpdating {
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
         case .trackerDataSet:
-            if fileStore.persist(data as? Data, forConfiguration: configuration) {
-                if TrackerDataManager.shared.reload(etag: etag) != .downloaded {
-                    Pixel.fire(pixel: .trackerDataReloadFailed)
-                    return false
-                }
-                return true
+            if fileStore.persist(data as? Data, forConfiguration: configuration),
+               TrackerDataManager.shared.reload(etag: etag) != .downloaded {
+                Pixel.fire(pixel: .trackerDataReloadFailed)
+                return false
             }
-            return false
+            return true
             
         case .privacyConfiguration:
-            if fileStore.persist(data as? Data, forConfiguration: configuration) {
-                if PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
-                    // TODO: Fix pixel
-                    Pixel.fire(pixel: .trackerDataReloadFailed)
-                    return false
-                }
-                return true
+            if fileStore.persist(data as? Data, forConfiguration: configuration),
+               PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
+                Pixel.fire(pixel: .privacyConfigurationReloadFailed)
+                return false
             }
-            return false
+            return true
             
         }
     }

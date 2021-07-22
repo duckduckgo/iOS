@@ -102,8 +102,7 @@ public class PrivacyConfigurationManager {
                 let data = try JSONDecoder().decode(PrivacyConfiguration.self, from: data)
                 fetchedData = (data, etag)
             } catch {
-                // TODO: fix pixels
-                Pixel.fire(pixel: .trackerDataParseFailed, error: error)
+                Pixel.fire(pixel: .privacyConfigurationParseFailed, error: error)
                 fetchedData = nil
                 return .embeddedFallback
             }

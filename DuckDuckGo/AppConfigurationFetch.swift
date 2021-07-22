@@ -71,7 +71,6 @@ class AppConfigurationFetch {
         static let fetchHTTPSExcludedDomainsCount = "d3"
         static let fetchSurrogatesCount = "d4"
         static let fetchTrackerDataSetCount = "d5"
-        static let fetchTemporaryUnprotectedSitesCount = "d6"
         static let fetchPrivacyConfigurationCount = "d7"
     }
     
@@ -97,9 +96,6 @@ class AppConfigurationFetch {
 
     @UserDefaultsWrapper(key: .downloadedTrackerDataSetCount, defaultValue: 0)
     private var downloadedTrackerDataSetCount: Int
-
-    @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
-    private var downloadedTemporaryUnprotectedSitesCount: Int
     
     @UserDefaultsWrapper(key: .downloadedPrivacyConfigurationCount, defaultValue: 0)
     private var downloadedPrivacyConfigurationCount: Int
@@ -262,7 +258,6 @@ class AppConfigurationFetch {
             backgroundFetchType = Keys.bgFetchTypeLegacy
         }
         
-        // TODO: PR Review - Adding another entry throws compiler error
         let parameters = [Keys.bgFetchStart: String(store.backgroundStartCount),
                           Keys.bgFetchNoData: String(store.backgroundNoDataCount),
                           Keys.bgFetchWithData: String(store.backgroundNewDataCount),
@@ -277,7 +272,7 @@ class AppConfigurationFetch {
                           Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
                           Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
                           Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
-                          Keys.fetchTemporaryUnprotectedSitesCount: String(downloadedTemporaryUnprotectedSitesCount)]
+                          Keys.fetchPrivacyConfigurationCount: String(downloadedPrivacyConfigurationCount)]
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -312,7 +307,6 @@ class AppConfigurationFetch {
         downloadedHTTPSBloomFilterSpecCount = 0
         downloadedHTTPSExcludedDomainsCount = 0
         downloadedSurrogatesCount = 0
-        downloadedTemporaryUnprotectedSitesCount = 0
         downloadedTrackerDataSetCount = 0
     }
 }

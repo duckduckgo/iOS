@@ -173,6 +173,9 @@ public enum PixelName: String {
     case trackerDataReloadFailed = "m_d_tds_r"
     case trackerDataCouldNotBeLoaded = "m_d_tds_l"
     case fileStoreWriteFailed = "m_d_fswf"
+    case privacyConfigurationReloadFailed = "m_d_pc_r"
+    case privacyConfigurationParseFailed = "m_d_pc_p"
+    case privacyConfigurationCouldNotBeLoaded = "m_d_pc_l"
     
     case contentBlockingTDSCompilationFailed = "m_d_cb_ct"
     case contentBlockingTempListCompilationFailed = "m_d_cb_cl"

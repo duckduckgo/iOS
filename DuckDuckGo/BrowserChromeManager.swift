@@ -25,7 +25,8 @@ protocol BrowserChromeDelegate: AnyObject {
     func setNavigationBarHidden(_ hidden: Bool)
     
     func setBarsVisibility(_ percent: CGFloat, animated: Bool)
-
+    
+    var canHideBars: Bool { get }
     var isToolbarHidden: Bool { get }
     var toolbarHeight: CGFloat { get }
     var barsMaxHeight: CGFloat { get }
@@ -136,7 +137,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     
     /// Bars should not be hidden in case ScrollView content is smaller than full (with bars hidden) viewport.
     private func canHideBars(for scrollView: UIScrollView) -> Bool {
-        return scrollView.bounds.height + (delegate?.barsMaxHeight ?? 0) < scrollView.contentSize.height
+        let heightAllowsHide = scrollView.bounds.height + (delegate?.barsMaxHeight ?? 0) < scrollView.contentSize.height
+        return heightAllowsHide && (delegate?.canHideBars ?? true)
     }
 
     func reset() {

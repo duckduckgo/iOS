@@ -932,10 +932,6 @@ extension MainViewController: BrowserChromeDelegate {
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
-
-            if DaxDialogs.shared.shouldShowFireButtonPulse {
-                return
-            }
         } else {
             showMenuHighlighterIfNeeded()
         }
@@ -965,6 +961,10 @@ extension MainViewController: BrowserChromeDelegate {
         omniBar.alpha = hidden ? 0 : 1
         tabsBar.alpha = hidden ? 0 : 1
         statusBarBackground.alpha = hidden ? 0 : 1
+    }
+    
+    var canHideBars: Bool {
+        return !DaxDialogs.shared.shouldShowFireButtonPulse
     }
 
     var isToolbarHidden: Bool {

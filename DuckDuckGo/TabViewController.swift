@@ -167,14 +167,16 @@ class TabViewController: UIViewController {
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
+    private var printingUserScript = PrintingUserScript()
+    private var autofillUserScript = AutofillUserScript()
+    private var debugScript = DebugUserScript()
+
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
         emailManager.requestDelegate = self
         return emailManager
     }()
-    private var autofillUserScript = AutofillUserScript()
-    private var debugScript = DebugUserScript()
     
     private var userScripts: [UserScript] = []
 
@@ -231,7 +233,8 @@ class TabViewController: UIViewController {
             fingerprintScript,
             faviconScript,
             fullScreenVideoScript,
-            autofillUserScript
+            autofillUserScript,
+            printingUserScript
         ]
         
         if #available(iOS 13, *) {
@@ -254,6 +257,7 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
+        printingUserScript.delegate = self
     }
     
     func updateTabModel() {
@@ -617,8 +621,13 @@ class TabViewController: UIViewController {
             if let diff = notification.userInfo?[ContentBlockerProtectionChangedNotification.diffKey] as? ContentBlockerRulesIdentifier.Difference {
                 if diff.contains(.unprotectedSites) {
                     reload(scripts: true)
+                } else {
+                    reloadUserScripts()
                 }
+            } else {
+                reloadUserScripts()
             }
+
         }
     }
 
@@ -857,12 +866,7 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
-        if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
-            self.siteRating = makeSiteRating(url: siteRating.url)
-        } else {
-            resetSiteRating()
-        }
+        resetSiteRating()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -999,6 +1003,7 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         webpageDidFailToLoad()
         checkForReloadOnError()
+        scheduleTrackerNetworksAnimation(collapsing: true)
     }
 
     private func webpageDidFailToLoad() {
@@ -1393,6 +1398,16 @@ extension TabViewController: FaviconUserScriptDelegate {
         tabModel.didUpdateFavicon()
     }
     
+}
+
+extension TabViewController: PrintingUserScriptDelegate {
+
+    func printingUserScriptDidRequestPrintController(_ script: PrintingUserScript) {
+        let controller = UIPrintInteractionController.shared
+        controller.printFormatter = webView.viewPrintFormatter()
+        controller.present(animated: true, completionHandler: nil)
+    }
+
 }
 
 extension TabViewController: EmailManagerAliasPermissionDelegate {

@@ -178,7 +178,7 @@
           // If this `XMLHttpRequest` instance fails to load, we
           // can assume it has been blocked.
           this._tpErrorHandler = function() {
-            sendMessage(this._url);
+            sendMessage(this._url, "xmlhttprequest");
           };
           this.addEventListener("error", this._tpErrorHandler);
         }
@@ -194,6 +194,7 @@
       
       delete Image.prototype.src;
       Object.defineProperty(Image.prototype, "src", {
+        configurable: true,
         get: function() {
           return originalImageSrc.get.call(this);
         },

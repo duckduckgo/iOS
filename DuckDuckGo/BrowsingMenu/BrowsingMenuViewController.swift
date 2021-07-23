@@ -196,7 +196,9 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     }
     
     @objc func backgroundTapped() {
-        ViewHighlighter.hideAll()
+        if !DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
+        }
         dismiss?()
     }
     

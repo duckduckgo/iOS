@@ -1412,7 +1412,7 @@ many trackers we've blocked.</string>
                                                 <constraint firstItem="3j6-i6-nia" firstAttribute="top" secondItem="2vQ-S5-Xxv" secondAttribute="top" constant="8" id="kwt-rB-kzs"/>
                                                 <constraint firstItem="tGi-n5-HjD" firstAttribute="centerX" secondItem="2vQ-S5-Xxv" secondAttribute="centerX" id="lWb-xb-FEw"/>
                                                 <constraint firstAttribute="bottom" secondItem="3j6-i6-nia" secondAttribute="bottom" constant="8" id="mzD-PU-e9l"/>
-                                                <constraint firstAttribute="height" constant="75" id="xN7-nQ-eyz"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="xN7-nQ-eyz"/>
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ict-Tf-vBn">

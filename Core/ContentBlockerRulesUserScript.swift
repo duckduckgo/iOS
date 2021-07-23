@@ -32,7 +32,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     }
     
     public var source: String {
-        let unprotectedDomains = (UnprotectedSitesManager().domains.joined(separator: "\n"))
+        let unprotectedDomains = UnprotectedSitesManager().domains.joined(separator: "\n")
             + "\n"
             + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
         
@@ -62,74 +62,26 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
         
         guard let dict = message.body as? [String: Any] else { return }
+        
+        // False if domain is in unprotected list
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
+        let resourceType = (dict[ContentBlockerKey.resourceType] as? String) ?? "unknown"
         guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
         
-        if let tracker = trackerFromUrl(trackerUrlString, pageUrlString: pageUrlStr, potentiallyBlocked: blocked) {
-            guard let pageUrl = URL(string: pageUrlStr),
-                  let pageHost = pageUrl.host,
-                  let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
-                  let pageEntity = currentTrackerData.findEntity(forHost: pageHost) else {
-                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
-                return
-            }
-            
-            if pageEntity.displayName != tracker.entity?.displayName {
-                delegate.contentBlockerUserScript(self, detectedTracker: tracker)
-            }
-        }
-    }
-    
-    private func trackerFromUrl(_ trackerUrlString: String, pageUrlString: String, potentiallyBlocked: Bool) -> DetectedTracker? {
-        
-        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
-              let knownTracker = currentTrackerData.findTracker(forUrl: trackerUrlString) else {
-            return nil
-        }
-
-        let blocked: Bool
-        
-        let unprotectedSites = UnprotectedSitesManager().domains
-
-        if knownTracker.hasExemption(for: trackerUrlString, pageUrlString: pageUrlString) {
-            blocked = false
-        } else if let pageDomain = URL(string: pageUrlString),
-                  let pageHost = pageDomain.host {
-            if unprotectedSites.contains(pageHost) || temporaryUnprotectedDomains.contains(pageHost) {
-                blocked = false
-            } else {
-                blocked = potentiallyBlocked
-            }
-        } else {
-            blocked = potentiallyBlocked
-        }
-
-        if let entity = currentTrackerData.findEntity(byName: knownTracker.owner?.name ?? "") {
-            return DetectedTracker(url: trackerUrlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData else {
+            return
         }
         
-        return nil
-    }
-}
-
-fileprivate extension KnownTracker {
-
-    func hasExemption(for trackerUrlString: String, pageUrlString: String) -> Bool {
-        let range = NSRange(location: 0, length: trackerUrlString.utf16.count)
-
-        for rule in rules ?? [] where rule.action == .ignore {
-            guard let pattern = rule.rule,
-                  let host = URL(string: pageUrlString)?.host,
-                  rule.exceptions?.domains?.contains(host) ?? false == false,
-                  let regex = try? NSRegularExpression(pattern: pattern, options: []) else { continue }
-
-            if regex.firstMatch(in: trackerUrlString, options: [], range: range) != nil {
-                return true
-            }
+        let resolver = TrackerResolver(tds: currentTrackerData,
+                                       unprotectedSites: UnprotectedSitesManager().domains,
+                                       tempList: temporaryUnprotectedDomains)
+        
+        if let tracker = resolver.trackerFromUrl(trackerUrlString,
+                                                 pageUrlString: pageUrlStr,
+                                                 resourceType: resourceType,
+                                                 potentiallyBlocked: blocked) {
+            delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
-
-        return false
     }
-
 }

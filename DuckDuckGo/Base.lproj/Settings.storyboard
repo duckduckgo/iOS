@@ -441,10 +441,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Beta" translatesAutoresizingMaskIntoConstraints="NO" id="Ij1-YN-FXM">
-                                                    <rect key="frame" x="144.66666666666666" y="12" width="33" height="16"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="mtJ-8m-qOK" userLabel="Duck Address">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="mtJ-8m-qOK" userLabel="Duck Address">
                                                     <rect key="frame" x="270.66666666666669" y="14" width="105.66666666666669" height="16"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="dax@duck.com">
@@ -460,14 +457,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="bAK-LL-HUH" firstAttribute="centerY" secondItem="uZd-se-xLZ" secondAttribute="centerY" id="49S-hm-CLg"/>
-                                                <constraint firstItem="Ij1-YN-FXM" firstAttribute="centerY" secondItem="bAK-LL-HUH" secondAttribute="centerY" constant="-2" id="JzO-Rv-bte"/>
                                                 <constraint firstItem="mtJ-8m-qOK" firstAttribute="centerY" secondItem="uZd-se-xLZ" secondAttribute="centerY" id="LgG-za-BqZ"/>
-                                                <constraint firstItem="mtJ-8m-qOK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ij1-YN-FXM" secondAttribute="trailing" constant="20" id="Pbo-Nc-CbV"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Ij1-YN-FXM" secondAttribute="trailing" id="YOa-tD-TI9"/>
-                                                <constraint firstItem="Ij1-YN-FXM" firstAttribute="leading" secondItem="bAK-LL-HUH" secondAttribute="trailing" constant="8" id="cum-oH-EwW"/>
                                                 <constraint firstItem="bAK-LL-HUH" firstAttribute="top" secondItem="uZd-se-xLZ" secondAttribute="top" constant="10" id="eVq-c1-n5A"/>
                                                 <constraint firstAttribute="bottom" secondItem="bAK-LL-HUH" secondAttribute="bottom" constant="10" id="l3S-0n-oRu"/>
                                                 <constraint firstItem="bAK-LL-HUH" firstAttribute="leading" secondItem="uZd-se-xLZ" secondAttribute="leadingMargin" id="nXR-4K-7YR"/>
+                                                <constraint firstItem="mtJ-8m-qOK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bAK-LL-HUH" secondAttribute="trailing" constant="8" symbolic="YES" id="ryN-cN-1Ye"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="mtJ-8m-qOK" secondAttribute="trailing" id="uGj-mI-Muo"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -613,11 +607,11 @@
                                         <rect key="frame" x="0.0" y="1024.3333301544189" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="373.33333333333331" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -1760,7 +1754,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
                                 <rect key="frame" x="20" y="176" width="374" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -2074,7 +2068,6 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
         </scene>
     </scenes>
     <resources>
-        <image name="Beta" width="33" height="16"/>
         <image name="EmailWaitlistContactUs" width="100" height="100"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="HomeRowAppIcon" width="512" height="512"/>

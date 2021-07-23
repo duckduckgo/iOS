@@ -502,7 +502,6 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            Pixel.fire(pixel: .fireEducationFireButtonPressedWhilstPulseShowing)
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
@@ -933,10 +932,6 @@ extension MainViewController: BrowserChromeDelegate {
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
-
-            if DaxDialogs.shared.shouldShowFireButtonPulse {
-                return
-            }
         } else {
             showMenuHighlighterIfNeeded()
         }
@@ -966,6 +961,10 @@ extension MainViewController: BrowserChromeDelegate {
         omniBar.alpha = hidden ? 0 : 1
         tabsBar.alpha = hidden ? 0 : 1
         statusBarBackground.alpha = hidden ? 0 : 1
+    }
+    
+    var canHideBars: Bool {
+        return !DaxDialogs.shared.shouldShowFireButtonPulse
     }
 
     var isToolbarHidden: Bool {

@@ -8,7 +8,16 @@
         },
         "trackingCookies3p": {
             "state": "enabled",
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "hangouts.google.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "docs.google.com",
+                    "reason": "site breakage"
+                }
+            ],
             "settings": {
                 "excludedCookieDomains": [
                     {
@@ -404,6 +413,10 @@
         },
         {
             "domain": "fidelity.com",
+            "reason": "site breakage"
+        },
+        {
+            "domain": "www.bandsintown.com",
             "reason": "site breakage"
         }
     ]

@@ -186,15 +186,21 @@
     while (domainParts && domainParts.length > 1) {
         let partialDomain = domainParts.join(".")
 
-        excludeTempStorage = `
-            ${tempStorageExceptions}
-            `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
-        excludeBattery = `
-            ${batteryExceptions}
-            `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
-        excludeScreenSize = `
-            ${screenSizeExceptions}
-            `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        if (!excludeTempStorage) {
+            excludeTempStorage = `
+                ${tempStorageExceptions}
+                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        }
+        if (!excludeBattery) {
+            excludeBattery = `
+                ${batteryExceptions}
+                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        }
+        if (!excludeScreenSize) {
+            excludeScreenSize = `
+                ${screenSizeExceptions}
+                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        }
 
         domainParts.shift()
     }

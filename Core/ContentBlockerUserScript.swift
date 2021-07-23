@@ -44,6 +44,9 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         let unprotectedDomains = UnprotectedSitesManager().domains.joined(separator: "\n")
             + "\n"
             + (PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.joined(separator: "\n"))
+            + "\n"
+            + (PrivacyConfigurationManager.shared.privacyConfig
+                .exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
         let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
 
         // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work

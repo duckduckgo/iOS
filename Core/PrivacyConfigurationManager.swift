@@ -21,7 +21,7 @@ import Foundation
 
 public class PrivacyConfigurationManager {
     public struct Constants {
-        public static let embeddedConfigETag = "\"d2a60035e07218b91f951ac872c503e1\""
+        public static let embeddedConfigETag = "\"194e78de5cf445721677f03c1a5c727a\""
     }
     
     public enum ReloadResult {

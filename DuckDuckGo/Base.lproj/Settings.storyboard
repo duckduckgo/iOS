@@ -1754,7 +1754,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
                                 <rect key="frame" x="20" y="176" width="374" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>

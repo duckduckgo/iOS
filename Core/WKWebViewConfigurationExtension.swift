@@ -61,4 +61,38 @@ extension WKWebViewConfiguration {
             self.installContentBlockingRules()
         }
     }
+    
+    public func storeWebViewDataStore(containerName: String) {
+        let fileManager = FileManager.default
+        guard let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last else { return }
+        
+        do {
+            let archiver = try NSKeyedArchiver.archivedData(withRootObject: self.websiteDataStore, requiringSecureCoding: true)
+            try archiver.write(to: docsDir.appendingPathComponent("\(containerName).tab"))
+        } catch {
+            Swift.print(">>>ERROR: \(error)")
+        }
+    }
+    
+    public static func loadContainerConfiguration(containerName: String) -> WKWebViewConfiguration {
+        let fileManager = FileManager.default
+        guard let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last else {
+            return WKWebViewConfiguration.nonPersistent()
+        }
+        
+        let defaultConfig = WKWebViewConfiguration.nonPersistent()
+        
+        do {
+            let dataStore = try NSKeyedUnarchiver
+                                    .unarchivedObject(ofClass: WKWebsiteDataStore.self,
+                                                      from: Data(contentsOf: docsDir.appendingPathComponent("\(containerName).tab")))
+            if let dataStore = dataStore {
+                defaultConfig.websiteDataStore = dataStore
+            }
+        } catch {
+            Swift.print(">>>ERROR: \(error)")
+        }
+        
+        return defaultConfig
+    }
 }

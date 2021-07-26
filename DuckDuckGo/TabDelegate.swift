@@ -24,7 +24,7 @@ protocol TabDelegate: AnyObject {
 
     func tabWillRequestNewTab(_ tab: TabViewController) -> UIKeyModifierFlags?
 
-    func tabDidRequestNewTab(_ tab: TabViewController)
+    func tabDidRequestNewTab(_ tab: TabViewController, containerTab: Bool)
 
     func tab(_ tab: TabViewController,
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,

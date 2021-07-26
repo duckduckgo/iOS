@@ -869,7 +869,7 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
-    func newTab(reuseExisting: Bool = false) {
+    func newTab(reuseExisting: Bool = false, containerTab: Bool = false) {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -881,7 +881,7 @@ class MainViewController: UIViewController {
         if reuseExisting, let existing = tabManager.firstHomeTab() {
             tabManager.selectTab(existing)
         } else {
-            tabManager.addHomeTab()
+            tabManager.addHomeTab(containerTab: containerTab)
         }
         attachHomeScreen()
         homeController?.openedAsNewTab()
@@ -1272,9 +1272,9 @@ extension MainViewController: TabDelegate {
         keyModifierFlags
     }
 
-    func tabDidRequestNewTab(_ tab: TabViewController) {
+    func tabDidRequestNewTab(_ tab: TabViewController, containerTab: Bool) {
         _ = findInPageView.resignFirstResponder()
-        newTab()
+        newTab(containerTab: containerTab)
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {

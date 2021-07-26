@@ -103,6 +103,8 @@ extension TabViewController {
             entries.append(buildToggleProtectionEntry(forDomain: domain))
         }
         
+        entries.append(buildNewContainerTabEntry())
+        
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
                                                  image: UIImage(named: "MenuFeedback")!,
                                                  action: { [weak self] in
@@ -141,7 +143,17 @@ extension TabViewController {
     
     private func onNewTabAction() {
         Pixel.fire(pixel: .browsingMenuNewTab)
-        delegate?.tabDidRequestNewTab(self)
+        delegate?.tabDidRequestNewTab(self, containerTab: false)
+    }
+    
+    private func onNewContainerTabAction() {
+        delegate?.tabDidRequestNewTab(self, containerTab: true)
+    }
+    
+    private func buildNewContainerTabEntry() -> BrowsingMenuEntry {
+        return BrowsingMenuEntry.regular(name: "New Container Tab", image: UIImage(named: "MenuNewTab")!, action: { [weak self] in
+            self?.onNewContainerTabAction()
+        })
     }
     
     private func buildFindInPageEntry(forLink link: Link) -> BrowsingMenuEntry {

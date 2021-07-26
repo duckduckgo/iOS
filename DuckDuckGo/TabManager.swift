@@ -50,7 +50,12 @@ class TabManager {
     }
 
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
-        let configuration =  WKWebViewConfiguration.persistent()
+        let configuration: WKWebViewConfiguration
+        if tab.containerName != "default" {
+            configuration = WKWebViewConfiguration.loadContainerConfiguration(containerName: tab.containerName)
+        } else {
+           configuration = WKWebViewConfiguration.persistent()
+        }
         let controller = TabViewController.loadFromStoryboard(model: tab)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest(url: url!),
@@ -120,8 +125,12 @@ class TabManager {
         return controller
     }
 
-    func addHomeTab() {
-        model.add(tab: Tab())
+    func addHomeTab(containerTab: Bool = false) {
+        if containerTab {
+            model.add(tab: Tab(containerName: "container"))
+        } else {
+            model.add(tab: Tab())
+        }
         model.select(tabAt: model.count - 1)
         save()
     }
@@ -166,14 +175,14 @@ class TabManager {
         return controller
     }
 
-    func add(url: URL?, inBackground: Bool = false) -> TabViewController {
+    func add(url: URL?, inBackground: Bool = false, containerName: String = "default") -> TabViewController {
 
         if !inBackground {
             current?.dismiss()
         }
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
-        let tab = Tab(link: link)
+        let tab = Tab(link: link, containerName: containerName)
         tab.viewed = !inBackground
         let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
@@ -225,6 +234,10 @@ class TabManager {
     }
 
     func save() {
+        let tabModel = model.tabs[model.currentIndex]
+        if tabModel.containerName != "default" {
+            current?.webView.configuration.storeWebViewDataStore(containerName: tabModel.containerName)
+        }
         model.save()
     }
 

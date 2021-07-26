@@ -36,9 +36,12 @@ public class Tab: NSObject, NSCoding {
         static let link = "link"
         static let viewed = "viewed"
         static let desktop = "desktop"
+        static let containerName = "containerName"
     }
 
     private var observersHolder = [WeaklyHeldTabObserver]()
+    
+    private(set) var containerName: String
     
     let uid: String
     
@@ -63,11 +66,13 @@ public class Tab: NSObject, NSCoding {
     public init(uid: String? = nil,
                 link: Link? = nil,
                 viewed: Bool = true,
-                desktop: Bool = AppWidthObserver.shared.isLargeWidth) {
+                desktop: Bool = AppWidthObserver.shared.isLargeWidth,
+                containerName: String = "default") {
         self.uid = uid ?? UUID().uuidString
         self.link = link
         self.viewed = viewed
         self.isDesktop = desktop
+        self.containerName = containerName
     }
 
     public convenience required init?(coder decoder: NSCoder) {
@@ -75,7 +80,8 @@ public class Tab: NSObject, NSCoding {
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
         let viewed = decoder.containsValue(forKey: NSCodingKeys.viewed) ? decoder.decodeBool(forKey: NSCodingKeys.viewed) : true
         let desktop = decoder.containsValue(forKey: NSCodingKeys.desktop) ? decoder.decodeBool(forKey: NSCodingKeys.desktop) : false
-        self.init(uid: uid, link: link, viewed: viewed, desktop: desktop)
+        let containerName = decoder.decodeObject(forKey: NSCodingKeys.containerName) as? String ?? "default"
+        self.init(uid: uid, link: link, viewed: viewed, desktop: desktop, containerName: containerName)
     }
 
     public func encode(with coder: NSCoder) {
@@ -83,6 +89,7 @@ public class Tab: NSObject, NSCoding {
         coder.encode(link, forKey: NSCodingKeys.link)
         coder.encode(viewed, forKey: NSCodingKeys.viewed)
         coder.encode(isDesktop, forKey: NSCodingKeys.desktop)
+        coder.encode(containerName, forKey: NSCodingKeys.containerName)
     }
 
     public override func isEqual(_ other: Any?) -> Bool {

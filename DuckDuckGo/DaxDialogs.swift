@@ -151,8 +151,7 @@ class DaxDialogs {
     }
     
     var shouldShowFireButtonPulse: Bool {
-        return false
-        // return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
     }
 
     func dismiss() {

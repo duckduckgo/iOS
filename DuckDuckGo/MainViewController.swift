@@ -1529,6 +1529,7 @@ extension MainViewController: AutoClearWorker {
         findInPageView?.done()
         
         ServerTrustCache.shared.clear()
+        URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {

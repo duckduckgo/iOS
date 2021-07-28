@@ -68,19 +68,21 @@ public class StorageCache: StorageCacheUpdating {
             
         case .trackerDataSet:
             if fileStore.persist(data as? Data, forConfiguration: configuration),
-               TrackerDataManager.shared.reload(etag: etag) != .downloaded {
+               TrackerDataManager.shared.reload(etag: etag) == .downloaded {
+                return true
+            } else {
                 Pixel.fire(pixel: .trackerDataReloadFailed)
-                return false
             }
-            return true
+            return false
             
         case .privacyConfiguration:
             if fileStore.persist(data as? Data, forConfiguration: configuration),
-               PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
+               PrivacyConfigurationManager.shared.reload(etag: etag) == .downloaded {
+                return true
+            } else {
                 Pixel.fire(pixel: .privacyConfigurationReloadFailed)
-                return false
             }
-            return true
+            return false
 
         case .temporaryUnprotectedSites, .httpsBloomFilterSpec:
             return false

@@ -81,10 +81,6 @@ public class PrivacyConfigurationManager {
         return embeddedData.config
     }
 
-    init(configData: PrivacyConfiguration) {
-        _fetchedData = (configData, "")
-    }
-
     init() {
         reload(etag: UserDefaultsETagStorage().etag(for: .privacyConfiguration))
     }

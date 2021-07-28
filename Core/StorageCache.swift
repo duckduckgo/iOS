@@ -63,9 +63,6 @@ public class StorageCache: StorageCacheUpdating {
             HTTPSUpgrade.shared.loadData()
             return result
             
-        case .httpsBloomFilterSpec:
-            return false
-            
         case .surrogates:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
@@ -84,9 +81,9 @@ public class StorageCache: StorageCacheUpdating {
                 return false
             }
             return true
-            
-        case .temporaryUnprotectedSites:
-            return true
+
+        case .temporaryUnprotectedSites, .httpsBloomFilterSpec:
+            return false
             
         }
     }

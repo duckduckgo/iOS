@@ -1531,6 +1531,8 @@ extension MainViewController: AutoClearWorker {
         ServerTrustCache.shared.clear()
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
+        HSTSCache.delete()
+
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {
             pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
@@ -1542,9 +1544,9 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
-            self.forgetData()
-            DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
+            DaxDialogs.shared.resumeRegularFlow()
+            self.forgetData()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()

@@ -44,13 +44,13 @@ class AutoClear {
     
     private func clearData() {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
-        
-        if settings.action.contains(.clearData) {
-            worker.forgetData()
-        }
-        
+
         if settings.action.contains(.clearTabs) {
             worker.forgetTabs()
+        }
+
+        if settings.action.contains(.clearData) {
+            worker.forgetData()
         }
     }
     

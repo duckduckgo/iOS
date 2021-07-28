@@ -38,6 +38,7 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case httpsExcludedDomains
         case surrogates
         case trackerDataSet
+        case temporaryUnprotectedSites
         case privacyConfiguration
     }
     

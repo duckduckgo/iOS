@@ -38,11 +38,17 @@ public class StorageCache: StorageCacheUpdating {
     public init() {
         tld = TLD()
         termsOfServiceStore = EmbeddedTermsOfServiceStore()
+        
+        // Remove legacy data
+        fileStore.removeData(forConfiguration: .temporaryUnprotectedSites)
     }
     
     public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore) {
         self.tld = tld
         self.termsOfServiceStore = termsOfServiceStore
+        
+        // Remove legacy data
+        fileStore.removeData(forConfiguration: .temporaryUnprotectedSites)
     }
     
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {

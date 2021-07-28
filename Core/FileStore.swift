@@ -36,6 +36,18 @@ public class FileStore {
         }
     }
     
+    func removeData(forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
+        guard hasData(forConfiguration: config) else { return true }
+        
+        do {
+            try FileManager.default.removeItem(at: persistenceLocation(forConfiguration: config))
+        } catch {
+            return false
+        }
+        
+        return true
+    }
+    
     func loadAsString(forConfiguration config: ContentBlockerRequest.Configuration) -> String? {
         return try? String(contentsOf: persistenceLocation(forConfiguration: config))
     }

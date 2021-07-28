@@ -41,7 +41,8 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
     }
 
     var tempListEtag: String? {
-        return UserDefaultsETagStorage().etag(for: .privacyConfiguration)
+        return PrivacyConfigurationManager.shared.fetchedData?.etag
+            ?? PrivacyConfigurationManager.shared.embeddedData.etag
     }
 
     var tempList: [String] {

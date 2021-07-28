@@ -81,6 +81,7 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case .surrogates: return appUrls.surrogates
         case .trackerDataSet: return appUrls.trackerDataSet
         case .privacyConfiguration: return appUrls.privacyConfig
+        case .temporaryUnprotectedSites: return appUrls.temporaryUnprotectedSites
         }
     }
 }

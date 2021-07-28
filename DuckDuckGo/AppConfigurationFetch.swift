@@ -220,6 +220,7 @@ class AppConfigurationFetch {
         case .surrogates: downloadedSurrogatesCount += 1
         case .trackerDataSet: downloadedTrackerDataSetCount += 1
         case .privacyConfiguration: downloadedPrivacyConfigurationCount += 1
+        case .temporaryUnprotectedSites: break
         }
     }
     

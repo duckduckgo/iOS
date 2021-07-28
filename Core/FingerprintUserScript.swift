@@ -27,11 +27,11 @@ public class FingerprintUserScript: NSObject, UserScript {
         """
         {
             fingerprintingTemporaryStorage: \(PrivacyConfigurationManager.shared.privacyConfig
-                                                .isEnabled(featureKey: .fingerprintingTemporaryStorage).description),
+                .isEnabled(featureKey: .fingerprintingTemporaryStorage) ? "true" : "false"),
             fingerprintingBattery: \(PrivacyConfigurationManager.shared.privacyConfig
-                                        .isEnabled(featureKey: .fingerprintingBattery).description),
+                                        .isEnabled(featureKey: .fingerprintingBattery) ? "true" : "false"),
             fingerprintingScreenSize: \(PrivacyConfigurationManager.shared.privacyConfig
-                                            .isEnabled(featureKey: .fingerprintingScreenSize).description),
+                                            .isEnabled(featureKey: .fingerprintingScreenSize) ? "true" : "false"),
         }
         """
         

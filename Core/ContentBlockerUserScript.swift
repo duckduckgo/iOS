@@ -62,7 +62,8 @@ public class ContentBlockerUserScript: NSObject, UserScript {
             "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
             "${surrogates}": surrogates,
-            "${blockingEnabled}": PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .contentBlocking).description
+            "${blockingEnabled}": PrivacyConfigurationManager.shared.privacyConfig
+                .isEnabled(featureKey: .contentBlocking) ? "true" : "false"
         ])
     }
     

@@ -1531,11 +1531,10 @@ extension MainViewController: AutoClearWorker {
         ServerTrustCache.shared.clear()
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
-        HSTSCache.delete()
-
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {
             pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+            HSTSCache.delete()
         }
     }
     

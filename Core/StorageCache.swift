@@ -51,6 +51,7 @@ public class StorageCache: StorageCacheUpdating {
         _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
+    // swiftlint:disable:next cyclomatic_complexity
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
         switch configuration {
         case .httpsExcludedDomains:
@@ -67,20 +68,22 @@ public class StorageCache: StorageCacheUpdating {
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
         case .trackerDataSet:
-            if fileStore.persist(data as? Data, forConfiguration: configuration),
-               TrackerDataManager.shared.reload(etag: etag) == .downloaded {
+            if fileStore.persist(data as? Data, forConfiguration: configuration) {
+                if TrackerDataManager.shared.reload(etag: etag) != .downloaded {
+                    Pixel.fire(pixel: .trackerDataReloadFailed)
+                    return false
+                }
                 return true
-            } else {
-                Pixel.fire(pixel: .trackerDataReloadFailed)
             }
             return false
             
         case .privacyConfiguration:
-            if fileStore.persist(data as? Data, forConfiguration: configuration),
-               PrivacyConfigurationManager.shared.reload(etag: etag) == .downloaded {
+            if fileStore.persist(data as? Data, forConfiguration: configuration) {
+                if PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
+                    Pixel.fire(pixel: .privacyConfigurationReloadFailed)
+                    return false
+                }
                 return true
-            } else {
-                Pixel.fire(pixel: .privacyConfigurationReloadFailed)
             }
             return false
 

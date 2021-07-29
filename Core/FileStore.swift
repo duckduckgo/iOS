@@ -36,11 +36,14 @@ public class FileStore {
         }
     }
     
-    func removeData(forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
-        guard hasData(forConfiguration: config) else { return true }
+    func removeData(forFile file: String) -> Bool {
+        var path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
+        path = path!.appendingPathComponent(file)
+        guard let path = path else { return false }
+        guard FileManager.default.fileExists(atPath: path.absoluteString) else { return true }
         
         do {
-            try FileManager.default.removeItem(at: persistenceLocation(forConfiguration: config))
+            try FileManager.default.removeItem(at: path)
         } catch {
             return false
         }

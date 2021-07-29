@@ -40,7 +40,7 @@ public class StorageCache: StorageCacheUpdating {
         termsOfServiceStore = EmbeddedTermsOfServiceStore()
         
         // Remove legacy data
-        _ = fileStore.removeData(forConfiguration: .temporaryUnprotectedSites)
+        _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
     public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore) {
@@ -48,7 +48,7 @@ public class StorageCache: StorageCacheUpdating {
         self.termsOfServiceStore = termsOfServiceStore
         
         // Remove legacy data
-        _ = fileStore.removeData(forConfiguration: .temporaryUnprotectedSites)
+        _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
@@ -84,7 +84,7 @@ public class StorageCache: StorageCacheUpdating {
             }
             return false
 
-        case .temporaryUnprotectedSites, .httpsBloomFilterSpec:
+        case .httpsBloomFilterSpec:
             return false
             
         }

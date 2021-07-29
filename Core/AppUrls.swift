@@ -34,7 +34,6 @@ public struct AppUrls {
         static let autocomplete = "\(base)/ac/"
         
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        static let temporaryUnprotectedSites = "\(base)/contentblocking/trackers-unprotected-temporary.txt"
         static let privacyConfig = "\(staticBase)/trackerblocking/config/v1/ios-config.json"
         static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/tds.json"
 
@@ -117,10 +116,6 @@ public struct AppUrls {
     
     public var trackerDataSet: URL {
         return URL(string: Url.trackerDataSet)!
-    }
-    
-    public var temporaryUnprotectedSites: URL {
-        return URL(string: Url.temporaryUnprotectedSites)!
     }
     
     public var privacyConfig: URL {

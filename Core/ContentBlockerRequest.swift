@@ -38,7 +38,7 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case httpsExcludedDomains
         case surrogates
         case trackerDataSet
-        case temporaryUnprotectedSites
+        case privacyConfiguration
     }
     
     var requestCount = 0
@@ -79,7 +79,7 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         case .httpsExcludedDomains: return appUrls.httpsExcludedDomains
         case .surrogates: return appUrls.surrogates
         case .trackerDataSet: return appUrls.trackerDataSet
-        case .temporaryUnprotectedSites: return appUrls.temporaryUnprotectedSites
+        case .privacyConfiguration: return appUrls.privacyConfig
         }
     }
 }

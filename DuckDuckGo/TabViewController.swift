@@ -615,7 +615,8 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        if let rules = ContentBlockerRulesManager.shared.currentRules {
+        if let rules = ContentBlockerRulesManager.shared.currentRules,
+           PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .contentBlocking) {
             self.webView.configuration.userContentController.removeAllContentRuleLists()
             self.webView.configuration.userContentController.add(rules.rulesList)
             
@@ -1056,7 +1057,7 @@ extension TabViewController: WKNavigationDelegate {
         
         var request = incomingRequest
         // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
+        if appSettings.sendDoNotSell && PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .gpc) {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)

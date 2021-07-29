@@ -52,7 +52,7 @@ class ConfigurationDebugViewController: UITableViewController {
         case httpsExcludedDomains
         case surrogates
         case trackerDataSet
-        case temporaryUnprotectedSites
+        case privacyConfiguration
         case resetEtags = "Reset ETags"
 
         var showDetail: Bool {

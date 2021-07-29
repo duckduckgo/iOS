@@ -71,7 +71,7 @@ class AppConfigurationFetch {
         static let fetchHTTPSExcludedDomainsCount = "d3"
         static let fetchSurrogatesCount = "d4"
         static let fetchTrackerDataSetCount = "d5"
-        static let fetchTemporaryUnprotectedSitesCount = "d6"
+        static let fetchPrivacyConfigurationCount = "d7"
     }
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
@@ -96,9 +96,9 @@ class AppConfigurationFetch {
 
     @UserDefaultsWrapper(key: .downloadedTrackerDataSetCount, defaultValue: 0)
     private var downloadedTrackerDataSetCount: Int
-
-    @UserDefaultsWrapper(key: .downloadedTemporaryUnprotectedSitesCount, defaultValue: 0)
-    private var downloadedTemporaryUnprotectedSitesCount: Int
+    
+    @UserDefaultsWrapper(key: .downloadedPrivacyConfigurationCount, defaultValue: 0)
+    private var downloadedPrivacyConfigurationCount: Int
 
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
@@ -218,8 +218,8 @@ class AppConfigurationFetch {
         case .httpsBloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
         case .httpsExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
         case .surrogates: downloadedSurrogatesCount += 1
-        case .temporaryUnprotectedSites: downloadedTemporaryUnprotectedSitesCount += 1
         case .trackerDataSet: downloadedTrackerDataSetCount += 1
+        case .privacyConfiguration: downloadedPrivacyConfigurationCount += 1
         }
     }
     
@@ -272,7 +272,7 @@ class AppConfigurationFetch {
                           Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
                           Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
                           Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
-                          Keys.fetchTemporaryUnprotectedSitesCount: String(downloadedTemporaryUnprotectedSitesCount)]
+                          Keys.fetchPrivacyConfigurationCount: String(downloadedPrivacyConfigurationCount)]
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -307,8 +307,8 @@ class AppConfigurationFetch {
         downloadedHTTPSBloomFilterSpecCount = 0
         downloadedHTTPSExcludedDomainsCount = 0
         downloadedSurrogatesCount = 0
-        downloadedTemporaryUnprotectedSitesCount = 0
         downloadedTrackerDataSetCount = 0
+        downloadedPrivacyConfigurationCount = 0
     }
 }
 

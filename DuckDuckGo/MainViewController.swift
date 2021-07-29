@@ -481,7 +481,8 @@ class MainViewController: UIViewController {
         currentTab?.dismiss()
         removeHomeScreen()
 
-        let controller = HomeViewController.loadFromStoryboard()
+        let tabModel = currentTab?.tabModel
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!)
         homeController = controller
 
         controller.chromeDelegate = self
@@ -886,6 +887,17 @@ class MainViewController: UIViewController {
         attachHomeScreen()
         homeController?.openedAsNewTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+    }
+    
+    func animateLogoAppearance() {
+        logoContainer.alpha = 0
+        logoContainer.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            UIView.animate(withDuration: 0.2) {
+                self.logoContainer.alpha = 1
+                self.logoContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+        }
     }
     
     func updateFindInPage() {
@@ -1396,6 +1408,7 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         newTab()
+        animateLogoAppearance()
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {

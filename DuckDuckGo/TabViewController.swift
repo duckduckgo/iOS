@@ -211,6 +211,7 @@ class TabViewController: UIViewController {
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
+        tabModel.viewed = true
     }
 
     override func buildActivities() -> [UIActivity] {

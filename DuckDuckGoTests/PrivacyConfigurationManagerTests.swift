@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import CommonCrypto
 @testable import Core
 
 class PrivacyConfigurationManagerTests: XCTestCase {
@@ -27,13 +28,78 @@ class PrivacyConfigurationManagerTests: XCTestCase {
         try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .privacyConfiguration))
     }
 
-    func testEmbeddedConfigurationEtag() throws {
-        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedData.etag, PrivacyConfigurationManager.Constants.embeddedConfigETag)
+    func testEmbeddedConfigurationEtagAndSHA() throws {
+        let hash = calculateHash(for: PrivacyConfigurationManager.embeddedUrl)
+        XCTAssertEqual(hash, PrivacyConfigurationManager.Constants.embeddedConfigurationSHA,
+                       "Error: please update SHA and ETag when changing embedded TDS")
+        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedData.etag,
+                       PrivacyConfigurationManager.Constants.embeddedConfigETag)
     }
 
     func testEmbeddedConfigurationFeaturesAreCorrect() throws {
         XCTAssertTrue(PrivacyConfigurationManager.shared.embeddedData.config.isEnabled(featureKey: .contentBlocking))
         XCTAssertTrue(PrivacyConfigurationManager.shared.embeddedData.config.isEnabled(featureKey: .gpc))
+    }
+    
+    private func calculateHash(for fileURL: URL) -> String {
+        if let data = sha256(url: fileURL) {
+            return data.base64EncodedString()
+        }
+        
+        XCTFail("Could not calculate TDS hash")
+        return ""
+    }
+    
+    // Source:
+    // https://stackoverflow.com/questions/42934154/how-can-i-hash-a-file-on-ios-using-swift-3/49878022#49878022
+    func sha256(url: URL) -> Data? {
+        do {
+            let bufferSize = 1024 * 1024
+            // Open file for reading:
+            let file = try FileHandle(forReadingFrom: url)
+            defer {
+                file.closeFile()
+            }
+
+            // Create and initialize SHA256 context:
+            var context = CC_SHA256_CTX()
+            CC_SHA256_Init(&context)
+
+            // Read up to `bufferSize` bytes, until EOF is reached, and update SHA256 context:
+            while autoreleasepool(invoking: {
+                // Read up to `bufferSize` bytes
+                let data = file.readData(ofLength: bufferSize)
+                if data.count > 0 {
+                    _ = data.withUnsafeBytes { bytesFromBuffer -> Int32 in
+                        guard let rawBytes = bytesFromBuffer.bindMemory(to: UInt8.self).baseAddress else {
+                            return Int32(kCCMemoryFailure)
+                        }
+                        
+                        return CC_SHA256_Update(&context, rawBytes, numericCast(data.count))
+                    }
+                    // Continue
+                    return true
+                } else {
+                    // End of file
+                    return false
+                }
+            }) { }
+
+            // Compute the SHA256 digest:
+            var digestData = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
+            _ = digestData.withUnsafeMutableBytes { bytesFromDigest -> Int32 in
+              guard let rawBytes = bytesFromDigest.bindMemory(to: UInt8.self).baseAddress else {
+                return Int32(kCCMemoryFailure)
+              }
+
+              return CC_SHA256_Final(rawBytes, &context)
+            }
+
+            return digestData
+        } catch {
+            print(error)
+            return nil
+        }
     }
 
 }

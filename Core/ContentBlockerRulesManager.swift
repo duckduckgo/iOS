@@ -231,17 +231,22 @@ public class ContentBlockerRulesManager {
                 // We failed compilation for non-embedded TDS, marking as broken.
                 etagForFailedTDSCompilation = tdsEtag
                 Pixel.fire(pixel: .contentBlockingTDSCompilationFailed,
+                           error: error,
                            withAdditionalParameters: [PixelParameters.etag: tdsEtag])
             } else if tempListEtag != nil {
                 etagForFailedTempListCompilation = tempListEtag
                 Pixel.fire(pixel: .contentBlockingTempListCompilationFailed,
+                           error: error,
                            withAdditionalParameters: [PixelParameters.etag: tempListEtag ?? "empty"])
             } else if !unprotectedSitesHash.isEmpty {
                 hashForFailedUnprotectedSitesCompilation = unprotectedSitesHash
-                Pixel.fire(pixel: .contentBlockingUnpSitesCompilationFailed)
+                Pixel.fire(pixel: .contentBlockingUnpSitesCompilationFailed,
+                           error: error)
             } else {
                 // We failed for embedded data, this is unlikely.
-                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed)
+                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed) { _ in
+                    assertionFailure("Could not compile rules list")
+                }
             }
         }
         

@@ -245,7 +245,7 @@ public class ContentBlockerRulesManager {
             } else {
                 // We failed for embedded data, this is unlikely.
                 Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed) { _ in
-                    assertionFailure("Could not compile rules list")
+                    fatalError("Could not compile embedded rules list")
                 }
             }
         }

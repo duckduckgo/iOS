@@ -57,12 +57,20 @@ class HomeViewController: UIViewController {
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
-    static func loadFromStoryboard() -> HomeViewController {
+    private(set) var tabModel: Tab
+    
+    static func loadFromStoryboard(model: Tab) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
             fatalError("Failed to instantiate correct view controller for Home")
         }
+        controller.tabModel = model
         return controller
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        tabModel = Tab(link: nil)
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -125,6 +133,7 @@ class HomeViewController: UIViewController {
         }
                 
         viewHasAppeared = true
+        tabModel.viewed = true
     }
     
     var isShowingDax: Bool {

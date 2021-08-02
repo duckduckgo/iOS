@@ -43,7 +43,10 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     public var source: String {
         let unprotectedDomains = UnprotectedSitesManager().domains.joined(separator: "\n")
             + "\n"
-            + (storageCache?.fileStore.loadAsString(forConfiguration: .temporaryUnprotectedSites) ?? "")
+            + (PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.joined(separator: "\n"))
+            + "\n"
+            + (PrivacyConfigurationManager.shared.privacyConfig
+                .exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
         let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
 
         // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work
@@ -58,7 +61,9 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
-            "${surrogates}": surrogates
+            "${surrogates}": surrogates,
+            "${blockingEnabled}": PrivacyConfigurationManager.shared.privacyConfig
+                .isEnabled(featureKey: .contentBlocking) ? "true" : "false"
         ])
     }
     

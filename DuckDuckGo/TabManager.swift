@@ -174,7 +174,6 @@ class TabManager {
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
         let tab = Tab(link: link)
-        tab.viewed = !inBackground
         let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
 

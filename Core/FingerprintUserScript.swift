@@ -23,7 +23,31 @@ import BrowserServicesKit
 
 public class FingerprintUserScript: NSObject, UserScript {
     public var source: String {
-        return Self.loadJS("fingerprint", from: Bundle.core)
+        let featureSettings =
+        """
+        {
+            fingerprintingTemporaryStorage: \(PrivacyConfigurationManager.shared.privacyConfig
+                .isEnabled(featureKey: .fingerprintingTemporaryStorage) ? "true" : "false"),
+            fingerprintingBattery: \(PrivacyConfigurationManager.shared.privacyConfig
+                                        .isEnabled(featureKey: .fingerprintingBattery) ? "true" : "false"),
+            fingerprintingScreenSize: \(PrivacyConfigurationManager.shared.privacyConfig
+                                            .isEnabled(featureKey: .fingerprintingScreenSize) ? "true" : "false"),
+        }
+        """
+        
+        let tempStorageExceptions = PrivacyConfigurationManager.shared.privacyConfig
+            .exceptionsList(forFeature: .fingerprintingTemporaryStorage).joined(separator: "\n")
+        let batteryExceptions = PrivacyConfigurationManager.shared.privacyConfig
+            .exceptionsList(forFeature: .fingerprintingBattery).joined(separator: "\n")
+        let screenSizeExceptions = PrivacyConfigurationManager.shared.privacyConfig
+            .exceptionsList(forFeature: .fingerprintingScreenSize).joined(separator: "\n")
+        
+        return Self.loadJS("fingerprint", from: Bundle.core, withReplacements: [
+            "${featureSettings}": featureSettings,
+            "${tempStorageExceptions}": tempStorageExceptions,
+            "${batteryExceptions}": batteryExceptions,
+            "${screenSizeExceptions}": screenSizeExceptions
+        ])
     }
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

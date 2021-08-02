@@ -428,6 +428,8 @@ _utf8_encode : function (string) {
     let trackerData = ${trackerData}
     // tracker data set
 
+    let blockingEnabled = ${blockingEnabled}
+    
     // overrides
     Trackers.prototype.findTrackerOwner = function(domain) {
         var parts = domain.split(".")
@@ -502,6 +504,10 @@ _utf8_encode : function (string) {
     // public
     function shouldBlock(trackerUrl, type) {
         let startTime = performance.now()
+        
+        if (!blockingEnabled) {
+            return false;
+        }
 
         let result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
             type: type

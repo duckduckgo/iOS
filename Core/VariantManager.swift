@@ -64,7 +64,7 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
+        Variant(name: "se", weight: 8, isIncluded: When.always, features: [])
     ]
     
     public let name: String

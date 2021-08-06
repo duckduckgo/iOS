@@ -45,9 +45,21 @@ class SiteRatingTests: XCTestCase {
         static let entity1 = Entity(displayName: "Entity 1", domains: nil, prevalence: 1)
         static let entity2 = Entity(displayName: "Entity 2", domains: nil, prevalence: 2)
 
-        static let blockedTracker = DetectedTracker(url: Url.tracker, knownTracker: knownTracker1, entity: entity1, blocked: true)
-        static let unblockedTracker = DetectedTracker(url: Url.tracker, knownTracker: knownTracker1, entity: entity1, blocked: false)
-        static let differentTracker = DetectedTracker(url: Url.differentTracker, knownTracker: knownTracker2, entity: entity2, blocked: true)
+        static let blockedTracker = DetectedTracker(url: Url.tracker,
+                                                    knownTracker: knownTracker1,
+                                                    entity: entity1,
+                                                    blocked: true,
+                                                    pageUrl: Url.https.absoluteString)
+        static let unblockedTracker = DetectedTracker(url: Url.tracker,
+                                                      knownTracker: knownTracker1,
+                                                      entity: entity1,
+                                                      blocked: false,
+                                                      pageUrl: Url.https.absoluteString)
+        static let differentTracker = DetectedTracker(url: Url.differentTracker,
+                                                      knownTracker: knownTracker2,
+                                                      entity: entity2,
+                                                      blocked: true,
+                                                      pageUrl: Url.https.absoluteString)
                                                       
     }
 

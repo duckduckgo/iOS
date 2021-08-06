@@ -95,7 +95,7 @@ class DaxDialogTests: XCTestCase {
             let siteRating = SiteRating(url: URLs.example)
             
             testCase.urls.forEach { url in
-                let detectedTracker = detectedTrackerFrom(url)
+                let detectedTracker = detectedTrackerFrom(url, pageUrl: URLs.example.absoluteString)
                 siteRating.trackerDetected(detectedTracker)
             }
             
@@ -110,7 +110,7 @@ class DaxDialogTests: XCTestCase {
 
     func testWhenTrackersShownThenNoTrackersNotShown() {
         let siteRating = SiteRating(url: URLs.example)
-        siteRating.trackerDetected(detectedTrackerFrom(URLs.google))
+        siteRating.trackerDetected(detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString))
         XCTAssertNotNil(onboarding.nextBrowsingMessage(siteRating: siteRating))
         XCTAssertNil(onboarding.nextBrowsingMessage(siteRating: SiteRating(url: URLs.example)))
     }
@@ -231,13 +231,14 @@ class DaxDialogTests: XCTestCase {
         XCTAssertTrue(DefaultDaxDialogsSettings().isDismissed)
     }
         
-    private func detectedTrackerFrom(_ url: URL) -> DetectedTracker {
+    private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedTracker {
         let tds = ContentBlockerRulesManager.shared.currentRules?.trackerData
         let entity = tds?.findEntity(forHost: url.host!)
         let knownTracker = tds?.findTracker(forUrl: url.absoluteString)
         return DetectedTracker(url: url.absoluteString,
                                       knownTracker: knownTracker,
                                       entity: entity,
-                                      blocked: true)
+                                      blocked: true,
+                                      pageUrl: pageUrl)
     }
 }

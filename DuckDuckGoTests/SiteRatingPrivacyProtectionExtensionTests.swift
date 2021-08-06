@@ -34,57 +34,105 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
     func testMultipleMajorNetworksBlockedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: nil, blocked: true))
-        rating.trackerDetected(DetectedTracker(url: "otherurl", knownTracker: nil, entity: nil, blocked: true))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: true,
+                                               pageUrl: Constants.pageURL.absoluteString))
+        rating.trackerDetected(DetectedTracker(url: "otherurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: true,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.majorNetworksBlockedText().contains("Trackers Blocked"))
     }
 
     func testMultipleMajorNetworksDetectedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: nil, blocked: false))
-        rating.trackerDetected(DetectedTracker(url: "otherurl", knownTracker: nil, entity: nil, blocked: false))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: false,
+                                               pageUrl: Constants.pageURL.absoluteString))
+        rating.trackerDetected(DetectedTracker(url: "otherurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: false,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.majorNetworksDetectedText().contains("Trackers Found"))
     }
 
     func testMultipleNetworksBlockedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: nil, blocked: true))
-        rating.trackerDetected(DetectedTracker(url: "otherurl", knownTracker: nil, entity: nil, blocked: true))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: true,
+                                               pageUrl: Constants.pageURL.absoluteString))
+        rating.trackerDetected(DetectedTracker(url: "otherurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: true,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.networksBlockedText().contains("Trackers Blocked"))
     }
 
     func testMultipleNetworksDetectedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: nil, blocked: false))
-        rating.trackerDetected(DetectedTracker(url: "otherurl", knownTracker: nil, entity: nil, blocked: false))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: false,
+                                               pageUrl: Constants.pageURL.absoluteString))
+        rating.trackerDetected(DetectedTracker(url: "otherurl",
+                                               knownTracker: nil,
+                                               entity: nil,
+                                               blocked: false,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.networksDetectedText().contains("Trackers Found"))
     }
 
     func testSingleMajorNetworkBlockedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
         let entity = Entity(displayName: "Entity", domains: nil, prevalence: 100)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: true))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: entity,
+                                               blocked: true,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.majorNetworksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleMajorNetworkDetectedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
         let entity = Entity(displayName: "Entity", domains: nil, prevalence: 100)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: false))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: entity,
+                                               blocked: false,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.majorNetworksDetectedText().contains("Tracker Found"))
     }
 
     func testSingleNetworkBlockedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
         let entity = Entity(displayName: "Entity", domains: nil, prevalence: nil)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: true))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: entity,
+                                               blocked: true,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.networksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleNetworkDetectedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
         let entity = Entity(displayName: "Entity", domains: nil, prevalence: nil)
-        rating.trackerDetected(DetectedTracker(url: "someurl", knownTracker: nil, entity: entity, blocked: false))
+        rating.trackerDetected(DetectedTracker(url: "someurl",
+                                               knownTracker: nil,
+                                               entity: entity,
+                                               blocked: false,
+                                               pageUrl: Constants.pageURL.absoluteString))
         XCTAssertTrue(rating.networksDetectedText().contains("Tracker Found"))
     }
 

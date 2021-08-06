@@ -28,6 +28,7 @@ class DetectedTrackerTests: XCTestCase {
         static let anotherUrl = "www.anotherurl.com"
         static let aParentDomain = "adomain.com"
         static let anotherParentDomain = "anotherdomain.com"
+        static let pageUrl = "example.com"
     }
 
     func testWhenTrackersHaveSameEntityThenHashMatchesAndIsEqualsIsTrue() {
@@ -35,8 +36,8 @@ class DetectedTrackerTests: XCTestCase {
         let entity1 = Entity(displayName: "Entity", domains: nil, prevalence: nil)
         let entity2 = Entity(displayName: "Entity", domains: [ Constants.aParentDomain ], prevalence: 1)
 
-        let tracker1 = DetectedTracker(url: Constants.aUrl, knownTracker: nil, entity: entity1, blocked: true)
-        let tracker2 = DetectedTracker(url: Constants.anotherUrl, knownTracker: nil, entity: entity2, blocked: false)
+        let tracker1 = DetectedTracker(url: Constants.aUrl, knownTracker: nil, entity: entity1, blocked: true, pageUrl: Constants.pageUrl)
+        let tracker2 = DetectedTracker(url: Constants.anotherUrl, knownTracker: nil, entity: entity2, blocked: false, pageUrl: Constants.pageUrl)
 
         XCTAssertEqual(tracker1.hashValue, tracker2.hashValue)
         XCTAssertEqual(tracker1, tracker2)

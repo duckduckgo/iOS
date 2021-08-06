@@ -1382,7 +1382,9 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
     }
     
     func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
-        siteRating?.surrogateInstalled(host)
+        if siteRating?.url.absoluteString == tracker.pageUrl {
+            siteRating?.surrogateInstalled(host)
+        }
         contentBlockerUserScript(script, detectedTracker: tracker)
     }
     

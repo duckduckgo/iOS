@@ -27,9 +27,9 @@ public struct DetectedTracker {
     public let knownTracker: KnownTracker?
     public let entity: Entity?
     public let blocked: Bool
-    public let pageUrl: String?
+    public let pageUrl: String
     
-    public init(url: String, knownTracker: KnownTracker?, entity: Entity?, blocked: Bool, pageUrl: String? = nil) {
+    public init(url: String, knownTracker: KnownTracker?, entity: Entity?, blocked: Bool, pageUrl: String) {
         self.url = url
         self.knownTracker = knownTracker
         self.entity = entity

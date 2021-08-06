@@ -261,6 +261,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                            includeATB: Bool = true,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
@@ -272,9 +273,9 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor, includeATB: includeATB)
         } else {
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue)
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, includeATB: includeATB)
         }
         
         APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in

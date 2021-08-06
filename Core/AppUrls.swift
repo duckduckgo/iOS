@@ -293,13 +293,17 @@ public struct AppUrls {
         return URL(string: Url.emailLoginQuickLink)!
     }
     
-    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil) -> URL {
+    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = Url.pixel.format(arguments: pixelName)
         if let formFactor = formFactor {
             urlString.append("_ios_\(formFactor)")
         }
         var url = URL(string: urlString)!
-        url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+
+        if includeATB {
+            url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+        }
+
         return url
     }
     

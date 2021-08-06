@@ -210,6 +210,15 @@ class SiteRatingTests: XCTestCase {
         let site = testee.scores.site
         XCTAssertEqual(66, site.score)
     }
+    
+    func testWhenIncorrectPageURLThenTrackerNotLogged() {
+        let testee = SiteRating(url: Url.http)
+        testee.trackerDetected(TrackerMock.differentTracker)
+        testee.trackerDetected(TrackerMock.unblockedTracker)
+        XCTAssertEqual(testee.totalTrackersDetected, 0)
+        XCTAssertEqual(testee.totalTrackersBlocked, 0)
+        XCTAssertEqual(testee.installedSurrogates.count, 0)
+    }
 
 }
 

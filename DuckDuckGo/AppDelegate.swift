@@ -447,7 +447,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 
-    func presentWaitlistSettingsModal() {
+    private func presentWaitlistSettingsModal() {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
         rootViewController.clearNavigationStack()

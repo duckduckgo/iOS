@@ -1430,18 +1430,18 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
             if let userEmail = emailManager.userEmail {
                 let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
                 alert.addAction(title: actionTitle) {
-                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters)
+                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includeATB: false)
                     completionHandler(.user)
                 }
             }
 
             alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters)
+                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includeATB: false)
                 completionHandler(.generated)
             }
 
             alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
+                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includeATB: false)
                 completionHandler(.none)
             }
 

@@ -211,6 +211,7 @@ class TabViewController: UIViewController {
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
+        tabModel.viewed = true
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -614,7 +615,8 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        if let rules = ContentBlockerRulesManager.shared.currentRules {
+        if let rules = ContentBlockerRulesManager.shared.currentRules,
+           PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .contentBlocking) {
             self.webView.configuration.userContentController.removeAllContentRuleLists()
             self.webView.configuration.userContentController.add(rules.rulesList)
             
@@ -1055,7 +1057,7 @@ extension TabViewController: WKNavigationDelegate {
         
         var request = incomingRequest
         // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell {
+        if appSettings.sendDoNotSell && PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .gpc) {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
@@ -1430,18 +1432,18 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
             if let userEmail = emailManager.userEmail {
                 let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
                 alert.addAction(title: actionTitle) {
-                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters)
+                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includeATB: false)
                     completionHandler(.user)
                 }
             }
 
             alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters)
+                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includeATB: false)
                 completionHandler(.generated)
             }
 
             alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
+                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includeATB: false)
                 completionHandler(.none)
             }
 

@@ -34,7 +34,7 @@ public struct AppUrls {
         static let autocomplete = "\(base)/ac/"
         
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        static let temporaryUnprotectedSites = "\(base)/contentblocking/trackers-unprotected-temporary.txt"
+        static let privacyConfig = "\(staticBase)/trackerblocking/config/v1/ios-config.json"
         static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/tds.json"
 
         static let atb = "\(base)/atb.js\(devMode)"
@@ -118,8 +118,8 @@ public struct AppUrls {
         return URL(string: Url.trackerDataSet)!
     }
     
-    public var temporaryUnprotectedSites: URL {
-        return URL(string: Url.temporaryUnprotectedSites)!
+    public var privacyConfig: URL {
+        return URL(string: Url.privacyConfig)!
     }
 
     public var feedback: URL {
@@ -293,13 +293,17 @@ public struct AppUrls {
         return URL(string: Url.emailLoginQuickLink)!
     }
     
-    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil) -> URL {
+    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = Url.pixel.format(arguments: pixelName)
         if let formFactor = formFactor {
             urlString.append("_ios_\(formFactor)")
         }
         var url = URL(string: urlString)!
-        url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+
+        if includeATB {
+            url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+        }
+
         return url
     }
     

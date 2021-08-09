@@ -72,7 +72,7 @@ public class ContentBlockerLoader {
         
         request(.surrogates, with: dataSource, semaphore, progress)
         request(.trackerDataSet, with: dataSource, semaphore, progress)
-        request(.temporaryUnprotectedSites, with: dataSource, semaphore, progress)
+        request(.privacyConfiguration, with: dataSource, semaphore, progress)
         requestHttpsUpgrade(dataSource, semaphore, progress)
         requestHttpsExcludedDomains(dataSource, semaphore, progress)
         

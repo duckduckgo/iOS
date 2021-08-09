@@ -28,12 +28,27 @@ public class FileStore {
     func persist(_ data: Data?, forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
         guard let data = data else { return false }
         do {
-            try data.write(to: persistenceLocation(forConfiguration: config))
+            try data.write(to: persistenceLocation(forConfiguration: config), options: .atomic)
             return true
         } catch {
             Pixel.fire(pixel: .fileStoreWriteFailed, error: error, withAdditionalParameters: ["config": config.rawValue ])
             return false
         }
+    }
+    
+    func removeData(forFile file: String) -> Bool {
+        var fileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
+        fileUrl = fileUrl!.appendingPathComponent(file)
+        guard let fileUrl = fileUrl else { return false }
+        guard FileManager.default.fileExists(atPath: fileUrl.path) else { return true }
+        
+        do {
+            try FileManager.default.removeItem(at: fileUrl)
+        } catch {
+            return false
+        }
+        
+        return true
     }
     
     func loadAsString(forConfiguration config: ContentBlockerRequest.Configuration) -> String? {

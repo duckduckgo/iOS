@@ -440,19 +440,27 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        presentWaitlistSettingsModal()
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            presentWaitlistSettingsModal()
+        }
+
         completionHandler()
     }
 
     private func presentWaitlistSettingsModal() {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
-        rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
-        let navigationController = rootViewController.presentedViewController as? UINavigationController
-        let waitlist = EmailWaitlistViewController.loadFromStoryboard()
+        rootViewController.clearNavigationStack()
 
-        navigationController?.popToRootViewController(animated: false)
-        navigationController?.pushViewController(waitlist, animated: true)
+        // Give the `clearNavigationStack` call time to complete.
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+            let navigationController = rootViewController.presentedViewController as? UINavigationController
+            let waitlist = EmailWaitlistViewController.loadFromStoryboard()
+
+            navigationController?.popToRootViewController(animated: false)
+            navigationController?.pushViewController(waitlist, animated: true)
+        }
     }
 
 }

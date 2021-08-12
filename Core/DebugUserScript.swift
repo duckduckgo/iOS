@@ -31,7 +31,7 @@ public class DebugUserScript: NSObject, UserScript {
     }
     
     public lazy var source: String = {
-        return Self.loadJS(isDebugBuild ? "debug-messaging-enabled" : "debug-messaging-disabled", from: Bundle.core)
+        return ""
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

@@ -18,6 +18,40 @@
 //
 
 (function() {
+    
+    if (${isDebug}) {
+        var duckduckgoDebugMessaging = function() {
+            
+            function signpostEvent(data) {
+                try {
+                    webkit.messageHandlers.signpostMessage.postMessage(data);
+                } catch(error) {}
+            }
+            
+            function log() {
+                try {
+                    webkit.messageHandlers.log.postMessage(JSON.stringify(arguments));
+                } catch(error) {}
+            }
+            
+            return {
+                signpostEvent: signpostEvent,
+                log: log
+            }
+        }()
+    } else {
+        var duckduckgoDebugMessaging = function() {
+            
+            function signpostEvent(data) {}
+            
+            function log() {}
+            
+            return {
+                signpostEvent: signpostEvent,
+                log: log
+            }
+        }()
+    }
 
    function surrogateInjected(data) {
        try {
@@ -442,6 +476,7 @@ _utf8_encode : function (string) {
         }
         return null;
     }
+    Object.freeze(Trackers.prototype)
 
     // create an instance to use
     let trackers = new Trackers({
@@ -543,7 +578,7 @@ _utf8_encode : function (string) {
                 isSurrogate: isSurrogate
             })
 
-            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
+            duckduckgoDebugMessaging.signpostEvent({event: "Surrogate Injected",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
 
@@ -557,9 +592,6 @@ _utf8_encode : function (string) {
         [].slice.apply(document.scripts).forEach(function(el) {
             if (shouldBlock(el.src, 'SCRIPT')) {
                 duckduckgoDebugMessaging.log("blocking load")
-            } else {
-                duckduckgoDebugMessaging.log("don't block " + el.src);
-                return
             }
             
         });
@@ -569,26 +601,17 @@ _utf8_encode : function (string) {
           if (el.naturalWidth === 0) {
               if (shouldBlock(el.src, 'IMG')) {
                   duckduckgoDebugMessaging.log("blocking load")
-              } else {
-                  duckduckgoDebugMessaging.log("don't block " + el.src);
-                  return
               }
           }
         });
         [].slice.apply(document.querySelectorAll('link')).forEach(function(el) {
             if (shouldBlock(el.href, 'LINK')) {
                 duckduckgoDebugMessaging.log("blocking load")
-            } else {
-                duckduckgoDebugMessaging.log("don't block " + el.href);
-                return
             }
         });
         [].slice.apply(document.querySelectorAll('iframe')).forEach(function(el) {
           if (shouldBlock(el.src, 'IFRAME')) {
               duckduckgoDebugMessaging.log("blocking load")
-          } else {
-              duckduckgoDebugMessaging.log("don't block " + el.src);
-              return
           }
         });
         scheduleProcessPage()
@@ -625,7 +648,6 @@ _utf8_encode : function (string) {
                         duckduckgoDebugMessaging.log("blocking image src: " + value)
                     } else {
                         originalImageSrc.set.call(instance, value);
-                        duckduckgoDebugMessaging.log("allowing image src: " + value)
                     }
                     
                 }

@@ -11,13 +11,9 @@
     <entity name="Folder" representedClassName="Folder" parentEntity="BookmarkItem" syncable="YES" codeGenerationType="class">
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="BookmarkItem" inverseName="parent" inverseEntity="BookmarkItem"/>
     </entity>
-    <entity name="TopLevelFolderBookmarks" representedClassName="TopLevelFolderBookmarks" parentEntity="Folder" syncable="YES" codeGenerationType="class"/>
-    <entity name="TopLevelFolderFavourites" representedClassName="TopLevelFolderFavourites" parentEntity="Folder" syncable="YES" codeGenerationType="class"/>
     <elements>
         <element name="Bookmark" positionX="-103.337890625" positionY="45.55987548828125" width="128" height="44"/>
         <element name="BookmarkItem" positionX="-8.4656982421875" positionY="-75.2490234375" width="128" height="74"/>
         <element name="Folder" positionX="90.49835205078125" positionY="47.87652587890625" width="128" height="58"/>
-        <element name="TopLevelFolderBookmarks" positionX="18" positionY="27" width="128" height="29"/>
-        <element name="TopLevelFolderFavourites" positionX="27" positionY="36" width="128" height="29"/>
     </elements>
 </model>

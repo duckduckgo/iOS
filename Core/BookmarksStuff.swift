@@ -20,28 +20,12 @@
 import Foundation
 import CoreData
 
-// TODO unecessary lvel of abstraction? We will see
-// see what happens with bookmarks data source...
-protocol BookmarksStorage {
-    
-}
-
-public class BookmarksCoreDataStorage: BookmarksStorage {
+public class BookmarksCoreDataStorage {
     
     private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: "BookmarksAndFolders")
     
     //TODO chache bookmark items in memory?
     //probably will need to given we have to make the folder structure
-    
-//    public lazy var topLevelFolder: Folder = {
-//        //TODO how get if already exists?
-//        let folder = NSEntityDescription.insertNewObject(forEntityName: "Folder", into: context) as! Folder
-//        try? context.save()
-//        return folder
-//
-//        //get where parent = nil
-//        //if nothing returned, create
-//    }()
         
     private func getTopLevelFolder(isFavorite: Bool) -> Folder {
         let fetchRequest = NSFetchRequest<Folder>(entityName: "Folder")
@@ -63,47 +47,23 @@ public class BookmarksCoreDataStorage: BookmarksStorage {
         return folder
     }
     
-    public lazy var topLevelBookmarksFolder: Folder = {
+    private lazy var topLevelBookmarksFolder: Folder = {
         getTopLevelFolder(isFavorite: false)
     }()
     
-    public lazy var topLevelFavoritesFolder: Folder = {
+    private lazy var topLevelFavoritesFolder: Folder = {
         getTopLevelFolder(isFavorite: true)
     }()
-    
-//    private lazy var topLevelBookmarksFolder: TopLevelFolderBookmarks = {
-//        let fetchRequest: NSFetchRequest<TopLevelFolderBookmarks> = TopLevelFolderBookmarks.fetchRequest()
-//
-//        guard let results = try? context.fetch(fetchRequest),
-//              let folder = results.first else {
-//
-//            let folder = NSEntityDescription.insertNewObject(forEntityName: "TopLevelFolderBookmarks", into: context) as? TopLevelFolderBookmarks
-//            try? context.save()
-//
-//            guard let newFolder = folder else {
-//                fatalError("Error creating BookmarkItems")
-//            }
-//            return newFolder
-//        }
-//
-//        return folder
-//    }()
 
-    public lazy var topLevelBookmarkItems: [BookmarkItem] = {
-        let children = topLevelBookmarksFolder.children
-        let items: [BookmarkItem]? = children?.array as? [BookmarkItem]
-        return items ?? []
+    public lazy var topLevelBookmarksItems: [BookmarkItem] = {
+        topLevelBookmarksFolder.children?.array as? [BookmarkItem] ?? []
     }()
     
+    public lazy var topLevelFavoritesItems: [BookmarkItem] = {
+        topLevelFavoritesFolder.children?.array as? [BookmarkItem] ?? []
+    }()
         
     public init() { }
-    
-    /*
-     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent = %@", self.parentFolder];
-     [fetchRequest setPredicate:predicate];
-     
-     hmm, if have dummy node with children, can just fetch that to get the tree? seems like it should work?
-     */
     
     public func bookmarkItems() -> [BookmarkItem] {
         let fetchRequest: NSFetchRequest<BookmarkItem> = BookmarkItem.fetchRequest()
@@ -114,11 +74,6 @@ public class BookmarksCoreDataStorage: BookmarksStorage {
         
         return results
     }
-    
-//    public func topLevelBookmarkItems2() -> [BookmarkItem] {
-//        let items = topLevelFolder.children?.array as? [BookmarkItem]
-//        return items ?? []
-//    }
     
     private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: Folder? = nil) {
         let managedObject = NSEntityDescription.insertNewObject(forEntityName: "Bookmark", into: context)

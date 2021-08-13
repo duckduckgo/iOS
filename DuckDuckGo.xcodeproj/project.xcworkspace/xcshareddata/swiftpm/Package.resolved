@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "sam/autofill-version-3.2.2",
-          "revision": "50d17f469d37fbe63dd4352df87873c18eb933ab",
-          "version": null
+          "branch": null,
+          "revision": "7fe3315b30e0452762e87e308b22e821d37d128d",
+          "version": "7.1.2"
         }
       },
       {

@@ -87,6 +87,46 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         }
     }
     
+    //TODO I'm probably going to end up constructing an array of visible items, and their associated depth e.d.
+    /*
+    [
+     (bookmark, 0),
+     (folder, 0),
+     (bookmark, 1), <- these two bookmarks are under the first folder
+     (bookmark, 1),
+     (folder, 1), <- this folder isn't expanded
+     (bookmark, 0),
+     */
+    
+    //TODO untested, probably not going to use this
+//    private func findItem(at index: Int) -> BookmarkItem? {
+//        let topLevelItems = bookmarksManager.topLevelBookmarkItems
+//        var traversalStack = Array(topLevelItems.reversed())
+//        var numberOfTraversedItems = 0
+//        while let item = traversalStack.popLast() {
+//            if numberOfTraversedItems == index {
+//                return item
+//            }
+//            if let folder = item as? Folder,
+//               expandedFolders.contains(folder),
+//               let children = folder.children?.array as? [BookmarkItem] {
+//                traversalStack.append(contentsOf: children.reversed())
+//            }
+//            numberOfTraversedItems += 1
+//        }
+//    }
+    private func numberOfExpandedItems(for item: BookmarkItem) -> Int {
+        if let folder = item as? Folder,
+           expandedFolders.contains(folder),
+           let children = folder.children?.array as? [BookmarkItem] {
+                
+            return 1 + children.reduce(0) { (result, item) -> Int in
+                result + numberOfExpandedItems(for: item)
+            }
+        } else {
+            return 1
+        }
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return max(1, section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount)
     }

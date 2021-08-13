@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G80" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Bookmark" representedClassName="Bookmark" parentEntity="BookmarkItem" syncable="YES" codeGenerationType="class">
-        <attribute name="url" optional="YES" attributeType="URI"/>
+        <attribute name="url" attributeType="URI"/>
     </entity>
     <entity name="BookmarkItem" representedClassName="BookmarkItem" isAbstract="YES" syncable="YES" codeGenerationType="class">
-        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isFavorite" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="children" inverseEntity="Folder"/>
     </entity>
     <entity name="Folder" representedClassName="Folder" parentEntity="BookmarkItem" syncable="YES" codeGenerationType="class">
-        <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="BookmarkItem" inverseName="parent" inverseEntity="BookmarkItem"/>
+        <relationship name="children" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="BookmarkItem" inverseName="parent" inverseEntity="BookmarkItem"/>
     </entity>
     <elements>
         <element name="Bookmark" positionX="-103.337890625" positionY="45.55987548828125" width="128" height="44"/>
         <element name="BookmarkItem" positionX="-8.4656982421875" positionY="-75.2490234375" width="128" height="74"/>
-        <element name="Folder" positionX="90.49835205078125" positionY="47.87652587890625" width="128" height="58"/>
+        <element name="Folder" positionX="90.49835205078125" positionY="47.87652587890625" width="128" height="44"/>
     </elements>
 </model>

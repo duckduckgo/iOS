@@ -26,6 +26,18 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         return nil
     }
     
+    typealias VisibleBookmarkItem = (item: BookmarkItem, depth: Int)
+    
+    func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
+        return nil
+    }
+    
+    func expand(folder: Folder) {
+    }
+    
+    func collapse(folder: Folder) {
+    }
+    
     var isEmpty: Bool {
         return true
     }
@@ -54,13 +66,17 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
         return cell
     }
-
+    
+    //TOdo we need to a representation for folders. I guess just the image is different?
+    //oh they also have the arrow and number of items on the right.
+    //probably worthy or a new cell type?
     fileprivate func createBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
 
-        cell.link = link(at: indexPath)
+        //TODO handle folders
+        cell.bookmark = item(at: indexPath) as! Bookmark
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
@@ -74,6 +90,9 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 class DefaultBookmarksDataSource: BookmarksDataSource {
 
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    
+    //TODO I question if this is necessary. Could just use the visible object to track this
+    private var expandedFolders = Set<Folder>()
 
     override var isEmpty: Bool {
         return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
@@ -87,48 +106,42 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         }
     }
     
-    //TODO I'm probably going to end up constructing an array of visible items, and their associated depth e.d.
-    /*
-    [
-     (bookmark, 0),
-     (folder, 0),
-     (bookmark, 1), <- these two bookmarks are under the first folder
-     (bookmark, 1),
-     (folder, 1), <- this folder isn't expanded
-     (bookmark, 0),
-     */
+    private lazy var visibleBookmarkItems: [VisibleBookmarkItem] = {
+        return bookmarksManager.topLevelBookmarkItems.map {
+            VisibleBookmarkItem($0, 0)
+        }
+    }()
     
-    //TODO untested, probably not going to use this
-//    private func findItem(at index: Int) -> BookmarkItem? {
-//        let topLevelItems = bookmarksManager.topLevelBookmarkItems
-//        var traversalStack = Array(topLevelItems.reversed())
-//        var numberOfTraversedItems = 0
-//        while let item = traversalStack.popLast() {
-//            if numberOfTraversedItems == index {
-//                return item
-//            }
-//            if let folder = item as? Folder,
-//               expandedFolders.contains(folder),
-//               let children = folder.children?.array as? [BookmarkItem] {
-//                traversalStack.append(contentsOf: children.reversed())
-//            }
-//            numberOfTraversedItems += 1
-//        }
-//    }
-    private func numberOfExpandedItems(for item: BookmarkItem) -> Int {
-        if let folder = item as? Folder,
-           expandedFolders.contains(folder),
-           let children = folder.children?.array as? [BookmarkItem] {
-                
-            return 1 + children.reduce(0) { (result, item) -> Int in
-                result + numberOfExpandedItems(for: item)
-            }
+    override func expand(folder: Folder) {
+        expandedFolders.insert(folder)
+        guard let children = folder.children?.array as? [BookmarkItem],
+              let index = visibleBookmarkItems.firstIndex(where: { $0.item == folder }) else {
+            return //TOdo fatal error if firstIndex fails?
+        }
+        let newDepth = visibleBookmarkItems[index].depth + 1
+        let visibleChildren = children.map {
+            VisibleBookmarkItem($0, newDepth)
+        }
+        visibleBookmarkItems.insert(contentsOf: visibleChildren, at: index + 1)
+        //TODO reload
+    }
+    
+    override func collapse(folder: Folder) {
+        expandedFolders.remove(folder)
+        visibleBookmarkItems.removeAll(where: { $0.item.parent == folder })
+        //TODO reload
+    }
+    
+    override func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
+        if indexPath.section == 0 {
+            return nil //TODO
         } else {
-            return 1
+            return visibleBookmarkItems[indexPath.row]
         }
     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(1, section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount)
+        return max(1, section == 0 ? bookmarksManager.favoritesCount : visibleBookmarkItems.count)
     }
     
     override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {

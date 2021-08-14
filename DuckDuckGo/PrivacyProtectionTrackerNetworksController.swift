@@ -30,7 +30,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
+    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
 
     struct Section {
 
@@ -80,8 +80,8 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func trackers() -> [DetectedTracker] {
-        var protecting = siteRating.protecting(protectionStore)
-        if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+        var protecting = siteRating.protecting(privacyConfig)
+        if privacyConfig.isTempUnprotected(domain: siteRating.domain) {
             protecting = false
         }
         
@@ -93,12 +93,12 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateSubtitle() {
-        subtitleLabel.text = siteRating.networksText(protectionStore: protectionStore).uppercased()
+        subtitleLabel.text = siteRating.networksText(config: privacyConfig).uppercased()
     }
 
     private func updateIcon() {
 
-        if protecting() || siteRating.trackerNetworksDetected == 0 {
+        if siteRating.protecting(privacyConfig) || siteRating.trackerNetworksDetected == 0 {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")
@@ -114,10 +114,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     private func initUI() {
         messageLabel.setAttributedTextString(UserText.ppTrackerNetworksInfo)
         backButton.isHidden = !isPad
-    }
-
-    private func protecting() -> Bool {
-        return siteRating.protecting(protectionStore)
     }
 
     override func viewWillLayoutSubviews() {
@@ -171,9 +167,9 @@ extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
 
 extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
         self.siteRating = siteRating
-        self.protectionStore = protectionStore
+        self.privacyConfig = config
         update()
     }
 

@@ -32,12 +32,13 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     }
     
     public var source: String {
-        let unprotectedDomains = UnprotectedSitesManager().domains.joined(separator: "\n")
+        let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+
+        let unprotectedDomains = privacyConfiguration.locallyUnprotectedDomains.joined(separator: "\n")
             + "\n"
-            + (PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.joined(separator: "\n"))
+            + (privacyConfiguration.tempUnprotectedDomains.joined(separator: "\n"))
             + "\n"
-            + (PrivacyConfigurationManager.shared.privacyConfig
-                .exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
+            + (privacyConfiguration.exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains
@@ -53,10 +54,9 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     public weak var delegate: ContentBlockerUserScriptDelegate?
     public weak var storageCache: StorageCache? {
         didSet {
-            temporaryUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig
-                .tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
-            temporaryUnprotectedDomains.append(contentsOf: PrivacyConfigurationManager.shared.privacyConfig
-                            .exceptionsList(forFeature: .contentBlocking))
+            let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+            temporaryUnprotectedDomains = privacyConfiguration.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+            temporaryUnprotectedDomains.append(contentsOf: privacyConfiguration.exceptionsList(forFeature: .contentBlocking))
         }
     }
 
@@ -77,9 +77,11 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData else {
             return
         }
-        
+
+        let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+
         let resolver = TrackerResolver(tds: currentTrackerData,
-                                       unprotectedSites: UnprotectedSitesManager().domains,
+                                       unprotectedSites: privacyConfiguration.locallyUnprotectedDomains,
                                        tempList: temporaryUnprotectedDomains)
         
         if let tracker = resolver.trackerFromUrl(trackerUrlString,

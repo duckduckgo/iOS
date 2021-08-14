@@ -24,7 +24,7 @@ protocol ContentBlockerRulesSource {
 
     var trackerData: TrackerDataManager.DataSet? { get }
     var embeddedTrackerData: TrackerDataManager.DataSet { get }
-    var tempListEtag: String? { get }
+    var tempListEtag: String { get }
     var tempList: [String] { get }
     var unprotectedSites: [String] { get }
 
@@ -40,21 +40,19 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
         return TrackerDataManager.shared.embeddedData
     }
 
-    var tempListEtag: String? {
-        return PrivacyConfigurationManager.shared.fetchedData?.etag
-            ?? PrivacyConfigurationManager.shared.embeddedData.etag
+    var tempListEtag: String {
+        return PrivacyConfigurationManager.shared.privacyConfig.identifier
     }
 
     var tempList: [String] {
-        var tempUnprotected = PrivacyConfigurationManager.shared.privacyConfig
-            .tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
-        tempUnprotected.append(contentsOf: PrivacyConfigurationManager.shared.privacyConfig
-                                .exceptionsList(forFeature: .contentBlocking))
+        let config = PrivacyConfigurationManager.shared.privacyConfig
+        var tempUnprotected = config.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+        tempUnprotected.append(contentsOf: config.exceptionsList(forFeature: .contentBlocking))
         return tempUnprotected
     }
 
     var unprotectedSites: [String] {
-        return UnprotectedSitesManager().domains
+        return PrivacyConfigurationManager.shared.privacyConfig.locallyUnprotectedDomains
     }
 
 }

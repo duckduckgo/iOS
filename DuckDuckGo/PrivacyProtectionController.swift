@@ -39,6 +39,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     var errorText: String?
   
     private var storageCache = AppDependencyProvider.shared.storageCache.current
+    private var privacyConfig = PrivacyConfigurationManager.shared.privacyConfig
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +106,7 @@ class PrivacyProtectionController: ThemableNavigationController {
 
         viewControllers.forEach {
             guard let infoDisplaying = $0 as? PrivacyProtectionInfoDisplaying else { return }
-            infoDisplaying.using(siteRating: siteRating, protectionStore: storageCache.protectionStore)
+            infoDisplaying.using(siteRating: siteRating, config: privacyConfig)
         }
     }
 

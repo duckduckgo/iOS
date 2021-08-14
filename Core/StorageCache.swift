@@ -29,8 +29,6 @@ public class StorageCache: StorageCacheUpdating {
     public let fileStore = FileStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     
-    public let protectionStore: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
-    
     // Read only
     public let tld: TLD
     public let termsOfServiceStore: TermsOfServiceStore

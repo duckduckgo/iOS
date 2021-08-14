@@ -1,8 +1,8 @@
 //
-//  ContentBlockerConfigurationUserDefaults.swift
+//  DomainsProtectionUserDefaultsStore.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 import Foundation
 import SafariServices
 
-public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore {
+public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
 
     private struct Keys {
         static let unprotectedDomains = "com.duckduckgo.contentblocker.whitelist"
@@ -29,19 +29,8 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
 
     private let suiteName: String
 
-    // This variable should be confined to the Main Thread
-    private var tempUnprotectedDomains: [String]?
-
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName =  suiteName
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onStorageChange),
-                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
-                                               object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: StorageCacheProvider.didUpdateStorageCacheNotification, object: nil)
     }
 
     private var userDefaults: UserDefaults? {
@@ -63,34 +52,6 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
         }
     }
 
-    public func isProtected(domain: String?) -> Bool {
-        guard let domain = domain else { return true }
-        
-        return !isTempUnprotected(domain: domain) && !unprotectedDomains.contains(domain)
-    }
-    
-    public func isTempUnprotected(domain: String?) -> Bool {
-        guard let domain = domain else { return false }
-        
-        if tempUnprotectedDomains == nil {
-            tempUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains
-                .filter { !$0.trimWhitespace().isEmpty }
-        }
-        
-        // Break domain apart to handle www.*
-        var tempDomain = domain
-        while tempDomain.contains(".") {
-            if tempUnprotectedDomains!.contains(tempDomain) {
-                return true
-            }
-            
-            let comps = tempDomain.split(separator: ".")
-            tempDomain = comps.dropFirst().joined(separator: ".")
-        }
-        
-        return false
-    }
-
     public func disableProtection(forDomain domain: String) {
         var domains = unprotectedDomains
         domains.insert(domain)
@@ -106,14 +67,5 @@ public class ContentBlockerProtectionUserDefaults: ContentBlockerProtectionStore
     private func onStoreChanged() {
         ContentBlockerRulesManager.shared.recompile()
     }
-    
-    @objc private func onStorageChange() {
-        let newList = PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains
-            .filter { !$0.trimWhitespace().isEmpty }
 
-        DispatchQueue.main.async {
-            self.tempUnprotectedDomains = newList
-        }
-
-    }
 }

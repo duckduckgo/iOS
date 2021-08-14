@@ -59,12 +59,12 @@ extension SiteRating {
         return privacyPractice.summary
     }
     
-    func majorNetworksText(protectionStore: ContentBlockerProtectionStore) -> String {
-        return protecting(protectionStore) ? majorNetworksBlockedText() : majorNetworksDetectedText()
+    func majorNetworksText(config: PrivacyConfiguration) -> String {
+        return protecting(config) ? majorNetworksBlockedText() : majorNetworksDetectedText()
     }
     
-    func majorNetworksSuccess(protectionStore: ContentBlockerProtectionStore) -> Bool {
-        return (protecting(protectionStore) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
+    func majorNetworksSuccess(config: PrivacyConfiguration) -> Bool {
+        return (protecting(config) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
     }
     
     func majorNetworksBlockedText() -> String {
@@ -75,17 +75,17 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionMajorTrackersFound, majorTrackerNetworksDetected)
     }
     
-    func networksText(protectionStore: ContentBlockerProtectionStore) -> String {
-        var isProtecting = protecting(protectionStore)
-        if protectionStore.isTempUnprotected(domain: domain) {
+    func networksText(config: PrivacyConfiguration) -> String {
+        var isProtecting = protecting(config)
+        if config.isTempUnprotected(domain: domain) {
             isProtecting = false
         }
         
         return isProtecting ? networksBlockedText() : networksDetectedText()
     }
     
-    func networksSuccess(protectionStore: ContentBlockerProtectionStore) -> Bool {
-        return (protecting(protectionStore) ? trackersBlocked.count : trackersDetected.count) <= 0
+    func networksSuccess(config: PrivacyConfiguration) -> Bool {
+        return (protecting(config) ? trackersBlocked.count : trackersDetected.count) <= 0
     }
     
     func networksBlockedText() -> String {
@@ -96,8 +96,8 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionTrackersFound, trackersDetected.count)
     }
     
-    func protecting(_ protectionStore: ContentBlockerProtectionStore) -> Bool {
-        return protectionStore.isProtected(domain: domain)
+    func protecting(_ config: PrivacyConfiguration) -> Bool {
+        return config.isProtected(domain: domain)
     }
     
     static let gradeImages: [Grade.Grading: UIImage] = [

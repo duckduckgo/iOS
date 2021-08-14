@@ -19,81 +19,111 @@
 
 import Foundation
 
-public struct PrivacyConfiguration: Codable {
-    public typealias FeatureName = String
-    public typealias UnprotectedList = [ExceptionEntry]
+public protocol PrivacyConfiguration {
+
+    var identifier: String { get }
+
+    var locallyUnprotectedDomains: [String] { get }
+    var tempUnprotectedDomains: [String] { get }
+
+    func isEnabled(featureKey: PrivacyFeature) -> Bool
+    func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String]
+
+    func isProtected(domain: String?) -> Bool
+
+    func isLocallyUnprotected(domain: String?) -> Bool
+    func isTempUnprotected(domain: String?) -> Bool
+    func isInExceptionList(domain: String?, forFeature featureKey: PrivacyFeature) -> Bool
+
+    func enableProtection(forDomain: String)
+    func disableProtection(forDomain: String)
+}
+
+public enum PrivacyFeature: String {
+    case contentBlocking
+    case fingerprintingTemporaryStorage
+    case fingerprintingBattery
+    case fingerprintingScreenSize
+    case gpc
+}
+
+public struct AppPrivacyConfiguration: PrivacyConfiguration {
+
+    private(set) public var identifier: String
     
-    public let features: [FeatureName: PrivacyFeature]
-    public let unprotectedTemporary: UnprotectedList
-    
-    public enum SupportedFeatures: String {
-        case contentBlocking
-        case fingerprintingTemporaryStorage
-        case fingerprintingBattery
-        case fingerprintingScreenSize
-        case gpc
+    private let data: PrivacyConfigurationData
+    private let locallyUnprotected: DomainsProtectionStore = DomainsProtectionUserDefaultsStore()
+
+    init(data: PrivacyConfigurationData, identifier: String) {
+        self.data = data
+        self.identifier = identifier
     }
-    
-    public init(features: [String: PrivacyFeature], unprotectedTemporary: [ExceptionEntry]) {
-        self.features = features
-        self.unprotectedTemporary = unprotectedTemporary
+
+    public var locallyUnprotectedDomains: [String] {
+        return Array(locallyUnprotected.unprotectedDomains)
     }
     
     public var tempUnprotectedDomains: [String] {
-        return unprotectedTemporary.map { $0.domain }
+        return data.unprotectedTemporary.map { $0.domain }
     }
     
-    public func isEnabled(featureKey: SupportedFeatures) -> Bool {
-        guard let feature = features[featureKey.rawValue] else { return false }
+    public func isEnabled(featureKey: PrivacyFeature) -> Bool {
+        guard let feature = data.features[featureKey.rawValue] else { return false }
         
         return feature.state == "enabled"
     }
     
-    public func exceptionsList(forFeature featureKey: SupportedFeatures) -> [String] {
-        guard let feature = features[featureKey.rawValue] else { return [] }
+    public func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String] {
+        guard let feature = data.features[featureKey.rawValue] else { return [] }
         
         return feature.exceptions.map { $0.domain }
     }
-    
-    enum CodingKeys: String, CodingKey {
-        case features
-        case unprotectedTemporary
-    }
-}
 
-public struct PrivacyFeature: Codable {
-    public typealias FeatureState = String
-    public typealias ExceptionList = [ExceptionEntry]
-    public typealias FeatureSettings = [String: String]
-    
-    public let state: FeatureState
-    public let exceptions: ExceptionList
-    
-    public init(state: String, exceptions: [ExceptionEntry]) {
-        self.state = state
-        self.exceptions = exceptions
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case state
-        case exceptions
-    }
-}
+    public func isProtected(domain: String?) -> Bool {
+        guard let domain = domain else { return true }
 
-public struct ExceptionEntry: Codable {
-    public typealias ExcludedDomain = String
-    public typealias ExclusionReason = String
-    
-    public let domain: ExcludedDomain
-    public let reason: ExclusionReason?
-    
-    public init(domain: String, reason: String?) {
-        self.domain = domain
-        self.reason = reason
+        return !isTempUnprotected(domain: domain) && !isLocallyUnprotected(domain: domain)
+    }
+
+    public func isLocallyUnprotected(domain: String?) -> Bool {
+        guard let domain = domain else { return false }
+
+        return locallyUnprotected.unprotectedDomains.contains(domain)
+    }
+
+    public func isTempUnprotected(domain: String?) -> Bool {
+        return isDomain(domain, wildcardMatching: tempUnprotectedDomains)
+    }
+
+    public func isInExceptionList(domain: String?, forFeature featureKey: PrivacyFeature) -> Bool {
+        return isDomain(domain, wildcardMatching: exceptionsList(forFeature: featureKey))
+    }
+
+    private func isDomain(_ domain: String?, wildcardMatching domainsList: [String]) -> Bool {
+        guard let domain = domain else { return false }
+
+        let trimmedDomains = domainsList.filter { !$0.trimWhitespace().isEmpty }
+
+        // Break domain apart to handle www.*
+        var tempDomain = domain
+        while tempDomain.contains(".") {
+            if trimmedDomains.contains(tempDomain) {
+                return true
+            }
+
+            let comps = tempDomain.split(separator: ".")
+            tempDomain = comps.dropFirst().joined(separator: ".")
+        }
+
+        return false
+    }
+
+    public func enableProtection(forDomain domain: String) {
+        locallyUnprotected.enableProtection(forDomain: domain)
+    }
+
+    public func disableProtection(forDomain domain: String) {
+        locallyUnprotected.disableProtection(forDomain: domain)
     }
     
-    enum CodingKeys: String, CodingKey {
-        case domain
-        case reason
-    }
 }

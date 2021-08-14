@@ -72,7 +72,6 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
@@ -1198,7 +1197,7 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        if !contentBlockerProtection.isProtected(domain: url.host) {
+        if !PrivacyConfigurationManager.shared.privacyConfig.isProtected(domain: url.host) {
             completion(allowPolicy)
             return
         }

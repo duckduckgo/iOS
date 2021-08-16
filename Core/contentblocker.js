@@ -200,12 +200,11 @@ _utf8_encode : function (string) {
     // Buffer
 
     // trackers.js - https://raw.githubusercontent.com/duckduckgo/privacy-grade/298ddcbdd9d55808233643d90639578cd063a439/src/classes/trackers.js
-    (function () {
-        class Trackers {
-            constructor (ops) {
-                this.tldjs = ops.tldjs
-                this.utils = ops.utils
-            }
+    class Trackers {
+        constructor (ops) {
+            this.tldjs = ops.tldjs
+            this.utils = ops.utils
+        }
 
         setLists (lists) {
             lists.forEach(list => {
@@ -442,14 +441,8 @@ _utf8_encode : function (string) {
 
             return {action, reason}
         }
-        }
+    }
 
-        if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
-            module.exports = Trackers
-        else
-            window.Trackers = Trackers
-
-    })()
     // trackers.js
 
     // surrogates

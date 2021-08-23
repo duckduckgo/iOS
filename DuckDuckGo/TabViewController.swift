@@ -479,7 +479,8 @@ class TabViewController: UIViewController {
             url = webView.url
             onWebpageDidStartLoading(httpsForced: false)
             onWebpageDidFinishLoading()
-        } else if webView.canGoBack && webView.goBack() != nil {
+        } else if webView.canGoBack {
+            webView.goBack()
             chromeDelegate?.omniBar.resignFirstResponder()
         } else if openingTab != nil {
             delegate?.tabDidRequestClose(self)

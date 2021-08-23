@@ -22,6 +22,23 @@ import WebKit
 import TrackerRadarKit
 import BrowserServicesKit
 
+public protocol ContentBlockerUserScriptConfigSource {
+
+    var privacyConfig: PrivacyConfiguration { get }
+    var trackerData: TrackerData? { get }
+}
+
+public class DefaultUserScriptConfigSource: ContentBlockerUserScriptConfigSource {
+
+    public var privacyConfig: PrivacyConfiguration {
+        return PrivacyConfigurationManager.shared.privacyConfig
+    }
+
+    public var trackerData: TrackerData? {
+        return ContentBlockerRulesManager.shared.currentRules?.trackerData
+    }
+}
+
 public class ContentBlockerRulesUserScript: NSObject, UserScript {
     
     struct ContentBlockerKey {
@@ -30,9 +47,21 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         static let blocked = "blocked"
         static let pageUrl = "pageUrl"
     }
+
+    private let configurationSource: ContentBlockerUserScriptConfigSource
+
+    public init(configurationSource: ContentBlockerUserScriptConfigSource) {
+        self.configurationSource = configurationSource
+
+        super.init()
+    }
+
+    public override convenience init() {
+        self.init(configurationSource: DefaultUserScriptConfigSource())
+    }
     
     public var source: String {
-        let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+        let privacyConfiguration = configurationSource.privacyConfig
 
         let unprotectedDomains = privacyConfiguration.locallyUnprotectedDomains.joined(separator: "\n")
             + "\n"
@@ -74,11 +103,11 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         let resourceType = (dict[ContentBlockerKey.resourceType] as? String) ?? "unknown"
         guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
         
-        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData else {
+        guard let currentTrackerData = configurationSource.trackerData else {
             return
         }
 
-        let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+        let privacyConfiguration = configurationSource.privacyConfig
 
         let resolver = TrackerResolver(tds: currentTrackerData,
                                        unprotectedSites: privacyConfiguration.locallyUnprotectedDomains,

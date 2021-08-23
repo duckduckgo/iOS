@@ -1,6 +1,40 @@
 
 
 (function() {
+    
+    if (${isDebug}) {
+        var duckduckgoDebugMessaging = function() {
+            
+            function signpostEvent(data) {
+                try {
+                    webkit.messageHandlers.signpostMessage.postMessage(data);
+                } catch(error) {}
+            }
+            
+            function log() {
+                try {
+                    webkit.messageHandlers.log.postMessage(JSON.stringify(arguments));
+                } catch(error) {}
+            }
+            
+            return {
+                signpostEvent: signpostEvent,
+                log: log
+            }
+        }()
+    } else {
+        var duckduckgoDebugMessaging = function() {
+            
+            function signpostEvent(data) {}
+            
+            function log() {}
+            
+            return {
+                signpostEvent: signpostEvent,
+                log: log
+            }
+        }()
+    }
 
     const logger = duckduckgoDebugMessaging; // switch to console if helpful
 

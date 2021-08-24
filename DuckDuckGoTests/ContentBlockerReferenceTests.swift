@@ -25,14 +25,15 @@ import TrackerRadarKit
 @testable import Core
 @testable import DuckDuckGo
 
-
 class ContentBlockerReferenceTests: XCTestCase {
 
     let schemeHandler = TestSchemeHandler()
     let userScriptDelegateMock = MockUserScriptDelegate()
     let navigationDelegateMock = MockNavigationDelegate()
 
-    var webView: WKWebView?
+    var webView: WKWebView!
+    var tds: TrackerData!
+    var tests = [RefTests.Test]()
 
     override func setUp() {
         super.setUp()
@@ -83,44 +84,123 @@ class ContentBlockerReferenceTests: XCTestCase {
         }
     }
 
-    private var data = JsonTestDataLoader()
+    func testDomainMatching() throws {
 
-    func wiptestDomainMatching() throws {
+        let data = JsonTestDataLoader()
         let trackerJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/tracker_radar_reference.json")
         let testJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/domain_matching_tests.json")
 
-        let trackerData = try JSONDecoder().decode(TrackerData.self, from: trackerJSON)
+        tds = try JSONDecoder().decode(TrackerData.self, from: trackerJSON)
 
         let refTests = try JSONDecoder().decode(RefTests.self, from: testJSON)
-        let tests = refTests.domainTests.tests
+        tests = refTests.domainTests.tests
 
-        setupWebViewForUserScripTests(trackerData: trackerData,
+        let testsExecuted = expectation(description: "tests executed")
+        testsExecuted.expectedFulfillmentCount = tests.count
+
+        setupWebViewForUserScripTests(trackerData: tds,
                                       exceptions: ["duckduckgo.com"],
                                       tempUnprotected: [],
                                       userScriptDelegate: userScriptDelegateMock,
                                       schemeHandler: schemeHandler) { webView in
             self.webView = webView
 
-
+            self.popTestAndExecute(onTestExecuted: testsExecuted)
         }
 
-        for test in tests {
-            let skip = test.exceptPlatforms?.contains("ios-browser")
-            if skip == true {
-                os_log("!!SKIPPING TEST: %s", test.name)
-                continue
+        waitForExpectations(timeout: 60, handler: nil)
+    }
+
+    private func popTestAndExecute(onTestExecuted: XCTestExpectation) {
+
+        guard let test = tests.popLast() else {
+            return
+        }
+
+        let skip = test.exceptPlatforms?.contains("ios-browser")
+        if skip == true {
+            os_log("!!SKIPPING TEST: %s", test.name)
+            onTestExecuted.fulfill()
+            DispatchQueue.main.async {
+                self.popTestAndExecute(onTestExecuted: onTestExecuted)
+            }
+        }
+
+        os_log("TEST: %s", test.name)
+
+        let siteURL = URL(string: test.siteURL.replacingOccurrences(of: "https://", with: "test://"))!
+        let requestURL = URL(string: test.requestURL.replacingOccurrences(of: "https://", with: "test://"))!
+
+        let resource: MockWebsite.EmbeddedResource
+        if test.requestType == "image" {
+            resource = MockWebsite.EmbeddedResource(type: .image,
+                                                    url: requestURL.appendingPathComponent("1.png"))
+        } else if test.requestType == "script" {
+            resource = MockWebsite.EmbeddedResource(type: .script,
+                                                    url: requestURL.appendingPathComponent("1.js"))
+        } else {
+            XCTFail("Unknown request type: \(test.requestType) in test \(test.name)")
+            return
+        }
+
+        let mockWebsite = MockWebsite(resources: [resource])
+
+        schemeHandler.reset()
+        schemeHandler.requestHandlers[siteURL] = { _ in
+            return mockWebsite.htmlRepresentation.data(using: .utf8)!
+        }
+
+        userScriptDelegateMock.reset()
+
+        os_log("Loading %s ...", siteURL.absoluteString)
+        let request = URLRequest(url: siteURL)
+        webView.load(request)
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            os_log("Website loaded")
+            if test.expectAction == "block" {
+                // Only website request
+                XCTAssertEqual(self.schemeHandler.handledRequests.count, 1)
+                // Only resource request
+                XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
+
+                if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
+                    XCTAssert(tracker.blocked)
+                } else {
+                    XCTFail("Expected to detect tracker for test \(test.name)")
+                }
+            } else if test.expectAction == "ignore" {
+                // Website request & resource request
+                XCTAssertEqual(self.schemeHandler.handledRequests.count, 2)
+
+                if let pageEntity = self.tds.findEntity(forHost: siteURL.host!),
+                   let trackerOwner = self.tds.findTracker(forUrl: requestURL.absoluteString)?.owner,
+                   pageEntity.displayName == trackerOwner.name {
+
+                    //
+                } else {
+                    if self.userScriptDelegateMock.detectedTrackers.count != 1 {
+                        print("---> yyy: \(test.name)")
+                    }
+
+                    XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
+
+                    if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
+                        XCTAssertFalse(tracker.blocked)
+                    } else {
+                        XCTFail("Expected to detect tracker for test \(test.name)")
+                    }
+                }
+
+            } else {
+                // Website request & resource request
+                XCTAssertEqual(self.schemeHandler.handledRequests.count, 2)
+                XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 0)
             }
 
-            os_log("TEST: %s", test.name)
-
-
-            let requestURL = URL(string: test.requestURL)
-            let siteURL = URL(string: test.siteURL)
-
-            if test.expectAction == "block" {
-//                XCTAssertEqual(result, .block())
-            } else {
-//                XCTAssertTrue(result == nil || result == .ignorePreviousRules())
+            onTestExecuted.fulfill()
+            DispatchQueue.main.async {
+                self.popTestAndExecute(onTestExecuted: onTestExecuted)
             }
         }
     }

@@ -33,6 +33,11 @@ class TestSchemeHandler: NSObject, WKURLSchemeHandler {
 
     public var handledRequests = [URL]()
 
+    func reset() {
+        requestHandlers.removeAll()
+        handledRequests.removeAll()
+    }
+
     func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) { }
 
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {

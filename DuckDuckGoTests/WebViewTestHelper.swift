@@ -48,6 +48,11 @@ class MockUserScriptDelegate: NSObject, ContentBlockerUserScriptDelegate {
     var detectedSurrogates = Set<DetectedTracker>()
     var detectedTrackers = Set<DetectedTracker>()
 
+    func reset() {
+        detectedTrackers.removeAll()
+        detectedSurrogates.removeAll()
+    }
+
     func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool {
         return shouldProcessTrackers
     }
@@ -96,6 +101,4 @@ class WebKitTestHelper {
         }
     }
 }
-
-
 

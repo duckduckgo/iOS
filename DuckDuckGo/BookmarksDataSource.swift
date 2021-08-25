@@ -47,7 +47,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if link(at: indexPath) != nil {
+        if item(at: indexPath) != nil {
             return createBookmarkCell(tableView, forIndexPath: indexPath)
         } else {
             return createEmptyCell(tableView, forIndexPath: indexPath)
@@ -104,6 +104,17 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
             return bookmarksManager.favorite(atIndex: indexPath.row)
         } else {
             return bookmarksManager.bookmark(atIndex: indexPath.row)
+        }
+    }
+    
+    override func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
+        if indexPath.section == 0 {
+            return nil //TODO
+        } else {
+            if visibleBookmarkItems.count <= indexPath.row {
+                return nil
+            }
+            return visibleBookmarkItems[indexPath.row]
         }
     }
     

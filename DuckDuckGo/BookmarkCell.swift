@@ -24,17 +24,55 @@ class BookmarkCell: UITableViewCell {
 
     static let reuseIdentifier = "BookmarkCell"
 
+    //TODO rename
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var numberOfChildrenLabel: UILabel!
+    @IBOutlet weak var disclosureImage: UIImageView!
+    
+    @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
 
-    var link: Link? {
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    
+//    var link: Link? {
+//        didSet {
+//            if let linkTitle = link?.title?.trimWhitespace(), !linkTitle.isEmpty {
+//                title.text = linkTitle
+//            } else {
+//                title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
+//            }
+//            linkImage.loadFavicon(forDomain: link?.url.host, usingCache: .bookmarks)
+//        }
+//    }
+
+    var bookmarkItem: BookmarkItem? {
         didSet {
-            if let linkTitle = link?.title?.trimWhitespace(), !linkTitle.isEmpty {
-                title.text = linkTitle
-            } else {
-                title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
+            if let bookmark = bookmarkItem as? Bookmark {
+                disclosureImage.isHidden = true
+                numberOfChildrenLabel.isHidden = true
+                imageHeightConstraint.constant = 24
+                if let linkTitle = bookmark.title?.trimWhitespace(), !linkTitle.isEmpty {
+                    title.text = linkTitle
+                } else {
+                    title.text = bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
+                }
+                linkImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
+            } else if let folder = bookmarkItem as? Folder {
+                //TODO
+                imageHeightConstraint.constant = 22
+                disclosureImage.isHidden = false
+                numberOfChildrenLabel.isHidden = false
+                title.text = folder.title
+                numberOfChildrenLabel.text = folder.children?.count.description
+                linkImage.image = #imageLiteral(resourceName: "Folder")
             }
-            linkImage.loadFavicon(forDomain: link?.url.host, usingCache: .bookmarks)
+        }
+    }
+    
+    var depth: Int = 0 {
+        didSet {
+            let paddingDepth = min(depth, 10)
+            leadingPaddingConstraint.constant = CGFloat(paddingDepth) * 16.0
         }
     }
 

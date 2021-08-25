@@ -93,7 +93,20 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
     //TODO I question if this is necessary. Could just use the visible object to track this
+    // now it really isn't now we don't have expansion
     private var expandedFolders = Set<Folder>()
+    
+    private lazy var visibleBookmarkItems: [VisibleBookmarkItem] = {
+        return bookmarksManager.topLevelBookmarkItems.map {
+            VisibleBookmarkItem($0, 0)
+        }
+    }()
+    
+    private lazy var visibleFavouriteItems: [VisibleBookmarkItem] = {
+        return bookmarksManager.topLevelFavoriteItems.map {
+            VisibleBookmarkItem($0, 0)
+        }
+    }()
 
     override var isEmpty: Bool {
         return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
@@ -108,22 +121,15 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
     }
     
     override func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
-        if indexPath.section == 0 {
-            return nil //TODO
-        } else {
-            if visibleBookmarkItems.count <= indexPath.row {
-                return nil
-            }
-            return visibleBookmarkItems[indexPath.row]
+        let items = indexPath.section == 0 ? visibleFavouriteItems : visibleBookmarkItems
+        if items.count <= indexPath.row {
+            return nil
         }
+        return items[indexPath.row]
     }
     
-    private lazy var visibleBookmarkItems: [VisibleBookmarkItem] = {
-        return bookmarksManager.topLevelBookmarkItems.map {
-            VisibleBookmarkItem($0, 0)
-        }
-    }()
-    
+    //TODO I don't think we actually need this cos things can't actually expand
+    //sigh, assumptions be wrong :(
     override func expand(folder: Folder) {
         expandedFolders.insert(folder)
         guard let children = folder.children?.array as? [BookmarkItem],
@@ -144,16 +150,8 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         //TODO reload
     }
     
-    override func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
-        if indexPath.section == 0 {
-            return nil //TODO
-        } else {
-            return visibleBookmarkItems[indexPath.row]
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(1, section == 0 ? bookmarksManager.favoritesCount : visibleBookmarkItems.count)
+        return max(1, section == 0 ? visibleFavouriteItems.count : visibleBookmarkItems.count)
     }
     
     override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {

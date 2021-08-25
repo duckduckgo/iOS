@@ -115,5 +115,10 @@ public class BookmarksCoreDataStorage {
         createBookmark(url: URL(string: "httP://pig.com")!, title: "pig 3.1", isFavorite: false, parent: secondLevelFolder)
         try? context.save()
     }
+    
+    public func createTestFavourites() {
+        createBookmark(url: URL(string: "http://example.com")!, title: "example fav", isFavorite: true)
+        createBookmark(url: URL(string: "http://fish.com")!, title: "fish fav", isFavorite: true)
+    }
 }
 

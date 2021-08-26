@@ -52,11 +52,14 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
     private(set) public var identifier: String
     
     private let data: PrivacyConfigurationData
-    private let locallyUnprotected: DomainsProtectionStore = DomainsProtectionUserDefaultsStore()
+    private let locallyUnprotected: DomainsProtectionStore
 
-    init(data: PrivacyConfigurationData, identifier: String) {
+    init(data: PrivacyConfigurationData,
+         identifier: String,
+         localProtection: DomainsProtectionStore = DomainsProtectionUserDefaultsStore()) {
         self.data = data
         self.identifier = identifier
+        self.locallyUnprotected = localProtection
     }
 
     public var locallyUnprotectedDomains: [String] {

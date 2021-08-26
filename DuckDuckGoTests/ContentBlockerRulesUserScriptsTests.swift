@@ -1,5 +1,5 @@
 //
-//  ContentBlockerUserScriptsTests.swift
+//  ContentBlockerRulesUserScriptsTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -24,7 +24,7 @@ import TrackerRadarKit
 @testable import Core
 @testable import DuckDuckGo
 
-class PrivateBrowserTests: XCTestCase {
+class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
     static let exampleRules = """
 {
@@ -94,8 +94,7 @@ class PrivateBrowserTests: XCTestCase {
     }
     
     func setupWebViewForUserScripTests(trackerData: TrackerData,
-                                       exceptions: [String],
-                                       tempUnprotected: [String],
+                                       privacyConfig: PrivacyConfiguration,
                                        userScriptDelegate: ContentBlockerUserScriptDelegate,
                                        schemeHandler: TestSchemeHandler,
                                        completion: @escaping (WKWebView) -> Void) {
@@ -104,8 +103,11 @@ class PrivateBrowserTests: XCTestCase {
                                                        embeddedTrackerData: (trackerData, UUID().uuidString) )
         _ = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
 
+        var tempUnprotected = privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+        tempUnprotected.append(contentsOf: privacyConfig.exceptionsList(forFeature: .contentBlocking))
+
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
-                                                     exceptions: exceptions,
+                                                     exceptions: privacyConfig.locallyUnprotectedDomains,
                                                      tempUnprotected: tempUnprotected) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
@@ -120,6 +122,7 @@ class PrivateBrowserTests: XCTestCase {
             webView.navigationDelegate = self.navigationDelegateMock
 
             let mockUserScriptConfig = MockUserScriptConfigSource()
+            mockUserScriptConfig.privacyConfig = privacyConfig
             mockUserScriptConfig.trackerData = trackerData
 
             let userScript = ContentBlockerRulesUserScript(configurationSource: mockUserScriptConfig)
@@ -139,6 +142,12 @@ class PrivateBrowserTests: XCTestCase {
     }
 
     func testBasicUserScriptReporting() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://example.com")!
 
@@ -159,8 +168,7 @@ class PrivateBrowserTests: XCTestCase {
         }
 
         setupWebViewForUserScripTests(trackerData: trackerData,
-                                      exceptions: [],
-                                      tempUnprotected: [],
+                                      privacyConfig: privacyConfig,
                                       userScriptDelegate: userScriptDelegateMock,
                                       schemeHandler: schemeHandler) { webView in
             // Keep webview in memory till test finishes
@@ -179,6 +187,12 @@ class PrivateBrowserTests: XCTestCase {
     }
 
     func testFirstPartyUserScriptReporting() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://tracker.com")!
 
@@ -190,21 +204,20 @@ class PrivateBrowserTests: XCTestCase {
 
             XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
 
-            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
             let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
             XCTAssertTrue(blockedTrackers.isEmpty)
 
-            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
             // Shall we detect first party trackers?
-            //XCTAssertEqual(expectedTrackers, detectedTrackers)
+            // let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            // let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+            // XCTAssertEqual(expectedTrackers, detectedTrackers)
 
             let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.subTrackerURL]
             XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
         setupWebViewForUserScripTests(trackerData: trackerData,
-                                      exceptions: [],
-                                      tempUnprotected: [],
+                                      privacyConfig: privacyConfig,
                                       userScriptDelegate: userScriptDelegateMock,
                                       schemeHandler: schemeHandler) { webView in
             // Keep webview in memory till test finishes
@@ -223,6 +236,12 @@ class PrivateBrowserTests: XCTestCase {
     }
 
     func testLocallyUnprotectedUserScriptReporting() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://example.com")!
 
@@ -235,7 +254,7 @@ class PrivateBrowserTests: XCTestCase {
             XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
 
             let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
-            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { !$0.blocked }.map { $0.domain })
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
             XCTAssertTrue(blockedTrackers.isEmpty)
 
             let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
@@ -246,8 +265,7 @@ class PrivateBrowserTests: XCTestCase {
         }
 
         setupWebViewForUserScripTests(trackerData: trackerData,
-                                      exceptions: ["example.com"],
-                                      tempUnprotected: [],
+                                      privacyConfig: privacyConfig,
                                       userScriptDelegate: userScriptDelegateMock,
                                       schemeHandler: schemeHandler) { webView in
             // Keep webview in memory till test finishes
@@ -266,6 +284,12 @@ class PrivateBrowserTests: XCTestCase {
     }
 
     func testLocallyUnprotectedSubdomainUserScriptReporting() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://sub.example.com")!
 
@@ -278,19 +302,15 @@ class PrivateBrowserTests: XCTestCase {
             XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
 
             let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
-            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { !$0.blocked }.map { $0.domain })
-            XCTAssertTrue(blockedTrackers.isEmpty)
-
-            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
-            XCTAssertEqual(expectedTrackers, detectedTrackers)
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, blockedTrackers)
 
             let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
             XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
         setupWebViewForUserScripTests(trackerData: trackerData,
-                                      exceptions: ["example.com"],
-                                      tempUnprotected: [],
+                                      privacyConfig: privacyConfig,
                                       userScriptDelegate: userScriptDelegateMock,
                                       schemeHandler: schemeHandler) { webView in
             // Keep webview in memory till test finishes

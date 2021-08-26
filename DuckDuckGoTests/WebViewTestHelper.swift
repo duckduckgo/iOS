@@ -70,14 +70,54 @@ class MockUserScriptDelegate: NSObject, ContentBlockerUserScriptDelegate {
 
 class MockUserScriptConfigSource: ContentBlockerUserScriptConfigSource {
 
+    private var _privacyConfig: PrivacyConfiguration?
     public var privacyConfig: PrivacyConfiguration {
-        return PrivacyConfigurationManager.shared.privacyConfig
+        get {
+            if let config = _privacyConfig {
+                return config
+            }
+            return PrivacyConfigurationManager.shared.privacyConfig
+        }
+        set {
+            _privacyConfig = newValue
+        }
     }
 
     public var trackerData: TrackerData?
 }
 
+class MockDomainsProtectionStore: DomainsProtectionStore {
+    var unprotectedDomains = Set<String>()
+
+    func disableProtection(forDomain domain: String) {
+        unprotectedDomains.remove(domain)
+    }
+
+    func enableProtection(forDomain domain: String) {
+        unprotectedDomains.insert(domain)
+    }
+}
+
 class WebKitTestHelper {
+
+    static func preparePrivacyConfig(locallyUnprotected: [String],
+                                     tempUnprotected: [String],
+                                     contentBlockingEnabled: Bool,
+                                     exceptions: [String]) -> PrivacyConfiguration {
+        let contentBlockingExceptions = exceptions.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
+        let features = [PrivacyFeature.contentBlocking.rawValue: PrivacyConfigurationData.PrivacyFeature(state: contentBlockingEnabled ? "enabled" : "disabled",
+                                                                                                         exceptions: contentBlockingExceptions)]
+        let unprotectedTemporary = tempUnprotected.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
+        let privacyData = PrivacyConfigurationData(features: features,
+                                                   unprotectedTemporary: unprotectedTemporary)
+
+        let localProtection = MockDomainsProtectionStore()
+        localProtection.unprotectedDomains = Set(locallyUnprotected)
+
+        return AppPrivacyConfiguration(data: privacyData,
+                                       identifier: "",
+                                       localProtection: localProtection)
+    }
 
     static func prepareContentBlockingRules(trackerData: TrackerData,
                                             exceptions: [String],

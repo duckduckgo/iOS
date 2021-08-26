@@ -40,8 +40,6 @@ class ContentBlockerReferenceTests: XCTestCase {
     }
 
     func setupWebViewForUserScripTests(trackerData: TrackerData,
-                                       exceptions: [String],
-                                       tempUnprotected: [String],
                                        userScriptDelegate: ContentBlockerUserScriptDelegate,
                                        schemeHandler: TestSchemeHandler,
                                        completion: @escaping (WKWebView) -> Void) {
@@ -51,8 +49,8 @@ class ContentBlockerReferenceTests: XCTestCase {
         _ = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
 
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
-                                                     exceptions: exceptions,
-                                                     tempUnprotected: tempUnprotected) { rules in
+                                                     exceptions: [],
+                                                     tempUnprotected: []) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -99,8 +97,6 @@ class ContentBlockerReferenceTests: XCTestCase {
         testsExecuted.expectedFulfillmentCount = tests.count
 
         setupWebViewForUserScripTests(trackerData: tds,
-                                      exceptions: ["duckduckgo.com"],
-                                      tempUnprotected: [],
                                       userScriptDelegate: userScriptDelegateMock,
                                       schemeHandler: schemeHandler) { webView in
             self.webView = webView
@@ -177,12 +173,8 @@ class ContentBlockerReferenceTests: XCTestCase {
                    let trackerOwner = self.tds.findTracker(forUrl: requestURL.absoluteString)?.owner,
                    pageEntity.displayName == trackerOwner.name {
 
-                    //
+                    // Nothing to detect - tracker and website have the same entity
                 } else {
-                    if self.userScriptDelegateMock.detectedTrackers.count != 1 {
-                        print("---> yyy: \(test.name)")
-                    }
-
                     XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
 
                     if let tracker = self.userScriptDelegateMock.detectedTrackers.first {

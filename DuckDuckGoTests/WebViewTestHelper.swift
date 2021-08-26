@@ -38,7 +38,7 @@ class MockNavigationDelegate: NSObject, WKNavigationDelegate {
     }
 }
 
-class MockUserScriptDelegate: NSObject, ContentBlockerUserScriptDelegate {
+class MockRulesUserScriptDelegate: NSObject, ContentBlockerRulesUserScriptDelegate {
 
     var shouldProcessTrackers = true
 
@@ -53,16 +53,12 @@ class MockUserScriptDelegate: NSObject, ContentBlockerUserScriptDelegate {
         detectedSurrogates.removeAll()
     }
 
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool {
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
         return shouldProcessTrackers
     }
 
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
-        detectedSurrogates.insert(tracker)
-        onSurrogateDetected?(tracker, host)
-    }
-
-    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
+    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
+                                  detectedTracker tracker: DetectedTracker) {
         detectedTrackers.insert(tracker)
         onTrackerDetected?(tracker)
     }

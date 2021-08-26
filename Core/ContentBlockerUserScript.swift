@@ -22,15 +22,16 @@ import os
 import TrackerRadarKit
 import BrowserServicesKit
 
-public protocol ContentBlockerUserScriptDelegate: NSObjectProtocol {
+public protocol SurrogatesUserScriptDelegate: NSObjectProtocol {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String)
-    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker)
+    func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool
+    func surrogatesUserScript(_ script: SurrogatesUserScript,
+                              detectedTracker tracker: DetectedTracker,
+                              withSurrogate host: String)
 
 }
 
-public class ContentBlockerUserScript: NSObject, UserScript {
+public class SurrogatesUserScript: NSObject, UserScript {
     
     struct TrackerDetectedKey {
         static let protectionId = "protectionId"
@@ -75,13 +76,13 @@ public class ContentBlockerUserScript: NSObject, UserScript {
     public var messageNames: [String] = [ "trackerDetectedMessage" ]
     
     public weak var storageCache: StorageCache?
-    public weak var delegate: ContentBlockerUserScriptDelegate?
+    public weak var delegate: SurrogatesUserScriptDelegate?
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         os_log("trackerDetected %s", log: generalLog, type: .debug, String(describing: message.body))
 
         guard let delegate = delegate else { return }
-        guard delegate.contentBlockerUserScriptShouldProcessTrackers(self) else { return }
+        guard delegate.surrogatesUserScriptShouldProcessTrackers(self) else { return }
         
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
@@ -90,7 +91,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
 
         if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
-            delegate.contentBlockerUserScript(self, detectedTracker: tracker, withSurrogate: host)
+            delegate.surrogatesUserScript(self, detectedTracker: tracker, withSurrogate: host)
             
             os_log("surrogate for %s Injected", log: generalLog, type: .debug, tracker.domain ?? "")
         }

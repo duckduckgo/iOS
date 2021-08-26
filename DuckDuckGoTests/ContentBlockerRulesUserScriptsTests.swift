@@ -74,7 +74,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 """
 
     let schemeHandler = TestSchemeHandler()
-    let userScriptDelegateMock = MockUserScriptDelegate()
+    let userScriptDelegateMock = MockRulesUserScriptDelegate()
     let navigationDelegateMock = MockNavigationDelegate()
 
     var webView: WKWebView?
@@ -95,7 +95,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
     
     func setupWebViewForUserScripTests(trackerData: TrackerData,
                                        privacyConfig: PrivacyConfiguration,
-                                       userScriptDelegate: ContentBlockerUserScriptDelegate,
+                                       userScriptDelegate: ContentBlockerRulesUserScriptDelegate,
                                        schemeHandler: TestSchemeHandler,
                                        completion: @escaping (WKWebView) -> Void) {
 

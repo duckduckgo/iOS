@@ -22,6 +22,14 @@ import WebKit
 import TrackerRadarKit
 import BrowserServicesKit
 
+public protocol ContentBlockerRulesUserScriptDelegate: NSObjectProtocol {
+
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool
+    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
+                                  detectedTracker tracker: DetectedTracker)
+
+}
+
 public protocol ContentBlockerUserScriptConfigSource {
 
     var privacyConfig: PrivacyConfiguration { get }
@@ -79,7 +87,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     
     public var messageNames: [String] = [ "processRule" ]
     
-    public weak var delegate: ContentBlockerUserScriptDelegate?
+    public weak var delegate: ContentBlockerRulesUserScriptDelegate?
     public weak var storageCache: StorageCache? {
         didSet {
             let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig

@@ -28,7 +28,7 @@ import TrackerRadarKit
 class ContentBlockerReferenceTests: XCTestCase {
 
     let schemeHandler = TestSchemeHandler()
-    let userScriptDelegateMock = MockUserScriptDelegate()
+    let userScriptDelegateMock = MockRulesUserScriptDelegate()
     let navigationDelegateMock = MockNavigationDelegate()
 
     var webView: WKWebView!
@@ -40,7 +40,7 @@ class ContentBlockerReferenceTests: XCTestCase {
     }
 
     func setupWebViewForUserScripTests(trackerData: TrackerData,
-                                       userScriptDelegate: ContentBlockerUserScriptDelegate,
+                                       userScriptDelegate: ContentBlockerRulesUserScriptDelegate,
                                        schemeHandler: TestSchemeHandler,
                                        completion: @escaping (WKWebView) -> Void) {
 

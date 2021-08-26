@@ -158,7 +158,7 @@ class TabViewController: UIViewController {
     
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
-    private var contentBlockerScript = ContentBlockerUserScript()
+    private var surrogatesScript = SurrogatesUserScript()
     private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var fingerprintScript = FingerprintUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -228,7 +228,7 @@ class TabViewController: UIViewController {
             debugScript,
             findInPageScript,
             navigatorPatchScript,
-            contentBlockerScript,
+            surrogatesScript,
             contentBlockerRulesScript,
             fingerprintScript,
             faviconScript,
@@ -252,8 +252,8 @@ class TabViewController: UIViewController {
         
         faviconScript.delegate = self
         debugScript.instrumentation = instrumentation
-        contentBlockerScript.storageCache = storageCache
-        contentBlockerScript.delegate = self
+        surrogatesScript.storageCache = storageCache
+        surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
@@ -1352,14 +1352,18 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension TabViewController: ContentBlockerUserScriptDelegate {
+extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool {
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
+    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
+                                  detectedTracker tracker: DetectedTracker) {
+        userScriptDetectedTracker(tracker)
+    }
 
+    fileprivate func userScriptDetectedTracker(_ tracker: DetectedTracker) {
         if tracker.blocked && fireWoFollowUp {
             fireWoFollowUp = false
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
@@ -1381,12 +1385,21 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
             NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
         }
     }
-    
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
-        siteRating?.surrogateInstalled(host)
-        contentBlockerUserScript(script, detectedTracker: tracker)
+}
+
+extension TabViewController: SurrogatesUserScriptDelegate {
+
+    func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
+        return siteRating?.isFor(self.url) ?? false
     }
-    
+
+    func surrogatesUserScript(_ script: SurrogatesUserScript,
+                              detectedTracker tracker: DetectedTracker,
+                              withSurrogate host: String) {
+        siteRating?.surrogateInstalled(host)
+        userScriptDetectedTracker(tracker)
+    }
+
 }
 
 extension TabViewController: FaviconUserScriptDelegate {

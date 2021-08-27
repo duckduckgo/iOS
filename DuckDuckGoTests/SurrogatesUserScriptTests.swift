@@ -117,12 +117,10 @@ class SurrogatesUserScriptsTests: XCTestCase {
                                           .init(type: .script, url: nonSurrogateScriptURL)])
     }
 
-    func setupWebViewForUserScripTests(trackerData: TrackerData,
-                                       encodedTrackerData: String,
-                                       privacyConfig: PrivacyConfiguration,
-                                       userScriptDelegate: SurrogatesUserScriptDelegate,
-                                       schemeHandler: TestSchemeHandler,
-                                       completion: @escaping (WKWebView) -> Void) {
+    private func setupWebViewForUserScripTests(trackerData: TrackerData,
+                                               encodedTrackerData: String,
+                                               privacyConfig: PrivacyConfiguration,
+                                               completion: @escaping (WKWebView) -> Void) {
 
         let mockSource = MockContentBlockerRulesSource(trackerData: nil,
                                                        embeddedTrackerData: (trackerData, UUID().uuidString) )
@@ -140,7 +138,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
             }
 
             let configuration = WKWebViewConfiguration()
-            configuration.setURLSchemeHandler(schemeHandler, forURLScheme: schemeHandler.scheme)
+            configuration.setURLSchemeHandler(self.schemeHandler, forURLScheme: self.schemeHandler.scheme)
 
             let webView = WKWebView(frame: .init(origin: .zero, size: .init(width: 500, height: 1000)),
                                  configuration: configuration)
@@ -151,7 +149,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
             mockUserScriptConfig.surrogates = Self.exampleSurrogates
 
             let userScript = SurrogatesUserScript(configurationSource: mockUserScriptConfig)
-            userScript.delegate = userScriptDelegate
+            userScript.delegate = self.userScriptDelegateMock
 
             for messageName in userScript.messageNames {
                 configuration.userContentController.add(userScript, name: messageName)
@@ -170,22 +168,40 @@ class SurrogatesUserScriptsTests: XCTestCase {
         }
     }
 
-    func testBasicSurrogateInjection() {
-
-        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
-                                                                  tempUnprotected: [],
-                                                                  contentBlockingEnabled: true,
-                                                                  exceptions: [])
-
-        let websiteLoaded = self.expectation(description: "Website Loaded")
-        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
-        let websiteURL = URL(string: "test://example.com")!
+    private func performTestFor(privacyConfig: PrivacyConfiguration,
+                                websiteURL: URL) {
 
         let trackerDataSource = Self.exampleRules.data(using: .utf8)!
         let trackerData = (try? JSONDecoder().decode(TrackerData.self, from: trackerDataSource))!
 
         let encodedData = try? JSONEncoder().encode(trackerData)
         let encodedTrackerData = String(data: encodedData!, encoding: .utf8)!
+
+        setupWebViewForUserScripTests(trackerData: trackerData,
+                                      encodedTrackerData: encodedTrackerData,
+                                      privacyConfig: privacyConfig) { webView in
+            // Keep webview in memory till test finishes
+            self.webView = webView
+
+            self.schemeHandler.requestHandlers[websiteURL] = { _ in
+                return self.website.htmlRepresentation.data(using: .utf8)!
+            }
+
+            let request = URLRequest(url: websiteURL)
+            webView.load(request)
+        }
+    }
+
+    func testWhenThereIsSurrogateRuleThenSurrogateIsInjected() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+        let websiteURL = URL(string: "test://example.com")!
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
@@ -205,23 +221,74 @@ class SurrogatesUserScriptsTests: XCTestCase {
             XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
-        setupWebViewForUserScripTests(trackerData: trackerData,
-                                      encodedTrackerData: encodedTrackerData,
-                                      privacyConfig: privacyConfig,
-                                      userScriptDelegate: userScriptDelegateMock,
-                                      schemeHandler: schemeHandler) { webView in
-            // Keep webview in memory till test finishes
-            self.webView = webView
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
 
-            // Test non-fist party trackers
-            self.schemeHandler.requestHandlers[websiteURL] = { _ in
-                return self.website.htmlRepresentation.data(using: .utf8)!
-            }
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
 
-            let request = URLRequest(url: websiteURL)
-            webView.load(request)
+    func testWhenSiteIsLocallyUnprotectedThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
-        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 90)
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenSiteIsSubdomainOfLocallyUnprotectedThenSurrogatesAreInjected() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteURL = URL(string: "test://sub.example.com")!
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 1)
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.first?.url, self.surrogateScriptURL.absoluteString)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { result, err in
+                XCTAssertNil(err)
+                if let result = result as? String {
+                    XCTAssertEqual(result, "success")
+                    surrogateValidated.fulfill()
+                }
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
     }
 }

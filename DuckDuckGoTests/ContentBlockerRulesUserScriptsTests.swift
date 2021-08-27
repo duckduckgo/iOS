@@ -93,11 +93,11 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
                                           .init(type: .image, url: subTrackerURL)])
     }
     
-    func setupWebViewForUserScripTests(trackerData: TrackerData,
-                                       privacyConfig: PrivacyConfiguration,
-                                       userScriptDelegate: ContentBlockerRulesUserScriptDelegate,
-                                       schemeHandler: TestSchemeHandler,
-                                       completion: @escaping (WKWebView) -> Void) {
+    private func setupWebViewForUserScripTests(trackerData: TrackerData,
+                                               privacyConfig: PrivacyConfiguration,
+                                               userScriptDelegate: ContentBlockerRulesUserScriptDelegate,
+                                               schemeHandler: TestSchemeHandler,
+                                               completion: @escaping (WKWebView) -> Void) {
 
         let mockSource = MockContentBlockerRulesSource(trackerData: nil,
                                                        embeddedTrackerData: (trackerData, UUID().uuidString) )
@@ -140,29 +140,11 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
         }
     }
 
-    func testBasicUserScriptReporting() {
-
-        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
-                                                                  tempUnprotected: [],
-                                                                  contentBlockingEnabled: true,
-                                                                  exceptions: [])
-
-        let websiteLoaded = self.expectation(description: "Website Loaded")
-        let websiteURL = URL(string: "test://example.com")!
+    private func performTest(privacyConfig: PrivacyConfiguration,
+                             websiteURL: URL) {
 
         let trackerDataSource = Self.exampleRules.data(using: .utf8)!
         let trackerData = (try? JSONDecoder().decode(TrackerData.self, from: trackerDataSource))!
-
-        navigationDelegateMock.onDidFinishNavigation = {
-            websiteLoaded.fulfill()
-
-            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
-            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
-            XCTAssertEqual(expectedTrackers, blockedTrackers)
-
-            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
-            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
-        }
 
         setupWebViewForUserScripTests(trackerData: trackerData,
                                       privacyConfig: privacyConfig,
@@ -179,11 +161,35 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
             let request = URLRequest(url: websiteURL)
             webView.load(request)
         }
+    }
+
+    func testWhenThereIsTrackerThenItIsReportedAndBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, blockedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
 
         self.wait(for: [websiteLoaded], timeout: 30)
     }
 
-    func testFirstPartyUserScriptReporting() {
+    func testWhenThereIsFirstPartyTrackerThenItIsNotBlocked() {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
@@ -192,9 +198,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://tracker.com")!
-
-        let trackerDataSource = Self.exampleRules.data(using: .utf8)!
-        let trackerData = (try? JSONDecoder().decode(TrackerData.self, from: trackerDataSource))!
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
@@ -211,26 +214,12 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
             XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
-        setupWebViewForUserScripTests(trackerData: trackerData,
-                                      privacyConfig: privacyConfig,
-                                      userScriptDelegate: userScriptDelegateMock,
-                                      schemeHandler: schemeHandler) { webView in
-            // Keep webview in memory till test finishes
-            self.webView = webView
-
-            // Test non-fist party trackers
-            self.schemeHandler.requestHandlers[websiteURL] = { _ in
-                return self.website.htmlRepresentation.data(using: .utf8)!
-            }
-
-            let request = URLRequest(url: websiteURL)
-            webView.load(request)
-        }
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
 
         self.wait(for: [websiteLoaded], timeout: 30)
     }
 
-    func testLocallyUnprotectedUserScriptReporting() {
+    func testWhenThereIsTrackerOnLocallyUnprotectedSiteThenItIsReportedButNotBlocked() {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
@@ -239,9 +228,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://example.com")!
-
-        let trackerDataSource = Self.exampleRules.data(using: .utf8)!
-        let trackerData = (try? JSONDecoder().decode(TrackerData.self, from: trackerDataSource))!
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
@@ -257,26 +243,12 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
             XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
-        setupWebViewForUserScripTests(trackerData: trackerData,
-                                      privacyConfig: privacyConfig,
-                                      userScriptDelegate: userScriptDelegateMock,
-                                      schemeHandler: schemeHandler) { webView in
-            // Keep webview in memory till test finishes
-            self.webView = webView
-
-            // Test non-fist party trackers
-            self.schemeHandler.requestHandlers[websiteURL] = { _ in
-                return self.website.htmlRepresentation.data(using: .utf8)!
-            }
-
-            let request = URLRequest(url: websiteURL)
-            webView.load(request)
-        }
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
 
         self.wait(for: [websiteLoaded], timeout: 30)
     }
 
-    func testLocallyUnprotectedSubdomainUserScriptReporting() {
+    func testWhenThereIsTrackerOnLocallyUnprotectedSiteSubdomainThenItIsReportedAndBlocked() {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
@@ -285,9 +257,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let websiteLoaded = self.expectation(description: "Website Loaded")
         let websiteURL = URL(string: "test://sub.example.com")!
-
-        let trackerDataSource = Self.exampleRules.data(using: .utf8)!
-        let trackerData = (try? JSONDecoder().decode(TrackerData.self, from: trackerDataSource))!
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
@@ -300,21 +269,204 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
             XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
 
-        setupWebViewForUserScripTests(trackerData: trackerData,
-                                      privacyConfig: privacyConfig,
-                                      userScriptDelegate: userScriptDelegateMock,
-                                      schemeHandler: schemeHandler) { webView in
-            // Keep webview in memory till test finishes
-            self.webView = webView
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
 
-            // Test non-fist party trackers
-            self.schemeHandler.requestHandlers[websiteURL] = { _ in
-                return self.website.htmlRepresentation.data(using: .utf8)!
-            }
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
 
-            let request = URLRequest(url: websiteURL)
-            webView.load(request)
+    func testWhenThereIsTrackerOnSiteSimmilarToLocallyUnprotectedSiteThenItIsReportedAndBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://someexample.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, blockedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
         }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
+    func testWhenThereIsTrackerOnTempUnprotectedSiteThenItIsReportedButNotBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: ["example.com"],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertTrue(blockedTrackers.isEmpty)
+
+            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, detectedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.subTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
+    func testWhenThereIsTrackerOnTempUnprotectedSiteSubdomainThenItIsReportedButNotBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: ["example.com"],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://sub.example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertTrue(blockedTrackers.isEmpty)
+
+            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, detectedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.subTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
+    func testWhenThereIsTrackerOnSiteSimmilarToTempUnprotectedSiteThenItIsReportedAndBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: ["example.com"],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://someexample.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, blockedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
+    func testWhenThereIsTrackerOnSiteFromExceptionListThenItIsReportedButNotBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: ["example.com"])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertTrue(blockedTrackers.isEmpty)
+
+            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, detectedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.subTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
+    func testWhenThereIsTrackerOnSubdomainOfSiteFromExceptionListThenItIsReportedButNotBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: ["example.com"])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://sub.example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertTrue(blockedTrackers.isEmpty)
+
+            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, detectedTrackers)
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.subTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
+    func testWhenContentBlockingFeatureIsDisabledThenTrackersAreReportedButNotBlocked() {
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: false,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+            XCTAssertTrue(blockedTrackers.isEmpty)
+
+            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+            XCTAssertEqual(expectedTrackers, detectedTrackers)
+
+            // Note: do not check the requests - they will be blocked as test setup adds content blocking rules
+            // despite feature flag being set to false - so we validate only how Surrogates script handles that.
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
 
         self.wait(for: [websiteLoaded], timeout: 30)
     }

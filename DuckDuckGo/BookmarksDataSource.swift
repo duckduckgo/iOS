@@ -171,7 +171,7 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return link(at: indexPath) != nil
+        return item(at: indexPath) != nil
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

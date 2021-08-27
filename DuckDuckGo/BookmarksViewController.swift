@@ -23,8 +23,10 @@ import os.log
 
 class BookmarksViewController: UITableViewController {
 
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var addFolderButton: UIBarButtonItem!
 
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     private var searchController: UISearchController!
     weak var delegate: BookmarksDelegate?
     
@@ -40,7 +42,7 @@ class BookmarksViewController: UITableViewController {
         registerForNotifications()
         configureTableView()
         configureSearch()
-        refreshEditButton()
+        configureBars()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -137,10 +139,18 @@ class BookmarksViewController: UITableViewController {
     }
     
     @objc func onExternalDataChange(notification: NSNotification) {
+        //TODO when does this happen?
         guard let source = notification.object as? BookmarkUserDefaults,
               dataSource.bookmarksManager.dataStore !== source else { return }
-        
+
         tableView.reloadData()
+    }
+    
+    private func configureBars() {
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+        toolbarItems?.insert(flexibleSpace, at: 1)
+        refreshEditButton()
     }
 
     private func refreshEditButton() {
@@ -151,6 +161,9 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
+    @IBAction func onAddFolderPressed(_ sender: Any) {
+    }
+    
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
         startEditing()
     }
@@ -290,6 +303,7 @@ extension BookmarksViewController: Themable {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
+        decorateToolbar(with: theme)
         
         if #available(iOS 13.0, *) {
             overrideSystemTheme(with: theme)

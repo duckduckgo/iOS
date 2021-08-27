@@ -30,6 +30,13 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZgT-dg-Rsg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="has-RZ-1QV">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem title="Item" id="ugz-ja-3LP"/>
+                    </items>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="1009" y="805"/>
         </scene>
@@ -38,7 +45,7 @@
             <objects>
                 <tableViewController id="aqL-Wl-TTD" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V5q-dM-Log">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -133,20 +140,32 @@
                             <outlet property="delegate" destination="aqL-Wl-TTD" id="ZOo-G6-g4I"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Bookmarks" id="tVt-jc-YaY">
-                        <barButtonItem key="leftBarButtonItem" id="V4E-YN-xud">
+                    <toolbarItems>
+                        <barButtonItem title="Add Folder" id="ToB-IA-MxG">
                             <connections>
-                                <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="gaA-92-zAb"/>
+                                <action selector="onAddFolderPressed:" destination="aqL-Wl-TTD" id="LDq-yz-GBf"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem title="Edit" width="66.5" id="pwj-Ie-VbJ">
+                            <connections>
+                                <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="UdP-p0-rRw"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Bookmarks" id="tVt-jc-YaY">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="1oZ-re-yKW">
                             <connections>
                                 <action selector="onDonePressed:" destination="aqL-Wl-TTD" id="6RA-yx-ZhQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
-                        <outlet property="editButton" destination="V4E-YN-xud" id="w11-ER-wKw"/>
+                        <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
+                        <outlet property="editButton" destination="pwj-Ie-VbJ" id="XgF-gG-JUa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>

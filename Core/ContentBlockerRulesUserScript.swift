@@ -123,7 +123,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         if let tracker = resolver.trackerFromUrl(trackerUrlString,
                                                  pageUrlString: pageUrlStr,
                                                  resourceType: resourceType,
-                                                 potentiallyBlocked: blocked) {
+                                                 potentiallyBlocked: blocked && privacyConfiguration.isEnabled(featureKey: .contentBlocking)) {
             delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
     }

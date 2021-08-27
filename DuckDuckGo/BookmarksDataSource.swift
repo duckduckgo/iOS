@@ -22,20 +22,10 @@ import Core
 
 class BookmarksDataSource: NSObject, UITableViewDataSource {
     
-    func link(at indexPath: IndexPath) -> Link? {
-        return nil
-    }
-    
     typealias VisibleBookmarkItem = (item: BookmarkItem, depth: Int)
     
     func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
         return nil
-    }
-    
-    func expand(folder: Folder) {
-    }
-    
-    func collapse(folder: Folder) {
     }
     
     var isEmpty: Bool {

@@ -137,7 +137,6 @@ public enum PixelName: String {
     
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"
-    case widgetAddFavoriteLaunch = "m_w_af"
 
     case defaultBrowserButtonPressedSettings = "m_db_s"
     case defaultBrowserButtonPressedHome = "m_db_h"
@@ -186,9 +185,6 @@ public enum PixelName: String {
     
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
-
-    case settingsAppIconChangeFailed = "m_d_aicf"
-    case settingsAppIconChangeNotSupported = "m_d_aicns"
 
     case backgroundTaskSubmissionFailed = "m_bt_rf"
     

@@ -44,6 +44,16 @@ extension Themable where Self: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
     }
     
+    func decorateToolbar(with theme: Theme) {
+        navigationController?.toolbar.barTintColor = theme.barBackgroundColor
+        navigationController?.toolbar.backgroundColor = theme.barBackgroundColor
+        navigationController?.toolbar.tintColor = theme.navigationBarTintColor
+        
+        for item in navigationController?.toolbar.items ?? [] {
+            item.tintColor = theme.navigationBarTitleColor
+        }
+    }
+    
     @available(iOS 13.0, *)
     func overrideSystemTheme(with theme: Theme) {
         if theme.currentImageSet == .dark {

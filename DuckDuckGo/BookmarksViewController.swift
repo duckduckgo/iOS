@@ -55,20 +55,23 @@ class BookmarksViewController: UITableViewController {
     }
     
     func openEditFormWhenPresented(link: Link) {
-        onDidAppearAction = { [weak self] in
-            guard let strongSelf = self,
-                  let index = strongSelf.dataSource.bookmarksManager.indexOfBookmark(url: link.url) else { return }
-            
-            let indexPath = IndexPath(row: index, section: 1)
-            strongSelf.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-            strongSelf.showEditBookmarkAlert(for: indexPath)
-        }
+        //TODO show new edit screen
+//        onDidAppearAction = { [weak self] in
+//            guard let strongSelf = self,
+//                  let index = strongSelf.dataSource.bookmarksManager.indexOfBookmark(url: link.url) else { return }
+//
+//            let indexPath = IndexPath(row: index, section: 1)
+//            strongSelf.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+//            strongSelf.showEditBookmarkAlert(for: indexPath)
+//        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
-            showEditBookmarkAlert(for: indexPath)
+            //TODO replace with edit screen
         } else if let link = currentDataSource.link(at: indexPath) {
+            //TODO shouldn't use links
+            //TODO what if press folder
             selectLink(link)
         }
     }
@@ -206,19 +209,6 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
         
         enableEditButton()
-    }
-
-    fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
-        let title = UserText.actionEditBookmark
-        let link = dataSource.link(at: indexPath)
-        let alert = EditBookmarkAlert.buildAlert(
-            title: title,
-            bookmark: link,
-            saveCompletion: { [weak self] (updatedBookmark) in
-                self?.dataSource.tableView(self!.tableView, updateBookmark: updatedBookmark, at: indexPath)
-            }
-        )
-        present(alert, animated: true)
     }
     
     fileprivate func showShareSheet(for indexPath: IndexPath) {

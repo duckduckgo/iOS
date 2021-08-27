@@ -83,66 +83,35 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
 
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
-    //TODO I question if this is necessary. Could just use the visible object to track this
-    // now it really isn't now we don't have expansion
-    private var expandedFolders = Set<Folder>()
+    //TODO variable parent
+    
+    //I'm really not sure we need this visible bookmark item idea...
+    //don't know how we're goign to integrate with the folder screen...
     
     private lazy var visibleBookmarkItems: [VisibleBookmarkItem] = {
         return bookmarksManager.topLevelBookmarkItems.map {
             VisibleBookmarkItem($0, 0)
         }
     }()
-    
-    private lazy var visibleFavouriteItems: [VisibleBookmarkItem] = {
-        return bookmarksManager.topLevelFavoriteItems.map {
-            VisibleBookmarkItem($0, 0)
-        }
-    }()
 
     override var isEmpty: Bool {
-        return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
-    }
-
-    override func link(at indexPath: IndexPath) -> Link? {
-        if indexPath.section == 0 {
-            return bookmarksManager.favorite(atIndex: indexPath.row)
-        } else {
-            return bookmarksManager.bookmark(atIndex: indexPath.row)
-        }
+        return bookmarksManager.favoritesCount == 0 && bookmarksManager.topLevelBookmarkItemsCount == 0
     }
     
     override func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
-        let items = indexPath.section == 0 ? visibleFavouriteItems : visibleBookmarkItems
-        if items.count <= indexPath.row {
-            return nil
+        if indexPath.section == 0 {
+            guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return nil }
+            return VisibleBookmarkItem(favorite, 0)
+        } else {
+            if visibleBookmarkItems.count <= indexPath.row {
+                return nil
+            }
+            return visibleBookmarkItems[indexPath.row]
         }
-        return items[indexPath.row]
-    }
-    
-    //TODO I don't think we actually need this cos things can't actually expand
-    //sigh, assumptions be wrong :(
-    override func expand(folder: Folder) {
-        expandedFolders.insert(folder)
-        guard let children = folder.children?.array as? [BookmarkItem],
-              let index = visibleBookmarkItems.firstIndex(where: { $0.item == folder }) else {
-            return //TOdo fatal error if firstIndex fails?
-        }
-        let newDepth = visibleBookmarkItems[index].depth + 1
-        let visibleChildren = children.map {
-            VisibleBookmarkItem($0, newDepth)
-        }
-        visibleBookmarkItems.insert(contentsOf: visibleChildren, at: index + 1)
-        //TODO reload
-    }
-    
-    override func collapse(folder: Folder) {
-        expandedFolders.remove(folder)
-        visibleBookmarkItems.removeAll(where: { $0.item.parent == folder })
-        //TODO reload
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(1, section == 0 ? visibleFavouriteItems.count : visibleBookmarkItems.count)
+        return max(1, section == 0 ? bookmarksManager.favoritesCount : visibleBookmarkItems.count)
     }
     
     override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {
@@ -173,12 +142,12 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         guard editingStyle == .delete else { return }
         var reload = false
         
+        guard let item = item(at: indexPath)?.item else { return }
+        bookmarksManager.delete(item: item)
         if indexPath.section == 0 {
-            bookmarksManager.deleteFavorite(at: indexPath.row)
             reload = bookmarksManager.favoritesCount == 0
         } else {
-            bookmarksManager.deleteBookmark(at: indexPath.row)
-            reload = bookmarksManager.bookmarksCount == 0
+            reload = bookmarksManager.topLevelBookmarkItemsCount == 0
         }
         
         if reload {
@@ -192,20 +161,21 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         var reload = false
+        // TODO lets do edit screen first cos moving is gonna be interesting
         if sourceIndexPath.section == 0 && destinationIndexPath.section == 0 {
-            bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
+            //bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
         } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
-            bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
-            reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.bookmarksCount == 1
+            //bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
+            reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.topLevelBookmarkItemsCount == 1
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
-            bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
+            //bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
             guard item(at: sourceIndexPath)?.item is Bookmark else {
                 // Folders aren't allowed in favourites
                 return
             }
-            bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
-            reload = bookmarksManager.bookmarksCount == 0 || bookmarksManager.favoritesCount == 1
+            //bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
+            reload = bookmarksManager.topLevelBookmarkItemsCount == 0 || bookmarksManager.favoritesCount == 1
         }
 
         if reload {
@@ -213,15 +183,6 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, updateBookmark updatedBookmark: Link, at indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            bookmarksManager.updateFavorite(at: indexPath.row, with: updatedBookmark)
-        } else {
-            bookmarksManager.updateBookmark(at: indexPath.row, with: updatedBookmark)
-        }
-        
-        tableView.reloadData()
-    }
 }
 
 class SearchBookmarksDataSource: BookmarksDataSource {
@@ -238,16 +199,17 @@ class SearchBookmarksDataSource: BookmarksDataSource {
         return searchResults.isEmpty
     }
 
-    override func link(at indexPath: IndexPath) -> Link? {
-        guard indexPath.row < searchResults.count else {
-            return nil
-        }
-        
-        return searchResults[indexPath.row]
-    }
+//    override func link(at indexPath: IndexPath) -> Link? {
+//        guard indexPath.row < searchResults.count else {
+//            return nil
+//        }
+//        
+//        return searchResults[indexPath.row]
+//    }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return link(at: indexPath) != nil
+        //return link(at: indexPath) != nil
+        return false
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -262,3 +224,28 @@ class SearchBookmarksDataSource: BookmarksDataSource {
         return cell
     }
 }
+
+
+/*
+ //TODO I don't think we actually need this cos things can't actually expand
+ //sigh, assumptions be wrong :(
+ override func expand(folder: Folder) {
+     expandedFolders.insert(folder)
+     guard let children = folder.children?.array as? [BookmarkItem],
+           let index = visibleBookmarkItems.firstIndex(where: { $0.item == folder }) else {
+         return //TOdo fatal error if firstIndex fails?
+     }
+     let newDepth = visibleBookmarkItems[index].depth + 1
+     let visibleChildren = children.map {
+         VisibleBookmarkItem($0, newDepth)
+     }
+     visibleBookmarkItems.insert(contentsOf: visibleChildren, at: index + 1)
+     //TODO reload
+ }
+ 
+ override func collapse(folder: Folder) {
+     expandedFolders.remove(folder)
+     visibleBookmarkItems.removeAll(where: { $0.item.parent == folder })
+     //TODO reload
+ }
+ */

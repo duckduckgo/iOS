@@ -101,7 +101,7 @@ class ImageCacheDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .favorites: return bookmarksManager.favoritesCount
-        case .bookmarks: return bookmarksManager.bookmarksCount
+        case .bookmarks: return 0 //TODO what do here? count could be inefficient
         case .tabs: return tabsModel.count
         default: return 0
         }
@@ -109,16 +109,19 @@ class ImageCacheDebugViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let host: String?
-        switch Sections(rawValue: indexPath.section) {
-        case .favorites: host = bookmarksManager.favorite(atIndex: indexPath.row)?.url.host
-        case .bookmarks: host = bookmarksManager.bookmark(atIndex: indexPath.row)?.url.host
-        case .tabs: host = tabsModel.get(tabAt: indexPath.row).link?.url.host
-        default: host = nil
-        }
-        guard let domain = host, let cell = tableView.cellForRow(at: indexPath) else { return }
-        share(image: cell.imageView?.image, forDomain: domain, fromView: cell)
-        tableView.deselectRow(at: indexPath, animated: true)
+        //TODO what is this even supposed to do?
+        //and how do we translate it to new method? Flat struture?
+        //yeah...that's probably it, we'll need a way of getting just bookmarks flat
+//        let host: String?
+//        switch Sections(rawValue: indexPath.section) {
+//        case .favorites: host = bookmarksManager.favorite(atIndex: indexPath.row)?.url.host
+//        case .bookmarks: host = bookmarksManager.bookmark(atIndex: indexPath.row)?.url.host
+//        case .tabs: host = tabsModel.get(tabAt: indexPath.row).link?.url.host
+//        default: host = nil
+//        }
+//        guard let domain = host, let cell = tableView.cellForRow(at: indexPath) else { return }
+//        share(image: cell.imageView?.image, forDomain: domain, fromView: cell)
+//        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     private func share(image: UIImage?, forDomain domain: String, fromView view: UIView) {

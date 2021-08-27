@@ -55,6 +55,7 @@ public class BookmarksCoreDataStorage {
         getTopLevelFolder(isFavorite: true)
     }()
 
+    //TODO will need to keep these in sync?
     public lazy var topLevelBookmarksItems: [BookmarkItem] = {
         topLevelBookmarksFolder.children?.array as? [BookmarkItem] ?? []
     }()
@@ -73,6 +74,21 @@ public class BookmarksCoreDataStorage {
         }
         
         return results
+    }
+    
+    public func allBookmarksAndFavorites() -> [Bookmark] {
+        let fetchRequest: NSFetchRequest<Bookmark> = Bookmark.fetchRequest()
+        
+        guard let results = try? context.fetch(fetchRequest) else {
+            fatalError("Error fetching Bookmarks")
+        }
+        
+        return results
+    }
+    
+    public func delete(item: BookmarkItem) {
+        context.delete(item)
+        try? context.save()
     }
     
     private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: Folder? = nil) {
@@ -121,4 +137,9 @@ public class BookmarksCoreDataStorage {
         createBookmark(url: URL(string: "http://fish.com")!, title: "fish fav", isFavorite: true)
     }
 }
+
+//extension BookmarksCoreDataStorage: BookmarkStore {
+//
+//    
+//}
 

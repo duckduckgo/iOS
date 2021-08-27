@@ -89,9 +89,7 @@ public class SurrogatesUserScript: NSObject, UserScript {
     public var source: String {
         let privacyConfiguration = configurationSource.privacyConfig
 
-        let unprotectedDomains = privacyConfiguration.locallyUnprotectedDomains.joined(separator: "\n")
-            + "\n"
-            + (privacyConfiguration.tempUnprotectedDomains.joined(separator: "\n"))
+        let remoteUnprotectedDomains = (privacyConfiguration.tempUnprotectedDomains.joined(separator: "\n"))
             + "\n"
             + (privacyConfiguration.exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
 
@@ -105,7 +103,8 @@ public class SurrogatesUserScript: NSObject, UserScript {
         }
         
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
-            "${unprotectedDomains}": unprotectedDomains,
+            "${tempUnprotectedDomains}": remoteUnprotectedDomains,
+            "${localUnprotectedDomains}": privacyConfiguration.locallyUnprotectedDomains.joined(separator: "\n"),
             "${trackerData}": trackerData,
             "${surrogates}": configurationSource.surrogates,
             "${blockingEnabled}": privacyConfiguration.isEnabled(featureKey: .contentBlocking) ? "true" : "false"

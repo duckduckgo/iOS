@@ -1,5 +1,5 @@
 //
-//  ContentBlockerUserScript.swift
+//  SurrogatesUserScript.swift
 //  Core
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -31,6 +31,39 @@ public protocol SurrogatesUserScriptDelegate: NSObjectProtocol {
 
 }
 
+public protocol SurrogatesUserScriptConfigSource {
+
+    var privacyConfig: PrivacyConfiguration { get }
+    var encodedTrackerData: String? { get }
+    var surrogates: String { get }
+}
+
+public class DefaultSurrogatesUserScriptConfigSource: SurrogatesUserScriptConfigSource {
+
+    public var privacyConfig: PrivacyConfiguration {
+        return PrivacyConfigurationManager.shared.privacyConfig
+    }
+
+    public var encodedTrackerData: String? {
+        return ContentBlockerRulesManager.shared.currentRules?.encodedTrackerData
+    }
+
+    private var cachedSurrogatesETag = ""
+    private var cachedSurrogates = ""
+    public var surrogates: String {
+        let etagStore = UserDefaultsETagStorage()
+
+        let surrogatesETag = etagStore.etag(for: .surrogates) ?? ""
+
+        if cachedSurrogates != surrogatesETag {
+            cachedSurrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
+            cachedSurrogatesETag = surrogatesETag
+        }
+
+        return cachedSurrogates
+    }
+}
+
 public class SurrogatesUserScript: NSObject, UserScript {
     
     struct TrackerDetectedKey {
@@ -41,20 +74,31 @@ public class SurrogatesUserScript: NSObject, UserScript {
         static let isSurrogate = "isSurrogate"
     }
 
+    private let configurationSource: SurrogatesUserScriptConfigSource
+
+    public init(configurationSource: SurrogatesUserScriptConfigSource) {
+        self.configurationSource = configurationSource
+
+        super.init()
+    }
+
+    public override convenience init() {
+        self.init(configurationSource: DefaultSurrogatesUserScriptConfigSource())
+    }
+
     public var source: String {
-        let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+        let privacyConfiguration = configurationSource.privacyConfig
 
         let unprotectedDomains = privacyConfiguration.locallyUnprotectedDomains.joined(separator: "\n")
             + "\n"
             + (privacyConfiguration.tempUnprotectedDomains.joined(separator: "\n"))
             + "\n"
             + (privacyConfiguration.exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
-        let surrogates = storageCache?.fileStore.loadAsString(forConfiguration: .surrogates) ?? ""
 
         // Encode whatever the tracker data manager is using to ensure it's in sync and because we know it will work
         let trackerData: String
-        if let rules = ContentBlockerRulesManager.shared.currentRules {
-            trackerData = rules.encodedTrackerData
+        if let data = configurationSource.encodedTrackerData {
+            trackerData = data
         } else {
             let encodedData = try? JSONEncoder().encode(TrackerData(trackers: [:], entities: [:], domains: [:], cnames: [:]))
             trackerData = String(data: encodedData!, encoding: .utf8)!
@@ -63,9 +107,8 @@ public class SurrogatesUserScript: NSObject, UserScript {
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
             "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
-            "${surrogates}": surrogates,
-            "${blockingEnabled}": PrivacyConfigurationManager.shared.privacyConfig
-                .isEnabled(featureKey: .contentBlocking) ? "true" : "false"
+            "${surrogates}": configurationSource.surrogates,
+            "${blockingEnabled}": privacyConfiguration.isEnabled(featureKey: .contentBlocking) ? "true" : "false"
         ])
     }
     
@@ -74,8 +117,7 @@ public class SurrogatesUserScript: NSObject, UserScript {
     public var forMainFrameOnly: Bool = false
     
     public var messageNames: [String] = [ "trackerDetectedMessage" ]
-    
-    public weak var storageCache: StorageCache?
+
     public weak var delegate: SurrogatesUserScriptDelegate?
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

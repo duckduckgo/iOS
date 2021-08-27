@@ -252,7 +252,6 @@ class TabViewController: UIViewController {
         
         faviconScript.delegate = self
         debugScript.instrumentation = instrumentation
-        surrogatesScript.storageCache = storageCache
         surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache

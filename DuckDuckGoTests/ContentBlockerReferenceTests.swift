@@ -63,7 +63,7 @@ class ContentBlockerReferenceTests: XCTestCase {
                                  configuration: configuration)
             webView.navigationDelegate = self.navigationDelegateMock
 
-            let mockUserScriptConfig = MockUserScriptConfigSource()
+            let mockUserScriptConfig = MockUserScriptConfigSource(privacyConfig: PrivacyConfigurationManager.shared.privacyConfig)
             mockUserScriptConfig.trackerData = trackerData
 
             let userScript = ContentBlockerRulesUserScript(configurationSource: mockUserScriptConfig)

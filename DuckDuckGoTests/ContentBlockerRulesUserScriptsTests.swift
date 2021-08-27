@@ -121,8 +121,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
                                  configuration: configuration)
             webView.navigationDelegate = self.navigationDelegateMock
 
-            let mockUserScriptConfig = MockUserScriptConfigSource()
-            mockUserScriptConfig.privacyConfig = privacyConfig
+            let mockUserScriptConfig = MockUserScriptConfigSource(privacyConfig: privacyConfig)
             mockUserScriptConfig.trackerData = trackerData
 
             let userScript = ContentBlockerRulesUserScript(configurationSource: mockUserScriptConfig)
@@ -156,8 +155,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
-
-            XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
 
             let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
             let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
@@ -201,8 +198,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
-
-            XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
 
             let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
             XCTAssertTrue(blockedTrackers.isEmpty)
@@ -251,8 +246,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
 
-            XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
-
             let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
             let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
             XCTAssertTrue(blockedTrackers.isEmpty)
@@ -298,8 +291,6 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         navigationDelegateMock.onDidFinishNavigation = {
             websiteLoaded.fulfill()
-
-            XCTAssertTrue(self.userScriptDelegateMock.detectedSurrogates.isEmpty)
 
             let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
             let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })

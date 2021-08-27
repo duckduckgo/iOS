@@ -41,16 +41,11 @@ class MockNavigationDelegate: NSObject, WKNavigationDelegate {
 class MockRulesUserScriptDelegate: NSObject, ContentBlockerRulesUserScriptDelegate {
 
     var shouldProcessTrackers = true
-
-    var onSurrogateDetected: ((DetectedTracker, String) -> Void)?
     var onTrackerDetected: ((DetectedTracker) -> Void)?
-
-    var detectedSurrogates = Set<DetectedTracker>()
     var detectedTrackers = Set<DetectedTracker>()
 
     func reset() {
         detectedTrackers.removeAll()
-        detectedSurrogates.removeAll()
     }
 
     func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
@@ -66,20 +61,49 @@ class MockRulesUserScriptDelegate: NSObject, ContentBlockerRulesUserScriptDelega
 
 class MockUserScriptConfigSource: ContentBlockerUserScriptConfigSource {
 
-    private var _privacyConfig: PrivacyConfiguration?
-    public var privacyConfig: PrivacyConfiguration {
-        get {
-            if let config = _privacyConfig {
-                return config
-            }
-            return PrivacyConfigurationManager.shared.privacyConfig
-        }
-        set {
-            _privacyConfig = newValue
-        }
+    init(privacyConfig: PrivacyConfiguration) {
+        self.privacyConfig = privacyConfig
     }
 
+    public private(set) var privacyConfig: PrivacyConfiguration
+
     public var trackerData: TrackerData?
+}
+
+class MockSurrogatesUserScriptDelegate: NSObject, SurrogatesUserScriptDelegate {
+
+    var shouldProcessTrackers = true
+
+    var onSurrogateDetected: ((DetectedTracker, String) -> Void)?
+    var detectedSurrogates = Set<DetectedTracker>()
+
+    func reset() {
+        detectedSurrogates.removeAll()
+    }
+
+    func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
+        return shouldProcessTrackers
+    }
+
+    func surrogatesUserScript(_ script: SurrogatesUserScript,
+                              detectedTracker tracker: DetectedTracker,
+                              withSurrogate host: String) {
+        detectedSurrogates.insert(tracker)
+        onSurrogateDetected?(tracker, host)
+    }
+}
+
+class MockSurrogatesUserScriptConfigSource: SurrogatesUserScriptConfigSource {
+
+    init(privacyConfig: PrivacyConfiguration) {
+        self.privacyConfig = privacyConfig
+    }
+
+    public private(set) var privacyConfig: PrivacyConfiguration
+
+    public var encodedTrackerData: String?
+
+    public var surrogates = ""
 }
 
 class MockDomainsProtectionStore: DomainsProtectionStore {
@@ -137,4 +161,3 @@ class WebKitTestHelper {
         }
     }
 }
-

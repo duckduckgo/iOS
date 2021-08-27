@@ -82,6 +82,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.title.textColor = theme.tableCellTextColor
+        //TODO folder tint
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         return cell
@@ -209,6 +210,10 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
             bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
+            guard item(at: sourceIndexPath)?.item is Bookmark else {
+                // Folders aren't allowed in favourites
+                return
+            }
             bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
             reload = bookmarksManager.bookmarksCount == 0 || bookmarksManager.favoritesCount == 1
         }

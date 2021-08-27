@@ -291,4 +291,159 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
     }
+
+    func testWhenSiteIsTempUnprotectedThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: ["example.com"],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenSiteIsSubdomainOfTempUnprotectedThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://sub.example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: ["example.com"],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenSiteIsInExceptionListThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: ["example.com"])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenSiteIsSubdomainOfExceptionListThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://sub.example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: ["example.com"])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenContentBlockingFeatureIsDisabledThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://sub.example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  contentBlockingEnabled: false,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            // Note: do not check the requests - they will be blocked as test setup adds content blocking rules
+            // despite feature flag being set to false - so we validate only how Surrogates script handles that.
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
 }

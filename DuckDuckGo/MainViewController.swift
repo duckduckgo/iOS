@@ -638,6 +638,7 @@ class MainViewController: UIViewController {
     fileprivate func updateCurrentTab() {
         if let currentTab = currentTab {
             select(tab: currentTab)
+            omniBar.resignFirstResponder()
         } else {
             attachHomeScreen()
         }

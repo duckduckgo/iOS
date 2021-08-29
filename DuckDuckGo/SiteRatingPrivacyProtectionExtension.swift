@@ -77,7 +77,7 @@ extension SiteRating {
     
     func networksText(config: PrivacyConfiguration) -> String {
         var isProtecting = protecting(config)
-        if config.isTempUnprotected(domain: domain) {
+        if config.isTempUnprotected(domain: domain) || config.isInExceptionList(domain: domain, forFeature: .contentBlocking) {
             isProtecting = false
         }
         

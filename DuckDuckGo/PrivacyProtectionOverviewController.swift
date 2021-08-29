@@ -168,7 +168,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func updateProtectionToggle() {
-        if privacyConfiguration.isTempUnprotected(domain: siteRating.domain) {
+        if privacyConfiguration.isTempUnprotected(domain: siteRating.domain) ||
+            privacyConfiguration.isInExceptionList(domain: siteRating.domain, forFeature: .contentBlocking) {
             privacyProtectionView.backgroundColor = UIColor.ppGray
             privacyProtectionSwitch.isEnabled = false
             privacyProtectionSwitch.isOn = false
@@ -191,10 +192,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
         let isProtected = toggle.isOn
         
         if isProtected {
-            privacyConfiguration.enableProtection(forDomain: domain)
+            privacyConfiguration.userEnabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))
         } else {
-            privacyConfiguration.disableProtection(forDomain: domain)
+            privacyConfiguration.userDisabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
         }
         Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
@@ -238,7 +239,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case Cells.tempUnprotectedInfo.rawValue:
-            if privacyConfiguration.isTempUnprotected(domain: siteRating.domain) {
+            if privacyConfiguration.isTempUnprotected(domain: siteRating.domain) ||
+                privacyConfiguration.isInExceptionList(domain: siteRating.domain, forFeature: .contentBlocking) {
                 return UITableView.automaticDimension
             } else {
                 return 0

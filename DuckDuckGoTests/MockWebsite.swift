@@ -19,6 +19,7 @@
 
 import Foundation
 
+// swiftlint:disable nesting
 class MockWebsite {
 
     struct EmbeddedResource {
@@ -61,3 +62,4 @@ class MockWebsite {
             """
     }
 }
+// swiftlint:enable nesting

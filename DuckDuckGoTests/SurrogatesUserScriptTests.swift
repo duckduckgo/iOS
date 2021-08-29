@@ -24,6 +24,8 @@ import TrackerRadarKit
 @testable import Core
 @testable import DuckDuckGo
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class SurrogatesUserScriptsTests: XCTestCase {
 
     static let exampleRules = """
@@ -447,3 +449,5 @@ class SurrogatesUserScriptsTests: XCTestCase {
         self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
     }
 }
+// swiftlint:enable type_body_length
+// swiftlint:enable file_length

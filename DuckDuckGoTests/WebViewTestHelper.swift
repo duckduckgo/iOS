@@ -1,5 +1,5 @@
 //
-//  ContentBlockerWebViewTestHelpers.swift
+//  WebViewTestHelper.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -125,7 +125,8 @@ class WebKitTestHelper {
                                      contentBlockingEnabled: Bool,
                                      exceptions: [String]) -> PrivacyConfiguration {
         let contentBlockingExceptions = exceptions.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
-        let features = [PrivacyFeature.contentBlocking.rawValue: PrivacyConfigurationData.PrivacyFeature(state: contentBlockingEnabled ? "enabled" : "disabled",
+        let contentBlockingStatus = contentBlockingEnabled ? "enabled" : "disabled"
+        let features = [PrivacyFeature.contentBlocking.rawValue: PrivacyConfigurationData.PrivacyFeature(state: contentBlockingStatus,
                                                                                                          exceptions: contentBlockingExceptions)]
         let unprotectedTemporary = tempUnprotected.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
         let privacyData = PrivacyConfigurationData(features: features,

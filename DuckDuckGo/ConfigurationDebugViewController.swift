@@ -42,6 +42,8 @@ class ConfigurationDebugViewController: UITableViewController {
 
         case lastRefreshDate
         case resetLastRefreshDate
+        case copyConfigLocationPath
+        case forceRefresh
 
     }
 
@@ -95,6 +97,7 @@ class ConfigurationDebugViewController: UITableViewController {
         return titles[section]
     }
 
+    // swiftlint:disable cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         switch Sections(rawValue: indexPath.section) {
@@ -111,7 +114,12 @@ class ConfigurationDebugViewController: UITableViewController {
                 }
             case .resetLastRefreshDate:
                 cell.textLabel?.text = "Reset Last Refresh Date"
-            default: break
+            case .copyConfigLocationPath:
+                cell.textLabel?.text = "Get Location of Config Files"
+            case .forceRefresh:
+                cell.textLabel?.text = "Trigger refresh"
+            case .none:
+                break
             }
 
         case .queuedTasks:
@@ -136,13 +144,14 @@ class ConfigurationDebugViewController: UITableViewController {
 
         return cell
     }
+    // swiftlint:enable cyclomatic_complexity
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .refreshInformation: return RefreshInformationRows.allCases.count
         case .queuedTasks: return queuedTasks.isEmpty ? 1 : queuedTasks.count
         case .etags: return ETagRows.allCases.count
-        default: return 0
+        case .none: return 0
         }
     }
 
@@ -153,6 +162,18 @@ class ConfigurationDebugViewController: UITableViewController {
             case .resetLastRefreshDate:
                 lastConfigurationRefreshDate = Date.distantPast
                 tableView.reloadData()
+            case .copyConfigLocationPath:
+                let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
+                UIPasteboard.general.string = location?.path ?? ""
+            case .forceRefresh:
+                AppConfigurationFetch().start { [weak tableView] newData in
+                    if newData {
+                        DispatchQueue.main.async {
+                            tableView?.reloadData()
+                        }
+                        ContentBlockerRulesManager.shared.recompile()
+                    }
+                }
             default: break
             }
         case .etags:
@@ -164,6 +185,8 @@ class ConfigurationDebugViewController: UITableViewController {
             }
         default: break
         }
+
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }

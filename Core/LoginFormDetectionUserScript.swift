@@ -29,7 +29,9 @@ public protocol LoginFormDetectionDelegate: NSObjectProtocol {
 public class LoginFormDetectionUserScript: NSObject, UserScript {
 
     public lazy var source: String = {
-        return Self.loadJS("login-form-detection", from: Bundle.core)
+        return Self.loadJS("login-form-detection", from: Bundle.core, withReplacements: [
+            "${isDebug}": isDebugBuild ? "true" : "false"
+        ])
     }()
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

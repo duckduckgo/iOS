@@ -42,7 +42,6 @@ class AppIconManager {
         let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
         UIApplication.shared.setAlternateIconName(alternateIconName) { error in
             if let error = error {
-                Pixel.fire(pixel: .settingsAppIconChangeFailed, error: error)
                 os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
                 completionHandler?(error)
             } else {

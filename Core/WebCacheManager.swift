@@ -180,6 +180,11 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
 
     public func removeAllDataExceptCookies(completion: @escaping () -> Void) {
         var types = WKWebsiteDataStore.allWebsiteDataTypes()
+
+        // Force the HSTS cache to clear when using the Fire button.
+        // https://github.com/WebKit/WebKit/blob/0f73b4d4350c707763146ff0501ab62425c902d6/Source/WebKit/UIProcess/API/Cocoa/WKWebsiteDataRecord.mm#L47
+        types.insert("_WKWebsiteDataTypeHSTSCache")
+
         types.remove(WKWebsiteDataTypeCookies)
 
         removeData(ofTypes: types,

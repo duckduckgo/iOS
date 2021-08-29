@@ -63,7 +63,9 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showError(withText errorText: String) {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
+        guard let controller = storyboard?.instantiateViewController(identifier: "Error", creator: { coder in
+            PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
+        }) else { return }
         controller.errorText = errorText
         pushViewController(controller, animated: true)
     }

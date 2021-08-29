@@ -157,10 +157,6 @@ class SurrogatesUserScriptsTests: XCTestCase {
                 configuration.userContentController.add(userScript, name: messageName)
             }
 
-            let debugMessagingSource = DebugUserScript.loadJS("debug-messaging-disabled", from: Bundle.core)
-            configuration.userContentController.addUserScript(WKUserScript(source: debugMessagingSource,
-                                                                           injectionTime: .atDocumentStart,
-                                                                           forMainFrameOnly: false))
             configuration.userContentController.addUserScript(WKUserScript(source: userScript.source,
                                                                            injectionTime: .atDocumentStart,
                                                                            forMainFrameOnly: false))

@@ -28,6 +28,8 @@
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B051169262A166300F6079C /* EmailWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailWaitlistViewController.swift */; };
+		4B05163926DDBCC9005C818A /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05163826DDBCC9005C818A /* AdvancedSettingsViewController.swift */; };
+		4B05163B26DDC0B8005C818A /* AdvancedSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05163A26DDC0B8005C818A /* AdvancedSettings.swift */; };
 		4B14B56326937892002E6805 /* EmailWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */; };
 		4B15817626706A2200F34D16 /* EmailProtectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15817526706A2200F34D16 /* EmailProtectionViewController.swift */; };
 		4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52648A25F9613B00CB4C24 /* trackerData.json */; };
@@ -768,6 +770,8 @@
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
+		4B05163826DDBCC9005C818A /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
+		4B05163A26DDC0B8005C818A /* AdvancedSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettings.swift; sourceTree = "<group>"; };
 		4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B15817526706A2200F34D16 /* EmailProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailProtectionViewController.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
@@ -2664,6 +2668,7 @@
 				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
 				8531A08D1F9950E6000484F0 /* UnprotectedSitesViewController.swift */,
 				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
+				4B05163826DDBCC9005C818A /* AdvancedSettingsViewController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2673,6 +2678,7 @@
 			children = (
 				85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */,
 				4B53648926718D0E001AA041 /* EmailWaitlist.swift */,
+				4B05163A26DDC0B8005C818A /* AdvancedSettings.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -4901,6 +4907,7 @@
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
+				4B05163B26DDC0B8005C818A /* AdvancedSettings.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
@@ -4921,6 +4928,7 @@
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
+				4B05163926DDBCC9005C818A /* AdvancedSettingsViewController.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,

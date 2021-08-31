@@ -63,6 +63,8 @@ public struct UserDefaultsWrapper<T> {
 
         case showWaitlistNotification = "com.duckduckgo.ios.showWaitlistNotification"
 
+        case autoplayMedia = "com.duckduckgo.app.autoplayMedia"
+
         case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
         case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
         case downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"

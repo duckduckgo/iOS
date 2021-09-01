@@ -18,20 +18,29 @@
 //
 
 import Foundation
+import WebKit
 import os.log
 
 public class CookieStorage {
 
     struct Constants {
         static let key = "com.duckduckgo.allowedCookies"
+        static let container = "com.duckduckgo.containerCookies"
     }
 
     private var userDefaults: UserDefaults
+    private var containerName: String?
 
     var cookies: [HTTPCookie] {
 
         var storedCookies = [HTTPCookie]()
-        if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
+        
+        var defaultsKey = Constants.key
+        if let containerName = containerName {
+            defaultsKey = Constants.container + ".\(containerName)"
+        }
+        
+        if let cookies = userDefaults.object(forKey: defaultsKey) as? [[String: Any?]] {
             for cookieData in cookies {
                 var properties = [HTTPCookiePropertyKey: Any]()
                 cookieData.forEach({
@@ -48,13 +57,33 @@ public class CookieStorage {
         return storedCookies
     }
 
-    public init(userDefaults: UserDefaults = UserDefaults.standard) {
+    public init(userDefaults: UserDefaults = UserDefaults.standard,
+                containerName: String? = nil) {
         self.userDefaults = userDefaults
+        self.containerName = containerName
     }
 
     func clear() {
         userDefaults.removeObject(forKey: Constants.key)
         os_log("cleared cookies", log: generalLog, type: .debug)
+    }
+    
+    func storeCookies(forStore store: WKWebsiteDataStore, containerName: String, completion: (() -> Void)?) {
+        guard let cookieStore = store.cookieStore else { return }
+        cookieStore.getAllCookies { cookies in
+            var storedCookies = [[String: Any]]()
+            for cookie in cookies {
+                var properties = [String: Any]()
+                cookie.properties?.forEach {
+                    properties[$0.key.rawValue] = $0.value
+                }
+                storedCookies.append(properties)
+            }
+            
+            UserDefaults.standard.set(storedCookies, forKey: Constants.container + ".\(containerName)")
+            
+            completion?()
+        }
     }
 
 }

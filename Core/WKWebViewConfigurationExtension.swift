@@ -70,6 +70,9 @@ extension WKWebViewConfiguration {
         do {
             let archiver = try NSKeyedArchiver.archivedData(withRootObject: self.websiteDataStore, requiringSecureCoding: true)
             try archiver.write(to: docsDir.appendingPathComponent("\(containerName).tab"))
+            let cookieStorage = CookieStorage(containerName: containerName)
+            cookieStorage.storeCookies(forStore: self.websiteDataStore,
+                                       containerName: containerName, completion: nil)
         } catch {
             Swift.print(">>>ERROR: \(error)")
         }
@@ -88,6 +91,12 @@ extension WKWebViewConfiguration {
                                     .unarchivedObject(ofClass: WKWebsiteDataStore.self,
                                                       from: Data(contentsOf: docsDir.appendingPathComponent("\(containerName).tab")))
             if let dataStore = dataStore {
+                let cookieStorage = CookieStorage(containerName: containerName)
+                let cookies = cookieStorage.cookies
+                cookies.forEach {
+                    dataStore.cookieStore?.setCookie($0, completionHandler: nil)
+                }
+                
                 defaultConfig.websiteDataStore = dataStore
             }
         } catch {

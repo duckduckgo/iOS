@@ -59,6 +59,7 @@ public class ContentBlockerUserScript: NSObject, UserScript {
         }
         
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
+            "${isDebug}": isDebugBuild ? "true" : "false",
             "${unprotectedDomains}": unprotectedDomains,
             "${trackerData}": trackerData,
             "${surrogates}": surrogates,

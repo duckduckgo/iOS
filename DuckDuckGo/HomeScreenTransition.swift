@@ -198,8 +198,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         imageView.contentMode = .center
         if tabSwitcherSettings.isGridViewEnabled {
             imageView.image = TabViewGridCell.logoImage
-        } else {
-            imageContainer.alpha = 0
+            imageView.alpha = tab.viewed ? 1 : 0
         }
         imageView.backgroundColor = .clear
         
@@ -216,9 +215,11 @@ class ToHomeScreenTransition: HomeScreenTransition {
                 self.homeScreenSnapshot?.frame = self.imageContainer.bounds
             }
             
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
-                self.imageView.alpha = 0
-                self.imageContainer.alpha = 1
+            if tab.viewed {
+                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
+                    self.imageView.alpha = 0
+                    self.imageContainer.alpha = 1
+                }
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {

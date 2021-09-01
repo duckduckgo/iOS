@@ -67,6 +67,11 @@ class TabViewListCell: TabViewCell {
             title.text = UserText.homeTabTitle
             link.text = linkText
             favicon.image = UIImage(named: "Logo")
+            unread.isHidden = true
+            title.isHidden = !tab.viewed
+            favicon.isHidden = !tab.viewed
+            removeButton.isHidden = !tab.viewed
+            link.isHidden = !tab.viewed
         } else {
             removeButton.isHidden = false
             link.text = tab.link?.url.absoluteString ?? ""

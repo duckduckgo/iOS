@@ -57,7 +57,7 @@ public class Tab: NSObject, NSCoding {
         }
     }
     
-    var viewed: Bool = true {
+    var viewed: Bool = false {
         didSet {
             notifyObservers()
         }
@@ -65,7 +65,7 @@ public class Tab: NSObject, NSCoding {
 
     public init(uid: String? = nil,
                 link: Link? = nil,
-                viewed: Bool = true,
+                viewed: Bool = false,
                 desktop: Bool = AppWidthObserver.shared.isLargeWidth,
                 containerName: String = "default") {
         self.uid = uid ?? UUID().uuidString

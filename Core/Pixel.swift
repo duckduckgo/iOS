@@ -137,7 +137,6 @@ public enum PixelName: String {
     
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"
-    case widgetAddFavoriteLaunch = "m_w_af"
 
     case defaultBrowserButtonPressedSettings = "m_db_s"
     case defaultBrowserButtonPressedHome = "m_db_h"
@@ -173,6 +172,9 @@ public enum PixelName: String {
     case trackerDataReloadFailed = "m_d_tds_r"
     case trackerDataCouldNotBeLoaded = "m_d_tds_l"
     case fileStoreWriteFailed = "m_d_fswf"
+    case privacyConfigurationReloadFailed = "m_d_pc_r"
+    case privacyConfigurationParseFailed = "m_d_pc_p"
+    case privacyConfigurationCouldNotBeLoaded = "m_d_pc_l"
     
     case contentBlockingTDSCompilationFailed = "m_d_cb_ct"
     case contentBlockingTempListCompilationFailed = "m_d_cb_cl"
@@ -183,9 +185,6 @@ public enum PixelName: String {
     
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
-
-    case settingsAppIconChangeFailed = "m_d_aicf"
-    case settingsAppIconChangeNotSupported = "m_d_aicns"
 
     case backgroundTaskSubmissionFailed = "m_bt_rf"
     
@@ -258,6 +257,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                            includeATB: Bool = true,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
@@ -269,9 +269,9 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor, includeATB: includeATB)
         } else {
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue)
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, includeATB: includeATB)
         }
         
         APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in

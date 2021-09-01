@@ -66,8 +66,8 @@ class TabsModelTests: XCTestCase {
 
     }
 
-    func testWhenTabsAddedViewedIsTrue() {
-        XCTAssertTrue(filledModel.tabs[0].viewed)
+    func testWhenTabsAddedViewedIsFalse() {
+        XCTAssertFalse(filledModel.tabs[0].viewed)
     }
 
     func testWhenModelIsNewThenContainsHomeTab() {

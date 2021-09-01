@@ -23,7 +23,10 @@ import BrowserServicesKit
 
 public class DoNotSellUserScript: NSObject, UserScript {
     public var source: String {
-        return Self.loadJS("donotsell", from: Bundle.core)
+        return Self.loadJS("donotsell", from: Bundle.core, withReplacements: [
+            "${gpcEnabled}": PrivacyConfigurationManager.shared.privacyConfig
+                .isEnabled(featureKey: .gpc) ? "true" : "false"
+        ])
     }
     
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart

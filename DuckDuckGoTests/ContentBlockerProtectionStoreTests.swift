@@ -24,12 +24,21 @@ import XCTest
 class ContentBlockerProtectionStoreTests: XCTestCase {
 
     func testWhenCheckingDomainsAreProtected_ThenUsesPersistedUnprotectedDomainList() {
-        let domains = [
-            "domain1.com",
-            "domain2.com",
-            "domain3.com"
-        ].joined(separator: "\n").data(using: .utf8)!
-        _ = StorageCacheProvider().current.fileStore.persist(domains, forConfiguration: .temporaryUnprotectedSites)
+        let config =
+        """
+        {
+            "features": {},
+            "unprotectedTemporary": [
+                    { "domain": "domain1.com" },
+                    { "domain": "domain2.com" },
+                    { "domain": "domain3.com" },
+            ]
+        }
+        """.data(using: .utf8)!
+        _ = FileStore().persist(config, forConfiguration: .privacyConfiguration)
+        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedData.etag, PrivacyConfigurationManager.Constants.embeddedConfigETag)
+        XCTAssertEqual(PrivacyConfigurationManager.shared.reload(etag: "new etag"), .downloaded)
+        XCTAssertEqual(PrivacyConfigurationManager.shared.fetchedData?.etag, "new etag")
         let protection = ContentBlockerProtectionUserDefaults()
 
         XCTAssertFalse(protection.isTempUnprotected(domain: "main1.com"))

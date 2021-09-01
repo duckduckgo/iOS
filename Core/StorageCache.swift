@@ -38,13 +38,20 @@ public class StorageCache: StorageCacheUpdating {
     public init() {
         tld = TLD()
         termsOfServiceStore = EmbeddedTermsOfServiceStore()
+        
+        // Remove legacy data
+        _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
     public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore) {
         self.tld = tld
         self.termsOfServiceStore = termsOfServiceStore
+        
+        // Remove legacy data
+        _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
+    // swiftlint:disable:next cyclomatic_complexity
     func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
         switch configuration {
         case .httpsExcludedDomains:
@@ -56,9 +63,6 @@ public class StorageCache: StorageCacheUpdating {
             let result = httpsUpgradeStore.persistBloomFilter(specification: bloomFilter.spec, data: bloomFilter.data)
             HTTPSUpgrade.shared.loadData()
             return result
-            
-        case .httpsBloomFilterSpec:
-            return false
             
         case .surrogates:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
@@ -73,8 +77,18 @@ public class StorageCache: StorageCacheUpdating {
             }
             return false
             
-        case .temporaryUnprotectedSites:
-            return fileStore.persist(data as? Data, forConfiguration: configuration)
+        case .privacyConfiguration:
+            if fileStore.persist(data as? Data, forConfiguration: configuration) {
+                if PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
+                    Pixel.fire(pixel: .privacyConfigurationReloadFailed)
+                    return false
+                }
+                return true
+            }
+            return false
+
+        case .httpsBloomFilterSpec:
+            return false
             
         }
     }

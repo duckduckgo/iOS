@@ -18,6 +18,11 @@
 //
 
 (function() {
+    const gpcEnabled = ${gpcEnabled}
+    if (!gpcEnabled) {
+        return;
+    }
+    
     if (navigator.globalPrivacyControl === undefined) {
         Object.defineProperty(navigator, 'globalPrivacyControl', {
             value: true,

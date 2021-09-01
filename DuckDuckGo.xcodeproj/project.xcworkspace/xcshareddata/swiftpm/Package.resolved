@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": null,
-          "revision": "79ba9886d62e501e2977498da40e44add828cfa6",
-          "version": "6.0.1"
+          "revision": "7fe3315b30e0452762e87e308b22e821d37d128d",
+          "version": "7.1.2"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {
           "branch": null,
-          "revision": "2d795b521934b02357fec781b33e2c407655eebb",
-          "version": "5.15.4"
+          "revision": "44450a8f564d7c0165f736ba2250649ff8d3e556",
+          "version": "6.3.0"
         }
       },
       {

@@ -56,11 +56,15 @@ public struct Variant {
     
     // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
-        
+
+        // Special SERP experiement https://app.asana.com/0/392891325557410/1200628097107837
+        Variant(name: "gx", weight: 1, isIncluded: When.always, features: []),
+        Variant(name: "gy", weight: 1, isIncluded: When.always, features: []),
+
         // SERP testing
-        Variant(name: "sc", weight: 1, isIncluded: When.always, features: []),
+        Variant(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: 1, isIncluded: When.always, features: [])
+        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
     ]
     
     public let name: String

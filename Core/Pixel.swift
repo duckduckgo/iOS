@@ -259,7 +259,7 @@ public class Pixel {
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             includeATB: Bool = true,
-                            onComplete: @escaping (Error?) -> Void = {_ in }) {
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         
         var newParams = params
         newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
@@ -289,7 +289,7 @@ extension Pixel {
     public static func fire(pixel: PixelName,
                             error: Error,
                             withAdditionalParameters params: [String: String] = [:],
-                            onComplete: @escaping (Error?) -> Void = {_ in }) {
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"

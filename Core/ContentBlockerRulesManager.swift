@@ -244,7 +244,10 @@ public class ContentBlockerRulesManager {
                            error: error)
             } else {
                 // We failed for embedded data, this is unlikely.
-                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed) { _ in
+                // Include description - why built-in version of the TDS has failed to compile?
+                let errorDesc = error.localizedDescription
+                let params = [PixelParameters.errorDescription: errorDesc.isEmpty ? "empty" : errorDesc]
+                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed, error: error, withAdditionalParameters: params) { _ in
                     fatalError("Could not compile embedded rules list")
                 }
             }

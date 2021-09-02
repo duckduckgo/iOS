@@ -109,7 +109,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
         tempUnprotected.append(contentsOf: privacyConfig.exceptionsList(forFeature: .contentBlocking))
 
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
-                                                     exceptions: privacyConfig.locallyUnprotectedDomains,
+                                                     exceptions: privacyConfig.userUnprotectedDomains,
                                                      tempUnprotected: tempUnprotected) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")

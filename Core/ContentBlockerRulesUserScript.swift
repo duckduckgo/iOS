@@ -77,7 +77,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
             "${tempUnprotectedDomains}": remoteUnprotectedDomains,
-            "${localUnprotectedDomains}": privacyConfiguration.locallyUnprotectedDomains.joined(separator: "\n")
+            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")
         ])
     }
 
@@ -117,7 +117,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         let privacyConfiguration = configurationSource.privacyConfig
 
         let resolver = TrackerResolver(tds: currentTrackerData,
-                                       unprotectedSites: privacyConfiguration.locallyUnprotectedDomains,
+                                       unprotectedSites: privacyConfiguration.userUnprotectedDomains,
                                        tempList: temporaryUnprotectedDomains)
         
         if let tracker = resolver.trackerFromUrl(trackerUrlString,

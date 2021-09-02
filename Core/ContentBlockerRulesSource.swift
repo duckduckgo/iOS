@@ -52,7 +52,7 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
     }
 
     var unprotectedSites: [String] {
-        return PrivacyConfigurationManager.shared.privacyConfig.locallyUnprotectedDomains
+        return PrivacyConfigurationManager.shared.privacyConfig.userUnprotectedDomains
     }
 
 }

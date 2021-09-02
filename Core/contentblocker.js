@@ -506,7 +506,7 @@ _utf8_encode : function (string) {
 
     if (!unprotectedDomain && topLevelUrl.host != null) {
       unprotectedDomain = `
-          ${localUnprotectedDomains}
+          ${userUnprotectedDomains}
           `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
     }
 

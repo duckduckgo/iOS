@@ -26,25 +26,25 @@ public protocol PrivacyConfiguration {
 
     /// Domains for which user has toggled protection off.
     ///
-    /// Use `isLocallyUnprotected(domain:)` to check if given domain is locally unprotected.
-    var locallyUnprotectedDomains: [String] { get }
+    /// Use `isUserUnprotected(domain:)` to check if given domain is unprotected.
+    var userUnprotectedDomains: [String] { get }
 
     /// Domains for which all protections has been disabled because of some broken functionality
     ///
-    /// Use `isTempUnprotected(domain:)` to check if given domain is locally unprotected.
+    /// Use `isTempUnprotected(domain:)` to check if given domain is unprotected.
     var tempUnprotectedDomains: [String] { get }
 
     func isEnabled(featureKey: PrivacyFeature) -> Bool
 
     /// Domains for which given PrivacyFeature is disabled.
     ///
-    /// Use `isTempUnprotected(domain:)` to check if given domain is locally unprotected.
+    /// Use `isTempUnprotected(domain:)` to check if a feature is disabled for the given domain.
     func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String]
 
     /// Check the protection status of given domain.
     ///
     /// Returns true if all below is true:
-    ///  - Site is not locally unprotected.
+    ///  - Site is not user unprotected.
     ///  - Site is not in temp list.
     ///  - Site is not in an exception list for content blocking feature.
     func isProtected(domain: String?) -> Bool
@@ -52,7 +52,7 @@ public protocol PrivacyConfiguration {
     /// Check if given domain is locally unprotected.
     ///
     /// Returns true for exact match, but false for subdomains.
-    func isLocallyUnprotected(domain: String?) -> Bool
+    func isUserUnprotected(domain: String?) -> Bool
 
     /// Check if given domain is temp unprotected.
     ///
@@ -93,7 +93,7 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
         self.locallyUnprotected = localProtection
     }
 
-    public var locallyUnprotectedDomains: [String] {
+    public var userUnprotectedDomains: [String] {
         return Array(locallyUnprotected.unprotectedDomains)
     }
     
@@ -116,11 +116,11 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
     public func isProtected(domain: String?) -> Bool {
         guard let domain = domain else { return true }
 
-        return !isTempUnprotected(domain: domain) && !isLocallyUnprotected(domain: domain) &&
+        return !isTempUnprotected(domain: domain) && !isUserUnprotected(domain: domain) &&
             !isInExceptionList(domain: domain, forFeature: .contentBlocking)
     }
 
-    public func isLocallyUnprotected(domain: String?) -> Bool {
+    public func isUserUnprotected(domain: String?) -> Bool {
         guard let domain = domain else { return false }
 
         return locallyUnprotected.unprotectedDomains.contains(domain)

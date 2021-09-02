@@ -541,7 +541,7 @@
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
 		F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */; };
 		F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16390811E648B7A005B4550 /* HomeViewController.swift */; };
-		F16393F51ECCA85900DDD653 /* DomainsProtectionUserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16393F41ECCA85900DDD653 /* DomainsProtectionUserDefaultsStore.swift */; };
+		F16393F51ECCA85900DDD653 /* DomainsProtectionUserDefaultsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16393F41ECCA85900DDD653 /* DomainsProtectionUserDefaultsStoreTests.swift */; };
 		F16393FF1ECCB9CC00DDD653 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */; };
 		F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */; };
 		F16956401ECC9C66009C35C9 /* DomainsProtectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F169563F1ECC9C66009C35C9 /* DomainsProtectionStore.swift */; };
@@ -1997,7 +1997,7 @@
 		F1617C141E57336D00DEDCAF /* TabManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
 		F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherDelegate.swift; sourceTree = "<group>"; };
 		F16390811E648B7A005B4550 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		F16393F41ECCA85900DDD653 /* DomainsProtectionUserDefaultsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsProtectionUserDefaultsStore.swift; sourceTree = "<group>"; };
+		F16393F41ECCA85900DDD653 /* DomainsProtectionUserDefaultsStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsProtectionUserDefaultsStoreTests.swift; sourceTree = "<group>"; };
 		F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		F169563F1ECC9C66009C35C9 /* DomainsProtectionStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsProtectionStore.swift; sourceTree = "<group>"; };
@@ -2260,7 +2260,7 @@
 			isa = PBXGroup;
 			children = (
 				85F1C3CB1F7A76B900161346 /* ContentBlockerStringCacheTests.swift */,
-				F16393F41ECCA85900DDD653 /* DomainsProtectionUserDefaultsStore.swift */,
+				F16393F41ECCA85900DDD653 /* DomainsProtectionUserDefaultsStoreTests.swift */,
 				8521FDE4238D411400A44CC3 /* FileStoreTests.swift */,
 				85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */,
 			);
@@ -5016,7 +5016,7 @@
 				98A69A7326D70D9600370512 /* SurrogatesUserScriptTests.swift in Sources */,
 				98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */,
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
-				F16393F51ECCA85900DDD653 /* DomainsProtectionUserDefaultsStore.swift in Sources */,
+				F16393F51ECCA85900DDD653 /* DomainsProtectionUserDefaultsStoreTests.swift in Sources */,
 				85C271DB1FD0366F007216B4 /* HTTPSUpgradeTests.swift in Sources */,
 				85E5603026541D9E00F4DC44 /* AutocompleteRequestTests.swift in Sources */,
 				F1DA2F7D1EBCF23700313F51 /* ExternalUrlSchemeTests.swift in Sources */,

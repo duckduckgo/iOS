@@ -115,7 +115,7 @@ class ConfigurationDebugViewController: UITableViewController {
             case .resetLastRefreshDate:
                 cell.textLabel?.text = "Reset Last Refresh Date"
             case .copyConfigLocationPath:
-                cell.textLabel?.text = "Get Location of Config Files"
+                cell.textLabel?.text = "Copy Location of Config Files to Pasteboard"
             case .forceRefresh:
                 cell.textLabel?.text = "Trigger refresh"
             case .none:

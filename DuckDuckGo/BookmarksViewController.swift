@@ -81,7 +81,6 @@ class BookmarksViewController: UITableViewController {
                 viewController.dataSource.parentFolder = folder
                 viewController.delegate = delegate
                 navigationController?.pushViewController(viewController, animated: true)
-                //TODO transition is funky, particuarly the first time
             }
         }
     }
@@ -330,6 +329,8 @@ extension BookmarksViewController: Themable {
                 
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor
+        
+        navigationController?.view.backgroundColor = tableView.backgroundColor
         
         tableView.reloadData()
     }

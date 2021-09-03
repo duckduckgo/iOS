@@ -28,6 +28,12 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         return nil
     }
     
+    var includeFavorites: Bool {
+        return true
+    }
+    
+    var parentFolder: Folder? = nil
+    
     var isEmpty: Bool {
         return true
     }
@@ -84,8 +90,11 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
 
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
-    var includeFavorites = true
-    var parentFolder: Folder? = nil
+    override var includeFavorites: Bool {
+        return (parentFolder == nil)
+    }
+    
+
     //TODO should this also include the ability to show all the folders?
     //hmmm, at that point we might be better off with a new data source, idk
     //we'll see

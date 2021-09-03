@@ -72,7 +72,14 @@ class BookmarksViewController: UITableViewController {
             if let bookmark = item as? Bookmark {
                 select(bookmark: bookmark)
             } else if let folder = item as? Folder {
-                
+                let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+                guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController") as? BookmarksViewController else {
+                    return
+                }
+                viewController.dataSource.parentFolder = folder
+                navigationController?.pushViewController(viewController, animated: true)
+                //TODO why does bookmark selection not work from child folders?
+                //TODO transition is funky, particuarly the first time
             }
         }
     }
@@ -154,6 +161,9 @@ class BookmarksViewController: UITableViewController {
         self.navigationController?.setToolbarHidden(false, animated: true)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems?.insert(flexibleSpace, at: 1)
+        if let folder = dataSource.parentFolder {
+            title = folder.title
+        }
         refreshEditButton()
     }
 
@@ -234,9 +244,9 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
-    fileprivate func selectLink(_ link: Link) {
+    fileprivate func select(bookmark: Bookmark) {
         dismiss()
-        delegate?.bookmarksDidSelect(link: link)
+        delegate?.bookmarksDidSelect(bookmark: bookmark)
     }
 
     private func dismiss() {

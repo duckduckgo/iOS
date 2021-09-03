@@ -1,5 +1,5 @@
 //
-//  ContentBlockerUserDefaultsTests.swift
+//  DomainsProtectionUserDefaultsStoreTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import XCTest
 import Core
 
-class ContentBlockerUserDefaultsTests: XCTestCase {
+class DomainsProtectionUserDefaultsStoreTests: XCTestCase {
 
     struct Constants {
         static let userDefaultsSuit = "ContentBlockerUserDefaultsTestsSuit"
@@ -28,25 +28,25 @@ class ContentBlockerUserDefaultsTests: XCTestCase {
         static let someOtherDomain = "someotherdomain.com"
     }
 
-    var testee: ContentBlockerProtectionUserDefaults!
+    var testee: DomainsProtectionUserDefaultsStore!
 
     override func setUp() {
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
-        testee = ContentBlockerProtectionUserDefaults(suiteName: Constants.userDefaultsSuit)
+        testee = DomainsProtectionUserDefaultsStore(suiteName: Constants.userDefaultsSuit)
     }
 
-    func testWhenNothingIsUnprotectedThenProtectedReturnsTrue() {
-        XCTAssertTrue(testee.isProtected(domain: Constants.domain))
+    func testWhenNothingIsUnprotectedThenSetIsEmpty() {
+        XCTAssert(testee.unprotectedDomains.isEmpty)
     }
 
-    func testWhenDomainIsUnprotectedThenProtectedReturnsFalse() {
+    func testWhenDomainIsUnprotectedThenItIsInTheUnprotectedSet() {
         testee.disableProtection(forDomain: Constants.domain)
-        XCTAssertFalse(testee.isProtected(domain: Constants.domain))
+        XCTAssert(testee.unprotectedDomains.contains(Constants.domain))
     }
 
-    func testWhenDomainProtectionIsEnabledThenProtectedReturnsTrue() {
+    func testWhenDomainProtectionIsEnabledThenSetIsEmpty() {
         testee.disableProtection(forDomain: Constants.domain)
         testee.enableProtection(forDomain: Constants.domain)
-        XCTAssertTrue(testee.isProtected(domain: Constants.domain))
+        XCTAssert(testee.unprotectedDomains.isEmpty)
     }
 }

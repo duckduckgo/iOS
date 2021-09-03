@@ -275,20 +275,20 @@ extension TabViewController {
     }
     
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
-        let manager = UnprotectedSitesManager()
-        let isProtected = manager.isProtected(domain: domain)
+        let protectionStore = DomainsProtectionUserDefaultsStore()
+        let isProtected = !protectionStore.unprotectedDomains.contains(domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
         let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
     
         return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
             Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-            self?.togglePrivacyProtection(manager: manager, domain: domain)
+            self?.togglePrivacyProtection(protectionStore: protectionStore, domain: domain)
         })
     }
     
-    private func togglePrivacyProtection(manager: UnprotectedSitesManager, domain: String) {
-        let isProtected = manager.isProtected(domain: domain)
-        let operation = isProtected ? manager.add : manager.remove
+    private func togglePrivacyProtection(protectionStore: DomainsProtectionStore, domain: String) {
+        let isProtected = !protectionStore.unprotectedDomains.contains(domain)
+        let operation = isProtected ? protectionStore.disableProtection : protectionStore.enableProtection
         
         operation(domain)
         
@@ -300,7 +300,7 @@ extension TabViewController {
         }
         
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
-            self?.togglePrivacyProtection(manager: manager, domain: domain)
+            self?.togglePrivacyProtection(protectionStore: protectionStore, domain: domain)
         }
     }
 }

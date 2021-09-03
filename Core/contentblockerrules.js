@@ -31,10 +31,16 @@
     let partialDomain = domainParts.join(".")
 
     unprotectedDomain = `
-        ${unprotectedDomains}
+        ${tempUnprotectedDomains}
         `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
     
     domainParts.shift()
+  }
+
+  if (!unprotectedDomain && topLevelUrl.host != null) {
+    unprotectedDomain = `
+        ${userUnprotectedDomains}
+        `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
   }
 
   // private

@@ -1,5 +1,5 @@
 //
-//  ContentBlockerProtectionStore.swift
+//  DomainsProtectionStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,19 +19,9 @@
 
 import Foundation
 
-public struct ContentBlockerProtectionChangedNotification {
-    public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
-    
-    public static let diffKey = "ContentBlockingDiff"
-}
-
-public protocol ContentBlockerProtectionStore: AnyObject {
+public protocol DomainsProtectionStore: AnyObject {
 
     var unprotectedDomains: Set<String> { get }
-
-    func isProtected(domain: String?) -> Bool
-    
-    func isTempUnprotected(domain: String?) -> Bool
 
     func disableProtection(forDomain domain: String)
 

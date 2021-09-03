@@ -321,35 +321,8 @@ extension BookmarksViewController: Themable {
         decorateNavigationBar(with: theme)
         decorateToolbar(with: theme)
         
-        if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
-            searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
-        } else {
-            
-            switch theme.currentImageSet {
-            case .dark:
-                searchController.searchBar.barStyle = .black
-            case .light:
-                searchController.searchBar.barStyle = .default
-            }
-            
-            searchController.searchBar.tintColor = theme.searchBarTextColor
-            if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-                searchField.layer.backgroundColor = theme.searchBarBackgroundColor.cgColor
-                searchField.layer.cornerRadius = 8
-                
-                // Hide default background view.
-                for view in searchField.subviews {
-                    // Background has same size as search field
-                    guard view.bounds == searchField.bounds else {
-                        continue
-                    }
-
-                    view.alpha = 0.0
-                    break
-                }
-            }
-        }
+        overrideSystemTheme(with: theme)
+        searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
         
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor

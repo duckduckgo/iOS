@@ -27,7 +27,7 @@ class BookmarksViewController: UITableViewController {
 
     @IBOutlet weak var editButton: UIBarButtonItem!
     
-    private var searchController: UISearchController!
+    private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -37,13 +37,13 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate var onDidAppearAction: () -> Void = {}
     
-    //TODO child folders need to hide title and search
+    //TODO child folders need to hide section title and search
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForNotifications()
         configureTableView()
-        configureSearch()
+        configureSearchIfNeeded()
         configureBars()
         
         applyTheme(ThemeManager.shared.currentTheme)
@@ -111,30 +111,32 @@ class BookmarksViewController: UITableViewController {
         tableView.dataSource = dataSource
     }
     
-    private func configureSearch() {
-        // Do not use UISearchController() as it causes iOS 12 to miss search bar.
-        searchController = UISearchController(searchResultsController: nil)
+    private func configureSearchIfNeeded() {
+        guard dataSource.parentFolder == nil else {
+            // Don't show search for sub folders
+            return
+        }
+        let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
-        if #available(iOS 13.0, *) {
-            searchController.automaticallyShowsScopeBar = false
-            searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
-            
-            // Add separator
-            if let nv = navigationController?.navigationBar {
-                let separator = UIView()
-                separator.backgroundColor = .greyish
-                nv.addSubview(separator)
-                separator.translatesAutoresizingMaskIntoConstraints = false
-                separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
-                separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
-                separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
-                separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
-            }
+        searchController.automaticallyShowsScopeBar = false
+        searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
+        
+        // Add separator
+        if let nv = navigationController?.navigationBar {
+            let separator = UIView()
+            separator.backgroundColor = .greyish
+            nv.addSubview(separator)
+            separator.translatesAutoresizingMaskIntoConstraints = false
+            separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
+            separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
+            separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
+            separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
         }
+        self.searchController = searchController
         
         // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0 and we are using `isModalInPresentation` set to true
         tableView.setContentOffset(CGPoint(x: 0, y: 1), animated: false)
@@ -254,7 +256,7 @@ class BookmarksViewController: UITableViewController {
     private func dismiss() {
         delegate?.bookmarksUpdated()
         
-        if searchController.isActive {
+        if let searchController = searchController, searchController.isActive {
             searchController.dismiss(animated: false) {
                 self.dismiss(animated: true, completion: nil)
             }
@@ -264,24 +266,26 @@ class BookmarksViewController: UITableViewController {
     }
     
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if #available(iOS 13.0, *), searchController.searchBar.bounds.height == 0 {
+        if (searchController?.searchBar.bounds.height ?? 0) == 0 {
             // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
             isModalInPresentation = true
         }
     }
 
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
-            // Re-enable drag-to-dismiss if needed
-            isModalInPresentation = false
-        }
+        // TODO need to figure out when this actually happens so we know what to do with child folder pages
+        //hmm search bar behaviour before I touched it is a bit funky...
+//        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+//            // Re-enable drag-to-dismiss if needed
+//            isModalInPresentation = false
+//        }
     }
 
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
-            // Re-enable drag-to-dismiss if needed
-            isModalInPresentation = false
-        }
+//        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+//            // Re-enable drag-to-dismiss if needed
+//            isModalInPresentation = false
+//        }
     }
 }
 
@@ -322,8 +326,8 @@ extension BookmarksViewController: Themable {
         decorateToolbar(with: theme)
         
         overrideSystemTheme(with: theme)
-        searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
-        
+        searchController?.searchBar.searchTextField.textColor = theme.searchBarTextColor
+                
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor
         

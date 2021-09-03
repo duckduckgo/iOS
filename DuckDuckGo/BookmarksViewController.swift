@@ -37,6 +37,8 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate var onDidAppearAction: () -> Void = {}
     
+    //TODO child folders need to hide title and search
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForNotifications()
@@ -77,8 +79,8 @@ class BookmarksViewController: UITableViewController {
                     return
                 }
                 viewController.dataSource.parentFolder = folder
+                viewController.delegate = delegate
                 navigationController?.pushViewController(viewController, animated: true)
-                //TODO why does bookmark selection not work from child folders?
                 //TODO transition is funky, particuarly the first time
             }
         }

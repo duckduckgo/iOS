@@ -67,9 +67,13 @@ class BookmarksViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
-            showEditBookmarkAlert(for: indexPath)
-        } else if let link = currentDataSource.link(at: indexPath) {
-            selectLink(link)
+            //TODO replace with edit screen
+        } else if let item = currentDataSource.item(at: indexPath)?.item {
+            if let bookmark = item as? Bookmark {
+                select(bookmark: bookmark)
+            } else if let folder = item as? Folder {
+                
+            }
         }
     }
     

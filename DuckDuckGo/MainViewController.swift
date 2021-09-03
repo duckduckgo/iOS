@@ -1449,9 +1449,11 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(link: Link) {
+    func bookmarksDidSelect(bookmark: Bookmark) {
         dismissOmniBar()
-        loadUrl(link.url)
+        if let url = bookmark.url {
+            loadUrl(url)
+        }
     }
     
     func bookmarksUpdated() {

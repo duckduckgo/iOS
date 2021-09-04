@@ -580,7 +580,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yvj-LL-MiR">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="391" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -628,11 +628,11 @@
                                         <rect key="frame" x="0.0" y="1068.3333301544189" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="15" y="0.0" width="373.33333333333331" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -2067,7 +2067,7 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             <outlet property="delegate" destination="fm9-s6-db1" id="AKv-0j-3R7"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="3c4-b7-aPb"/>
+                    <navigationItem key="navigationItem" title="Advanced Settings" id="3c4-b7-aPb"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outletCollection property="labels" destination="A8d-A8-8kc" collectionClass="NSMutableArray" id="G3n-YY-Oej"/>

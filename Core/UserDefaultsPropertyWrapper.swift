@@ -63,8 +63,6 @@ public struct UserDefaultsWrapper<T> {
 
         case showWaitlistNotification = "com.duckduckgo.ios.showWaitlistNotification"
 
-        case autoplayMedia = "com.duckduckgo.app.autoplayMedia"
-
         case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
         case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
         case downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"
@@ -98,6 +96,37 @@ public struct UserDefaultsWrapper<T> {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: key.rawValue)
+        }
+    }
+}
+
+@propertyWrapper
+public struct RawRepresentableUserDefaultsWrapper<T: RawRepresentable> {
+
+    public enum Key: String, CaseIterable {
+
+        case autoplayMedia = "com.duckduckgo.app.autoplayMedia"
+
+    }
+
+    private let key: Key
+    private let defaultValue: T
+
+    public init(key: Key, defaultValue: T) {
+        self.key = key
+        self.defaultValue = defaultValue
+    }
+
+    public var wrappedValue: T {
+        get {
+            if let storedValue = UserDefaults.standard.object(forKey: key.rawValue) as? T.RawValue {
+                return T(rawValue: storedValue) ?? defaultValue
+            }
+
+            return defaultValue
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: key.rawValue)
         }
     }
 }

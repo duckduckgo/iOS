@@ -23,10 +23,29 @@ class AdvancedSettingsViewController: UITableViewController {
 
     @IBOutlet var labels: [UILabel]!
 
+    private var advancedSettings = AdvancedSettings()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let theme = ThemeManager.shared.currentTheme
+        cell.decorate(with: theme)
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = EnumeratedSettingTableViewController<AdvancedSettings.AutoplayMedia>(titleForSetting: { setting in
+            return setting.title
+        }, settingIsSelected: { [weak self] setting in
+            return setting == self?.advancedSettings.autoplayMedia
+        }, settingSelectionHandler: { [weak self] setting in
+            self?.advancedSettings.autoplayMedia = setting
+        })
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }

@@ -21,14 +21,27 @@ import Core
 
 struct AdvancedSettings {
 
-    enum AutoplayMedia: String {
+    enum AutoplayMedia: Int, CaseIterable {
         case audioAndVideo
         case videoOnly
         case audioOnly
         case none
+
+        var title: String {
+            switch self {
+            case .audioAndVideo:
+                return "Audio & Video"
+            case .videoOnly:
+                return "Video Only"
+            case .audioOnly:
+                return "Audio Only"
+            case .none:
+                return "Don't Autoplay Media"
+            }
+        }
     }
 
-    @UserDefaultsWrapper(key: .autoplayMedia, defaultValue: .audioAndVideo)
+    @RawRepresentableUserDefaultsWrapper(key: .autoplayMedia, defaultValue: .audioAndVideo)
     var autoplayMedia: AutoplayMedia
 
 }

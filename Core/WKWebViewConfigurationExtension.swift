@@ -57,9 +57,4 @@ extension WKWebViewConfiguration {
         }
     }
     
-    public func installContentRules(trackerProtection: Bool) {
-        if trackerProtection {
-            self.installContentBlockingRules()
-        }
-    }
 }

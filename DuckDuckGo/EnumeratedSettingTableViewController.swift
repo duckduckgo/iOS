@@ -44,16 +44,15 @@ class EnumeratedSettingTableViewController<Setting: CaseIterable & RawRepresenta
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "Autoplay Media"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
     private func setting(at targetIndex: Int) -> Setting? {
-        for (index, setting) in Setting.allCases.enumerated() {
-            if index == targetIndex { return setting }
-        }
-
-        return nil
+        let index = Setting.allCases.index(Setting.allCases.startIndex, offsetBy: targetIndex)
+        return Setting.allCases[index]
     }
 
     // MARK: - UITableViewDataSource
@@ -66,6 +65,7 @@ class EnumeratedSettingTableViewController<Setting: CaseIterable & RawRepresenta
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
 
         if let setting = setting(at: indexPath.row) {
+            cell.textLabel?.font = UIFont.semiBoldAppFont(ofSize: 16)
             cell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
             cell.textLabel?.text = titleForSetting(setting)
 

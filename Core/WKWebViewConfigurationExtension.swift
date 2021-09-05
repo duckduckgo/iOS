@@ -18,6 +18,7 @@
 //
 
 import WebKit
+import Core
 
 extension WKWebViewConfiguration {
         
@@ -43,6 +44,15 @@ extension WKWebViewConfiguration {
         configuration.allowsPictureInPictureMediaPlayback = true
         configuration.ignoresViewportScaleLimits = true
 
+        let advancedSettings = AdvancedSettings()
+
+        switch advancedSettings.autoplayMedia {
+        case .audioAndVideo: break // Do nothing, all media should autoplay
+        case .audioOnly: configuration.mediaTypesRequiringUserActionForPlayback = .video
+        case .videoOnly: configuration.mediaTypesRequiringUserActionForPlayback = .audio
+        case .none: configuration.mediaTypesRequiringUserActionForPlayback = .all
+        }
+
         return configuration
     }
     
@@ -56,5 +66,5 @@ extension WKWebViewConfiguration {
             addRulesToController(rules: rules.rulesList)
         }
     }
-    
+
 }

@@ -23,18 +23,18 @@ struct AdvancedSettings {
 
     enum AutoplayMedia: Int, CaseIterable {
         case audioAndVideo
-        case videoOnly
         case audioOnly
+        case videoOnly
         case none
 
         var title: String {
             switch self {
             case .audioAndVideo:
                 return "Audio & Video"
-            case .videoOnly:
-                return "Video Only"
             case .audioOnly:
                 return "Audio Only"
+            case .videoOnly:
+                return "Video Only"
             case .none:
                 return "Don't Autoplay Media"
             }

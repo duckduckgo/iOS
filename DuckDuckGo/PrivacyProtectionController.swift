@@ -39,6 +39,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     var errorText: String?
   
     private var storageCache = AppDependencyProvider.shared.storageCache.current
+    private var privacyConfig = PrivacyConfigurationManager.shared.privacyConfig
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +63,9 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showError(withText errorText: String) {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
+        guard let controller = storyboard?.instantiateViewController(identifier: "Error", creator: { coder in
+            PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
+        }) else { return }
         controller.errorText = errorText
         pushViewController(controller, animated: true)
     }
@@ -105,7 +108,7 @@ class PrivacyProtectionController: ThemableNavigationController {
 
         viewControllers.forEach {
             guard let infoDisplaying = $0 as? PrivacyProtectionInfoDisplaying else { return }
-            infoDisplaying.using(siteRating: siteRating, protectionStore: storageCache.protectionStore)
+            infoDisplaying.using(siteRating: siteRating, config: privacyConfig)
         }
     }
 

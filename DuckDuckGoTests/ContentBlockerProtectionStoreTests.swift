@@ -24,7 +24,7 @@ import XCTest
 class ContentBlockerProtectionStoreTests: XCTestCase {
 
     func testWhenCheckingDomainsAreProtected_ThenUsesPersistedUnprotectedDomainList() {
-        let config =
+        let configFile =
         """
         {
             "features": {},
@@ -35,17 +35,23 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-        _ = FileStore().persist(config, forConfiguration: .privacyConfiguration)
-        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedData.etag, PrivacyConfigurationManager.Constants.embeddedConfigETag)
+        _ = FileStore().persist(configFile, forConfiguration: .privacyConfiguration)
+        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedConfigData.etag, PrivacyConfigurationManager.Constants.embeddedConfigETag)
         XCTAssertEqual(PrivacyConfigurationManager.shared.reload(etag: "new etag"), .downloaded)
-        XCTAssertEqual(PrivacyConfigurationManager.shared.fetchedData?.etag, "new etag")
-        let protection = ContentBlockerProtectionUserDefaults()
 
-        XCTAssertFalse(protection.isTempUnprotected(domain: "main1.com"))
-        XCTAssertFalse(protection.isTempUnprotected(domain: "notdomain1.com"))
-        XCTAssertTrue(protection.isTempUnprotected(domain: "domain1.com"))
+        let newConfig = PrivacyConfigurationManager.shared.fetchedConfigData
+        XCTAssertNotNil(newConfig)
 
-        XCTAssertTrue(protection.isTempUnprotected(domain: "www.domain1.com"))
+        if let newConfig = newConfig {
+            XCTAssertEqual(newConfig.etag, "new etag")
+            let config = AppPrivacyConfiguration(data: newConfig.data, identifier: "")
+
+            XCTAssertFalse(config.isTempUnprotected(domain: "main1.com"))
+            XCTAssertFalse(config.isTempUnprotected(domain: "notdomain1.com"))
+            XCTAssertTrue(config.isTempUnprotected(domain: "domain1.com"))
+
+            XCTAssertTrue(config.isTempUnprotected(domain: "www.domain1.com"))
+        }
     }
 
 }

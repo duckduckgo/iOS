@@ -56,10 +56,10 @@ class PrivacyProtectionHeaderConfigurator {
     
     static func configure(cell: PrivacyProtectionHeaderCell,
                           siteRating: SiteRating,
-                          protectionStore: ContentBlockerProtectionStore) {
+                          config: PrivacyConfiguration) {
         
         let grades = siteRating.scores
-        let protecting = protectionStore.isProtected(domain: siteRating.domain)
+        let protecting = config.isProtected(domain: siteRating.domain)
         let grade =  protecting ? grades.enhanced.grade : grades.site.grade
         cell.gradeImage.image = protecting ? gradesOn[grade] : gradesOff[grade]
         

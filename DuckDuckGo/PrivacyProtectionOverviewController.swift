@@ -64,7 +64,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     fileprivate var popRecognizer: InteractivePopRecognizer!
     
     private var siteRating: SiteRating!
-    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
+    private var privacyConfiguration: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +82,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
-            displayInfo.using(siteRating: siteRating, protectionStore: protectionStore)
+            displayInfo.using(siteRating: siteRating, config: privacyConfiguration)
         }
         
         if let unprotectedSitesController = segue.destination as? UnprotectedSitesViewController {
@@ -149,11 +149,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private var isProtecting: Bool {
-        return protectionStore.isProtected(domain: siteRating.domain)
+        return privacyConfiguration.isProtected(domain: siteRating.domain)
     }
     
     private func updateTrackers() {
-        trackersCell.summaryLabel.text = siteRating.networksText(protectionStore: protectionStore)
+        trackersCell.summaryLabel.text = siteRating.networksText(config: privacyConfiguration)
         
         if isProtecting || siteRating.trackersDetected.count == 0 {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
@@ -168,7 +168,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func updateProtectionToggle() {
-        if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+        if privacyConfiguration.isTempUnprotected(domain: siteRating.domain) ||
+            privacyConfiguration.isInExceptionList(domain: siteRating.domain, forFeature: .contentBlocking) {
             privacyProtectionView.backgroundColor = UIColor.ppGray
             privacyProtectionSwitch.isEnabled = false
             privacyProtectionSwitch.isOn = false
@@ -191,10 +192,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
         let isProtected = toggle.isOn
         
         if isProtected {
-            protectionStore.enableProtection(forDomain: domain)
+            privacyConfiguration.userEnabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))
         } else {
-            protectionStore.disableProtection(forDomain: domain)
+            privacyConfiguration.userDisabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
         }
         Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
@@ -215,7 +216,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
                 fatalError("Missing Header cell")
             }
             
-            PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, protectionStore: protectionStore)
+            PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, config: privacyConfiguration)
             cell.backImage.isHidden = true
             
             return cell
@@ -238,7 +239,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case Cells.tempUnprotectedInfo.rawValue:
-            if protectionStore.isTempUnprotected(domain: siteRating.domain) {
+            if privacyConfiguration.isTempUnprotected(domain: siteRating.domain) ||
+                privacyConfiguration.isInExceptionList(domain: siteRating.domain, forFeature: .contentBlocking) {
                 return UITableView.automaticDimension
             } else {
                 return 0
@@ -273,9 +275,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
 extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
     
-    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
         self.siteRating = siteRating
-        self.protectionStore = protectionStore
+        self.privacyConfiguration = config
         update()
     }
     

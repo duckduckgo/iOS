@@ -32,13 +32,14 @@ class PrivacyConfigurationManagerTests: XCTestCase {
         let hash = calculateHash(for: PrivacyConfigurationManager.embeddedUrl)
         XCTAssertEqual(hash, PrivacyConfigurationManager.Constants.embeddedConfigurationSHA,
                        "Error: please update SHA and ETag when changing embedded TDS")
-        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedData.etag,
+        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedConfigData.etag,
                        PrivacyConfigurationManager.Constants.embeddedConfigETag)
     }
 
     func testEmbeddedConfigurationFeaturesAreCorrect() throws {
-        XCTAssertTrue(PrivacyConfigurationManager.shared.embeddedData.config.isEnabled(featureKey: .contentBlocking))
-        XCTAssertTrue(PrivacyConfigurationManager.shared.embeddedData.config.isEnabled(featureKey: .gpc))
+        let embeddedConfig = AppPrivacyConfiguration(data: PrivacyConfigurationManager.shared.embeddedConfigData.data, identifier: "")
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .contentBlocking))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .gpc))
     }
     
     private func calculateHash(for fileURL: URL) -> String {

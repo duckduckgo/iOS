@@ -638,6 +638,7 @@ class MainViewController: UIViewController {
     fileprivate func updateCurrentTab() {
         if let currentTab = currentTab {
             select(tab: currentTab)
+            omniBar.resignFirstResponder()
         } else {
             attachHomeScreen()
         }
@@ -676,7 +677,7 @@ class MainViewController: UIViewController {
     }
     
     private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
+        omniBar.updateSiteRating(siteRating, with: PrivacyConfigurationManager.shared.privacyConfig)
     }
 
     func dismissOmniBar() {

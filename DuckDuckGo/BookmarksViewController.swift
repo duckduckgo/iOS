@@ -179,6 +179,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     @IBAction func onAddFolderPressed(_ sender: Any) {
+        performSegue(withIdentifier: "AddBookmarksFolder", sender: nil)
     }
     
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
@@ -261,6 +262,12 @@ class BookmarksViewController: UITableViewController {
             }
         } else {
             dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let viewController = segue.destination as? AddBookmarksFolderViewController {
+            viewController.hidesBottomBarWhenPushed = true
         }
     }
     

@@ -614,6 +614,9 @@
 		F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
 		F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */; };
+		F4F6DFB226E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB126E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift */; };
+		F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */; };
+		F4F6DFB626E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */; };
 		F4F7F10A25813FE200045D62 /* 01_Fire_really_small.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10725813FE200045D62 /* 01_Fire_really_small.json */; };
 		F4F7F10B25813FE200045D62 /* 02_Water_swirl_really_small.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10825813FE200045D62 /* 02_Water_swirl_really_small.json */; };
 		F4F7F10C25813FE200045D62 /* 03_Airstream_divided_by_four.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */; };
@@ -2075,6 +2078,9 @@
 		F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
 		F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCutOutView.swift; sourceTree = "<group>"; };
+		F4F6DFB126E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookmarksFolderViewController.swift; sourceTree = "<group>"; };
+		F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFolderCell.swift; sourceTree = "<group>"; };
+		F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFoldersTableViewController.swift; sourceTree = "<group>"; };
 		F4F7F10725813FE200045D62 /* 01_Fire_really_small.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 01_Fire_really_small.json; sourceTree = "<group>"; };
 		F4F7F10825813FE200045D62 /* 02_Water_swirl_really_small.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 02_Water_swirl_really_small.json; sourceTree = "<group>"; };
 		F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 03_Airstream_divided_by_four.json; sourceTree = "<group>"; };
@@ -3528,10 +3534,13 @@
 			children = (
 				F1D796EF1E7B07610019D451 /* BookmarkCell.swift */,
 				F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */,
+				F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */,
 				F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */,
 				F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */,
 				F103076A1E800DC30059FEC7 /* BookmarksManager.swift */,
 				F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */,
+				F4F6DFB126E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift */,
+				F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */,
 				F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */,
 				F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */,
 				F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */,
@@ -4766,6 +4775,7 @@
 				8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */,
 				83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
+				F4F6DFB226E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift in Sources */,
 				8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */,
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
@@ -4816,6 +4826,7 @@
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
 				98999D5922FDA41500CBBE1B /* BasicAuthenticationAlert.swift in Sources */,
 				98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */,
+				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
@@ -4941,6 +4952,7 @@
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
 				98D98A8F25ED952F00D8E3DF /* BrowsingMenuButton.swift in Sources */,
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,
+				F4F6DFB626E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift in Sources */,
 				8586A11024CCCD040049720E /* TabsBarViewController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,

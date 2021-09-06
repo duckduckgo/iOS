@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -43,7 +44,7 @@
         <!--Bookmarks-->
         <scene sceneID="rqJ-jV-QgT">
             <objects>
-                <tableViewController id="aqL-Wl-TTD" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="BookmarksViewController" id="aqL-Wl-TTD" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V5q-dM-Log">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -166,21 +167,138 @@
                     <connections>
                         <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
                         <outlet property="editButton" destination="pwj-Ie-VbJ" id="XgF-gG-JUa"/>
+                        <segue destination="gvC-OM-VDO" kind="show" identifier="AddBookmarksFolder" id="Sc3-6b-3AP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2049" y="805"/>
         </scene>
+        <!--Add Folder-->
+        <scene sceneID="CJo-jI-HMh">
+            <objects>
+                <viewController id="gvC-OM-VDO" customClass="AddBookmarksFolderViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nHt-Cp-jg8"/>
+                        <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZKl-y5-8OG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63r-nO-tSp">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <connections>
+                                    <segue destination="o1q-bZ-7v3" kind="embed" id="zyO-WQ-z92"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="63r-nO-tSp" secondAttribute="bottom" id="7uU-MI-iq3"/>
+                            <constraint firstItem="63r-nO-tSp" firstAttribute="leading" secondItem="ZKl-y5-8OG" secondAttribute="leading" id="8qg-Gp-0cE"/>
+                            <constraint firstAttribute="trailing" secondItem="63r-nO-tSp" secondAttribute="trailing" id="V57-G6-1HK"/>
+                            <constraint firstItem="63r-nO-tSp" firstAttribute="top" secondItem="nHt-Cp-jg8" secondAttribute="bottom" id="tF9-jy-3gI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Folder" id="qaZ-4Z-o70" customClass="AddBoo">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="joc-V8-T3B">
+                            <connections>
+                                <action selector="onDonePressed:" destination="gvC-OM-VDO" id="Nqp-wg-b2j"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bjy-HW-Gvk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2049" y="1623"/>
+        </scene>
+        <!--Bookmark Folders-->
+        <scene sceneID="gmt-6C-Bi5">
+            <objects>
+                <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
+                        <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditBookmarkFolderCell" id="OPL-sH-Akf" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="49.5" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OPL-sH-Akf" id="oMK-LK-l0a">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="8R7-gf-yWn">
+                                            <rect key="frame" x="16" y="11" width="343" height="22"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="r23-2J-lpn"/>
+                                                        <constraint firstAttribute="height" constant="22" id="ub2-8R-Fqz"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2O-E5-pyF">
+                                                    <rect key="frame" x="36" y="0.0" width="276.5" height="22"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="axT-SQ-QSz" userLabel="TickImage">
+                                                    <rect key="frame" x="324.5" y="2" width="18.5" height="18.5"/>
+                                                    <color key="tintColor" name="TableCellAccessoryColor"/>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="8R7-gf-yWn" firstAttribute="leading" secondItem="oMK-LK-l0a" secondAttribute="leadingMargin" id="7fS-iW-BEh"/>
+                                        <constraint firstItem="8R7-gf-yWn" firstAttribute="centerY" secondItem="oMK-LK-l0a" secondAttribute="centerY" id="G3C-pv-Co8"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="8R7-gf-yWn" secondAttribute="trailing" id="gns-zm-1ez"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="disclosureImage" destination="axT-SQ-QSz" id="qL8-gh-dWh"/>
+                                    <outlet property="leadingPaddingConstraint" destination="7fS-iW-BEh" id="rep-g3-pX5"/>
+                                    <outlet property="title" destination="K2O-E5-pyF" id="FlO-Vd-BTw"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="o1q-bZ-7v3" id="K8a-wW-1Y4"/>
+                            <outlet property="delegate" destination="o1q-bZ-7v3" id="TPn-6O-FBA"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wPV-8g-VdM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2758" y="1611"/>
+        </scene>
     </scenes>
     <resources>
         <image name="DisclosureIndicator" width="8" height="13"/>
+        <image name="Folder" width="22" height="20"/>
         <image name="GlobeSmall" width="24" height="24"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <namedColor name="BookmarksTableViewBackgroundColor">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="TableCellAccessoryColor">
             <color red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="TableCellAccessoryTextColor">
             <color red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

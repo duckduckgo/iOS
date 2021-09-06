@@ -30,8 +30,6 @@ class BookmarksViewController: UITableViewController {
     private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
     
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
-
     fileprivate var dataSource = DefaultBookmarksDataSource()
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     

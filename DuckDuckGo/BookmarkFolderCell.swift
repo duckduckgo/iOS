@@ -17,4 +17,37 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
+import Core
+
+class BookmarkFolderCell: UITableViewCell {
+
+    static let reuseIdentifier = "BookmarkFolderCell"
+
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var tickImage: UIImageView!
+    
+    @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
+
+    var folder: Folder? {
+        didSet {
+            guard let folder = folder else { return }
+            title.text = folder.title
+        }
+    }
+    
+    var depth: Int = 0 {
+        didSet {
+            let paddingDepth = min(depth, 10)
+            leadingPaddingConstraint.constant = CGFloat(paddingDepth) * 16.0
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            tickImage.isHidden = !isSelected
+        }
+    }
+    
+}
+

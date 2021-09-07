@@ -47,7 +47,7 @@ public class BookmarksCoreDataStorage {
         return folder
     }
     
-    private lazy var topLevelBookmarksFolder: Folder = {
+    public lazy var topLevelBookmarksFolder: Folder = {
         getTopLevelFolder(isFavorite: false)
     }()
     
@@ -55,13 +55,25 @@ public class BookmarksCoreDataStorage {
         getTopLevelFolder(isFavorite: true)
     }()
 
+    //TODO will need to keep these in sync?
     public lazy var topLevelBookmarksItems: [BookmarkItem] = {
         topLevelBookmarksFolder.children?.array as? [BookmarkItem] ?? []
     }()
     
-    public lazy var topLevelFavoritesItems: [BookmarkItem] = {
+    private lazy var topLevelFavoritesItems: [BookmarkItem] = {
         topLevelFavoritesFolder.children?.array as? [BookmarkItem] ?? []
     }()
+    
+    public func favorites() -> [Bookmark] {
+        let favorites: [Bookmark] = topLevelFavoritesItems.map {
+            if let fav = $0 as? Bookmark {
+                return fav
+            } else {
+                fatalError("Favourites shouldn't contain folders")
+            }
+        }
+        return favorites
+    }
         
     public init() { }
     

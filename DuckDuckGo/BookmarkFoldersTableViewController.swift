@@ -21,11 +21,10 @@ import UIKit
 
 class BookmarkFoldersViewController: UITableViewController {
 
-    private var dataSource = DefaultBookmarksDataSource()
-    //TODO I think this should be a new data source
+    private var dataSource = BookmarkFoldersDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.dataSource = dataSource
+        tableView.dataSource = dataSource
     }
 }

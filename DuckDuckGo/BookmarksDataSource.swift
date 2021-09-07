@@ -22,6 +22,7 @@ import Core
 
 class BookmarksDataSource: NSObject, UITableViewDataSource {
     
+    //TODO this name doesn't really make sense anymore
     typealias VisibleBookmarkItem = (item: BookmarkItem, depth: Int)
     
     func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
@@ -63,10 +64,6 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         return cell
     }
     
-    //TOdo we need to a representation for folders. I guess just the image is different?
-    //oh they also have the arrow and number of items on the right.
-    //probably worthy or a new cell type?
-    //nah
     fileprivate func createBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
@@ -81,6 +78,18 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         cell.title.textColor = theme.tableCellTextColor
         //TODO folder tint
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        
+        return cell
+    }
+    
+    fileprivate func createFolderCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) as? BookmarkFolderCell else {
+            fatalError("Failed to dequeue \(BookmarkFolderCell.reuseIdentifier) as BookmarkFolderCell")
+        }
+        
+        let item = item(at: indexPath)
+        cell.folder = item?.item as? Folder
+        cell.depth = item?.depth ?? 0
         
         return cell
     }
@@ -215,6 +224,60 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
         }
     }
     
+}
+
+class BookmarkFoldersDataSource: BookmarksDataSource {
+    
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    
+    override var includeFavorites: Bool {
+        return false
+    }
+    
+    private lazy var visibleBookmarkItems: [VisibleBookmarkItem] = {
+        let folder = parentFolder ?? bookmarksManager.topLevelBookmarksFolder
+        return visibleFolders(for: folder, depthOfFolder: 0)
+    }()
+    
+    private func visibleFolders(for folder: Folder, depthOfFolder: Int) -> [VisibleBookmarkItem] {
+        let array = folder.children?.array as? [BookmarkItem] ?? []
+        let folders = array.compactMap { $0 as? Folder }
+        
+        var visibleItems = [VisibleBookmarkItem(folder, depthOfFolder)]
+        
+        visibleItems.append(contentsOf: folders.map { folder -> [VisibleBookmarkItem] in
+            return visibleFolders(for: folder, depthOfFolder: depthOfFolder + 1)
+        }.flatMap { $0 })
+        
+        return visibleItems
+    }
+
+    override var isEmpty: Bool {
+        return visibleBookmarkItems.count == 0
+    }
+    
+    override func item(at indexPath: IndexPath) -> VisibleBookmarkItem? {
+        if visibleBookmarkItems.count <= indexPath.row {
+            return nil
+        }
+        return visibleBookmarkItems[indexPath.row]
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return visibleBookmarkItems.count
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if item(at: indexPath) != nil {
+            return createFolderCell(tableView, forIndexPath: indexPath)
+        } else {
+            return createEmptyCell(tableView, forIndexPath: indexPath)
+        }
+    }
 }
 
 class SearchBookmarksDataSource: BookmarksDataSource {

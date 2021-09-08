@@ -76,7 +76,7 @@ class BookmarksViewController: UITableViewController {
                 guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController") as? BookmarksViewController else {
                     return
                 }
-                viewController.dataSource.parentFolder = folder
+                viewController.dataSource.sections = [.bookmarksShallow(parentFolder: folder)]
                 viewController.delegate = delegate
                 navigationController?.pushViewController(viewController, animated: true)
             }
@@ -109,7 +109,7 @@ class BookmarksViewController: UITableViewController {
     }
     
     private func configureSearchIfNeeded() {
-        guard dataSource.parentFolder == nil else {
+        guard dataSource.showSearch else {
             // Don't show search for sub folders
             return
         }
@@ -162,8 +162,8 @@ class BookmarksViewController: UITableViewController {
         self.navigationController?.setToolbarHidden(false, animated: true)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems?.insert(flexibleSpace, at: 1)
-        if let folder = dataSource.parentFolder {
-            title = folder.title
+        if let dataSourceTitle = dataSource.navigationTitle() {
+            title = dataSourceTitle
         }
         refreshEditButton()
     }

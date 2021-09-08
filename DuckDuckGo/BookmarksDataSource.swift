@@ -74,6 +74,18 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return dataSources[indexPath.section].item(at: indexPath.row) != nil
+    }
+
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return !dataSources[indexPath.section].isEmpty()
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        dataSources[indexPath.section].commit(tableView, editingStyle: editingStyle, forRowAt: indexPath.row, section: indexPath.section)
+    }
 }
 
 //TODO how would search fit into this?
@@ -98,17 +110,23 @@ protocol BookmarksSectionDataSource {
     
     typealias PresentableBookmarkItem = (item: BookmarkItem, depth: Int)
     
-    func item(at index: Int) -> PresentableBookmarkItem?
+    func title() -> String?
     
     func isEmpty() -> Bool
     
     func numberOfRows() -> Int
     
+    func item(at index: Int) -> PresentableBookmarkItem?
+    
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell
     
     func createCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell
     
-    func title() -> String?
+    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool
+
+    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool
+    
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int)
     
 }
 
@@ -152,6 +170,17 @@ extension BookmarksSectionDataSource {
     func title() -> String? {
         return nil
     }
+    
+    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return false
+    }
+
+    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return false
+    }
+    
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
+    }
 }
 
 class FavoritesSectionDataSource: BookmarksSectionDataSource {
@@ -171,7 +200,6 @@ class FavoritesSectionDataSource: BookmarksSectionDataSource {
         return max(1, bookmarksManager.favoritesCount)
     }
     
-    
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
         let cell = (self as BookmarksSectionDataSource).createEmptyCell(tableView, forIndex: index)
         
@@ -184,61 +212,31 @@ class FavoritesSectionDataSource: BookmarksSectionDataSource {
         return UserText.sectionTitleFavorites
     }
     
-    //TODO not sure how we'll handle any of this
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return item(at: indexPath) != nil
-//    }
-//
-//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//        return !isEmpty
-//    }
-//
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        guard editingStyle == .delete else { return }
-//        var reload = false
-//
-//        guard let item = item(at: indexPath)?.item else { return }
-//        bookmarksManager.delete(item: item)
-//        if indexPath.section == favoritesSection {
-//            reload = bookmarksManager.favoritesCount == 0
-//        } else {
-//            reload = bookmarksManager.topLevelBookmarkItemsCount == 0
-//        }
-//
-//        if reload {
-//            // because we're replacing this cell with a place holder that says "no whatever yet"
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//        } else {
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//        }
-//    }
-//
-//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//
-//        // TODO lets do edit screen first cos moving is gonna be interesting
-//
-//
-//        var reload = false
-//        if sourceIndexPath.section == 0 && destinationIndexPath.section == 0 {
-//            //bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
-//        } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
-//            //bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
-//            reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.topLevelBookmarkItemsCount == 1
-//        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
-//            //bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
-//        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
-//            guard item(at: sourceIndexPath)?.item is Bookmark else {
-//                // Folders aren't allowed in favourites
-//                return
-//            }
-//            //bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
-//            reload = bookmarksManager.topLevelBookmarkItemsCount == 0 || bookmarksManager.favoritesCount == 1
-//        }
-//
-//        if reload {
-//            tableView.reloadData()
-//        }
-//    }
+    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return item(at: index) != nil
+    }
+
+    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return !isEmpty()
+    }
+
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
+        
+        guard editingStyle == .delete else { return }
+
+        guard let item = item(at: index)?.item else { return }
+        //TODO actual deletion
+        bookmarksManager.delete(item: item)
+        
+        let indexPath = IndexPath(row: index, section: section)
+        if bookmarksManager.favoritesCount == 0 {
+            // because we're replacing this cell with a place holder that says "no whatever yet"
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+
 }
 
 class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
@@ -246,7 +244,7 @@ class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private let parentFolder: Folder?
     
-    private lazy var PresentableBookmarkItems: [PresentableBookmarkItem] = {
+    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
         if let folder = parentFolder {
             let array = folder.children?.array as? [BookmarkItem] ?? []
             return array.map {
@@ -268,20 +266,19 @@ class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
     }
     
     func item(at index: Int) -> PresentableBookmarkItem? {
-        if PresentableBookmarkItems.count <= index {
+        if presentableBookmarkItems.count <= index {
             return nil
         }
-        return PresentableBookmarkItems[index]
+        return presentableBookmarkItems[index]
     }
     
     func isEmpty() -> Bool {
-        PresentableBookmarkItems.count == 0
+        presentableBookmarkItems.count == 0
     }
     
     func numberOfRows() -> Int {
-        return max(1, PresentableBookmarkItems.count)
+        return max(1, presentableBookmarkItems.count)
     }
-    
     
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
         let cell = (self as BookmarksSectionDataSource).createEmptyCell(tableView, forIndex: index)
@@ -291,6 +288,32 @@ class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
 
     func title() -> String? {
         return UserText.sectionTitleBookmarks
+    }
+    
+    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return item(at: index) != nil
+    }
+
+    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return !isEmpty()
+    }
+    
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
+        guard editingStyle == .delete else { return }
+
+        guard let item = item(at: index)?.item else { return }
+        //TODO actual deletion
+        //gonna have to refresh presentablebookmarkitems too
+        bookmarksManager.delete(item: item)
+
+        let indexPath = IndexPath(row: index, section: section)
+        //TODO this needs to take into account variable parent folder
+        if bookmarksManager.topLevelBookmarkItemsCount == 0 {
+            // because we're replacing this cell with a place holder that says "no whatever yet"
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 
 }
@@ -372,62 +395,6 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
             $0.self is BookmarksShallowSectionDataSource
         } as? BookmarksShallowSectionDataSource
         return bookmarksDataSource?.navigationTitle()
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return item(at: indexPath) != nil
-    }
-
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return !isEmpty
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        var reload = false
-        
-        //TODO
-//        guard let item = item(at: indexPath)?.item else { return }
-//        bookmarksManager.delete(item: item)
-//        if indexPath.section == favoritesSection {
-//            reload = bookmarksManager.favoritesCount == 0
-//        } else {
-//            reload = bookmarksManager.topLevelBookmarkItemsCount == 0
-//        }
-//
-//        if reload {
-//            // because we're replacing this cell with a place holder that says "no whatever yet"
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//        } else {
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//        }
-    }
-
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
-        // TODO lets do edit screen first cos moving is gonna be interesting
-
-        
-        var reload = false
-        if sourceIndexPath.section == 0 && destinationIndexPath.section == 0 {
-            //bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
-        } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
-            //bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
-            reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.topLevelBookmarkItemsCount == 1
-        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
-            //bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
-        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
-            guard item(at: sourceIndexPath)?.item is Bookmark else {
-                // Folders aren't allowed in favourites
-                return
-            }
-            //bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
-            reload = bookmarksManager.topLevelBookmarkItemsCount == 0 || bookmarksManager.favoritesCount == 1
-        }
-
-        if reload {
-            tableView.reloadData()
-        }
     }
     
 }

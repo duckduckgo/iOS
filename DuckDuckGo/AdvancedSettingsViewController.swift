@@ -23,10 +23,14 @@ class AdvancedSettingsViewController: UITableViewController {
 
     @IBOutlet var labels: [UILabel]!
 
+    @IBOutlet var autoplayMediaSwitch: UISwitch!
+
     private var advancedSettings = AdvancedSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        autoplayMediaSwitch.isOn = advancedSettings.autoplayMedia
 
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -36,16 +40,8 @@ class AdvancedSettingsViewController: UITableViewController {
         cell.decorate(with: theme)
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = EnumeratedSettingTableViewController<AdvancedSettings.AutoplayMedia>(titleForSetting: { setting in
-            return setting.title
-        }, settingIsSelected: { [weak self] setting in
-            return setting == self?.advancedSettings.autoplayMedia
-        }, settingSelectionHandler: { [weak self] setting in
-            self?.advancedSettings.autoplayMedia = setting
-        })
-
-        navigationController?.pushViewController(viewController, animated: true)
+    @IBAction func onAutoplayMediaSettingChanged(_ sender: Any) {
+        advancedSettings.autoplayMedia = autoplayMediaSwitch.isOn
     }
 
 }

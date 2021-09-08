@@ -43,15 +43,7 @@ extension WKWebViewConfiguration {
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsPictureInPictureMediaPlayback = true
         configuration.ignoresViewportScaleLimits = true
-
-        let advancedSettings = AdvancedSettings()
-
-        switch advancedSettings.autoplayMedia {
-        case .audioAndVideo: break // Do nothing, all media should autoplay
-        case .audioOnly: configuration.mediaTypesRequiringUserActionForPlayback = .video
-        case .videoOnly: configuration.mediaTypesRequiringUserActionForPlayback = .audio
-        case .none: configuration.mediaTypesRequiringUserActionForPlayback = .all
-        }
+        configuration.mediaTypesRequiringUserActionForPlayback = AdvancedSettings().autoplayMedia ? [] : .all
 
         return configuration
     }

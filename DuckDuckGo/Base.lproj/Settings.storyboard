@@ -2048,14 +2048,32 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Autoplay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8d-A8-8kc">
-                                                    <rect key="frame" x="20" y="13" width="374" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autoplay Media" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qu1-Tg-D0Q">
+                                                    <rect key="frame" x="20" y="10" width="305" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="1JR-Qd-UqS"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.99999064209999999" green="0.9999936223" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JMn-hd-kNE">
+                                                    <rect key="frame" x="345" y="6.6666666666666679" width="51" height="31.000000000000004"/>
+                                                    <connections>
+                                                        <action selector="onAutoplayMediaSettingChanged:" destination="fm9-s6-db1" eventType="valueChanged" id="xWs-B8-44R"/>
+                                                        <action selector="onDoNotSellValueChanged:" destination="fV3-86-QQj" eventType="valueChanged" id="Mqf-yB-o1J"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="qu1-Tg-D0Q" secondAttribute="bottom" constant="10" id="OvM-bd-Oz6"/>
+                                                <constraint firstItem="qu1-Tg-D0Q" firstAttribute="top" secondItem="X44-J0-hef" secondAttribute="top" constant="10" id="a2P-7F-FpK"/>
+                                                <constraint firstItem="qu1-Tg-D0Q" firstAttribute="centerY" secondItem="X44-J0-hef" secondAttribute="centerY" id="h2M-ME-G2J"/>
+                                                <constraint firstItem="JMn-hd-kNE" firstAttribute="leading" secondItem="qu1-Tg-D0Q" secondAttribute="trailing" constant="20" id="jK4-Lw-a9L"/>
+                                                <constraint firstItem="qu1-Tg-D0Q" firstAttribute="leading" secondItem="X44-J0-hef" secondAttribute="leading" constant="20" symbolic="YES" id="vg3-LR-aup"/>
+                                                <constraint firstItem="JMn-hd-kNE" firstAttribute="centerY" secondItem="qu1-Tg-D0Q" secondAttribute="centerY" id="xKl-lm-NKS"/>
+                                                <constraint firstAttribute="trailing" secondItem="JMn-hd-kNE" secondAttribute="trailing" constant="20" symbolic="YES" id="yar-t8-yHV"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
@@ -2070,7 +2088,8 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                     <navigationItem key="navigationItem" title="Advanced Settings" id="3c4-b7-aPb"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outletCollection property="labels" destination="A8d-A8-8kc" collectionClass="NSMutableArray" id="G3n-YY-Oej"/>
+                        <outlet property="autoplayMediaSwitch" destination="JMn-hd-kNE" id="cQp-i3-AVc"/>
+                        <outletCollection property="labels" destination="qu1-Tg-D0Q" collectionClass="NSMutableArray" id="5z2-b8-Tuf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nBI-Es-rgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

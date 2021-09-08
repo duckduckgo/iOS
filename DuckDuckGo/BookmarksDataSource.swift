@@ -27,7 +27,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     
     fileprivate var dataSources: [BookmarksSectionDataSource] = []
     
-    var sections: [BookmarksSection] = [] {
+    fileprivate var sections: [BookmarksSection] = [] {
         didSet {
             dataSources = sections.map { $0.dataSource! }
         }
@@ -74,40 +74,25 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         }
     }
     
-    fileprivate func createFolderCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) as? BookmarkFolderCell else {
-            fatalError("Failed to dequeue \(BookmarkFolderCell.reuseIdentifier) as BookmarkFolderCell")
-        }
-        
-        let item = item(at: indexPath)
-        cell.folder = item?.item as? Folder
-        cell.depth = item?.depth ?? 0
-        
-        return cell
-    }
 }
 
 //TODO how would search fit into this?
 enum BookmarksSection {
     case favourites
     case bookmarksShallow(parentFolder: Folder?)
-    case folders(parentFolder: Folder)
+    case folders(parentFolder: Folder?)
     
     var dataSource: BookmarksSectionDataSource? {
         switch self {
         case .favourites:
             return FavoritesSectionDataSource()
-        case .bookmarksShallow(parentFolder: let parentFolder):
+        case .bookmarksShallow(let parentFolder):
             return BookmarksShallowSectionDataSource(parentFolder: parentFolder)
-        case .folders(parentFolder: let parentFolder):
-            return nil//TODO
+        case .folders(let parentFolder):
+            return BookmarkFoldersSectionDataSource(parentFolder: parentFolder)
         }
     }
 }
-
-//TODO define protocol for a sectiomn data source?
-//yeah, and then that can exist on the enum
-//not sure how to manage them tho, since enums can't have stored properties :(
 
 protocol BookmarksSectionDataSource {
     
@@ -300,9 +285,7 @@ class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
     
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
         let cell = (self as BookmarksSectionDataSource).createEmptyCell(tableView, forIndex: index)
-        
         cell.label.text =  UserText.emptyBookmarks
-        
         return cell
     }
 
@@ -312,16 +295,72 @@ class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
 
 }
 
+class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
+
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    private let parentFolder: Folder?
+
+    init(parentFolder: Folder?) {
+        self.parentFolder = parentFolder
+    }
+
+    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
+        let folder = parentFolder ?? bookmarksManager.topLevelBookmarksFolder
+        return visibleFolders(for: folder, depthOfFolder: 0)
+    }()
+    
+    func item(at index: Int) -> PresentableBookmarkItem? {
+        if presentableBookmarkItems.count <= index {
+            return nil
+        }
+        return presentableBookmarkItems[index]
+    }
+    
+    func isEmpty() -> Bool {
+        presentableBookmarkItems.count == 0
+    }
+    
+    func numberOfRows() -> Int {
+        return presentableBookmarkItems.count
+    }
+    
+    func createCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) as? BookmarkFolderCell else {
+            fatalError("Failed to dequeue \(BookmarkFolderCell.reuseIdentifier) as BookmarkFolderCell")
+        }
+        
+        let item = item(at: index)
+        cell.folder = item?.item as? Folder
+        cell.depth = item?.depth ?? 0
+        
+        return cell
+    }
+    
+    private func visibleFolders(for folder: Folder, depthOfFolder: Int) -> [PresentableBookmarkItem] {
+        let array = folder.children?.array as? [BookmarkItem] ?? []
+        let folders = array.compactMap { $0 as? Folder }
+
+        var visibleItems = [PresentableBookmarkItem(folder, depthOfFolder)]
+
+        visibleItems.append(contentsOf: folders.map { folder -> [PresentableBookmarkItem] in
+            return visibleFolders(for: folder, depthOfFolder: depthOfFolder + 1)
+        }.flatMap { $0 })
+
+        return visibleItems
+    }
+}
+
 class DefaultBookmarksDataSource: BookmarksDataSource {
 
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
-    //var sections: [BookmarksSection] =
-      //  [.favourites, .bookmarksShallow(parentFolder: nil)]
-    //TODO better way to do this? Maybe BookmarksDataSource init should just always take the sections.
-    override init() {
+    init(parentFolder: Folder? = nil) {
         super.init()
-        sections = [.favourites, .bookmarksShallow(parentFolder: nil)]
+        if parentFolder != nil {
+            self.sections = [.bookmarksShallow(parentFolder: parentFolder)]
+        } else {
+            self.sections = [.favourites, .bookmarksShallow(parentFolder: nil)]
+        }
     }
     
     override var showSearch: Bool {
@@ -393,59 +432,14 @@ class DefaultBookmarksDataSource: BookmarksDataSource {
     
 }
 
-//class BookmarkFoldersDataSource: BookmarksDataSource {
-//
-//    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-//
-//    override var includeFavorites: Bool {
-//        return false
-//    }
-//
-//    private lazy var PresentableBookmarkItems: [PresentableBookmarkItem] = {
-//        let folder = parentFolder ?? bookmarksManager.topLevelBookmarksFolder
-//        return visibleFolders(for: folder, depthOfFolder: 0)
-//    }()
-//
-//    private func visibleFolders(for folder: Folder, depthOfFolder: Int) -> [PresentableBookmarkItem] {
-//        let array = folder.children?.array as? [BookmarkItem] ?? []
-//        let folders = array.compactMap { $0 as? Folder }
-//
-//        var visibleItems = [PresentableBookmarkItem(folder, depthOfFolder)]
-//
-//        visibleItems.append(contentsOf: folders.map { folder -> [PresentableBookmarkItem] in
-//            return visibleFolders(for: folder, depthOfFolder: depthOfFolder + 1)
-//        }.flatMap { $0 })
-//
-//        return visibleItems
-//    }
-//
-//    override var isEmpty: Bool {
-//        return PresentableBookmarkItems.count == 0
-//    }
-//
-//    override func item(at indexPath: IndexPath) -> PresentableBookmarkItem? {
-//        if PresentableBookmarkItems.count <= indexPath.row {
-//            return nil
-//        }
-//        return PresentableBookmarkItems[indexPath.row]
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return PresentableBookmarkItems.count
-//    }
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if item(at: indexPath) != nil {
-//            return createFolderCell(tableView, forIndexPath: indexPath)
-//        } else {
-//            return createEmptyCell(tableView, forIndexPath: indexPath)
-//        }
-//    }
-//}
+class BookmarkFoldersDataSource: BookmarksDataSource {
+
+    init(parentFolder: Folder? = nil) {
+        super.init()
+        self.sections = [.folders(parentFolder: parentFolder)]
+    }
+
+}
 
 class SearchBookmarksDataSource: BookmarksDataSource {
     

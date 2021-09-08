@@ -76,7 +76,7 @@ class BookmarksViewController: UITableViewController {
                 guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController") as? BookmarksViewController else {
                     return
                 }
-                viewController.dataSource.sections = [.bookmarksShallow(parentFolder: folder)]
+                viewController.dataSource = DefaultBookmarksDataSource(parentFolder: folder)
                 viewController.delegate = delegate
                 navigationController?.pushViewController(viewController, animated: true)
             }

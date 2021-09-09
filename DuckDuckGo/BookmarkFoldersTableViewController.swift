@@ -18,13 +18,33 @@
 //
 
 import UIKit
+import Core
 
 class BookmarkFoldersViewController: UITableViewController {
 
-    private var dataSource = BookmarkFoldersDataSource()
+    private var dataSource = BookmarksFolderDetailsDataSource()
+    
+    var existingFolder: Folder? {
+        didSet {
+            dataSource = BookmarksFolderDetailsDataSource(existingFolder: existingFolder)
+            tableView.dataSource = dataSource
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dataSource.select(tableView, indexPath: indexPath)
+    }
 }
+
+// TODO NEXT UP
+/*
+ can either do rest of cell styling or the other elements of this page
+
+ Need to at least do the title colour
+ let's do the add folder title cell
+ */

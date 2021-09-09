@@ -74,7 +74,7 @@ class TrackerResolver {
             return nil
         }
 
-        return DetectedTracker(url: trackerUrlString, knownTracker: tracker, entity: entity, blocked: blocked)
+        return DetectedTracker(url: trackerUrlString, knownTracker: tracker, entity: entity, blocked: blocked, pageUrl: pageUrlString)
     }
 
     enum RuleAction {

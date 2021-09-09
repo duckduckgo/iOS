@@ -72,6 +72,7 @@ public class SurrogatesUserScript: NSObject, UserScript {
         static let networkName = "networkName"
         static let url = "url"
         static let isSurrogate = "isSurrogate"
+        static let pageUrl = "pageUrl"
     }
 
     private let configurationSource: SurrogatesUserScriptConfigSource
@@ -129,8 +130,9 @@ public class SurrogatesUserScript: NSObject, UserScript {
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
+        guard let pageUrlStr = dict[TrackerDetectedKey.pageUrl] as? String else { return }
 
-        let tracker = trackerFromUrl(urlString.trimWhitespace(), blocked)
+        let tracker = trackerFromUrl(urlString.trimWhitespace(), pageUrlString: pageUrlStr, blocked)
 
         if let isSurrogate = dict[TrackerDetectedKey.isSurrogate] as? Bool, isSurrogate, let host = URL(string: urlString)?.host {
             delegate.surrogatesUserScript(self, detectedTracker: tracker, withSurrogate: host)
@@ -139,10 +141,10 @@ public class SurrogatesUserScript: NSObject, UserScript {
         }
     }
             
-    private func trackerFromUrl(_ urlString: String, _ blocked: Bool) -> DetectedTracker {
+    private func trackerFromUrl(_ urlString: String, pageUrlString: String, _ blocked: Bool) -> DetectedTracker {
         let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData
         let knownTracker = currentTrackerData?.findTracker(forUrl: urlString)
         let entity = currentTrackerData?.findEntity(byName: knownTracker?.owner?.name ?? "")
-        return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked)
+        return DetectedTracker(url: urlString, knownTracker: knownTracker, entity: entity, blocked: blocked, pageUrl: pageUrlString)
     }
 }

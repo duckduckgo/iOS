@@ -108,7 +108,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
         let resourceType = (dict[ContentBlockerKey.resourceType] as? String) ?? "unknown"
-        guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
+        guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
         
         guard let currentTrackerData = configurationSource.trackerData else {
             return

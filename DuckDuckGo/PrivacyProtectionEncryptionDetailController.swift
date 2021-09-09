@@ -133,7 +133,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
 extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
         self.siteRating = siteRating
     }
 

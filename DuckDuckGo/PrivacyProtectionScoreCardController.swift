@@ -31,7 +31,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var isMajorNetworkCell: PrivacyProtectionScoreCardCell!
 
     private var siteRating: SiteRating!
-    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
+    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
 
     override func viewDidLoad() {
         Pixel.fire(pixel: .privacyDashboardScorecard)
@@ -73,13 +73,13 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     }
 
     private func updateNetworksCell() {
-        let success = siteRating.networksSuccess(protectionStore: protectionStore)
-        networksCell.update(message: siteRating.networksText(protectionStore: protectionStore), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.networksSuccess(config: privacyConfig)
+        networksCell.update(message: siteRating.networksText(config: privacyConfig), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updateMajorNetworksCell() {
-        let success = siteRating.majorNetworksSuccess(protectionStore: protectionStore)
-        majorNetworksCell.update(message: siteRating.majorNetworksText(protectionStore: protectionStore), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.majorNetworksSuccess(config: privacyConfig)
+        majorNetworksCell.update(message: siteRating.majorNetworksText(config: privacyConfig), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updatePrivacyPractices() {
@@ -91,7 +91,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         let gradeImages = siteRating.siteGradeImages()
         privacyGradeCell.iconImage.image = gradeImages.from
         enhancedGradeCell.iconImage.image = gradeImages.to
-        enhancedGradeCell.isHidden = !siteRating.protecting(protectionStore) || gradeImages.from == gradeImages.to
+        enhancedGradeCell.isHidden = !siteRating.protecting(privacyConfig) || gradeImages.from == gradeImages.to
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -103,7 +103,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
             fatalError("Missing Header cell")
         }
         
-        PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, protectionStore: protectionStore)
+        PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, config: privacyConfig)
         cell.disclosureImage.isHidden = true
         cell.backImage.isHidden = !AppWidthObserver.shared.isLargeWidth
         
@@ -113,9 +113,9 @@ class PrivacyProtectionScoreCardController: UITableViewController {
 
 extension PrivacyProtectionScoreCardController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
         self.siteRating = siteRating
-        self.protectionStore = protectionStore
+        self.privacyConfig = config
         update()
     }
 

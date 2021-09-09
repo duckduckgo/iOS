@@ -230,7 +230,7 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules?.etag)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
         
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.trackerData?.etag ?? "") + (mockSource.tempListEtag ?? "\"\""))
+        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.trackerData?.etag ?? "") + mockSource.tempListEtag)
         
     }
     
@@ -259,7 +259,7 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
         
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + (mockSource.tempListEtag ?? "\"\""))
+        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + mockSource.tempListEtag)
     }
     
     func test_ValidTDS_InvalidTempList_NoUnprotectedSites() {
@@ -320,7 +320,7 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNil(cbrm.hashForFailedUnprotectedSitesCompilation)
         
         XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + (mockSource.tempListEtag ?? "\"\"") + mockSource.unprotectedSitesHash)
+                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag + mockSource.unprotectedSitesHash)
     }
     
     func test_ValidTDS_ValidTempList_BrokenUnprotectedSites() {
@@ -378,7 +378,7 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
         
         wait(for: [initialLoading], timeout: 15.0)
         
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + (mockSource.tempListEtag ?? "\"\""))
+        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + mockSource.tempListEtag)
         
         mockSource.trackerData = Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag())
         
@@ -392,7 +392,7 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
         wait(for: [updating], timeout: 15.0)
         
         XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + (mockSource.tempListEtag ?? "\"\""))
+                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag)
         
         if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
             let diff = oldId.compare(with: newId)
@@ -437,7 +437,7 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
         wait(for: [updating], timeout: 15.0)
         
         XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + (mockSource.tempListEtag ?? "\"\""))
+                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag)
         
         if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
             let diff = oldId.compare(with: newId)
@@ -482,7 +482,7 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
         wait(for: [updating], timeout: 15.0)
         
         XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + (mockSource.tempListEtag ?? "\"\"") + mockSource.unprotectedSitesHash)
+                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag + mockSource.unprotectedSitesHash)
         
         if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
             let diff = oldId.compare(with: newId)
@@ -501,7 +501,7 @@ class MockContentBlockerRulesSource: ContentBlockerRulesSource {
     var trackerData: TrackerDataManager.DataSet?
     var embeddedTrackerData: TrackerDataManager.DataSet
 
-    var tempListEtag: String?
+    var tempListEtag: String = ""
     var tempList: [String] = []
     var unprotectedSites: [String] = []
     

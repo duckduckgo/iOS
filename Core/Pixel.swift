@@ -137,7 +137,6 @@ public enum PixelName: String {
     
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"
-    case widgetAddFavoriteLaunch = "m_w_af"
 
     case defaultBrowserButtonPressedSettings = "m_db_s"
     case defaultBrowserButtonPressedHome = "m_db_h"
@@ -187,9 +186,6 @@ public enum PixelName: String {
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 
-    case settingsAppIconChangeFailed = "m_d_aicf"
-    case settingsAppIconChangeNotSupported = "m_d_aicns"
-
     case backgroundTaskSubmissionFailed = "m_bt_rf"
     
     case blankOverlayNotDismissed = "m_d_ovs"
@@ -216,10 +212,11 @@ public struct PixelParameters {
     static let dataAvailiability = "dp"
     
     static let errorCode = "e"
-    static let errorDesc = "d"
+    static let errorDomain = "d"
+    static let errorDescription = "de"
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
-    static let underlyingErrorDesc = "ud"
+    static let underlyingErrorDomain = "ud"
 
     public static let tabCount = "tc"
 
@@ -262,7 +259,7 @@ public class Pixel {
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             includeATB: Bool = true,
-                            onComplete: @escaping (Error?) -> Void = {_ in }) {
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         
         var newParams = params
         newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
@@ -289,20 +286,23 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:]) {
+    public static func fire(pixel: PixelName,
+                            error: Error,
+                            withAdditionalParameters params: [String: String] = [:],
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
-        newParams[PixelParameters.errorDesc] = nsError.domain
+        newParams[PixelParameters.errorDomain] = nsError.domain
         
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
-            newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
+            newParams[PixelParameters.underlyingErrorDomain] = underlyingError.domain
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
-            newParams[PixelParameters.underlyingErrorDesc] = "NSSQLiteErrorDomain"
+            newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
         }
-        fire(pixel: pixel, withAdditionalParameters: newParams)
+        fire(pixel: pixel, withAdditionalParameters: newParams, includeATB: false, onComplete: onComplete)
     }
 }
 

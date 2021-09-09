@@ -18,6 +18,40 @@
 //
 
 (function() {
+    
+    if (${isDebug}) {
+        var duckduckgoDebugMessaging = function() {
+            
+            function signpostEvent(data) {
+                try {
+                    webkit.messageHandlers.signpostMessage.postMessage(data);
+                } catch(error) {}
+            }
+            
+            function log() {
+                try {
+                    webkit.messageHandlers.log.postMessage(JSON.stringify(arguments));
+                } catch(error) {}
+            }
+            
+            return {
+                signpostEvent: signpostEvent,
+                log: log
+            }
+        }()
+    } else {
+        var duckduckgoDebugMessaging = function() {
+            
+            function signpostEvent(data) {}
+            
+            function log() {}
+            
+            return {
+                signpostEvent: signpostEvent,
+                log: log
+            }
+        }()
+    }
 
    function surrogateInjected(data) {
        try {
@@ -166,12 +200,11 @@ _utf8_encode : function (string) {
     // Buffer
 
     // trackers.js - https://raw.githubusercontent.com/duckduckgo/privacy-grade/298ddcbdd9d55808233643d90639578cd063a439/src/classes/trackers.js
-    (function () {
-        class Trackers {
-            constructor (ops) {
-                this.tldjs = ops.tldjs
-                this.utils = ops.utils
-            }
+    class Trackers {
+        constructor (ops) {
+            this.tldjs = ops.tldjs
+            this.utils = ops.utils
+        }
 
         setLists (lists) {
             lists.forEach(list => {
@@ -408,14 +441,8 @@ _utf8_encode : function (string) {
 
             return {action, reason}
         }
-        }
+    }
 
-        if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
-            module.exports = Trackers
-        else
-            window.Trackers = Trackers
-
-    })()
     // trackers.js
 
     // surrogates
@@ -442,6 +469,7 @@ _utf8_encode : function (string) {
         }
         return null;
     }
+    Object.freeze(Trackers.prototype)
 
     // create an instance to use
     let trackers = new Trackers({
@@ -470,10 +498,16 @@ _utf8_encode : function (string) {
       let partialDomain = domainParts.join(".")
 
       unprotectedDomain = `
-          ${unprotectedDomains}
+          ${tempUnprotectedDomains}
           `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
 
       domainParts.shift()
+    }
+
+    if (!unprotectedDomain && topLevelUrl.host != null) {
+      unprotectedDomain = `
+          ${userUnprotectedDomains}
+          `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
     }
 
     // private
@@ -545,7 +579,7 @@ _utf8_encode : function (string) {
                 pageUrl: pageUrl
             })
 
-            duckduckgoDebugMessaging.signpostEvent({event: "Tracker Blocked",
+            duckduckgoDebugMessaging.signpostEvent({event: "Surrogate Injected",
                                                    url: trackerUrl,
                                                    time: performance.now() - startTime})
 
@@ -559,9 +593,6 @@ _utf8_encode : function (string) {
         [].slice.apply(document.scripts).forEach(function(el) {
             if (shouldBlock(el.src, 'SCRIPT')) {
                 duckduckgoDebugMessaging.log("blocking load")
-            } else {
-                duckduckgoDebugMessaging.log("don't block " + el.src);
-                return
             }
             
         });
@@ -571,26 +602,17 @@ _utf8_encode : function (string) {
           if (el.naturalWidth === 0) {
               if (shouldBlock(el.src, 'IMG')) {
                   duckduckgoDebugMessaging.log("blocking load")
-              } else {
-                  duckduckgoDebugMessaging.log("don't block " + el.src);
-                  return
               }
           }
         });
         [].slice.apply(document.querySelectorAll('link')).forEach(function(el) {
             if (shouldBlock(el.href, 'LINK')) {
                 duckduckgoDebugMessaging.log("blocking load")
-            } else {
-                duckduckgoDebugMessaging.log("don't block " + el.href);
-                return
             }
         });
         [].slice.apply(document.querySelectorAll('iframe')).forEach(function(el) {
           if (shouldBlock(el.src, 'IFRAME')) {
               duckduckgoDebugMessaging.log("blocking load")
-          } else {
-              duckduckgoDebugMessaging.log("don't block " + el.src);
-              return
           }
         });
         scheduleProcessPage()
@@ -627,7 +649,6 @@ _utf8_encode : function (string) {
                         duckduckgoDebugMessaging.log("blocking image src: " + value)
                     } else {
                         originalImageSrc.set.call(instance, value);
-                        duckduckgoDebugMessaging.log("allowing image src: " + value)
                     }
                     
                 }

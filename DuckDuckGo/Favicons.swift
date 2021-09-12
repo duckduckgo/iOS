@@ -387,11 +387,7 @@ public class Favicons {
         }
 
         // Explicity set the expiry
-        #if DEBUG
-        let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(.seconds(60))
-        #else
-        let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(.days(7))
-        #endif
+        let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(isDebugBuild ? .seconds(60) : .days(7))
 
         return [
             .downloader(Constants.downloader),

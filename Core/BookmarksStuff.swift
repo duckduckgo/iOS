@@ -48,7 +48,9 @@ public class BookmarksCoreDataStorage {
     }
     
     public lazy var topLevelBookmarksFolder: Folder = {
-        getTopLevelFolder(isFavorite: false)
+        let folder = getTopLevelFolder(isFavorite: false)
+        folder.title = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
+        return folder
     }()
     
     private lazy var topLevelFavoritesFolder: Folder = {

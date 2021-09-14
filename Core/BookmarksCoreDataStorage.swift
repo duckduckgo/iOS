@@ -69,34 +69,37 @@ public class BookmarksCoreDataStorage {
     //TODO rearranging
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
+    //TODO optional title
     public func update(folderID: NSManagedObjectID, newTitle: String?, newParent: BookmarkFolder) {
-        // TODO
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
+            let mo = self.context.object(with: folderID)
+            guard let folder = mo as? BookmarkFolderManagedObject else {
+                assertionFailure("Failed to get folder")
+                return
+            }
+            
+            let parentMO = self.context.object(with: newParent.objectID)
+            guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
+                assertionFailure("Failed to get new parent")
+                return
+            }
+            
+            folder.parent?.removeFromChildren(folder)
+            folder.parent = newParentMO
+            newParentMO.addToChildren(folder)
+            folder.title = newTitle
+            
+            do {
+                try self.context.save()
+            } catch {
+                assertionFailure("Updating folder failed")
+            }
+        }
+        // TODO update any caches
     }
-    
-    //hmm don't want to handle saving children changes since that will never happen
-    //so I should come up with an interface for this that reflects just changing the title and parent
-//    public func saveExisting(folder: Folder, newTitle: String?, newParent: Folder, originalParent: Folder?) {
-//        //TODO we're gonna need to know the previous parent
-//        //I'm not sure a generic save function is the way to go...
-//        //maybe lets ignore rearranging for now
-//        //so saving means saving the title and parent
-//        //and adding it to the new parents children
-//        //and removing it from the old one
-//
-////        originalParent?.removeFromChildren(folder)
-////        newParent.addToChildren(folder)
-////        let context1 = folder.managedObjectContext
-////        let context2 = newParent.managedObjectContext
-////        print(context1)
-////        print(context2)
-////        //folder.parent = newParent
-////        folder.title = newTitle
-////        folder.parent?.addToChildren(folder)
-////        try? context.save()
-//
-//        //we would need to invalidate topLevelBookmarkItems maybe?
-//        //idk...
-//    }
+
 
     //TODO should it be possible to save with no title?
     public func saveNewFolder(withTitle title: String?, parent: BookmarkFolder) {
@@ -195,11 +198,6 @@ public class BookmarksCoreDataStorage {
             bookmark.parent = parent
             parent.addToChildren(bookmark)
         }
-        do {
-            try context.save()
-        } catch {
-            assertionFailure("Saving new bookmark failed")
-        }
     }
     
     @discardableResult
@@ -219,11 +217,6 @@ public class BookmarksCoreDataStorage {
             folder.parent = parent
             parent.addToChildren(folder)
         }
-        do {
-            try context.save()
-        } catch {
-            assertionFailure("Saving new folder failed")
-        }
         return folder
     }
     
@@ -241,6 +234,7 @@ public class BookmarksCoreDataStorage {
     public func createTestFavourites() {
         createBookmark(url: URL(string: "http://example.com")!, title: "example fav", isFavorite: true)
         createBookmark(url: URL(string: "http://fish.com")!, title: "fish fav", isFavorite: true)
+        try? context.save()
     }
 }
 

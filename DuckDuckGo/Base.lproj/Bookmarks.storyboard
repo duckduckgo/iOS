@@ -177,7 +177,7 @@
         <!--Add Folder-->
         <scene sceneID="CJo-jI-HMh">
             <objects>
-                <viewController id="gvC-OM-VDO" customClass="AddBookmarksFolderViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gvC-OM-VDO" customClass="AddOrEditBookmarkFolderViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nHt-Cp-jg8"/>
                         <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>

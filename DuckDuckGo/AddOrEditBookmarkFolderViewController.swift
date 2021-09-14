@@ -20,19 +20,29 @@
 import UIKit
 import Core
 
-class AddBookmarksFolderViewController: UIViewController {
-    
+class AddOrEditBookmarkFolderViewController: UIViewController {
+        
     //TODO we don't need this layer of indirection...
     private var foldersViewController: BookmarkFoldersViewController?
     
     var existingFolder: BookmarkFolder? {
         didSet {
             foldersViewController?.existingFolder = existingFolder
+            setUpTitle()
         }
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        setUpTitle()
+    }
+    
+    func setUpTitle() {
+        if existingFolder != nil {
+            title = NSLocalizedString("Edit Folder", comment: "Edit folder screen title")
+        } else {
+            title = NSLocalizedString("Add Folder", comment: "Add folder screen title")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

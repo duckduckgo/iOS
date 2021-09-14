@@ -102,9 +102,9 @@ public class BookmarksCoreDataStorage {
     public func saveNewFolder(withTitle title: String?, parent: BookmarkFolder) {
         //TODO will also need to update caches, whatever we end up with
         
-//        context.perform { [weak self] in
-//            guard let self = self else { return }
-//
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
             let mo = self.context.object(with: parent.objectID)
             guard let parentMO = mo as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get parent folder")
@@ -112,7 +112,7 @@ public class BookmarksCoreDataStorage {
             }
             //TODO optional title
             self.createFolder(title: title!, isFavorite: false, parent: parentMO)
-        //}
+        }
     }
     
     public init() { }

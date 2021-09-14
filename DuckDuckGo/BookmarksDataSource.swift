@@ -20,9 +20,6 @@
 import UIKit
 import Core
 
-//todo fileprivate?
-typealias PresentableBookmarkItem = (item: BookmarkItem, depth: Int)
-
 //TODO I think this would have been waaaay easier if I'd made any none UITableViewDataSource methods part of a seperate protocol.
 //let's do it
 
@@ -37,17 +34,25 @@ typealias PresentableBookmarkItem = (item: BookmarkItem, depth: Int)
  navigation title?
  */
 
-protocol MainBookmarksViewDataSource {
+protocol MainBookmarksViewDataSource: UITableViewDataSource {
     var isEmpty: Bool { get }
+    var showSearch: Bool { get }
+    var navigationTitle: String? { get }
     
-    func item(
+    func item(at indexPath: IndexPath) -> BookmarkItem?
 }
 
+protocol FolderDetailsDataSource: UITableViewDataSource {
+    func select(_ tableView: UITableView, indexPath: IndexPath)
+    func save(_ tableView: UITableView)
+}
 
-
-//also, no function should be emmiting PresentableBookmarkItems outside of this file, no one else needs to know about the depth
-class BookmarksDataSource: NSObject, UITableViewDataSource {
+//Todo I should just not have this? It's sort of stupid...
+//yeah, only the actual bookmark data source (favourites, bookmarks, folders) should share a common source and maybe some kind of view controller mechanism (but even then probably get rid of the shared view controller at least for now?)
+//e.g. edit folder view should defo have a different view controller chain
+class BookmarksDataSource: NSObject {
     
+    //TODO should inject bookmarksManager properly
     fileprivate var dataSources: [BookmarksSectionDataSource] = []
     
     fileprivate var sections: [BookmarksSection] = [] {
@@ -56,54 +61,408 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         }
     }
     
-    func item(at indexPath: IndexPath) -> PresentableBookmarkItem? {
-        if dataSources.count <= indexPath.section {
-            return nil
-        }
-        return dataSources[indexPath.section].bookmarkItem(at: indexPath.row)
-    }
-    
-    var isEmpty: Bool {
-        let isSectionsEmpty = dataSources.map { $0.containsBookmarkItems() }
-        return !isSectionsEmpty.contains(where: { !$0 })
-    }
-    
-    var showSearch: Bool {
-        return false
-    }
-    
-    func navigationTitle() -> String? {
-        return nil
-    }
-    
+}
+
+extension BookmarksDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSources[section].numberOfRows()
+        return dataSources[section].numberOfRows
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return dataSources[section].title()
+        return dataSources[section].title
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataSource = dataSources[indexPath.section]
         return dataSource.cell(tableView, forIndex: indexPath.row)
     }
+}
+
+//TODO how would search fit into this?
+enum BookmarksSection {
+    case favourites
+    case bookmarksShallow(parentFolder: BookmarkFolder?)
+    case folders(_ folder: BookmarkFolder?)
+    case folderDetails(_ folder: BookmarkFolder?)
     
+    var dataSource: BookmarksSectionDataSource {
+        switch self {
+        case .favourites:
+            return FavoritesSectionDataSource()
+        case .bookmarksShallow(let parentFolder):
+            return BookmarksShallowSectionDataSource(parentFolder: parentFolder)
+        case .folders(let folder):
+            return BookmarkFoldersSectionDataSource(existingFolder: folder)
+        case .folderDetails(let folder):
+            return BookmarksFolderDetailsSectionDataSource(existingFolder: folder)
+        }
+    }
+}
+
+//Okay, lets just ditch this whole thing :(
+protocol BookmarksSectionDataSource {
+    
+    var title: String? { get }
+    var numberOfRows: Int { get }
+    
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell
+        
+}
+
+extension BookmarksSectionDataSource {
+    
+    var title: String? {
+        return nil
+    }
+    
+}
+
+typealias PresentableBookmarkItem = (item: BookmarkItem, depth: Int)
+
+//maybe keep this one? idk...
+protocol BookmarkItemsSectionDataSource: BookmarksSectionDataSource {
+        
+    var isEmpty: Bool { get }
+    
+    func bookmarkItem(at index: Int) -> PresentableBookmarkItem?
+    
+    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool
+    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int)
+    
+}
+
+extension BookmarkItemsSectionDataSource {
+    
+    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return bookmarkItem(at: index) != nil
+    }
+
+    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
+        return !isEmpty
+    }
+    
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        if isEmpty {
+            return createEmptyCell(tableView, forIndex: index)
+        } else {
+            return createCell(tableView, withItem: bookmarkItem(at: index))
+        }
+    }
+    
+    func createCell(_ tableView: UITableView, withItem item: PresentableBookmarkItem?) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
+            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
+        }
+
+        cell.bookmarkItem = item?.item
+        cell.depth = item?.depth ?? 0
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.title.textColor = theme.tableCellTextColor
+        //TODO folder tint
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        
+        return cell
+    }
+    
+    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
+            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
+        }
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.label.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+
+        return cell
+    }
+}
+
+class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
+    
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    
+    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
+        guard let favorite = bookmarksManager.favorite(atIndex: index) else { return nil }
+        return PresentableBookmarkItem(favorite, 0)
+    }
+    
+    var isEmpty: Bool {
+        bookmarksManager.favoritesCount == 0
+    }
+    
+    var numberOfRows: Int {
+        return max(1, bookmarksManager.favoritesCount)
+    }
+    
+    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
+        let cell = (self as BookmarkItemsSectionDataSource).createEmptyCell(tableView, forIndex: index)
+        cell.label.text =  UserText.emptyFavorites
+        return cell
+    }
+
+    func title() -> String? {
+        return UserText.sectionTitleFavorites
+    }
+
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
+        
+        guard editingStyle == .delete else { return }
+
+        guard let item = bookmarkItem(at: index)?.item else { return }
+        //TODO actual deletion
+        bookmarksManager.delete(item: item)
+        
+        let indexPath = IndexPath(row: index, section: section)
+        if bookmarksManager.favoritesCount == 0 {
+            // because we're replacing this cell with a place holder that says "no whatever yet"
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+
+}
+
+class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
+    
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    private let parentFolder: BookmarkFolder?
+    
+    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
+        if let folder = parentFolder {
+            let array = folder.children.array as? [BookmarkItem] ?? []
+            return array.map {
+                PresentableBookmarkItem($0, 0)
+            }
+        } else {
+            return bookmarksManager.topLevelBookmarkItems.map {
+                PresentableBookmarkItem($0, 0)
+            }
+        }
+    }()
+    
+    var isEmpty: Bool {
+        presentableBookmarkItems.count == 0
+    }
+    
+    init(parentFolder: BookmarkFolder?) {
+        self.parentFolder = parentFolder
+    }
+    
+    func navigationTitle() -> String? {
+        return parentFolder?.title
+    }
+    
+    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
+        if presentableBookmarkItems.count <= index {
+            return nil
+        }
+        return presentableBookmarkItems[index]
+    }
+    
+    var numberOfRows: Int {
+        return max(1, presentableBookmarkItems.count)
+    }
+
+    func title() -> String? {
+        return UserText.sectionTitleBookmarks
+    }
+    
+    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
+        guard editingStyle == .delete else { return }
+
+        guard let item = bookmarkItem(at: index)?.item else { return }
+        //TODO actual deletion
+        //gonna have to refresh presentablebookmarkitems too
+        bookmarksManager.delete(item: item)
+
+        let indexPath = IndexPath(row: index, section: section)
+        //TODO this needs to take into account variable parent folder
+        if bookmarksManager.topLevelBookmarkItemsCount == 0 {
+            // because we're replacing this cell with a place holder that says "no whatever yet"
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+
+}
+
+class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
+
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+
+    //TODO this really should just use folders internally if we can?
+    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
+        return visibleFolders(for: bookmarksManager.topLevelBookmarksFolder, depthOfFolder: 0)
+    }()
+    
+    private var selectedRow = 0
+    
+    //TODO If a folder has subfolders and we edit the location, hide the subfolders in the folder structure"
+    init(existingFolder: BookmarkFolder?) {
+        if let folder = existingFolder, let parent = folder.parent {
+            let parentIndex = presentableBookmarkItems.firstIndex {
+                $0.item.objectID == parent.objectID
+            }
+            selectedRow = parentIndex ?? 0
+        }
+    }
+    
+    //TODO should this actually be optional?
+    func item(at index: Int) -> PresentableBookmarkItem? {
+        if presentableBookmarkItems.count <= index {
+            return nil
+        }
+        return presentableBookmarkItems[index]
+    }
+    
+    func containsBookmarkItems() -> Bool {
+        // Don't count the top level item
+        presentableBookmarkItems.count > 0
+    }
+    
+    var numberOfRows: Int {
+        return presentableBookmarkItems.count
+    }
+    
+    func title() -> String? {
+        NSLocalizedString("Location", comment: "Header for folder selection for bookmarks")
+    }
+    
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) as? BookmarkFolderCell else {
+            fatalError("Failed to dequeue \(BookmarkFolderCell.reuseIdentifier) as BookmarkFolderCell")
+        }
+        
+        let item = item(at: index)
+        cell.folder = item?.item as? BookmarkFolder
+        cell.depth = item?.depth ?? 0
+        cell.isSelected = index == selectedRow
+        
+        return cell
+    }
+    
+    func select(_ tableView: UITableView, row: Int, section: Int) {
+        let previousSelected = selectedRow
+        selectedRow = row
+        
+        let indexesToReload = [IndexPath(row: row, section: section), IndexPath(row: previousSelected, section: section)]
+        tableView.reloadRows(at: indexesToReload, with: .none)
+    }
+    
+    func selected() -> BookmarkItem? {
+        return item(at: selectedRow)?.item
+    }
+    
+    private func visibleFolders(for folder: BookmarkFolder, depthOfFolder: Int) -> [PresentableBookmarkItem] {
+        let array = folder.children.array as? [BookmarkItem] ?? []
+        let folders = array.compactMap { $0 as? BookmarkFolder }
+
+        var visibleItems = [PresentableBookmarkItem(folder, depthOfFolder)]
+
+        visibleItems.append(contentsOf: folders.map { folder -> [PresentableBookmarkItem] in
+            return visibleFolders(for: folder, depthOfFolder: depthOfFolder + 1)
+        }.flatMap { $0 })
+
+        return visibleItems
+    }
+}
+
+class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
+    
+    let initialTitle: String?
+
+    init(existingFolder: BookmarkFolder?) {
+        self.initialTitle = existingFolder?.title
+    }
+    
+    func containsBookmarkItems() -> Bool {
+        false
+    }
+    
+    var numberOfRows: Int {
+        return 1
+    }
+    
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarksTextFieldCell.reuseIdentifier) as? BookmarksTextFieldCell else {
+            fatalError("Failed to dequeue \(BookmarksTextFieldCell.reuseIdentifier) as BookmarksTextFieldCell")
+        }
+        
+        cell.textField.text = initialTitle
+        return cell
+    }
+    
+    func folderTitle(_ tableView: UITableView, section: Int) -> String? {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? BookmarksTextFieldCell else {
+            assertionFailure("Could not get folder details cell")
+            return nil
+        }
+        return cell.title
+    }
+}
+
+class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
+    
+    private var itemsDataSources: [BookmarkItemsSectionDataSource] {
+        //TODO I hate it
+        return dataSources as! [BookmarkItemsSectionDataSource]
+    }
+        
+    init(parentFolder: BookmarkFolder? = nil) {
+        super.init()
+        if parentFolder != nil {
+            self.sections = [.bookmarksShallow(parentFolder: parentFolder)]
+        } else {
+            self.sections = [.favourites, .bookmarksShallow(parentFolder: nil)]
+        }
+    }
+    
+    var isEmpty: Bool {
+        let isSectionsEmpty = itemsDataSources.map { $0.isEmpty }
+        return !isSectionsEmpty.contains(where: { !$0 })
+    }
+    
+    var showSearch: Bool {
+        return sections.count > 1
+    }
+    
+    var navigationTitle: String? {
+        let bookmarksDataSource = dataSources.first {
+            $0.self is BookmarksShallowSectionDataSource
+        } as? BookmarksShallowSectionDataSource
+        return bookmarksDataSource?.navigationTitle()
+    }
+    
+    func item(at indexPath: IndexPath) -> BookmarkItem? {
+        if dataSources.count <= indexPath.section {
+            return nil
+        }
+        return itemsDataSources[indexPath.section].bookmarkItem(at: indexPath.row)?.item
+    }
+}
+
+extension DefaultBookmarksDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return dataSources[indexPath.section].containsBookmarkItems()
+        return itemsDataSources[indexPath.section].isEmpty
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return !dataSources[indexPath.section].containsBookmarkItems()
+        return !itemsDataSources[indexPath.section].isEmpty
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        dataSources[indexPath.section].commit(tableView, editingStyle: editingStyle, forRowAt: indexPath.row, section: indexPath.section)
+        itemsDataSources[indexPath.section].commit(tableView, editingStyle: editingStyle, forRowAt: indexPath.row, section: indexPath.section)
     }
     
         func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -142,380 +501,20 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         }
 }
 
-//TODO how would search fit into this?
-enum BookmarksSection {
-    case favourites
-    case bookmarksShallow(parentFolder: Folder?)
-    case folders
-    case folderDetails(_ folder: Folder?)
-    
-    var dataSource: BookmarksSectionDataSource {
-        switch self {
-        case .favourites:
-            return FavoritesSectionDataSource()
-        case .bookmarksShallow(let parentFolder):
-            return BookmarksShallowSectionDataSource(parentFolder: parentFolder)
-        case .folders:
-            return BookmarkFoldersSectionDataSource()
-        case .folderDetails(let folder):
-            return BookmarksFolderDetailsSectionDataSource(existingFolder: folder)
-        }
-    }
-}
-
-protocol BookmarksSectionDataSource {
-    
-    typealias PresentableBookmarkItem = (item: BookmarkItem, depth: Int)
-    
-    func title() -> String?
-    
-    func containsBookmarkItems() -> Bool
-    
-    func numberOfRows() -> Int
-    
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem?
-    
-    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell
-            
-    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool
-
-    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool
-    
-    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int)
+class BookmarksFolderDetailsDataSource: BookmarksDataSource, FolderDetailsDataSource {
         
-}
-
-extension BookmarksSectionDataSource {
+    //private let folderDetailsDataSource
+    //private let
+    private let originalParent: BookmarkFolder? //TODO doubt we need this
+    private let existingFolder: BookmarkFolder?
     
-    func title() -> String? {
-        return nil
-    }
-    
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
-        return nil
-    }
-    
-    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
-        return false
-    }
-
-    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
-        return false
-    }
-    
-    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
-    }
-    
-    func createCell(_ tableView: UITableView, withItem item: PresentableBookmarkItem?) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
-            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
-        }
-
-        cell.bookmarkItem = item?.item
-        cell.depth = item?.depth ?? 0
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTextColor
-        //TODO folder tint
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        return cell
-    }
-    
-    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
-            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-        }
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.label.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-
-        return cell
-    }
-}
-
-class FavoritesSectionDataSource: BookmarksSectionDataSource {
-    
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-    
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
-        guard let favorite = bookmarksManager.favorite(atIndex: index) else { return nil }
-        return PresentableBookmarkItem(favorite, 0)
-    }
-    
-    func containsBookmarkItems() -> Bool {
-        bookmarksManager.favoritesCount == 0
-    }
-    
-    func numberOfRows() -> Int {
-        return max(1, bookmarksManager.favoritesCount)
-    }
-    
-    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
-        if containsBookmarkItems() {
-            return createEmptyCell(tableView, forIndex: index)
-        } else {
-            return createCell(tableView, withItem: bookmarkItem(at: index))
-        }
-    }
-    
-    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        let cell = (self as BookmarksSectionDataSource).createEmptyCell(tableView, forIndex: index)
-        cell.label.text =  UserText.emptyFavorites
-        return cell
-    }
-
-    func title() -> String? {
-        return UserText.sectionTitleFavorites
-    }
-    
-    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
-        return bookmarkItem(at: index) != nil
-    }
-
-    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
-        return !containsBookmarkItems()
-    }
-
-    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
-        
-        guard editingStyle == .delete else { return }
-
-        guard let item = bookmarkItem(at: index)?.item else { return }
-        //TODO actual deletion
-        bookmarksManager.delete(item: item)
-        
-        let indexPath = IndexPath(row: index, section: section)
-        if bookmarksManager.favoritesCount == 0 {
-            // because we're replacing this cell with a place holder that says "no whatever yet"
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        } else {
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-    }
-
-}
-
-//why did I do any of this? we're never gonna mix and match...
-
-class BookmarksShallowSectionDataSource: BookmarksSectionDataSource {
-    
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-    private let parentFolder: Folder?
-    
-    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
-        if let folder = parentFolder {
-            let array = folder.children?.array as? [BookmarkItem] ?? []
-            return array.map {
-                PresentableBookmarkItem($0, 0)
-            }
-        } else {
-            return bookmarksManager.topLevelBookmarkItems.map {
-                PresentableBookmarkItem($0, 0)
-            }
-        }
-    }()
-    
-    init(parentFolder: Folder?) {
-        self.parentFolder = parentFolder
-    }
-    
-    func navigationTitle() -> String? {
-        return parentFolder?.title
-    }
-    
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
-        if presentableBookmarkItems.count <= index {
-            return nil
-        }
-        return presentableBookmarkItems[index]
-    }
-
-    func containsBookmarkItems() -> Bool {
-        presentableBookmarkItems.count == 0
-    }
-    
-    func numberOfRows() -> Int {
-        return max(1, presentableBookmarkItems.count)
-    }
-    
-    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
-        if containsBookmarkItems() {
-            return createEmptyCell(tableView, forIndex: index)
-        } else {
-            return createCell(tableView, withItem: bookmarkItem(at: index))
-        }
-    }
-    
-    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        let cell = (self as BookmarksSectionDataSource).createEmptyCell(tableView, forIndex: index)
-        cell.label.text =  UserText.emptyBookmarks
-        return cell
-    }
-
-    func title() -> String? {
-        return UserText.sectionTitleBookmarks
-    }
-    
-    func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
-        return bookmarkItem(at: index) != nil
-    }
-
-    func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool {
-        return !containsBookmarkItems()
-    }
-    
-    func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
-        guard editingStyle == .delete else { return }
-
-        guard let item = bookmarkItem(at: index)?.item else { return }
-        //TODO actual deletion
-        //gonna have to refresh presentablebookmarkitems too
-        bookmarksManager.delete(item: item)
-
-        let indexPath = IndexPath(row: index, section: section)
-        //TODO this needs to take into account variable parent folder
-        if bookmarksManager.topLevelBookmarkItemsCount == 0 {
-            // because we're replacing this cell with a place holder that says "no whatever yet"
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        } else {
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-    }
-
-}
-
-class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
-
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-
-    //TODO this really should just use folders internally if we can?
-    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
-        return visibleFolders(for: bookmarksManager.topLevelBookmarksFolder, depthOfFolder: 0)
-    }()
-    
-    private var selectedRow = 0
-    
-    //TODO should this actually be optional?
-    func item(at index: Int) -> PresentableBookmarkItem? {
-        if presentableBookmarkItems.count <= index {
-            return nil
-        }
-        return presentableBookmarkItems[index]
-    }
-    
-    func containsBookmarkItems() -> Bool {
-        // Don't count the top level item
-        presentableBookmarkItems.count > 0
-    }
-    
-    func numberOfRows() -> Int {
-        return presentableBookmarkItems.count
-    }
-    
-    func title() -> String? {
-        NSLocalizedString("Location", comment: "Header for folder selection for bookmarks")
-    }
-    
-    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) as? BookmarkFolderCell else {
-            fatalError("Failed to dequeue \(BookmarkFolderCell.reuseIdentifier) as BookmarkFolderCell")
-        }
-        
-        let item = item(at: index)
-        cell.folder = item?.item as? Folder
-        cell.depth = item?.depth ?? 0
-        cell.isSelected = index == selectedRow
-        
-        return cell
-    }
-    
-    func select(_ tableView: UITableView, row: Int, section: Int) {
-        let previousSelected = selectedRow
-        selectedRow = row
-        
-        let indexesToReload = [IndexPath(row: row, section: section), IndexPath(row: previousSelected, section: section)]
-        tableView.reloadRows(at: indexesToReload, with: .none)
-    }
-    
-    func selected() -> BookmarkItem? {
-        return item(at: selectedRow)?.item
-    }
-    
-    private func visibleFolders(for folder: Folder, depthOfFolder: Int) -> [PresentableBookmarkItem] {
-        let array = folder.children?.array as? [BookmarkItem] ?? []
-        let folders = array.compactMap { $0 as? Folder }
-
-        var visibleItems = [PresentableBookmarkItem(folder, depthOfFolder)]
-
-        visibleItems.append(contentsOf: folders.map { folder -> [PresentableBookmarkItem] in
-            return visibleFolders(for: folder, depthOfFolder: depthOfFolder + 1)
-        }.flatMap { $0 })
-
-        return visibleItems
-    }
-}
-
-class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
-    
-    let existingFolder: Folder?
-
-    init(existingFolder: Folder?) {
+    init(existingFolder: BookmarkFolder? = nil) {
         self.existingFolder = existingFolder
-    }
-    
-    func containsBookmarkItems() -> Bool {
-        false
-    }
-    
-    func numberOfRows() -> Int {
-        return 1
-    }
-    
-    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarksTextFieldCell.reuseIdentifier) as? BookmarksTextFieldCell else {
-            fatalError("Failed to dequeue \(BookmarksTextFieldCell.reuseIdentifier) as BookmarksTextFieldCell")
-        }
-        
-        cell.textField.text = existingFolder?.title
-        return cell
-    }
-}
-
-class DefaultBookmarksDataSource: BookmarksDataSource {
-
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-    
-    init(parentFolder: Folder? = nil) {
+        self.originalParent = existingFolder?.parent
         super.init()
-        if parentFolder != nil {
-            self.sections = [.bookmarksShallow(parentFolder: parentFolder)]
-        } else {
-            self.sections = [.favourites, .bookmarksShallow(parentFolder: nil)]
-        }
-    }
-    
-    override var showSearch: Bool {
-        return sections.count > 1
-    }
-    
-    override func navigationTitle() -> String? {
-        let bookmarksDataSource = dataSources.first {
-            $0.self is BookmarksShallowSectionDataSource
-        } as? BookmarksShallowSectionDataSource
-        return bookmarksDataSource?.navigationTitle()
-    }
-    
-}
-
-class BookmarksFolderDetailsDataSource: BookmarksDataSource {
-    
-    init(existingFolder: Folder? = nil) {
-        super.init()
-        self.sections = [.folderDetails(existingFolder), .folders]
+        self.sections = [.folderDetails(existingFolder), .folders(existingFolder)]
+        //TODO seriously need to get rid of this sections stuff
+        //I like having the seperate data sources, but we should at least keep references to the individual data sources
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {
@@ -526,13 +525,32 @@ class BookmarksFolderDetailsDataSource: BookmarksDataSource {
         dataSource.select(tableView, row: indexPath.row, section: indexPath.section)
     }
     
-    func save() {
-        // TODO
-        //need selected location, and the title. How get title?
+    func save(_ tableView: UITableView) {
+        let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
+        //TODO if this is nil, something has gone really wrong
+        guard let selectedParent = dataSource.selected() as? BookmarkFolder else {
+            assertionFailure("BookmarkFoldersSectionDataSource selected folder nil, this shouldn't be possible. Folder will not be saved")
+            return
+        }
+        let detailsDataSource = dataSources[0] as! BookmarksFolderDetailsSectionDataSource
+        let title = detailsDataSource.folderTitle(tableView, section: 0)
+        // TODO inject bookmarks manager properly
+        let manager = BookmarksManager()
+        
+        if let folder = existingFolder {
+            manager.update(folderID: folder.objectID, newTitle: title, newParent: selectedParent)
+        } else {
+            manager.saveNewFolder(withTitle: title, parent: selectedParent)
+        }
+        
+        //TODO on save, any number of views might have to change...
+        //hmmm, we gonna have to audit that...
+        //any instance of main bookmark view will need to
+        //For this particular one, I don't think anything else will have to?
     }
 }
 
-class SearchBookmarksDataSource: BookmarksDataSource {
+class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     
     var searchResults = [Link]()
     private let searchEngine = BookmarksSearch()
@@ -541,10 +559,28 @@ class SearchBookmarksDataSource: BookmarksDataSource {
         let query = query.lowercased()
         searchResults = searchEngine.search(query: query, sortByRelevance: false)
     }
-
-    override var isEmpty: Bool {
+    
+    var isEmpty: Bool {
         return searchResults.isEmpty
     }
+    
+    var showSearch: Bool {
+        sections.count > 1
+    }
+    
+    var navigationTitle: String?
+    
+    func item(at indexPath: IndexPath) -> BookmarkItem? {
+        guard indexPath.row < searchResults.count else {
+            return nil
+        }
+        return nil
+        //return searchResults[indexPath.row]
+    }
+
+//    override var isEmpty: Bool {
+//        return searchResults.isEmpty
+//    }
 
 //    override func link(at indexPath: IndexPath) -> Link? {
 //        guard indexPath.row < searchResults.count else {

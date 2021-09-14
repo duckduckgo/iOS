@@ -24,17 +24,95 @@ public class BookmarksCoreDataStorage {
     
     private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: "BookmarksAndFolders")
     
+    //TODO this should maybe be cached
+    public var topLevelBookmarksFolder: BookmarkFolder {
+        let folder = BookmarkFolder(managedObject: topLevelBookmarksFolderMO)
+        folder.title = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
+        return folder
+    }
+    
+    public var topLevelBookmarksItems: [BookmarkItem] {
+        topLevelBookmarksFolder.children.array as? [BookmarkItem] ?? []
+    }
+    
+    public func favorites() -> [Bookmark] {
+        let favorites: [Bookmark] = topLevelFavoritesItems.map {
+            if let fav = $0 as? Bookmark {
+                return fav
+            } else {
+                fatalError("Favourites shouldn't contain folders")
+            }
+        }
+        return favorites
+    }
+    
+    // Doesn't include parents
+    public func allBookmarksAndFavoritesShallow() -> [Bookmark] {
+        let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
+
+        guard let results = try? context.fetch(fetchRequest) else {
+            fatalError("Error fetching Bookmarks")
+        }
+        let bookmarks = results.map {
+            Bookmark(managedObject: $0, deepCopy: false)
+        }
+
+        return bookmarks
+    }
+    
+    //TODO rearranging
+    
+    // Since we'll never need to update children at the same time, we only support changing the title and parent
+    public func update(folderID: NSManagedObjectID, newTitle: String?, newParent: BookmarkFolder) {
+        // TODO
+    }
+    
+    //hmm don't want to handle saving children changes since that will never happen
+    //so I should come up with an interface for this that reflects just changing the title and parent
+//    public func saveExisting(folder: Folder, newTitle: String?, newParent: Folder, originalParent: Folder?) {
+//        //TODO we're gonna need to know the previous parent
+//        //I'm not sure a generic save function is the way to go...
+//        //maybe lets ignore rearranging for now
+//        //so saving means saving the title and parent
+//        //and adding it to the new parents children
+//        //and removing it from the old one
+//
+////        originalParent?.removeFromChildren(folder)
+////        newParent.addToChildren(folder)
+////        let context1 = folder.managedObjectContext
+////        let context2 = newParent.managedObjectContext
+////        print(context1)
+////        print(context2)
+////        //folder.parent = newParent
+////        folder.title = newTitle
+////        folder.parent?.addToChildren(folder)
+////        try? context.save()
+//
+//        //we would need to invalidate topLevelBookmarkItems maybe?
+//        //idk...
+//    }
+
+    //TODO should it be possible to save with no title?
+    public func saveNewFolder(withTitle title: String?, parent: BookmarkFolder) {
+        //TODO get corect parent
+        //maybe can do with just ID? idk
+        //createFolder(title: title ?? "", isFavorite: false, parent: parent)
+        //TODO will also need to update caches, whatever we end up with
+    }
+    
+    public init() { }
+    
     //TODO chache bookmark items in memory?
     //probably will need to given we have to make the folder structure
         
-    private func getTopLevelFolder(isFavorite: Bool) -> Folder {
-        let fetchRequest = NSFetchRequest<Folder>(entityName: "Folder")
+    private func getTopLevelFolder(isFavorite: Bool) -> BookmarkFolderManagedObject {
+        let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: "BookmarkFolderManagedObject")
         fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == %@", NSNumber(value: isFavorite))
 
         guard let results = try? context.fetch(fetchRequest),
           let folder = results.first else {
 
-            let folder = NSEntityDescription.insertNewObject(forEntityName: "Folder", into: context) as? Folder
+            let folder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject
             folder?.isFavorite = isFavorite
             try? context.save()
 
@@ -47,72 +125,67 @@ public class BookmarksCoreDataStorage {
         return folder
     }
     
-    public lazy var topLevelBookmarksFolder: Folder = {
+    private lazy var topLevelBookmarksFolderMO: BookmarkFolderManagedObject = {
         let folder = getTopLevelFolder(isFavorite: false)
         folder.title = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
         return folder
     }()
     
-    private lazy var topLevelFavoritesFolder: Folder = {
+    private lazy var topLevelFavoritesFolderMO: BookmarkFolderManagedObject = {
         getTopLevelFolder(isFavorite: true)
     }()
+    
+    private var topLevelFavoritesFolder: BookmarkFolder {
+        BookmarkFolder(managedObject: topLevelFavoritesFolderMO)
+    }
+    
+    private var topLevelFavoritesItems: [BookmarkItem] {
+        topLevelFavoritesFolder.children.array as? [BookmarkItem] ?? []
+    }
+    
+//    //TODO shouldn't be public, just for testing
+//    public func bookmarkItems() -> [BookmarkItem] {
+//        let fetchRequest: NSFetchRequest<BookmarkItemManagedObject> = BookmarkItem.fetchRequest()
+//
+//        guard let results = try? context.fetch(fetchRequest) else {
+//            fatalError("Error fetching BookmarkItems")
+//        }
+//
+//        return results
+//    }
+//
 
-    //TODO will need to keep these in sync?
-    public lazy var topLevelBookmarksItems: [BookmarkItem] = {
-        topLevelBookmarksFolder.children?.array as? [BookmarkItem] ?? []
-    }()
+//
+//    public func delete(item: BookmarkItem) {
+//        context.delete(item)
+//        try? context.save()
+//    }
     
-    private lazy var topLevelFavoritesItems: [BookmarkItem] = {
-        topLevelFavoritesFolder.children?.array as? [BookmarkItem] ?? []
-    }()
-    
-    public func favorites() -> [Bookmark] {
-        let favorites: [Bookmark] = topLevelFavoritesItems.map {
-            if let fav = $0 as? Bookmark {
-                return fav
-            } else {
-                fatalError("Favourites shouldn't contain folders")
-            }
-        }
-        return favorites
-    }
-        
-    public init() { }
-    
-    public func bookmarkItems() -> [BookmarkItem] {
-        let fetchRequest: NSFetchRequest<BookmarkItem> = BookmarkItem.fetchRequest()
-        
-        guard let results = try? context.fetch(fetchRequest) else {
-            fatalError("Error fetching BookmarkItems")
-        }
-        
-        return results
-    }
-    
-    private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: Folder? = nil) {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "Bookmark", into: context)
-        guard let bookmark = managedObject as? Bookmark else { return }
+    private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) {
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "BookmarkManagedObject", into: context)
+        guard let bookmark = managedObject as? BookmarkManagedObject else { return }
         bookmark.url = url
         bookmark.title = title
         bookmark.isFavorite = isFavorite
         if let parent = parent {
             parent.addToChildren(bookmark)
         } else {
-            let parent = isFavorite ? topLevelFavoritesFolder : topLevelBookmarksFolder
+            let parent = isFavorite ? topLevelFavoritesFolderMO : topLevelBookmarksFolderMO
             parent.addToChildren(bookmark)
         }
         try? context.save()
     }
     
-    private func createFolder(title: String, isFavorite: Bool, parent: Folder? = nil) -> Folder? {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "Folder", into: context)
-        guard let folder = managedObject as? Folder else { return nil }
+    @discardableResult
+    private func createFolder(title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) -> BookmarkFolderManagedObject? {
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context)
+        guard let folder = managedObject as? BookmarkFolderManagedObject else { return nil }
         folder.title = title
         folder.isFavorite = isFavorite
         if let parent = parent {
             parent.addToChildren(folder)
         } else {
-            let parent = isFavorite ? topLevelFavoritesFolder : topLevelBookmarksFolder
+            let parent = isFavorite ? topLevelFavoritesFolderMO : topLevelBookmarksFolderMO
             parent.addToChildren(folder)
         }
         try? context.save()

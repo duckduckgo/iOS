@@ -18,14 +18,32 @@
 //
 
 import UIKit
+import Core
 
 class AddBookmarksFolderViewController: UIViewController {
+    
+    //TODO we don't need this layer of indirection...
+    private var foldersViewController: BookmarkFoldersViewController?
+    
+    var existingFolder: BookmarkFolder? {
+        didSet {
+            foldersViewController?.existingFolder = existingFolder
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()        
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
+            foldersViewController = segue.destination as? BookmarkFoldersViewController
+            foldersViewController?.existingFolder = existingFolder
+        }
+    }
+    
     @IBAction func onDonePressed(_ sender: Any) {
+        foldersViewController?.save()
         dismiss(animated: true, completion: nil)
     }
 }

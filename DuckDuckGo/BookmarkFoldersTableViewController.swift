@@ -22,9 +22,9 @@ import Core
 
 class BookmarkFoldersViewController: UITableViewController {
 
-    private var dataSource = BookmarksFolderDetailsDataSource()
+    var dataSource: FolderDetailsDataSource = BookmarksFolderDetailsDataSource()
     
-    var existingFolder: Folder? {
+    var existingFolder: BookmarkFolder? {
         didSet {
             dataSource = BookmarksFolderDetailsDataSource(existingFolder: existingFolder)
             tableView.dataSource = dataSource
@@ -38,6 +38,10 @@ class BookmarkFoldersViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dataSource.select(tableView, indexPath: indexPath)
+    }
+    
+    func save() {
+        dataSource.save(tableView)
     }
 }
 

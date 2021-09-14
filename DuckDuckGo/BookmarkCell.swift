@@ -57,13 +57,13 @@ class BookmarkCell: UITableViewCell {
                     title.text = bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
                 }
                 linkImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
-            } else if let folder = bookmarkItem as? Folder {
+            } else if let folder = bookmarkItem as? BookmarkFolder {
                 //TODO
                 imageHeightConstraint.constant = 22
                 disclosureImage.isHidden = false
                 numberOfChildrenLabel.isHidden = false
                 title.text = folder.title
-                numberOfChildrenLabel.text = folder.children?.count.description
+                numberOfChildrenLabel.text = folder.children.count.description
                 linkImage.image = #imageLiteral(resourceName: "Folder")
             }
         }

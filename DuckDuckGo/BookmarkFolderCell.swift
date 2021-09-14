@@ -29,7 +29,7 @@ class BookmarkFolderCell: UITableViewCell {
     
     @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
 
-    var folder: Folder? {
+    var folder: BookmarkFolder? {
         didSet {
             guard let folder = folder else { return }
             title.text = folder.title

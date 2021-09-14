@@ -17,4 +17,18 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
+import Core
+
+class BookmarksTextFieldCell: UITableViewCell {
+
+    static let reuseIdentifier = "BookmarksTextFieldCell"
+    
+    var title: String? {
+        textField.text
+    }
+
+    @IBOutlet weak var textField: UITextField!
+    
+}
+

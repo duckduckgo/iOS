@@ -69,13 +69,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-Wh-Evj">
-                                                    <rect key="frame" x="36" y="0.0" width="235.5" height="24"/>
+                                                    <rect key="frame" x="36" y="0.0" width="236" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vil-gw-sgh" userLabel="NumberOfChildren">
-                                                    <rect key="frame" x="283.5" y="0.0" width="39.5" height="24"/>
+                                                    <rect key="frame" x="284" y="0.0" width="39" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="TableCellAccessoryTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -189,7 +189,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63r-nO-tSp">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <connections>
-                                    <segue destination="o1q-bZ-7v3" kind="embed" id="zyO-WQ-z92"/>
+                                    <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="zyO-WQ-z92"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -243,7 +243,6 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2O-E5-pyF">
                                                     <rect key="frame" x="36" y="0.0" width="276.5" height="22"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="axT-SQ-QSz" userLabel="TickImage">
@@ -267,6 +266,33 @@
                                     <outlet property="title" destination="K2O-E5-pyF" id="1j8-kf-ZCy"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarksTextFieldCell" id="fZI-vz-Ikc" customClass="BookmarksTextFieldCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="93" width="375" height="44.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fZI-vz-Ikc" id="MfZ-X5-f9l">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KiU-Wb-7jj">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="44.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="KiU-Wb-7jj" firstAttribute="top" secondItem="MfZ-X5-f9l" secondAttribute="top" id="0lH-lx-ovU"/>
+                                        <constraint firstAttribute="bottom" secondItem="KiU-Wb-7jj" secondAttribute="bottom" id="ET3-Zc-u43"/>
+                                        <constraint firstAttribute="trailing" secondItem="KiU-Wb-7jj" secondAttribute="trailing" constant="16" id="gcE-Cm-w8O"/>
+                                        <constraint firstItem="KiU-Wb-7jj" firstAttribute="leading" secondItem="MfZ-X5-f9l" secondAttribute="leading" constant="16" id="lbc-To-k5Z"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="KiU-Wb-7jj" id="hO7-0f-faW"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="o1q-bZ-7v3" id="K8a-wW-1Y4"/>
@@ -280,7 +306,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPV-8g-VdM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2758" y="1611"/>
+            <point key="canvasLocation" x="2826" y="1622"/>
         </scene>
     </scenes>
     <resources>

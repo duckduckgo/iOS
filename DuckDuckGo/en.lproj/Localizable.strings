@@ -652,6 +652,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
+/* Header for folder selection for bookmarks */
+"Location" = "Location";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
 

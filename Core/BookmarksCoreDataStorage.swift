@@ -22,7 +22,13 @@ import CoreData
 
 public class BookmarksCoreDataStorage {
     
-    private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: "BookmarksAndFolders")
+    private struct Constants {
+        static let contextName = "BookmarksAndFolders"
+        static let bookmarkClassName = "BookmarkManagedObject"
+        static let folderClassName = "BookmarkFolderManagedObject"
+    }
+    
+    private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: Constants.contextName)
     
     //TODO this should maybe be cached
     public var topLevelBookmarksFolder: BookmarkFolder {
@@ -94,19 +100,30 @@ public class BookmarksCoreDataStorage {
 
     //TODO should it be possible to save with no title?
     public func saveNewFolder(withTitle title: String?, parent: BookmarkFolder) {
-        //TODO get corect parent
-        //maybe can do with just ID? idk
-        //createFolder(title: title ?? "", isFavorite: false, parent: parent)
         //TODO will also need to update caches, whatever we end up with
+        
+//        context.perform { [weak self] in
+//            guard let self = self else { return }
+//
+            let mo = self.context.object(with: parent.objectID)
+            guard let parentMO = mo as? BookmarkFolderManagedObject else {
+                assertionFailure("Failed to get parent folder")
+                return
+            }
+            //TODO optional title
+            self.createFolder(title: title!, isFavorite: false, parent: parentMO)
+        //}
     }
     
     public init() { }
     
     //TODO chache bookmark items in memory?
     //probably will need to given we have to make the folder structure
+    
+    //TODO context.perform good behaviour
         
     private func getTopLevelFolder(isFavorite: Bool) -> BookmarkFolderManagedObject {
-        let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: "BookmarkFolderManagedObject")
+        let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
         fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == %@", NSNumber(value: isFavorite))
 
         guard let results = try? context.fetch(fetchRequest),
@@ -162,33 +179,51 @@ public class BookmarksCoreDataStorage {
 //    }
     
     private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "BookmarkManagedObject", into: context)
-        guard let bookmark = managedObject as? BookmarkManagedObject else { return }
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: context)
+        guard let bookmark = managedObject as? BookmarkManagedObject else {
+            assertionFailure("Inserting new bookmark failed")
+            return
+        }
         bookmark.url = url
         bookmark.title = title
         bookmark.isFavorite = isFavorite
         if let parent = parent {
+            bookmark.parent = parent
             parent.addToChildren(bookmark)
         } else {
             let parent = isFavorite ? topLevelFavoritesFolderMO : topLevelBookmarksFolderMO
+            bookmark.parent = parent
             parent.addToChildren(bookmark)
         }
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            assertionFailure("Saving new bookmark failed")
+        }
     }
     
     @discardableResult
     private func createFolder(title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) -> BookmarkFolderManagedObject? {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context)
-        guard let folder = managedObject as? BookmarkFolderManagedObject else { return nil }
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.folderClassName, into: context)
+        guard let folder = managedObject as? BookmarkFolderManagedObject else {
+            assertionFailure("Inserting new folder failed")
+            return nil
+        }
         folder.title = title
         folder.isFavorite = isFavorite
         if let parent = parent {
+            folder.parent = parent
             parent.addToChildren(folder)
         } else {
             let parent = isFavorite ? topLevelFavoritesFolderMO : topLevelBookmarksFolderMO
+            folder.parent = parent
             parent.addToChildren(folder)
         }
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            assertionFailure("Saving new folder failed")
+        }
         return folder
     }
     
@@ -208,4 +243,11 @@ public class BookmarksCoreDataStorage {
         createBookmark(url: URL(string: "http://fish.com")!, title: "fish fav", isFavorite: true)
     }
 }
+
+
+
+//extension BookmarksCoreDataStorage: BookmarkStore {
+//
+//    
+//}
 

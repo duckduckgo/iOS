@@ -592,7 +592,7 @@
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
 		F41C2DA326C1925700F9A760 /* BookmarksAndFolders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA126C1925600F9A760 /* BookmarksAndFolders.xcdatamodeld */; };
-		F41C2DA526C1975E00F9A760 /* BookmarksStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA426C1975E00F9A760 /* BookmarksStuff.swift */; };
+		F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */; };
 		F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
 		F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F446B9B625115C1700324016 /* HomeMessageCell.xib */; };
@@ -617,6 +617,8 @@
 		F4F6DFB226E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB126E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift */; };
 		F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */; };
 		F4F6DFB626E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */; };
+		F4F6DFB826EA9AA600ED7E12 /* BookmarksTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB726EA9AA600ED7E12 /* BookmarksTextFieldCell.swift */; };
+		F4F6DFBA26EFF28A00ED7E12 /* BookmarkObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB926EFF28A00ED7E12 /* BookmarkObjects.swift */; };
 		F4F7F10A25813FE200045D62 /* 01_Fire_really_small.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10725813FE200045D62 /* 01_Fire_really_small.json */; };
 		F4F7F10B25813FE200045D62 /* 02_Water_swirl_really_small.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10825813FE200045D62 /* 02_Water_swirl_really_small.json */; };
 		F4F7F10C25813FE200045D62 /* 03_Airstream_divided_by_four.json in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */; };
@@ -2061,7 +2063,7 @@
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
 		F41C2DA226C1925700F9A760 /* BookmarksAndFolders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookmarksAndFolders.xcdatamodel; sourceTree = "<group>"; };
-		F41C2DA426C1975E00F9A760 /* BookmarksStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksStuff.swift; sourceTree = "<group>"; };
+		F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCoreDataStorage.swift; sourceTree = "<group>"; };
 		F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDaxDialogViewController.swift; sourceTree = "<group>"; };
 		F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewSectionRenderer.swift; sourceTree = "<group>"; };
 		F446B9B625115C1700324016 /* HomeMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeMessageCell.xib; sourceTree = "<group>"; };
@@ -2081,6 +2083,8 @@
 		F4F6DFB126E6AEC100ED7E12 /* AddBookmarksFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookmarksFolderViewController.swift; sourceTree = "<group>"; };
 		F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFolderCell.swift; sourceTree = "<group>"; };
 		F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFoldersTableViewController.swift; sourceTree = "<group>"; };
+		F4F6DFB726EA9AA600ED7E12 /* BookmarksTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTextFieldCell.swift; sourceTree = "<group>"; };
+		F4F6DFB926EFF28A00ED7E12 /* BookmarkObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkObjects.swift; sourceTree = "<group>"; };
 		F4F7F10725813FE200045D62 /* 01_Fire_really_small.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 01_Fire_really_small.json; sourceTree = "<group>"; };
 		F4F7F10825813FE200045D62 /* 02_Water_swirl_really_small.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 02_Water_swirl_really_small.json; sourceTree = "<group>"; };
 		F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 03_Airstream_divided_by_four.json; sourceTree = "<group>"; };
@@ -3535,6 +3539,7 @@
 				F1D796EF1E7B07610019D451 /* BookmarkCell.swift */,
 				F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */,
 				F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */,
+				F4F6DFB726EA9AA600ED7E12 /* BookmarksTextFieldCell.swift */,
 				F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */,
 				F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */,
 				F103076A1E800DC30059FEC7 /* BookmarksManager.swift */,
@@ -3817,7 +3822,8 @@
 				F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */,
 				F1CE42A51ECA0A460074A8DF /* BookmarkUserDefaults.swift */,
 				F41C2DA126C1925600F9A760 /* BookmarksAndFolders.xcdatamodeld */,
-				F41C2DA426C1975E00F9A760 /* BookmarksStuff.swift */,
+				F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */,
+				F4F6DFB926EFF28A00ED7E12 /* BookmarkObjects.swift */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -4922,6 +4928,7 @@
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
+				F4F6DFB826EA9AA600ED7E12 /* BookmarksTextFieldCell.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				4B15817626706A2200F34D16 /* EmailProtectionViewController.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
@@ -5140,7 +5147,7 @@
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				02DC6A64255D8C5000B03BC2 /* FingerprintUserScript.swift in Sources */,
-				F41C2DA526C1975E00F9A760 /* BookmarksStuff.swift in Sources */,
+				F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */,
 				988A05B92672CE8000363C13 /* ContentBlockerRulesSource.swift in Sources */,
 				85BDC31224339E080053DB07 /* DocumentUserScript.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
@@ -5193,6 +5200,7 @@
 				F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */,
 				85F21DC621145DD5002631A6 /* global.swift in Sources */,
 				F41C2DA326C1925700F9A760 /* BookmarksAndFolders.xcdatamodeld in Sources */,
+				F4F6DFBA26EFF28A00ED7E12 /* BookmarkObjects.swift in Sources */,
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
@@ -6603,6 +6611,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6610,6 +6619,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "iOS 14 - Dev - App";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -6623,6 +6633,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6630,6 +6641,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "iOS 14 - Dev - App";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

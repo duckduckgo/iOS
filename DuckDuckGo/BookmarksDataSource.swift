@@ -377,6 +377,7 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     }
 }
 
+// TODO can currently select the cell in screwy way if you press the right bit
 class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
     
     let initialTitle: String?

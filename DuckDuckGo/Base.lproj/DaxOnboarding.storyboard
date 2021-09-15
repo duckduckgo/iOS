@@ -267,11 +267,6 @@ DuckDuckGo!</string>
                         <action selector="onTapText" destination="UUS-R7-a2i" id="QGR-gw-YBK"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="IpT-mY-clw">
-                    <connections>
-                        <action selector="onTapText" destination="UUS-R7-a2i" id="E04-X1-lJT"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1273" y="391"/>
         </scene>

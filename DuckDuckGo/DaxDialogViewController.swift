@@ -118,7 +118,7 @@ class DaxDialogViewController: UIViewController {
         updateMessage()
     }
     
-    @IBAction func onTapText() {
+    @IBAction func onTap() {
         finish()
     }
     

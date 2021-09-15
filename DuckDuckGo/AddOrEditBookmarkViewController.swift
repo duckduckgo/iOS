@@ -20,13 +20,13 @@
 import UIKit
 import Core
 
-class AddOrEditBookmarkFolderViewController: UIViewController {
-        
-    private var foldersViewController: BookmarkFoldersViewController?
+class AddOrEditBookmarkViewController: UIViewController {
     
-    var existingFolder: BookmarkFolder? {
+    private var foldersViewController: BookmarkFoldersViewController?
+        
+    var existingBookmark: Bookmark? {
         didSet {
-            foldersViewController?.existingFolder = existingFolder
+            //TODO update data source for this
             setUpTitle()
         }
     }
@@ -37,17 +37,17 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     }
     
     func setUpTitle() {
-        if existingFolder != nil {
-            title = NSLocalizedString("Edit Folder", comment: "Edit folder screen title")
+        if existingBookmark != nil {
+            title = NSLocalizedString("Edit Boomkark", comment: "Edit bookmark screen title")
         } else {
-            title = NSLocalizedString("Add Folder", comment: "Add folder screen title")
+            title = NSLocalizedString("Add Bookmark", comment: "Add bookmark screen title")
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
-            foldersViewController?.existingFolder = existingFolder
+            //foldersViewController?.existingFolder = existingFolder
         }
     }
     

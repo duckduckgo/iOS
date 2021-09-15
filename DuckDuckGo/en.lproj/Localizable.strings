@@ -85,6 +85,9 @@
 /* Share action */
 "action.title.share" = "Share";
 
+/* Add bookmark screen title */
+"Add Bookmark" = "Add Bookmark";
+
 /* Add folder screen title */
 "Add Folder" = "Add Folder";
 
@@ -261,6 +264,9 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automatically blocks many trackers. With Global Privacy Control (GPC), you can also ask participating websites to restrict selling or sharing your personal data with other companies.";
+
+/* Edit bookmark screen title */
+"Edit Boomkark" = "Edit Boomkark";
 
 /* Edit folder screen title */
 "Edit Folder" = "Edit Folder";

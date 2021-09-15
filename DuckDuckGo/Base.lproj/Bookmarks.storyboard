@@ -69,13 +69,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-Wh-Evj">
-                                                    <rect key="frame" x="36" y="0.0" width="236" height="24"/>
+                                                    <rect key="frame" x="36" y="0.0" width="235.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vil-gw-sgh" userLabel="NumberOfChildren">
-                                                    <rect key="frame" x="284" y="0.0" width="39" height="24"/>
+                                                    <rect key="frame" x="283.5" y="0.0" width="39.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="TableCellAccessoryTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -167,7 +167,8 @@
                     <connections>
                         <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
                         <outlet property="editButton" destination="pwj-Ie-VbJ" id="XgF-gG-JUa"/>
-                        <segue destination="gvC-OM-VDO" kind="show" identifier="AddBookmarksFolder" id="Sc3-6b-3AP"/>
+                        <segue destination="gvC-OM-VDO" kind="show" identifier="AddOrEditBookmarkFolder" id="Sc3-6b-3AP"/>
+                        <segue destination="lMj-DP-NIV" kind="show" identifier="AddOrEditBookmark" id="ZtW-76-sQp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -306,9 +307,51 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPV-8g-VdM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2826" y="1622"/>
+            <point key="canvasLocation" x="2449" y="2380"/>
+        </scene>
+        <!--Add Bookmark-->
+        <scene sceneID="dBL-ta-aZ3">
+            <objects>
+                <viewController id="lMj-DP-NIV" userLabel="Add Bookmark" customClass="AddOrEditBookmarkViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QCC-7t-XrT"/>
+                        <viewControllerLayoutGuide type="bottom" id="QdE-VD-rGM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PHO-rE-hZ4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vS5-16-4wa">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <connections>
+                                    <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="Q6P-k0-1D4"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vS5-16-4wa" firstAttribute="leading" secondItem="PHO-rE-hZ4" secondAttribute="leading" id="Dmg-w2-u4h"/>
+                            <constraint firstAttribute="trailing" secondItem="vS5-16-4wa" secondAttribute="trailing" id="O8R-gq-yem"/>
+                            <constraint firstItem="vS5-16-4wa" firstAttribute="top" secondItem="QCC-7t-XrT" secondAttribute="bottom" id="aKv-j3-Sqw"/>
+                            <constraint firstAttribute="bottom" secondItem="vS5-16-4wa" secondAttribute="bottom" id="cy6-tD-QBo"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Folder" id="qA0-bu-lRC" customClass="AddBoo">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cZ5-DS-6T0">
+                            <connections>
+                                <action selector="onDonePressed:" destination="lMj-DP-NIV" id="V52-ii-4WR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ofO-dp-I1e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2796" y="1622"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Q6P-k0-1D4"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="DisclosureIndicator" width="8" height="13"/>
         <image name="Folder" width="22" height="20"/>

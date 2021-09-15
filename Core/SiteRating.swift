@@ -122,6 +122,7 @@ public class SiteRating {
     }
 
     public func trackerDetected(_ tracker: DetectedTracker) {
+        guard tracker.pageUrl == url.absoluteString else { return }
         let entity = tracker.entity
         if tracker.blocked {
             trackersBlocked.insert(tracker)

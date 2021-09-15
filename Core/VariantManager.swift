@@ -24,9 +24,6 @@ public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
-    
-    // Fire button education
-    case fireButtonEducationIteration
 }
 
 public struct Variant {

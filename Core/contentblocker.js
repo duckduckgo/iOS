@@ -570,11 +570,13 @@ _utf8_encode : function (string) {
                 loadedSurrogates[result.matchedRule.surrogate] = true
             }
             
+            const pageUrl = window.location.href
             surrogateInjected({
                 url: trackerUrl,
                 blocked: blocked,
                 reason: result.reason,
-                isSurrogate: isSurrogate
+                isSurrogate: isSurrogate,
+                pageUrl: pageUrl
             })
 
             duckduckgoDebugMessaging.signpostEvent({event: "Surrogate Injected",

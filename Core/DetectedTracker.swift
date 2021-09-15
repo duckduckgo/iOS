@@ -27,12 +27,14 @@ public struct DetectedTracker {
     public let knownTracker: KnownTracker?
     public let entity: Entity?
     public let blocked: Bool
+    public let pageUrl: String
     
-    public init(url: String, knownTracker: KnownTracker?, entity: Entity?, blocked: Bool) {
+    public init(url: String, knownTracker: KnownTracker?, entity: Entity?, blocked: Bool, pageUrl: String) {
         self.url = url
         self.knownTracker = knownTracker
         self.entity = entity
         self.blocked = blocked
+        self.pageUrl = pageUrl
     }
 
     public var domain: String? {

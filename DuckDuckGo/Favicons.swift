@@ -392,6 +392,7 @@ public class Favicons {
         return [
             .downloader(Constants.downloader),
             .requestModifier(Constants.requestModifier),
+            .cacheSerializer(FormatIndicatedCacheSerializer.jpeg),
             .targetCache(cache),
             expiry,
             .alternativeSources(sources)

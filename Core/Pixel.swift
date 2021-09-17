@@ -147,10 +147,10 @@ public enum PixelName: String {
     case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
     case widgetsOnboardingMovedToBackground = "m_o_w_b"
 
-    case emailUserPressedUseAddress = "email_filled_main"
-    case emailUserPressedUseAlias = "email_filled_random"
-    case emailUserCreatedAlias = "email_generated_button"
-    case emailTooltipDismissed = "email_tooltip_dismissed"
+    case emailUserPressedUseAddress = "m_email_filled_main"
+    case emailUserPressedUseAlias = "m_email_filled_random"
+    case emailUserCreatedAlias = "m_email_generated_button"
+    case emailTooltipDismissed = "m_email_tooltip_dismissed"
 
     // MARK: SERP pixels
     

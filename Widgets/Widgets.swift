@@ -87,21 +87,18 @@ struct Provider: TimelineProvider {
     }
 
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
-        guard let domain = domain, let cache = Favicons.Constants.caches[.bookmarks] else { return nil }
+        guard let domain = domain else { return nil }
 
-        cache.diskStorage.config.expiration = .never
+        let key = Favicons.createHash(ofDomain: domain)
+        guard let cacheUrl = Favicons.CacheType.bookmarks.cacheLocation() else { return nil }
 
-        var image: UIImage?
+        // Slight leap here to avoid loading Kingisher as a library for the widgets.
+        // Once dependency management is fixed, link it and use Favicons directly.
+        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
 
-        cache.retrieveImageInDiskCache(forKey: Favicons.createHash(ofDomain: domain), options: [.loadDiskFileSynchronously]) { result in
-            switch result {
-            case .success(let loadedImage):
-                image = loadedImage?.toSRGB()
-            default: break
-            }
-        }
+        guard let data = (try? Data(contentsOf: imageUrl)) else { return nil }
 
-        return image
+        return UIImage(data: data)
     }
 
 }
@@ -153,16 +150,6 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
-    }
-
-}
-
-extension UIImage {
-
-    func toSRGB() -> UIImage {
-        UIGraphicsImageRenderer(size: size).image { _ in
-            draw(in: CGRect(origin: .zero, size: size))
-        }
     }
 
 }

@@ -29,6 +29,8 @@ class DaxDialogViewController: UIViewController {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var label: UILabel!
     
+    @IBOutlet weak var tapToCompleteGestureRecognizer: UIGestureRecognizer!
+    
     var message: String? {
         didSet {
             initLabel()

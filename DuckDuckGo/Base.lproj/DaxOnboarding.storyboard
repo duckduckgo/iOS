@@ -37,7 +37,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lvy-9G-3gr">
-                                <rect key="frame" x="20" y="182" width="984" height="81"/>
+                                <rect key="frame" x="20" y="182" width="984" height="70"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Welcome to
@@ -176,7 +176,7 @@ DuckDuckGo!</string>
                                 <rect key="frame" x="10" y="82" width="355" height="113"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
-                                        <rect key="frame" x="16" y="10" width="323" height="25.5"/>
+                                        <rect key="frame" x="16" y="10" width="323" height="22"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Label">
                                                 <attributes>
@@ -257,6 +257,7 @@ DuckDuckGo!</string>
                         <outlet property="icon" destination="UzU-6y-Vfa" id="h5u-VZ-4uc"/>
                         <outlet property="label" destination="UDm-rv-vek" id="E3z-rn-qvh"/>
                         <outlet property="pointer" destination="eh6-ce-Ivv" id="Pyj-WK-6C6"/>
+                        <outlet property="tapToCompleteGestureRecognizer" destination="o8q-3z-33o" id="VHC-Wy-gPT"/>
                         <outlet property="textArea" destination="Ix6-dq-RAh" id="UTU-sm-jn7"/>
                         <outlet property="topSpacing" destination="Gmu-7B-dTI" id="8mg-Zw-YAm"/>
                     </connections>
@@ -265,6 +266,11 @@ DuckDuckGo!</string>
                 <tapGestureRecognizer id="1gA-Oe-qi9">
                     <connections>
                         <action selector="onTap" destination="UUS-R7-a2i" id="rL5-bR-JzA"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="o8q-3z-33o">
+                    <connections>
+                        <action selector="onTap" destination="UUS-R7-a2i" id="Eh7-ke-WPO"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -293,7 +299,7 @@ DuckDuckGo!</string>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgy-75-OvJ">
-                                <rect key="frame" x="966" y="72" width="34" height="31"/>
+                                <rect key="frame" x="966" y="72" width="34" height="28"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Hide"/>

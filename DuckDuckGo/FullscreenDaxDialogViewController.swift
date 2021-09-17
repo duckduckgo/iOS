@@ -87,8 +87,10 @@ class FullscreenDaxDialogViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        if segue.destination is DaxDialogViewController {
-            daxDialogViewController = segue.destination as? DaxDialogViewController
+        
+        if let daxDialog = segue.destination as? DaxDialogViewController {
+            daxDialogViewController = daxDialog
+            highlightCutOutView.addGestureRecognizer(daxDialog.tapToCompleteGestureRecognizer)
         }
     }
     

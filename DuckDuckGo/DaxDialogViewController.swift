@@ -74,6 +74,8 @@ class DaxDialogViewController: UIViewController {
         return position >= chars.count
     }
     
+    var isFinished: Bool { atEnd(position) }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

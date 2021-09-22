@@ -350,6 +350,7 @@
 		986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DA94924884B18004A7E39 /* WebViewTransition.swift */; };
 		98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98728E812417E3300033960E /* BrokenSiteInfo.swift */; };
 		9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */; };
+		98733E5D26FB354300521D94 /* TrackerAllowlistReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98733E5C26FB354300521D94 /* TrackerAllowlistReferenceTests.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
 		9875E00722316B8400B1373F /* Instruments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9875E00622316B8400B1373F /* Instruments.swift */; };
 		9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B75D2232B36900D81D9F /* TabInstrumentation.swift */; };
@@ -1580,6 +1581,7 @@
 		98710C7C24A518CA0049F515 /* HTTPSUpgrade 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "HTTPSUpgrade 2.xcdatamodel"; sourceTree = "<group>"; };
 		98728E812417E3300033960E /* BrokenSiteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteInfo.swift; sourceTree = "<group>"; };
 		9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPreviewsSource.swift; sourceTree = "<group>"; };
+		98733E5C26FB354300521D94 /* TrackerAllowlistReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAllowlistReferenceTests.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
 		9875E00622316B8400B1373F /* Instruments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruments.swift; sourceTree = "<group>"; };
 		98763201251EAC3400FE6FFA /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2776,6 +2778,7 @@
 				985CA1F326CD3D40001325DB /* ContentBlockerRulesUserScriptsTests.swift */,
 				98A69A7226D70D9600370512 /* SurrogatesUserScriptTests.swift */,
 				9877BDB226D3190000002D51 /* ContentBlockerReferenceTests.swift */,
+				98733E5C26FB354300521D94 /* TrackerAllowlistReferenceTests.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -4663,6 +4666,7 @@
 				859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
+				98733E5D26FB354300521D94 /* TrackerAllowlistReferenceTests.swift in Sources */,
 				985CA1F426CD3D40001325DB /* ContentBlockerRulesUserScriptsTests.swift in Sources */,
 				4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,

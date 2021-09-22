@@ -1,5 +1,5 @@
 //
-//  ContentBlockerReferenceTests.swift
+//  TrackerAllowlistReferenceTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -25,7 +25,21 @@ import TrackerRadarKit
 @testable import Core
 @testable import DuckDuckGo
 
-class ContentBlockerReferenceTests: XCTestCase {
+struct AllowlistTests: Decodable {
+
+    struct Test: Decodable {
+
+        let description: String
+        let site: String
+        let request: String
+        let isAllowlisted: Bool
+
+    }
+
+    let domainTests: [Test]
+}
+
+class TrackerAllowlistReferenceTests: XCTestCase {
 
     let schemeHandler = TestSchemeHandler()
     let userScriptDelegateMock = MockRulesUserScriptDelegate()
@@ -33,7 +47,7 @@ class ContentBlockerReferenceTests: XCTestCase {
 
     var webView: WKWebView!
     var tds: TrackerData!
-    var tests = [RefTests.Test]()
+    var tests = [AllowlistTests.Test]()
 
     override func setUp() {
         super.setUp()
@@ -87,16 +101,16 @@ class ContentBlockerReferenceTests: XCTestCase {
         }
     }
 
-    func testDomainMatching() throws {
+    func testDomainAllowlist() throws {
 
         let data = JsonTestDataLoader()
         let trackerJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/tracker_radar_reference.json")
-        let testJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/domain_matching_tests.json")
+        let testJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/tracker_allowlist_matching_tests.json")
 
         tds = try JSONDecoder().decode(TrackerData.self, from: trackerJSON)
 
-        let refTests = try JSONDecoder().decode(RefTests.self, from: testJSON)
-        tests = refTests.domainTests.tests
+        let refTests = try JSONDecoder().decode(Array<AllowlistTests.Test>.self, from: testJSON)
+        tests = refTests
 
         let testsExecuted = expectation(description: "tests executed")
         testsExecuted.expectedFulfillmentCount = tests.count
@@ -119,32 +133,13 @@ class ContentBlockerReferenceTests: XCTestCase {
             return
         }
 
-        let skip = test.exceptPlatforms?.contains("ios-browser")
-        if skip == true {
-            os_log("!!SKIPPING TEST: %s", test.name)
-            onTestExecuted.fulfill()
-            DispatchQueue.main.async {
-                self.popTestAndExecute(onTestExecuted: onTestExecuted)
-            }
-            return
-        }
+        os_log("TEST: %s", test.description)
 
-        os_log("TEST: %s", test.name)
+        let siteURL = URL(string: test.site.replacingOccurrences(of: "https://", with: "test://"))!
+        let requestURL = URL(string: test.request.replacingOccurrences(of: "https://", with: "test://"))!
 
-        let siteURL = URL(string: test.siteURL.replacingOccurrences(of: "https://", with: "test://"))!
-        let requestURL = URL(string: test.requestURL.replacingOccurrences(of: "https://", with: "test://"))!
-
-        let resource: MockWebsite.EmbeddedResource
-        if test.requestType == "image" {
-            resource = MockWebsite.EmbeddedResource(type: .image,
-                                                    url: requestURL.appendingPathComponent("1.png"))
-        } else if test.requestType == "script" {
-            resource = MockWebsite.EmbeddedResource(type: .script,
-                                                    url: requestURL.appendingPathComponent("1.js"))
-        } else {
-            XCTFail("Unknown request type: \(test.requestType) in test \(test.name)")
-            return
-        }
+        let resource = MockWebsite.EmbeddedResource(type: .script,
+                                                    url: requestURL)
 
         let mockWebsite = MockWebsite(resources: [resource])
 
@@ -161,7 +156,7 @@ class ContentBlockerReferenceTests: XCTestCase {
 
         navigationDelegateMock.onDidFinishNavigation = {
             os_log("Website loaded")
-            if test.expectAction == "block" {
+            if !test.isAllowlisted {
                 // Only website request
                 XCTAssertEqual(self.schemeHandler.handledRequests.count, 1)
                 // Only resource request
@@ -170,9 +165,9 @@ class ContentBlockerReferenceTests: XCTestCase {
                 if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
                     XCTAssert(tracker.blocked)
                 } else {
-                    XCTFail("Expected to detect tracker for test \(test.name)")
+                    XCTFail("Expected to detect tracker for test \(test.description)")
                 }
-            } else if test.expectAction == "ignore" {
+            } else {
                 // Website request & resource request
                 XCTAssertEqual(self.schemeHandler.handledRequests.count, 2)
 
@@ -187,14 +182,9 @@ class ContentBlockerReferenceTests: XCTestCase {
                     if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
                         XCTAssertFalse(tracker.blocked)
                     } else {
-                        XCTFail("Expected to detect tracker for test \(test.name)")
+                        XCTFail("Expected to detect tracker for test \(test.description)")
                     }
                 }
-
-            } else {
-                // Website request & resource request
-                XCTAssertEqual(self.schemeHandler.handledRequests.count, 2)
-                XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 0)
             }
 
             onTestExecuted.fulfill()
@@ -204,5 +194,6 @@ class ContentBlockerReferenceTests: XCTestCase {
         }
     }
     // swiftlint:enable function_body_length
-    
+
 }
+

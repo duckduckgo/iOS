@@ -26,4 +26,4 @@ GROUP_ID_PREFIX = group.com.duckduckgo
 CODE_SIGN_STYLE = Manual
 
 // The manualy specified provisioning profile
-PROVISIONING_PROFILE_SPECIFIER = iOS 14 - Dev - App
+PROVISIONING_PROFILE_SPECIFIER = Development - App

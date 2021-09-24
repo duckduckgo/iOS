@@ -239,13 +239,25 @@ extension TabViewController {
         let image = UIImage(named: "MenuEmail")!
 
         return BrowsingMenuEntry.regular(name: title, image: image) { [weak self] in
-            self?.emailManager.getAliasIfNeededAndConsume { alias, _ in
+            guard let emailManager = self?.emailManager else { return }
+
+            var pixelParameters: [String: String] = [:]
+
+            if let cohort = emailManager.cohort {
+                pixelParameters[PixelParameters.emailCohort] = cohort
+            }
+            pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
+            emailManager.updateLastUseDate()
+
+            Pixel.fire(pixel: .emailUserCreatedAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
+
+            emailManager.getAliasIfNeededAndConsume { alias, _ in
                 guard let alias = alias else {
                     // we may want to communicate this failure to the user in the future
                     return
                 }
                 let pasteBoard = UIPasteboard.general
-                pasteBoard.string = self?.emailManager.emailAddressFor(alias)
+                pasteBoard.string = emailManager.emailAddressFor(alias)
                 ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
             }
         }

@@ -64,11 +64,13 @@ class NetworkLeaderboard {
     }
     
     func reset() {
-        context.deleteAll(matching: PPTrackerNetwork.fetchRequest())
-        context.deleteAll(matching: PPPageStats.fetchRequest())
-        createNewPageStatsEntity()
-        try? context.save()
-        userDefaults.set(Constants.dataVersion, forKey: Constants.dataVersionKey)
+        context.performAndWait {
+            context.deleteAll(matching: PPTrackerNetwork.fetchRequest())
+            context.deleteAll(matching: PPPageStats.fetchRequest())
+            createNewPageStatsEntity()
+            try? context.save()
+            userDefaults.set(Constants.dataVersion, forKey: Constants.dataVersionKey)
+        }
     }
 
     func incrementPagesLoaded() {
@@ -126,21 +128,25 @@ class NetworkLeaderboard {
     }
     
     func incrementDetectionCount(forNetworkNamed networkName: String) {
-        guard let network = findNetwork(byName: networkName) else {
-            createNewNetworkEntity(named: networkName)
-            return
+        context.performAndWait {
+            guard let network = findNetwork(byName: networkName) else {
+                createNewNetworkEntity(named: networkName)
+                return
+            }
+            network.detectedOnCount += 1
+            try? context.save()
         }
-        network.detectedOnCount += 1
-        try? context.save()
     }
     
     func incrementTrackersCount(forNetworkNamed networkName: String) {
-        guard let network = findNetwork(byName: networkName) else {
-            createNewNetworkEntity(named: networkName)
-            return
+        context.performAndWait {
+            guard let network = findNetwork(byName: networkName) else {
+                createNewNetworkEntity(named: networkName)
+                return
+            }
+            network.trackersCount += 1
+            try? context.save()
         }
-        network.trackersCount += 1
-        try? context.save()
     }
     
     private func createNewNetworkEntity(named networkName: String) {

@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "bartek/email-pixels",
-          "revision": "36634231d345e1de394ea2e48c0a44ceff0c14a8",
-          "version": null
+          "branch": null,
+          "revision": "d4d89f868f88b9122e456db88b520a421b27be4c",
+          "version": "7.1.4"
         }
       },
       {

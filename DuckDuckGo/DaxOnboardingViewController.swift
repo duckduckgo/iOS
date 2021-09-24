@@ -78,8 +78,9 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
-        if let controller = segue.destination as? DaxDialogViewController {
-            self.daxDialog = controller
+        if let daxDialog = segue.destination as? DaxDialogViewController {
+            self.daxDialog = daxDialog
+            view.addGestureRecognizer(daxDialog.tapToCompleteGestureRecognizer)
         } else if let controller = segue.destination as? DaxOnboardingPadViewController {
             controller.delegate = self
         } else if let navController = segue.destination as? UINavigationController,

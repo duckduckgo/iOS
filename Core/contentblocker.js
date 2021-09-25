@@ -498,10 +498,16 @@ _utf8_encode : function (string) {
       let partialDomain = domainParts.join(".")
 
       unprotectedDomain = `
-          ${unprotectedDomains}
+          ${tempUnprotectedDomains}
           `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
 
       domainParts.shift()
+    }
+
+    if (!unprotectedDomain && topLevelUrl.host != null) {
+      unprotectedDomain = `
+          ${userUnprotectedDomains}
+          `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
     }
 
     // private
@@ -564,11 +570,13 @@ _utf8_encode : function (string) {
                 loadedSurrogates[result.matchedRule.surrogate] = true
             }
             
+            const pageUrl = window.location.href
             surrogateInjected({
                 url: trackerUrl,
                 blocked: blocked,
                 reason: result.reason,
-                isSurrogate: isSurrogate
+                isSurrogate: isSurrogate,
+                pageUrl: pageUrl
             })
 
             duckduckgoDebugMessaging.signpostEvent({event: "Surrogate Injected",

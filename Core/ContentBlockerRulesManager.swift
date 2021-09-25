@@ -22,6 +22,12 @@ import WebKit
 import os.log
 import TrackerRadarKit
 
+public struct ContentBlockerProtectionChangedNotification {
+    public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
+
+    public static let diffKey = "ContentBlockingDiff"
+}
+
 // swiftlint:disable type_body_length
 public class ContentBlockerRulesManager {
     
@@ -124,10 +130,10 @@ public class ContentBlockerRulesManager {
         }
         
         var tempSites: (sites: [String]?, etag: String)?
-        if let etag = tempSitesEtag, etag != etagForFailedTempListCompilation {
+        if tempSitesEtag != etagForFailedTempListCompilation {
             let tempUnprotectedDomains = dataSource.tempList
             if !tempUnprotectedDomains.isEmpty {
-                tempSites = (tempUnprotectedDomains, etag)
+                tempSites = (tempUnprotectedDomains, tempSitesEtag)
                 
                 // In case we had an error last time, clear it and retry to re-fetch TDS
                 if etagForFailedTempListCompilation != nil {
@@ -244,7 +250,11 @@ public class ContentBlockerRulesManager {
                            error: error)
             } else {
                 // We failed for embedded data, this is unlikely.
-                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed) { _ in
+                // Include description - why built-in version of the TDS has failed to compile?
+                let error = error as NSError
+                let errorDesc = (error.userInfo[NSHelpAnchorErrorKey] as? String) ?? "missing"
+                let params = [PixelParameters.errorDescription: errorDesc.isEmpty ? "empty" : errorDesc]
+                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed, error: error, withAdditionalParameters: params) { _ in
                     fatalError("Could not compile embedded rules list")
                 }
             }

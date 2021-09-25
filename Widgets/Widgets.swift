@@ -98,7 +98,7 @@ struct Provider: TimelineProvider {
 
         guard let data = (try? Data(contentsOf: imageUrl)) else { return nil }
 
-        return UIImage(data: data)
+        return UIImage(data: data)?.toSRGB()
     }
 
 }
@@ -150,6 +150,16 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
+    }
+
+}
+
+extension UIImage {
+
+    func toSRGB() -> UIImage {
+        UIGraphicsImageRenderer(size: size).image { _ in
+            draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 
 }

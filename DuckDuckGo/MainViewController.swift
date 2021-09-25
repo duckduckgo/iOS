@@ -677,7 +677,7 @@ class MainViewController: UIViewController {
     }
     
     private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
+        omniBar.updateSiteRating(siteRating, with: PrivacyConfigurationManager.shared.privacyConfig)
     }
 
     func dismissOmniBar() {

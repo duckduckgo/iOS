@@ -1,5 +1,5 @@
 //
-//  PrivacyProtectionInfoDisplaying.swift
+//  DomainsProtectionStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,10 +17,13 @@
 //  limitations under the License.
 //
 
-import Core
+import Foundation
 
-protocol PrivacyProtectionInfoDisplaying {
+public protocol DomainsProtectionStore: AnyObject {
 
-    func using(siteRating: SiteRating, config: PrivacyConfiguration)
+    var unprotectedDomains: Set<String> { get }
 
+    func disableProtection(forDomain domain: String)
+
+    func enableProtection(forDomain domain: String)
 }

@@ -94,6 +94,11 @@ class ActionSheetDaxDialogViewController: UIViewController {
     }
 
     @IBAction func onTapOutside(_ sender: Any) {
+        guard daxDialogViewController?.isFinished ?? true else {
+            daxDialogViewController?.finish()
+            return
+        }
+        
         self.dismiss(animated: true)
         if let spec = spec {
             Pixel.fire(pixel: spec.cancelActionPixelName)

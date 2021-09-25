@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -161,7 +161,7 @@ DuckDuckGo!</string>
             <objects>
                 <viewController storyboardIdentifier="DaxDialog" id="UUS-R7-a2i" customClass="DaxDialogViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="im0-JF-Sin">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UzU-6y-Vfa">
@@ -173,7 +173,7 @@ DuckDuckGo!</string>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ix6-dq-RAh" userLabel="Background">
-                                <rect key="frame" x="10" y="82" width="355" height="318"/>
+                                <rect key="frame" x="10" y="82" width="355" height="113"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDm-rv-vek">
                                         <rect key="frame" x="16" y="10" width="323" height="22"/>
@@ -189,7 +189,7 @@ DuckDuckGo!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-F9-L48">
-                                        <rect key="frame" x="16" y="250" width="323" height="44"/>
+                                        <rect key="frame" x="16" y="45" width="323" height="44"/>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Gta-qP-xcx"/>
@@ -222,9 +222,6 @@ DuckDuckGo!</string>
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="1gA-Oe-qi9" appends="YES" id="2hE-O7-Jy6"/>
-                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh6-ce-Ivv" userLabel="Pointer">
                                 <rect key="frame" x="56.5" y="77" width="10" height="10"/>
@@ -251,12 +248,16 @@ DuckDuckGo!</string>
                             <constraint firstItem="Ix6-dq-RAh" firstAttribute="width" secondItem="im0-JF-Sin" secondAttribute="width" constant="-20" id="ifK-1a-KrV"/>
                             <constraint firstItem="Ix6-dq-RAh" firstAttribute="centerX" secondItem="im0-JF-Sin" secondAttribute="centerX" id="sl4-7u-0ho"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="1gA-Oe-qi9" appends="YES" id="QQQ-bZ-CVH"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="button" destination="zJt-F9-L48" id="RMQ-DD-jZK"/>
                         <outlet property="icon" destination="UzU-6y-Vfa" id="h5u-VZ-4uc"/>
                         <outlet property="label" destination="UDm-rv-vek" id="E3z-rn-qvh"/>
                         <outlet property="pointer" destination="eh6-ce-Ivv" id="Pyj-WK-6C6"/>
+                        <outlet property="tapToCompleteGestureRecognizer" destination="o8q-3z-33o" id="VHC-Wy-gPT"/>
                         <outlet property="textArea" destination="Ix6-dq-RAh" id="UTU-sm-jn7"/>
                         <outlet property="topSpacing" destination="Gmu-7B-dTI" id="8mg-Zw-YAm"/>
                     </connections>
@@ -264,12 +265,12 @@ DuckDuckGo!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61G-0Y-elT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="1gA-Oe-qi9">
                     <connections>
-                        <action selector="onTapText" destination="UUS-R7-a2i" id="QGR-gw-YBK"/>
+                        <action selector="onTap" destination="UUS-R7-a2i" id="rL5-bR-JzA"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="IpT-mY-clw">
+                <tapGestureRecognizer id="o8q-3z-33o">
                     <connections>
-                        <action selector="onTapText" destination="UUS-R7-a2i" id="E04-X1-lJT"/>
+                        <action selector="onTap" destination="UUS-R7-a2i" id="Eh7-ke-WPO"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -442,7 +443,7 @@ DuckDuckGo!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="x63-BY-KWY"/>
+        <segue reference="Z8u-vf-YsD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>

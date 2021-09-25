@@ -58,9 +58,9 @@ public class SiteRatingView: UIView {
         
     }
 
-    public func update(siteRating: SiteRating?, with storageCache: StorageCache?) {
+    public func update(siteRating: SiteRating?, with config: PrivacyConfiguration?) {
         self.siteRating = siteRating
-        refresh(with: storageCache)
+        refresh(with: config)
     }
     
     private func resetSiteRatingImage() {
@@ -68,8 +68,8 @@ public class SiteRatingView: UIView {
                                                                               iconSize: circleIndicator.bounds.size)
     }
 
-    public func refresh(with storageCache: StorageCache?) {
-        guard let storageCache = storageCache,
+    public func refresh(with config: PrivacyConfiguration?) {
+        guard let config = config,
             let siteRating = siteRating else {
             resetSiteRatingImage()
             return
@@ -86,7 +86,7 @@ public class SiteRatingView: UIView {
                                                                                   iconSize: circleIndicator.bounds.size)
         case .ready:
             let grades = siteRating.scores
-            let grade = storageCache.protectionStore.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
+            let grade = config.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
             circleIndicator.accessibilityLabel = UserText.privacyGrade(grade.grade.rawValue.uppercased())

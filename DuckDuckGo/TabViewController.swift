@@ -72,7 +72,6 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private let contentBlockerProtection: ContentBlockerProtectionStore = ContentBlockerProtectionUserDefaults()
     private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
@@ -159,7 +158,7 @@ class TabViewController: UIViewController {
     
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
-    private var contentBlockerScript = ContentBlockerUserScript()
+    private var surrogatesScript = SurrogatesUserScript()
     private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var fingerprintScript = FingerprintUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -229,7 +228,7 @@ class TabViewController: UIViewController {
             debugScript,
             findInPageScript,
             navigatorPatchScript,
-            contentBlockerScript,
+            surrogatesScript,
             contentBlockerRulesScript,
             fingerprintScript,
             faviconScript,
@@ -253,8 +252,7 @@ class TabViewController: UIViewController {
         
         faviconScript.delegate = self
         debugScript.instrumentation = instrumentation
-        contentBlockerScript.storageCache = storageCache
-        contentBlockerScript.delegate = self
+        surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
@@ -1199,7 +1197,7 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        if !contentBlockerProtection.isProtected(domain: url.host) {
+        if !PrivacyConfigurationManager.shared.privacyConfig.isProtected(domain: url.host) {
             completion(allowPolicy)
             return
         }
@@ -1354,14 +1352,18 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension TabViewController: ContentBlockerUserScriptDelegate {
+extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: UserScript) -> Bool {
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: UserScript, detectedTracker tracker: DetectedTracker) {
+    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
+                                  detectedTracker tracker: DetectedTracker) {
+        userScriptDetectedTracker(tracker)
+    }
 
+    fileprivate func userScriptDetectedTracker(_ tracker: DetectedTracker) {
         if tracker.blocked && fireWoFollowUp {
             fireWoFollowUp = false
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
@@ -1383,12 +1385,23 @@ extension TabViewController: ContentBlockerUserScriptDelegate {
             NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
         }
     }
-    
-    func contentBlockerUserScript(_ script: ContentBlockerUserScript, detectedTracker tracker: DetectedTracker, withSurrogate host: String) {
-        siteRating?.surrogateInstalled(host)
-        contentBlockerUserScript(script, detectedTracker: tracker)
+}
+
+extension TabViewController: SurrogatesUserScriptDelegate {
+
+    func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
+        return siteRating?.isFor(self.url) ?? false
     }
-    
+
+    func surrogatesUserScript(_ script: SurrogatesUserScript,
+                              detectedTracker tracker: DetectedTracker,
+                              withSurrogate host: String) {
+        if siteRating?.url.absoluteString == tracker.pageUrl {
+            siteRating?.surrogateInstalled(host)
+        }
+        userScriptDetectedTracker(tracker)
+    }
+
 }
 
 extension TabViewController: FaviconUserScriptDelegate {
@@ -1431,18 +1444,27 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
             if let userEmail = emailManager.userEmail {
                 let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
                 alert.addAction(title: actionTitle) {
-                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includeATB: false)
+                    pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
+                    emailManager.updateLastUseDate()
+
+                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includedParameters: [])
+
                     completionHandler(.user)
                 }
             }
 
             alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includeATB: false)
+                pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
+                emailManager.updateLastUseDate()
+
+                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
+
                 completionHandler(.generated)
             }
 
             alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includeATB: false)
+                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
+
                 completionHandler(.none)
             }
 

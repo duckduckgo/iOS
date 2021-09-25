@@ -271,6 +271,16 @@ class TabViewController: UIViewController {
         shouldReloadOnError = true
     }
 
+    func resetWebView(with configuration: WKWebViewConfiguration) {
+        let currentURL = webView.url
+
+        webView.removeFromSuperview()
+        webView = nil
+
+        let request = currentURL == nil ? nil : URLRequest(url: url!)
+        attachWebView(configuration: configuration, andLoadRequest: request, consumeCookies: true)
+    }
+
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {

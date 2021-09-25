@@ -248,11 +248,24 @@ extension TabManager {
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onWebViewSettingsChanged),
+                                               name: AdvancedSettings.Notifications.autoplayMediaDidChange,
+                                               object: nil)
     }
 
     @objc
     private func onApplicationBecameActive(_ notification: NSNotification) {
         assertTabPreviewCount()
+    }
+
+    @objc
+    private func onWebViewSettingsChanged(_ notification: NSNotification) {
+        for tabViewController in tabControllerCache {
+            let configuration = WKWebViewConfiguration.persistent()
+            tabViewController.resetWebView(with: configuration)
+        }
     }
 
     private func assertTabPreviewCount() {

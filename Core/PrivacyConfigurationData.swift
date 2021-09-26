@@ -18,59 +18,141 @@
 //
 
 import Foundation
+import UIKit
 
 // swiftlint:disable nesting
-public struct PrivacyConfigurationData: Codable {
+public struct PrivacyConfigurationData {
+
     public typealias FeatureName = String
-    public typealias UnprotectedList = [ExceptionEntry]
 
-    public let features: [FeatureName: PrivacyFeature]
-    public let unprotectedTemporary: UnprotectedList
-
-    public init(features: [String: PrivacyFeature], unprotectedTemporary: [ExceptionEntry]) {
-        self.features = features
-        self.unprotectedTemporary = unprotectedTemporary
-    }
-
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String {
         case features
         case unprotectedTemporary
+        case trackerAllowlist
     }
 
-    public struct PrivacyFeature: Codable {
+    public let features: [FeatureName: PrivacyFeature]
+    public let trackerAllowlist: TrackerAllowlist
+    public let unprotectedTemporary: [ExceptionEntry]
+
+    public init(json: [String: Any]) {
+
+        if let tempListData = json[CodingKeys.unprotectedTemporary.rawValue] as? [[String: String]] {
+            unprotectedTemporary = tempListData.compactMap({ ExceptionEntry(json: $0) })
+        } else {
+            unprotectedTemporary = []
+        }
+
+        if var featuresData = json[CodingKeys.features.rawValue] as? [String: Any] {
+            var features = [FeatureName: PrivacyFeature]()
+
+            if let allowlistEntry = featuresData[CodingKeys.trackerAllowlist.rawValue] as? [String: Any] {
+                if let allowlist = TrackerAllowlist(json: allowlistEntry) {
+                    self.trackerAllowlist = allowlist
+                } else {
+                    self.trackerAllowlist = TrackerAllowlist(state: "disabled", exceptions: [])
+                }
+                featuresData.removeValue(forKey: CodingKeys.trackerAllowlist.rawValue)
+            } else {
+                self.trackerAllowlist = TrackerAllowlist(state: "disabled", exceptions: [])
+            }
+
+            for featureEntry in featuresData {
+
+                guard let featureData = featureEntry.value as? [String: Any],
+                      let feature = PrivacyFeature(json: featureData) else { continue }
+                features[featureEntry.key] = feature
+            }
+            self.features = features
+        } else {
+            self.features = [:]
+            self.trackerAllowlist = TrackerAllowlist(state: "disabled", exceptions: [])
+        }
+    }
+
+    public init(features: [FeatureName: PrivacyFeature], unprotectedTemporary: [ExceptionEntry]) {
+        self.features = features
+        self.unprotectedTemporary = unprotectedTemporary
+        self.trackerAllowlist = TrackerAllowlist(state: "disabled", exceptions: [])
+    }
+
+    public class PrivacyFeature {
         public typealias FeatureState = String
         public typealias ExceptionList = [ExceptionEntry]
-        public typealias FeatureSettings = [String: String]
+        public typealias FeatureSettings = [String: Any]
+
+        enum CodingKeys: String {
+            case state
+            case exceptions
+            case settings
+        }
 
         public let state: FeatureState
         public let exceptions: ExceptionList
+        public let settings: FeatureSettings
 
-        public init(state: String, exceptions: [ExceptionEntry]) {
+        public init?(json: [String: Any]) {
+            guard let state = json[CodingKeys.state.rawValue] as? String else { return nil }
             self.state = state
-            self.exceptions = exceptions
+
+            if let exceptionsData = json[CodingKeys.exceptions.rawValue] as? [[String: String]] {
+                self.exceptions = exceptionsData.compactMap({ ExceptionEntry(json: $0) })
+            } else {
+                self.exceptions = []
+            }
+
+            self.settings = (json[CodingKeys.settings.rawValue] as? [String: Any]) ?? [:]
         }
 
-        enum CodingKeys: String, CodingKey {
-            case state
-            case exceptions
+        public init(state: String, exceptions: [ExceptionEntry], settings: [String: Any] = [:]) {
+            self.state = state
+            self.exceptions = exceptions
+            self.settings = settings
         }
     }
 
-    public struct ExceptionEntry: Codable {
+    public class TrackerAllowlist: PrivacyFeature {
+
+        public typealias Entry = (rule: String, domains: [String])
+
+        var entries: [Entry] {
+            guard let trackers = settings["allowlistedTrackers"] as? [String: [String: [Any]]] else { return [] }
+
+            var result = [Entry]()
+            for (_, tracker) in trackers {
+                if let rules = tracker["rules"] as? [ [String: Any] ] {
+                    result.append(contentsOf: rules.compactMap { ruleDict -> Entry? in
+                        guard let rule = ruleDict["rule"] as? String, let domains = ruleDict["domains"] as? [String] else { return nil }
+
+                        return Entry(rule: rule, domains: domains)
+                    })
+                }
+            }
+
+            return result
+        }
+    }
+
+    public struct ExceptionEntry {
         public typealias ExcludedDomain = String
         public typealias ExclusionReason = String
+
+        enum CodingKeys: String {
+            case domain
+            case reason
+        }
 
         public let domain: ExcludedDomain
         public let reason: ExclusionReason?
 
+        public init?(json: [String: String]) {
+            guard let domain = json[CodingKeys.domain.rawValue] else { return nil }
+            self.init(domain: domain, reason: json[CodingKeys.reason.rawValue])
+        }
+
         public init(domain: String, reason: String?) {
             self.domain = domain
             self.reason = reason
-        }
-
-        enum CodingKeys: String, CodingKey {
-            case domain
-            case reason
         }
     }
 }

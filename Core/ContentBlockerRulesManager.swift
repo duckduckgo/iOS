@@ -171,7 +171,7 @@ public class ContentBlockerRulesManager {
                         self.workQueue.async {
                             self.compile(tds: tds.tds, tdsEtag: tds.etag,
                                          tempList: tempSites?.sites, tempListEtag: tempSites?.etag,
-                                         unprotectedSites: unprotectedSites, identifier: identifier)
+                                         unprotectedSites: unprotectedSites, trackerAllowlist: [], identifier: identifier)
                         }
                     }
                 })
@@ -179,7 +179,7 @@ public class ContentBlockerRulesManager {
         } else {
             compile(tds: tds.tds, tdsEtag: tds.etag,
                     tempList: tempSites?.sites, tempListEtag: tempSites?.etag,
-                    unprotectedSites: unprotectedSites, identifier: identifier)
+                    unprotectedSites: unprotectedSites, trackerAllowlist: [], identifier: identifier)
         }
     }
     // swiftlint:enable function_body_length
@@ -188,6 +188,7 @@ public class ContentBlockerRulesManager {
     fileprivate func compile(tds: TrackerData, tdsEtag: String,
                              tempList: [String]?, tempListEtag: String?,
                              unprotectedSites: [String]?,
+                             trackerAllowlist: [TrackerException],
                              identifier: ContentBlockerRulesIdentifier) {
         os_log("Starting CBR compilation", log: generalLog, type: .default)
 
@@ -371,7 +372,7 @@ extension ContentBlockerRulesManager {
         let id = ContentBlockerRulesIdentifier(identifier: "\"\(UUID().uuidString)\"\"\"")!
         cbrm.compile(tds: embedded.tds, tdsEtag: embedded.etag,
                      tempList: nil, tempListEtag: nil,
-                     unprotectedSites: nil, identifier: id)
+                     unprotectedSites: nil, trackerAllowlist: [], identifier: id)
         
         return cbrm
     }

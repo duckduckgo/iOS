@@ -26,6 +26,7 @@
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
+		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
@@ -725,6 +726,7 @@
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
+		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
@@ -3279,6 +3281,7 @@
 				850559CF23CF647C0055C0D5 /* PreserveLogins.swift */,
 				4B75EA9126A266CB00018634 /* PrintingUserScript.swift */,
 				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
+				1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */,
 				836A941C247F23C600BF8EF5 /* UserAgentManager.swift */,
 				F1A886771F29394E0096251E /* WebCacheManager.swift */,
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
@@ -4869,6 +4872,7 @@
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				98DA35C7268CDA3B00159906 /* TrackerResolver.swift in Sources */,
+				1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */,
 				98ECDD172707168C00FF141C /* ContentBlockerRulesSourceManager.swift in Sources */,

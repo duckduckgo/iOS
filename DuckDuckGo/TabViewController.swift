@@ -167,6 +167,7 @@ class TabViewController: UIViewController {
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var printingUserScript = PrintingUserScript()
+    private var textSizeUserScript = TextSizeUserScript()
     private var autofillUserScript = AutofillUserScript()
     private var debugScript = DebugUserScript()
 
@@ -238,7 +239,8 @@ class TabViewController: UIViewController {
             faviconScript,
             fullScreenVideoScript,
             autofillUserScript,
-            printingUserScript
+            printingUserScript,
+            textSizeUserScript
         ]
         
         if #available(iOS 13, *) {

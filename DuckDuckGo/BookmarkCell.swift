@@ -69,6 +69,7 @@ class BookmarkCell: UITableViewCell {
         }
     }
     
+    //TODO I'm pretty sure this isn't a thing we ever need?
     var depth: Int = 0 {
         didSet {
             let paddingDepth = min(depth, 10)
@@ -82,7 +83,6 @@ class BookmarkCell: UITableViewCell {
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        linkImage.isHidden = editing
         super.setEditing(editing, animated: animated)
     }
 

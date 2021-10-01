@@ -42,7 +42,7 @@ protocol MainBookmarksViewDataSource: UITableViewDataSource {
     func item(at indexPath: IndexPath) -> BookmarkItem?
 }
 
-protocol FolderDetailsDataSource: UITableViewDataSource {
+protocol BookmarkItemDetailsDataSource: UITableViewDataSource {
     func select(_ tableView: UITableView, indexPath: IndexPath)
     func save(_ tableView: UITableView)
 }
@@ -50,7 +50,7 @@ protocol FolderDetailsDataSource: UITableViewDataSource {
 //Todo I should just not have this? It's sort of stupid...
 //yeah, only the actual bookmark data source (favourites, bookmarks, folders) should share a common source and maybe some kind of view controller mechanism (but even then probably get rid of the shared view controller at least for now?)
 //e.g. edit folder view should defo have a different view controller chain
-class BookmarksDataSource: NSObject {
+class BookmarksDataSource: NSObject, UITableViewDataSource {
     
     //TODO should inject bookmarksManager properly
     fileprivate var dataSources: [BookmarksSectionDataSource] = []
@@ -61,9 +61,6 @@ class BookmarksDataSource: NSObject {
         }
     }
     
-}
-
-extension BookmarksDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }

@@ -58,6 +58,6 @@ class AddOrEditBookmarkViewController: UIViewController {
     
     @IBAction func onDonePressed(_ sender: Any) {
         foldersViewController?.save()
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }

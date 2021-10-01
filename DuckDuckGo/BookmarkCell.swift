@@ -30,8 +30,6 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
     @IBOutlet weak var disclosureImage: UIImageView!
     
-    @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
-
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
 //    var link: Link? {
@@ -66,14 +64,6 @@ class BookmarkCell: UITableViewCell {
                 numberOfChildrenLabel.text = folder.children.count.description
                 linkImage.image = #imageLiteral(resourceName: "Folder")
             }
-        }
-    }
-    
-    //TODO I'm pretty sure this isn't a thing we ever need?
-    var depth: Int = 0 {
-        didSet {
-            let paddingDepth = min(depth, 10)
-            leadingPaddingConstraint.constant = CGFloat(paddingDepth) * 16.0
         }
     }
 

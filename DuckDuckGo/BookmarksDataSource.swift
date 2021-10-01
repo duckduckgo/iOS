@@ -70,7 +70,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return dataSources[section].title
+        return dataSources[section].title()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,16 +106,16 @@ enum BookmarksSection {
 //Okay, lets just ditch this whole thing :(
 protocol BookmarksSectionDataSource {
     
-    var title: String? { get }
     var numberOfRows: Int { get }
     
     func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell
+    func title() -> String?
         
 }
 
 extension BookmarksSectionDataSource {
     
-    var title: String? {
+    func title() -> String? {
         return nil
     }
     
@@ -136,6 +136,7 @@ protocol BookmarkItemsSectionDataSource: BookmarksSectionDataSource {
     
 }
 
+//TODO none of this needs this visible bookmark thing...
 extension BookmarkItemsSectionDataSource {
     
     func canEditRow(_ tableView: UITableView, at index: Int) -> Bool {
@@ -160,7 +161,6 @@ extension BookmarkItemsSectionDataSource {
         }
 
         cell.bookmarkItem = item?.item
-        cell.depth = item?.depth ?? 0
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor

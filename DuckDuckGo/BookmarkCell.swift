@@ -30,6 +30,7 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
     @IBOutlet weak var disclosureImage: UIImageView!
     
+    @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
 //    var link: Link? {
@@ -48,6 +49,7 @@ class BookmarkCell: UITableViewCell {
             if let bookmark = bookmarkItem as? Bookmark {
                 disclosureImage.isHidden = true
                 numberOfChildrenLabel.isHidden = true
+                imageWidthConstraint.constant = 24
                 imageHeightConstraint.constant = 24
                 if let linkTitle = bookmark.title?.trimWhitespace(), !linkTitle.isEmpty {
                     title.text = linkTitle
@@ -57,7 +59,8 @@ class BookmarkCell: UITableViewCell {
                 linkImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
             } else if let folder = bookmarkItem as? BookmarkFolder {
                 //TODO
-                imageHeightConstraint.constant = 22
+                imageWidthConstraint.constant = 22
+                imageHeightConstraint.constant = 20
                 disclosureImage.isHidden = false
                 numberOfChildrenLabel.isHidden = false
                 title.text = folder.title

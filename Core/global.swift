@@ -25,7 +25,7 @@ public let isDebugBuild = true
 public let isDebugBuild = false
 #endif
 
-struct Global {
+public struct Global {
     public static let groupIdPrefix: String = {
         let groupIdPrefixKey = "DuckDuckGoGroupIdentifierPrefix"
         guard let groupIdPrefix = Bundle.main.object(forInfoDictionaryKey: groupIdPrefixKey) as? String else {

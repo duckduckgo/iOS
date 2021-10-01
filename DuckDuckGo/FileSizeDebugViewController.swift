@@ -160,7 +160,7 @@ class FileSizeDebugViewController: UITableViewController {
     }
 }
 
-extension URL {
+fileprivate extension URL {
     
     var isDirectory: Bool {
         let urlForDirectory = (try? resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false

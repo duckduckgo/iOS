@@ -78,13 +78,29 @@ class BookmarksManager {
     
     //TODO how are we going to handle rearranging?
     
-    public func update(folderID: NSManagedObjectID, newTitle: String?, newParent: BookmarkFolder) {
-        coreDataStorage.update(folderID: folderID, newTitle: newTitle, newParent: newParent)
+    func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
+        coreDataStorage.update(folderID: folderID, newTitle: newTitle, newParentID: newParentID)
     }
     
-    //TODO should it be possible to save with no title?
-    func saveNewFolder(withTitle title: String?, parent: BookmarkFolder) {
-        coreDataStorage.saveNewFolder(withTitle: title, parent: parent)
+    func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
+        coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID)
+    }
+    
+    func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
+        coreDataStorage.update(favoriteID: favoriteID, newTitle: newTitle, newURL: newURL)
+    }
+    
+    func saveNewFavorite(withTitle title: String, url: URL) {
+        coreDataStorage.saveNewFavorite(withTitle: title, url: url)
+    }
+    
+    //TODO not really sure if we should be using IDs at this level or not... we'll see
+    func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
+        coreDataStorage.update(bookmarkID: bookmarkID, newTitle: newTitle, newURL: newURL, newParentID: newParentID)
+    }
+    
+    func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
+        coreDataStorage.saveNewBookmark(withTitle: title, url: url, parentID: parentID)
     }
 
 //    func bookmarkItem(atIndex index: Int) -> BookmarkItem? {

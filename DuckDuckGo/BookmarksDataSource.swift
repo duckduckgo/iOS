@@ -574,14 +574,14 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
             return
         }
         let detailsDataSource = dataSources[0] as! BookmarksFolderDetailsSectionDataSource
-        let title = detailsDataSource.folderTitle(tableView, section: 0)
+        let title = detailsDataSource.folderTitle(tableView, section: 0)! //TODO !
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()
         
         if let folder = existingFolder {
-            manager.update(folderID: folder.objectID, newTitle: title, newParent: selectedParent)
+            manager.update(folderID: folder.objectID, newTitle: title, newParentID: selectedParent.objectID)
         } else {
-            manager.saveNewFolder(withTitle: title, parent: selectedParent)
+            manager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID)
         }
         
         //TODO on save, any number of views might have to change...
@@ -618,22 +618,21 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
             return
         }
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
-        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)
+        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)! // TODO
         let urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0)
+        let url = URL(string: urlString ?? "")!
         //TODO what should we do if the url is invalid
+        // original has some interesting logic in EditBookmarkAlert. We should copy it...
+        //TODO what should we do if the url is invalid
+        //it only lets save if can create url, we should do same
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()
         
         if let bookmark = existingBookmark {
-            //TODO
+            manager.update(bookmarkID: bookmark.objectID, newTitle: title, newURL: url, newParentID: selectedParent.objectID)
         } else {
-            //TODO
+            manager.saveNewBookmark(withTitle: title, url: url, parentID: selectedParent.objectID)
         }
-        
-        //TODO on save, any number of views might have to change...
-        //hmmm, we gonna have to audit that...
-        //any instance of main bookmark view will need to
-        //For this particular one, I don't think anything else will have to?
     }
 }
 
@@ -653,16 +652,20 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
     
     func save(_ tableView: UITableView) {
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
-        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)
+        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)! //TODO !
         let urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0)
+        //TODO shouldn't be able to save if field blank
+        let url = URL(string: urlString ?? "")!
         //TODO what should we do if the url is invalid
+        // original has some interesting logic in EditBookmarkAlert. We should copy it...
+        
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()
         
         if let bookmark = existingBookmark {
-            //TODO
+            manager.update(favoriteID: bookmark.objectID, newTitle: title, newURL: url)
         } else {
-            //TODO
+            manager.saveNewFavorite(withTitle: title, url: url)
         }
     }
     

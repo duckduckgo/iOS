@@ -73,7 +73,6 @@ public class BookmarksCoreDataStorage {
     //TODO rearranging
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
-    //TODO optional title
     public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
         context.perform { [weak self] in
             guard let self = self else { return }
@@ -84,15 +83,17 @@ public class BookmarksCoreDataStorage {
                 return
             }
             
-            let parentMO = self.context.object(with: newParentID)
-            guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
-                assertionFailure("Failed to get new parent")
-                return
+            if folder.parent?.objectID != newParentID {
+                let parentMO = self.context.object(with: newParentID)
+                guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
+                    assertionFailure("Failed to get new parent")
+                    return
+                }
+                
+                folder.parent?.removeFromChildren(folder)
+                folder.parent = newParentMO
+                newParentMO.addToChildren(folder)
             }
-            
-            folder.parent?.removeFromChildren(folder)
-            folder.parent = newParentMO
-            newParentMO.addToChildren(folder)
             folder.title = newTitle
             
             do {
@@ -162,15 +163,18 @@ public class BookmarksCoreDataStorage {
                 return
             }
             
-            let parentMO = self.context.object(with: newParentID)
-            guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
-                assertionFailure("Failed to get new parent")
-                return
+            if bookmark.parent?.objectID != newParentID {
+                let parentMO = self.context.object(with: newParentID)
+                guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
+                    assertionFailure("Failed to get new parent")
+                    return
+                }
+                
+                bookmark.parent?.removeFromChildren(bookmark)
+                bookmark.parent = newParentMO
+                newParentMO.addToChildren(bookmark)
             }
             
-            bookmark.parent?.removeFromChildren(bookmark)
-            bookmark.parent = newParentMO
-            newParentMO.addToChildren(bookmark)
             bookmark.title = newTitle
             bookmark.url = newURL
             

@@ -28,7 +28,6 @@ public struct ContentBlockerProtectionChangedNotification {
     public static let diffKey = "ContentBlockingDiff"
 }
 
-// swiftlint:disable type_body_length
 public class ContentBlockerRulesManager {
     
     public typealias CompletionBlock = (WKContentRuleList?) -> Void
@@ -110,15 +109,15 @@ public class ContentBlockerRulesManager {
         
         performCompilation(isInitial: isInitial)
     }
-    
-    // swiftlint:disable function_body_length
+
     private func performCompilation(isInitial: Bool = false) {
         let input = inputManager.prepareInputs()
         
         if isInitial {
             // Delegate querying to main thread - crashes were observed in background.
             DispatchQueue.main.async {
-                WKContentRuleListStore.default()?.lookUpContentRuleList(forIdentifier: input.rulesIdentifier.stringValue, completionHandler: { ruleList, _ in
+                WKContentRuleListStore.default()?.lookUpContentRuleList(forIdentifier: input.rulesIdentifier.stringValue,
+                                                                        completionHandler: { ruleList, _ in
                     if let ruleList = ruleList {
                         self.compilationSucceeded(with: ruleList, for: input)
                     } else {
@@ -132,9 +131,7 @@ public class ContentBlockerRulesManager {
             compile(input: input)
         }
     }
-    // swiftlint:enable function_body_length
-    
-    // swiftlint:disable function_parameter_count
+
     fileprivate func compile(input: ContentBlockerRulesInputModel) {
         os_log("Starting CBR compilation", log: generalLog, type: .default)
 
@@ -185,7 +182,6 @@ public class ContentBlockerRulesManager {
         state = .recompiling
         lock.unlock()
     }
-    // swiftlint:enable function_parameter_count
     
     static func extractSurrogates(from tds: TrackerData) -> TrackerData {
         
@@ -276,7 +272,6 @@ public class ContentBlockerRulesManager {
     }
 
 }
-// swiftlint:enable type_body_length
 
 extension ContentBlockerRulesManager {
     
@@ -300,119 +295,4 @@ extension ContentBlockerRulesManager {
         shared = instance
     }
     
-}
-
-class ContentBlockerRulesInputIdentifiers {
-
-    let tdsIdentifier: String
-
-    var tempListIdentifier: String?
-
-    var unprotectedSitesIdentifier: String?
-
-    init(tdsIdentfier: String) {
-        self.tdsIdentifier = tdsIdentfier
-    }
-
-    var rulesIdentifier: ContentBlockerRulesIdentifier {
-        ContentBlockerRulesIdentifier(tdsEtag: tdsIdentifier,
-                                      tempListEtag: tempListIdentifier,
-                                      unprotectedSitesHash: unprotectedSitesIdentifier)
-    }
-}
-
-class ContentBlockerRulesInputModel: ContentBlockerRulesInputIdentifiers {
-
-    let tds: TrackerData
-
-    var tempList = [String]()
-
-    var unprotectedSites = [String]()
-
-    init(tdsIdentfier: String, tds: TrackerData) {
-        self.tds = tds
-        super.init(tdsIdentfier: tdsIdentfier)
-    }
-}
-
-class ContentBlockerRulesInputManager {
-
-    private let dataSource: ContentBlockerRulesSource
-
-    public private(set) var brokenInputs: ContentBlockerRulesInputIdentifiers?
-
-    init(dataSource: ContentBlockerRulesSource) {
-        self.dataSource = dataSource
-    }
-
-    func prepareInputs() -> ContentBlockerRulesInputModel {
-
-        // Fetch identifier up-front
-        let tempListIdentifier = dataSource.tempListEtag
-        let unprotectedSites = dataSource.unprotectedSites
-        let unprotectedSitesIdentifier = ContentBlockerRulesIdentifier.hash(domains: unprotectedSites)
-
-        // In case of any broken input that has been changed, reset the broken state and retry full compilation
-        if (brokenInputs?.tempListIdentifier != nil && brokenInputs?.tempListIdentifier != tempListIdentifier) ||
-            brokenInputs?.unprotectedSitesIdentifier != nil && brokenInputs?.unprotectedSitesIdentifier != unprotectedSitesIdentifier {
-            brokenInputs = nil
-        }
-
-        // Check which Tracker Data Set to use
-        let result: ContentBlockerRulesInputModel
-        if let trackerData = dataSource.trackerData,
-           trackerData.etag != brokenInputs?.tdsIdentifier {
-            result = ContentBlockerRulesInputModel(tdsIdentfier: trackerData.etag,
-                                                   tds: trackerData.tds)
-        } else {
-            result = ContentBlockerRulesInputModel(tdsIdentfier: dataSource.embeddedTrackerData.etag,
-                                                   tds: dataSource.embeddedTrackerData.tds)
-        }
-
-        if tempListIdentifier != brokenInputs?.tempListIdentifier {
-            let tempListDomains = dataSource.tempList
-            if !tempListDomains.isEmpty {
-                result.tempListIdentifier = tempListIdentifier
-                result.tempList = tempListDomains
-            }
-        }
-
-        if unprotectedSitesIdentifier != brokenInputs?.unprotectedSitesIdentifier {
-            if !unprotectedSites.isEmpty {
-                result.unprotectedSitesIdentifier = unprotectedSitesIdentifier
-                result.unprotectedSites = unprotectedSites
-            }
-        }
-
-        return result
-    }
-
-    func compilationFailed(for input: ContentBlockerRulesInputIdentifiers, with error: Error) {
-
-        if input.tdsIdentifier != dataSource.embeddedTrackerData.etag {
-            // We failed compilation for non-embedded TDS, marking as broken.
-            brokenInputs = ContentBlockerRulesInputIdentifiers(tdsIdentfier: input.tdsIdentifier)
-            Pixel.fire(pixel: .contentBlockingTDSCompilationFailed,
-                       error: error,
-                       withAdditionalParameters: [PixelParameters.etag: input.tdsIdentifier])
-        } else if input.tempListIdentifier != nil {
-            brokenInputs?.tempListIdentifier = input.tempListIdentifier
-            Pixel.fire(pixel: .contentBlockingTempListCompilationFailed,
-                       error: error,
-                       withAdditionalParameters: [PixelParameters.etag: input.tempListIdentifier ?? "empty"])
-        } else if input.unprotectedSitesIdentifier != nil {
-            brokenInputs?.unprotectedSitesIdentifier = input.unprotectedSitesIdentifier
-            Pixel.fire(pixel: .contentBlockingUnpSitesCompilationFailed,
-                       error: error)
-        } else {
-            // We failed for embedded data, this is unlikely.
-            // Include description - why built-in version of the TDS has failed to compile?
-            let error = error as NSError
-            let errorDesc = (error.userInfo[NSHelpAnchorErrorKey] as? String) ?? "missing"
-            let params = [PixelParameters.errorDescription: errorDesc.isEmpty ? "empty" : errorDesc]
-            Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed, error: error, withAdditionalParameters: params) { _ in
-                fatalError("Could not compile embedded rules list")
-            }
-        }
-    }
 }

@@ -101,7 +101,7 @@ class TrackerAllowlistReferenceTests: XCTestCase {
         }
     }
 
-    func testDomainAllowlist() throws {
+    func todotestDomainAllowlist() throws {
 
         let data = JsonTestDataLoader()
         let trackerJSON = data.fromJsonFile("privacy-reference-tests/tracker-radar-tests/TR-domain-matching/tracker_radar_reference.json")
@@ -126,7 +126,6 @@ class TrackerAllowlistReferenceTests: XCTestCase {
         waitForExpectations(timeout: 60, handler: nil)
     }
 
-    // swiftlint:disable function_body_length
     private func popTestAndExecute(onTestExecuted: XCTestExpectation) {
 
         guard let test = tests.popLast() else {
@@ -193,7 +192,5 @@ class TrackerAllowlistReferenceTests: XCTestCase {
             }
         }
     }
-    // swiftlint:enable function_body_length
 
 }
-

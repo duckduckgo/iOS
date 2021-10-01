@@ -26,7 +26,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     
     var existingFolder: BookmarkFolder? {
         didSet {
-            foldersViewController?.existingFolder = existingFolder
+            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(existingFolder: existingFolder)
             setUpTitle()
         }
     }
@@ -47,7 +47,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
-            foldersViewController?.existingFolder = existingFolder
+            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(existingFolder: existingFolder)
         }
     }
     

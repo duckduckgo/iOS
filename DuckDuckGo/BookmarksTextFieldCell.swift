@@ -21,11 +21,17 @@ import UIKit
 import Core
 
 class BookmarksTextFieldCell: UITableViewCell {
+    //TODO delete icon
 
     static let reuseIdentifier = "BookmarksTextFieldCell"
     
     var title: String? {
-        textField.text
+        get {
+            textField.text
+        }
+        set {
+            textField.text = newValue
+        }
     }
 
     @IBOutlet weak var textField: UITextField!

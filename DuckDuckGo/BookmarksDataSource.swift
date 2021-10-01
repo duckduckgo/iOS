@@ -83,8 +83,9 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 enum BookmarksSection {
     case favourites
     case bookmarksShallow(parentFolder: BookmarkFolder?)
-    case folders(_ folder: BookmarkFolder?)
+    case folders(_ item: BookmarkItem?)
     case folderDetails(_ folder: BookmarkFolder?)
+    case bookmarkDetails(_ bookmark: Bookmark?)
     
     var dataSource: BookmarksSectionDataSource {
         switch self {
@@ -92,10 +93,12 @@ enum BookmarksSection {
             return FavoritesSectionDataSource()
         case .bookmarksShallow(let parentFolder):
             return BookmarksShallowSectionDataSource(parentFolder: parentFolder)
-        case .folders(let folder):
-            return BookmarkFoldersSectionDataSource(existingFolder: folder)
+        case .folders(let item):
+            return BookmarkFoldersSectionDataSource(existingItem: item)
         case .folderDetails(let folder):
             return BookmarksFolderDetailsSectionDataSource(existingFolder: folder)
+        case .bookmarkDetails(let bookmark):
+            return BookmarkDetailsSectionDataSource(existingBookmark: bookmark)
         }
     }
 }
@@ -198,7 +201,7 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
     var numberOfRows: Int {
         return max(1, bookmarksManager.favoritesCount)
     }
-    
+ 
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
         let cell = (self as BookmarkItemsSectionDataSource).createEmptyCell(tableView, forIndex: index)
         cell.label.text =  UserText.emptyFavorites
@@ -305,8 +308,8 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     private var selectedRow = 0
     
     //TODO If a folder has subfolders and we edit the location, hide the subfolders in the folder structure"
-    init(existingFolder: BookmarkFolder?) {
-        if let folder = existingFolder, let parent = folder.parent {
+    init(existingItem: BookmarkItem?) {
+        if let item = existingItem, let parent = item.parent {
             let parentIndex = presentableBookmarkItems.firstIndex {
                 $0.item.objectID == parent.objectID
             }
@@ -396,7 +399,7 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
             fatalError("Failed to dequeue \(BookmarksTextFieldCell.reuseIdentifier) as BookmarksTextFieldCell")
         }
         
-        cell.textField.text = initialTitle
+        cell.title = initialTitle
         return cell
     }
     
@@ -407,6 +410,52 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
         }
         return cell.title
     }
+}
+
+class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
+    
+    let initialTitle: String?
+    let initialUrl: URL?
+
+    init(existingBookmark: Bookmark?) {
+        self.initialTitle = existingBookmark?.title
+        self.initialUrl = existingBookmark?.url
+    }
+    
+    func containsBookmarkItems() -> Bool {
+        false
+    }
+    
+    var numberOfRows: Int {
+        return 1
+    }
+    
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkDetailsCell.reuseIdentifier) as? BookmarkDetailsCell else {
+            fatalError("Failed to dequeue \(BookmarkDetailsCell.reuseIdentifier) as BookmarkDetailsCell")
+        }
+        
+        cell.title = initialTitle
+        cell.urlString = initialUrl?.absoluteString
+        //todo favicon
+        return cell
+    }
+    
+    func bookmarkTitle(_ tableView: UITableView, section: Int) -> String? {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? BookmarkDetailsCell else {
+            assertionFailure("Could not get bookmark details cell")
+            return nil
+        }
+        return cell.title
+    }
+    
+    func bookmarkUrlString(_ tableView: UITableView, section: Int) -> String? {
+       guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? BookmarkDetailsCell else {
+           assertionFailure("Could not get bookmark details cell")
+           return nil
+       }
+       return cell.urlString
+   }
 }
 
 class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
@@ -447,11 +496,9 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
         }
         return itemsDataSources[indexPath.section].bookmarkItem(at: indexPath.row)?.item
     }
-}
-
-extension DefaultBookmarksDataSource {
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return itemsDataSources[indexPath.section].isEmpty
+        return !itemsDataSources[indexPath.section].isEmpty
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -499,16 +546,12 @@ extension DefaultBookmarksDataSource {
         }
 }
 
-class BookmarksFolderDetailsDataSource: BookmarksDataSource, FolderDetailsDataSource {
+class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSource {
         
-    //private let folderDetailsDataSource
-    //private let
-    private let originalParent: BookmarkFolder? //TODO doubt we need this
     private let existingFolder: BookmarkFolder?
     
     init(existingFolder: BookmarkFolder? = nil) {
         self.existingFolder = existingFolder
-        self.originalParent = existingFolder?.parent
         super.init()
         self.sections = [.folderDetails(existingFolder), .folders(existingFolder)]
         //TODO seriously need to get rid of this sections stuff
@@ -539,6 +582,60 @@ class BookmarksFolderDetailsDataSource: BookmarksDataSource, FolderDetailsDataSo
             manager.update(folderID: folder.objectID, newTitle: title, newParent: selectedParent)
         } else {
             manager.saveNewFolder(withTitle: title, parent: selectedParent)
+        }
+        
+        //TODO on save, any number of views might have to change...
+        //hmmm, we gonna have to audit that...
+        //any instance of main bookmark view will need to
+        //For this particular one, I don't think anything else will have to?
+    }
+}
+
+class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSource {
+        
+    private let existingBookmark: Bookmark?
+    private let isFavorite: Bool
+    
+    init(isFavorite: Bool, existingBookmark: Bookmark? = nil) {
+        self.isFavorite = isFavorite
+        self.existingBookmark = existingBookmark
+        super.init()
+        //TODO I think we should use the same one for favs
+        if isFavorite {
+            self.sections = [.bookmarkDetails(existingBookmark)]
+        } else {
+            self.sections = [.bookmarkDetails(existingBookmark), .folders(existingBookmark)]
+        }
+        //TODO seriously need to get rid of this sections stuff
+        //I like having the seperate data sources, but we should at least keep references to the individual data sources
+    }
+    
+    func select(_ tableView: UITableView, indexPath: IndexPath) {
+        guard let dataSource = dataSources[indexPath.section] as? BookmarkFoldersSectionDataSource else {
+            return
+        }
+        
+        dataSource.select(tableView, row: indexPath.row, section: indexPath.section)
+    }
+    
+    func save(_ tableView: UITableView) {
+        let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
+        //TODO if this is nil, something has gone really wrong
+        guard let selectedParent = dataSource.selected() as? BookmarkFolder else {
+            assertionFailure("BookmarkFoldersSectionDataSource selected folder nil, this shouldn't be possible. Folder will not be saved")
+            return
+        }
+        let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
+        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)
+        let urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0)
+        //TODO what should we do if the url is invalid
+        // TODO inject bookmarks manager properly
+        let manager = BookmarksManager()
+        
+        if let bookmark = existingBookmark {
+            //TODO
+        } else {
+            //TODO
         }
         
         //TODO on save, any number of views might have to change...

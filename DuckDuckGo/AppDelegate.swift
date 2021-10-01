@@ -87,6 +87,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
         
+        let thing = BookmarksCoreDataStorage()
+//        let topLevelFolder = thing.topLevelBookmarksFolder
+//        let topLevelFavoritesFolder = thing.topLevelFavoritesFolder
+        //thing.createTestData()
+        //thing.createTestFavourites()
+        let topItems = thing.topLevelBookmarksItems
+//        let allItems = thing.bookmarkItems()
+//        print(topLevelFolder)
+//        print(allItems)
+        
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"

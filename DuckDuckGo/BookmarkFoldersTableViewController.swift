@@ -20,13 +20,15 @@
 import UIKit
 import Core
 
+//TODO this should be renamed...
 class BookmarkFoldersViewController: UITableViewController {
 
-    var dataSource: FolderDetailsDataSource = BookmarksFolderDetailsDataSource()
-    
-    var existingFolder: BookmarkFolder? {
+    //TODO This should be purely injected I reckon?
+    //now I'm just wondering if this should be one view controller again...
+    //let's worry about it after the design review
+    //if we do we should probs unify the datasources
+    var dataSource: BookmarkItemDetailsDataSource = BookmarkFolderDetailsDataSource() {
         didSet {
-            dataSource = BookmarksFolderDetailsDataSource(existingFolder: existingFolder)
             tableView.dataSource = dataSource
         }
     }
@@ -44,11 +46,3 @@ class BookmarkFoldersViewController: UITableViewController {
         dataSource.save(tableView)
     }
 }
-
-// TODO NEXT UP
-/*
- can either do rest of cell styling or the other elements of this page
-
- Need to at least do the title colour
- let's do the add folder title cell
- */

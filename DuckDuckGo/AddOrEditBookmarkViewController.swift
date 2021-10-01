@@ -23,10 +23,12 @@ import Core
 class AddOrEditBookmarkViewController: UIViewController {
     
     private var foldersViewController: BookmarkFoldersViewController?
+    
+    var isFavorite = false
         
     var existingBookmark: Bookmark? {
         didSet {
-            //TODO update data source for this
+            foldersViewController?.dataSource = BookmarkDetailsDataSource(isFavorite: existingBookmark?.isFavorite ?? isFavorite, existingBookmark: existingBookmark)
             setUpTitle()
         }
     }
@@ -34,6 +36,9 @@ class AddOrEditBookmarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
+        if existingBookmark == nil {
+            foldersViewController?.dataSource = BookmarkDetailsDataSource(isFavorite: isFavorite)
+        }
     }
     
     func setUpTitle() {
@@ -47,7 +52,7 @@ class AddOrEditBookmarkViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
-            //foldersViewController?.existingFolder = existingFolder
+            foldersViewController?.dataSource =  BookmarkDetailsDataSource(isFavorite: existingBookmark?.isFavorite ?? isFavorite, existingBookmark: existingBookmark)
         }
     }
     

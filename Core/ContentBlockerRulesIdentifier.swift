@@ -19,7 +19,7 @@
 
 import Foundation
 
-public class ContentBlockerRulesIdentifier {
+public class ContentBlockerRulesIdentifier: Equatable {
     
     private let tdsEtag: String
     private let tempListEtag: String
@@ -43,21 +43,21 @@ public class ContentBlockerRulesIdentifier {
         public static let all: Difference = [.tdsEtag, .tempListEtag, .unprotectedSites]
     }
     
-    private class func normalize(etag: String?) -> String {
-        // Ensure etag is in double quotes
-        guard var etag = etag else {
+    private class func normalize(identifier: String?) -> String {
+        // Ensure identifier is in double quotes
+        guard var identifier = identifier else {
             return "\"\""
         }
         
-        if !etag.hasSuffix("\"") {
-            etag += "\""
+        if !identifier.hasSuffix("\"") {
+            identifier += "\""
         }
         
-        if !etag.hasPrefix("\"") || etag.count == 1 {
-            etag = "\"" + etag
+        if !identifier.hasPrefix("\"") || identifier.count == 1 {
+            identifier = "\"" + identifier
         }
         
-        return etag
+        return identifier
     }
     
     public class func hash(domains: [String]?) -> String {
@@ -69,21 +69,32 @@ public class ContentBlockerRulesIdentifier {
     }
     
     init?(identifier: String) {
-        guard let betweenEtags = identifier.range(of: "\"\""), let lastEtagChar = identifier.lastIndex(of: "\"") else {
+
+        var components = identifier.components(separatedBy: "\"\"")
+        if components.count == 2 {
+            // Legacy - migrate to new format
+            let tdsComponent = components[0]
+            let tmpListAndUnprotected = components[1].components(separatedBy: "\"")
+
+            components = [tdsComponent,
+                          tmpListAndUnprotected.first ?? "",
+                          (tmpListAndUnprotected.last ?? "").appending("\"")]
+
+        } else if components.count != 3 {
             Pixel.fire(pixel: .contentBlockingIdentifierError)
             return nil
         }
-        
-        tdsEtag = String(identifier[identifier.startIndex...betweenEtags.lowerBound])
-        tempListEtag = String(identifier[identifier.index(before: betweenEtags.upperBound)...lastEtagChar])
-        unprotectedSitesHash = String(identifier[identifier.index(after: lastEtagChar)..<identifier.endIndex])
+
+        tdsEtag = Self.normalize(identifier: components[0])
+        tempListEtag = Self.normalize(identifier: components[1])
+        unprotectedSitesHash = Self.normalize(identifier: components[2])
     }
     
-    init(tdsEtag: String, tempListEtag: String?, unprotectedSites: [String]?) {
+    init(tdsEtag: String, tempListEtag: String?, unprotectedSitesHash: String?) {
         
-        self.tdsEtag = Self.normalize(etag: tdsEtag)
-        self.tempListEtag = Self.normalize(etag: tempListEtag)
-        self.unprotectedSitesHash = Self.hash(domains: unprotectedSites)
+        self.tdsEtag = Self.normalize(identifier: tdsEtag)
+        self.tempListEtag = Self.normalize(identifier: tempListEtag)
+        self.unprotectedSitesHash = Self.normalize(identifier: unprotectedSitesHash)
     }
     
     public func compare(with id: ContentBlockerRulesIdentifier) -> Difference {
@@ -100,5 +111,9 @@ public class ContentBlockerRulesIdentifier {
         }
         
         return result
+    }
+
+    public static func == (lhs: ContentBlockerRulesIdentifier, rhs: ContentBlockerRulesIdentifier) -> Bool {
+        return lhs.compare(with: rhs).isEmpty
     }
 }

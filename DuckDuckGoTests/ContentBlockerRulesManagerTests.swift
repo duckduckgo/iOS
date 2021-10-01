@@ -185,8 +185,11 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         
         XCTAssertNotNil(cbrm.currentRules)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.trackerData?.etag ?? "") + "\"\"")
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "",
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
     }
     
     func test_InvalidTDS_NoTempList_NoUnprotectedSites() {
@@ -205,8 +208,11 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         
         XCTAssertNotNil(cbrm.currentRules)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + "\"\"")
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
     }
     
     func test_ValidTDS_ValidTempList_NoUnprotectedSites() {
@@ -229,9 +235,11 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules)
         XCTAssertNotNil(cbrm.currentRules?.etag)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.trackerData?.etag ?? "") + mockSource.tempListEtag)
-        
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "",
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: nil))
     }
     
     func test_InvalidTDS_ValidTempList_NoUnprotectedSites() {
@@ -254,12 +262,15 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules)
         XCTAssertNotNil(cbrm.currentRules?.etag)
         
-        XCTAssertNotNil(cbrm.etagForFailedTDSCompilation)
-        XCTAssertEqual(cbrm.etagForFailedTDSCompilation, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
         
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + mockSource.tempListEtag)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: nil))
     }
     
     func test_ValidTDS_InvalidTempList_NoUnprotectedSites() {
@@ -284,13 +295,16 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
         
         // TDS is also marked as invalid to simplify flow
-        XCTAssertNotNil(cbrm.etagForFailedTDSCompilation)
-        XCTAssertEqual(cbrm.etagForFailedTDSCompilation, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
         
-        XCTAssertNotNil(cbrm.etagForFailedTempListCompilation)
-        XCTAssertEqual(cbrm.etagForFailedTempListCompilation, mockSource.tempListEtag)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + "\"\"")
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tempListIdentifier, mockSource.tempListEtag)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
     }
     
     func test_ValidTDS_ValidTempList_ValidUnprotectedSites() {
@@ -315,12 +329,14 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules?.etag)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
         
-        XCTAssertNil(cbrm.etagForFailedTDSCompilation)
-        XCTAssertNil(cbrm.etagForFailedTempListCompilation)
-        XCTAssertNil(cbrm.hashForFailedUnprotectedSitesCompilation)
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
         
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag + mockSource.unprotectedSitesHash)
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: mockSource.unprotectedSitesHash))
     }
     
     func test_ValidTDS_ValidTempList_BrokenUnprotectedSites() {
@@ -346,16 +362,19 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
         
         // TDS is also marked as invalid to simplify flow
-        XCTAssertNotNil(cbrm.etagForFailedTDSCompilation)
-        XCTAssertEqual(cbrm.etagForFailedTDSCompilation, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
         
-        XCTAssertNotNil(cbrm.etagForFailedTempListCompilation)
-        XCTAssertEqual(cbrm.etagForFailedTempListCompilation, mockSource.tempListEtag)
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tempListIdentifier, mockSource.tempListEtag)
         
-        XCTAssertNotNil(cbrm.hashForFailedUnprotectedSitesCompilation)
-        XCTAssertEqual(cbrm.hashForFailedUnprotectedSitesCompilation, mockSource.unprotectedSitesHash)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + "\"\"")
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier, mockSource.unprotectedSitesHash)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
     }
 }
 
@@ -377,8 +396,11 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
                                          handler: nil)
         
         wait(for: [initialLoading], timeout: 15.0)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + mockSource.tempListEtag)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: nil))
         
         mockSource.trackerData = Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag())
         
@@ -390,9 +412,11 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
                                    handler: nil)
         
         wait(for: [updating], timeout: 15.0)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: nil))
         
         if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
             let diff = oldId.compare(with: newId)
@@ -421,8 +445,11 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
                                          handler: nil)
         
         wait(for: [initialLoading], timeout: 15.0)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + "\"\"")
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
         
         mockSource.tempListEtag = Self.makeEtag()
         mockSource.tempList = validTempSites
@@ -435,9 +462,11 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
                                    handler: nil)
         
         wait(for: [updating], timeout: 15.0)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: nil))
         
         if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
             let diff = oldId.compare(with: newId)
@@ -467,8 +496,11 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
                                          handler: nil)
         
         wait(for: [initialLoading], timeout: 15.0)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue, (mockSource.embeddedTrackerData.etag) + "\"\"")
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
         
         mockSource.unprotectedSites = ["example.com"]
         
@@ -480,9 +512,11 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
                                    handler: nil)
         
         wait(for: [updating], timeout: 15.0)
-        
-        XCTAssertEqual(cbrm.currentRules?.identifier.stringValue,
-                       (mockSource.trackerData?.etag ?? "\"\"") + mockSource.tempListEtag + mockSource.unprotectedSitesHash)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     unprotectedSitesHash: mockSource.unprotectedSitesHash))
         
         if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
             let diff = oldId.compare(with: newId)
@@ -490,6 +524,53 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
             XCTAssert(diff.contains(.tdsEtag))
             XCTAssert(diff.contains(.tempListEtag))
             XCTAssert(diff.contains(.unprotectedSites))
+        } else {
+            XCTFail("Missing identifiers")
+        }
+    }
+
+    func test_InvalidUnprotectedSites_StillBrokenAfterTempListUpdate() {
+
+        let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
+                                                       embeddedTrackerData: Self.fakeEmbeddedDataSet)
+        mockSource.tempListEtag = Self.makeEtag()
+        mockSource.tempList = validTempSites
+        mockSource.unprotectedSites = ["broken site Ltd. . 😉.com"]
+
+        XCTAssertNotEqual(mockSource.trackerData?.etag, mockSource.embeddedTrackerData.etag)
+
+        let cbrm = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
+
+        let initialLoading = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                                         object: cbrm,
+                                         handler: nil)
+
+        wait(for: [initialLoading], timeout: 15.0)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
+
+        // New etag (testing update)
+        mockSource.tempListEtag = Self.makeEtag()
+
+        let identifier = cbrm.currentRules?.identifier
+
+        cbrm.recompile()
+        let updating = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                                   object: cbrm,
+                                   handler: nil)
+
+        wait(for: [updating], timeout: 15.0)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     unprotectedSitesHash: nil))
+
+        if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
+            XCTAssertEqual(oldId, newId)
         } else {
             XCTFail("Missing identifiers")
         }

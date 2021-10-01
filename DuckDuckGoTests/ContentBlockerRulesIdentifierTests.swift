@@ -26,47 +26,71 @@ class ContentBlockerRulesIdentifierTests: XCTestCase {
     func testWhenInitializedWithLegacyThenNil() {
         XCTAssertNil(ContentBlockerRulesIdentifier(identifier: "tds"))
     }
+
+    func testIdentifierMigration() {
+
+        let legacyTDS = "\"abc\"\"\""
+
+        let id1 = ContentBlockerRulesIdentifier(identifier: legacyTDS)
+        let id1v = ContentBlockerRulesIdentifier(tdsEtag: "abc", tempListEtag: nil, unprotectedSitesHash: nil)
+        XCTAssertEqual(id1, id1v)
+
+        let legacyTDSTmp = "\"abc\"\"def\""
+        let id2 = ContentBlockerRulesIdentifier(identifier: legacyTDSTmp)
+        let id2v = ContentBlockerRulesIdentifier(tdsEtag: "abc", tempListEtag: "def", unprotectedSitesHash: nil)
+        XCTAssertEqual(id2, id2v)
+
+        let legacyTDSTmpUnp = "\"abc\"\"def\"ghj"
+        let id3 = ContentBlockerRulesIdentifier(identifier: legacyTDSTmpUnp)
+        let id3v = ContentBlockerRulesIdentifier(tdsEtag: "abc", tempListEtag: "def", unprotectedSitesHash: "ghj")
+        XCTAssertEqual(id3, id3v)
+
+        let legacyTDSUnp = "\"abc\"\"\"ghj"
+        let id4 = ContentBlockerRulesIdentifier(identifier: legacyTDSUnp)
+        let id4v = ContentBlockerRulesIdentifier(tdsEtag: "abc", tempListEtag: nil, unprotectedSitesHash: "ghj")
+        XCTAssertEqual(id4, id4v)
+
+    }
     
     func testStringInitialization() {
         let etag = "\"ABC\""
         let tempEtag = "\"DEF\""
         
-        let unprotected = ["ghj"]
-        let unprotectedHash = unprotected.joined().sha1
+        let unprotected = "ghj"
         
         let empty = "\"\""
         
-        let basic1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: nil, unprotectedSites: nil)
-        let basic2 = ContentBlockerRulesIdentifier(identifier: etag + empty)!
+        let basic1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: nil, unprotectedSitesHash: nil)
+        let basic2 = ContentBlockerRulesIdentifier(identifier: etag + empty + empty)!
+
+        XCTAssertEqual(basic1, basic2)
         
-        XCTAssertTrue(basic1.compare(with: basic2).isEmpty)
+        let withTempList1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: tempEtag, unprotectedSitesHash: nil)
+        let withTempList2 = ContentBlockerRulesIdentifier(identifier: etag + tempEtag + empty)!
         
-        let withTempList1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: tempEtag, unprotectedSites: nil)
-        let withTempList2 = ContentBlockerRulesIdentifier(identifier: etag + tempEtag)!
+        XCTAssertEqual(withTempList1, withTempList2)
         
-        XCTAssertTrue(withTempList1.compare(with: withTempList2).isEmpty)
+        let withUnp1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: nil, unprotectedSitesHash: unprotected)
+        let withUnp2 = ContentBlockerRulesIdentifier(identifier: etag + empty + unprotected)!
+
+        XCTAssertEqual(withUnp1, withUnp2)
         
-        let withUnp1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: nil, unprotectedSites: unprotected)
-        let withUnp2 = ContentBlockerRulesIdentifier(identifier: etag + empty + unprotectedHash)!
-        
-        XCTAssertTrue(withUnp1.compare(with: withUnp2).isEmpty)
-        
-        let full1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: tempEtag, unprotectedSites: unprotected)
-        let full2 = ContentBlockerRulesIdentifier(identifier: etag + tempEtag + unprotectedHash)!
-        
-        XCTAssertTrue(full1.compare(with: full2).isEmpty)
+        let full1 = ContentBlockerRulesIdentifier(tdsEtag: etag, tempListEtag: tempEtag, unprotectedSitesHash: unprotected)
+        let full2 = ContentBlockerRulesIdentifier(identifier: etag + tempEtag + unprotected)!
+
+        XCTAssertEqual(full1, full2)
     }
     
     func testForEquality() {
         
-        let empty = ContentBlockerRulesIdentifier(tdsEtag: "", tempListEtag: nil, unprotectedSites: nil)
+        let empty = ContentBlockerRulesIdentifier(tdsEtag: "", tempListEtag: nil, unprotectedSitesHash: nil)
         
-        let a = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: nil, unprotectedSites: nil)
-        let ab = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: "b", unprotectedSites: [])
-        let abc = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: "b", unprotectedSites: ["c"])
-        let bbc = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "b", unprotectedSites: ["c"])
-        let bac = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "a", unprotectedSites: ["c"])
-        let bacd = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "a", unprotectedSites: ["c", "d"])
+        let a = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: nil, unprotectedSitesHash: nil)
+        let ab = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: "b", unprotectedSitesHash: "")
+        let abc = ContentBlockerRulesIdentifier(tdsEtag: "a", tempListEtag: "b", unprotectedSitesHash: "c")
+        let bbc = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "b", unprotectedSitesHash: "c")
+        let bac = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "a", unprotectedSitesHash: "c")
+        let bacd = ContentBlockerRulesIdentifier(tdsEtag: "b", tempListEtag: "a", unprotectedSitesHash: "d")
         
         XCTAssertTrue(empty.compare(with: a).contains(.tdsEtag))
         XCTAssertFalse(empty.compare(with: a).contains(.tempListEtag))

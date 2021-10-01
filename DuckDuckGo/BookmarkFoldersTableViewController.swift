@@ -27,7 +27,7 @@ class BookmarkFoldersViewController: UITableViewController {
     //now I'm just wondering if this should be one view controller again...
     //let's worry about it after the design review
     //if we do we should probs unify the datasources
-    var dataSource: BookmarkItemDetailsDataSource = BookmarkFolderDetailsDataSource() {
+    var dataSource: BookmarkItemDetailsDataSource? {
         didSet {
             tableView.dataSource = dataSource
         }
@@ -39,10 +39,10 @@ class BookmarkFoldersViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dataSource.select(tableView, indexPath: indexPath)
+        dataSource?.select(tableView, indexPath: indexPath)
     }
     
     func save() {
-        dataSource.save(tableView)
+        dataSource?.save(tableView)
     }
 }

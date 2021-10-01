@@ -28,20 +28,18 @@ class AddOrEditBookmarkViewController: UIViewController {
         
     var existingBookmark: Bookmark? {
         didSet {
-            foldersViewController?.dataSource = BookmarkDetailsDataSource(isFavorite: existingBookmark?.isFavorite ?? isFavorite, existingBookmark: existingBookmark)
             setUpTitle()
+            setUpDataSource()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
-        if existingBookmark == nil {
-            foldersViewController?.dataSource = BookmarkDetailsDataSource(isFavorite: isFavorite)
-        }
     }
     
-    func setUpTitle() {
+    private func setUpTitle() {
+        //TODO fav text
         if existingBookmark != nil {
             title = NSLocalizedString("Edit Boomkark", comment: "Edit bookmark screen title")
         } else {
@@ -49,10 +47,18 @@ class AddOrEditBookmarkViewController: UIViewController {
         }
     }
     
+    private func setUpDataSource() {
+        if existingBookmark?.isFavorite ?? isFavorite {
+            foldersViewController?.dataSource = FavoriteDetailsDataSource(existingBookmark: existingBookmark)
+        } else {
+            foldersViewController?.dataSource = BookmarkDetailsDataSource(existingBookmark: existingBookmark)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
-            foldersViewController?.dataSource =  BookmarkDetailsDataSource(isFavorite: existingBookmark?.isFavorite ?? isFavorite, existingBookmark: existingBookmark)
+            setUpDataSource()
         }
     }
     

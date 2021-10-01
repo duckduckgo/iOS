@@ -594,20 +594,12 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
 class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSource {
         
     private let existingBookmark: Bookmark?
-    private let isFavorite: Bool
     
-    init(isFavorite: Bool, existingBookmark: Bookmark? = nil) {
-        self.isFavorite = isFavorite
+    init(existingBookmark: Bookmark? = nil) {
         self.existingBookmark = existingBookmark
         super.init()
-        //TODO I think we should use the same one for favs
-        if isFavorite {
-            self.sections = [.bookmarkDetails(existingBookmark)]
-        } else {
-            self.sections = [.bookmarkDetails(existingBookmark), .folders(existingBookmark)]
-        }
-        //TODO seriously need to get rid of this sections stuff
-        //I like having the seperate data sources, but we should at least keep references to the individual data sources
+
+        self.sections = [.bookmarkDetails(existingBookmark), .folders(existingBookmark)]
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {
@@ -643,6 +635,37 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         //any instance of main bookmark view will need to
         //For this particular one, I don't think anything else will have to?
     }
+}
+
+class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSource {
+    private let existingBookmark: Bookmark?
+    
+    init(existingBookmark: Bookmark? = nil) {
+        self.existingBookmark = existingBookmark
+        super.init()
+
+        self.sections = [.bookmarkDetails(existingBookmark)]
+    }
+    
+    func select(_ tableView: UITableView, indexPath: IndexPath) {
+        
+    }
+    
+    func save(_ tableView: UITableView) {
+        let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
+        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)
+        let urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0)
+        //TODO what should we do if the url is invalid
+        // TODO inject bookmarks manager properly
+        let manager = BookmarksManager()
+        
+        if let bookmark = existingBookmark {
+            //TODO
+        } else {
+            //TODO
+        }
+    }
+    
 }
 
 class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {

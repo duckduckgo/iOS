@@ -92,6 +92,11 @@ class BookmarksViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let item = currentDataSource.item(at: indexPath),
+              item as? BookmarkFolder == nil else {
+            return nil
+        }
+     
         let shareContextualAction = UIContextualAction(style: .normal, title: UserText.actionShare) { (_, _, completionHandler) in
             self.showShareSheet(for: indexPath)
             completionHandler(true)

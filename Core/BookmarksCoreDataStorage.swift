@@ -205,14 +205,58 @@ public class BookmarksCoreDataStorage {
             guard let self = self else { return }
 
             let mo = self.context.object(with: bookmarkItemID)
-            guard let folder = mo as? BookmarkItemManagedObject else {
+            guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 return
             }
             
-            let parent = folder.parent
-            parent?.removeFromChildren(folder)
-            parent?.insertIntoChildren(folder, at: newIndex)
+            let parent = item.parent
+            parent?.removeFromChildren(item)
+            parent?.insertIntoChildren(item, at: newIndex)
+            
+            do {
+                try self.context.save()
+            } catch {
+                assertionFailure("Updating item failed")
+            }
+        }
+    }
+    
+    public func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
+            let mo = self.context.object(with: favoriteID)
+            guard let favorite = mo as? BookmarkManagedObject else {
+                assertionFailure("Failed to get item")
+                return
+            }
+            
+            favorite.parent?.removeFromChildren(favorite)
+            favorite.isFavorite = false
+            self.topLevelBookmarksFolderMO.insertIntoChildren(favorite, at: newIndex)
+            
+            do {
+                try self.context.save()
+            } catch {
+                assertionFailure("Updating item failed")
+            }
+        }
+    }
+    
+    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
+            let mo = self.context.object(with: bookmarkID)
+            guard let bookmark = mo as? BookmarkManagedObject else {
+                assertionFailure("Failed to get item")
+                return
+            }
+            
+            bookmark.parent?.removeFromChildren(bookmark)
+            bookmark.isFavorite = true
+            self.topLevelFavoritesFolderMO.insertIntoChildren(bookmark, at: newIndex)
             
             do {
                 try self.context.save()

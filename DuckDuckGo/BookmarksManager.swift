@@ -105,6 +105,14 @@ class BookmarksManager {
         coreDataStorage.updateIndex(of: bookmarkItemID, newIndex: newIndex)
     }
     
+    func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int) {
+        coreDataStorage.convertFavoriteToBookmark(favoriteID, newIndex: newIndex)
+    }
+    
+    func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
+        coreDataStorage.convertBookmarkToFavorite(bookmarkID, newIndex: newIndex)
+    }
+    
     func delete(_ bookmarkItemID: NSManagedObjectID) {
         coreDataStorage.delete(bookmarkItemID)
     }

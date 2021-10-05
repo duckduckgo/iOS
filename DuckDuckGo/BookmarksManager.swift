@@ -105,9 +105,8 @@ class BookmarksManager {
         coreDataStorage.updateIndex(of: bookmarkItemID, newIndex: newIndex)
     }
     
-    func delete(item: BookmarkItem) {
-        //TODO
-        //coreDataStorage.delete(item: item)
+    func delete(_ bookmarkItemID: NSManagedObjectID) {
+        coreDataStorage.delete(bookmarkItemID)
     }
     
 //    func bookmarkItem(atIndex index: Int) -> BookmarkItem? {

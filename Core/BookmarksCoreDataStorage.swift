@@ -226,15 +226,13 @@ public class BookmarksCoreDataStorage {
         context.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: itemID)
-            guard let folder = mo as? BookmarkItemManagedObject else {
+            let mo = self.context.object(with: bookmarkItemID)
+            guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 return
             }
             
-            let parent = folder.parent
-            parent?.removeFromChildren(folder)
-            parent?.insertIntoChildren(folder, at: newIndex)
+            self.context.delete(item)
             
             do {
                 try self.context.save()
@@ -246,8 +244,6 @@ public class BookmarksCoreDataStorage {
     
     public init() { }
     
-    //TODO chache bookmark items in memory?
-    //probably will need to given we have to make the folder structure
     
     //TODO context.perform good behaviour
         
@@ -301,11 +297,6 @@ public class BookmarksCoreDataStorage {
 //    }
 //
 
-//
-//    public func delete(item: BookmarkItem) {
-//        context.delete(item)
-//        try? context.save()
-//    }
     
     private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) {
         let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: context)

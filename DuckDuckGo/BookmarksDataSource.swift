@@ -217,8 +217,7 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
         guard editingStyle == .delete else { return }
 
         guard let item = bookmarkItem(at: index)?.item else { return }
-        //TODO actual deletion
-        bookmarksManager.delete(item: item)
+        bookmarksManager.delete(item.objectID)
         
         let indexPath = IndexPath(row: index, section: section)
         if bookmarksManager.favoritesCount == 0 {
@@ -280,9 +279,8 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         guard editingStyle == .delete else { return }
 
         guard let item = bookmarkItem(at: index)?.item else { return }
-        //TODO actual deletion
-        //gonna have to refresh presentablebookmarkitems too
-        bookmarksManager.delete(item: item)
+        //TODO gonna have to refresh presentablebookmarkitems too
+        bookmarksManager.delete(item.objectID)
 
         let indexPath = IndexPath(row: index, section: section)
         //TODO this needs to take into account variable parent folder

@@ -71,6 +71,44 @@ public class BookmarksCoreDataStorage {
     }
     
     //TODO rearranging
+
+    public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
+        //TODO will also need to update caches, whatever we end up with
+        
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
+            let mo = self.context.object(with: parentID)
+            guard let parentMO = mo as? BookmarkFolderManagedObject else {
+                assertionFailure("Failed to get parent folder")
+                return
+            }
+
+            self.createFolder(title: title, isFavorite: false, parent: parentMO)
+        }
+    }
+    
+    public func saveNewFavorite(withTitle title: String, url: URL) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
+            self.createBookmark(url: url, title: title, isFavorite: true)
+        }
+    }
+    
+    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
+
+            let mo = self.context.object(with: parentID)
+            guard let parentMO = mo as? BookmarkFolderManagedObject else {
+                assertionFailure("Failed to get parent folder")
+                return
+            }
+
+            self.createBookmark(url: url, title: title, isFavorite: false, parent: parentMO)
+        }
+    }
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
     public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
@@ -104,24 +142,6 @@ public class BookmarksCoreDataStorage {
         }
         // TODO update any caches
     }
-
-
-    //TODO maybe parent here should be an ID
-    public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
-        //TODO will also need to update caches, whatever we end up with
-        
-        context.perform { [weak self] in
-            guard let self = self else { return }
-
-            let mo = self.context.object(with: parentID)
-            guard let parentMO = mo as? BookmarkFolderManagedObject else {
-                assertionFailure("Failed to get parent folder")
-                return
-            }
-
-            self.createFolder(title: title, isFavorite: false, parent: parentMO)
-        }
-    }
     
     public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
         context.perform { [weak self] in
@@ -141,14 +161,6 @@ public class BookmarksCoreDataStorage {
             } catch {
                 assertionFailure("Updating favorite failed")
             }
-        }
-    }
-    
-    public func saveNewFavorite(withTitle title: String, url: URL) {
-        context.perform { [weak self] in
-            guard let self = self else { return }
-
-            self.createBookmark(url: url, title: title, isFavorite: true)
         }
     }
     
@@ -186,17 +198,49 @@ public class BookmarksCoreDataStorage {
         }
     }
     
-    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
+    //tODO will also need to be able to move favs and bookmarks between each other >:(
+    
+    public func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {
         context.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: parentID)
-            guard let parentMO = mo as? BookmarkFolderManagedObject else {
-                assertionFailure("Failed to get parent folder")
+            let mo = self.context.object(with: bookmarkItemID)
+            guard let folder = mo as? BookmarkItemManagedObject else {
+                assertionFailure("Failed to get item")
                 return
             }
+            
+            let parent = folder.parent
+            parent?.removeFromChildren(folder)
+            parent?.insertIntoChildren(folder, at: newIndex)
+            
+            do {
+                try self.context.save()
+            } catch {
+                assertionFailure("Updating item failed")
+            }
+        }
+    }
+    
+    public func delete(_ bookmarkItemID: NSManagedObjectID) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
 
-            self.createBookmark(url: url, title: title, isFavorite: false, parent: parentMO)
+            let mo = self.context.object(with: itemID)
+            guard let folder = mo as? BookmarkItemManagedObject else {
+                assertionFailure("Failed to get item")
+                return
+            }
+            
+            let parent = folder.parent
+            parent?.removeFromChildren(folder)
+            parent?.insertIntoChildren(folder, at: newIndex)
+            
+            do {
+                try self.context.save()
+            } catch {
+                assertionFailure("Updating item failed")
+            }
         }
     }
     

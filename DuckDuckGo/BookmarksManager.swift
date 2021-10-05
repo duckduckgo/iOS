@@ -25,10 +25,14 @@ class BookmarksManager {
 
     private(set) var dataStore: BookmarkStore
     private(set) var coreDataStorage: BookmarksCoreDataStorage
+    
+    //todo delete this pls
+    static let tempCoreDataStorageRetentionDevice = BookmarksCoreDataStorage()
 
     init(dataStore: BookmarkStore = BookmarkUserDefaults(), coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage()) {
         self.dataStore = dataStore
-        self.coreDataStorage = coreDataStore
+        //self.coreDataStorage = coreDataStore
+        self.coreDataStorage = BookmarksManager.tempCoreDataStorageRetentionDevice
     }
 
     var topLevelBookmarkItemsCount: Int {
@@ -59,11 +63,7 @@ class BookmarksManager {
         return favorites[index]
     }
     
-    func delete(item: BookmarkItem) {
-        //TODO
-        //coreDataStorage.delete(item: item)
-    }
-    
+    //TODO fix favicons
     func removeFavicon(forBookmark bookmark: Bookmark?) {
         guard let domain = bookmark?.url?.host else { return }
         
@@ -76,33 +76,40 @@ class BookmarksManager {
         }
     }
     
-    //TODO how are we going to handle rearranging?
-    
-    func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
-        coreDataStorage.update(folderID: folderID, newTitle: newTitle, newParentID: newParentID)
-    }
-    
     func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
         coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID)
-    }
-    
-    func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
-        coreDataStorage.update(favoriteID: favoriteID, newTitle: newTitle, newURL: newURL)
     }
     
     func saveNewFavorite(withTitle title: String, url: URL) {
         coreDataStorage.saveNewFavorite(withTitle: title, url: url)
     }
     
+    func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
+        coreDataStorage.saveNewBookmark(withTitle: title, url: url, parentID: parentID)
+    }
+    
+    func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
+        coreDataStorage.update(folderID: folderID, newTitle: newTitle, newParentID: newParentID)
+    }
+    
+    func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
+        coreDataStorage.update(favoriteID: favoriteID, newTitle: newTitle, newURL: newURL)
+    }
+
     //TODO not really sure if we should be using IDs at this level or not... we'll see
     func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
         coreDataStorage.update(bookmarkID: bookmarkID, newTitle: newTitle, newURL: newURL, newParentID: newParentID)
     }
     
-    func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
-        coreDataStorage.saveNewBookmark(withTitle: title, url: url, parentID: parentID)
+    func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {
+        coreDataStorage.updateIndex(of: bookmarkItemID, newIndex: newIndex)
     }
-
+    
+    func delete(item: BookmarkItem) {
+        //TODO
+        //coreDataStorage.delete(item: item)
+    }
+    
 //    func bookmarkItem(atIndex index: Int) -> BookmarkItem? {
 //        return link(at: index, in: dataStore.bookmarks)
 //    }

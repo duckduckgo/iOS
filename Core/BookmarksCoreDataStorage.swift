@@ -1,5 +1,5 @@
 //
-//  BookmarksStuff.swift
+//  BookmarksCoreDataStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -23,106 +23,93 @@ import CoreData
 public class BookmarksCoreDataStorage {
     
     private struct Constants {
-        static let contextName = "BookmarksAndFolders"
+        static let privateContextName = "EditBookmarksAndFolders"
+        static let viewContextName = "ViewBookmarksAndFolders"
+        
         static let bookmarkClassName = "BookmarkManagedObject"
         static let folderClassName = "BookmarkFolderManagedObject"
     }
     
-    private lazy var context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: Constants.contextName)
+    private lazy var privateContext = Database.shared.makeContext(concurrencyType: .privateQueueConcurrencyType, name: Constants.privateContextName)
+    private lazy var viewContext = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: Constants.viewContextName)
     
-    //TODO this should maybe be cached
-    //re caching, updating etc
-    //maybe I should just cache the not managed objects, and just use MOs for saving...
-    //hmm, currently leaning that way tbh
+    private var cachedReadOnlyTopLevelBookmarksFolder: BookmarkFolderManagedObject?
+    private var cachedReadOnlyTopLevelFavoritesFolder: BookmarkFolderManagedObject?
     
-    public var topLevelBookmarksFolder: BookmarkFolder {
-        let folder = BookmarkFolder(managedObject: topLevelBookmarksFolderMO)
-        folder.title = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
-        return folder
-    }
+    public init() { }
+}
+
+// MARK: public interface
+extension BookmarksCoreDataStorage {
     
-    public var topLevelBookmarksItems: [BookmarkItem] {
-        topLevelBookmarksFolder.children.array as? [BookmarkItem] ?? []
-    }
-    
-    public func favorites() -> [Bookmark] {
-        let favorites: [Bookmark] = topLevelFavoritesItems.map {
-            if let fav = $0 as? Bookmark {
-                return fav
-            } else {
-                fatalError("Favourites shouldn't contain folders")
-            }
+    public func topLevelBookmarksFolder(completion: @escaping (BookmarkFolder) -> Void) {
+        readOnlyTopLevelBookmarksFolder() { folder in
+            completion(folder)
         }
-        return favorites
+    }
+    
+    public func topLevelBookmarksItem(completion: @escaping ([BookmarkItem]) -> Void) {
+        topLevelBookmarksFolder() { folder in
+            completion(folder.children?.array as? [BookmarkItem] ?? [])
+        }
+    }
+    
+    public func favorites(completion: @escaping ([Bookmark]) -> Void) {
+        readOnlyTopLevelFavoritesItems() { items in
+            let favorites: [Bookmark] = items.map {
+                if let fav = $0 as? Bookmark {
+                    return fav
+                } else {
+                    fatalError("Favourites shouldn't contain folders")
+                }
+            }
+            completion(favorites)
+        }
     }
     
     // Doesn't include parents
-    public func allBookmarksAndFavoritesShallow() -> [Bookmark] {
-        let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
+    // Just used for favicon deletion
+    public func allBookmarksAndFavoritesShallow(completion: @escaping ([BookmarkItem]) -> Void) {
+        viewContext.perform { [weak self] in
+        
+            let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
 
-        guard let results = try? context.fetch(fetchRequest) else {
-            fatalError("Error fetching Bookmarks")
+            guard let results = try? self?.viewContext.fetch(fetchRequest) else {
+                fatalError("Error fetching Bookmarks")
+            }
+    //        let bookmarks = results.map {
+    //            $0 as Bookmark
+    //        }
+            
+            completion(results)
         }
-        let bookmarks = results.map {
-            Bookmark(managedObject: $0, deepCopy: false)
-        }
-
-        return bookmarks
     }
     
-    //TODO rearranging
-
     public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
-        //TODO will also need to update caches, whatever we end up with
-        
-        context.perform { [weak self] in
-            guard let self = self else { return }
-
-            let mo = self.context.object(with: parentID)
-            guard let parentMO = mo as? BookmarkFolderManagedObject else {
-                assertionFailure("Failed to get parent folder")
-                return
-            }
-
-            self.createFolder(title: title, isFavorite: false, parent: parentMO)
-        }
+        createFolder(title: title, isFavorite: false, parentID: parentID) { _ in } //TODO no completion pls
     }
     
     public func saveNewFavorite(withTitle title: String, url: URL) {
-        context.perform { [weak self] in
-            guard let self = self else { return }
-
-            self.createBookmark(url: url, title: title, isFavorite: true)
-        }
+        createBookmark(url: url, title: title, isFavorite: true)
     }
     
     public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
-        context.perform { [weak self] in
-            guard let self = self else { return }
-
-            let mo = self.context.object(with: parentID)
-            guard let parentMO = mo as? BookmarkFolderManagedObject else {
-                assertionFailure("Failed to get parent folder")
-                return
-            }
-
-            self.createBookmark(url: url, title: title, isFavorite: false, parent: parentMO)
-        }
+        createBookmark(url: url, title: title, isFavorite: false, parentID: parentID)
     }
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
     public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
-        context.perform { [weak self] in
+        privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: folderID)
+            let mo = self.privateContext.object(with: folderID)
             guard let folder = mo as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get folder")
                 return
             }
             
             if folder.parent?.objectID != newParentID {
-                let parentMO = self.context.object(with: newParentID)
+                let parentMO = self.privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
                     return
@@ -135,7 +122,7 @@ public class BookmarksCoreDataStorage {
             folder.title = newTitle
             
             do {
-                try self.context.save()
+                try self.privateContext.save()
             } catch {
                 assertionFailure("Updating folder failed")
             }
@@ -144,10 +131,10 @@ public class BookmarksCoreDataStorage {
     }
     
     public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
-        context.perform { [weak self] in
+        privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: favoriteID)
+            let mo = self.privateContext.object(with: favoriteID)
             guard let favorite = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get favorite")
                 return
@@ -157,7 +144,7 @@ public class BookmarksCoreDataStorage {
             favorite.url = newURL
             
             do {
-                try self.context.save()
+                try self.privateContext.save()
             } catch {
                 assertionFailure("Updating favorite failed")
             }
@@ -166,17 +153,18 @@ public class BookmarksCoreDataStorage {
     
     public func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
         //TODO currently changes order and shouldn't
-        context.perform { [weak self] in
+        //I think I might have done this already
+        privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: bookmarkID)
+            let mo = self.privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get bookmark")
                 return
             }
             
             if bookmark.parent?.objectID != newParentID {
-                let parentMO = self.context.object(with: newParentID)
+                let parentMO = self.privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
                     return
@@ -191,20 +179,18 @@ public class BookmarksCoreDataStorage {
             bookmark.url = newURL
             
             do {
-                try self.context.save()
+                try self.privateContext.save()
             } catch {
                 assertionFailure("Updating bookmark failed")
             }
         }
     }
-    
-    //tODO will also need to be able to move favs and bookmarks between each other >:(
-    
+        
     public func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {
-        context.perform { [weak self] in
+        privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: bookmarkItemID)
+            let mo = self.privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 return
@@ -215,7 +201,7 @@ public class BookmarksCoreDataStorage {
             parent?.insertIntoChildren(item, at: newIndex)
             
             do {
-                try self.context.save()
+                try self.privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
             }
@@ -223,179 +209,223 @@ public class BookmarksCoreDataStorage {
     }
     
     public func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int) {
-        context.perform { [weak self] in
+        swapIsFavorite(favoriteID, newIndex: newIndex)
+    }
+    
+    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
+        swapIsFavorite(bookmarkID, newIndex: newIndex)
+    }
+    
+    public func delete(_ bookmarkItemID: NSManagedObjectID) {
+        privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: favoriteID)
-            guard let favorite = mo as? BookmarkManagedObject else {
+            let mo = self.privateContext.object(with: bookmarkItemID)
+            guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 return
             }
             
-            favorite.parent?.removeFromChildren(favorite)
-            favorite.isFavorite = false
-            self.topLevelBookmarksFolderMO.insertIntoChildren(favorite, at: newIndex)
+            self.privateContext.delete(item)
             
             do {
-                try self.context.save()
+                try self.privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
             }
         }
     }
+}
+
+// MARK: private
+extension BookmarksCoreDataStorage {
     
-    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
-        context.perform { [weak self] in
+    private func swapIsFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
+        privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.context.object(with: bookmarkID)
+            let mo = self.privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get item")
                 return
             }
             
             bookmark.parent?.removeFromChildren(bookmark)
-            bookmark.isFavorite = true
-            self.topLevelFavoritesFolderMO.insertIntoChildren(bookmark, at: newIndex)
+            bookmark.isFavorite = !bookmark.isFavorite
             
-            do {
-                try self.context.save()
-            } catch {
-                assertionFailure("Updating item failed")
+            self.getOrCreateIfNecessaryTopLevelFolder(isFavorite: bookmark.isFavorite, returnReadOnly: false) { newParent in
+                bookmark.parent = newParent
+                newParent.insertIntoChildren(bookmark, at: newIndex)
+                
+                do {
+                    try self.privateContext.save()
+                } catch {
+                    assertionFailure("Updating item failed")
+                }
             }
         }
     }
     
-    public func delete(_ bookmarkItemID: NSManagedObjectID) {
-        context.perform { [weak self] in
-            guard let self = self else { return }
-
-            let mo = self.context.object(with: bookmarkItemID)
-            guard let item = mo as? BookmarkItemManagedObject else {
-                assertionFailure("Failed to get item")
+    
+    private func getOrCreateIfNecessaryTopLevelFolder(isFavorite: Bool, returnReadOnly: Bool, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
+        
+        getTopLevelFolder(isFavorite: isFavorite, readOnly: returnReadOnly) { folder in
+            if let folder = folder {
+                completion(folder)
                 return
             }
             
-            self.context.delete(item)
+            self.privateContext.perform { [weak self] in
+                guard let self = self else {
+                    fatalError("self nil when creating top level bookmark folder")
+                }
+                let folder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: self.privateContext) as? BookmarkFolderManagedObject
+                folder?.isFavorite = isFavorite
+                            
+                do {
+                    try self.privateContext.save()
+                } catch {
+                    fatalError("Error creating top level bookmark folder")
+                }
+                
+                self.getTopLevelFolder(isFavorite: isFavorite, readOnly: returnReadOnly) { folder in
+                    guard let folder = folder else {
+                        fatalError("Error getting newly created top level bookmark folder")
+                    }
+                    completion(folder)
+                }
+            }
+        }
+    }
+    
+    private func getTopLevelFolder(isFavorite: Bool, readOnly: Bool, completion: @escaping (BookmarkFolderManagedObject?) -> Void) {
+        
+        let context = readOnly ? viewContext : privateContext
+        context.perform {
+            
+            let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
+            fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == %@", NSNumber(value: isFavorite))
+            
+            let results = try? context.fetch(fetchRequest)
+            let folder = results?.first
+            completion(folder)
+        }
+    }
+    
+    private func readOnlyTopLevelBookmarksFolder(completion: @escaping (BookmarkFolderManagedObject) -> Void) {
+        if let folder = cachedReadOnlyTopLevelBookmarksFolder {
+            completion(folder)
+        }
+        getOrCreateIfNecessaryTopLevelFolder(isFavorite: false, returnReadOnly: true) { folder in
+            self.cachedReadOnlyTopLevelBookmarksFolder = folder
+            completion(folder)
+        }
+    }
+    
+    private func readOnlyTopLevelFavoritesFolder(completion: @escaping (BookmarkFolderManagedObject) -> Void) {
+        if let folder = cachedReadOnlyTopLevelFavoritesFolder {
+            completion(folder)
+        }
+        getOrCreateIfNecessaryTopLevelFolder(isFavorite: true, returnReadOnly: true) { folder in
+            self.cachedReadOnlyTopLevelFavoritesFolder = folder
+            completion(folder)
+        }
+    }
+    
+    private func readOnlyTopLevelFavoritesItems(completion: @escaping ([BookmarkItem]) -> Void) {
+        readOnlyTopLevelFavoritesFolder() { folder in
+            completion(folder.children?.array as? [BookmarkItem] ?? [])
+        }
+    }
+}
+
+
+// MARK: creation
+extension BookmarksCoreDataStorage {
+    
+    private func createBookmark(url: URL, title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil) {
+        privateContext.perform { [weak self] in
+            guard let self = self else {
+                fatalError("self nil when creating bookmark")
+            }
+        
+            let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: self.privateContext)
+            guard let bookmark = managedObject as? BookmarkManagedObject else {
+                assertionFailure("Inserting new bookmark failed")
+                return
+            }
+            bookmark.url = url
+            bookmark.title = title
+            bookmark.isFavorite = isFavorite
+            
+            self.updateParentAndSave(of: bookmark, parentID: parentID)
+        }
+    }
+    
+    //TODO get rid of completion probably
+    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: (BookmarkFolderManagedObject?) -> Void) {
+        
+        privateContext.perform { [weak self] in
+            guard let self = self else {
+                fatalError("self nil when creating folder")
+            }
+            
+            let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.folderClassName, into: self.privateContext)
+            guard let folder = managedObject as? BookmarkFolderManagedObject else {
+                assertionFailure("Inserting new folder failed")
+                return
+            }
+            folder.title = title
+            folder.isFavorite = isFavorite
+            
+            self.updateParentAndSave(of: folder, parentID: parentID)
+        }
+    }
+    
+    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?) {
+        func updateParentAndSave(parent: BookmarkFolderManagedObject) {
+            item.parent = parent
+            parent.addToChildren(item)
             
             do {
-                try self.context.save()
+                try self.privateContext.save()
             } catch {
-                assertionFailure("Updating item failed")
+                assertionFailure("Saving item failed")
             }
         }
-    }
-    
-    public init() { }
-    
-    
-    //TODO context.perform good behaviour
         
-    private func getTopLevelFolder(isFavorite: Bool) -> BookmarkFolderManagedObject {
-        let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
-        fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == %@", NSNumber(value: isFavorite))
-
-        guard let results = try? context.fetch(fetchRequest),
-          let folder = results.first else {
-
-            let folder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject
-            folder?.isFavorite = isFavorite
-            try? context.save()
-
-            guard let newFolder = folder else {
-                fatalError("Error creating top level bookmark folder")
+        if let parentID = parentID {
+            let parentMO = self.privateContext.object(with: parentID)
+            guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
+                assertionFailure("Failed to get new parent")
+                return
             }
-            return newFolder
-        }
-
-        return folder
-    }
-    
-    private lazy var topLevelBookmarksFolderMO: BookmarkFolderManagedObject = {
-        let folder = getTopLevelFolder(isFavorite: false)
-        folder.title = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
-        return folder
-    }()
-    
-    private lazy var topLevelFavoritesFolderMO: BookmarkFolderManagedObject = {
-        getTopLevelFolder(isFavorite: true)
-    }()
-    
-    private var topLevelFavoritesFolder: BookmarkFolder {
-        BookmarkFolder(managedObject: topLevelFavoritesFolderMO)
-    }
-    
-    private var topLevelFavoritesItems: [BookmarkItem] {
-        topLevelFavoritesFolder.children.array as? [BookmarkItem] ?? []
-    }
-    
-//    //TODO shouldn't be public, just for testing
-//    public func bookmarkItems() -> [BookmarkItem] {
-//        let fetchRequest: NSFetchRequest<BookmarkItemManagedObject> = BookmarkItem.fetchRequest()
-//
-//        guard let results = try? context.fetch(fetchRequest) else {
-//            fatalError("Error fetching BookmarkItems")
-//        }
-//
-//        return results
-//    }
-//
-
-    
-    private func createBookmark(url: URL, title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: context)
-        guard let bookmark = managedObject as? BookmarkManagedObject else {
-            assertionFailure("Inserting new bookmark failed")
-            return
-        }
-        bookmark.url = url
-        bookmark.title = title
-        bookmark.isFavorite = isFavorite
-        if let parent = parent {
-            bookmark.parent = parent
-            parent.addToChildren(bookmark)
+            updateParentAndSave(parent: newParentMO)
         } else {
-            let parent = isFavorite ? topLevelFavoritesFolderMO : topLevelBookmarksFolderMO
-            bookmark.parent = parent
-            parent.addToChildren(bookmark)
+            self.getOrCreateIfNecessaryTopLevelFolder(isFavorite: item.isFavorite, returnReadOnly: false) { parent in
+                updateParentAndSave(parent: parent)
+            }
         }
-    }
-    
-    @discardableResult
-    private func createFolder(title: String, isFavorite: Bool, parent: BookmarkFolderManagedObject? = nil) -> BookmarkFolderManagedObject? {
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.folderClassName, into: context)
-        guard let folder = managedObject as? BookmarkFolderManagedObject else {
-            assertionFailure("Inserting new folder failed")
-            return nil
-        }
-        folder.title = title
-        folder.isFavorite = isFavorite
-        if let parent = parent {
-            folder.parent = parent
-            parent.addToChildren(folder)
-        } else {
-            let parent = isFavorite ? topLevelFavoritesFolderMO : topLevelBookmarksFolderMO
-            folder.parent = parent
-            parent.addToChildren(folder)
-        }
-        return folder
     }
     
     public func createTestData() {
         createBookmark(url: URL(string: "http://example.com")!, title: "example 1.1", isFavorite: false)
         createBookmark(url: URL(string: "http://fish.com")!, title: "fish 1.2", isFavorite: false)
-        let topFolder = createFolder(title: "Test folder 1, 1.3", isFavorite: false)
-        createBookmark(url: URL(string: "http://dogs.com")!, title: "dogs 1.4", isFavorite: false)
-        createBookmark(url: URL(string: "http://cnn.com")!, title: "cnn 2.1", isFavorite: false, parent: topFolder)
-        let secondLevelFolder = createFolder(title: "Test folder 2 2.2", isFavorite: false, parent: topFolder)
-        createBookmark(url: URL(string: "httP://pig.com")!, title: "pig 3.1", isFavorite: false, parent: secondLevelFolder)
-        try? context.save()
+        
+        createFolder(title: "Test folder 1, 1.3", isFavorite: false) { topFolder in
+            
+            createBookmark(url: URL(string: "http://dogs.com")!, title: "dogs 1.4", isFavorite: false)
+            createBookmark(url: URL(string: "http://cnn.com")!, title: "cnn 2.1", isFavorite: false, parentID: topFolder?.objectID)
+            createFolder(title: "Test folder 2 2.2", isFavorite: false, parentID: topFolder?.objectID) { secondLevelFolder in
+                
+                createBookmark(url: URL(string: "httP://pig.com")!, title: "pig 3.1", isFavorite: false, parentID: secondLevelFolder?.objectID)
+            }
+        }
     }
     
     public func createTestFavourites() {
         createBookmark(url: URL(string: "http://example.com")!, title: "example fav", isFavorite: true)
         createBookmark(url: URL(string: "http://fish.com")!, title: "fish fav", isFavorite: true)
-        try? context.save()
     }
 }
 

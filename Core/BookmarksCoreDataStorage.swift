@@ -22,6 +22,10 @@ import CoreData
 
 public class BookmarksCoreDataStorage {
     
+    public struct Notifications {
+        public static let dataDidChange = Notification.Name("com.duckduckgo.app.BookmarksCoreDataDidChange")
+    }
+    
     private struct Constants {
         static let privateContextName = "EditBookmarksAndFolders"
         static let viewContextName = "ViewBookmarksAndFolders"
@@ -31,45 +35,54 @@ public class BookmarksCoreDataStorage {
     }
     
     private lazy var privateContext = Database.shared.makeContext(concurrencyType: .privateQueueConcurrencyType, name: Constants.privateContextName)
-    private lazy var viewContext = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: Constants.viewContextName)
+    private lazy var viewContext: NSManagedObjectContext = {
+        let context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: Constants.viewContextName)
+        context.mergePolicy = NSMergePolicy(merge: .rollbackMergePolicyType)
+        return context
+    }()
     
     private var cachedReadOnlyTopLevelBookmarksFolder: BookmarkFolderManagedObject?
     private var cachedReadOnlyTopLevelFavoritesFolder: BookmarkFolderManagedObject?
     
-    public init() { }
+    public init() {
+        cacheReadOnlyTopLevelBookmarksFolder()
+        cacheReadOnlyTopLevelFavoritesFolder()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave), name: .NSManagedObjectContextDidSave, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(objectsDidChange), name: .NSManagedObjectContextObjectsDidChange, object: nil)
+    }
 }
 
 // MARK: public interface
 extension BookmarksCoreDataStorage {
     
-    public func topLevelBookmarksFolder(completion: @escaping (BookmarkFolder) -> Void) {
-        readOnlyTopLevelBookmarksFolder() { folder in
-            completion(folder)
+    public var topLevelBookmarksFolder: BookmarkFolder {
+        guard let folder = cachedReadOnlyTopLevelBookmarksFolder else {
+            fatalError("folder cache not loaded")
         }
+        return folder
     }
     
-    public func topLevelBookmarksItem(completion: @escaping ([BookmarkItem]) -> Void) {
-        topLevelBookmarksFolder() { folder in
-            completion(folder.children?.array as? [BookmarkItem] ?? [])
+    public var topLevelBookmarksItems: [BookmarkItem] {
+        guard let folder = cachedReadOnlyTopLevelBookmarksFolder else {
+            fatalError("folder cache not loaded")
         }
+        return folder.children?.array as? [BookmarkItem] ?? []
     }
     
-    public func favorites(completion: @escaping ([Bookmark]) -> Void) {
-        readOnlyTopLevelFavoritesItems() { items in
-            let favorites: [Bookmark] = items.map {
-                if let fav = $0 as? Bookmark {
-                    return fav
-                } else {
-                    fatalError("Favourites shouldn't contain folders")
-                }
+    public var favorites: [Bookmark] {
+        return readOnlyTopLevelFavoritesItems().map {
+            if let fav = $0 as? Bookmark {
+                return fav
+            } else {
+                fatalError("Favourites shouldn't contain folders")
             }
-            completion(favorites)
         }
     }
     
     // Doesn't include parents
     // Just used for favicon deletion
-    public func allBookmarksAndFavoritesShallow(completion: @escaping ([BookmarkItem]) -> Void) {
+    public func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void) {
         viewContext.perform { [weak self] in
         
             let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
@@ -237,6 +250,31 @@ extension BookmarksCoreDataStorage {
     }
 }
 
+// MARK: respond to data updates
+extension BookmarksCoreDataStorage {
+            
+    @objc func contextDidSave(notification: Notification) {
+        guard let sender = notification.object as? NSManagedObjectContext else { return }
+
+        if sender == privateContext {
+            viewContext.perform { [weak self] in
+                self?.viewContext.mergeChanges(fromContextDidSave: notification)
+            }
+        }
+//        } else if sender == viewContext {
+//            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
+//        }
+    }
+    
+    @objc func objectsDidChange(notification: Notification) {
+        guard let sender = notification.object as? NSManagedObjectContext else { return }
+
+        if sender == viewContext {
+            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
+        }
+    }
+}
+
 // MARK: private
 extension BookmarksCoreDataStorage {
     
@@ -265,7 +303,6 @@ extension BookmarksCoreDataStorage {
             }
         }
     }
-    
     
     private func getOrCreateIfNecessaryTopLevelFolder(isFavorite: Bool, returnReadOnly: Bool, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
         
@@ -312,30 +349,24 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func readOnlyTopLevelBookmarksFolder(completion: @escaping (BookmarkFolderManagedObject) -> Void) {
-        if let folder = cachedReadOnlyTopLevelBookmarksFolder {
-            completion(folder)
-        }
+    private func cacheReadOnlyTopLevelBookmarksFolder() {
         getOrCreateIfNecessaryTopLevelFolder(isFavorite: false, returnReadOnly: true) { folder in
             self.cachedReadOnlyTopLevelBookmarksFolder = folder
-            completion(folder)
         }
     }
     
-    private func readOnlyTopLevelFavoritesFolder(completion: @escaping (BookmarkFolderManagedObject) -> Void) {
-        if let folder = cachedReadOnlyTopLevelFavoritesFolder {
-            completion(folder)
-        }
+    private func cacheReadOnlyTopLevelFavoritesFolder() {
         getOrCreateIfNecessaryTopLevelFolder(isFavorite: true, returnReadOnly: true) { folder in
             self.cachedReadOnlyTopLevelFavoritesFolder = folder
-            completion(folder)
         }
     }
     
-    private func readOnlyTopLevelFavoritesItems(completion: @escaping ([BookmarkItem]) -> Void) {
-        readOnlyTopLevelFavoritesFolder() { folder in
-            completion(folder.children?.array as? [BookmarkItem] ?? [])
+    private func readOnlyTopLevelFavoritesItems() -> [BookmarkItem] {
+        guard let folder = cachedReadOnlyTopLevelFavoritesFolder else {
+            assertionFailure("favorites folder not cached")
+            return []
         }
+        return folder.children?.array as? [BookmarkItem] ?? []
     }
 }
 

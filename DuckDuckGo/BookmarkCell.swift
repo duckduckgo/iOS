@@ -64,7 +64,7 @@ class BookmarkCell: UITableViewCell {
                 disclosureImage.isHidden = false
                 numberOfChildrenLabel.isHidden = false
                 title.text = folder.title
-                numberOfChildrenLabel.text = folder.children.count.description
+                numberOfChildrenLabel.text = folder.children?.count.description
                 linkImage.image = #imageLiteral(resourceName: "Folder")
             }
         }

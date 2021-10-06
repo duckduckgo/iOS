@@ -52,8 +52,15 @@ class BookmarksViewController: UITableViewController {
         
         onDidAppearAction()
         onDidAppearAction = {}
+        
+        //TODO maybe the datasource should have it's own notification
+        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
     }
     
+    @objc func dataDidChange(notification: Notification) {
+        tableView.reloadData()
+    }
+        
     func openEditFormWhenPresented(link: Link) {
         //TODO show new edit screen
 //        onDidAppearAction = { [weak self] in

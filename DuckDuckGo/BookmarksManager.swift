@@ -22,6 +22,10 @@ import WidgetKit
 import CoreData
 
 class BookmarksManager {
+    
+    public struct Notifications {
+        public static let bookmarksDidChange = Notification.Name("com.duckduckgo.app.BookmarksDidChange")
+    }
 
     private(set) var dataStore: BookmarkStore
     private(set) var coreDataStorage: BookmarksCoreDataStorage
@@ -33,6 +37,11 @@ class BookmarksManager {
         self.dataStore = dataStore
         //self.coreDataStorage = coreDataStore
         self.coreDataStorage = BookmarksManager.tempCoreDataStorageRetentionDevice
+        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
+    }
+    
+    @objc func dataDidChange(notification: Notification) {
+        NotificationCenter.default.post(name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
     }
 
     var topLevelBookmarkItemsCount: Int {
@@ -49,7 +58,7 @@ class BookmarksManager {
     
     //TOdo is public access to this ever reqiured?
     private var favorites: [Bookmark] {
-        return coreDataStorage.favorites()
+        return coreDataStorage.favorites
     }
         
     var favoritesCount: Int {
@@ -67,11 +76,12 @@ class BookmarksManager {
     func removeFavicon(forBookmark bookmark: Bookmark?) {
         guard let domain = bookmark?.url?.host else { return }
         
-        let bookmarks = coreDataStorage.allBookmarksAndFavoritesShallow()
-        DispatchQueue.global(qos: .background).async {
-            let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
-            if !bookmarks.contains(where: matchesDomain) {
-                Favicons.shared.removeBookmarkFavicon(forDomain: domain)
+        coreDataStorage.allBookmarksAndFavoritesShallow() { bookmarks in
+            DispatchQueue.global(qos: .background).async {
+                let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
+                if !bookmarks.contains(where: matchesDomain) {
+                    Favicons.shared.removeBookmarkFavicon(forDomain: domain)
+                }
             }
         }
     }

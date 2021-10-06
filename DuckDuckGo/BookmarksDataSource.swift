@@ -235,9 +235,9 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private let parentFolder: BookmarkFolder?
     
-    private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
+    private func bookmarkItems() -> [PresentableBookmarkItem] {
         if let folder = parentFolder {
-            let array = folder.children.array as? [BookmarkItem] ?? []
+            let array = folder.children?.array as? [BookmarkItem] ?? []
             return array.map {
                 PresentableBookmarkItem($0, 0)
             }
@@ -246,10 +246,10 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
                 PresentableBookmarkItem($0, 0)
             }
         }
-    }()
+    }
     
     var isEmpty: Bool {
-        presentableBookmarkItems.count == 0
+        bookmarkItems().count == 0
     }
     
     init(parentFolder: BookmarkFolder?) {
@@ -261,14 +261,15 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
     }
     
     func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
-        if presentableBookmarkItems.count <= index {
+        let items = bookmarkItems()
+        if items.count <= index {
             return nil
         }
-        return presentableBookmarkItems[index]
+        return items[index]
     }
     
     var numberOfRows: Int {
-        return max(1, presentableBookmarkItems.count)
+        return max(1, bookmarkItems().count)
     }
 
     func title() -> String? {
@@ -307,7 +308,7 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     
     //TODO If a folder has subfolders and we edit the location, hide the subfolders in the folder structure"
     init(existingItem: BookmarkItem?) {
-        if let item = existingItem, let parent = item.parent {
+        if let item = existingItem, let parent = item.parentFolder {
             let parentIndex = presentableBookmarkItems.firstIndex {
                 $0.item.objectID == parent.objectID
             }
@@ -362,7 +363,7 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     }
     
     private func visibleFolders(for folder: BookmarkFolder, depthOfFolder: Int) -> [PresentableBookmarkItem] {
-        let array = folder.children.array as? [BookmarkItem] ?? []
+        let array = folder.children?.array as? [BookmarkItem] ?? []
         let folders = array.compactMap { $0 as? BookmarkFolder }
 
         var visibleItems = [PresentableBookmarkItem(folder, depthOfFolder)]

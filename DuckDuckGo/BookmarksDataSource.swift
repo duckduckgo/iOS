@@ -226,14 +226,6 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
 
         guard let item = bookmarkItem(at: index)?.item else { return }
         bookmarksManager.delete(item.objectID)
-        
-        let indexPath = IndexPath(row: index, section: section)
-        if bookmarksManager.favoritesCount == 0 {
-            // because we're replacing this cell with a place holder that says "no whatever yet"
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        } else {
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
     }
 
 }
@@ -288,17 +280,7 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         guard editingStyle == .delete else { return }
 
         guard let item = bookmarkItem(at: index)?.item else { return }
-        //TODO gonna have to refresh presentablebookmarkitems too
         bookmarksManager.delete(item.objectID)
-
-        let indexPath = IndexPath(row: index, section: section)
-        //TODO this needs to take into account variable parent folder
-        if bookmarksManager.topLevelBookmarkItemsCount == 0 {
-            // because we're replacing this cell with a place holder that says "no whatever yet"
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        } else {
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
     }
 
 }

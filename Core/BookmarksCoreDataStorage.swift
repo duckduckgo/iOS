@@ -261,9 +261,6 @@ extension BookmarksCoreDataStorage {
                 self?.viewContext.mergeChanges(fromContextDidSave: notification)
             }
         }
-//        } else if sender == viewContext {
-//            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
-//        }
     }
     
     @objc func objectsDidChange(notification: Notification) {

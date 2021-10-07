@@ -111,6 +111,24 @@ class BookmarksViewController: UITableViewController {
         shareContextualAction.backgroundColor = UIColor.cornflowerBlue
         return UISwipeActionsConfiguration(actions: [shareContextualAction])
     }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        if let item = currentDataSource.item(at: sourceIndexPath),
+           item as? BookmarkFolder != nil &&
+           proposedDestinationIndexPath.section == 0 {
+            return sourceIndexPath
+        }
+        
+        //TODO maybe this will be nicer with a way to explictiyl check the section is empty
+        //Check if the proposed section is empty, if so we need to make sure the proposed row is 0, not 1
+        let sectionIndexPath = IndexPath(row: 0, section: proposedDestinationIndexPath.section)
+        if currentDataSource.item(at: sectionIndexPath) == nil {
+            return sectionIndexPath
+        }
+        
+        return proposedDestinationIndexPath
+    }
 
     private func registerForNotifications() {
         NotificationCenter.default.addObserver(self,

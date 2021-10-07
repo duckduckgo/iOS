@@ -449,6 +449,9 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
 
 class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     
+    //TODO proper injection
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    
     private var itemsDataSources: [BookmarkItemsSectionDataSource] {
         //TODO I hate it
         return dataSources as! [BookmarkItemsSectionDataSource]
@@ -499,40 +502,25 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
         itemsDataSources[indexPath.section].commit(tableView, editingStyle: editingStyle, forRowAt: indexPath.row, section: indexPath.section)
     }
     
-        func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-            
-            //original logic is, if both sections equal, don't need to reload, otherwise do
-            //I have no idea what we'll need...
-            
-            //folders can't move to favorites
-            
-            //perhaps we should figure out what this will look like at the data layer first
-            //sections will need to know about this, cos they'll need to update their own models
-            
-            //perhaps something like moverow(at, to: ) where to is optional, and if nil it's moving out of the section.
-            //hmmm
-    
-//            var reload = false
-//            if sourceIndexPath.section == 0 && destinationIndexPath.section == 0 {
-//                //bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
-//            } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
-//                //bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
-//                reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.topLevelBookmarkItemsCount == 1
-//            } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
-//                //bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
-//            } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
-//                guard item(at: sourceIndexPath)?.item is Bookmark else {
-//                    // Folders aren't allowed in favourites
-//                    return
-//                }
-//                //bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
-//                reload = bookmarksManager.topLevelBookmarkItemsCount == 0 || bookmarksManager.favoritesCount == 1
-//            }
-//
-//            if reload {
-//                tableView.reloadData()
-//            }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+
+        guard let item = item(at: sourceIndexPath) else {
+            assertionFailure("Item does not exist")
+            return
         }
+        
+        if sourceIndexPath.section == destinationIndexPath.section {
+            bookmarksManager.updateIndex(of: item.objectID, newIndex: destinationIndexPath.row)
+        } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
+            bookmarksManager.convertFavoriteToBookmark(item.objectID, newIndex: destinationIndexPath.row)
+        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
+            guard let bookmark = item as? Bookmark else {
+                // Folders aren't allowed in favourites. We shouldn't be able to get here
+                fatalError()
+            }
+            bookmarksManager.convertBookmarkToFavorite(bookmark.objectID, newIndex: destinationIndexPath.row)
+        }
+    }
 }
 
 class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSource {

@@ -165,8 +165,6 @@ extension BookmarksCoreDataStorage {
     }
     
     public func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
-        //TODO currently changes order and shouldn't
-        //I think I might have done this already
         privateContext.perform { [weak self] in
             guard let self = self else { return }
 
@@ -285,16 +283,17 @@ extension BookmarksCoreDataStorage {
                 return
             }
             
-            bookmark.parent?.removeFromChildren(bookmark)
-            bookmark.isFavorite = !bookmark.isFavorite
-            
-            self.getOrCreateIfNecessaryTopLevelFolder(isFavorite: bookmark.isFavorite, returnReadOnly: false) { newParent in
-                bookmark.parent = newParent
+            self.getOrCreateIfNecessaryTopLevelFolder(isFavorite: !bookmark.isFavorite, returnReadOnly: false) { newParent in
+                
+                bookmark.parent?.removeFromChildren(bookmark)
+                bookmark.isFavorite = !bookmark.isFavorite
                 newParent.insertIntoChildren(bookmark, at: newIndex)
+                
                 
                 do {
                     try self.privateContext.save()
-                } catch {
+                } catch let error {
+                    print(error)
                     assertionFailure("Updating item failed")
                 }
             }
@@ -341,6 +340,9 @@ extension BookmarksCoreDataStorage {
             fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == %@", NSNumber(value: isFavorite))
             
             let results = try? context.fetch(fetchRequest)
+            guard (results?.count ?? 0) <= 1 else {
+                fatalError("There shouldn't be an orphaned folder")
+            }
             let folder = results?.first
             completion(folder)
         }

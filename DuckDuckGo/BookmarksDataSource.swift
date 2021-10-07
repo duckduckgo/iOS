@@ -201,6 +201,14 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
     var numberOfRows: Int {
         return max(1, bookmarksManager.favoritesCount)
     }
+    
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        if isEmpty {
+            return createEmptyCell(tableView, forIndex: index)
+        } else {
+            return createCell(tableView, withItem: bookmarkItem(at: index))
+        }
+    }
  
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
         let cell = (self as BookmarkItemsSectionDataSource).createEmptyCell(tableView, forIndex: index)

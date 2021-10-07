@@ -648,14 +648,19 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
     
 }
 
+//TODO integrate this into the whole sections data srouce thing
+//hmm, searching seems to work in terms of getting results. So this just isn't displaying anything
 class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     
-    var searchResults = [Link]()
+    var searchResults = [Bookmark]()
     private let searchEngine = BookmarksSearch()
     
-    func performSearch(query: String) {
+    func performSearch(query: String, completion: @escaping () -> Void) {
         let query = query.lowercased()
-        searchResults = searchEngine.search(query: query, sortByRelevance: false)
+        searchEngine.search(query: query, sortByRelevance: false) { results in
+            self.searchResults = results
+            completion()
+        }
     }
     
     var isEmpty: Bool {
@@ -669,39 +674,69 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
     var navigationTitle: String?
     
     func item(at indexPath: IndexPath) -> BookmarkItem? {
-        guard indexPath.row < searchResults.count else {
+        return item(at: indexPath.row)
+    }
+    
+    func item(at index: Int) -> Bookmark? {
+        guard index < searchResults.count else {
             return nil
         }
-        return nil
-        //return searchResults[indexPath.row]
+        return searchResults[index]
     }
-
-//    override var isEmpty: Bool {
-//        return searchResults.isEmpty
-//    }
-
-//    override func link(at indexPath: IndexPath) -> Link? {
-//        guard indexPath.row < searchResults.count else {
-//            return nil
-//        }
-//        
-//        return searchResults[indexPath.row]
-//    }
     
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        //return link(at: indexPath) != nil
-//        return false
-//    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return item(at: indexPath.row) != nil
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return max(1, searchResults.count)
     }
     
-//    override func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> NoBookmarksCell {
-//        let cell = super.createEmptyCell(tableView, forIndexPath: indexPath)
-//
-//        cell.label.text = UserText.noMatchesFound
-//
-//        return cell
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if isEmpty {
+            return createEmptyCell(tableView, forIndex: indexPath.row)
+        } else {
+            let item = item(at: indexPath.row)
+            return createCell(tableView, withItem: item)
+        }
+    }
+    
+    //TODO copied from section data source, should make this use section datasource.
+    func createCell(_ tableView: UITableView, withItem item: Bookmark?) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
+            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
+        }
+
+        cell.bookmarkItem = item
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.title.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        
+        return cell
+    }
+    
+    //TODO copied from section data source, should make this use section datasource.
+    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
+            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
+        }
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.label.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+
+        cell.label.text = UserText.noMatchesFound
+        return cell
+    }
 }

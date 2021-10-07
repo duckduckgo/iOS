@@ -340,8 +340,9 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
         
-        searchDataSource.performSearch(query: searchText)
-        tableView.reloadData()
+        searchDataSource.performSearch(query: searchText) {
+            self.tableView.reloadData()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

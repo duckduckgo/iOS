@@ -155,20 +155,21 @@ class AutocompleteViewController: UIViewController {
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let strongSelf = self else { return }
             
-            let matches = strongSelf.bookmarksSearch.search(query: query)
-            let notQueryMatches = matches.filter { $0.url.absoluteString != query }
-            let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
-            let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.displayTitle!, url: $0.url)}
-            
-            guard let suggestions = suggestions, error == nil else {
-                os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
-                self?.updateSuggestions(localSuggestions)
-                return
-            }
+            strongSelf.bookmarksSearch.search(query: query) { matches in
+                let notQueryMatches = matches.filter { $0.url?.absoluteString != query }
+                let filteredMatches = notQueryMatches.filter { $0.title != nil }.prefix(Constants.maxLocalItems)
+                let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.title!, url: $0.url)}
+                
+                guard let suggestions = suggestions, error == nil else {
+                    os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
+                    self?.updateSuggestions(localSuggestions)
+                    return
+                }
 
-            let combinedSuggestions = localSuggestions + suggestions
-            strongSelf.updateSuggestions(Array(combinedSuggestions))
-            strongSelf.pendingRequest = false
+                let combinedSuggestions = localSuggestions + suggestions
+                strongSelf.updateSuggestions(Array(combinedSuggestions))
+                strongSelf.pendingRequest = false
+            }
         }
     }
 

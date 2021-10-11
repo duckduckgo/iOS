@@ -36,6 +36,15 @@ class BookmarkFolderCell: UITableViewCell {
         }
     }
     
+    var titleString: String? {
+        get {
+            return title.text
+        }
+        set {
+            title.text = newValue
+        }
+    }
+    
     var depth: Int = 0 {
         didSet {
             let paddingDepth = min(depth, 10)

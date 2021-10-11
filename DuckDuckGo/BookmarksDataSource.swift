@@ -165,7 +165,6 @@ extension BookmarkItemsSectionDataSource {
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.title.textColor = theme.tableCellTextColor
-        //TODO folder tint
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         return cell
@@ -336,6 +335,11 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
         cell.folder = item?.item as? BookmarkFolder
         cell.depth = item?.depth ?? 0
         cell.isSelected = index == selectedRow
+        
+        if index == 0 {
+            cell.titleString = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
+
+        }
         
         return cell
     }

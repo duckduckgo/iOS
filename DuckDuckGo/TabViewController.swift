@@ -277,7 +277,7 @@ class TabViewController: UIViewController {
         webView.removeFromSuperview()
         webView = nil
 
-        let request = currentURL == nil ? nil : URLRequest(url: url!)
+        let request = currentURL == nil ? nil : URLRequest(url: currentURL!)
         attachWebView(configuration: configuration, andLoadRequest: request, consumeCookies: true)
     }
 

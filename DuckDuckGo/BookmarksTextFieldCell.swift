@@ -21,7 +21,6 @@ import UIKit
 import Core
 
 class BookmarksTextFieldCell: UITableViewCell {
-    //TODO delete icon
 
     static let reuseIdentifier = "BookmarksTextFieldCell"
     

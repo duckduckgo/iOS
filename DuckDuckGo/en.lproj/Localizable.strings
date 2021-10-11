@@ -151,6 +151,9 @@
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 
+/* Top level bookmarks folder title */
+"Bookmarks" = "Bookmarks";
+
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bookmarks";
 

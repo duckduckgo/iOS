@@ -266,9 +266,9 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate func showShareSheet(for indexPath: IndexPath) {
 
-        if let item = currentDataSource.item(at: indexPath) {
-            //TODO
-            //presentShareSheet(withItems: [link], fromView: self.view)
+        if let item = currentDataSource.item(at: indexPath),
+            let bookmark = item as? Bookmark {
+            presentShareSheet(withItems: [bookmark], fromView: self.view)
         } else {
             os_log("Invalid share link found", log: generalLog, type: .debug)
         }

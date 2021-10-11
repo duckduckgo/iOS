@@ -34,9 +34,7 @@ public protocol PrivacyConfiguration {
     /// Use `isTempUnprotected(domain:)` to check if given domain is unprotected.
     var tempUnprotectedDomains: [String] { get }
 
-    /// Domains for which all protections has been disabled because of some broken functionality
-    ///
-    /// Use `isTempUnprotected(domain:)` to check if given domain is unprotected.
+    /// Trackers that has been allow listed because of site breakage
     var trackerAllowlist: [PrivacyConfigurationData.TrackerAllowlist.Entry] { get }
 
     func isEnabled(featureKey: PrivacyFeature) -> Bool

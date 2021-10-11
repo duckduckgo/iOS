@@ -122,6 +122,7 @@ class WebKitTestHelper {
 
     static func preparePrivacyConfig(locallyUnprotected: [String],
                                      tempUnprotected: [String],
+                                     trackerAllowlist: [PrivacyConfigurationData.TrackerAllowlist.Entry],
                                      contentBlockingEnabled: Bool,
                                      exceptions: [String]) -> PrivacyConfiguration {
         let contentBlockingExceptions = exceptions.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
@@ -130,7 +131,8 @@ class WebKitTestHelper {
                                                                                                          exceptions: contentBlockingExceptions)]
         let unprotectedTemporary = tempUnprotected.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
         let privacyData = PrivacyConfigurationData(features: features,
-                                                   unprotectedTemporary: unprotectedTemporary)
+                                                   unprotectedTemporary: unprotectedTemporary,
+                                                   trackerAllowlist: trackerAllowlist)
 
         let localProtection = MockDomainsProtectionStore()
         localProtection.unprotectedDomains = Set(locallyUnprotected)
@@ -143,10 +145,12 @@ class WebKitTestHelper {
     static func prepareContentBlockingRules(trackerData: TrackerData,
                                             exceptions: [String],
                                             tempUnprotected: [String],
+                                            trackerAllowlist: [TrackerException],
                                             completion: @escaping (WKContentRuleList?) -> Void) {
 
         let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: exceptions,
-                                                                                    andTemporaryUnprotectedDomains: tempUnprotected)
+                                                                                    andTemporaryUnprotectedDomains: tempUnprotected,
+                                                                                    andTrackerAllowlist: trackerAllowlist)
 
         let data = (try? JSONEncoder().encode(rules))!
         var ruleList = String(data: data, encoding: .utf8)!

@@ -23,6 +23,7 @@ public class ContentBlockerRulesIdentifier: Equatable {
     
     private let tdsEtag: String
     private let tempListEtag: String
+    private let allowListEtag: String
     private let unprotectedSitesHash: String
     
     public var stringValue: String {
@@ -38,9 +39,10 @@ public class ContentBlockerRulesIdentifier: Equatable {
         
         public static let tdsEtag = Difference(rawValue: 1 << 0)
         public static let tempListEtag = Difference(rawValue: 1 << 1)
-        public static let unprotectedSites = Difference(rawValue: 1 << 2)
+        public static let allowListEtag = Difference(rawValue: 1 << 2)
+        public static let unprotectedSites = Difference(rawValue: 1 << 3)
         
-        public static let all: Difference = [.tdsEtag, .tempListEtag, .unprotectedSites]
+        public static let all: Difference = [.tdsEtag, .tempListEtag, .allowListEtag, .unprotectedSites]
     }
     
     private class func normalize(identifier: String?) -> String {
@@ -78,22 +80,25 @@ public class ContentBlockerRulesIdentifier: Equatable {
 
             components = [tdsComponent,
                           tmpListAndUnprotected.first ?? "",
+                          "",
                           (tmpListAndUnprotected.last ?? "").appending("\"")]
 
-        } else if components.count != 3 {
+        } else if components.count != 4 {
             Pixel.fire(pixel: .contentBlockingIdentifierError)
             return nil
         }
 
         tdsEtag = Self.normalize(identifier: components[0])
         tempListEtag = Self.normalize(identifier: components[1])
-        unprotectedSitesHash = Self.normalize(identifier: components[2])
+        allowListEtag = Self.normalize(identifier: components[2])
+        unprotectedSitesHash = Self.normalize(identifier: components[3])
     }
     
-    init(tdsEtag: String, tempListEtag: String?, unprotectedSitesHash: String?) {
+    init(tdsEtag: String, tempListEtag: String?, allowListEtag: String?, unprotectedSitesHash: String?) {
         
         self.tdsEtag = Self.normalize(identifier: tdsEtag)
         self.tempListEtag = Self.normalize(identifier: tempListEtag)
+        self.allowListEtag = Self.normalize(identifier: allowListEtag)
         self.unprotectedSitesHash = Self.normalize(identifier: unprotectedSitesHash)
     }
     
@@ -105,6 +110,9 @@ public class ContentBlockerRulesIdentifier: Equatable {
         }
         if tempListEtag != id.tempListEtag {
             result.insert(.tempListEtag)
+        }
+        if allowListEtag != id.allowListEtag {
+            result.insert(.allowListEtag)
         }
         if unprotectedSitesHash != id.unprotectedSitesHash {
             result.insert(.unprotectedSites)

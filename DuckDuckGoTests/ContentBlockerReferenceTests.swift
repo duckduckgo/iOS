@@ -50,7 +50,8 @@ class ContentBlockerReferenceTests: XCTestCase {
 
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: [],
-                                                     tempUnprotected: []) { rules in
+                                                     tempUnprotected: [],
+                                                     trackerAllowlist: []) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -65,6 +66,7 @@ class ContentBlockerReferenceTests: XCTestCase {
 
             let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                       tempUnprotected: [],
+                                                                      trackerAllowlist: [],
                                                                       contentBlockingEnabled: true,
                                                                       exceptions: [])
 
@@ -157,7 +159,12 @@ class ContentBlockerReferenceTests: XCTestCase {
 
         os_log("Loading %s ...", siteURL.absoluteString)
         let request = URLRequest(url: siteURL)
-        webView.load(request)
+        WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache,
+                                                          WKWebsiteDataTypeMemoryCache],
+                                                modifiedSince: Date(timeIntervalSince1970: 0),
+                                                completionHandler: {
+            self.webView.load(request)
+        })
 
         navigationDelegateMock.onDidFinishNavigation = {
             os_log("Website loaded")

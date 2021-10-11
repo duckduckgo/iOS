@@ -178,6 +178,7 @@ public enum PixelName: String {
     
     case contentBlockingTDSCompilationFailed = "m_d_cb_ct"
     case contentBlockingTempListCompilationFailed = "m_d_cb_cl"
+    case contentBlockingAllowListCompilationFailed = "m_d_cb_ca"
     case contentBlockingUnpSitesCompilationFailed = "m_d_cb_cu"
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     

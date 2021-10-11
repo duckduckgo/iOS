@@ -26,6 +26,8 @@ class ContentBlockerRulesInputIdentifiers {
 
     var tempListIdentifier: String?
 
+    var allowListIdentifier: String?
+
     var unprotectedSitesIdentifier: String?
 
     init(tdsIdentfier: String) {
@@ -35,6 +37,7 @@ class ContentBlockerRulesInputIdentifiers {
     var rulesIdentifier: ContentBlockerRulesIdentifier {
         ContentBlockerRulesIdentifier(tdsEtag: tdsIdentifier,
                                       tempListEtag: tempListIdentifier,
+                                      allowListEtag: allowListIdentifier,
                                       unprotectedSitesHash: unprotectedSitesIdentifier)
     }
 }
@@ -44,6 +47,8 @@ class ContentBlockerRulesInputModel: ContentBlockerRulesInputIdentifiers {
     let tds: TrackerData
 
     var tempList = [String]()
+
+    var allowList = [TrackerException]()
 
     var unprotectedSites = [String]()
 
@@ -67,12 +72,14 @@ class ContentBlockerRulesInputManager {
 
         // Fetch identifier up-front
         let tempListIdentifier = dataSource.tempListEtag
+        let allowListIdentifier = dataSource.allowListEtag
         let unprotectedSites = dataSource.unprotectedSites
         let unprotectedSitesIdentifier = ContentBlockerRulesIdentifier.hash(domains: unprotectedSites)
 
         // In case of any broken input that has been changed, reset the broken state and retry full compilation
         if (brokenInputs?.tempListIdentifier != nil && brokenInputs?.tempListIdentifier != tempListIdentifier) ||
-            brokenInputs?.unprotectedSitesIdentifier != nil && brokenInputs?.unprotectedSitesIdentifier != unprotectedSitesIdentifier {
+            brokenInputs?.unprotectedSitesIdentifier != nil && brokenInputs?.unprotectedSitesIdentifier != unprotectedSitesIdentifier ||
+            brokenInputs?.allowListIdentifier != nil && brokenInputs?.allowListIdentifier != allowListIdentifier {
             brokenInputs = nil
         }
 
@@ -92,6 +99,14 @@ class ContentBlockerRulesInputManager {
             if !tempListDomains.isEmpty {
                 result.tempListIdentifier = tempListIdentifier
                 result.tempList = tempListDomains
+            }
+        }
+
+        if allowListIdentifier != brokenInputs?.allowListIdentifier {
+            let allowList = dataSource.allowList
+            if !allowList.isEmpty {
+                result.allowListIdentifier = allowListIdentifier
+                result.allowList = allowList
             }
         }
 
@@ -118,6 +133,11 @@ class ContentBlockerRulesInputManager {
             Pixel.fire(pixel: .contentBlockingTempListCompilationFailed,
                        error: error,
                        withAdditionalParameters: [PixelParameters.etag: input.tempListIdentifier ?? "empty"])
+        } else if input.allowListIdentifier != nil {
+            brokenInputs?.allowListIdentifier = input.allowListIdentifier
+            Pixel.fire(pixel: .contentBlockingAllowListCompilationFailed,
+                       error: error,
+                       withAdditionalParameters: [PixelParameters.etag: input.allowListIdentifier ?? "empty"])
         } else if input.unprotectedSitesIdentifier != nil {
             brokenInputs?.unprotectedSitesIdentifier = input.unprotectedSitesIdentifier
             Pixel.fire(pixel: .contentBlockingUnpSitesCompilationFailed,

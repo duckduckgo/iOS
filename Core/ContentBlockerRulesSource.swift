@@ -26,6 +26,8 @@ protocol ContentBlockerRulesSource {
     var embeddedTrackerData: TrackerDataManager.DataSet { get }
     var tempListEtag: String { get }
     var tempList: [String] { get }
+    var allowListEtag: String { get }
+    var allowList: [TrackerException] { get }
     var unprotectedSites: [String] { get }
 
 }
@@ -49,6 +51,22 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
         var tempUnprotected = config.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
         tempUnprotected.append(contentsOf: config.exceptionsList(forFeature: .contentBlocking))
         return tempUnprotected
+    }
+
+    var allowListEtag: String {
+        return PrivacyConfigurationManager.shared.privacyConfig.identifier
+    }
+
+    var allowList: [TrackerException] {
+        let list = PrivacyConfigurationManager.shared.privacyConfig.trackerAllowlist
+
+        return list.map { entry in
+            if entry.domains.contains("<all>") {
+                return TrackerException(rule: entry.rule, matching: .all)
+            } else {
+                return TrackerException(rule: entry.rule, matching: .domains(entry.domains))
+            }
+        }
     }
 
     var unprotectedSites: [String] {

@@ -138,7 +138,7 @@ public class ContentBlockerRulesManager {
         let builder = ContentBlockerRulesBuilder(trackerData: input.tds)
         let rules = builder.buildRules(withExceptions: input.unprotectedSites,
                                        andTemporaryUnprotectedDomains: input.tempList,
-                                       andTrackerAllowlist: [])
+                                       andTrackerAllowlist: input.allowList)
 
         let data: Data
         do {
@@ -231,6 +231,7 @@ public class ContentBlockerRulesManager {
         } else {
             diff = input.rulesIdentifier.compare(with: ContentBlockerRulesIdentifier(tdsEtag: "",
                                                                                      tempListEtag: nil,
+                                                                                     allowListEtag: nil,
                                                                                      unprotectedSitesHash: nil))
         }
         

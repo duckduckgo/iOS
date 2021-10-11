@@ -108,9 +108,18 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
         var tempUnprotected = privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
         tempUnprotected.append(contentsOf: privacyConfig.exceptionsList(forFeature: .contentBlocking))
 
+        let allowlist = privacyConfig.trackerAllowlist.map { (entry) -> TrackerException in
+            if entry.domains.contains("<all>") {
+                return TrackerException(rule: entry.rule, matching: .all)
+            } else {
+                return TrackerException(rule: entry.rule, matching: .domains(entry.domains))
+            }
+        }
+
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: privacyConfig.userUnprotectedDomains,
-                                                     tempUnprotected: tempUnprotected) { rules in
+                                                     tempUnprotected: tempUnprotected,
+                                                     trackerAllowlist: allowlist) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -169,6 +178,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -195,6 +205,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -225,6 +236,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -250,10 +262,43 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
         self.wait(for: [websiteLoaded], timeout: 30)
     }
 
+    func testWhenThereIsTrackerOnAllowlistThenItIsReportedButNotBlocked() {
+
+        let allowlist = [PrivacyConfigurationData.TrackerAllowlist.Entry(rule: "tracker.com/", domains: ["<all>"])]
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  trackerAllowlist: allowlist ,
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let websiteURL = URL(string: "test://example.com")!
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            let expectedTrackers: Set<String> = ["sub.tracker.com", "tracker.com"]
+            let blockedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.filter { $0.blocked }.map { $0.domain })
+//            XCTAssertTrue(blockedTrackers.isEmpty) // Todo
+
+            let detectedTrackers = Set(self.userScriptDelegateMock.detectedTrackers.map { $0.domain })
+//            XCTAssertEqual(expectedTrackers, detectedTrackers) // ToDo
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.subTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTest(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded], timeout: 30)
+    }
+
     func testWhenThereIsTrackerOnLocallyUnprotectedSiteSubdomainThenItIsReportedAndBlocked() {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -280,6 +325,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -306,6 +352,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -335,6 +382,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -364,6 +412,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -390,6 +439,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: ["example.com"])
 
@@ -419,6 +469,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: ["example.com"])
 
@@ -448,6 +499,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [],
                                                                   contentBlockingEnabled: false,
                                                                   exceptions: [])
 

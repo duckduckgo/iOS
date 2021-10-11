@@ -63,7 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
         #endif
-        
+
+        clearTmp()
+
         _ = UserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
@@ -115,6 +117,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appIsLaunching = true
         return true
+    }
+
+    private func clearTmp() {
+        let tmp = FileManager.default.temporaryDirectory
+        do {
+            try FileManager.default.removeItem(at: tmp)
+        } catch {
+            os_log("Failed to delete tmp dir")
+        }
     }
 
     private func clearLegacyAllowedDomainCookies() {

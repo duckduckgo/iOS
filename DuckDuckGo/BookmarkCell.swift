@@ -24,8 +24,7 @@ class BookmarkCell: UITableViewCell {
 
     static let reuseIdentifier = "BookmarkCell"
 
-    //TODO rename
-    @IBOutlet weak var linkImage: UIImageView!
+    @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
     @IBOutlet weak var disclosureImage: UIImageView!
@@ -56,16 +55,15 @@ class BookmarkCell: UITableViewCell {
                 } else {
                     title.text = bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
                 }
-                linkImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
+                itemImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
             } else if let folder = bookmarkItem as? BookmarkFolder {
-                //TODO
                 imageWidthConstraint.constant = 22
                 imageHeightConstraint.constant = 20
                 disclosureImage.isHidden = false
                 numberOfChildrenLabel.isHidden = false
                 title.text = folder.title
                 numberOfChildrenLabel.text = folder.children?.count.description
-                linkImage.image = #imageLiteral(resourceName: "Folder")
+                itemImage.image = #imageLiteral(resourceName: "Folder")
             }
         }
     }

@@ -272,7 +272,7 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
     }
 
     func title() -> String? {
-        return UserText.sectionTitleBookmarks
+        return parentFolder == nil ? UserText.sectionTitleBookmarks : nil
     }
     
     func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {

@@ -25,7 +25,7 @@ struct AdvancedSettings {
         public static let autoplayMediaDidChange = Notification.Name("com.duckduckgo.autoplayMediaDidChange")
     }
 
-    @UserDefaultsWrapper(key: .autoplayMedia, defaultValue: true)
+    @UserDefaultsWrapper(key: .autoplayMedia, defaultValue: false)
     var autoplayMedia: Bool {
         didSet {
             NotificationCenter.default.post(name: Notifications.autoplayMediaDidChange, object: nil)

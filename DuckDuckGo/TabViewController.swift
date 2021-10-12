@@ -1257,6 +1257,10 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
+    
+    private func canDisplayJavaScriptAlert() -> Bool {
+        return self.presentedViewController == nil
+    }
 }
 
 extension TabViewController: PrivacyProtectionDelegate {
@@ -1284,7 +1288,51 @@ extension TabViewController: WKUIDelegate {
         Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
+    
+     func webView(_ webView: WKWebView,
+                  runJavaScriptAlertPanelWithMessage message: String,
+                  initiatedByFrame frame: WKFrameInfo,
+                  completionHandler: @escaping () -> Void) {
+        if canDisplayJavaScriptAlert() {
+            let alertController = WebJSAlert(message: message,
+                                             alertType: .alert(handler: completionHandler)).createAlertController()
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            completionHandler()
+        }
+     }
 
+     func webView(_ webView: WKWebView,
+                  runJavaScriptConfirmPanelWithMessage message: String,
+                  initiatedByFrame frame: WKFrameInfo,
+                  completionHandler: @escaping (Bool) -> Void) {
+        
+        if canDisplayJavaScriptAlert() {
+            let alertController = WebJSAlert(message: message,
+                                             alertType: .confirm(handler: completionHandler)).createAlertController()
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            completionHandler(false)
+        }
+     }
+
+     func webView(_ webView: WKWebView,
+                  runJavaScriptTextInputPanelWithPrompt prompt: String,
+                  defaultText: String?,
+                  initiatedByFrame frame: WKFrameInfo,
+                  completionHandler: @escaping (String?) -> Void) {
+        if canDisplayJavaScriptAlert() {
+            let alertController = WebJSAlert(message: prompt,
+                                             alertType: .text(handler: completionHandler,
+                                                              defaultText: defaultText)).createAlertController()
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            completionHandler(nil)
+        }
+     }
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

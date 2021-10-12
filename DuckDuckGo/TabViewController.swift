@@ -178,6 +178,10 @@ class TabViewController: UIViewController {
     }()
     
     private var userScripts: [UserScript] = []
+    
+    private var canDisplayJavaScriptAlert: Bool {
+        return presentedViewController == nil
+    }
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -1257,10 +1261,6 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
-    
-    private func canDisplayJavaScriptAlert() -> Bool {
-        return self.presentedViewController == nil
-    }
 }
 
 extension TabViewController: PrivacyProtectionDelegate {
@@ -1293,7 +1293,7 @@ extension TabViewController: WKUIDelegate {
                   runJavaScriptAlertPanelWithMessage message: String,
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
-        if canDisplayJavaScriptAlert() {
+        if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: message,
                                              alertType: .alert(handler: completionHandler)).createAlertController()
             
@@ -1308,7 +1308,7 @@ extension TabViewController: WKUIDelegate {
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping (Bool) -> Void) {
         
-        if canDisplayJavaScriptAlert() {
+        if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: message,
                                              alertType: .confirm(handler: completionHandler)).createAlertController()
             
@@ -1323,7 +1323,7 @@ extension TabViewController: WKUIDelegate {
                   defaultText: String?,
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping (String?) -> Void) {
-        if canDisplayJavaScriptAlert() {
+        if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: prompt,
                                              alertType: .text(handler: completionHandler,
                                                               defaultText: defaultText)).createAlertController()

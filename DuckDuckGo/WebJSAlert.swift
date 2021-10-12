@@ -40,8 +40,6 @@ struct WebJSAlert {
         switch alertType {
         
         case .confirm(let handler):
-            let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertOKButton,
                                                     style: .default, handler: { _ in
                 handler(true)
@@ -61,17 +59,17 @@ struct WebJSAlert {
             return alertController
             
         case .text(let handler, let defaultText):
-            alertController.addTextField { (textField) in
+            alertController.addTextField { textField in
                 textField.text = defaultText
             }
             
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertOKButton,
-                                                    style: .default, handler: { _ in
-                if let text = alertController.textFields?.first?.text {
-                    handler(text)
-                } else {
-                    handler(defaultText)
-                }
+                                                    style: .default, handler: { [weak alertController] _ in
+               if let text = alertController?.textFields?.first?.text {
+                   handler(text)
+               } else {
+                   handler(defaultText)
+               }
             }))
 
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertCancelButton,

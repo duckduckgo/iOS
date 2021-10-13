@@ -290,7 +290,10 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
 
     //TODO this really should just use folders internally if we can?
     private lazy var presentableBookmarkItems: [PresentableBookmarkItem] = {
-        return visibleFolders(for: bookmarksManager.topLevelBookmarksFolder, depthOfFolder: 0)
+        guard let folder = bookmarksManager.topLevelBookmarksFolder else {
+            return []
+        }
+        return visibleFolders(for: folder, depthOfFolder: 0)
     }()
     
     private var selectedRow = 0

@@ -129,7 +129,6 @@ class BookmarksViewController: UITableViewController {
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
-        //TODO maybe the datasource should have it's own notification
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
     }
 

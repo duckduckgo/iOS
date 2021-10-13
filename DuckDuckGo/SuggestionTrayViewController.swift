@@ -36,7 +36,7 @@ class SuggestionTrayViewController: UIViewController {
     var dismissHandler: (() -> Void)?
     
     private let appSettings = AppUserDefaults()
-    private let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+    private let bookmarkManager = BookmarksManager()
 
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
@@ -168,7 +168,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func displayFavorites(onInstall: @escaping () -> Void = {}) -> Bool {
-        guard !bookmarkStore.favorites.isEmpty else { return false }
+        guard bookmarkManager.favoritesCount != 0 else { return false }
 
         if favoritesOverlay == nil {
             let controller = FavoritesOverlay()

@@ -23,7 +23,7 @@ import Core
 protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           didSelect link: Link)
+                           didSelect favorite: Bookmark)
     
 }
 
@@ -159,9 +159,10 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        guard let indexPath = collectionView.indexPath(for: cell),
+        let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
-        bookmarksManager.deleteFavorite(at: indexPath.row)
+        bookmarksManager.delete(favorite.objectID)
         collectionView.performBatchUpdates({
             collectionView.deleteItems(at: [indexPath])
         })

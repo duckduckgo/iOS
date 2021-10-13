@@ -53,12 +53,11 @@ class BookmarksManager {
         return coreDataStorage.topLevelBookmarksItems
     }
     
-    var topLevelBookmarksFolder: BookmarkFolder {
+    var topLevelBookmarksFolder: BookmarkFolder? {
         return coreDataStorage.topLevelBookmarksFolder
     }
     
-    //TOdo is public access to this ever reqiured?
-    private var favorites: [Bookmark] {
+    var favorites: [Bookmark] {
         return coreDataStorage.favorites
     }
         

@@ -231,11 +231,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
-    //TODO this
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
+        guard let url = favorite.url else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
-        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
-        delegate?.home(self, didRequestUrl: link.url)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        delegate?.home(self, didRequestUrl: url)
     }
 
 }

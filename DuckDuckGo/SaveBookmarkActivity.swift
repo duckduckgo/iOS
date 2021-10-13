@@ -27,6 +27,8 @@ class SaveBookmarkActivity: UIActivity {
     
     private weak var controller: UIViewController?
     private var isFavorite: Bool
+    
+    private var activityViewControllerAccessed = false
 
     init(controller: UIViewController, isFavorite: Bool = false) {
         self.controller = controller
@@ -54,26 +56,37 @@ class SaveBookmarkActivity: UIActivity {
         bookmark = activityItems.first(where: { $0 is Link }) as? Link
     }
 
+    //TOdo this still uses links. Maybe that's fine...
     override var activityViewController: UIViewController? {
-        defer {
-            activityDidFinish(true)
-        }
+        guard !activityViewControllerAccessed else { return nil }
+        activityViewControllerAccessed = true
 
         guard let bookmark = bookmark else {
+            activityDidFinish(true)
             return nil
         }
 
-        if bookmarksManager.contains(url: bookmark.url) {
-            ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
-            return nil
-        }
-
-        if isFavorite {
-            bookmarksManager.save(favorite: bookmark)
-            ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-        } else {
-            bookmarksManager.save(bookmark: bookmark)
-            ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+        bookmarksManager.contains(url: bookmark.url) { contains in
+            if contains {
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
+                    self.activityDidFinish(true)
+                }
+            } else {
+                if self.isFavorite {
+                    self.bookmarksManager.saveNewFavorite(withTitle: bookmark.title ?? "", url: bookmark.url)
+                    DispatchQueue.main.async {
+                        ActionMessageView.present(message: UserText.webSaveFavoriteDone)
+                        self.activityDidFinish(true)
+                    }
+                } else {
+                    self.bookmarksManager.saveNewBookmark(withTitle: bookmark.title ?? "", url: bookmark.url, parentID: nil)
+                    DispatchQueue.main.async {
+                        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+                        self.activityDidFinish(true)
+                    }
+                }
+            }
         }
         return nil
     }

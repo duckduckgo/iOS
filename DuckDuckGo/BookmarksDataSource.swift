@@ -564,11 +564,6 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
         } else {
             manager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID)
         }
-        
-        //TODO on save, any number of views might have to change...
-        //hmmm, we gonna have to audit that...
-        //any instance of main bookmark view will need to
-        //For this particular one, I don't think anything else will have to?
     }
 }
 

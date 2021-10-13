@@ -34,9 +34,7 @@ class BookmarksViewController: UITableViewController {
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     
     fileprivate var onDidAppearAction: () -> Void = {}
-    
-    //TODO child folders need to hide section title and search
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForNotifications()
@@ -52,9 +50,6 @@ class BookmarksViewController: UITableViewController {
         
         onDidAppearAction()
         onDidAppearAction = {}
-        
-        //TODO maybe the datasource should have it's own notification
-        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
     }
     
     @objc func dataDidChange(notification: Notification) {
@@ -82,7 +77,6 @@ class BookmarksViewController: UITableViewController {
             } else if let folder = item as? BookmarkFolder {
                 performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: folder)
             }
-            //TODO should finish editing here? not sure, maybe check with sveta
         } else {
             if let bookmark = item as? Bookmark {
                 select(bookmark: bookmark)
@@ -135,11 +129,8 @@ class BookmarksViewController: UITableViewController {
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onExternalDataChange),
-                                               name: BookmarkUserDefaults.Notifications.bookmarkStoreDidChange,
-                                               object: nil)
+        //TODO maybe the datasource should have it's own notification
+        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
     }
 
     private func configureTableView() {
@@ -188,15 +179,6 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    @objc func onExternalDataChange(notification: NSNotification) {
-        //TODO when does this happen?
-//        guard let source = notification.object as? BookmarkUserDefaults,
-//              dataSource.bookmarksManager.dataStore !== source else { return }
-        //hmm, I don;t think bookmakes manager should really be accessible
-
-        tableView.reloadData()
-    }
-    
     private func configureBars() {
         self.navigationController?.setToolbarHidden(false, animated: true)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
@@ -227,7 +209,6 @@ class BookmarksViewController: UITableViewController {
         if tableView.isEditing && !currentDataSource.isEmpty {
             finishEditing()
         } else {
-            //TODO done on subfolders dismisses the whole thing D:
             dismiss()
         }
     }
@@ -309,19 +290,25 @@ class BookmarksViewController: UITableViewController {
     }
 
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        // TODO need to figure out when this actually happens so we know what to do with child folder pages
-        //hmm search bar behaviour before I touched it is a bit funky...
-//        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
-//            // Re-enable drag-to-dismiss if needed
-//            isModalInPresentation = false
-//        }
+        guard let searchController = searchController else {
+            return
+        }
+
+        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+            // Re-enable drag-to-dismiss if needed
+            isModalInPresentation = false
+        }
     }
 
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
-//            // Re-enable drag-to-dismiss if needed
-//            isModalInPresentation = false
-//        }
+        guard let searchController = searchController else {
+            return
+        }
+        
+        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+            // Re-enable drag-to-dismiss if needed
+            isModalInPresentation = false
+        }
     }
 }
 

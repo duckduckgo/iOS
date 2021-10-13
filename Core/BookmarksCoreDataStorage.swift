@@ -80,6 +80,18 @@ extension BookmarksCoreDataStorage {
         }
     }
     
+    public func contains(url: URL, completion: @escaping (Bool) -> Void) {
+        containsBookmark(url: url, searchType: .bookmarksAndFavorites, completion: completion)
+    }
+    
+    public func containsBookmark(url: URL, completion: @escaping (Bool) -> Void) {
+        containsBookmark(url: url, searchType: .bookmarksOnly, completion: completion)
+    }
+    
+    public func containsFavorite(url: URL, completion: @escaping (Bool) -> Void) {
+        containsBookmark(url: url, searchType: .favoritesOnly, completion: completion)
+    }
+    
     // Doesn't include parents
     // Just used for favicon deletion
     public func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void) {
@@ -106,7 +118,7 @@ extension BookmarksCoreDataStorage {
         createBookmark(url: url, title: title, isFavorite: true)
     }
     
-    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
+    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?) {
         createBookmark(url: url, title: title, isFavorite: false, parentID: parentID)
     }
     
@@ -297,6 +309,34 @@ extension BookmarksCoreDataStorage {
                     assertionFailure("Updating item failed")
                 }
             }
+        }
+    }
+    
+    private enum SearchType {
+        case bookmarksOnly
+        case favoritesOnly
+        case bookmarksAndFavorites
+    }
+    
+    private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping (Bool) -> Void) {
+        privateContext.perform {
+            
+            let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+            
+            switch searchType {
+            case .bookmarksOnly:
+                fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == false", url as CVarArg)
+            case .favoritesOnly:
+                fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == true", url as CVarArg)
+            case .bookmarksAndFavorites:
+                fetchRequest.predicate = NSPredicate(format: "url == %@", url as CVarArg)
+            }
+            
+            guard let results = try? self.privateContext.fetch(fetchRequest) else {
+                completion(false)
+                return
+            }
+            completion(results.count > 0)
         }
     }
     

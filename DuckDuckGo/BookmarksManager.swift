@@ -33,7 +33,8 @@ class BookmarksManager {
     //todo delete this pls
     static let tempCoreDataStorageRetentionDevice = BookmarksCoreDataStorage()
 
-    init(dataStore: BookmarkStore = BookmarkUserDefaults(), coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage()) {
+    init(dataStore: BookmarkStore = BookmarkUserDefaults()) {
+    //init(dataStore: BookmarkStore = BookmarkUserDefaults(), coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage()) {
         self.dataStore = dataStore
         //self.coreDataStorage = coreDataStore
         self.coreDataStorage = BookmarksManager.tempCoreDataStorageRetentionDevice
@@ -86,6 +87,21 @@ class BookmarksManager {
         }
     }
     
+    //TODO also update favicons method?
+    
+    
+    func contains(url: URL, completion: @escaping (Bool) -> Void) {
+        coreDataStorage.contains(url: url, completion: completion)
+    }
+    
+    func containsBookmark(url: URL, completion: @escaping (Bool) -> Void) {
+        coreDataStorage.containsBookmark(url: url, completion: completion)
+    }
+    
+    func containsFavorite(url: URL, completion: @escaping (Bool) -> Void) {
+        coreDataStorage.containsFavorite(url: url, completion: completion)
+    }
+    
     func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
         coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID)
     }
@@ -94,7 +110,7 @@ class BookmarksManager {
         coreDataStorage.saveNewFavorite(withTitle: title, url: url)
     }
     
-    func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID) {
+    func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?) {
         coreDataStorage.saveNewBookmark(withTitle: title, url: url, parentID: parentID)
     }
     

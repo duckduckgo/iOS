@@ -25,7 +25,6 @@ class BookmarkFolderCell: UITableViewCell {
     static let reuseIdentifier = "BookmarkFolderCell"
 
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var tickImage: UIImageView!
     
     @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
 
@@ -54,7 +53,7 @@ class BookmarkFolderCell: UITableViewCell {
     
     override var isSelected: Bool {
         didSet {
-            tickImage.isHidden = !isSelected
+            accessoryType = isSelected ? .checkmark : .none
         }
     }
     

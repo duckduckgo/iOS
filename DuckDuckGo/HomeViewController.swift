@@ -81,6 +81,11 @@ class HomeViewController: UIViewController {
 
         configureCollectionView()
         applyTheme(ThemeManager.shared.currentTheme)
+        NotificationCenter.default.addObserver(self, selector: #selector(bookmarksDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
+    }
+    
+    @objc func bookmarksDidChange() {
+        configureCollectionView()
     }
     
     func configureCollectionView() {
@@ -226,6 +231,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
+    //TODO this
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)

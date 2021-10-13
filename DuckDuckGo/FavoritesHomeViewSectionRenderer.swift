@@ -39,7 +39,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    private lazy var bookmarksManager = BookmarksManager()
+    //TODO this needs injecting properly
+    private var bookmarksManager = BookmarksManager()
 
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
@@ -134,10 +135,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             fatalError("not a FavoriteCell")
         }
 
-        guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else {
+        guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else {
             return cell
         }
-        cell.updateFor(link: link)
+
+        cell.updateFor(favorite: favorite)
 
         // can't use captured index path because deleting items can change it
         cell.onDelete = { [weak self, weak collectionView, weak cell] in

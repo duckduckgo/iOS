@@ -38,6 +38,7 @@ protocol MainBookmarksViewDataSource: UITableViewDataSource {
     var isEmpty: Bool { get }
     var showSearch: Bool { get }
     var navigationTitle: String? { get }
+    var bookmarksManager: BookmarksManager { get }
     
     func item(at indexPath: IndexPath) -> BookmarkItem?
 }
@@ -432,8 +433,7 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
         }
         
         cell.title = initialTitle
-        cell.urlString = initialUrl?.absoluteString
-        //todo favicon
+        cell.setUrl(initialUrl)
         return cell
     }
     
@@ -651,8 +651,10 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
 }
 
 //TODO integrate this into the whole sections data srouce thing
-//hmm, searching seems to work in terms of getting results. So this just isn't displaying anything
 class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
+    
+    //TODO injection here
+    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
     var searchResults = [Bookmark]()
     private let searchEngine = BookmarksSearch()

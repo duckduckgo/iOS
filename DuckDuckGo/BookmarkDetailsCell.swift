@@ -46,6 +46,9 @@ class BookmarkDetailsCell: UITableViewCell {
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var faviconImageView: UIImageView!
     
-    //TODO set favicon
+    func setUrl(_ url: URL?) {
+        faviconImageView.loadFavicon(forDomain: url?.host, usingCache: .bookmarks)
+        urlString = url?.absoluteString
+    }
 }
 

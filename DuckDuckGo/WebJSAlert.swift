@@ -65,11 +65,8 @@ struct WebJSAlert {
             
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertOKButton,
                                                     style: .default, handler: { [weak alertController] _ in
-               if let text = alertController?.textFields?.first?.text {
-                   handler(text)
-               } else {
-                   handler(defaultText)
-               }
+                handler(alertController?.textFields?.first?.text)
+
             }))
 
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertCancelButton,

@@ -39,7 +39,7 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="1009" y="805"/>
+            <point key="canvasLocation" x="1010" y="805"/>
         </scene>
         <!--Bookmarks-->
         <scene sceneID="rqJ-jV-QgT">
@@ -220,7 +220,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -366,11 +366,11 @@
                         <viewControllerLayoutGuide type="bottom" id="QdE-VD-rGM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PHO-rE-hZ4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vS5-16-4wa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="Q6P-k0-1D4"/>
                                 </connections>
@@ -384,7 +384,7 @@
                             <constraint firstAttribute="bottom" secondItem="vS5-16-4wa" secondAttribute="bottom" id="cy6-tD-QBo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Folder" id="qA0-bu-lRC" customClass="AddBoo">
+                    <navigationItem key="navigationItem" title="Add Bookmark" id="qA0-bu-lRC">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cZ5-DS-6T0">
                             <connections>
                                 <action selector="onDonePressed:" destination="lMj-DP-NIV" id="V52-ii-4WR"/>
@@ -394,10 +394,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ofO-dp-I1e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2796" y="1622"/>
+            <point key="canvasLocation" x="2994" y="1591"/>
+        </scene>
+        <!--Themable Navigation Controller-->
+        <scene sceneID="rok-j4-3Xm">
+            <objects>
+                <navigationController storyboardIdentifier="AddOrEditBookmarkAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tP5-Vr-ZSr" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k8L-C1-KwX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lMj-DP-NIV" kind="relationship" relationship="rootViewController" id="1AY-d5-ZEP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6eD-J9-o3x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3038" y="768"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="1AY-d5-ZEP"/>
         <segue reference="Q6P-k0-1D4"/>
     </inferredMetricsTieBreakers>
     <resources>

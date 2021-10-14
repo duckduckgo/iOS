@@ -169,23 +169,18 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        guard let indexPath = collectionView.indexPath(for: cell),
+              let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        
         Pixel.fire(pixel: .homeScreenEditFavorite)
-        let alert = EditBookmarkAlert.buildAlert(
-            title: UserText.alertSaveFavorite,
-            bookmark: bookmarksManager.favorite(atIndex: indexPath.row),
-            saveCompletion: { [weak self, weak collectionView] newLink in
-                guard let collectionView = collectionView else { return }
-                self?.updateFavorite(at: indexPath, in: collectionView, with: newLink)
-            })
-        controller?.present(alert, animated: true, completion: nil)
-    }
-    
-    private func updateFavorite(at indexPath: IndexPath, in collectionView: UICollectionView, with link: Link) {
-        bookmarksManager.updateFavorite(at: indexPath.row, with: link)
-        collectionView.performBatchUpdates({
-            collectionView.reloadItems(at: [indexPath])
-        })
+        let storyboard: UIStoryboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+        let navigationViewController = storyboard.instantiateViewController(withIdentifier: "AddOrEditBookmarkAlertViewController")
+        guard let viewController = navigationViewController.children.first as? AddOrEditBookmarkViewController else {
+            return
+        }
+        viewController.existingBookmark = favorite
+        viewController.isAlertController = true
+        controller?.present(navigationViewController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView,

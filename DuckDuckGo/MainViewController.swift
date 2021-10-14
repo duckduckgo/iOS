@@ -1363,6 +1363,13 @@ extension MainViewController: TabDelegate {
         let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
         return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
     }
+
+    func tab(_ tab: TabViewController,
+             didRequestPresentingTrackerAnimation siteRating: SiteRating,
+             isCollapsing: Bool) {
+        guard tabManager.current === tab else { return }
+        omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: isCollapsing)
+    }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
         showMenuHighlighterIfNeeded()

@@ -212,7 +212,10 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        guard let favorite = bookmarksManager.favorite(atIndex: sourceIndexPath.row) else {
+            return
+        }
+        bookmarksManager.updateIndex(of: favorite.objectID, newIndex: destinationIndexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
@@ -249,32 +252,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
-        guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
-        controller?.favoritesRenderer(self, didSelect: link)
-    }
-    
-    private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
-        Pixel.fire(pixel: .homeScreenAddFavorite)
-        let alert = EditBookmarkAlert.buildAlert(
-            title: UserText.alertSaveFavorite,
-            bookmark: nil,
-            saveCompletion: { [weak self] newLink in
-                Pixel.fire(pixel: .homeScreenAddFavoriteOK)
-                self?.saveNewFavorite(newLink, in: collectionView, at: indexPath)
-            },
-            cancelCompletion: {
-                Pixel.fire(pixel: .homeScreenAddFavoriteCancel)
-            }
-        )
-        controller?.present(alert, animated: true, completion: nil)
-    }
-    
-    private func saveNewFavorite(_ link: Link, in collectionView: UICollectionView, at indexPath: IndexPath) {
-        bookmarksManager.save(favorite: link)
-        collectionView.performBatchUpdates({
-            collectionView.insertItems(at: [indexPath])
-        })
+        controller?.favoritesRenderer(self, didSelect: favorite)
     }
     
 }

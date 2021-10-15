@@ -56,16 +56,16 @@ public class BookmarksCoreDataStorage {
 // MARK: public interface
 extension BookmarksCoreDataStorage {
     
-    public var topLevelBookmarksFolder: BookmarkFolder {
+    public var topLevelBookmarksFolder: BookmarkFolder? {
         guard let folder = cachedReadOnlyTopLevelBookmarksFolder else {
-            fatalError("folder cache not loaded")
+            return nil
         }
         return folder
     }
     
     public var topLevelBookmarksItems: [BookmarkItem] {
         guard let folder = cachedReadOnlyTopLevelBookmarksFolder else {
-            fatalError("folder cache not loaded")
+            return []
         }
         return folder.children?.array as? [BookmarkItem] ?? []
     }
@@ -90,6 +90,17 @@ extension BookmarksCoreDataStorage {
     
     public func containsFavorite(url: URL, completion: @escaping (Bool) -> Void) {
         containsBookmark(url: url, searchType: .favoritesOnly, completion: completion)
+    }
+    
+    public func bookmark(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+        viewContext.perform {
+    
+            let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+            fetchRequest.predicate = NSPredicate(format: "url == %@", url as CVarArg)
+            
+            let results = try? self.privateContext.fetch(fetchRequest)
+            completion(results?.first)
+        }
     }
     
     // Doesn't include parents
@@ -152,7 +163,6 @@ extension BookmarksCoreDataStorage {
                 assertionFailure("Updating folder failed")
             }
         }
-        // TODO update any caches
     }
     
     public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
@@ -319,7 +329,7 @@ extension BookmarksCoreDataStorage {
     }
     
     private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping (Bool) -> Void) {
-        privateContext.perform {
+        viewContext.perform {
             
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             
@@ -391,18 +401,19 @@ extension BookmarksCoreDataStorage {
     private func cacheReadOnlyTopLevelBookmarksFolder() {
         getOrCreateIfNecessaryTopLevelFolder(isFavorite: false, returnReadOnly: true) { folder in
             self.cachedReadOnlyTopLevelBookmarksFolder = folder
+            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
         }
     }
     
     private func cacheReadOnlyTopLevelFavoritesFolder() {
         getOrCreateIfNecessaryTopLevelFolder(isFavorite: true, returnReadOnly: true) { folder in
             self.cachedReadOnlyTopLevelFavoritesFolder = folder
+            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
         }
     }
     
     private func readOnlyTopLevelFavoritesItems() -> [BookmarkItem] {
         guard let folder = cachedReadOnlyTopLevelFavoritesFolder else {
-            assertionFailure("favorites folder not cached")
             return []
         }
         return folder.children?.array as? [BookmarkItem] ?? []

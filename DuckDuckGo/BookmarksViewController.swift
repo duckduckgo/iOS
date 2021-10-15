@@ -56,16 +56,15 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
     }
         
+    //we might want to change the behaviour too
     func openEditFormWhenPresented(link: Link) {
-        //TODO show new edit screen
-//        onDidAppearAction = { [weak self] in
-//            guard let strongSelf = self,
-//                  let index = strongSelf.dataSource.bookmarksManager.indexOfBookmark(url: link.url) else { return }
-//
-//            let indexPath = IndexPath(row: index, section: 1)
-//            strongSelf.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-//            strongSelf.showEditBookmarkAlert(for: indexPath)
-//        }
+        onDidAppearAction = { [weak self] in
+            self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
+                if let bookmark = bookmark {
+                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+                }
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -98,7 +98,7 @@ extension BookmarksCoreDataStorage {
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             fetchRequest.predicate = NSPredicate(format: "url == %@", url as CVarArg)
             
-            let results = try? self.privateContext.fetch(fetchRequest)
+            let results = try? self.viewContext.fetch(fetchRequest)
             completion(results?.first)
         }
     }
@@ -329,7 +329,7 @@ extension BookmarksCoreDataStorage {
     }
     
     private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping (Bool) -> Void) {
-        viewContext.perform {
+        privateContext.perform {
             
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             

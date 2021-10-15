@@ -101,6 +101,10 @@ class BookmarksManager {
         coreDataStorage.containsFavorite(url: url, completion: completion)
     }
     
+    func bookmark(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+        coreDataStorage.bookmark(forURL: url, completion: completion)
+    }
+    
     func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
         coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID)
     }

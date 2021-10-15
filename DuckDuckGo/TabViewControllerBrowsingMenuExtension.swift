@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import BrowserServicesKit
+import simd
 
 extension TabViewController {
     
@@ -64,13 +65,30 @@ extension TabViewController {
         var entries = [BrowsingMenuEntry]()
         
         if let link = link, !isError {
-            if let entry = buildBookmarkEntry(for: link) {
-                entries.append(entry)
+            let group = DispatchGroup()
+            
+            var bookmarkEntry: BrowsingMenuEntry?
+            group.enter()
+            buildBookmarkEntry(for: link) { entry in
+                bookmarkEntry = entry
+                group.leave()
             }
             
-            if let entry = buildFavoriteEntry(for: link) {
-                assert(favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
-                entries.append(entry)
+            var favoriteEntry: BrowsingMenuEntry?
+            group.enter()
+            buildFavoriteEntry(for: link) { entry in
+                favoriteEntry = entry
+                group.leave()
+            }
+        
+            group.wait()
+            if let bookmarkEntry = bookmarkEntry {
+                entries.append(bookmarkEntry)
+            }
+            
+            if let favoriteEntry = favoriteEntry {
+                assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
+                entries.append(favoriteEntry)
             }
             
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
@@ -151,30 +169,34 @@ extension TabViewController {
         })
     }
     
-    private func buildBookmarkEntry(for link: Link) -> BrowsingMenuEntry? {
-        
+    //omg so much to do here
+    private func buildBookmarkEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
+        //TODO inject properly
         let bookmarksManager = BookmarksManager()
-        let isBookmark = bookmarksManager.containsBookmark(url: link.url)
-        if isBookmark {
-            return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
-                                             image: UIImage(named: "MenuBookmarkSolid")!,
-                                             action: { [weak self] in
-                                                self?.performEditBookmarkAction(for: link)
-                                             })
-        } else {
-            return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
-                                             image: UIImage(named: "MenuBookmark")!,
-                                             action: { [weak self] in
-                                                self?.performSaveBookmarkAction(for: link)
-                                             })
+        bookmarksManager.containsBookmark(url: link.url) { contains in
+            if contains {
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
+                                                      image: UIImage(named: "MenuBookmarkSolid")!,
+                                                      action: { [weak self] in
+                                                         self?.performEditBookmarkAction(for: link)
+                                                      })
+                completion(entry)
+            } else {
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
+                                                      image: UIImage(named: "MenuBookmark")!,
+                                                      action: { [weak self] in
+                                                        self?.performSaveBookmarkAction(for: link)
+                                                      })
+                completion(entry)
+            }
         }
     }
     
     private func performSaveBookmarkAction(for link: Link) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-        
-        BookmarksManager().save(bookmark: link)
-        
+//TODO inject properly, seriously, what is this shit
+        BookmarksManager().saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit) {
             self.performEditBookmarkAction(for: link)
@@ -187,36 +209,40 @@ extension TabViewController {
         delegate?.tabDidRequestEditBookmark(tab: self)
     }
     
-    private func buildFavoriteEntry(for link: Link) -> BrowsingMenuEntry? {
+    private func buildFavoriteEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
+        //TODO inject properly. Seriously why is this never injected?!
         let bookmarksManager = BookmarksManager()
-        let isFavorite = bookmarksManager.containsFavorite(url: link.url)
-        
-        if isFavorite {
-            
-            let action: () -> Void = { [weak self] in
-                Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
-                self?.performRemoveFavoriteAction(for: link)
-            }
-            
-            return BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
-                                             image: UIImage(named: "MenuFavoriteSolid")!,
-                                             action: action)
-                                                
-        } else {
-            // Capture flow state here as will be reset after menu is shown
-            let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+        bookmarksManager.containsFavorite(url: link.url) { contains in
 
-            return BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
-                Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-                self?.performSaveFavoriteAction(for: link)
-            })
+            if contains {
+                let action: () -> Void = { [weak self] in
+                    Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
+                    self?.performRemoveFavoriteAction(for: link)
+                }
+
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
+                                                      image: UIImage(named: "MenuFavoriteSolid")!,
+                                                      action: action)
+                completion(entry)
+
+            } else {
+                // Capture flow state here as will be reset after menu is shown
+                let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
+                    Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+                    self?.performSaveFavoriteAction(for: link)
+                })
+                completion(entry)
+            }
         }
     }
     
     private func performSaveFavoriteAction(for link: Link) {
         let bookmarksManager = BookmarksManager()
-        bookmarksManager.save(favorite: link)
-        
+        //TODO okay, this might need a completion to actually return when it's done
+        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url)
+
         ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
             self.performRemoveFavoriteAction(for: link)
         }
@@ -224,12 +250,19 @@ extension TabViewController {
     
     private func performRemoveFavoriteAction(for link: Link) {
         let bookmarksManager = BookmarksManager()
-        guard let index = bookmarksManager.indexOfFavorite(url: link.url) else { return }
-        
-        bookmarksManager.deleteFavorite(at: index)
-        
-        ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
-            self.performSaveFavoriteAction(for: link)
+        bookmarksManager.bookmark(forURL: link.url) { bookmark in
+            guard let bookmark = bookmark else {
+                return
+            }
+            
+            //TODO we arguably need a call back here
+            bookmarksManager.delete(bookmark.objectID)
+
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
+                    self.performSaveFavoriteAction(for: link)
+                }
+            }
         }
     }
     

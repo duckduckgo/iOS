@@ -316,13 +316,13 @@
 /* Header text for the email waitlist */
 "email.waitlist.joined" = "You’re on the waitlist!";
 
-/* First parameter is 'get a notification', second is 'Learn more' */
+/* First parameter is 'get a notification', second is 'Learn more'. */
 "email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to %1$@ when it arrives? %2$@ about Email Protection.";
 
 /* Notification text for the email waitlist */
 "email.waitlist.joined.no-notification.get-notification" = "get a notification";
 
-/* Description text for the email waitlist */
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
 "email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
 
 /* Footer text for the email waitlist */
@@ -346,13 +346,13 @@
 /* Title for the email waitlist notification */
 "email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
 
-/* Footer text for the email waitlist */
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
 "email.waitlist.privacy-guarantee" = "We do not save your emails. %@.";
 
 /* Header text for the email waitlist */
 "email.waitlist.privacy-simplified" = "Email privacy, simplified.";
 
-/* Description text for the email waitlist. Parameter is 'Learn more' */
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
 "email.waitlist.summary" = "Block email trackers and hide your address, without switching your email provider. %@.";
 
 /* Empty list state placholder */

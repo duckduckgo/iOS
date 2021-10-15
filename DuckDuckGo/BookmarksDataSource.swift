@@ -443,6 +443,7 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
         }
         
         cell.title = initialTitle
+        cell.textField.becomeFirstResponder()
         return cell
     }
     
@@ -480,6 +481,7 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
         
         cell.title = initialTitle
         cell.setUrl(initialUrl)
+        cell.titleTextField.becomeFirstResponder()
         return cell
     }
     

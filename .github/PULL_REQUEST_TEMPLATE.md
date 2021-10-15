@@ -11,12 +11,12 @@ CC:
 
 **Steps to test this PR**:
 1.
-1.
+2.
 
 <!--
 Before submitting a PR, please ensure you have tested the combinations you expect the reviewer to test, then delete configurations you *know* do not need explicit testing.
 
-Using a simulator where a physical device is unavailable is acceptable. 
+Using a simulator where a physical device is unavailable is acceptable.
 -->
 
 **Copy Testing**:
@@ -39,6 +39,7 @@ Using a simulator where a physical device is unavailable is acceptable.
 
 * [ ] iOS 13
 * [ ] iOS 14
+* [ ] iOS 15
 
 **Theme Testing**:
 
@@ -50,4 +51,3 @@ Using a simulator where a physical device is unavailable is acceptable.
 [Software Engineering Expectations](https://app.asana.com/0/59792373528535/199064865822552)
 [Technical Design Template](https://app.asana.com/0/59792373528535/184709971311943)
 **When ready for review, remember to post the PR in MM**
-

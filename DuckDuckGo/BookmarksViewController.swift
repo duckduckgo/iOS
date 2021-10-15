@@ -54,6 +54,7 @@ class BookmarksViewController: UITableViewController {
     
     @objc func dataDidChange(notification: Notification) {
         tableView.reloadData()
+        refreshEditButton()
     }
         
     //we might want to change the behaviour too

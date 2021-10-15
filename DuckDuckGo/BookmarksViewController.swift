@@ -134,6 +134,9 @@ class BookmarksViewController: UITableViewController {
 
     private func configureTableView() {
         tableView.dataSource = dataSource
+        if dataSource.folder != nil {
+            tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
+        }
     }
     
     private func configureSearchIfNeeded() {

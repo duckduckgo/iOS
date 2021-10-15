@@ -316,11 +316,17 @@
 /* Header text for the email waitlist */
 "email.waitlist.joined" = "You’re on the waitlist!";
 
-/* Description text for the email waitlist */
-"email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.";
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to %1$@ when it arrives? %2$@ about Email Protection.";
 
-/* Description text for the email waitlist */
-"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. Learn more.";
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "get a notification";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Learn more";
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";
@@ -340,14 +346,14 @@
 /* Title for the email waitlist notification */
 "email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
 
-/* Footer text for the email waitlist */
-"email.waitlist.privacy-guarantee" = "We do not save your emails. Learn more.";
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "We do not save your emails. %@.";
 
 /* Header text for the email waitlist */
 "email.waitlist.privacy-simplified" = "Email privacy, simplified.";
 
-/* Description text for the email waitlist */
-"email.waitlist.summary" = "Block email trackers and hide your address, without switching your email provider. Learn more.";
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Block email trackers and hide your address, without switching your email provider. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";

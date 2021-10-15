@@ -30,7 +30,7 @@ class BookmarksViewController: UITableViewController {
     private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
     
-    fileprivate var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource()
+    fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     
     fileprivate var onDidAppearAction: () -> Void = {}
@@ -84,7 +84,7 @@ class BookmarksViewController: UITableViewController {
                 guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController") as? BookmarksViewController else {
                     return
                 }
-                viewController.dataSource = DefaultBookmarksDataSource(parentFolder: folder)
+                viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
                 viewController.delegate = delegate
                 navigationController?.pushViewController(viewController, animated: true)
             }
@@ -338,6 +338,12 @@ extension BookmarksViewController: UISearchBarDelegate {
 extension BookmarksViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         finishEditing()
+    }
+}
+
+extension BookmarksViewController: BookmarksShallowSectionDataSourceDelegate {
+    func bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert() -> UIViewController {
+        return self
     }
 }
 

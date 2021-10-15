@@ -90,7 +90,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 //TODO how would search fit into this?
 enum BookmarksSection {
     case favourites
-    case bookmarksShallow(parentFolder: BookmarkFolder?)
+    case bookmarksShallow(parentFolder: BookmarkFolder?, delegate: BookmarksShallowSectionDataSourceDelegate?)
     case folders(_ item: BookmarkItem?, parentFolder: BookmarkFolder?)
     case folderDetails(_ folder: BookmarkFolder?)
     case bookmarkDetails(_ bookmark: Bookmark?)
@@ -99,8 +99,8 @@ enum BookmarksSection {
         switch self {
         case .favourites:
             return FavoritesSectionDataSource()
-        case .bookmarksShallow(let parentFolder):
-            return BookmarksShallowSectionDataSource(parentFolder: parentFolder)
+        case .bookmarksShallow(let parentFolder, let delegate):
+            return BookmarksShallowSectionDataSource(parentFolder: parentFolder, delegate: delegate)
         case .folders(let item, let parentFolder):
             return BookmarkFoldersSectionDataSource(existingItem: item, initialParentFolder: parentFolder)
         case .folderDetails(let folder):
@@ -237,10 +237,16 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
 
 }
 
+protocol BookmarksShallowSectionDataSourceDelegate: AnyObject {
+    func bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert() ->
+    UIViewController
+}
+
 class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
     
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private let parentFolder: BookmarkFolder?
+    weak var delegate: BookmarksShallowSectionDataSourceDelegate?
     
     private func bookmarkItems() -> [PresentableBookmarkItem] {
         if let folder = parentFolder {
@@ -259,8 +265,9 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         bookmarkItems().count == 0
     }
     
-    init(parentFolder: BookmarkFolder?) {
+    init(parentFolder: BookmarkFolder?, delegate: BookmarksShallowSectionDataSourceDelegate?) {
         self.parentFolder = parentFolder
+        self.delegate = delegate
     }
     
     func navigationTitle() -> String? {
@@ -287,7 +294,29 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         guard editingStyle == .delete else { return }
 
         guard let item = bookmarkItem(at: index)?.item else { return }
-        bookmarksManager.delete(item.objectID)
+        if let delegate = delegate,
+            let folder = item as? BookmarkFolder,
+            (folder.children?.count ?? 0) > 0 {
+            let title = String(format: NSLocalizedString("Delete %@?", comment: "Delete bookmark folder alert title"), folder.title ?? "")
+            let count = folder.children?.count ?? 0
+            let messageString: String
+            if count == 1 {
+                messageString = NSLocalizedString("Are you sure you want to delete this folder and %i item?", comment: "Delete bookmark folder alert message")
+            } else {
+                messageString = NSLocalizedString("Are you sure you want to delete this folder and %i items?", comment: "Delete bookmark folder alert message plural")
+            }
+            let message = String(format: messageString, count)
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(title: NSLocalizedString("Delete", comment: "Delete bookmark folder alert delete button"), style: .default) {
+                self.bookmarksManager.delete(item.objectID)
+            }
+            alertController.addAction(title: UserText.actionCancel, style: .cancel)
+            let viewController = delegate.bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert()
+            viewController.present(alertController, animated: true)
+            
+        } else {
+            bookmarksManager.delete(item.objectID)
+        }
     }
 
 }
@@ -482,13 +511,13 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
         return dataSources as! [BookmarkItemsSectionDataSource]
     }
         
-    init(parentFolder: BookmarkFolder? = nil) {
+    init(alertDelegate: BookmarksShallowSectionDataSourceDelegate?, parentFolder: BookmarkFolder? = nil) {
         self.parentFolder = parentFolder
         super.init()
         if parentFolder != nil {
-            self.sections = [.bookmarksShallow(parentFolder: parentFolder)]
+            self.sections = [.bookmarksShallow(parentFolder: parentFolder, delegate: alertDelegate)]
         } else {
-            self.sections = [.favourites, .bookmarksShallow(parentFolder: nil)]
+            self.sections = [.favourites, .bookmarksShallow(parentFolder: nil, delegate: alertDelegate)]
         }
     }
     

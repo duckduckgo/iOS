@@ -38,9 +38,16 @@ protocol MainBookmarksViewDataSource: UITableViewDataSource {
     var isEmpty: Bool { get }
     var showSearch: Bool { get }
     var navigationTitle: String? { get }
+    var folder: BookmarkFolder? { get }
     var bookmarksManager: BookmarksManager { get }
     
     func item(at indexPath: IndexPath) -> BookmarkItem?
+}
+
+extension MainBookmarksViewDataSource {
+    var folder: BookmarkFolder? {
+        return nil
+    }
 }
 
 protocol BookmarkItemDetailsDataSource: UITableViewDataSource {
@@ -84,7 +91,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 enum BookmarksSection {
     case favourites
     case bookmarksShallow(parentFolder: BookmarkFolder?)
-    case folders(_ item: BookmarkItem?)
+    case folders(_ item: BookmarkItem?, parentFolder: BookmarkFolder?)
     case folderDetails(_ folder: BookmarkFolder?)
     case bookmarkDetails(_ bookmark: Bookmark?)
     
@@ -94,8 +101,8 @@ enum BookmarksSection {
             return FavoritesSectionDataSource()
         case .bookmarksShallow(let parentFolder):
             return BookmarksShallowSectionDataSource(parentFolder: parentFolder)
-        case .folders(let item):
-            return BookmarkFoldersSectionDataSource(existingItem: item)
+        case .folders(let item, let parentFolder):
+            return BookmarkFoldersSectionDataSource(existingItem: item, initialParentFolder: parentFolder)
         case .folderDetails(let folder):
             return BookmarksFolderDetailsSectionDataSource(existingFolder: folder)
         case .bookmarkDetails(let bookmark):
@@ -300,9 +307,10 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     private var selectedRow = 0
     private let existingItem: BookmarkItem?
     
-    init(existingItem: BookmarkItem?) {
+    init(existingItem: BookmarkItem?, initialParentFolder: BookmarkFolder?) {
         self.existingItem = existingItem
-        if let item = existingItem, let parent = item.parentFolder {
+        
+        if let parent = existingItem?.parentFolder ?? initialParentFolder {
             let parentIndex = presentableBookmarkItems.firstIndex {
                 $0.item.objectID == parent.objectID
             }
@@ -467,6 +475,7 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
     
     //TODO proper injection
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    var parentFolder: BookmarkFolder?
     
     private var itemsDataSources: [BookmarkItemsSectionDataSource] {
         //TODO I hate it
@@ -474,12 +483,17 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
     }
         
     init(parentFolder: BookmarkFolder? = nil) {
+        self.parentFolder = parentFolder
         super.init()
         if parentFolder != nil {
             self.sections = [.bookmarksShallow(parentFolder: parentFolder)]
         } else {
             self.sections = [.favourites, .bookmarksShallow(parentFolder: nil)]
         }
+    }
+    
+    var folder: BookmarkFolder? {
+        return parentFolder
     }
     
     var isEmpty: Bool {
@@ -543,10 +557,10 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
         
     private let existingFolder: BookmarkFolder?
     
-    init(existingFolder: BookmarkFolder? = nil) {
+    init(existingFolder: BookmarkFolder? = nil, initialParentFolder: BookmarkFolder? = nil) {
         self.existingFolder = existingFolder
         super.init()
-        self.sections = [.folderDetails(existingFolder), .folders(existingFolder)]
+        self.sections = [.folderDetails(existingFolder), .folders(existingFolder, parentFolder: initialParentFolder)]
         //TODO seriously need to get rid of this sections stuff
         //I like having the seperate data sources, but we should at least keep references to the individual data sources
     }
@@ -583,11 +597,11 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         
     private let existingBookmark: Bookmark?
     
-    init(existingBookmark: Bookmark? = nil) {
+    init(existingBookmark: Bookmark? = nil, initialParentFolder: BookmarkFolder? = nil) {
         self.existingBookmark = existingBookmark
         super.init()
 
-        self.sections = [.bookmarkDetails(existingBookmark), .folders(existingBookmark)]
+        self.sections = [.bookmarkDetails(existingBookmark), .folders(existingBookmark, parentFolder: initialParentFolder)]
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {

@@ -273,10 +273,10 @@ class BookmarksViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? AddOrEditBookmarkFolderViewController {
             viewController.hidesBottomBarWhenPushed = true
-            viewController.existingFolder = sender as? BookmarkFolder
+            viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
         } else if let viewController = segue.destination as? AddOrEditBookmarkViewController {
             viewController.hidesBottomBarWhenPushed = true
-            viewController.existingBookmark = sender as? Bookmark
+            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
         }
     }
     

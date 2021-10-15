@@ -178,7 +178,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         guard let viewController = navigationViewController.children.first as? AddOrEditBookmarkViewController else {
             return
         }
-        viewController.existingBookmark = favorite
+        viewController.setExistingBookmark(favorite, initialParentFolder: nil)
         viewController.isAlertController = true
         controller?.present(navigationViewController, animated: true)
     }

@@ -26,13 +26,9 @@ class AddOrEditBookmarkViewController: UIViewController {
     
     var isFavorite = false
     var isAlertController = false
-        
-    var existingBookmark: Bookmark? {
-        didSet {
-            setUpTitle()
-            setUpDataSource()
-        }
-    }
+    
+    private var existingBookmark: Bookmark?
+    private var initialParentFolder: BookmarkFolder?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +57,13 @@ class AddOrEditBookmarkViewController: UIViewController {
             let item = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelPressed))
             navigationItem.setLeftBarButton(item, animated: false)
         }
+    }
+    
+    func setExistingBookmark(_ existingBookmark: Bookmark?, initialParentFolder: BookmarkFolder?) {
+        self.existingBookmark = existingBookmark
+        self.initialParentFolder = initialParentFolder
+        setUpTitle()
+        setUpDataSource()
     }
     
     private func setUpDataSource() {

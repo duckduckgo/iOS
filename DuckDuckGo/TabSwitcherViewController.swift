@@ -224,19 +224,25 @@ class TabSwitcherViewController: UIViewController {
         var newBookmarksCount: Int = 0
         var existingBookmarksCount: Int = 0
         
+        let group = DispatchGroup()
         tabs.forEach { tab in
             if let link = tab.link {
-                if bookmarksManager.contains(url: link.url) {
-                    existingBookmarksCount += 1
-                } else {
-                    bookmarksManager.save(bookmark: link)
-                    newBookmarksCount += 1
+                group.enter()
+                bookmarksManager.contains(url: link.url) { contains in
+                    if contains {
+                        existingBookmarksCount += 1
+                    } else {
+                        bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+                        newBookmarksCount += 1
+                    }
+                    group.leave()
                 }
             } else {
                 os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
             }
         }
         
+        group.wait()
         return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
     }
     

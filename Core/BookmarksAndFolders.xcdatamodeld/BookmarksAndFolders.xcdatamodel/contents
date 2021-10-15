@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BookmarkFolderManagedObject" representedClassName="BookmarkFolderManagedObject" parentEntity="BookmarkItemManagedObject" syncable="YES" codeGenerationType="class">
-        <relationship name="children" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="BookmarkItemManagedObject" inverseName="parent" inverseEntity="BookmarkItemManagedObject"/>
+        <relationship name="children" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="BookmarkItemManagedObject" inverseName="parent" inverseEntity="BookmarkItemManagedObject"/>
     </entity>
     <entity name="BookmarkItemManagedObject" representedClassName="BookmarkItemManagedObject" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="isFavorite" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -12,8 +12,8 @@
         <attribute name="url" attributeType="URI"/>
     </entity>
     <elements>
+        <element name="BookmarkFolderManagedObject" positionX="90.49835205078125" positionY="47.87652587890625" width="128" height="44"/>
         <element name="BookmarkItemManagedObject" positionX="-8.4656982421875" positionY="-75.2490234375" width="128" height="74"/>
         <element name="BookmarkManagedObject" positionX="-103.337890625" positionY="45.55987548828125" width="128" height="44"/>
-        <element name="BookmarkFolderManagedObject" positionX="90.49835205078125" positionY="47.87652587890625" width="128" height="44"/>
     </elements>
 </model>

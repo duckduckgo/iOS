@@ -323,7 +323,7 @@
 "email.waitlist.joined.no-notification.get-notification" = "get a notification";
 
 /* Description text for the email waitlist */
-"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you.";
+"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
 
 /* Footer text for the email waitlist */
 "email.waitlist.learn-more" = "Learn more";
@@ -347,13 +347,13 @@
 "email.waitlist.notification.title" = "Your Email Protection Invitation is Here!";
 
 /* Footer text for the email waitlist */
-"email.waitlist.privacy-guarantee" = "We do not save your emails.";
+"email.waitlist.privacy-guarantee" = "We do not save your emails. %@.";
 
 /* Header text for the email waitlist */
 "email.waitlist.privacy-simplified" = "Email privacy, simplified.";
 
-/* Description text for the email waitlist */
-"email.waitlist.summary" = "Block email trackers and hide your address, without switching your email provider.";
+/* Description text for the email waitlist. Parameter is 'Learn more' */
+"email.waitlist.summary" = "Block email trackers and hide your address, without switching your email provider. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";

@@ -247,11 +247,17 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {
-        return appendLearnMore(to: UserText.emailWaitlistSummary, url: AppUrls().addressBlogPostQuickLink)
+        let text = UserText.emailWaitlistSummary(learnMoreString: UserText.emailWaitlistLearnMore)
+        return createAttributedString(text: text, highlights: [
+            (text: UserText.emailWaitlistLearnMore, link: AppUrls().addressBlogPostQuickLink.absoluteString)
+        ])
     }
 
     private func createAttributedWaitlistJoinedWithNotificationSummary() -> NSAttributedString {
-        return appendLearnMore(to: UserText.emailWaitlistJoinedWithNotificationSummary, url: AppUrls().addressBlogPostQuickLink)
+        let text = UserText.emailWaitlistJoinedWithNotificationSummary(learnMoreString: UserText.emailWaitlistLearnMore)
+        return createAttributedString(text: text, highlights: [
+            (text: UserText.emailWaitlistLearnMore, link: AppUrls().addressBlogPostQuickLink.absoluteString)
+        ])
     }
 
     private func createAttributedWaitlistJoinedWithoutNotificationSummary() -> NSAttributedString {
@@ -267,16 +273,16 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     private func createAttributedWaitlistInvitedSummary() -> NSAttributedString {
-        return appendLearnMore(to: UserText.emailWaitlistSummary, url: AppUrls().addressBlogPostQuickLink)
+        let text = UserText.emailWaitlistSummary(learnMoreString: UserText.emailWaitlistLearnMore)
+        return createAttributedString(text: text, highlights: [
+            (text: UserText.emailWaitlistLearnMore, link: AppUrls().addressBlogPostQuickLink.absoluteString)
+        ])
     }
 
     private func createAttributedPrivacyGuaranteeString() -> NSAttributedString {
-        return appendLearnMore(to: UserText.emailWaitlistPrivacyGuarantee, url: AppUrls().emailPrivacyGuarantees)
-    }
-
-    private func appendLearnMore(to string: String, url: URL) -> NSAttributedString {
-        return createAttributedString(text: string + " " + UserText.emailWaitlistLearnMore + ".", highlights: [
-            (text: UserText.emailWaitlistLearnMore, link: url.absoluteString)
+        let text = UserText.emailWaitlistPrivacyGuarantee(learnMoreString: UserText.emailWaitlistLearnMore)
+        return createAttributedString(text: text, highlights: [
+            (text: UserText.emailWaitlistLearnMore, link: AppUrls().emailPrivacyGuarantees.absoluteString)
         ])
     }
 

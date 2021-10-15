@@ -1003,3 +1003,9 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorite added";
 
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Cancel";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
+

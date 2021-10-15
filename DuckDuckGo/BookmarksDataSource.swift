@@ -298,9 +298,10 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     }()
     
     private var selectedRow = 0
+    private let existingItem: BookmarkItem?
     
-    //TODO If a folder has subfolders and we edit the location, hide the subfolders in the folder structure"
     init(existingItem: BookmarkItem?) {
+        self.existingItem = existingItem
         if let item = existingItem, let parent = item.parentFolder {
             let parentIndex = presentableBookmarkItems.firstIndex {
                 $0.item.objectID == parent.objectID
@@ -362,7 +363,15 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     
     private func visibleFolders(for folder: BookmarkFolder, depthOfFolder: Int) -> [PresentableBookmarkItem] {
         let array = folder.children?.array as? [BookmarkItem] ?? []
-        let folders = array.compactMap { $0 as? BookmarkFolder }
+        let folders: [BookmarkFolder] = array.compactMap {
+            // If a folder has subfolders and we edit the location, hide the subfolders in the folder structure (so you can't insert a folder into itself
+            if let folder = existingItem as? BookmarkFolder,
+               folder.objectID == $0.objectID {
+                return nil
+            } else {
+                return $0 as? BookmarkFolder
+            }
+        }
 
         var visibleItems = [PresentableBookmarkItem(folder, depthOfFolder)]
 

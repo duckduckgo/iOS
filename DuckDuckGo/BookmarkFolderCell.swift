@@ -47,6 +47,7 @@ class BookmarkFolderCell: UITableViewCell {
     var depth: Int = 0 {
         didSet {
             let paddingDepth = min(depth, 10)
+            separatorInset.left = CGFloat(paddingDepth + 1) * 16.0
             leadingPaddingConstraint.constant = CGFloat(paddingDepth) * 16.0
         }
     }

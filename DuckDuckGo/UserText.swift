@@ -359,7 +359,7 @@ public struct UserText {
 
     public static let emailWaitlistGetANotification = NSLocalizedString("email.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the email waitlist")
     public static func emailWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
-        let message =  NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about Email Protection.", comment: "Description text for the email waitlist")
+        let message =  NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about Email Protection.", comment: "First parameter is 'get a notification', second is 'Learn more'")
         return message.format(arguments: getNotifiedString, learnMoreString)
     }
 

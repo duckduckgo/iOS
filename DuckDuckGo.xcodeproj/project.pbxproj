@@ -25,7 +25,9 @@
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
+		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
+		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B051169262A166300F6079C /* EmailWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailWaitlistViewController.swift */; };
 		4B14B56326937892002E6805 /* EmailWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */; };
@@ -717,7 +719,9 @@
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
+		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
+		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B15817526706A2200F34D16 /* EmailProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailProtectionViewController.swift; sourceTree = "<group>"; };
@@ -2498,6 +2502,7 @@
 				8590CB66268A2E520089F6BF /* RootDebugViewController.swift */,
 				8590CB68268A4E190089F6BF /* DebugEtagStorage.swift */,
 				4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */,
+				1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -3168,6 +3173,7 @@
 				8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */,
 				8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */,
 				8548D96725262C33005AAE49 /* view_highlight.json */,
+				31B524562715BB23002225AB /* WebJSAlert.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -4450,6 +4456,7 @@
 				F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
+				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
@@ -4499,6 +4506,7 @@
 				98D98A8225ED88E300D8E3DF /* BrowsingMenuSeparatorViewCell.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */,
+				1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */,
 				980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */,

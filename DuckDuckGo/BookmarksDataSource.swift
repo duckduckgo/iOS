@@ -37,6 +37,7 @@ import Core
 protocol MainBookmarksViewDataSource: UITableViewDataSource {
     var isEmpty: Bool { get }
     var showSearch: Bool { get }
+    var favoritesSectionIndex: Int? { get }
     var navigationTitle: String? { get }
     var folder: BookmarkFolder? { get }
     var bookmarksManager: BookmarksManager { get }
@@ -504,6 +505,11 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
 
 class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     
+    var favoritesSectionIndex: Int? {
+        return parentFolder == nil ? 0 : nil
+    }
+    
+    
     //TODO proper injection
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     var parentFolder: BookmarkFolder?
@@ -706,6 +712,10 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
 
 //TODO integrate this into the whole sections data srouce thing
 class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
+    var favoritesSectionIndex: Int? {
+        return nil
+    }
+    
     
     //TODO injection here
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()

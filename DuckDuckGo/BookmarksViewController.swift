@@ -108,9 +108,10 @@ class BookmarksViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         
+        // Can't move folders into favorites
         if let item = currentDataSource.item(at: sourceIndexPath),
            item as? BookmarkFolder != nil &&
-           proposedDestinationIndexPath.section == 0 {
+            proposedDestinationIndexPath.section == currentDataSource.favoritesSectionIndex {
             return sourceIndexPath
         }
         

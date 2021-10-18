@@ -52,6 +52,11 @@ extension Themable where Self: UIViewController {
         for item in navigationController?.toolbar.items ?? [] {
             item.tintColor = theme.navigationBarTitleColor
         }
+        
+        if #available(iOS 15.0, *) {
+            let appearance = navigationController?.toolbar.standardAppearance
+            navigationController?.toolbar.scrollEdgeAppearance = appearance
+        }
     }
     
     @available(iOS 13.0, *)

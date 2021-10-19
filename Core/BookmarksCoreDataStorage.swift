@@ -92,11 +92,22 @@ extension BookmarksCoreDataStorage {
         containsBookmark(url: url, searchType: .favoritesOnly, completion: completion)
     }
     
-    public func bookmark(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+    public func bookmarkOrFavorite(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
         viewContext.perform {
     
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             fetchRequest.predicate = NSPredicate(format: "url == %@", url as CVarArg)
+            
+            let results = try? self.viewContext.fetch(fetchRequest)
+            completion(results?.first)
+        }
+    }
+    
+    public func favorite(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+        viewContext.perform {
+    
+            let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+            fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == true", url as CVarArg)
             
             let results = try? self.viewContext.fetch(fetchRequest)
             completion(results?.first)

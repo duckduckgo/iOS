@@ -71,7 +71,7 @@ class BookmarksViewController: UITableViewController {
     
     func openEditFormWhenPresented(link: Link) {
         onDidAppearAction = { [weak self] in
-            self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
+            self?.dataSource.bookmarksManager.bookmarkOrFavorite(forURL: link.url) { bookmark in
                 if let bookmark = bookmark {
                     let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: true)
                     self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: info)

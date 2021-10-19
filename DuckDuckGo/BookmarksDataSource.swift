@@ -689,6 +689,7 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         dataSource.select(tableView, row: indexPath.row, section: indexPath.section)
     }
     
+    //TODO some logic here is duplicated
     func save(_ tableView: UITableView) {
         let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
         //TODO if this is nil, something has gone really wrong
@@ -697,13 +698,23 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
             return
         }
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
-        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)! // TODO
-        let urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0)
-        let url = URL(string: urlString ?? "")!
-        //TODO what should we do if the url is invalid
-        // original has some interesting logic in EditBookmarkAlert. We should copy it...
-        //TODO what should we do if the url is invalid
-        //it only lets save if can create url, we should do same
+        let title = detailsDataSource.bookmarkTitle(tableView, section: 0) ?? ""
+        var urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0) ?? ""
+        
+        if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") && !urlString.isBookmarklet() {
+            urlString = "http://\(urlString)"
+        }
+
+        let optionalURL: URL?
+        if urlString.isBookmarklet() {
+            optionalURL = urlString.toEncodedBookmarklet()
+            guard URL.isValidBookmarklet(url: optionalURL) else { return }
+        } else {
+            optionalURL = urlString.punycodedUrl
+        }
+        
+        guard let url = optionalURL else { return }
+        
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()
         
@@ -731,12 +742,22 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
     
     func save(_ tableView: UITableView) {
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
-        let title = detailsDataSource.bookmarkTitle(tableView, section: 0)! //TODO !
-        let urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0)
-        //TODO shouldn't be able to save if field blank
-        let url = URL(string: urlString ?? "")!
-        //TODO what should we do if the url is invalid
-        // original has some interesting logic in EditBookmarkAlert. We should copy it...
+        let title = detailsDataSource.bookmarkTitle(tableView, section: 0) ?? ""
+        var urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0) ?? ""
+        
+        if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") && !urlString.isBookmarklet() {
+            urlString = "http://\(urlString)"
+        }
+
+        let optionalURL: URL?
+        if urlString.isBookmarklet() {
+            optionalURL = urlString.toEncodedBookmarklet()
+            guard URL.isValidBookmarklet(url: optionalURL) else { return }
+        } else {
+            optionalURL = urlString.punycodedUrl
+        }
+        
+        guard let url = optionalURL else { return }
         
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()

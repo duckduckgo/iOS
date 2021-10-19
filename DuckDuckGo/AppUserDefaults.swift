@@ -165,6 +165,9 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
+    @UserDefaultsWrapper(key: .textSizeAdjustment, defaultValue: 1.0)
+    var textSizeAdjustment: Float
+    
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

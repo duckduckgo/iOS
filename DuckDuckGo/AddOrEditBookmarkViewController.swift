@@ -107,4 +107,12 @@ extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDeleg
         
         doneButton.isEnabled = !title.isEmpty && !url.isEmpty
     }
+    
+    func bookmarkDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarkDetailsSectionDataSource) {
+        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        if doneButton.isEnabled {
+            onDonePressed(self)
+        }
+        
+    }
 }

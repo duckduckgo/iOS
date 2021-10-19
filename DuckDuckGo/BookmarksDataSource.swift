@@ -473,6 +473,7 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
 
 protocol BookmarkDetailsSectionDataSourceDelegate: AnyObject {
     func bookmarkDetailsSectionDataSource(_ dataSource: BookmarkDetailsSectionDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?)
+    func bookmarkDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarkDetailsSectionDataSource)
 }
 
 class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
@@ -528,6 +529,10 @@ extension BookmarkDetailsSectionDataSource: BookmarkDetailsCellDelegate {
     
     func bookmarkDetailsCellDelegate(_ cell: BookmarkDetailsCell, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
         delegate?.bookmarkDetailsSectionDataSource(self, textFieldDidChangeWithTitleText: titleText, urlText: urlText)
+    }
+    
+    func bookmarkDetailsCellDelegateTextFieldDidReturn(cell: BookmarkDetailsCell) {
+        delegate?.bookmarkDetailsSectionDataSourceTextFieldDidReturn(dataSource: self)
     }
 }
 

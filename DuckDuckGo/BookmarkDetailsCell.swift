@@ -22,6 +22,7 @@ import Core
 
 protocol BookmarkDetailsCellDelegate: AnyObject {
     func bookmarkDetailsCellDelegate(_ cell: BookmarkDetailsCell, textFieldDidChangeWithTitleText titleText: String?, urlText: String?)
+    func bookmarkDetailsCellDelegateTextFieldDidReturn(cell: BookmarkDetailsCell)
 }
 
 class BookmarkDetailsCell: UITableViewCell {
@@ -57,9 +58,13 @@ class BookmarkDetailsCell: UITableViewCell {
         
         titleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         urlTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        titleTextField.removeTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
+        urlTextField.removeTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
         
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         urlTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        titleTextField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
+        urlTextField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
     }
     
     func setUrl(_ url: URL?) {
@@ -69,6 +74,10 @@ class BookmarkDetailsCell: UITableViewCell {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         delegate?.bookmarkDetailsCellDelegate(self, textFieldDidChangeWithTitleText: titleTextField.text, urlText: urlTextField.text)
+    }
+    
+    @objc func textFieldDidReturn() {
+        delegate?.bookmarkDetailsCellDelegateTextFieldDidReturn(cell: self)
     }
 }
 

@@ -30,6 +30,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
+        setUpDoneButton()
     }
     
     func setUpTitle() {
@@ -40,22 +41,40 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
         }
     }
     
+    func setUpDoneButton() {
+        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        if let title = existingFolder?.title, title.count > 0 {
+            doneButton.isEnabled = true
+        } else {
+            doneButton.isEnabled = false
+        }
+    }
+    
     func setExistingFolder(_ existingFolder: BookmarkFolder?, initialParentFolder: BookmarkFolder?) {
         self.existingFolder = existingFolder
         self.initialParentFolder = initialParentFolder
-        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(existingFolder: existingFolder, initialParentFolder: initialParentFolder)
+        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(delegate: self, existingFolder: existingFolder, initialParentFolder: initialParentFolder)
         setUpTitle()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
-            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(existingFolder: existingFolder, initialParentFolder: initialParentFolder)
+            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(delegate: self, existingFolder: existingFolder, initialParentFolder: initialParentFolder)
         }
     }
     
     @IBAction func onDonePressed(_ sender: Any) {
         foldersViewController?.save()
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension AddOrEditBookmarkFolderViewController: BookmarksFolderDetailsSectionDataSourceDelegate {
+    
+    func bookmarksFolderDetailsSectionDataSource(_ dataSource: BookmarksFolderDetailsSectionDataSource, titleTextFieldDidChange textField: UITextField) {
+        
+        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        doneButton.isEnabled = !(textField.text ?? "").isEmpty
     }
 }

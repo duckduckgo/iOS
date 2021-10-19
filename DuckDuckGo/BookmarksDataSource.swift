@@ -93,7 +93,7 @@ enum BookmarksSection {
     case favourites
     case bookmarksShallow(parentFolder: BookmarkFolder?, delegate: BookmarksShallowSectionDataSourceDelegate?)
     case folders(_ item: BookmarkItem?, parentFolder: BookmarkFolder?)
-    case folderDetails(_ folder: BookmarkFolder?)
+    case folderDetails(_ folder: BookmarkFolder?, delegate: BookmarksFolderDetailsSectionDataSourceDelegate)
     case bookmarkDetails(_ bookmark: Bookmark?)
     
     var dataSource: BookmarksSectionDataSource {
@@ -104,8 +104,8 @@ enum BookmarksSection {
             return BookmarksShallowSectionDataSource(parentFolder: parentFolder, delegate: delegate)
         case .folders(let item, let parentFolder):
             return BookmarkFoldersSectionDataSource(existingItem: item, initialParentFolder: parentFolder)
-        case .folderDetails(let folder):
-            return BookmarksFolderDetailsSectionDataSource(existingFolder: folder)
+        case .folderDetails(let folder, let delegate):
+            return BookmarksFolderDetailsSectionDataSource(existingFolder: folder, delegate: delegate)
         case .bookmarkDetails(let bookmark):
             return BookmarkDetailsSectionDataSource(existingBookmark: bookmark)
         }
@@ -421,13 +421,19 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     }
 }
 
+protocol BookmarksFolderDetailsSectionDataSourceDelegate: AnyObject {
+    func bookmarksFolderDetailsSectionDataSource(_ dataSource: BookmarksFolderDetailsSectionDataSource, titleTextFieldDidChange textField: UITextField)
+}
+
 // TODO can currently select the cell in screwy way if you press the right bit
 class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
     
     let initialTitle: String?
+    weak var delegate: BookmarksFolderDetailsSectionDataSourceDelegate?
 
-    init(existingFolder: BookmarkFolder?) {
+    init(existingFolder: BookmarkFolder?, delegate: BookmarksFolderDetailsSectionDataSourceDelegate) {
         self.initialTitle = existingFolder?.title
+        self.delegate = delegate
     }
     
     func containsBookmarkItems() -> Bool {
@@ -442,10 +448,18 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarksTextFieldCell.reuseIdentifier) as? BookmarksTextFieldCell else {
             fatalError("Failed to dequeue \(BookmarksTextFieldCell.reuseIdentifier) as BookmarksTextFieldCell")
         }
+        cell.textField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
         
         cell.title = initialTitle
         cell.textField.becomeFirstResponder()
+        cell.textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
         return cell
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        delegate?.bookmarksFolderDetailsSectionDataSource(self, titleTextFieldDidChange: textField)
     }
     
     func folderTitle(_ tableView: UITableView, section: Int) -> String? {
@@ -594,10 +608,10 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
         
     private let existingFolder: BookmarkFolder?
     
-    init(existingFolder: BookmarkFolder? = nil, initialParentFolder: BookmarkFolder? = nil) {
+    init(delegate: BookmarksFolderDetailsSectionDataSourceDelegate, existingFolder: BookmarkFolder? = nil, initialParentFolder: BookmarkFolder? = nil) {
         self.existingFolder = existingFolder
         super.init()
-        self.sections = [.folderDetails(existingFolder), .folders(existingFolder, parentFolder: initialParentFolder)]
+        self.sections = [.folderDetails(existingFolder, delegate: delegate), .folders(existingFolder, parentFolder: initialParentFolder)]
         //TODO seriously need to get rid of this sections stuff
         //I like having the seperate data sources, but we should at least keep references to the individual data sources
     }

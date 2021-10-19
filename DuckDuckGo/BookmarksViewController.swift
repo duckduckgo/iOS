@@ -57,12 +57,24 @@ class BookmarksViewController: UITableViewController {
         refreshEditButton()
     }
         
-    //we might want to change the behaviour too
+    private struct AddOrEditBookmarkSegueInfo {
+        let bookmark: Bookmark
+        let presentAsAlert: Bool
+    }
+    
+    func openEditFormWhenPresented(bookmark: Bookmark) {
+        onDidAppearAction = { [weak self] in
+            let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: true)
+            self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: info)
+        }
+    }
+    
     func openEditFormWhenPresented(link: Link) {
         onDidAppearAction = { [weak self] in
             self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
                 if let bookmark = bookmark {
-                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+                    let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: true)
+                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: info)
                 }
             }
         }
@@ -73,7 +85,8 @@ class BookmarksViewController: UITableViewController {
         
         if tableView.isEditing {
             if let bookmark = item as? Bookmark {
-                performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+                let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: false)
+                performSegue(withIdentifier: "AddOrEditBookmark", sender: info)
             } else if let folder = item as? BookmarkFolder {
                 performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: folder)
             }
@@ -281,7 +294,9 @@ class BookmarksViewController: UITableViewController {
             viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
         } else if let viewController = segue.destination as? AddOrEditBookmarkViewController {
             viewController.hidesBottomBarWhenPushed = true
-            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
+            let info = sender as? AddOrEditBookmarkSegueInfo
+            viewController.setExistingBookmark(info?.bookmark, initialParentFolder: dataSource.folder)
+            viewController.isAlertController = info?.presentAsAlert ?? false
         }
     }
     

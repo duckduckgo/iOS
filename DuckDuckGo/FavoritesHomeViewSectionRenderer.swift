@@ -24,6 +24,8 @@ protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
                            didSelect favorite: Bookmark)
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
+                           didRequestEdit favorite: Bookmark)
     
 }
 
@@ -173,14 +175,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
               let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         
         Pixel.fire(pixel: .homeScreenEditFavorite)
-        let storyboard: UIStoryboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-        let navigationViewController = storyboard.instantiateViewController(withIdentifier: "AddOrEditBookmarkAlertViewController")
-        guard let viewController = navigationViewController.children.first as? AddOrEditBookmarkViewController else {
-            return
-        }
-        viewController.setExistingBookmark(favorite, initialParentFolder: nil)
-        viewController.isAlertController = true
-        controller?.present(navigationViewController, animated: true)
+        
+        controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }
     
     func collectionView(_ collectionView: UICollectionView,

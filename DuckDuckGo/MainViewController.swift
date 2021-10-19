@@ -340,6 +340,9 @@ class MainViewController: UIViewController {
             if segue.identifier == "BookmarksEditCurrent",
                let link = currentTab?.link {
                 controller.openEditFormWhenPresented(link: link)
+            } else if segue.identifier == "BookmarksEdit",
+                        let bookmark = sender as? Bookmark {
+                controller.openEditFormWhenPresented(bookmark: bookmark)
             }
             return
         }
@@ -1212,6 +1215,10 @@ extension MainViewController: HomeControllerDelegate {
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         showKeyboardAfterFireButton?.cancel()
         loadUrl(url)
+    }
+    
+    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark) {
+        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {

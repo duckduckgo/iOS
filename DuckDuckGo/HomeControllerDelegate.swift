@@ -18,10 +18,13 @@
 //
 
 import UIKit
+import Core
 
 protocol HomeControllerDelegate: AnyObject {
 
     func home(_ home: HomeViewController, didRequestUrl url: URL)
+    
+    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark)
 
     func home(_ home: HomeViewController, didRequestQuery query: String)
     

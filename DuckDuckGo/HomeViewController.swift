@@ -237,6 +237,10 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }
+    
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+        delegate?.home(self, didRequestEdit: favorite)
+    }
 
 }
 

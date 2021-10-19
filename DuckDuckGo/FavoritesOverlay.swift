@@ -107,6 +107,10 @@ extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
         delegate?.favoritesOverlay(self, didSelect: favorite)
     }
     
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+        // currently can't edit favorites from overlay
+    }
+    
 }
 
 extension FavoritesOverlay: UICollectionViewDelegate {

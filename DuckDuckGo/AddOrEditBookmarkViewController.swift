@@ -33,7 +33,6 @@ class AddOrEditBookmarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
-        setUpBarItems()
     }
     
     private func setUpTitle() {
@@ -49,13 +48,6 @@ class AddOrEditBookmarkViewController: UIViewController {
             } else {
                 title = NSLocalizedString("Add Bookmark", comment: "Add bookmark screen title")
             }
-        }
-    }
-    
-    private func setUpBarItems() {
-        if isAlertController {
-            let item = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelPressed))
-            navigationItem.setLeftBarButton(item, animated: false)
         }
     }
     
@@ -83,14 +75,6 @@ class AddOrEditBookmarkViewController: UIViewController {
     
     @IBAction func onDonePressed(_ sender: Any) {
         foldersViewController?.save()
-        if isAlertController {
-            dismiss(animated: true, completion: nil)
-        } else {
-            navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @objc func onCancelPressed() {
         if isAlertController {
             dismiss(animated: true, completion: nil)
         } else {

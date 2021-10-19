@@ -78,4 +78,12 @@ extension AddOrEditBookmarkFolderViewController: BookmarksFolderDetailsSectionDa
         let title = textField.text?.trimWhitespace() ?? ""
         doneButton.isEnabled = !title.isEmpty
     }
+    
+    func bookmarksFolderDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarksFolderDetailsSectionDataSource) {
+        
+        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        if doneButton.isEnabled {
+            onDonePressed(self)
+        }
+    }
 }

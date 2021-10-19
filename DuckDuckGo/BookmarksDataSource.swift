@@ -423,6 +423,7 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
 
 protocol BookmarksFolderDetailsSectionDataSourceDelegate: AnyObject {
     func bookmarksFolderDetailsSectionDataSource(_ dataSource: BookmarksFolderDetailsSectionDataSource, titleTextFieldDidChange textField: UITextField)
+    func bookmarksFolderDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarksFolderDetailsSectionDataSource)
 }
 
 // TODO can currently select the cell in screwy way if you press the right bit
@@ -449,17 +450,23 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
             fatalError("Failed to dequeue \(BookmarksTextFieldCell.reuseIdentifier) as BookmarksTextFieldCell")
         }
         cell.textField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        cell.textField.removeTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
 
         
         cell.title = initialTitle
         cell.textField.becomeFirstResponder()
         cell.textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        cell.textField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
 
         return cell
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         delegate?.bookmarksFolderDetailsSectionDataSource(self, titleTextFieldDidChange: textField)
+    }
+    
+    @objc func textFieldDidReturn() {
+        delegate?.bookmarksFolderDetailsSectionDataSourceTextFieldDidReturn(dataSource: self)
     }
     
     func folderTitle(_ tableView: UITableView, section: Int) -> String? {

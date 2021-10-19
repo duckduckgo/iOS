@@ -109,10 +109,10 @@ extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDeleg
     }
     
     func bookmarkDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarkDetailsSectionDataSource) {
+        
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         if doneButton.isEnabled {
             onDonePressed(self)
         }
-        
     }
 }

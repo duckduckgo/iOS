@@ -94,7 +94,7 @@ enum BookmarksSection {
     case bookmarksShallow(parentFolder: BookmarkFolder?, delegate: BookmarksShallowSectionDataSourceDelegate?)
     case folders(_ item: BookmarkItem?, parentFolder: BookmarkFolder?)
     case folderDetails(_ folder: BookmarkFolder?, delegate: BookmarksFolderDetailsSectionDataSourceDelegate)
-    case bookmarkDetails(_ bookmark: Bookmark?)
+    case bookmarkDetails(_ bookmark: Bookmark?, delegate: BookmarkDetailsSectionDataSourceDelegate)
     
     var dataSource: BookmarksSectionDataSource {
         switch self {
@@ -106,8 +106,8 @@ enum BookmarksSection {
             return BookmarkFoldersSectionDataSource(existingItem: item, initialParentFolder: parentFolder)
         case .folderDetails(let folder, let delegate):
             return BookmarksFolderDetailsSectionDataSource(existingFolder: folder, delegate: delegate)
-        case .bookmarkDetails(let bookmark):
-            return BookmarkDetailsSectionDataSource(existingBookmark: bookmark)
+        case .bookmarkDetails(let bookmark, let delegate):
+            return BookmarkDetailsSectionDataSource(existingBookmark: bookmark, delegate: delegate)
         }
     }
 }
@@ -471,14 +471,20 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
     }
 }
 
+protocol BookmarkDetailsSectionDataSourceDelegate: AnyObject {
+    func bookmarkDetailsSectionDataSource(_ dataSource: BookmarkDetailsSectionDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?)
+}
+
 class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
     
     let initialTitle: String?
     let initialUrl: URL?
+    weak var delegate: BookmarkDetailsSectionDataSourceDelegate?
 
-    init(existingBookmark: Bookmark?) {
+    init(existingBookmark: Bookmark?, delegate: BookmarkDetailsSectionDataSourceDelegate) {
         self.initialTitle = existingBookmark?.title
         self.initialUrl = existingBookmark?.url
+        self.delegate = delegate
     }
     
     func containsBookmarkItems() -> Bool {
@@ -496,7 +502,8 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
         
         cell.title = initialTitle
         cell.setUrl(initialUrl)
-        cell.titleTextField.becomeFirstResponder()
+        cell.setUp()
+        cell.delegate = self
         return cell
     }
     
@@ -515,6 +522,13 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
        }
        return cell.urlString
    }
+}
+
+extension BookmarkDetailsSectionDataSource: BookmarkDetailsCellDelegate {
+    
+    func bookmarkDetailsCellDelegate(_ cell: BookmarkDetailsCell, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
+        delegate?.bookmarkDetailsSectionDataSource(self, textFieldDidChangeWithTitleText: titleText, urlText: urlText)
+    }
 }
 
 class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
@@ -648,11 +662,11 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         
     private let existingBookmark: Bookmark?
     
-    init(existingBookmark: Bookmark? = nil, initialParentFolder: BookmarkFolder? = nil) {
+    init(delegate: BookmarkDetailsSectionDataSourceDelegate, existingBookmark: Bookmark? = nil, initialParentFolder: BookmarkFolder? = nil) {
         self.existingBookmark = existingBookmark
         super.init()
 
-        self.sections = [.bookmarkDetails(existingBookmark), .folders(existingBookmark, parentFolder: initialParentFolder)]
+        self.sections = [.bookmarkDetails(existingBookmark, delegate: delegate), .folders(existingBookmark, parentFolder: initialParentFolder)]
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {
@@ -692,11 +706,11 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
 class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSource {
     private let existingBookmark: Bookmark?
     
-    init(existingBookmark: Bookmark? = nil) {
+    init(delegate: BookmarkDetailsSectionDataSourceDelegate, existingBookmark: Bookmark? = nil) {
         self.existingBookmark = existingBookmark
         super.init()
 
-        self.sections = [.bookmarkDetails(existingBookmark)]
+        self.sections = [.bookmarkDetails(existingBookmark, delegate: delegate)]
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {

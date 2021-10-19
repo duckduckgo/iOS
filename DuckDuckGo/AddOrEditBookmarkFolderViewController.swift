@@ -43,7 +43,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     
     func setUpDoneButton() {
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        if let title = existingFolder?.title, title.count > 0 {
+        if let title = existingFolder?.title, title.trimWhitespace().count > 0 {
             doneButton.isEnabled = true
         } else {
             doneButton.isEnabled = false
@@ -75,6 +75,7 @@ extension AddOrEditBookmarkFolderViewController: BookmarksFolderDetailsSectionDa
     func bookmarksFolderDetailsSectionDataSource(_ dataSource: BookmarksFolderDetailsSectionDataSource, titleTextFieldDidChange textField: UITextField) {
         
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        doneButton.isEnabled = !(textField.text ?? "").isEmpty
+        let title = textField.text?.trimWhitespace() ?? ""
+        doneButton.isEnabled = !title.isEmpty
     }
 }

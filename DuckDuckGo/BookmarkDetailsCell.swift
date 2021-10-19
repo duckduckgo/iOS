@@ -20,9 +20,15 @@
 import UIKit
 import Core
 
+protocol BookmarkDetailsCellDelegate: AnyObject {
+    func bookmarkDetailsCellDelegate(_ cell: BookmarkDetailsCell, textFieldDidChangeWithTitleText titleText: String?, urlText: String?)
+}
+
 class BookmarkDetailsCell: UITableViewCell {
 
     static let reuseIdentifier = "BookmarkDetailsCell"
+    
+    weak var delegate: BookmarkDetailsCellDelegate?
     
     var title: String? {
         get {
@@ -46,9 +52,23 @@ class BookmarkDetailsCell: UITableViewCell {
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var faviconImageView: UIImageView!
     
+    func setUp() {
+        titleTextField.becomeFirstResponder()
+        
+        titleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        urlTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        urlTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
     func setUrl(_ url: URL?) {
         faviconImageView.loadFavicon(forDomain: url?.host, usingCache: .bookmarks)
         urlString = url?.absoluteString
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        delegate?.bookmarkDetailsCellDelegate(self, textFieldDidChangeWithTitleText: titleTextField.text, urlText: urlTextField.text)
     }
 }
 

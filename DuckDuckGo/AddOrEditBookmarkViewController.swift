@@ -33,6 +33,7 @@ class AddOrEditBookmarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
+        setUpDoneButton()
     }
     
     private func setUpTitle() {
@@ -51,6 +52,20 @@ class AddOrEditBookmarkViewController: UIViewController {
         }
     }
     
+    func setUpDoneButton() {
+        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        if let bookmark = existingBookmark,
+           let title = bookmark.title,
+           title.trimWhitespace().count > 0,
+           let url = bookmark.url,
+           url.absoluteString.count > 0 {
+            
+            doneButton.isEnabled = true
+        } else {
+            doneButton.isEnabled = false
+        }
+    }
+    
     func setExistingBookmark(_ existingBookmark: Bookmark?, initialParentFolder: BookmarkFolder?) {
         self.existingBookmark = existingBookmark
         self.initialParentFolder = initialParentFolder
@@ -60,9 +75,9 @@ class AddOrEditBookmarkViewController: UIViewController {
     
     private func setUpDataSource() {
         if existingBookmark?.isFavorite ?? isFavorite {
-            foldersViewController?.dataSource = FavoriteDetailsDataSource(existingBookmark: existingBookmark)
+            foldersViewController?.dataSource = FavoriteDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
         } else {
-            foldersViewController?.dataSource = BookmarkDetailsDataSource(existingBookmark: existingBookmark)
+            foldersViewController?.dataSource = BookmarkDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
         }
     }
     
@@ -80,5 +95,16 @@ class AddOrEditBookmarkViewController: UIViewController {
         } else {
             navigationController?.popViewController(animated: true)
         }
+    }
+}
+
+extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDelegate {
+    
+    func bookmarkDetailsSectionDataSource(_ dataSource: BookmarkDetailsSectionDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
+        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        let title = titleText?.trimWhitespace() ?? ""
+        let url = urlText?.trimWhitespace() ?? ""
+        
+        doneButton.isEnabled = !title.isEmpty && !url.isEmpty
     }
 }

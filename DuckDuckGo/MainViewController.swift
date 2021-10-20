@@ -1410,6 +1410,9 @@ extension MainViewController: TabDelegate {
         }
     }
 
+    func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
+        return tabManager.current === tab
+    }
 }
 
 extension MainViewController: TabSwitcherDelegate {

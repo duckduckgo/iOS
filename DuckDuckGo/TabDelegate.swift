@@ -67,6 +67,8 @@ protocol TabDelegate: AnyObject {
     
     func tab(_ tab: TabViewController, didRequestPresentingAlert alert: UIAlertController)
 
+    func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool
+    
     func showBars()
 
 }

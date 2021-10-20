@@ -180,7 +180,7 @@ class TabViewController: UIViewController {
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
-        return presentedViewController == nil
+        return presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {

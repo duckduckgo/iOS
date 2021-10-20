@@ -263,6 +263,7 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
         printingUserScript.delegate = self
+        textSizeUserScript.textSizeAdjustment = appSettings.textSizeAdjustment
     }
     
     func updateTabModel() {

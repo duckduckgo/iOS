@@ -231,6 +231,7 @@ class TabViewController: UIViewController {
         
         userScripts = [
             debugScript,
+            textSizeUserScript,
             findInPageScript,
             navigatorPatchScript,
             surrogatesScript,
@@ -239,8 +240,7 @@ class TabViewController: UIViewController {
             faviconScript,
             fullScreenVideoScript,
             autofillUserScript,
-            printingUserScript,
-            textSizeUserScript
+            printingUserScript
         ]
         
         if #available(iOS 13, *) {

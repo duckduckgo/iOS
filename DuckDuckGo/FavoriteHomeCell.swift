@@ -88,9 +88,9 @@ class FavoriteHomeCell: UICollectionViewCell {
         
         isAccessibilityElement = true
         accessibilityTraits = .button
-        accessibilityLabel = "\(favorite.title ?? "")). \(UserText.favorite)"
+        accessibilityLabel = "\(favorite.displayTitle ?? "")). \(UserText.favorite)"
         
-        titleLabel.text = favorite.title
+        titleLabel.text = favorite.displayTitle
         iconBackground.backgroundColor = UIColor.forDomain(host)
         
         if let domain = favorite.url?.host?.dropPrefix(prefix: "www."),

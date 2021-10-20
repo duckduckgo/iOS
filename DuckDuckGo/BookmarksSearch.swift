@@ -34,6 +34,7 @@ class BookmarksSearch {
     private let bookmarksStore: BookmarkStore
     
     //TODO inject properly, don't like this duplication at all
+    //honestly why is this not using bookmarksmanager?
     private let bookmarksCoreDataStorage: BookmarksCoreDataStorage
     
     init(bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
@@ -78,7 +79,7 @@ class BookmarksSearch {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
         
         for entry in results {
-            guard let title = entry.bookmark.title?.lowercased() else { continue }
+            guard let title = entry.bookmark.displayTitle?.lowercased() else { continue }
             
             // Exact matches - full query
             if title.starts(with: query) { // High score for exact match from the begining of the title

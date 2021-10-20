@@ -32,17 +32,6 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
-//    var link: Link? {
-//        didSet {
-//            if let linkTitle = link?.title?.trimWhitespace(), !linkTitle.isEmpty {
-//                title.text = linkTitle
-//            } else {
-//                title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
-//            }
-//            linkImage.loadFavicon(forDomain: link?.url.host, usingCache: .bookmarks)
-//        }
-//    }
-
     var bookmarkItem: BookmarkItem? {
         didSet {
             if let bookmark = bookmarkItem as? Bookmark {

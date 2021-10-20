@@ -112,7 +112,9 @@ extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDeleg
         
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         if doneButton.isEnabled {
-            onDonePressed(self)
+            DispatchQueue.main.async {
+                self.onDonePressed(self)
+            }
         }
     }
 }

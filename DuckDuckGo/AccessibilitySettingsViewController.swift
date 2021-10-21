@@ -22,9 +22,16 @@ import UIKit
 
 class AccessibilitySettingsViewController: UITableViewController {
     
+    @IBOutlet weak var textSizeSlider: UISlider!
+    @IBOutlet weak var currentSelectedValueLabel: UILabel!
+    
+    private let predefinedPercentages = [50, 75, 85, 100, 115, 125, 150, 175, 200]
+    private var currentSelectedValue = 100
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureSlider()
+        updateLabel()
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -57,6 +64,38 @@ class AccessibilitySettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let theme = ThemeManager.shared.currentTheme
         cell.decorate(with: theme)
+    }
+    
+    private func configureSlider() {
+        textSizeSlider.minimumValue = 0
+        textSizeSlider.maximumValue = Float(predefinedPercentages.count - 1)
+        
+        let currentSelectionIndex = predefinedPercentages.firstIndex(of: currentSelectedValue) ?? 0
+        textSizeSlider.value = Float(currentSelectionIndex)
+    }
+    
+    private func updateLabel() {
+        currentSelectedValueLabel.text = "\(currentSelectedValue)%"
+    }
+}
+
+extension AccessibilitySettingsViewController {
+    
+    @IBAction func onNewTabValueChanged(_ sender: Any) {
+        let roundedValue = round(textSizeSlider.value)
+        let index = Int(roundedValue)
+
+        print("slider: \(textSizeSlider.value) rounded:\(roundedValue) - [\(index) = \(predefinedPercentages[index])]")
+
+        // snap the slider
+        textSizeSlider.value = roundedValue
+        
+        let newValue = predefinedPercentages[index]
+        if newValue != currentSelectedValue {
+            currentSelectedValue = newValue
+            // update UI
+            updateLabel()
+        }
     }
 }
 

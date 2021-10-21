@@ -58,11 +58,17 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestFireButtonPulse(tab: TabViewController)
         
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
+
+    func tab(_ tab: TabViewController,
+             didRequestPresentingTrackerAnimation siteRating: SiteRating,
+             isCollapsing: Bool)
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController)
     
     func tab(_ tab: TabViewController, didRequestPresentingAlert alert: UIAlertController)
 
+    func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool
+    
     func showBars()
 
 }

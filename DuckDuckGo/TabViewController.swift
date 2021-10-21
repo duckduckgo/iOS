@@ -178,6 +178,10 @@ class TabViewController: UIViewController {
     }()
     
     private var userScripts: [UserScript] = []
+    
+    private var canDisplayJavaScriptAlert: Bool {
+        return presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
+    }
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -982,7 +986,7 @@ extension TabViewController: WKNavigationDelegate {
     private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
             guard let siteRating = self.siteRating else { return }
-            self.chromeDelegate?.omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: collapsing)
+            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: siteRating, isCollapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
@@ -1284,7 +1288,51 @@ extension TabViewController: WKUIDelegate {
         Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
+    
+     func webView(_ webView: WKWebView,
+                  runJavaScriptAlertPanelWithMessage message: String,
+                  initiatedByFrame frame: WKFrameInfo,
+                  completionHandler: @escaping () -> Void) {
+        if canDisplayJavaScriptAlert {
+            let alertController = WebJSAlert(message: message,
+                                             alertType: .alert(handler: completionHandler)).createAlertController()
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            completionHandler()
+        }
+     }
 
+     func webView(_ webView: WKWebView,
+                  runJavaScriptConfirmPanelWithMessage message: String,
+                  initiatedByFrame frame: WKFrameInfo,
+                  completionHandler: @escaping (Bool) -> Void) {
+        
+        if canDisplayJavaScriptAlert {
+            let alertController = WebJSAlert(message: message,
+                                             alertType: .confirm(handler: completionHandler)).createAlertController()
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            completionHandler(false)
+        }
+     }
+
+     func webView(_ webView: WKWebView,
+                  runJavaScriptTextInputPanelWithPrompt prompt: String,
+                  defaultText: String?,
+                  initiatedByFrame frame: WKFrameInfo,
+                  completionHandler: @escaping (String?) -> Void) {
+        if canDisplayJavaScriptAlert {
+            let alertController = WebJSAlert(message: prompt,
+                                             alertType: .text(handler: completionHandler,
+                                                              defaultText: defaultText)).createAlertController()
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            completionHandler(nil)
+        }
+     }
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

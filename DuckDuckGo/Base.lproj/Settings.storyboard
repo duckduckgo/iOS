@@ -628,11 +628,11 @@
                                         <rect key="frame" x="0.0" y="1069.6666584014893" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="8" y="0.0" width="380.33333333333331" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="378.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -777,20 +777,25 @@
         <scene sceneID="27H-Zj-xSY">
             <objects>
                 <tableViewController id="Z3c-9H-Usp" customClass="AccessibilitySettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="5hH-aV-3P1">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" id="5hH-aV-3P1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Wtd-gR-e0S">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="98"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Na-Nh-zIU">
-                                    <rect key="frame" x="32" y="24" width="350" height="48"/>
-                                    <string key="text">Set your preferred reading text size, and websites will adjust to it. 
-Current Text Size - 100%</string>
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Na-Nh-zIU">
+                                    <rect key="frame" x="32" y="39" width="350" height="44"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Set your preferred reading text size, and websites will adjust to it.">
+                                            <attributes>
+                                                <color key="NSColor" systemColor="labelColor"/>
+                                                <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.29" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -798,16 +803,16 @@ Current Text Size - 100%</string>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="9Na-Nh-zIU" secondAttribute="trailing" constant="32" id="3Oz-lc-7XY"/>
                                 <constraint firstItem="9Na-Nh-zIU" firstAttribute="leading" secondItem="Wtd-gR-e0S" secondAttribute="leading" constant="32" id="7Ee-xM-9Xa"/>
-                                <constraint firstItem="9Na-Nh-zIU" firstAttribute="top" secondItem="Wtd-gR-e0S" secondAttribute="top" constant="24" id="o8M-hg-q8p"/>
+                                <constraint firstItem="9Na-Nh-zIU" firstAttribute="top" secondItem="Wtd-gR-e0S" secondAttribute="top" constant="39" id="o8M-hg-q8p"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="MbT-2v-wsX">
-                            <rect key="frame" x="0.0" y="222" width="414" height="136"/>
+                            <rect key="frame" x="0.0" y="162.00000000000003" width="414" height="52"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Text Size - 100%" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2R-HL-aY9">
-                                    <rect key="frame" x="32" y="24" width="350" height="16"/>
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Size - 100%" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2R-HL-aY9">
+                                    <rect key="frame" x="32" y="8" width="350" height="14"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -815,28 +820,25 @@ Current Text Size - 100%</string>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="A2R-HL-aY9" firstAttribute="leading" secondItem="MbT-2v-wsX" secondAttribute="leading" constant="32" id="18M-il-ny2"/>
-                                <constraint firstItem="A2R-HL-aY9" firstAttribute="top" secondItem="MbT-2v-wsX" secondAttribute="top" constant="24" id="9JF-Bv-R7p"/>
+                                <constraint firstItem="A2R-HL-aY9" firstAttribute="top" secondItem="MbT-2v-wsX" secondAttribute="top" constant="8" id="9JF-Bv-R7p"/>
                                 <constraint firstAttribute="trailing" secondItem="A2R-HL-aY9" secondAttribute="trailing" constant="32" id="PFq-OG-fFL"/>
                             </constraints>
                         </view>
                         <sections>
                             <tableViewSection id="aUq-nt-jWA">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="88" id="7rG-WS-ilN">
-                                        <rect key="frame" x="0.0" y="116" width="414" height="88"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="56" id="7rG-WS-ilN">
+                                        <rect key="frame" x="0.0" y="105" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7rG-WS-ilN" id="VQL-Ht-H21">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nxe-K7-cEY">
-                                                    <rect key="frame" x="52" y="67" width="310" height="16"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oTB-LF-8nM">
-                                                    <rect key="frame" x="50" y="29" width="314" height="31"/>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="TextSizeSmaller" maximumValueImage="TextSizeLarger" translatesAutoresizingMaskIntoConstraints="NO" id="oTB-LF-8nM">
+                                                    <rect key="frame" x="34" y="13" width="346" height="31"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                    <color key="minimumTrackTintColor" systemColor="secondaryLabelColor"/>
+                                                    <color key="maximumTrackTintColor" systemColor="secondaryLabelColor"/>
                                                     <connections>
                                                         <action selector="onNewTabValueChanged:" destination="Z3c-9H-Usp" eventType="valueChanged" id="LcT-cP-8K9"/>
                                                     </connections>
@@ -844,11 +846,8 @@ Current Text Size - 100%</string>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="oTB-LF-8nM" firstAttribute="centerY" secondItem="VQL-Ht-H21" secondAttribute="centerY" id="9lq-uR-uFg"/>
-                                                <constraint firstItem="oTB-LF-8nM" firstAttribute="leading" secondItem="VQL-Ht-H21" secondAttribute="leadingMargin" constant="32" id="MEA-Am-8x0"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Nxe-K7-cEY" secondAttribute="trailing" constant="32" id="m5n-Of-HiB"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="oTB-LF-8nM" secondAttribute="trailing" constant="32" id="rkz-Y4-1Kz"/>
-                                                <constraint firstItem="Nxe-K7-cEY" firstAttribute="top" secondItem="oTB-LF-8nM" secondAttribute="bottom" constant="8" id="zMQ-5H-NdD"/>
-                                                <constraint firstItem="Nxe-K7-cEY" firstAttribute="leading" secondItem="VQL-Ht-H21" secondAttribute="leadingMargin" constant="32" id="zlh-aU-h6V"/>
+                                                <constraint firstItem="oTB-LF-8nM" firstAttribute="leading" secondItem="VQL-Ht-H21" secondAttribute="leadingMargin" constant="16" id="MEA-Am-8x0"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="oTB-LF-8nM" secondAttribute="trailing" constant="16" id="rkz-Y4-1Kz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -862,7 +861,7 @@ Current Text Size - 100%</string>
                     </tableView>
                     <navigationItem key="navigationItem" title="Text Size" id="ssa-zd-L3T"/>
                     <connections>
-                        <outlet property="currentSelectedValueLabel" destination="Nxe-K7-cEY" id="UmN-ch-qo0"/>
+                        <outlet property="currentSelectedValueLabel" destination="A2R-HL-aY9" id="Jkc-0Y-3Rp"/>
                         <outlet property="textSizeSlider" destination="oTB-LF-8nM" id="obC-5Q-zHz"/>
                     </connections>
                 </tableViewController>
@@ -1980,7 +1979,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="149.33333206176761" width="414" height="120.00000000000003"/>
+                            <rect key="frame" x="0.0" y="149.33333206176755" width="414" height="120.00000000000003"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">
@@ -2192,11 +2191,16 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
         <image name="HomeRowAppIcon" width="512" height="512"/>
         <image name="LogoLightText" width="160" height="128"/>
         <image name="PP Arrow Back" width="10" height="16"/>
+        <image name="TextSizeLarger" width="17" height="20"/>
+        <image name="TextSizeSmaller" width="10" height="12"/>
         <namedColor name="AccentColor">
             <color red="0.40400001406669617" green="0.56099998950958252" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

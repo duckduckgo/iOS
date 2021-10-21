@@ -75,7 +75,7 @@ class AccessibilitySettingsViewController: UITableViewController {
     }
     
     private func updateLabel() {
-        currentSelectedValueLabel.text = "\(currentSelectedValue)%"
+        currentSelectedValueLabel.text = "Text Size - \(currentSelectedValue)%"
     }
 }
 

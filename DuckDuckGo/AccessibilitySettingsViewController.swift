@@ -28,6 +28,32 @@ class AccessibilitySettingsViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if #available(iOS 15.0, *) {
+            if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
+                sheetController.detents = [.medium(), .large()]
+                sheetController.animateChanges {
+                  sheetController.selectedDetentIdentifier = .medium
+                }
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if #available(iOS 15.0, *) {
+            if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
+                sheetController.detents = [.large()]
+                sheetController.animateChanges {
+                  sheetController.selectedDetentIdentifier = .large
+                }
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let theme = ThemeManager.shared.currentTheme
         cell.decorate(with: theme)

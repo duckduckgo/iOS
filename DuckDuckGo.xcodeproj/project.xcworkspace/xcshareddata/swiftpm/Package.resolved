@@ -5,18 +5,18 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "brindy/update-grdb",
-          "revision": "12df92ffff181901389cbc0b2391abd8ae49adaf",
-          "version": null
+          "branch": null,
+          "revision": "1eeec1a015f9e85d1c50ef67b0c21d2bb10cad77",
+          "version": "7.1.6"
         }
       },
       {
         "package": "GRDB",
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
-          "branch": "brindy/merge-upstream-for-xcode13",
-          "revision": "3dcb670e69c384516752d78cd4457d2540583e84",
-          "version": null
+          "branch": null,
+          "revision": "9efe5a515acff8b73f69a31a65fc2bce2a823219",
+          "version": "1.1.0"
         }
       },
       {

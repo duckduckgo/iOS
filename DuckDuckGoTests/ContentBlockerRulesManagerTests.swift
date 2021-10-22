@@ -169,6 +169,7 @@ class ContentBlockerRulesManagerTests: XCTestCase {
     
 }
 
+// swiftlint:disable type_body_length
 class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
     
     func test_ValidTDS_NoTempList_NoAllowList_NoUnprotectedSites() {
@@ -467,6 +468,8 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
                                                      unprotectedSitesHash: nil))
     }
 }
+
+// swiftlint:enable type_body_length
 
 class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
     

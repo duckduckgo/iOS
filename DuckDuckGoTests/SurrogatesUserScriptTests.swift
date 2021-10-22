@@ -153,8 +153,13 @@ class SurrogatesUserScriptsTests: XCTestCase {
             mockUserScriptConfig.encodedTrackerData = encodedTrackerData
             mockUserScriptConfig.surrogates = Self.exampleSurrogates
 
-            let userScript = SurrogatesUserScript(configurationSource: mockUserScriptConfig)
+            let userScript = CustomSurrogatesUserScript(configurationSource: mockUserScriptConfig)
             userScript.delegate = self.userScriptDelegateMock
+
+            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure trast scheme is matched instead of http/https
+            userScript.onSourceInjection = { inputScript -> String in
+                return inputScript.replacingOccurrences(of: "http", with: "test")
+            }
 
             for messageName in userScript.messageNames {
                 configuration.userContentController.add(userScript, name: messageName)
@@ -366,6 +371,74 @@ class SurrogatesUserScriptsTests: XCTestCase {
     }
 
     func testWhenSiteIsInExceptionListThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let allowlist = ["tracker.com": [PrivacyConfigurationData.TrackerAllowlist.Entry(rule: "tracker.com/", domains: ["example.com"])]]
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  trackerAllowlist: allowlist,
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenSiteIsNotInExceptionListThenSurrogatesAreInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let allowlist = ["tracker.com": [PrivacyConfigurationData.TrackerAllowlist.Entry(rule: "tracker.com/", domains: ["test.com"])]]
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  trackerAllowlist: allowlist,
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 1)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenTrackerIsInAllowListThenSurrogatesAreNotInjected() {
 
         let websiteURL = URL(string: "test://example.com")!
 

@@ -127,6 +127,15 @@ class CustomContentBlockerRulesUserScript: ContentBlockerRulesUserScript {
     }
 }
 
+class CustomSurrogatesUserScript: SurrogatesUserScript {
+
+    var onSourceInjection: (String) -> String = { $0 }
+
+    override var source: String {
+        return onSourceInjection(super.source)
+    }
+}
+
 class WebKitTestHelper {
 
     static func preparePrivacyConfig(locallyUnprotected: [String],

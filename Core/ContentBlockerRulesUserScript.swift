@@ -134,7 +134,6 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
 public class TrackerAllowlistInjection {
 
     static func prepareForInjection(allowlist: PrivacyConfigurationData.TrackerAllowlistData) -> String {
-
         // Transform rules into regular expresions
         var output = PrivacyConfigurationData.TrackerAllowlistData()
         for dictEntry in allowlist {

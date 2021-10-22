@@ -26,7 +26,7 @@ class AccessibilitySettingsViewController: UITableViewController {
     @IBOutlet weak var currentSelectedValueLabel: UILabel!
     
     private let predefinedPercentages = [50, 75, 85, 100, 115, 125, 150, 175, 200]
-    private var currentSelectedValue = 100
+    private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +95,13 @@ extension AccessibilitySettingsViewController {
             currentSelectedValue = newValue
             // update UI
             updateLabel()
+            
+            let appSettings = AppDependencyProvider.shared.appSettings
+            appSettings.textSizeAdjustment = Float(newValue)/100
+            
+            Swift.print("appSettings: \(appSettings.textSizeAdjustment) based on  \(newValue)%")
+            
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeAdjustmentChange, object: self)
         }
     }
 }

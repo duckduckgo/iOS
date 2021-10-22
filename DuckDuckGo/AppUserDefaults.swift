@@ -25,6 +25,7 @@ public class AppUserDefaults: AppSettings {
     public struct Notifications {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
+        public static let textSizeAdjustmentChange = Notification.Name("com.duckduckgo.app.TextSizeAdjustmentChange")
     }
 
     private let groupName: String

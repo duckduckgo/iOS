@@ -35,7 +35,7 @@ public protocol PrivacyConfiguration {
     var tempUnprotectedDomains: [String] { get }
 
     /// Trackers that has been allow listed because of site breakage
-    var trackerAllowlist: [PrivacyConfigurationData.TrackerAllowlist.Entry] { get }
+    var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData { get }
 
     func isEnabled(featureKey: PrivacyFeature) -> Bool
 
@@ -104,8 +104,8 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
         return data.unprotectedTemporary.map { $0.domain }
     }
 
-    public var trackerAllowlist: [PrivacyConfigurationData.TrackerAllowlist.Entry] {
-        return data.trackerAllowlist.entries
+    public var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData {
+        return data.trackerAllowlist.state == "enabled" ? data.trackerAllowlist.entries : [:]
     }
     
     public func isEnabled(featureKey: PrivacyFeature) -> Bool {

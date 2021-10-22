@@ -118,11 +118,20 @@ class MockDomainsProtectionStore: DomainsProtectionStore {
     }
 }
 
+class CustomContentBlockerRulesUserScript: ContentBlockerRulesUserScript {
+
+    var onSourceInjection: (String) -> String = { $0 }
+
+    override var source: String {
+        return onSourceInjection(super.source)
+    }
+}
+
 class WebKitTestHelper {
 
     static func preparePrivacyConfig(locallyUnprotected: [String],
                                      tempUnprotected: [String],
-                                     trackerAllowlist: [PrivacyConfigurationData.TrackerAllowlist.Entry],
+                                     trackerAllowlist: [String: [PrivacyConfigurationData.TrackerAllowlist.Entry]],
                                      contentBlockingEnabled: Bool,
                                      exceptions: [String]) -> PrivacyConfiguration {
         let contentBlockingExceptions = exceptions.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
@@ -145,12 +154,12 @@ class WebKitTestHelper {
     static func prepareContentBlockingRules(trackerData: TrackerData,
                                             exceptions: [String],
                                             tempUnprotected: [String],
-                                            trackerAllowlist: [TrackerException],
+                                            trackerExceptions: [TrackerException],
                                             completion: @escaping (WKContentRuleList?) -> Void) {
 
         let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: exceptions,
                                                                                     andTemporaryUnprotectedDomains: tempUnprotected,
-                                                                                    andTrackerAllowlist: trackerAllowlist)
+                                                                                    andTrackerAllowlist: trackerExceptions)
 
         let data = (try? JSONEncoder().encode(rules))!
         var ruleList = String(data: data, encoding: .utf8)!

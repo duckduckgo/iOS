@@ -58,19 +58,26 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
     }
 
     var allowList: [TrackerException] {
-        let list = PrivacyConfigurationManager.shared.privacyConfig.trackerAllowlist
+        return Self.transform(allowList: PrivacyConfigurationManager.shared.privacyConfig.trackerAllowlist)
+    }
 
-        return list.map { entry in
+    var unprotectedSites: [String] {
+        return PrivacyConfigurationManager.shared.privacyConfig.userUnprotectedDomains
+    }
+
+    class func transform(allowList: PrivacyConfigurationData.TrackerAllowlistData) -> [TrackerException] {
+
+        let trackerRules = allowList.values.reduce(into: []) { partialResult, next in
+            partialResult.append(contentsOf: next)
+        }
+
+        return trackerRules.map { entry in
             if entry.domains.contains("<all>") {
                 return TrackerException(rule: entry.rule, matching: .all)
             } else {
                 return TrackerException(rule: entry.rule, matching: .domains(entry.domains))
             }
         }
-    }
-
-    var unprotectedSites: [String] {
-        return PrivacyConfigurationManager.shared.privacyConfig.userUnprotectedDomains
     }
 
 }

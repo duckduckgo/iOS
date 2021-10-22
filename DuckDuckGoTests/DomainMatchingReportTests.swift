@@ -35,7 +35,7 @@ class DomainMatchingReportTests: XCTestCase {
         let refTests = try JSONDecoder().decode(RefTests.self, from: testJSON)
         let tests = refTests.domainTests.tests
         
-        let resolver = TrackerResolver(tds: trackerData, unprotectedSites: [], tempList: [])
+        let resolver = TrackerResolver(tds: trackerData, unprotectedSites: [], tempList: [], trackerAllowlist: [])
 
         for test in tests {            
             let tracker = resolver.trackerFromUrl(test.requestURL,

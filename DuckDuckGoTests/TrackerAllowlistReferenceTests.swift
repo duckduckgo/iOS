@@ -56,7 +56,7 @@ class TrackerAllowlistReferenceTests: XCTestCase {
 
     func setupWebView(trackerData: TrackerData,
                       userScriptDelegate: ContentBlockerRulesUserScriptDelegate,
-                      trackerAllowlist: [PrivacyConfigurationData.TrackerAllowlist.Entry],
+                      trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData,
                       schemeHandler: TestSchemeHandler,
                       completion: @escaping (WKWebView) -> Void) {
 
@@ -64,18 +64,12 @@ class TrackerAllowlistReferenceTests: XCTestCase {
                                                        embeddedTrackerData: (trackerData, UUID().uuidString) )
         _ = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
 
-        let allowlist = trackerAllowlist.map { entry -> TrackerException in
-            if entry.domains.contains("<all>") {
-                return TrackerException(rule: entry.rule, matching: .all)
-            } else {
-                return TrackerException(rule: entry.rule, matching: .domains(entry.domains))
-            }
-        }
+        let exceptions = DefaultContentBlockerRulesSource.transform(allowList: trackerAllowlist)
 
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: [],
                                                      tempUnprotected: [],
-                                                     trackerAllowlist: allowlist) { rules in
+                                                     trackerExceptions: exceptions) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -97,8 +91,13 @@ class TrackerAllowlistReferenceTests: XCTestCase {
             let mockUserScriptConfig = MockUserScriptConfigSource(privacyConfig: privacyConfig)
             mockUserScriptConfig.trackerData = trackerData
 
-            let userScript = ContentBlockerRulesUserScript(configurationSource: mockUserScriptConfig)
+            let userScript = CustomContentBlockerRulesUserScript(configurationSource: mockUserScriptConfig)
             userScript.delegate = userScriptDelegate
+
+            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure trast scheme is matched instead of http/https
+            userScript.onSourceInjection = { inputScript -> String in
+                return inputScript.replacingOccurrences(of: "http", with: "test")
+            }
 
             for messageName in userScript.messageNames {
                 configuration.userContentController.add(userScript, name: messageName)
@@ -142,7 +141,7 @@ class TrackerAllowlistReferenceTests: XCTestCase {
             self.popTestAndExecute(onTestExecuted: testsExecuted)
         }
 
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 560, handler: nil)
     }
 
     private func normalizeScheme(urlString: String) -> String {
@@ -188,31 +187,31 @@ class TrackerAllowlistReferenceTests: XCTestCase {
                 // Only website request
                 XCTAssertEqual(self.schemeHandler.handledRequests.count, 1)
                 // Only resource request
-//                XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
-//
-//                if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
-//                    XCTAssert(tracker.blocked)
-//                } else {
-//                    XCTFail("Expected to detect tracker for test \(test.description)")
-//                }
+                XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
+
+                if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
+                    XCTAssert(tracker.blocked)
+                } else {
+                    XCTFail("Expected to detect tracker for test \(test.description)")
+                }
             } else {
                 // Website request & resource request
                 XCTAssertEqual(self.schemeHandler.handledRequests.count, 2)
 
-//                if let pageEntity = self.tds.findEntity(forHost: siteURL.host!),
-//                   let trackerOwner = self.tds.findTracker(forUrl: requestURL.absoluteString)?.owner,
-//                   pageEntity.displayName == trackerOwner.name {
-//
-//                    // Nothing to detect - tracker and website have the same entity
-//                } else {
-//                    XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
-//
-//                    if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
-//                        XCTAssertFalse(tracker.blocked)
-//                    } else {
-//                        XCTFail("Expected to detect tracker for test \(test.description)")
-//                    }
-//                }
+                if let pageEntity = self.tds.findEntity(forHost: siteURL.host!),
+                   let trackerOwner = self.tds.findTracker(forUrl: requestURL.absoluteString)?.owner,
+                   pageEntity.displayName == trackerOwner.name {
+
+                    // Nothing to detect - tracker and website have the same entity
+                } else {
+                    XCTAssertEqual(self.userScriptDelegateMock.detectedTrackers.count, 1)
+
+                    if let tracker = self.userScriptDelegateMock.detectedTrackers.first {
+                        XCTAssertFalse(tracker.blocked)
+                    } else {
+                        XCTFail("Expected to detect tracker for test \(test.description)")
+                    }
+                }
             }
 
             onTestExecuted.fulfill()

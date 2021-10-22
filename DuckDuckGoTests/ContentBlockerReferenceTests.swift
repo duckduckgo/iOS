@@ -51,7 +51,7 @@ class ContentBlockerReferenceTests: XCTestCase {
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: [],
                                                      tempUnprotected: [],
-                                                     trackerAllowlist: []) { rules in
+                                                     trackerExceptions: []) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -66,7 +66,7 @@ class ContentBlockerReferenceTests: XCTestCase {
 
             let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                       tempUnprotected: [],
-                                                                      trackerAllowlist: [],
+                                                                      trackerAllowlist: [:],
                                                                       contentBlockingEnabled: true,
                                                                       exceptions: [])
 

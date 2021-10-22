@@ -131,18 +131,12 @@ class SurrogatesUserScriptsTests: XCTestCase {
         var tempUnprotected = privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
         tempUnprotected.append(contentsOf: privacyConfig.exceptionsList(forFeature: .contentBlocking))
 
-        let allowlist = privacyConfig.trackerAllowlist.map { entry -> TrackerException in
-            if entry.domains.contains("<all>") {
-                return TrackerException(rule: entry.rule, matching: .all)
-            } else {
-                return TrackerException(rule: entry.rule, matching: .domains(entry.domains))
-            }
-        }
+        let exceptions = DefaultContentBlockerRulesSource.transform(allowList: privacyConfig.trackerAllowlist)
 
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: privacyConfig.userUnprotectedDomains,
                                                      tempUnprotected: tempUnprotected,
-                                                     trackerAllowlist: allowlist) { rules in
+                                                     trackerExceptions: exceptions) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -208,7 +202,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
         let websiteURL = URL(string: "test://example.com")!
@@ -245,7 +239,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -275,7 +269,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -313,7 +307,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -345,7 +339,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -377,7 +371,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: ["example.com"])
 
@@ -409,7 +403,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: ["example.com"])
 
@@ -441,7 +435,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
-                                                                  trackerAllowlist: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: false,
                                                                   exceptions: [])
 

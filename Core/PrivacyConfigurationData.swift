@@ -24,6 +24,7 @@ import UIKit
 public struct PrivacyConfigurationData {
 
     public typealias FeatureName = String
+    public typealias TrackerAllowlistData = [String: [TrackerAllowlist.Entry]]
 
     enum CodingKeys: String {
         case features
@@ -46,15 +47,16 @@ public struct PrivacyConfigurationData {
         if var featuresData = json[CodingKeys.features.rawValue] as? [String: Any] {
             var features = [FeatureName: PrivacyFeature]()
 
+            // Allowlist entry does not follow the ususal feature structure - procss it first
             if let allowlistEntry = featuresData[CodingKeys.trackerAllowlist.rawValue] as? [String: Any] {
                 if let allowlist = TrackerAllowlist(json: allowlistEntry) {
                     self.trackerAllowlist = allowlist
                 } else {
-                    self.trackerAllowlist = TrackerAllowlist(entries: [], state: "disabled")
+                    self.trackerAllowlist = TrackerAllowlist(entries: [:], state: "disabled")
                 }
                 featuresData.removeValue(forKey: CodingKeys.trackerAllowlist.rawValue)
             } else {
-                self.trackerAllowlist = TrackerAllowlist(entries: [], state: "disabled")
+                self.trackerAllowlist = TrackerAllowlist(entries: [:], state: "disabled")
             }
 
             for featureEntry in featuresData {
@@ -66,11 +68,13 @@ public struct PrivacyConfigurationData {
             self.features = features
         } else {
             self.features = [:]
-            self.trackerAllowlist = TrackerAllowlist(entries: [], state: "disabled")
+            self.trackerAllowlist = TrackerAllowlist(entries: [:], state: "disabled")
         }
     }
 
-    public init(features: [FeatureName: PrivacyFeature], unprotectedTemporary: [ExceptionEntry], trackerAllowlist: [TrackerAllowlist.Entry]) {
+    public init(features: [FeatureName: PrivacyFeature],
+                unprotectedTemporary: [ExceptionEntry],
+                trackerAllowlist: TrackerAllowlistData) {
         self.features = features
         self.unprotectedTemporary = unprotectedTemporary
         self.trackerAllowlist = TrackerAllowlist(entries: trackerAllowlist, state: "enabled")
@@ -113,25 +117,26 @@ public struct PrivacyConfigurationData {
 
     public class TrackerAllowlist: PrivacyFeature {
 
-        public struct Entry {
+        public struct Entry: Encodable {
+
             let rule: String
             let domains: [String]
         }
 
-        let entries: [Entry]
+        let entries: TrackerAllowlistData
 
         public override init?(json: [String: Any]) {
             let settings = (json[PrivacyFeature.CodingKeys.settings.rawValue] as? [String: Any]) ?? [:]
 
-            var entries = [Entry]()
+            var entries = [String: [Entry]]()
             if let trackers = settings["allowlistedTrackers"] as? [String: [String: [Any]]] {
-                for (_, tracker) in trackers {
-                    if let rules = tracker["rules"] as? [ [String: Any] ] {
-                        entries.append(contentsOf: rules.compactMap { ruleDict -> Entry? in
+                for (trackerDomain, trackerRules) in trackers {
+                    if let rules = trackerRules["rules"] as? [ [String: Any] ] {
+                        entries[trackerDomain] = rules.compactMap { ruleDict -> Entry? in
                             guard let rule = ruleDict["rule"] as? String, let domains = ruleDict["domains"] as? [String] else { return nil }
 
                             return Entry(rule: rule, domains: domains)
-                        })
+                        }
                     }
                 }
             }
@@ -141,7 +146,7 @@ public struct PrivacyConfigurationData {
             super.init(json: json)
         }
 
-        public init(entries: [Entry], state: String) {
+        public init(entries: [String: [Entry]], state: String) {
             self.entries = entries
 
             super.init(state: state, exceptions: [])

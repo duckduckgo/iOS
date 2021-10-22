@@ -140,8 +140,10 @@ class ContentBlockerRulesManagerTests: XCTestCase {
     """
     
     let validTempSites = ["example.com"]
-    
     let invalidTempSites = ["This is not valid.. ."]
+
+    let validAllowList = [TrackerException(rule: "tracker.com/", matching: .all)]
+    let invalidAllowList = [TrackerException(rule: "tracker.com/", matching: .domains(["broken site Ltd. . 😉.com"]))]
     
     static var fakeEmbeddedDataSet: TrackerDataManager.DataSet!
     
@@ -312,7 +314,7 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
                                                      unprotectedSitesHash: nil))
     }
     
-    func test_ValidTDS_ValidTempList_NoAllowList_ValidUnprotectedSites() { // TODO
+    func test_ValidTDS_ValidTempList_NoAllowList_ValidUnprotectedSites() {
 
         let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
                                                        embeddedTrackerData: Self.fakeEmbeddedDataSet)
@@ -344,13 +346,91 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
                                                      allowListEtag: nil,
                                                      unprotectedSitesHash: mockSource.unprotectedSitesHash))
     }
-    
-    func test_ValidTDS_ValidTempList_NoAllowList_BrokenUnprotectedSites() { // ToDo
+
+    func test_ValidTDS_ValidTempList_ValidAllowList_ValidUnprotectedSites() {
 
         let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
                                                        embeddedTrackerData: Self.fakeEmbeddedDataSet)
         mockSource.tempListEtag = Self.makeEtag()
         mockSource.tempList = validTempSites
+        mockSource.allowListEtag = Self.makeEtag()
+        mockSource.allowList = validAllowList
+        mockSource.unprotectedSites = ["example.com"]
+
+        XCTAssertNotEqual(mockSource.trackerData?.etag, mockSource.embeddedTrackerData.etag)
+
+        let cbrm = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
+
+        let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                              object: cbrm,
+                              handler: nil)
+
+        wait(for: [exp], timeout: 15.0)
+
+        XCTAssertNotNil(cbrm.currentRules)
+        XCTAssertNotNil(cbrm.currentRules?.etag)
+        XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
+
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.allowListIdentifier)
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
+                                                     tempListEtag: mockSource.tempListEtag,
+                                                     allowListEtag: mockSource.allowListEtag,
+                                                     unprotectedSitesHash: mockSource.unprotectedSitesHash))
+    }
+
+    func test_ValidTDS_ValidTempList_InvalidAllowList_ValidUnprotectedSites() {
+
+        let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
+                                                       embeddedTrackerData: Self.fakeEmbeddedDataSet)
+        mockSource.tempListEtag = Self.makeEtag()
+        mockSource.tempList = validTempSites
+        mockSource.allowListEtag = Self.makeEtag()
+        mockSource.allowList = invalidAllowList
+        mockSource.unprotectedSites = ["example.com"]
+
+        XCTAssertNotEqual(mockSource.trackerData?.etag, mockSource.embeddedTrackerData.etag)
+
+        let cbrm = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
+
+        let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                              object: cbrm,
+                              handler: nil)
+
+        wait(for: [exp], timeout: 15.0)
+
+        XCTAssertNotNil(cbrm.currentRules)
+        XCTAssertNotNil(cbrm.currentRules?.etag)
+        XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
+
+        // TDS is also marked as invalid to simplify flow
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
+
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.allowListIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.allowListIdentifier, mockSource.allowListEtag)
+
+        XCTAssertNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     allowListEtag: nil,
+                                                     unprotectedSitesHash: mockSource.unprotectedSitesHash))
+    }
+    
+    func test_ValidTDS_ValidTempList_ValidAllowList_BrokenUnprotectedSites() {
+
+        let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
+                                                       embeddedTrackerData: Self.fakeEmbeddedDataSet)
+        mockSource.tempListEtag = Self.makeEtag()
+        mockSource.tempList = validTempSites
+        mockSource.allowListEtag = Self.makeEtag()
+        mockSource.allowList = validAllowList
         mockSource.unprotectedSites = ["broken site Ltd. . 😉.com"]
         
         XCTAssertNotEqual(mockSource.trackerData?.etag, mockSource.embeddedTrackerData.etag)
@@ -373,6 +453,9 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         
         XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
         XCTAssertEqual(cbrm.inputManager.brokenInputs?.tempListIdentifier, mockSource.tempListEtag)
+
+        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.allowListIdentifier)
+        XCTAssertEqual(cbrm.inputManager.brokenInputs?.allowListIdentifier, mockSource.allowListEtag)
         
         XCTAssertNotNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
         XCTAssertEqual(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier, mockSource.unprotectedSitesHash)
@@ -438,7 +521,7 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
         }
     }
     
-    func test_InvalidTempList_BeingFixed() { // ToDo - new test
+    func test_InvalidTempList_BeingFixed() {
 
         let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
                                                        embeddedTrackerData: Self.fakeEmbeddedDataSet)
@@ -484,6 +567,58 @@ class ContentBlockerRulesManagerUpdatingTests: ContentBlockerRulesManagerTests {
             
             XCTAssert(diff.contains(.tdsEtag))
             XCTAssert(diff.contains(.tempListEtag))
+            XCTAssertFalse(diff.contains(.unprotectedSites))
+        } else {
+            XCTFail("Missing identifiers")
+        }
+    }
+
+    func test_InvalidAllowList_BeingFixed() {
+
+        let mockSource = MockContentBlockerRulesSource(trackerData: Self.makeDataSet(tds: Self.validRules, etag: Self.makeEtag()),
+                                                       embeddedTrackerData: Self.fakeEmbeddedDataSet)
+        mockSource.allowListEtag = Self.makeEtag()
+        mockSource.allowList = invalidAllowList
+
+        XCTAssertNotEqual(mockSource.trackerData?.etag, mockSource.embeddedTrackerData.etag)
+
+        let cbrm = ContentBlockerRulesManager.test_prepareRegularInstance(source: mockSource, skipInitialSetup: false)
+
+        let initialLoading = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                                         object: cbrm,
+                                         handler: nil)
+
+        wait(for: [initialLoading], timeout: 15.0)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
+                                                     tempListEtag: nil,
+                                                     allowListEtag: nil,
+                                                     unprotectedSitesHash: nil))
+
+        mockSource.allowListEtag = Self.makeEtag()
+        mockSource.allowList = validAllowList
+
+        let identifier = cbrm.currentRules?.identifier
+
+        cbrm.recompile()
+        let updating = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                                   object: cbrm,
+                                   handler: nil)
+
+        wait(for: [updating], timeout: 15.0)
+
+        XCTAssertEqual(cbrm.currentRules?.identifier,
+                       ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
+                                                     tempListEtag: nil,
+                                                     allowListEtag: mockSource.allowListEtag,
+                                                     unprotectedSitesHash: nil))
+
+        if let oldId = identifier, let newId = cbrm.currentRules?.identifier {
+            let diff = oldId.compare(with: newId)
+
+            XCTAssert(diff.contains(.tdsEtag))
+            XCTAssert(diff.contains(.allowListEtag))
             XCTAssertFalse(diff.contains(.unprotectedSites))
         } else {
             XCTFail("Missing identifiers")

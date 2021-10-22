@@ -49,11 +49,42 @@ class PrivacyConfigurationDataTests: XCTestCase {
         let allowlist = configData.trackerAllowlist
         XCTAssertEqual(allowlist.state, "enabled")
         let rulesMap = allowlist.entries.reduce(into: [String: [String]]()) { partialResult, entry in
-            partialResult[entry.rule] = entry.domains
+            for e in entry.value {
+                partialResult[e.rule] = e.domains
+            }
         }
         XCTAssertEqual(rulesMap["example.com/tracker.js"], ["test.com"])
         XCTAssertEqual(rulesMap["example2.com/path/"], ["<all>"])
         XCTAssertEqual(rulesMap["example2.com/resource.json"], ["<all>"])
+    }
+
+    func testJSONWithoutAllowlistParsing() {
+        let jsonData = data.fromJsonFile("MockFiles/privacy-config-example.json")
+        var json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+        var features = json?["features"] as? [String: Any]
+        features?.removeValue(forKey: "trackerAllowlist")
+        json?["features"] = features
+
+        let configData = PrivacyConfigurationData(json: json!)
+
+        XCTAssertEqual(configData.unprotectedTemporary.count, 1)
+        XCTAssertEqual(configData.unprotectedTemporary.first?.domain, "example.com")
+
+        let gpcFeature = configData.features["contentBlocking"]
+        XCTAssertNotNil(gpcFeature)
+        XCTAssertEqual(gpcFeature?.state, "enabled")
+        XCTAssertEqual(gpcFeature?.exceptions.first?.domain, "example.com")
+
+        let exampleFeature = configData.features["exampleFeature"]
+        XCTAssertEqual(exampleFeature?.state, "enabled")
+        XCTAssertEqual((exampleFeature?.settings["dictValue"] as? [String: String])?["key"], "value")
+        XCTAssertEqual((exampleFeature?.settings["arrayValue"] as? [String])?.first, "value")
+        XCTAssertEqual((exampleFeature?.settings["stringValue"] as? String), "value")
+        XCTAssertEqual((exampleFeature?.settings["numericalValue"] as? Int), 1)
+
+        let allowlist = configData.trackerAllowlist
+        XCTAssertEqual(allowlist.state, "disabled")
+        XCTAssertEqual(allowlist.entries.count, 0)
     }
 
 }

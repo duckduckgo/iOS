@@ -43,6 +43,102 @@
         `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
   }
 
+
+    // tld.js
+    var tldjs = {
+
+        parse: function(url) {
+
+            if (url.startsWith("//")) {
+                url = "http:" + url;
+            }
+
+            try {
+                var parsed = new URL(url);
+                return {
+                    domain: parsed.hostname,
+                    hostname: parsed.hostname
+                }
+            } catch(error) {
+                return {
+                    domain: "",
+                    hostname: ""
+                }
+            }
+        }
+
+    };
+    // tld.js
+
+  var trackerAllowlist = {};
+  var trackerAllowlistEntries = `
+        ${trackerAllowlistEntries}
+        `
+
+  if (trackerAllowlistEntries) {
+    trackerAllowlist = JSON.parse(trackerAllowlistEntries)
+  }
+
+  function isTrackerAllowlisted (siteURL, request) {
+
+    // check that allowlist has entries
+    if (!Object.keys(trackerAllowlist).length) {
+        return false
+    }
+
+    const parsedRequest = tldjs.parse(request)
+    var requestDomainParts = Array.from(parsedRequest.domain.split('.'))
+
+    var allowListEntry = null
+    while (requestDomainParts.length > 1) {
+      let requestDomain = requestDomainParts.join('.')
+
+      allowListEntry = trackerAllowlist[requestDomain]
+      if (allowListEntry) {
+        break
+      }
+      requestDomainParts.shift()
+    }
+
+    if (allowListEntry) {
+        return _matchesRule(siteURL, request, allowListEntry)
+    } else {
+        return false
+    }
+  }
+
+  function _matchesRule (siteURL, request, allowListEntryList) {
+    let matchedEntry = null
+
+    if (allowListEntryList && allowListEntryList.length) {
+      for (const entryObj of allowListEntryList) {
+        if (request.match(entryObj.rule)) {
+          matchedEntry = entryObj
+          break
+        }
+      }
+    }
+
+    if (matchedEntry) {
+      if (matchedEntry.domains.includes('<all>')) {
+        return true
+      }
+
+      var siteDomainParts = Array.from(siteURL.host.split('.'))
+
+      while (siteDomainParts.length > 1) {
+        let siteDomain = siteDomainParts.join('.')
+        if (matchedEntry.domains.includes(siteDomain)) {
+          return true
+        }
+        siteDomainParts.shift()
+      }
+    }
+
+    return false
+  }
+
+
   // private
   function getTopLevelURL() {
       try {
@@ -112,12 +208,11 @@
 
     function sendMessage(url, resourceType) {
       if (url) {
-        const pageUrl = window.location.href
-        webkit.messageHandlers.processRule.postMessage({ 
+        webkit.messageHandlers.processRule.postMessage({
           url: url,
           resourceType: resourceType === undefined ? null : resourceType,
-          blocked: !unprotectedDomain,
-          pageUrl: pageUrl
+          blocked: !unprotectedDomain && !isTrackerAllowlisted(topLevelUrl, url),
+          pageUrl: topLevelUrl.href
         });
       }
     }

@@ -77,7 +77,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
             "${tempUnprotectedDomains}": remoteUnprotectedDomains,
-            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")
+            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n"),
+            "${trackerAllowlistEntries}": TrackerAllowlistInjection.prepareForInjection(allowlist: privacyConfiguration.trackerAllowlist)
         ])
     }
 
@@ -118,7 +119,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
 
         let resolver = TrackerResolver(tds: currentTrackerData,
                                        unprotectedSites: privacyConfiguration.userUnprotectedDomains,
-                                       tempList: temporaryUnprotectedDomains)
+                                       tempList: temporaryUnprotectedDomains,
+                                       trackerAllowlist: [])
         
         if let tracker = resolver.trackerFromUrl(trackerUrlString,
                                                  pageUrlString: pageUrlStr,
@@ -127,4 +129,24 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
     }
+}
+
+public class TrackerAllowlistInjection {
+
+    static func prepareForInjection(allowlist: PrivacyConfigurationData.TrackerAllowlistData) -> String {
+
+        // Transform rules into regular expresions
+        var output = PrivacyConfigurationData.TrackerAllowlistData()
+        for dictEntry in allowlist {
+            let newValue = dictEntry.value.map { entry -> PrivacyConfigurationData.TrackerAllowlist.Entry in
+                let regexp = ContentBlockerRulesBuilder.makeRegexpFilter(fromAllowlistRule: entry.rule)
+                let escapedRegexp = regexp.replacingOccurrences(of: "\\", with: "\\\\")
+                return PrivacyConfigurationData.TrackerAllowlist.Entry(rule: escapedRegexp, domains: entry.domains)
+            }
+            output[dictEntry.key] = newValue
+        }
+
+        return (try? String(data: JSONEncoder().encode(output), encoding: .utf8)) ?? ""
+    }
+
 }

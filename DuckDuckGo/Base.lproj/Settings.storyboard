@@ -837,8 +837,8 @@
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="TextSizeSmaller" maximumValueImage="TextSizeLarger" translatesAutoresizingMaskIntoConstraints="NO" id="oTB-LF-8nM">
                                                     <rect key="frame" x="34" y="13" width="346" height="31"/>
                                                     <color key="tintColor" systemColor="labelColor"/>
-                                                    <color key="minimumTrackTintColor" systemColor="secondaryLabelColor"/>
-                                                    <color key="maximumTrackTintColor" systemColor="secondaryLabelColor"/>
+                                                    <color key="minimumTrackTintColor" name="AccentColor"/>
+                                                    <color key="maximumTrackTintColor" name="AccentColor"/>
                                                     <connections>
                                                         <action selector="onNewTabValueChanged:" destination="Z3c-9H-Usp" eventType="valueChanged" id="LcT-cP-8K9"/>
                                                     </connections>

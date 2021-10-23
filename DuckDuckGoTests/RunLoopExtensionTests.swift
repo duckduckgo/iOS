@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import Core
 
-final class RunLoopExtensionTests: XCTestCase {
+class RunLoopExtensionTests: XCTestCase {
 
     func testWhenConditionResolvedThenNoWaitIsPerformed() {
         let condition = RunLoop.ResumeCondition()

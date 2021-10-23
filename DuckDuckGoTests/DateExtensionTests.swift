@@ -19,24 +19,24 @@
 
 import XCTest
 
- class DateExtensionTests: XCTestCase {
+class DateExtensionTests: XCTestCase {
 
-     func testWhenDatesAreSame() {
+    func testWhenDatesAreSame() {
         let today: Date = Date()
         let secondDate: Date = Date()
         XCTAssertTrue(today.isSameDay(secondDate))
     }
 
-     func testWhenDatesAreNotSame() {
+    func testWhenDatesAreNotSame() {
         let today: Date = Date()
         let secondDate: Date? = Calendar.current.date(byAdding: .day, value: -1, to: today)
         XCTAssertFalse(today.isSameDay(secondDate))
     }
-
-     func testWhenOtherDateIsNil() {
+    
+    func testWhenOtherDateIsNil() {
         let today: Date = Date()
         let secondDate: Date? = nil
         XCTAssertFalse(today.isSameDay(secondDate))
     }
 
- }
+}

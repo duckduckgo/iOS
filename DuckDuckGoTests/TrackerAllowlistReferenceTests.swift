@@ -141,7 +141,7 @@ class TrackerAllowlistReferenceTests: XCTestCase {
             self.popTestAndExecute(onTestExecuted: testsExecuted)
         }
 
-        waitForExpectations(timeout: 560, handler: nil)
+        waitForExpectations(timeout: 30, handler: nil)
     }
 
     private func normalizeScheme(urlString: String) -> String {

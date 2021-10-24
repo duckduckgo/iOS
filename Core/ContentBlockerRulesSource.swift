@@ -20,6 +20,9 @@
 import Foundation
 import TrackerRadarKit
 
+/**
+ Represents all sources used to build Content Blocking Rules along with their state information.
+ */
 protocol ContentBlockerRulesSource {
 
     var trackerData: TrackerDataManager.DataSet? { get }

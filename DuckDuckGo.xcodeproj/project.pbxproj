@@ -405,7 +405,7 @@
 		98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingViewController.swift */; };
 		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
 		98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */; };
-		98ECDD172707168C00FF141C /* ContentBlockerRulesInputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98ECDD162707168C00FF141C /* ContentBlockerRulesInputManager.swift */; };
+		98ECDD172707168C00FF141C /* ContentBlockerRulesSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98ECDD162707168C00FF141C /* ContentBlockerRulesSourceManager.swift */; };
 		98ED39E82506FAA000490915 /* PrivacyProtectionHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98ED39EA2506FAA000490915 /* PrivacyProtectionHeaderCell.xib */; };
 		98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EF177C21837E35006750C1 /* new_tab_dark.json */; };
 		98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */; };
@@ -1720,7 +1720,7 @@
 		98E47764251EAC4200699DD3 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
-		98ECDD162707168C00FF141C /* ContentBlockerRulesInputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesInputManager.swift; sourceTree = "<group>"; };
+		98ECDD162707168C00FF141C /* ContentBlockerRulesSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesSourceManager.swift; sourceTree = "<group>"; };
 		98ED39E92506FAA000490915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrivacyProtectionHeaderCell.xib; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
 		98F02E81251EAC11002A6C60 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2012,7 +2012,7 @@
 			children = (
 				988A05B82672CE8000363C13 /* ContentBlockerRulesSource.swift */,
 				0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */,
-				98ECDD162707168C00FF141C /* ContentBlockerRulesInputManager.swift */,
+				98ECDD162707168C00FF141C /* ContentBlockerRulesSourceManager.swift */,
 				0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */,
 				0254AC2324EDACDE004855DF /* contentblockerrules.js */,
 				98647993266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift */,
@@ -4855,7 +4855,7 @@
 				98DA35C7268CDA3B00159906 /* TrackerResolver.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */,
-				98ECDD172707168C00FF141C /* ContentBlockerRulesInputManager.swift in Sources */,
+				98ECDD172707168C00FF141C /* ContentBlockerRulesSourceManager.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				83E2D2BE253CD772005605F5 /* HTTPSExcludedDomains.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,

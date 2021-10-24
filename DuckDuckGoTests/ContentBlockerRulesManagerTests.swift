@@ -268,8 +268,8 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules)
         XCTAssertNotNil(cbrm.currentRules?.etag)
         
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.tdsIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.tdsIdentifier, mockSource.trackerData?.etag)
         
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
 
@@ -302,11 +302,11 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
         
         // TDS is also marked as invalid to simplify flow
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.tdsIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.tdsIdentifier, mockSource.trackerData?.etag)
         
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tempListIdentifier, mockSource.tempListEtag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.tempListIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.tempListIdentifier, mockSource.tempListEtag)
 
         XCTAssertEqual(cbrm.currentRules?.identifier,
                        ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
@@ -337,9 +337,9 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules?.etag)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
         
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.tdsIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.tempListIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.unprotectedSitesIdentifier)
         
         XCTAssertEqual(cbrm.currentRules?.identifier,
                        ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
@@ -372,10 +372,10 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertNotNil(cbrm.currentRules?.etag)
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.trackerData?.etag)
 
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.allowListIdentifier)
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.tdsIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.tempListIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.allowListIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.unprotectedSitesIdentifier)
 
         XCTAssertEqual(cbrm.currentRules?.identifier,
                        ContentBlockerRulesIdentifier(tdsEtag: mockSource.trackerData?.etag ?? "\"\"",
@@ -409,13 +409,13 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
 
         // TDS is also marked as invalid to simplify flow
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.tdsIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.tdsIdentifier, mockSource.trackerData?.etag)
 
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.allowListIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.allowListIdentifier, mockSource.allowListEtag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.allowListIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.allowListIdentifier, mockSource.allowListEtag)
 
-        XCTAssertNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
+        XCTAssertNil(cbrm.sourceManager.brokenSources?.unprotectedSitesIdentifier)
 
         XCTAssertEqual(cbrm.currentRules?.identifier,
                        ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,
@@ -449,17 +449,17 @@ class ContentBlockerRulesManagerLoadingTests: ContentBlockerRulesManagerTests {
         XCTAssertEqual(cbrm.currentRules?.etag, mockSource.embeddedTrackerData.etag)
         
         // TDS is also marked as invalid to simplify flow
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tdsIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tdsIdentifier, mockSource.trackerData?.etag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.tdsIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.tdsIdentifier, mockSource.trackerData?.etag)
         
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.tempListIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.tempListIdentifier, mockSource.tempListEtag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.tempListIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.tempListIdentifier, mockSource.tempListEtag)
 
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.allowListIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.allowListIdentifier, mockSource.allowListEtag)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.allowListIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.allowListIdentifier, mockSource.allowListEtag)
         
-        XCTAssertNotNil(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier)
-        XCTAssertEqual(cbrm.inputManager.brokenInputs?.unprotectedSitesIdentifier, mockSource.unprotectedSitesHash)
+        XCTAssertNotNil(cbrm.sourceManager.brokenSources?.unprotectedSitesIdentifier)
+        XCTAssertEqual(cbrm.sourceManager.brokenSources?.unprotectedSitesIdentifier, mockSource.unprotectedSitesHash)
 
         XCTAssertEqual(cbrm.currentRules?.identifier,
                        ContentBlockerRulesIdentifier(tdsEtag: mockSource.embeddedTrackerData.etag,

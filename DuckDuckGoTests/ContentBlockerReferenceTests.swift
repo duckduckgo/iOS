@@ -111,7 +111,7 @@ class ContentBlockerReferenceTests: XCTestCase {
             self.popTestAndExecute(onTestExecuted: testsExecuted)
         }
 
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 30, handler: nil)
     }
 
     // swiftlint:disable function_body_length

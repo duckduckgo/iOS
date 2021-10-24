@@ -132,7 +132,7 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
             let userScript = CustomContentBlockerRulesUserScript(configurationSource: mockUserScriptConfig)
             userScript.delegate = userScriptDelegate
 
-            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure trast scheme is matched instead of http/https
+            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure test scheme is matched instead of http/https
             userScript.onSourceInjection = { inputScript -> String in
                 return inputScript.replacingOccurrences(of: "http", with: "test")
             }

@@ -156,7 +156,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
             let userScript = CustomSurrogatesUserScript(configurationSource: mockUserScriptConfig)
             userScript.delegate = self.userScriptDelegateMock
 
-            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure trast scheme is matched instead of http/https
+            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure test scheme is matched instead of http/https
             userScript.onSourceInjection = { inputScript -> String in
                 return inputScript.replacingOccurrences(of: "http", with: "test")
             }

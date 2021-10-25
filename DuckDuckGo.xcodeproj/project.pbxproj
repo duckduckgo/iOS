@@ -6623,7 +6623,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "iOS 14 - Dev - App";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -6645,7 +6644,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "iOS 14 - Dev - App";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

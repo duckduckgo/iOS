@@ -25,13 +25,11 @@ class TrackerResolver {
     let tds: TrackerData
     let unprotectedSites: [String]
     let tempList: [String]
-    let trackerAllowlist: [TrackerException]
     
-    public init(tds: TrackerData, unprotectedSites: [String], tempList: [String], trackerAllowlist: [TrackerException]) {
+    public init(tds: TrackerData, unprotectedSites: [String], tempList: [String]) {
         self.tds = tds
         self.unprotectedSites = unprotectedSites
         self.tempList = tempList
-        self.trackerAllowlist = trackerAllowlist
     }
     
     public func trackerFromUrl(_ trackerUrlString: String,

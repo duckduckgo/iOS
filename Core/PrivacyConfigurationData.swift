@@ -32,6 +32,11 @@ public struct PrivacyConfigurationData {
         case trackerAllowlist
     }
 
+    struct State {
+        static let disabled = "disabled"
+        static let enabled = "enabled"
+    }
+
     public let features: [FeatureName: PrivacyFeature]
     public let trackerAllowlist: TrackerAllowlist
     public let unprotectedTemporary: [ExceptionEntry]
@@ -52,11 +57,11 @@ public struct PrivacyConfigurationData {
                 if let allowlist = TrackerAllowlist(json: allowlistEntry) {
                     self.trackerAllowlist = allowlist
                 } else {
-                    self.trackerAllowlist = TrackerAllowlist(entries: [:], state: "disabled")
+                    self.trackerAllowlist = TrackerAllowlist(entries: [:], state: State.disabled)
                 }
                 featuresData.removeValue(forKey: CodingKeys.trackerAllowlist.rawValue)
             } else {
-                self.trackerAllowlist = TrackerAllowlist(entries: [:], state: "disabled")
+                self.trackerAllowlist = TrackerAllowlist(entries: [:], state: State.disabled)
             }
 
             for featureEntry in featuresData {
@@ -68,7 +73,7 @@ public struct PrivacyConfigurationData {
             self.features = features
         } else {
             self.features = [:]
-            self.trackerAllowlist = TrackerAllowlist(entries: [:], state: "disabled")
+            self.trackerAllowlist = TrackerAllowlist(entries: [:], state: State.disabled)
         }
     }
 
@@ -77,7 +82,7 @@ public struct PrivacyConfigurationData {
                 trackerAllowlist: TrackerAllowlistData) {
         self.features = features
         self.unprotectedTemporary = unprotectedTemporary
-        self.trackerAllowlist = TrackerAllowlist(entries: trackerAllowlist, state: "enabled")
+        self.trackerAllowlist = TrackerAllowlist(entries: trackerAllowlist, state: State.enabled)
     }
 
     public class PrivacyFeature {

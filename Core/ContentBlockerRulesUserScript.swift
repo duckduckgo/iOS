@@ -119,8 +119,7 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
 
         let resolver = TrackerResolver(tds: currentTrackerData,
                                        unprotectedSites: privacyConfiguration.userUnprotectedDomains,
-                                       tempList: temporaryUnprotectedDomains,
-                                       trackerAllowlist: [])
+                                       tempList: temporaryUnprotectedDomains)
         
         if let tracker = resolver.trackerFromUrl(trackerUrlString,
                                                  pageUrlString: pageUrlStr,

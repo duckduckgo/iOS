@@ -169,7 +169,12 @@ class ContentBlockerRulesUserScriptsTests: XCTestCase {
             }
 
             let request = URLRequest(url: websiteURL)
-            webView.load(request)
+            WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache,
+                                                              WKWebsiteDataTypeMemoryCache],
+                                                    modifiedSince: Date(timeIntervalSince1970: 0),
+                                                    completionHandler: {
+                webView.load(request)
+            })
         }
     }
 

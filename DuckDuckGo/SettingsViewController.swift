@@ -43,6 +43,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
+    @IBOutlet weak var textSizeAccessoryText: UILabel!
 
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -74,6 +75,7 @@ class SettingsViewController: UITableViewController {
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
+        configureTextSizeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -87,6 +89,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureFireButtonAnimationCellAccessory()
+        configureTextSizeCellAccessory()
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
@@ -132,6 +135,10 @@ class SettingsViewController: UITableViewController {
     
     private func configureFireButtonAnimationCellAccessory() {
         fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
+    }
+    
+    private func configureTextSizeCellAccessory() {
+        textSizeAccessoryText.text = "\(Int(appSettings.textSizeAdjustment * 100))%"
     }
 
     private func configureIconViews() {

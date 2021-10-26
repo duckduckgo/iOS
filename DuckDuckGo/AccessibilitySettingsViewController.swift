@@ -25,7 +25,9 @@ class AccessibilitySettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeSlider: UISlider!
     @IBOutlet weak var currentSelectedValueLabel: UILabel!
     
-    private let predefinedPercentages = [50, 75, 85, 100, 115, 125, 150, 175, 200]
+//    private let predefinedPercentages = [50, 75, 85, 100, 115, 125, 150, 175, 200]
+    private let predefinedPercentages = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170]
+    
     private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
     
     override func viewDidLoad() {

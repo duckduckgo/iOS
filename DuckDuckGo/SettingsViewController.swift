@@ -170,11 +170,7 @@ class SettingsViewController: UITableViewController {
     }
      
     private func configureRememberLogins() {
-        if #available(iOS 13, *) {
-            rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
-        } else {
-            rememberLoginsCell.isHidden = true
-        }
+        rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
     }
 
     private func configureVersionText() {
@@ -186,9 +182,6 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureLinkPreviewsToggle() {
-        if #available(iOS 13, *) {
-            longPressCell.isHidden = false
-        }
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 

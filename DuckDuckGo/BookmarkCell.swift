@@ -27,6 +27,10 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
+    @IBOutlet weak var disclosureEditView: UIImageView!
+    @IBOutlet weak var editSeperatorView: UIView!
+    @IBOutlet weak var stackViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editSeperatorViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
@@ -66,10 +70,27 @@ class BookmarkCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         showsReorderControl = true
+        disclosureEditView.isHidden = true
+        editSeperatorView.isHidden = true
+        editSeperatorViewWidthConstraint.constant =  1.0 / UIScreen.main.scale
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        
+        if editing {
+            numberOfChildrenLabel.isHidden = true
+            disclosureEditView.isHidden = false
+            editSeperatorView.isHidden = false
+            stackViewTrailingConstraint.constant = 32 + editSeperatorViewWidthConstraint.constant
+        } else {
+            disclosureEditView.isHidden = true
+            editSeperatorView.isHidden = true
+            stackViewTrailingConstraint.constant = 0
+            if bookmarkItem as? BookmarkFolder != nil {
+                numberOfChildrenLabel.isHidden = false
+            }
+        }
     }
 
 }

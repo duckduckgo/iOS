@@ -22,10 +22,9 @@ import UIKit
 
 class AccessibilitySettingsViewController: UITableViewController {
     
-    @IBOutlet weak var textSizeSlider: UISlider!
+    @IBOutlet weak var textSizeSlider: IntervalSlider!
     @IBOutlet weak var currentSelectedValueLabel: UILabel!
     
-//    private let predefinedPercentages = [50, 75, 85, 100, 115, 125, 150, 175, 200]
     private let predefinedPercentages = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170]
     
     private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
@@ -71,6 +70,7 @@ class AccessibilitySettingsViewController: UITableViewController {
     private func configureSlider() {
         textSizeSlider.minimumValue = 0
         textSizeSlider.maximumValue = Float(predefinedPercentages.count - 1)
+        textSizeSlider.steps = predefinedPercentages.count
         
         let currentSelectionIndex = predefinedPercentages.firstIndex(of: currentSelectedValue) ?? 0
         textSizeSlider.value = Float(currentSelectionIndex)
@@ -78,6 +78,58 @@ class AccessibilitySettingsViewController: UITableViewController {
     
     private func updateLabel() {
         currentSelectedValueLabel.text = "Text Size - \(currentSelectedValue)%"
+    }
+}
+
+class IntervalSlider: UISlider {
+    
+    var steps: Int = 1 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    override func draw(_ rect: CGRect) {
+        
+        let trackRect = trackRect(forBounds: rect)
+        let thumbRect = thumbRect(forBounds: rect, trackRect: trackRect, value: 1.0)
+        
+        print("track: \(trackRect)")
+        print("thumb: \(thumbRect)")
+        
+        let thumbWidth = thumbRect.width
+        print("thumbWidth: \(thumbWidth)")
+        
+//        let thumbOffset = thumbRect.width/2 - 2
+        let thumbOffset = Darwin.round(thumbRect.width/2) - 3
+        print("thumbOffset: \(thumbOffset)")
+        
+        let newTrackRect = trackRect.inset(by: UIEdgeInsets(top: 0.0, left: thumbOffset, bottom: 0.0, right: thumbOffset))
+                
+        print("  new: \(newTrackRect)")
+        
+        let color: UIColor = UIColor.cornflowerBlue
+        let bpath: UIBezierPath = UIBezierPath(rect: newTrackRect)
+
+        color.set()
+        bpath.fill()
+        
+        for i in 0...steps {
+//            let trackWidth = newTrackRect.width
+//            let height = rect.height
+            let markWidth = 3.0
+            let markHeight = 9.0
+            
+//            let x = Darwin.round(newTrackRect.minX + newTrackRect.width/CGFloat(count) * CGFloat(i) - markWidth/2)
+            let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps) * CGFloat(i) - markWidth/2
+            let markRect = CGRect(x: x, y: newTrackRect.midY - markHeight/2, width: markWidth, height: markHeight)
+            print("mark[\(i)]: \(markRect)")
+            
+            let markPath: UIBezierPath = UIBezierPath(roundedRect: markRect, cornerRadius: 5.0)
+            color.set()
+        
+            markPath.fill()
+        }
     }
 }
 
@@ -111,6 +163,9 @@ extension AccessibilitySettingsViewController {
 extension AccessibilitySettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
+        
+        // TODO: Tweak style of othre elements too
+        
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         

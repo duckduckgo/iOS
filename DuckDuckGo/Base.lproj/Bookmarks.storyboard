@@ -68,13 +68,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-Wh-Evj">
-                                                    <rect key="frame" x="36" y="0.0" width="236" height="24"/>
+                                                    <rect key="frame" x="36" y="0.0" width="235.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vil-gw-sgh" userLabel="NumberOfChildren">
-                                                    <rect key="frame" x="284" y="0.0" width="39" height="24"/>
+                                                    <rect key="frame" x="283.5" y="0.0" width="39.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="TableCellAccessoryTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -146,7 +146,7 @@
                                 <action selector="onAddFolderPressed:" destination="aqL-Wl-TTD" id="LDq-yz-GBf"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem title="Edit" width="66.5" id="pwj-Ie-VbJ">
+                        <barButtonItem title="Edit" width="11.5" id="pwj-Ie-VbJ">
                             <connections>
                                 <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="UdP-p0-rRw"/>
                             </connections>
@@ -218,7 +218,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
@@ -271,7 +271,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KiU-Wb-7jj">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="44.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="347" height="44.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
                                             </constraints>
@@ -282,7 +282,7 @@
                                     <constraints>
                                         <constraint firstItem="KiU-Wb-7jj" firstAttribute="top" secondItem="MfZ-X5-f9l" secondAttribute="top" id="0lH-lx-ovU"/>
                                         <constraint firstAttribute="bottom" secondItem="KiU-Wb-7jj" secondAttribute="bottom" id="ET3-Zc-u43"/>
-                                        <constraint firstAttribute="trailing" secondItem="KiU-Wb-7jj" secondAttribute="trailing" constant="16" id="gcE-Cm-w8O"/>
+                                        <constraint firstAttribute="trailing" secondItem="KiU-Wb-7jj" secondAttribute="trailing" constant="12" id="gcE-Cm-w8O"/>
                                         <constraint firstItem="KiU-Wb-7jj" firstAttribute="leading" secondItem="MfZ-X5-f9l" secondAttribute="leading" constant="16" id="lbc-To-k5Z"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -305,7 +305,7 @@
                                             </constraints>
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
-                                            <rect key="frame" x="88" y="44.5" width="271" height="44"/>
+                                            <rect key="frame" x="88" y="44.5" width="275" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="tZz-vQ-lla"/>
                                             </constraints>
@@ -313,7 +313,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
-                                            <rect key="frame" x="88" y="0.0" width="271" height="44.5"/>
+                                            <rect key="frame" x="88" y="0.0" width="275" height="44.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
                                             </constraints>
@@ -322,7 +322,7 @@
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="rT4-Yr-P8D" secondAttribute="trailing" constant="16" id="9sq-rJ-cZp"/>
+                                        <constraint firstAttribute="trailing" secondItem="rT4-Yr-P8D" secondAttribute="trailing" constant="12" id="9sq-rJ-cZp"/>
                                         <constraint firstItem="YqY-sP-hhb" firstAttribute="trailing" secondItem="rT4-Yr-P8D" secondAttribute="trailing" id="Gr3-OY-Ppp"/>
                                         <constraint firstItem="gf7-Lt-ftk" firstAttribute="top" secondItem="8Dz-o3-ykG" secondAttribute="top" constant="16" id="J0p-OS-5wI"/>
                                         <constraint firstItem="rT4-Yr-P8D" firstAttribute="leading" secondItem="gf7-Lt-ftk" secondAttribute="trailing" constant="16" id="KNr-23-TPT"/>
@@ -364,11 +364,11 @@
                         <viewControllerLayoutGuide type="bottom" id="QdE-VD-rGM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PHO-rE-hZ4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vS5-16-4wa">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="Q6P-k0-1D4"/>
                                 </connections>
@@ -412,7 +412,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1AY-d5-ZEP"/>
+        <segue reference="ZtW-76-sQp"/>
         <segue reference="Q6P-k0-1D4"/>
     </inferredMetricsTieBreakers>
     <resources>

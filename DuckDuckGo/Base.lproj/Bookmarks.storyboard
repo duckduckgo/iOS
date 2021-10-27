@@ -68,13 +68,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-Wh-Evj">
-                                                    <rect key="frame" x="36" y="0.0" width="235.5" height="24"/>
+                                                    <rect key="frame" x="36" y="0.0" width="236" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vil-gw-sgh" userLabel="NumberOfChildren">
-                                                    <rect key="frame" x="283.5" y="0.0" width="39.5" height="24"/>
+                                                    <rect key="frame" x="284" y="0.0" width="39" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="TableCellAccessoryTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -320,6 +320,13 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVp-1a-TkJ">
+                                            <rect key="frame" x="88" y="44.5" width="287" height="0.5"/>
+                                            <color key="backgroundColor" name="BookmarksCellSeperatorColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" priority="750" constant="0.5" id="RDj-dx-Yf1"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="rT4-Yr-P8D" secondAttribute="trailing" constant="12" id="9sq-rJ-cZp"/>
@@ -328,14 +335,18 @@
                                         <constraint firstItem="rT4-Yr-P8D" firstAttribute="leading" secondItem="gf7-Lt-ftk" secondAttribute="trailing" constant="16" id="KNr-23-TPT"/>
                                         <constraint firstAttribute="bottom" secondItem="gf7-Lt-ftk" secondAttribute="bottom" constant="16" id="NtP-p9-dIW"/>
                                         <constraint firstItem="YqY-sP-hhb" firstAttribute="top" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="Pr0-l7-Ad6"/>
+                                        <constraint firstItem="fVp-1a-TkJ" firstAttribute="leading" secondItem="rT4-Yr-P8D" secondAttribute="leading" id="TfO-33-gV4"/>
                                         <constraint firstAttribute="bottom" secondItem="YqY-sP-hhb" secondAttribute="bottom" id="V1m-LZ-nJ2"/>
                                         <constraint firstItem="YqY-sP-hhb" firstAttribute="leading" secondItem="rT4-Yr-P8D" secondAttribute="leading" id="fAJ-vM-TtQ"/>
                                         <constraint firstItem="gf7-Lt-ftk" firstAttribute="leading" secondItem="8Dz-o3-ykG" secondAttribute="leading" constant="16" id="jAr-ZT-JEe"/>
+                                        <constraint firstAttribute="trailing" secondItem="fVp-1a-TkJ" secondAttribute="trailing" id="qS0-R1-t4U"/>
                                         <constraint firstItem="rT4-Yr-P8D" firstAttribute="top" secondItem="8Dz-o3-ykG" secondAttribute="top" id="ruT-aL-d7u"/>
+                                        <constraint firstItem="fVp-1a-TkJ" firstAttribute="centerY" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="xK7-H0-w8K"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="faviconImageView" destination="gf7-Lt-ftk" id="kIT-Vf-ZxY"/>
+                                    <outlet property="seperatorViewHeight" destination="RDj-dx-Yf1" id="f1A-nY-fdp"/>
                                     <outlet property="titleTextField" destination="rT4-Yr-P8D" id="4f9-bl-KM7"/>
                                     <outlet property="urlTextField" destination="YqY-sP-hhb" id="b8Y-vb-Msu"/>
                                 </connections>

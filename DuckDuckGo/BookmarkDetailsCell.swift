@@ -52,8 +52,10 @@ class BookmarkDetailsCell: UITableViewCell {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var faviconImageView: UIImageView!
+    @IBOutlet weak var seperatorViewHeight: NSLayoutConstraint!
     
     func setUp() {
+        seperatorViewHeight.constant = 1.0 / UIScreen.main.scale
         titleTextField.becomeFirstResponder()
         
         titleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)

@@ -27,7 +27,6 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
-    @IBOutlet weak var disclosureImage: UIImageView!
     
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
@@ -35,7 +34,6 @@ class BookmarkCell: UITableViewCell {
     var bookmarkItem: BookmarkItem? {
         didSet {
             if let bookmark = bookmarkItem as? Bookmark {
-                disclosureImage.isHidden = true
                 numberOfChildrenLabel.isHidden = true
                 imageWidthConstraint.constant = 24
                 imageHeightConstraint.constant = 24
@@ -44,15 +42,23 @@ class BookmarkCell: UITableViewCell {
                 } else {
                     title.text = bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
                 }
+                
+                accessoryView = nil
+                
                 itemImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
             } else if let folder = bookmarkItem as? BookmarkFolder {
                 imageWidthConstraint.constant = 22
                 imageHeightConstraint.constant = 20
-                disclosureImage.isHidden = false
                 numberOfChildrenLabel.isHidden = false
                 title.text = folder.title
                 numberOfChildrenLabel.text = folder.children?.count.description
                 itemImage.image = #imageLiteral(resourceName: "Folder")
+                
+                let theme = ThemeManager.shared.currentTheme
+                let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
+                accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
+                accesoryImage.tintColor = theme.tableCellAccessoryColor
+                accessoryView = accesoryImage
             }
         }
     }

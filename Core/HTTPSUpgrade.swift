@@ -55,15 +55,15 @@ public class HTTPSUpgrade {
         let config = PrivacyConfigurationManager.shared.privacyConfig
         if config.isEnabled(featureKey: .https) {
             // Check exception lists before upgrading
-            if let _ = config.tempUnprotectedDomains.firstIndex(of: host) {
+            if config.isTempUnprotected(domain: host) {
                 completion(false)
                 return
             }
-            if let _ = config.userUnprotectedDomains.firstIndex(of: host) {
+            if config.isUserUnprotected(domain: host) {
                 completion(false)
                 return
             }
-            if let _ = config.exceptionsList(forFeature: .https).firstIndex(of: host) {
+            if config.isInExceptionList(domain: host, forFeature: .https) {
                 completion(false)
                 return
             }

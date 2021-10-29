@@ -183,12 +183,19 @@
     var excludeAll = false;
     var domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split(".") : [];
 
+    const userExcluded = `
+                    ${userUnprotectedDomains}
+                    `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
+    if (userExcluded) {
+        return;
+    }
+    
     // walk up the domain to see if it's unprotected
     while (domainParts && domainParts.length > 1) {
         let partialDomain = domainParts.join(".")
         
         excludeAll = `
-                ${unprotectedDomains}
+                ${tempUnprotectedDomains}
                 `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
         if (excludeAll) {
             break;

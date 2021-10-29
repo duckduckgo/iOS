@@ -65,7 +65,12 @@ class HTTPSUpgradeTests: XCTestCase {
         let url = URL(string: "http://upgradable.url")!
 
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()),
-                                  privacyConfig: WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [], tempUnprotected: [], contentBlockingEnabled: true, exceptions: [], httpsEnabled: true))
+                                  privacyConfig: WebKitTestHelper.preparePrivacyConfig(
+                                    locallyUnprotected: [],
+                                    tempUnprotected: [],
+                                    contentBlockingEnabled: true,
+                                    exceptions: [],
+                                    httpsEnabled: true))
         testee.loadData()
         testee.isUgradeable(url: url) { result in
             XCTAssertTrue(result)

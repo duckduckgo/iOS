@@ -52,6 +52,26 @@ public class HTTPSUpgrade {
             return
         }
         
+        let config = PrivacyConfigurationManager.shared.privacyConfig
+        if config.isEnabled(featureKey: .https) {
+            // Check exception lists before upgrading
+            if let _ = config.tempUnprotectedDomains.firstIndex(of: host) {
+                completion(false)
+                return
+            }
+            if let _ = config.userUnprotectedDomains.firstIndex(of: host) {
+                completion(false)
+                return
+            }
+            if let _ = config.exceptionsList(forFeature: .https).firstIndex(of: host) {
+                completion(false)
+                return
+            }
+        } else {
+            completion(false)
+            return
+        }
+        
         waitForAnyReloadsToComplete()
         let isUpgradable = isInUpgradeList(host: host)
         os_log("%s %s upgradable", log: generalLog, type: .debug, host, isUpgradable ? "is" : "is not")

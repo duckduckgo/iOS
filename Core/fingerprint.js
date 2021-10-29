@@ -180,11 +180,19 @@
     var excludeTempStorage = false;
     var excludeBattery = false;
     var excludeScreenSize = false;
+    var excludeAll = false;
     var domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split(".") : [];
 
     // walk up the domain to see if it's unprotected
     while (domainParts && domainParts.length > 1) {
         let partialDomain = domainParts.join(".")
+        
+        excludeAll = `
+                ${unprotectedDomains}
+                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        if (excludeAll) {
+            break;
+        }
 
         if (!excludeTempStorage) {
             excludeTempStorage = `
@@ -203,6 +211,11 @@
         }
 
         domainParts.shift()
+    }
+    
+    // Check if domain on temp exceptions
+    if (excludeAll) {
+        return;
     }
     
     function getTopLevelURL() {

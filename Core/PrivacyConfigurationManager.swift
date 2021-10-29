@@ -76,9 +76,9 @@ public class PrivacyConfigurationManager {
     public static let shared = PrivacyConfigurationManager()
     
     public var privacyConfig: PrivacyConfiguration {
-//        if let configData = fetchedConfigData {
-//            return AppPrivacyConfiguration(data: configData.data, identifier: configData.etag)
-//        }
+        if let configData = fetchedConfigData {
+            return AppPrivacyConfiguration(data: configData.data, identifier: configData.etag)
+        }
         return AppPrivacyConfiguration(data: embeddedConfigData.data, identifier: embeddedConfigData.etag)
     }
 

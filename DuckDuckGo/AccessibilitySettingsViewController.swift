@@ -70,7 +70,7 @@ class AccessibilitySettingsViewController: UITableViewController {
     private func configureSlider() {
         textSizeSlider.minimumValue = 0
         textSizeSlider.maximumValue = Float(predefinedPercentages.count - 1)
-        textSizeSlider.steps = predefinedPercentages.count
+        textSizeSlider.steps = predefinedPercentages.count - 1
         
         let currentSelectionIndex = predefinedPercentages.firstIndex(of: currentSelectedValue) ?? 0
         textSizeSlider.value = Float(currentSelectionIndex)

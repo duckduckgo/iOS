@@ -24,10 +24,10 @@
     }
     
     if (navigator.globalPrivacyControl === undefined) {
-        Object.defineProperty(navigator, 'globalPrivacyControl', {
-            value: true,
-            writable: false,
-            configurable: false
+        Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', {
+            get: () => true,
+            configurable: true,
+            enumerable: true
         });
     } else {
         try {

@@ -274,13 +274,25 @@ extension TabViewController {
         let image = UIImage(named: "MenuEmail")!
 
         return BrowsingMenuEntry.regular(name: title, image: image) { [weak self] in
-            self?.emailManager.getAliasIfNeededAndConsume { alias, _ in
+            guard let emailManager = self?.emailManager else { return }
+
+            var pixelParameters: [String: String] = [:]
+
+            if let cohort = emailManager.cohort {
+                pixelParameters[PixelParameters.emailCohort] = cohort
+            }
+            pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
+            emailManager.updateLastUseDate()
+
+            Pixel.fire(pixel: .emailUserCreatedAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
+
+            emailManager.getAliasIfNeededAndConsume { alias, _ in
                 guard let alias = alias else {
                     // we may want to communicate this failure to the user in the future
                     return
                 }
                 let pasteBoard = UIPasteboard.general
-                pasteBoard.string = self?.emailManager.emailAddressFor(alias)
+                pasteBoard.string = emailManager.emailAddressFor(alias)
                 ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
             }
         }
@@ -310,20 +322,20 @@ extension TabViewController {
     }
     
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
-        let manager = UnprotectedSitesManager()
-        let isProtected = manager.isProtected(domain: domain)
+        let protectionStore = DomainsProtectionUserDefaultsStore()
+        let isProtected = !protectionStore.unprotectedDomains.contains(domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
         let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
     
         return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
             Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-            self?.togglePrivacyProtection(manager: manager, domain: domain)
+            self?.togglePrivacyProtection(protectionStore: protectionStore, domain: domain)
         })
     }
     
-    private func togglePrivacyProtection(manager: UnprotectedSitesManager, domain: String) {
-        let isProtected = manager.isProtected(domain: domain)
-        let operation = isProtected ? manager.add : manager.remove
+    private func togglePrivacyProtection(protectionStore: DomainsProtectionStore, domain: String) {
+        let isProtected = !protectionStore.unprotectedDomains.contains(domain)
+        let operation = isProtected ? protectionStore.disableProtection : protectionStore.enableProtection
         
         operation(domain)
         
@@ -335,7 +347,7 @@ extension TabViewController {
         }
         
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
-            self?.togglePrivacyProtection(manager: manager, domain: domain)
+            self?.togglePrivacyProtection(protectionStore: protectionStore, domain: domain)
         }
     }
 }

@@ -45,7 +45,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
+    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
 
     var rows = [Row]()
 
@@ -122,15 +122,18 @@ class PrivacyProtectionPracticesController: UIViewController {
         footerLabel.attributedText = mutableFooter
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        if let header = tableView.tableHeaderView {
-            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-            header.frame.size.height = newSize.height
-            DispatchQueue.main.async {
-                self.tableView.tableHeaderView = header
-            }
+        guard let headerView = tableView.tableHeaderView else {
+            return
+        }
+        
+        let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if headerView.frame.size.height != size.height {
+            headerView.frame.size.height = size.height
+            tableView.tableHeaderView = headerView
+            tableView.layoutIfNeeded()
         }
     }
 }
@@ -176,9 +179,9 @@ extension PrivacyProtectionPracticesController: UITableViewDelegate {
 
 extension PrivacyProtectionPracticesController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
         self.siteRating = siteRating
-        self.protectionStore = protectionStore
+        self.privacyConfig = config
         update()
     }
 

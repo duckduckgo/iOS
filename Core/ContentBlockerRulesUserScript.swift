@@ -22,6 +22,31 @@ import WebKit
 import TrackerRadarKit
 import BrowserServicesKit
 
+public protocol ContentBlockerRulesUserScriptDelegate: NSObjectProtocol {
+
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool
+    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
+                                  detectedTracker tracker: DetectedTracker)
+
+}
+
+public protocol ContentBlockerUserScriptConfigSource {
+
+    var privacyConfig: PrivacyConfiguration { get }
+    var trackerData: TrackerData? { get }
+}
+
+public class DefaultUserScriptConfigSource: ContentBlockerUserScriptConfigSource {
+
+    public var privacyConfig: PrivacyConfiguration {
+        return PrivacyConfigurationManager.shared.privacyConfig
+    }
+
+    public var trackerData: TrackerData? {
+        return ContentBlockerRulesManager.shared.currentRules?.trackerData
+    }
+}
+
 public class ContentBlockerRulesUserScript: NSObject, UserScript {
     
     struct ContentBlockerKey {
@@ -30,17 +55,29 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         static let blocked = "blocked"
         static let pageUrl = "pageUrl"
     }
+
+    private let configurationSource: ContentBlockerUserScriptConfigSource
+
+    public init(configurationSource: ContentBlockerUserScriptConfigSource) {
+        self.configurationSource = configurationSource
+
+        super.init()
+    }
+
+    public override convenience init() {
+        self.init(configurationSource: DefaultUserScriptConfigSource())
+    }
     
     public var source: String {
-        let unprotectedDomains = UnprotectedSitesManager().domains.joined(separator: "\n")
+        let privacyConfiguration = configurationSource.privacyConfig
+
+        let remoteUnprotectedDomains = (privacyConfiguration.tempUnprotectedDomains.joined(separator: "\n"))
             + "\n"
-            + (PrivacyConfigurationManager.shared.privacyConfig.tempUnprotectedDomains.joined(separator: "\n"))
-            + "\n"
-            + (PrivacyConfigurationManager.shared.privacyConfig
-                .exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
+            + (privacyConfiguration.exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
-            "${unprotectedDomains}": unprotectedDomains
+            "${tempUnprotectedDomains}": remoteUnprotectedDomains,
+            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")
         ])
     }
 
@@ -50,13 +87,12 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
     
     public var messageNames: [String] = [ "processRule" ]
     
-    public weak var delegate: ContentBlockerUserScriptDelegate?
+    public weak var delegate: ContentBlockerRulesUserScriptDelegate?
     public weak var storageCache: StorageCache? {
         didSet {
-            temporaryUnprotectedDomains = PrivacyConfigurationManager.shared.privacyConfig
-                .tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
-            temporaryUnprotectedDomains.append(contentsOf: PrivacyConfigurationManager.shared.privacyConfig
-                            .exceptionsList(forFeature: .contentBlocking))
+            let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+            temporaryUnprotectedDomains = privacyConfiguration.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
+            temporaryUnprotectedDomains.append(contentsOf: privacyConfiguration.exceptionsList(forFeature: .contentBlocking))
         }
     }
 
@@ -72,20 +108,22 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
         guard let blocked = dict[ContentBlockerKey.blocked] as? Bool else { return }
         guard let trackerUrlString = dict[ContentBlockerKey.url] as? String else { return }
         let resourceType = (dict[ContentBlockerKey.resourceType] as? String) ?? "unknown"
-        guard let pageUrlStr = message.webView?.url?.absoluteString ?? dict[ContentBlockerKey.pageUrl] as? String else { return }
+        guard let pageUrlStr = dict[ContentBlockerKey.pageUrl] as? String else { return }
         
-        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData else {
+        guard let currentTrackerData = configurationSource.trackerData else {
             return
         }
-        
+
+        let privacyConfiguration = configurationSource.privacyConfig
+
         let resolver = TrackerResolver(tds: currentTrackerData,
-                                       unprotectedSites: UnprotectedSitesManager().domains,
+                                       unprotectedSites: privacyConfiguration.userUnprotectedDomains,
                                        tempList: temporaryUnprotectedDomains)
         
         if let tracker = resolver.trackerFromUrl(trackerUrlString,
                                                  pageUrlString: pageUrlStr,
                                                  resourceType: resourceType,
-                                                 potentiallyBlocked: blocked) {
+                                                 potentiallyBlocked: blocked && privacyConfiguration.isEnabled(featureKey: .contentBlocking)) {
             delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
     }

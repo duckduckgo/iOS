@@ -12,22 +12,16 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.duckduckgo.mobile.ios</key>
-        <string>AppStore-App</string>
+        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios)</string>
 
         <key>com.duckduckgo.mobile.ios.ShareExtension</key>
-        <string>AppStore-Share</string>
-
-        <key>com.duckduckgo.mobile.ios.BookmarksTodayExtension</key>
-        <string>AppStore-Bookmarks</string>
-
-        <key>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</key>
-        <string>AppStore-QuickActions</string>
+        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios.ShareExtension)</string>
 
         <key>com.duckduckgo.mobile.ios.OpenAction2</key>
-        <string>AppStore-OpenAction</string>
+        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios.OpenAction2)</string>
 
         <key>com.duckduckgo.mobile.ios.Widgets</key>
-        <string>AppStore-Widgets</string>
+        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios.Widgets)</string>
     </dict>
 
 </dict>

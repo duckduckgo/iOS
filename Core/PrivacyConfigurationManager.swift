@@ -31,44 +31,44 @@ public class PrivacyConfigurationManager {
         case downloaded
     }
     
-    public typealias Configuration = (config: PrivacyConfiguration, etag: String)
+    public typealias ConfigurationData = (data: PrivacyConfigurationData, etag: String)
     
     private let lock = NSLock()
     
-    private var _fetchedData: Configuration?
-    private(set) public var fetchedData: Configuration? {
+    private var _fetchedConfigData: ConfigurationData?
+    private(set) public var fetchedConfigData: ConfigurationData? {
         get {
             lock.lock()
-            let data = _fetchedData
+            let data = _fetchedConfigData
             lock.unlock()
             return data
         }
         set {
             lock.lock()
-            _fetchedData = newValue
+            _fetchedConfigData = newValue
             lock.unlock()
         }
     }
     
-    private var _embeddedData: Configuration!
-    private(set) public var embeddedData: Configuration {
+    private var _embeddedConfigData: ConfigurationData!
+    private(set) public var embeddedConfigData: ConfigurationData {
         get {
             lock.lock()
-            let data: Configuration
+            let data: ConfigurationData
             // List is loaded lazily when needed
-            if let embedded = _embeddedData {
+            if let embedded = _embeddedConfigData {
                 data = embedded
             } else {
-                let configData = try? JSONDecoder().decode(PrivacyConfiguration.self, from: Self.loadEmbeddedAsData())
-                _embeddedData = (configData!, Constants.embeddedConfigETag)
-                data = _embeddedData
+                let configData = try? JSONDecoder().decode(PrivacyConfigurationData.self, from: Self.loadEmbeddedAsData())
+                _embeddedConfigData = (configData!, Constants.embeddedConfigETag)
+                data = _embeddedConfigData
             }
             lock.unlock()
             return data
         }
         set {
             lock.lock()
-            _embeddedData = newValue
+            _embeddedConfigData = newValue
             lock.unlock()
         }
     }
@@ -76,10 +76,10 @@ public class PrivacyConfigurationManager {
     public static let shared = PrivacyConfigurationManager()
     
     public var privacyConfig: PrivacyConfiguration {
-        if let data = fetchedData {
-            return data.config
+        if let configData = fetchedConfigData {
+            return AppPrivacyConfiguration(data: configData.data, identifier: configData.etag)
         }
-        return embeddedData.config
+        return AppPrivacyConfiguration(data: embeddedConfigData.data, identifier: embeddedConfigData.etag)
     }
 
     init() {
@@ -96,15 +96,15 @@ public class PrivacyConfigurationManager {
             
             do {
                 // This might fail if the downloaded data is corrupt or format has changed unexpectedly
-                let data = try JSONDecoder().decode(PrivacyConfiguration.self, from: data)
-                fetchedData = (data, etag)
+                let data = try JSONDecoder().decode(PrivacyConfigurationData.self, from: data)
+                fetchedConfigData = (data, etag)
             } catch {
                 Pixel.fire(pixel: .privacyConfigurationParseFailed, error: error)
-                fetchedData = nil
+                fetchedConfigData = nil
                 return .embeddedFallback
             }
         } else {
-            fetchedData = nil
+            fetchedConfigData = nil
             result = .embedded
         }
         

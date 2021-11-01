@@ -27,6 +27,8 @@ class TrackersAnimatorTests: XCTestCase {
     
     var omniBar: OmniBar!
     
+    static let pageUrl = "http://example.com"
+    
     override func setUp() {
         super.setUp()
         
@@ -50,11 +52,13 @@ class TrackersAnimatorTests: XCTestCase {
         let trackers = [DetectedTracker(url: "a",
                                         knownTracker: nil,
                                         entity: entity,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "b",
                                         knownTracker: nil,
                                         entity: entity,
-                                        blocked: true)]
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
                                                      toDisplay: trackers,
@@ -72,11 +76,13 @@ class TrackersAnimatorTests: XCTestCase {
         let trackers = [DetectedTracker(url: "a",
                                         knownTracker: nil,
                                         entity: entity1,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "b",
                                         knownTracker: nil,
                                         entity: entity2,
-                                        blocked: true)]
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
                                                      toDisplay: trackers,
@@ -95,15 +101,18 @@ class TrackersAnimatorTests: XCTestCase {
         let trackers = [DetectedTracker(url: "a",
                                         knownTracker: nil,
                                         entity: entity1,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "b",
                                         knownTracker: nil,
                                         entity: entity2,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "c",
                                         knownTracker: nil,
                                         entity: entity3,
-                                        blocked: true)]
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
                                                      toDisplay: trackers,
@@ -122,19 +131,23 @@ class TrackersAnimatorTests: XCTestCase {
         let trackers = [DetectedTracker(url: "a",
                                         knownTracker: nil,
                                         entity: entity1,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "b",
                                         knownTracker: nil,
                                         entity: entity2,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "c",
                                         knownTracker: nil,
                                         entity: entity3,
-                                        blocked: true),
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl),
                         DetectedTracker(url: "d",
                                         knownTracker: nil,
                                         entity: entity4,
-                                        blocked: true)]
+                                        blocked: true,
+                                        pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
                                                      toDisplay: trackers,

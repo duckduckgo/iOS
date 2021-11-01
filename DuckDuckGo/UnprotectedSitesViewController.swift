@@ -32,7 +32,7 @@ class UnprotectedSitesViewController: UITableViewController {
     private var hiddenNavBarItem: UIBarButtonItem?
     private var hiddenNavBarItems: [UIBarButtonItem]?
     
-    let unprotectedSitesManager = UnprotectedSitesManager()
+    private let protectionStore: DomainsProtectionStore = DomainsProtectionUserDefaultsStore()
     
     var showBackButton = false
     var enforceLightTheme = false
@@ -66,33 +66,41 @@ class UnprotectedSitesViewController: UITableViewController {
             setToolbarItems([flexibleSpace, editButton], animated: animated)
         }
         
-        editButton.isEnabled = unprotectedSitesManager.count > 0
+        editButton.isEnabled = protectionStore.unprotectedDomains.count > 0
     }
     
     private func configureBackButton() {
         backButton.isHidden = !showBackButton
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        if let header = tableView.tableHeaderView {
-            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-            header.frame.size.height = newSize.height
-            DispatchQueue.main.async {
-                self.tableView.tableHeaderView = header
-            }
+        guard let headerView = tableView.tableHeaderView else {
+            return
+        }
+        
+        let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if headerView.frame.size.height != size.height {
+            headerView.frame.size.height = size.height
+            tableView.tableHeaderView = headerView
+            tableView.layoutIfNeeded()
         }
     }
     
     // MARK: UITableView data source
+
+    private var unprotectedDomains: [String] {
+        return protectionStore.unprotectedDomains.sorted()
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return unprotectedSitesManager.count == 0 ? 1 : unprotectedSitesManager.count
+        let count = unprotectedDomains.count
+        return count == 0 ? 1 : count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,28 +108,27 @@ class UnprotectedSitesViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return unprotectedSitesManager.count > 0
+        return unprotectedDomains.count > 0
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
 
-        if let domain = unprotectedSitesManager.domain(at: indexPath.row) {
-            unprotectedSitesManager.remove(domain: domain)
-            
-            if unprotectedSitesManager.count == 0 {
-                if tableView.isEditing {
-                    // According to documentation it is inivalid to call it synchronously here.
-                    DispatchQueue.main.async {
-                        self.endEditing()
-                    }
-                } else {
-                    refreshToolbarItems(animated: true)
+        let domain = unprotectedDomains[indexPath.row]
+        protectionStore.enableProtection(forDomain: domain)
+
+        if unprotectedDomains.count == 0 {
+            if tableView.isEditing {
+                // According to documentation it is inivalid to call it synchronously here.
+                DispatchQueue.main.async {
+                    self.endEditing()
                 }
+            } else {
+                refreshToolbarItems(animated: true)
             }
-            
-            tableView.reloadData()
         }
+
+        tableView.reloadData()
     }
 
     // MARK: actions
@@ -178,7 +185,7 @@ class UnprotectedSitesViewController: UITableViewController {
     private func addSite(from controller: UIAlertController) {
         guard let field = controller.textFields?[0] else { return }
         guard let domain = domain(from: field) else { return }
-        unprotectedSitesManager.add(domain: domain)
+        protectionStore.disableProtection(forDomain: domain)
         tableView.reloadData()
         refreshToolbarItems(animated: true)
     }
@@ -191,7 +198,7 @@ class UnprotectedSitesViewController: UITableViewController {
 
     private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        if unprotectedSitesManager.count > 0 {
+        if unprotectedDomains.count > 0 {
             cell = createUnprotectedSiteCell(forRowAt: indexPath)
         } else {
             cell = createAllProtectedCell(forRowAt: indexPath)
@@ -220,7 +227,7 @@ class UnprotectedSitesViewController: UITableViewController {
             fatalError("Failed to dequeue cell as UnprotectedSitesItemCell")
         }
         
-        unprotectedItemCell.domain = unprotectedSitesManager.domain(at: indexPath.row)
+        unprotectedItemCell.domain = unprotectedDomains[indexPath.row]
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
         unprotectedItemCell.domainLabel.textColor = theme.tableCellTextColor

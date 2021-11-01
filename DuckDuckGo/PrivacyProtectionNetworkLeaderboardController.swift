@@ -36,7 +36,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var resetView: UIView!
     @IBOutlet weak var resetViewInfo: UILabel!
 
-    private var protectionStore = AppDependencyProvider.shared.storageCache.current.protectionStore
+    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
     private var siteRating: SiteRating!
 
     let leaderboard = NetworkLeaderboard.shared
@@ -86,8 +86,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initHeroIcon() {
-        let resultImage = siteRating.networksSuccess(protectionStore: protectionStore) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
-        heroIconImage.image = siteRating.protecting(protectionStore) ? resultImage : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
+        let resultImage = siteRating.networksSuccess(config: privacyConfig) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
+        heroIconImage.image = siteRating.protecting(privacyConfig) ? resultImage : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
     }
 
     private func initTable() {
@@ -170,15 +170,18 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         })
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        if let header = tableView.tableHeaderView {
-            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-            header.frame.size.height = newSize.height
-            DispatchQueue.main.async {
-                self.tableView.tableHeaderView = header
-            }
+        guard let headerView = tableView.tableHeaderView else {
+            return
+        }
+        
+        let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if headerView.frame.size.height != size.height {
+            headerView.frame.size.height = size.height
+            tableView.tableHeaderView = headerView
+            tableView.layoutIfNeeded()
         }
     }
 }
@@ -215,9 +218,9 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
 
 extension PrivacyProtectionNetworkLeaderboardController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, protectionStore: ContentBlockerProtectionStore) {
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
         self.siteRating = siteRating
-        self.protectionStore = protectionStore
+        self.privacyConfig = config
         update()
     }
 

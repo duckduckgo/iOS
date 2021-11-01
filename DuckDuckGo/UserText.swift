@@ -354,15 +354,30 @@ public struct UserText {
     public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the waitlist!", comment: "Header text for the email waitlist")
     public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’ve been invited!", comment: "Header text for the email waitlist")
 
-    public static let emailWaitlistSummary = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address, without switching your email provider. Learn more.", comment: "Description text for the email waitlist")
-    public static let emailWaitlistJoinedWithNotificationSummary = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. Learn more.", comment: "Description text for the email waitlist")
-    public static let emailWaitlistJoinedWithoutNotificationSummary = NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to get a notification when it arrives? Learn more about Email Protection.", comment: "Description text for the email waitlist")
+    public static func emailWaitlistSummary(learnMoreString: String) -> String {
+        let message = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address, without switching your email provider. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more'.")
+        return message.format(arguments: learnMoreString)
+    }
+    public static func emailWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
+        let message = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more.'")
+        return message.format(arguments: learnMoreString)
+    }
+
+    public static let emailWaitlistGetANotification = NSLocalizedString("email.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the email waitlist")
+    public static func emailWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
+        let message =  NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about Email Protection.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
+        return message.format(arguments: getNotifiedString, learnMoreString)
+    }
 
     public static let emailWaitlistJoinWaitlist = NSLocalizedString("email.waitlist.join", value: "Join the Private Waitlist", comment: "Action button text for the email waitlist")
     public static let emailWaitlistGetStarted = NSLocalizedString("email.waitlist.get-started", value: "Get Started", comment: "Action button text for the email waitlist")
 
     public static let emailWaitlistHaveInviteCode = NSLocalizedString("email.waitlist.have-invite-code", value: "I have an Invite Code", comment: "Invite code button text for the email waitlist")
-    public static let emailWaitlistPrivacyGuarantee = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We do not save your emails. Learn more.", comment: "Footer text for the email waitlist")
+    public static func emailWaitlistPrivacyGuarantee(learnMoreString: String) -> String {
+        let message = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We do not save your emails. %@.", comment: "Footer text for the email waitlist. Parameter is 'Learn more'.")
+        return message.format(arguments: learnMoreString)
+    }
+    public static let emailWaitlistLearnMore = NSLocalizedString("email.waitlist.learn-more", value: "Learn more", comment: "Footer text for the email waitlist")
     public static let emailWaitlistErrorJoining = NSLocalizedString("email.waitlist.error-joining", value: "An error occurred while joining the Waitlist, please try again later", comment: "Error text when failing to join the waitlist")
 
     public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like to us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
@@ -377,4 +392,7 @@ public struct UserText {
     public static let fireButtonAnimationWaterSwirlName = NSLocalizedString("fireButtonAnimation.waterSwirl.name", value: "Whirlpool", comment: "")
     public static let fireButtonAnimationAirstreamName = NSLocalizedString("fireButtonAnimation.airstream.name", value: "Airstream", comment: "")
     public static let fireButtonAnimationNoneName = NSLocalizedString("fireButtonAnimation.none.name", value: "None", comment: "")
+    
+    public static let webJSAlertOKButton = NSLocalizedString("webJSAlert.OK.button", value: "OK", comment: "OK button for JavaScript alerts")
+    public static let webJSAlertCancelButton = NSLocalizedString("webJSAlert.cancel.button", value: "Cancel", comment: "Cancel button for JavaScript alerts")
 }

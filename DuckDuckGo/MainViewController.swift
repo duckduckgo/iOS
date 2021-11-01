@@ -641,6 +641,7 @@ class MainViewController: UIViewController {
     fileprivate func updateCurrentTab() {
         if let currentTab = currentTab {
             select(tab: currentTab)
+            omniBar.resignFirstResponder()
         } else {
             attachHomeScreen()
         }
@@ -679,7 +680,7 @@ class MainViewController: UIViewController {
     }
     
     private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
+        omniBar.updateSiteRating(siteRating, with: PrivacyConfigurationManager.shared.privacyConfig)
     }
 
     func dismissOmniBar() {
@@ -1370,6 +1371,13 @@ extension MainViewController: TabDelegate {
         let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
         return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
     }
+
+    func tab(_ tab: TabViewController,
+             didRequestPresentingTrackerAnimation siteRating: SiteRating,
+             isCollapsing: Bool) {
+        guard tabManager.current === tab else { return }
+        omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: isCollapsing)
+    }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
         showMenuHighlighterIfNeeded()
@@ -1410,6 +1418,9 @@ extension MainViewController: TabDelegate {
         }
     }
 
+    func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
+        return tabManager.current === tab
+    }
 }
 
 extension MainViewController: TabSwitcherDelegate {

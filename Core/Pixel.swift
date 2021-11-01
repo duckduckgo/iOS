@@ -137,7 +137,6 @@ public enum PixelName: String {
     
     case widgetFavoriteLaunch = "m_w_fl"
     case widgetNewSearch = "m_w_ns"
-    case widgetAddFavoriteLaunch = "m_w_af"
 
     case defaultBrowserButtonPressedSettings = "m_db_s"
     case defaultBrowserButtonPressedHome = "m_db_h"
@@ -148,9 +147,10 @@ public enum PixelName: String {
     case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
     case widgetsOnboardingMovedToBackground = "m_o_w_b"
 
-    case emailUserPressedUseAddress = "m_e_uad"
-    case emailUserPressedUseAlias = "m_e_ua"
-    case emailTooltipDismissed = "m_e_t_d"
+    case emailUserPressedUseAddress = "email_filled_main"
+    case emailUserPressedUseAlias = "email_filled_random"
+    case emailUserCreatedAlias = "email_generated_button"
+    case emailTooltipDismissed = "email_tooltip_dismissed"
 
     // MARK: SERP pixels
     
@@ -187,9 +187,6 @@ public enum PixelName: String {
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 
-    case settingsAppIconChangeFailed = "m_d_aicf"
-    case settingsAppIconChangeNotSupported = "m_d_aicns"
-
     case backgroundTaskSubmissionFailed = "m_bt_rf"
     
     case blankOverlayNotDismissed = "m_d_ovs"
@@ -216,10 +213,11 @@ public struct PixelParameters {
     static let dataAvailiability = "dp"
     
     static let errorCode = "e"
-    static let errorDesc = "d"
+    static let errorDomain = "d"
+    static let errorDescription = "de"
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
-    static let underlyingErrorDesc = "ud"
+    static let underlyingErrorDomain = "ud"
 
     public static let tabCount = "tc"
 
@@ -239,6 +237,7 @@ public struct PixelParameters {
     public static let etag = "et"
 
     public static let emailCohort = "cohort"
+    public static let emailLastUsed = "duck_address_last_used"
 }
 
 public struct PixelValues {
@@ -253,6 +252,11 @@ public class Pixel {
         static let tablet = "tablet"
         static let phone = "phone"
     }
+
+    public enum QueryParameters {
+        case atb
+        case appVersion
+    }
     
     private init() {
     }
@@ -261,11 +265,13 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
-                            includeATB: Bool = true,
-                            onComplete: @escaping (Error?) -> Void = {_ in }) {
+                            includedParameters: [QueryParameters] = [.atb, .appVersion],
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         
         var newParams = params
-        newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
+        if includedParameters.contains(.appVersion) {
+            newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
+        }
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }
@@ -273,9 +279,11 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor, includeATB: includeATB)
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue,
+                                   formFactor: formFactor,
+                                   includeATB: includedParameters.contains(.atb))
         } else {
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, includeATB: includeATB)
+            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, includeATB: includedParameters.contains(.atb) )
         }
         
         APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
@@ -289,20 +297,23 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName, error: Error, withAdditionalParameters params: [String: String] = [:]) {
+    public static func fire(pixel: PixelName,
+                            error: Error,
+                            withAdditionalParameters params: [String: String] = [:],
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         let nsError = error as NSError
         var newParams = params
         newParams[PixelParameters.errorCode] = "\(nsError.code)"
-        newParams[PixelParameters.errorDesc] = nsError.domain
+        newParams[PixelParameters.errorDomain] = nsError.domain
         
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
-            newParams[PixelParameters.underlyingErrorDesc] = underlyingError.domain
+            newParams[PixelParameters.underlyingErrorDomain] = underlyingError.domain
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
-            newParams[PixelParameters.underlyingErrorDesc] = "NSSQLiteErrorDomain"
+            newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
         }
-        fire(pixel: pixel, withAdditionalParameters: newParams)
+        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }
 }
 

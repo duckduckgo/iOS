@@ -148,14 +148,19 @@ class HomeViewController: UIViewController {
     func showNextDaxDialog() {
 
         guard !isShowingDax else { return }
-        guard let spec = DaxDialogs.shared.nextHomeScreenMessage() else { return }
+        guard let spec = DaxDialogs.shared.nextHomeScreenMessage(),
+              let daxDialogViewController = daxDialogViewController else { return }
         collectionView.isHidden = true
         daxDialogContainer.isHidden = false
         daxDialogContainer.alpha = 0.0
-        daxDialogViewController?.loadViewIfNeeded()
-        daxDialogViewController?.message = spec.message
-        daxDialogViewController?.accessibleMessage = spec.accessibilityLabel
-        daxDialogContainerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
+        
+        daxDialogViewController.loadViewIfNeeded()
+        daxDialogViewController.message = spec.message
+        daxDialogViewController.accessibleMessage = spec.accessibilityLabel
+        
+        view.addGestureRecognizer(daxDialogViewController.tapToCompleteGestureRecognizer)
+        
+        daxDialogContainerHeight.constant = daxDialogViewController.calculateHeight()
         hideLogo()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

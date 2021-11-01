@@ -230,6 +230,9 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func startEditing() {
+        //necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
+        tableView.isEditing = false
+        
         tableView.isEditing = true
         disableEditButton()
     }

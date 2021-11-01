@@ -75,11 +75,23 @@ class BookmarkCell: UITableViewCell {
         editSeperatorView.isHidden = true
         editSeperatorViewWidthConstraint.constant =  1.0 / UIScreen.main.scale
     }
+    
+    var currentState: UITableViewCell.StateMask = []
+    
+    override func willTransition(to state: UITableViewCell.StateMask) {
+        currentState = state
+        super.willTransition(to: state)
+        currentState = state
+        if state == .showingEditControl {
+            
+        }
+    }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
-        if editing {
+        // require current state to make sure this doesn't happen when swiping cells
+        if editing && currentState.contains(.showingEditControl) {
             numberOfChildrenLabel.isHidden = true
             disclosureEditView.isHidden = false
             editSeperatorView.isHidden = false

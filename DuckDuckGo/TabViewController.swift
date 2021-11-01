@@ -350,7 +350,7 @@ class TabViewController: UIViewController {
         }
         lastError = nil
         updateContentMode()
-        load(urlRequest: URLRequest(url: url))
+        load(urlRequest: URLRequest.userInitiated(url))
     }
     
     private func load(urlRequest: URLRequest) {
@@ -359,6 +359,11 @@ class TabViewController: UIViewController {
         if let url = urlRequest.url, !shouldReissueSearch(for: url) {
             requeryLogic.onNewNavigation(url: url)
         }
+
+        if #available(iOS 15.0, *) {
+            assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
+        }
+
         webView.stopLoading()
         webView.load(urlRequest)
     }
@@ -1064,12 +1069,22 @@ extension TabViewController: WKNavigationDelegate {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
+
+                if #available(iOS 15.0, *) {
+                    request.attribution = .user
+                }
+
                 return request
             }
         } else {
             // Check if DN$ header is still there and remove it
             if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
                 request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
+
+                if #available(iOS 15.0, *) {
+                    request.attribution = .user
+                }
+
                 return request
             }
         }

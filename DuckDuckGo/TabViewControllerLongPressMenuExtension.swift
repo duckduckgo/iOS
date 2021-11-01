@@ -81,7 +81,7 @@ extension TabViewController {
     
     private func onOpenAction(forUrl url: URL) {
         if let webView = webView {
-            webView.load(URLRequest(url: url))
+            webView.load(URLRequest.userInitiated(url))
         }
     }
     

@@ -53,7 +53,7 @@ class TabManager {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
         controller.attachWebView(configuration: configuration,
-                                 andLoadRequest: url == nil ? nil : URLRequest(url: url!),
+                                 andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
                                  consumeCookies: !model.hasActiveTabs)
         controller.delegate = delegate
         controller.loadViewIfNeeded()

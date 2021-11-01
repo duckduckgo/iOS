@@ -29,6 +29,7 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
     @IBOutlet weak var disclosureEditView: UIImageView!
     @IBOutlet weak var editSeperatorView: UIView!
+    @IBOutlet weak var mainContentStackView: UIStackView!
     @IBOutlet weak var stackViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var editSeperatorViewWidthConstraint: NSLayoutConstraint!
     
@@ -83,6 +84,7 @@ class BookmarkCell: UITableViewCell {
             disclosureEditView.isHidden = false
             editSeperatorView.isHidden = false
             stackViewTrailingConstraint.constant = 32 + editSeperatorViewWidthConstraint.constant
+            mainContentStackView.setCustomSpacing(8, after: itemImage)
         } else {
             disclosureEditView.isHidden = true
             editSeperatorView.isHidden = true
@@ -90,6 +92,7 @@ class BookmarkCell: UITableViewCell {
             if bookmarkItem as? BookmarkFolder != nil {
                 numberOfChildrenLabel.isHidden = false
             }
+            mainContentStackView.setCustomSpacing(16, after: itemImage)
         }
     }
 

@@ -59,7 +59,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-Y2-ync">
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-Y2-ync">
                                             <rect key="frame" x="16" y="10" width="343" height="24"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="V04-QV-7fc">
@@ -71,7 +71,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-Wh-Evj">
-                                                    <rect key="frame" x="36" y="0.0" width="256.5" height="24"/>
+                                                    <rect key="frame" x="32" y="0.0" width="264.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -119,6 +119,7 @@
                                     <outlet property="imageHeightConstraint" destination="z3n-aR-JsM" id="uHA-cx-TQh"/>
                                     <outlet property="imageWidthConstraint" destination="ayR-02-xPw" id="lOB-8J-6Zs"/>
                                     <outlet property="itemImage" destination="V04-QV-7fc" id="WeY-O7-u1Y"/>
+                                    <outlet property="mainContentStackView" destination="3ek-Y2-ync" id="Pro-WJ-A8Z"/>
                                     <outlet property="numberOfChildrenLabel" destination="vil-gw-sgh" id="S5T-pG-BCK"/>
                                     <outlet property="stackViewTrailingConstraint" destination="ATh-Rk-awj" id="4xW-tP-R8f"/>
                                     <outlet property="title" destination="Lqe-Wh-Evj" id="3DO-GY-42U"/>

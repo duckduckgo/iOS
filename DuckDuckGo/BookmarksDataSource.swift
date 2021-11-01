@@ -271,6 +271,38 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         self.delegate = delegate
     }
     
+    //TODO some duplicaton here
+    func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        if isEmpty {
+            tableView.separatorColor = parentFolder != nil  ? .clear : UIColor(named: "BookmarksCellSeperatorColor")
+            return createEmptyCell(tableView, forIndex: index)
+        } else {
+            tableView.separatorColor = UIColor(named: "BookmarksCellSeperatorColor")
+            return createCell(tableView, withItem: bookmarkItem(at: index))
+        }
+    }
+    
+    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
+        if parentFolder != nil {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksInSubfolderCell.reuseIdentifier) as? NoBookmarksInSubfolderCell else {
+                fatalError("Failed to dequeue \(NoBookmarksInSubfolderCell.reuseIdentifier) as NoBookmarksInSubfolderCell")
+            }
+            cell.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
+                fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
+            }
+            
+            let theme = ThemeManager.shared.currentTheme
+            cell.backgroundColor = theme.tableCellBackgroundColor
+            cell.label.textColor = theme.tableCellTextColor
+            cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+
+            return cell
+        }
+    }
+    
     func navigationTitle() -> String? {
         return parentFolder?.title
     }

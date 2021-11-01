@@ -125,8 +125,34 @@
                                     <outlet property="title" destination="Lqe-Wh-Evj" id="3DO-GY-42U"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoBookmarksInSubfolderCell" rowHeight="79" id="6se-nF-A9L" customClass="NoBookmarksInSubfolderCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="93" width="375" height="79"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6se-nF-A9L" id="dVb-ES-9Wa">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Buv-ez-2Lr">
+                                            <rect key="frame" x="16" y="32" width="343" height="47"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="uSe-T6-hy7"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                            <color key="textColor" name="BookmarksEmptyFolderCellTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Buv-ez-2Lr" secondAttribute="trailing" constant="16" id="6b8-z7-yM4"/>
+                                        <constraint firstItem="Buv-ez-2Lr" firstAttribute="leading" secondItem="dVb-ES-9Wa" secondAttribute="leading" constant="16" id="L5O-a9-9sV"/>
+                                        <constraint firstAttribute="bottom" secondItem="Buv-ez-2Lr" secondAttribute="bottom" id="VSZ-dU-csb"/>
+                                        <constraint firstItem="Buv-ez-2Lr" firstAttribute="top" secondItem="dVb-ES-9Wa" secondAttribute="top" constant="32" id="sQT-cU-3hz"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarskCell" id="WYR-Zy-nVI" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="93" width="375" height="44.5"/>
+                                <rect key="frame" x="0.0" y="172" width="375" height="44.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WYR-Zy-nVI" id="WV9-kt-rsa">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -194,7 +220,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2049" y="805"/>
+            <point key="canvasLocation" x="2048.8000000000002" y="804.64767616191909"/>
         </scene>
         <!--Add Folder-->
         <scene sceneID="CJo-jI-HMh">
@@ -460,6 +486,9 @@
         </namedColor>
         <namedColor name="BookmarksCellSeperatorColor">
             <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BookmarksEmptyFolderCellTextColor">
+            <color red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksFolderColor">
             <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

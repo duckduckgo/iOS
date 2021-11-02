@@ -89,6 +89,11 @@ class IntervalSlider: UISlider {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.setNeedsDisplay()
+    }
+    
     override func draw(_ rect: CGRect) {
         
         let trackRect = trackRect(forBounds: rect)

@@ -104,13 +104,13 @@ public class SurrogatesUserScript: NSObject, UserScript {
         }
         
         return Self.loadJS("contentblocker", from: Bundle.core, withReplacements: [
-            "${isDebug}": isDebugBuild ? "true" : "false",
-            "${tempUnprotectedDomains}": remoteUnprotectedDomains,
-            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n"),
-            "${trackerAllowlistEntries}": TrackerAllowlistInjection.prepareForInjection(allowlist: privacyConfiguration.trackerAllowlist),
-            "${trackerData}": trackerData,
-            "${surrogates}": configurationSource.surrogates,
-            "${blockingEnabled}": privacyConfiguration.isEnabled(featureKey: .contentBlocking) ? "true" : "false"
+            "$IS_DEBUG$": isDebugBuild ? "true" : "false",
+            "$TEMP_UNPROTECTED_DOMAINS$": remoteUnprotectedDomains,
+            "$USER_UNPROTECTED_DOMAINS$": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n"),
+            "$TRACKER_ALLOWLIST_ENTRIES$": TrackerAllowlistInjection.prepareForInjection(allowlist: privacyConfiguration.trackerAllowlist),
+            "$TRACKER_DATA$": trackerData,
+            "$SURROGATES$": configurationSource.surrogates,
+            "$BLOCKING_ENABLED$": privacyConfiguration.isEnabled(featureKey: .contentBlocking) ? "true" : "false"
         ])
     }
     

@@ -29,6 +29,8 @@ class DaxDialogViewController: UIViewController {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var label: UILabel!
     
+    @IBOutlet weak var tapToCompleteGestureRecognizer: UIGestureRecognizer!
+    
     var message: String? {
         didSet {
             initLabel()
@@ -71,6 +73,8 @@ class DaxDialogViewController: UIViewController {
     private func atEnd(_ position: Int) -> Bool {
         return position >= chars.count
     }
+    
+    var isFinished: Bool { atEnd(position) }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,7 +122,7 @@ class DaxDialogViewController: UIViewController {
         updateMessage()
     }
     
-    @IBAction func onTapText() {
+    @IBAction func onTap() {
         finish()
     }
     

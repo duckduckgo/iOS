@@ -208,7 +208,7 @@ class BookmarksViewController: UITableViewController {
     private func refreshEditButton() {
         if currentDataSource.isEmpty {
             disableEditButton()
-        } else {
+        } else if !tableView.isEditing {
             enableEditButton()
         }
     }

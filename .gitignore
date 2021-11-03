@@ -6,6 +6,7 @@
 build/
 DerivedData/
 Carthage/Checkouts
+node_modules/
 
 ## Various settings
 *.pbxuser

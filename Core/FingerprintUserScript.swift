@@ -43,10 +43,10 @@ public class FingerprintUserScript: NSObject, UserScript {
             .exceptionsList(forFeature: .fingerprintingScreenSize).joined(separator: "\n")
         
         return Self.loadJS("fingerprint", from: Bundle.core, withReplacements: [
-            "${featureSettings}": featureSettings,
-            "${tempStorageExceptions}": tempStorageExceptions,
-            "${batteryExceptions}": batteryExceptions,
-            "${screenSizeExceptions}": screenSizeExceptions
+            "$FEATURE_SETTINGS$": featureSettings,
+            "$TEMP_STORAGE_EXCEPTIONS$": tempStorageExceptions,
+            "$BATTERY_EXCEPTIONS$": batteryExceptions,
+            "$SCREEN_SIZE_EXCEPTIONS$": screenSizeExceptions
         ])
     }
     

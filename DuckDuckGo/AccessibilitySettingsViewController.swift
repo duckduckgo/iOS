@@ -29,8 +29,11 @@ class AccessibilitySettingsViewController: UITableViewController {
     
     private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
     
+    private var hasAdjustedDetent: Bool = false
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureSlider()
         updateLabel()
         applyTheme(ThemeManager.shared.currentTheme)
@@ -38,33 +41,50 @@ class AccessibilitySettingsViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if #available(iOS 15.0, *) {
-            if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
+            if !hasAdjustedDetent, let sheetController = navigationController?.presentationController as? UISheetPresentationController {
                 sheetController.detents = [.medium(), .large()]
                 sheetController.animateChanges {
-                  sheetController.selectedDetentIdentifier = .medium
+                    sheetController.selectedDetentIdentifier = .medium
+                    hasAdjustedDetent = true
                 }
             }
         }
     }
+
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let theme = ThemeManager.shared.currentTheme
+        cell.decorate(with: theme)
+    }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    @IBAction func backButtonTapped(_ sender: AnyObject) {
+        var shouldPopViewController: Bool = true
         
         if #available(iOS 15.0, *) {
             if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
                 sheetController.detents = [.large()]
-                sheetController.animateChanges {
-                  sheetController.selectedDetentIdentifier = .large
+                
+                // We recreate two-step detent animation, like on push but in reverse
+                if sheetController.selectedDetentIdentifier != .large {
+                    shouldPopViewController = false
+                    
+                    // First step is to animate detent to large
+                    sheetController.animateChanges {
+                        sheetController.selectedDetentIdentifier = .large
+                    }
+                    
+                    // Second step is to actually pop the view controller
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let theme = ThemeManager.shared.currentTheme
-        cell.decorate(with: theme)
+        
+        if shouldPopViewController {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     private func configureSlider() {
@@ -127,7 +147,9 @@ class IntervalSlider: UISlider {
             
 //            let x = Darwin.round(newTrackRect.minX + newTrackRect.width/CGFloat(count) * CGFloat(i) - markWidth/2)
             let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps) * CGFloat(i) - markWidth/2
-            let markRect = CGRect(x: x, y: newTrackRect.midY - markHeight/2, width: markWidth, height: markHeight)
+            let xRounded = Darwin.round(x / 0.5) * 0.5
+            
+            let markRect = CGRect(x: xRounded, y: newTrackRect.midY - markHeight/2, width: markWidth, height: markHeight)
             print("mark[\(i)]: \(markRect)")
             
             let markPath: UIBezierPath = UIBezierPath(roundedRect: markRect, cornerRadius: 5.0)

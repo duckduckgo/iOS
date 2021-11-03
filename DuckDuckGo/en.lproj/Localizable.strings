@@ -961,6 +961,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Tab Switcher";
 
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Text Size - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Dark";
 

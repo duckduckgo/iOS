@@ -97,7 +97,8 @@ class AccessibilitySettingsViewController: UITableViewController {
     }
     
     private func updateLabel() {
-        currentSelectedValueLabel.text = "Text Size - \(currentSelectedValue)%"
+        let percentageString = "\(currentSelectedValue)%"
+        currentSelectedValueLabel.text = UserText.textSizeFooter(for: percentageString)
     }
 }
 

@@ -12,6 +12,7 @@
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
 		026ADE0E26B321E1002518EE /* PrivacyConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */; };
+		02889BE22731C15A000F606F /* LinkCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02889BE12731C15A000F606F /* LinkCleaner.swift */; };
 		02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
 		02BA15B326A89F3A00472DD7 /* PrivacyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA15B226A89F3A00472DD7 /* PrivacyConfiguration.swift */; };
@@ -705,6 +706,7 @@
 		025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FingerprintingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManagerTests.swift; sourceTree = "<group>"; };
+		02889BE12731C15A000F606F /* LinkCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCleaner.swift; sourceTree = "<group>"; };
 		02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManager.swift; sourceTree = "<group>"; };
 		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
 		02BA15B226A89F3A00472DD7 /* PrivacyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfiguration.swift; sourceTree = "<group>"; };
@@ -2027,6 +2029,14 @@
 			path = FingerprintingUITests;
 			sourceTree = "<group>";
 		};
+		02889BE02731C129000F606F /* LinkProtection */ = {
+			isa = PBXGroup;
+			children = (
+				02889BE12731C15A000F606F /* LinkCleaner.swift */,
+			);
+			name = LinkProtection;
+			sourceTree = "<group>";
+		};
 		02BA15AD26A89DE100472DD7 /* PrivacyConfiguration */ = {
 			isa = PBXGroup;
 			children = (
@@ -2129,6 +2139,7 @@
 		837774491F8E1ECE00E17A29 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
+				02889BE02731C129000F606F /* LinkProtection */,
 				02BA15AD26A89DE100472DD7 /* PrivacyConfiguration */,
 				83EC09B4212C456000F3797D /* API */,
 				8377744D1F8E1FF700E17A29 /* Converter */,
@@ -4817,6 +4828,7 @@
 				98647994266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
 				4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */,
+				02889BE22731C15A000F606F /* LinkCleaner.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */,

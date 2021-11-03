@@ -1089,7 +1089,15 @@ extension TabViewController: WKNavigationDelegate {
             load(urlRequest: request)
             return
         }
-
+        
+        if navigationAction.isTargetingMainFrame(),
+           navigationAction.navigationType == .linkActivated,
+           let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(navigationAction.request.url) {
+            decisionHandler(.cancel)
+            load(url: newUrl)
+            return
+        }
+            
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
            let modifierFlags = delegate?.tabWillRequestNewTab(self) {

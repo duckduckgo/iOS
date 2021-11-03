@@ -70,10 +70,30 @@ class HTTPSUpgradeTests: XCTestCase {
                                     tempUnprotected: [],
                                     contentBlockingEnabled: true,
                                     exceptions: [],
-                                    httpsEnabled: true))
+                                    httpsUpgradesEnabled: true))
         testee.loadData()
         testee.isUgradeable(url: url) { result in
             XCTAssertTrue(result)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+    
+    func testWhenURLIsHttpAndHttpsUpgradesDisabledThenShouldUpgradeIsFalse() {
+        let expect = expectation(description: "Http url in list and should not be upgraded")
+        let url = URL(string: "http://upgradable.url")!
+
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()),
+                                  privacyConfig: WebKitTestHelper.preparePrivacyConfig(
+                                    locallyUnprotected: [],
+                                    tempUnprotected: [],
+                                    contentBlockingEnabled: true,
+                                    exceptions: [],
+                                    httpsUpgradesEnabled: false))
+        testee.loadData()
+        testee.isUgradeable(url: url) { result in
+            XCTAssertFalse(result)
             expect.fulfill()
         }
         

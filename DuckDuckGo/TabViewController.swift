@@ -1092,7 +1092,8 @@ extension TabViewController: WKNavigationDelegate {
         
         if navigationAction.isTargetingMainFrame(),
            navigationAction.navigationType == .linkActivated,
-           let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(navigationAction.request.url) {
+           let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: webView.url,
+                                                                       destination: navigationAction.request.url) {
             decisionHandler(.cancel)
             load(url: newUrl)
             return

@@ -24,8 +24,8 @@ public class LinkCleaner {
     public static let shared = LinkCleaner()
     
     private let ampFormats = [
-        "https?:\\/\\/(?:w{3}\\.)?google\\.com\\/amp\\/s\\/(.+)",
-        "https?:\\/\\/.+ampproject\\.org\\/v\\/s\\/(.+)"
+        "https?:\\/\\/(?:w{3}\\.)?google\\.\\w{2,}\\/amp\\/s\\/(\\S+)",
+        "https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)"
     ]
     
     public func urlIsExtractableAmpLink(_ url: URL) -> String? {
@@ -38,24 +38,44 @@ public class LinkCleaner {
         return nil
     }
     
-    public func extractCanonicalFromAmpLink(_ url: URL?) -> URL? {
+    private func isURLExcluded(url: URL) -> Bool {
+        guard let host = url.host else { return true }
+        
+        let config = PrivacyConfigurationManager.shared.privacyConfig
+        if config.isTempUnprotected(domain: host) || config.isUserUnprotected(domain: host) {
+            return true
+        }
+        
+        return false
+    }
+    
+    public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?) -> URL? {
         guard let url = url else { return nil }
+        guard let initiator = initiator else { return nil }
+        
+        // Check initiator and destination against exceptions
+        guard !isURLExcluded(url: initiator) && !isURLExcluded(url: url) else { return nil }
+        
         guard let ampFormat = urlIsExtractableAmpLink(url) else { return nil }
         
         do {
+            let ampStr = url.absoluteString
             let regex = try NSRegularExpression(pattern: ampFormat, options: [.caseInsensitive])
             let matches = regex.matches(in: url.absoluteString,
                                         options: [],
-                                        range: NSRange(url.absoluteString.startIndex..<url.absoluteString.endIndex,
-                                                       in: url.absoluteString))
+                                        range: NSRange(ampStr.startIndex..<ampStr.endIndex,
+                                                       in: ampStr))
             guard let match = matches.first else { return nil }
             
             let matchRange = match.range(at: 1)
-            if let substrRange = Range(matchRange, in: url.absoluteString) {
-                var urlStr = String(url.absoluteString[substrRange])
+            if let substrRange = Range(matchRange, in: ampStr) {
+                var urlStr = String(ampStr[substrRange])
                 if !urlStr.hasPrefix("http") {
                     urlStr = "https://\(urlStr)"
-                    return URL(string: urlStr)
+                }
+                
+                if let cleanUrl = URL(string: urlStr), !isURLExcluded(url: cleanUrl) {
+                    return cleanUrl
                 }
             }
         } catch {

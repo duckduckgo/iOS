@@ -111,6 +111,26 @@ extension BookmarksCoreDataStorage {
         }
     }
     
+    //I don't love that I have a sync and an async version of these...
+    public func favorites(completion: @escaping ([Bookmark]) -> Void) {
+        getTopLevelFolder(isFavorite: true, readOnly: true) { folder in
+            
+            guard let folder = folder else {
+                completion([])
+                return
+            }
+            let children = folder.children?.array as? [BookmarkItem] ?? []
+            let favorites: [Bookmark] = children.map {
+                if let fav = $0 as? Bookmark {
+                    return fav
+                } else {
+                    fatalError("Favourites shouldn't contain folders")
+                }
+            }
+            completion(favorites)
+        }
+    }
+    
     public func contains(url: URL, completion: @escaping (Bool) -> Void) {
         containsBookmark(url: url, searchType: .bookmarksAndFavorites, completion: completion)
     }

@@ -495,7 +495,7 @@
 
     let trackerAllowlist = {}
     const trackerAllowlistEntries = `
-            "$TRACKER_ALLOWLIST_ENTRIES$"
+            $TRACKER_ALLOWLIST_ENTRIES$
           `
 
     if (trackerAllowlistEntries) {

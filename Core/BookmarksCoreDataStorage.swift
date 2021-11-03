@@ -32,12 +32,43 @@ public class BookmarksCoreDataStorage {
         
         static let bookmarkClassName = "BookmarkManagedObject"
         static let folderClassName = "BookmarkFolderManagedObject"
+        
+        static let databaseName = "BookmarksAndFolders"
+        
+        static let groupName = "\(Global.groupIdPrefix).bookmarks"
     }
     
-    private lazy var privateContext = Database.shared.makeContext(concurrencyType: .privateQueueConcurrencyType, name: Constants.privateContextName)
+    private lazy var persistentContainer: NSPersistentContainer = {
+        let mainBundle = Bundle.main
+        let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
+        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { fatalError("No DB scheme found") }
+        
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
+        let storeURL = containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
+        let description = NSPersistentStoreDescription(url: storeURL)
+
+        let container = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: managedObjectModel)
+        container.persistentStoreDescriptions = [description]
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                fatalError("Unable to load persistent stores: \(error)")
+            }
+        }
+        return container
+    }()
+    
+    private lazy var privateContext: NSManagedObjectContext = {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        context.name = Constants.privateContextName
+        return context
+    }()
+    
     private lazy var viewContext: NSManagedObjectContext = {
-        let context = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType, name: Constants.viewContextName)
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.mergePolicy = NSMergePolicy(merge: .rollbackMergePolicyType)
+        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        context.name = Constants.viewContextName
         return context
     }()
     

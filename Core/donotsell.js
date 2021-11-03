@@ -17,23 +17,23 @@
 //  limitations under the License.
 //
 
-(function() {
-    const gpcEnabled = ${gpcEnabled}
+(function () {
+    const gpcEnabled = $GPC_ENABLED$
     if (!gpcEnabled) {
-        return;
+        return
     }
-    
+
     if (navigator.globalPrivacyControl === undefined) {
         Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', {
             get: () => true,
             configurable: true,
             enumerable: true
-        });
+        })
     } else {
         try {
-            navigator.globalPrivacyControl = true;
+            navigator.globalPrivacyControl = true
         } catch (e) {
-            console.error('globalPrivacyControl is not writable: ', e);
+            console.error('globalPrivacyControl is not writable: ', e)
         }
     }
-})();
+})()

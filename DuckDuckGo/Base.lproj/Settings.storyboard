@@ -917,6 +917,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="8YG-7Q-Czd" id="fth-LM-z1l"/>
                         <outlet property="currentSelectedValueLabel" destination="A2R-HL-aY9" id="Jkc-0Y-3Rp"/>
                         <outlet property="textSizeSlider" destination="kaZ-4P-3gq" id="qdz-WS-gXa"/>
                     </connections>

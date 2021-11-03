@@ -30,6 +30,8 @@ class AccessibilitySettingsViewController: UITableViewController {
     private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
     
     private var hasAdjustedDetent: Bool = false
+    
+    @IBOutlet weak var backButton: UIButton!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,9 +47,14 @@ class AccessibilitySettingsViewController: UITableViewController {
         if #available(iOS 15.0, *) {
             if !hasAdjustedDetent, let sheetController = navigationController?.presentationController as? UISheetPresentationController {
                 sheetController.detents = [.medium(), .large()]
+                sheetController.delegate = self
                 sheetController.animateChanges {
                     sheetController.selectedDetentIdentifier = .medium
                     hasAdjustedDetent = true
+                    
+                    let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain,
+                                                      target: self, action: #selector(backButtonTapped(_:)))
+                    navigationItem.setLeftBarButton(closeButton, animated: true)
                 }
             }
         }
@@ -59,6 +66,10 @@ class AccessibilitySettingsViewController: UITableViewController {
     }
     
     @IBAction func backButtonTapped(_ sender: AnyObject) {
+// FADEOUT VERSION
+//        let fadeDuration = 0.1
+//        let targetAlpha = 0.1
+        
         var shouldPopViewController: Bool = true
         
         if #available(iOS 15.0, *) {
@@ -74,6 +85,13 @@ class AccessibilitySettingsViewController: UITableViewController {
                         sheetController.selectedDetentIdentifier = .large
                     }
                     
+                    self.navigationItem.setLeftBarButton(nil, animated: true)
+// FADEOUT VERSION
+//                    UIView.animate(withDuration: fadeDuration, delay: 0.2, options: [.curveEaseOut]) {
+//                        self.backButton.alpha = targetAlpha
+//                    } completion: { _ in
+//                    }
+                    
                     // Second step is to actually pop the view controller
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.navigationController?.popViewController(animated: true)
@@ -83,6 +101,17 @@ class AccessibilitySettingsViewController: UITableViewController {
         }
         
         if shouldPopViewController {
+            
+// FADEOUT VERSION
+//            UIView.animate(withDuration: fadeDuration, delay: 0.0, options: [.curveEaseOut]) {
+//                self.backButton.alpha = targetAlpha
+//            } completion: { _ in
+//            }
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+//                self.navigationController?.popViewController(animated: true)
+//            }
+            
             navigationController?.popViewController(animated: true)
         }
     }
@@ -199,4 +228,19 @@ extension AccessibilitySettingsViewController: Themable {
         
         tableView.reloadData()
     }
+}
+
+extension AccessibilitySettingsViewController: UISheetPresentationControllerDelegate {
+  @available(iOS 15.0, *)
+  func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+    print("ID: \(sheetPresentationController.selectedDetentIdentifier)")
+      
+      if sheetPresentationController.selectedDetentIdentifier == .large {
+          navigationItem.leftBarButtonItem = nil
+      } else if sheetPresentationController.selectedDetentIdentifier == .medium {
+          let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain,
+                                            target: self, action: #selector(backButtonTapped(_:)))
+          navigationItem.setLeftBarButton(closeButton, animated: true)
+      }
+  }
 }

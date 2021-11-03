@@ -47,11 +47,7 @@ extension Themable where Self: UIViewController {
     func decorateToolbar(with theme: Theme) {
         navigationController?.toolbar.barTintColor = theme.barBackgroundColor
         navigationController?.toolbar.backgroundColor = theme.barBackgroundColor
-        navigationController?.toolbar.tintColor = theme.navigationBarTintColor
-        
-        for item in navigationController?.toolbar.items ?? [] {
-            item.tintColor = theme.navigationBarTitleColor
-        }
+        navigationController?.toolbar.tintColor = theme.barTintColor
         
         if #available(iOS 15.0, *) {
             let appearance = navigationController?.toolbar.standardAppearance

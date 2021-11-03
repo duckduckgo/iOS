@@ -194,7 +194,7 @@
                                 <action selector="onAddFolderPressed:" destination="aqL-Wl-TTD" id="LDq-yz-GBf"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem title="Edit" width="11.5" id="pwj-Ie-VbJ">
+                        <barButtonItem title="Edit" id="pwj-Ie-VbJ">
                             <connections>
                                 <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="UdP-p0-rRw"/>
                             </connections>

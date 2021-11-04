@@ -6519,8 +6519,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/TrackerRadarKit.git";
 			requirement = {
-				branch = "bartek/tracker-exceptions";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
 			};
 		};
 		4BE86C5B2633DBD7001C0E77 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {

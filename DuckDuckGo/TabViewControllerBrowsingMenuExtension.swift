@@ -60,80 +60,80 @@ extension TabViewController {
     
     var favoriteEntryIndex: Int { 1 }
     
-    func buildBrowsingMenu() -> [BrowsingMenuEntry] {
+    func buildBrowsingMenu(completion: @escaping ([BrowsingMenuEntry]) -> Void) {
         
         var entries = [BrowsingMenuEntry]()
         
-        if let link = link, !isError {
-            let group = DispatchGroup()
+        buildLinkEntries() { linkEntries in
+            entries.append(contentsOf: linkEntries)
             
-            var bookmarkEntry: BrowsingMenuEntry?
-            group.enter()
-            buildBookmarkEntry(for: link) { entry in
-                bookmarkEntry = entry
-                group.leave()
+            if let domain = self.siteRating?.domain {
+                entries.append(self.buildToggleProtectionEntry(forDomain: domain))
             }
             
-            var favoriteEntry: BrowsingMenuEntry?
-            group.enter()
-            buildFavoriteEntry(for: link) { entry in
-                favoriteEntry = entry
-                group.leave()
-            }
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+                                                     image: UIImage(named: "MenuFeedback")!,
+                                                     action: { [weak self] in
+                self?.onReportBrokenSiteAction()
+            }))
+            
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
+                                                     image: UIImage(named: "MenuSettings")!,
+                                                     action: { [weak self] in
+                self?.onBrowsingSettingsAction()
+            }))
+            
+            completion(entries)
+        }
+    }
+    
+    private func buildLinkEntries(completion: @escaping ([BrowsingMenuEntry]) -> Void) {
+        guard let link = link, !isError else {
+            completion([])
+            return
+        }
         
-            group.wait()
+        var entries = [BrowsingMenuEntry]()
+        
+        buildBookmarkEntry(for: link) { bookmarkEntry in
             if let bookmarkEntry = bookmarkEntry {
                 entries.append(bookmarkEntry)
             }
             
-            if let favoriteEntry = favoriteEntry {
-                assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
-                entries.append(favoriteEntry)
-            }
-            
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
-                                                     image: UIImage(named: "MenuBookmarks")!,
-                                                     action: { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
-            }))
-            
-            entries.append(.separator)
+            self.buildFavoriteEntry(for: link) { favoriteEntry in
+                if let favoriteEntry = favoriteEntry {
+                    assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
+                    entries.append(favoriteEntry)
+                }
+                
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
+                                                         image: UIImage(named: "MenuBookmarks")!,
+                                                         action: { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
+                }))
+                
+                entries.append(.separator)
 
-            if let entry = buildKeepSignInEntry(forLink: link) {
-                entries.append(entry)
+                if let entry = self.buildKeepSignInEntry(forLink: link) {
+                    entries.append(entry)
+                }
+                
+                if let entry = self.buildUseNewDuckAddressEntry(forLink: link) {
+                    entries.append(entry)
+                }
+                
+                let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
+                let image = self.tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
+                entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
+                    self?.onToggleDesktopSiteAction(forUrl: link.url)
+                }))
+                
+                entries.append(self.buildFindInPageEntry(forLink: link))
+                
+                completion(entries)
             }
-            
-            if let entry = buildUseNewDuckAddressEntry(forLink: link) {
-                entries.append(entry)
-            }
-            
-            let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-            let image = tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
-            entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
-                self?.onToggleDesktopSiteAction(forUrl: link.url)
-            }))
-            
-            entries.append(buildFindInPageEntry(forLink: link))
         }
-        
-        if let domain = siteRating?.domain {
-            entries.append(buildToggleProtectionEntry(forDomain: domain))
-        }
-        
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
-                                                 image: UIImage(named: "MenuFeedback")!,
-                                                 action: { [weak self] in
-            self?.onReportBrokenSiteAction()
-        }))
-        
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
-                                                 image: UIImage(named: "MenuSettings")!,
-                                                 action: { [weak self] in
-            self?.onBrowsingSettingsAction()
-        }))
-        
-        return entries
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
@@ -171,8 +171,6 @@ extension TabViewController {
     
     //omg so much to do here
     private func buildBookmarkEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
-        //TODO inject properly
-        let bookmarksManager = BookmarksManager()
         bookmarksManager.containsBookmark(url: link.url) { contains in
             if contains {
                 let entry = BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
@@ -194,8 +192,7 @@ extension TabViewController {
     
     private func performSaveBookmarkAction(for link: Link) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-//TODO inject properly, seriously, what is this shit
-        BookmarksManager().saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+        bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit) {
@@ -210,8 +207,6 @@ extension TabViewController {
     }
     
     private func buildFavoriteEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
-        //TODO inject properly. Seriously why is this never injected?!
-        let bookmarksManager = BookmarksManager()
         bookmarksManager.containsFavorite(url: link.url) { contains in
 
             if contains {
@@ -239,7 +234,6 @@ extension TabViewController {
     }
     
     private func performSaveFavoriteAction(for link: Link) {
-        let bookmarksManager = BookmarksManager()
         //TODO okay, this might need a completion to actually return when it's done
         bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url)
 

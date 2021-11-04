@@ -147,7 +147,9 @@ class BookmarksSearch {
                 finalResult = finalResult.sorted { $0.score > $1.score }
             }
             
-            completion(finalResult.map { $0.bookmark })
+            DispatchQueue.main.async {
+                completion(finalResult.map { $0.bookmark })
+            }
         }
     }
 }

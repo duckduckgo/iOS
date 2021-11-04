@@ -151,11 +151,10 @@ class BookmarksManager {
         guard let domain = bookmark?.url?.host else { return }
         
         coreDataStorage.allBookmarksAndFavoritesShallow() { bookmarks in
-            DispatchQueue.global(qos: .background).async {
-                let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
-                if !bookmarks.contains(where: matchesDomain) {
-                    Favicons.shared.removeBookmarkFavicon(forDomain: domain)
-                }
+            let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
+            if !bookmarks.contains(where: matchesDomain) {
+                print("culprit?")
+                Favicons.shared.removeBookmarkFavicon(forDomain: domain)
             }
         }
     }
